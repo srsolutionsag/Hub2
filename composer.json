@@ -1,0 +1,13 @@
+{
+  "autoload": {
+    "psr-4": {"SRAG\\ILIAS\\Plugins\\Hub2\\": "src/"}
+  },
+  "classmap": [
+    "classes",
+    "../../../../../../../Services/Cron",
+    "../../../../../../../Modules/Course",
+    "../../../../../../../Modules/Category",
+    "../../../../../../../Services/User",
+    "../../../../../../../Modules/Group"
+  ]
+}
