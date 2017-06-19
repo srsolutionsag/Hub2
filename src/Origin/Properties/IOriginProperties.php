@@ -1,12 +1,16 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin\Properties;
+<?php namespace SRAG\Hub2\Origin\Properties;
 
 /**
  * Interface Properties
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin\Properties
  */
 interface IOriginProperties {
 
+	const PREFIX_UPDATE_DTO = 'update_dto_';
+
 	/**
+	 * Get a property value by key, returns NULL if no property is found.
+	 *
 	 * @param string $key
 	 * @return mixed
 	 */

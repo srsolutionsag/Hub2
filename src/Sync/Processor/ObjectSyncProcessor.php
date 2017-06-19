@@ -1,19 +1,17 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Sync\Processor;
+<?php namespace SRAG\Hub2\Sync\Processor;
 
-use SRAG\ILIAS\Plugins\Exception\HubException;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObject;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectFactory;
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
-use SRAG\ILIAS\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Object\IObject;
+use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Sync\IObjectStatusTransition;
+
 
 /**
  * Class ObjectProcessor
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Sync\Processor
+ * @package SRAG\Hub2\Sync\Processor
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
-
-	const IMPORT_PREFIX = 'srhub_';
 
 	/**
 	 * @var IOrigin
@@ -58,15 +56,15 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$this->origin->implementation()->afterDeleteILIASObject($object);
 				break;
 			default:
-				throw new HubException("Unrecognized intermediate status '{$object->getStatus()}' while processing");
+				throw new HubException("Unrecognized intermediate status '{$object->getStatus()}' while processing {$object}");
 		}
 		$object->setStatus($this->transition->intermediateToFinal($object));
-		$object->setPickupDateMicro(microtime(true));
+		$object->setProcessedDate(time());
 		$object->save();
 	}
 
 	/**
-	 * The import ID is set on the ILIAS object and used to identify the object again by the next sync processing.
+	 * The import ID is set on the ILIAS object.
 	 *
 	 * @param IObject $object
 	 * @return string
@@ -76,15 +74,25 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	}
 
 	/**
-	 * Create the corresponding ILIAS object and return the ID in ILIAS
+	 * Create the corresponding ILIAS object and return the internal ID in ILIAS (object-ID or ref-ID).
 	 *
 	 * @param IObject $object
 	 * @return int
 	 */
 	abstract protected function handleCreate(IObject $object);
 
+	/**
+	 * Update the corresponding ILIAS object.
+	 *
+	 * @param IObject $object
+	 */
 	abstract protected function handleUpdate(IObject $object);
 
+	/**
+	 * Delete the corresponding ILIAS object.
+	 *
+	 * @param IObject $object
+	 */
 	abstract protected function handleDelete(IObject $object);
 
 }

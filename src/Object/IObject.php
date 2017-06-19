@@ -1,9 +1,9 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Object;
+<?php namespace SRAG\Hub2\Object;
 
 /**
  * Describes common properties among the different hub object types
  *
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @package SRAG\Hub2\Object
  */
 interface IObject {
 
@@ -76,30 +76,31 @@ interface IObject {
 //	public function setExtId($id);
 
 	/**
-	 * Get the latest date where the data of this object was delivered from the external system, e.g. via CSV.
+	 * Get the date where the data of this object was delivered from the external system, e.g. via CSV.
 	 *
-	 * @return float
+	 * @return \DateTime
 	 */
-	public function getDeliveryDateMicro();
+	public function getDeliveryDate();
 
 	/**
-	 * @param float $date
+	 * @param int $unix_timestamp
 	 * @return $this
 	 */
-	public function setDeliveryDateMicro($date);
+	public function setDeliveryDate($unix_timestamp);
 
 	/**
-	 * Get the latest date where the sync picked up this object to create/update the corresponding ILIAS object.
+	 * Get the date where the sync processed this object, e.g. to create/update the corresponding ILIAS object
+	 * depending on the status.
 	 *
-	 * @return float
+	 * @return \DateTime
 	 */
-	public function getPickupDateMicro();
+	public function getProcessedDate();
 
 	/**
-	 * @param float $date
+	 * @param int $unix_timestamp
 	 * @return $this
 	 */
-	public function setPickupDateMicro($date);
+	public function setProcessedDate($unix_timestamp);
 
 	/**
 	 * Get the ID of this object in ILIAS. Depending on the object, this can either be the ILIAS object-ID or ref-ID.

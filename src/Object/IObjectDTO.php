@@ -1,10 +1,10 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Object;
+<?php namespace SRAG\Hub2\Object;
 
 /**
  * Data Transfer Objects of Hub objects.
  * These objects are exposed to the implementation of an origin.
  *
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @package SRAG\Hub2\Object
  */
 interface IObjectDTO {
 

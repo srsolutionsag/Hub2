@@ -1,13 +1,13 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Sync;
+<?php namespace SRAG\Hub2\Sync;
+use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
+use SRAG\Hub2\Exception\AbortSyncException;
+use SRAG\Hub2\Object\IObjectFactory;
+use SRAG\Hub2\Object\IObjectRepository;
+use SRAG\Hub2\Object\ObjectFactory;
+use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOriginRepository;
+use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
 
-use SRAG\ILIAS\Plugins\Exception\AbortOriginSyncOfCurrentTypeException;
-use SRAG\ILIAS\Plugins\Exception\AbortSyncException;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectFactory;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectRepository;
-use SRAG\ILIAS\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOriginRepository;
-use SRAG\ILIAS\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Class Sync
@@ -47,7 +47,8 @@ class Sync implements ISync {
 				$origin,
 				$this->getObjectRepository($origin),
 				$object_factory,
-				$this->getSyncProcessor($origin, $object_factory)
+				$this->getSyncProcessor($origin, $object_factory),
+				new ObjectStatusTransition($origin)
 			);
 			try {
 				$sync->execute();

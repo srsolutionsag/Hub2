@@ -1,13 +1,14 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin;
+<?php namespace SRAG\Hub2\Origin;
 
-use SRAG\ILIAS\Plugins\Exception\BuildObjectsFailedException;
-use SRAG\ILIAS\Plugins\Exception\ConnectionFailedException;
-use SRAG\ILIAS\Plugins\Exception\ParseDataFailedException;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObject;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectDTO;
+use SRAG\Hub2\Exception\BuildObjectsFailedException;
+use SRAG\Hub2\Exception\ConnectionFailedException;
+use SRAG\Hub2\Exception\ParseDataFailedException;
+use SRAG\Hub2\Object\IObject;
+use SRAG\Hub2\Object\IObjectDTO;
 
 /**
- * Interface OriginImplementation
+ * Interface IOriginImplementation
+ * @package SRAG\Hub2\Origin
  */
 interface IOriginImplementation {
 

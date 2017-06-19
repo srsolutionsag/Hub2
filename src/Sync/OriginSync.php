@@ -1,19 +1,19 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Sync;
+<?php namespace SRAG\Hub2\Sync;
 
-use SRAG\ILIAS\Plugins\Exception\AbortOriginSyncException;
-use SRAG\ILIAS\Plugins\Exception\HubException;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObject;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectDTO;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectFactory;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectRepository;
-use SRAG\ILIAS\Plugins\Hub2\Object\UserDTO;
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
-use SRAG\ILIAS\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Hub2\Exception\AbortOriginSyncException;
+use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Object\IObject;
+use SRAG\Hub2\Object\IObjectDTO;
+use SRAG\Hub2\Object\IObjectFactory;
+use SRAG\Hub2\Object\IObjectRepository;
+use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+
 
 /**
  * Class Sync
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Sync
+ * @package SRAG\Hub2\Sync
  */
 class OriginSync implements IOriginSync {
 
@@ -53,6 +53,21 @@ class OriginSync implements IOriginSync {
 	protected $transition;
 
 	/**
+	 * @var int
+	 */
+	protected $count_delivered = 0;
+
+	/**
+	 * @var array
+	 */
+	protected $count_processed_status = [
+		IObject::STATUS_CREATED => 0,
+		IObject::STATUS_UPDATED => 0,
+		IObject::STATUS_DELETED => 0,
+		IObject::STATUS_IGNORED => 0,
+	];
+
+	/**
 	 * @param IOrigin $origin
 	 * @param IObjectRepository $repository
 	 * @param IObjectFactory $factory
@@ -63,7 +78,7 @@ class OriginSync implements IOriginSync {
 	                            IObjectRepository $repository,
 	                            IObjectFactory $factory,
 	                            IObjectSyncProcessor $processor,
-								IObjectStatusTransition $transition
+	                            IObjectStatusTransition $transition
 	) {
 		$this->origin = $origin;
 		$this->repository = $repository;
@@ -81,6 +96,7 @@ class OriginSync implements IOriginSync {
 			$implementation->beforeSync();
 			$implementation->connect();
 			$count = $implementation->parseData();
+			$this->count_delivered = $count;
 			// Check if the origin aborts its sync if the amount of delivered data is not enough
 			if ($this->origin->config()->getCheckAmountData()) {
 				$threshold = $this->origin->config()->getCheckAmountDataPercentage();
@@ -112,7 +128,7 @@ class OriginSync implements IOriginSync {
 
 		foreach ($this->objects as $dto) {
 			$object = $this->factory->objectFromDTO($dto);
-			$object->setDeliveryDateMicro(microtime(true));
+			$object->setDeliveryDate(time());
 			$object->setData($dto->getData());
 			$object->setStatus($this->transition->finalToIntermediate($object));
 			$this->processObject($object);
@@ -120,14 +136,14 @@ class OriginSync implements IOriginSync {
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
-
-
-
-		// Set the status TO_DELETE for all objects which have not been delivered and process deletion
-//		$status->updateToDeleteStatus($this->objects);
-//		foreach ($this->repository->getByStatus(IObject::STATUS_TO_DELETE) as $object) {
-//			$this->processObject($object);
-//		}
+		$ext_ids_delivered = array_map(function ($object) {
+			/** @var $object IObject */
+			return $object->getExtId();
+		}, $this->objects);
+		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
+			$object->setStatus(IObject::STATUS_TO_DELETE);
+			$this->processObject($object);
+		}
 
 		try {
 			$implementation->afterSync();
@@ -145,16 +161,50 @@ class OriginSync implements IOriginSync {
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	public function getCountProcessedByStatus($status) {
+		return $this->count_processed_status[$status];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getCountProcessedTotal() {
+		$sum = 0;
+		foreach ($this->count_processed_status as $count) {
+			$sum += $count;
+		}
+		return $sum;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getCountDelivered() {
+		return $this->count_delivered;
+	}
+
+	/**
 	 * @param IObject $object
 	 * @throws AbortOriginSyncException
+	 * @throws HubException
 	 */
 	protected function processObject(IObject $object) {
 		try {
 			$this->processor->process($object);
-		} catch (\Exception $e) {
+			$this->incrementProcessed($object->getStatus());
+		} catch (HubException $e) {
+			// Origin implementation could throw HubExceptions, e.g. aborting current sync
+			// Exception is forwarded to global sync
 			$this->exceptions[] = $e;
 			$object->save();
-			// Origin implementation decides how to proceed
+			throw $e;
+		} catch (\Exception $e) {
+			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
+			// which decides how to proceed
+			$this->exceptions[] = $e;
+			$object->save();
 			$this->origin->implementation()->handleException($e);
 		} catch (\Error $e) {
 			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
@@ -162,5 +212,12 @@ class OriginSync implements IOriginSync {
 			$object->save();
 			throw new AbortOriginSyncException($e->getMessage());
 		}
+	}
+
+	/**
+	 * @param int $status
+	 */
+	protected function incrementProcessed($status) {
+		$this->count_processed_status[$status]++;
 	}
 }

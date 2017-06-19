@@ -1,6 +1,7 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin;
-use SRAG\ILIAS\Plugins\Hub2\Origin\Config\IOriginConfig;
-use SRAG\ILIAS\Plugins\Hub2\Origin\Properties\IOriginProperties;
+<?php namespace SRAG\Hub2\Origin;
+
+use SRAG\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface Origin

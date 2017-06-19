@@ -1,8 +1,8 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Object;
+<?php namespace SRAG\Hub2\Object;
 
 /**
  * Interface IObjectRepository
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @package SRAG\Hub2\Object
  */
 interface IObjectRepository {
 
@@ -21,12 +21,15 @@ interface IObjectRepository {
 	 */
 	public function getByStatus($status);
 
-
-//	public function getAllWithIntermediateStatus();
-//
-//
-//	public function getAllWithFinalStatus();
-
+	/**
+	 * Return all objects where the status TO_DELETE should be applied.
+	 * This method must return all hub objects where the ext-ID is not part of the given ext-IDs,
+	 * e.g. SELECT * FROM x WHERE ext_id NOT IN ($ext_ids).
+	 *
+	 * @param array $ext_ids
+	 * @return IObject[]
+	 */
+	public function getToDelete(array $ext_ids);
 
 	/**
 	 * Return the number of objects

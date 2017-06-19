@@ -1,10 +1,10 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Sync;
+<?php namespace SRAG\Hub2\Sync;
 
-use SRAG\ILIAS\Plugins\Hub2\Object\IObject;
+use SRAG\Hub2\Object\IObject;
 
 /**
  * Interface IObjectStatus
- * @package SRAG\ILIAS\Plugins\Hub2\Sync
+ * @package SRAG\Hub2\Sync
  */
 interface IObjectStatusTransition {
 

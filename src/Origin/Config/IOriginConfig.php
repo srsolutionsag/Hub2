@@ -1,18 +1,18 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin\Config;
+<?php namespace SRAG\Hub2\Origin\Config;
 
 /**
  * Interface IOriginConfig
  *
- * Provides read-only access to the config data of an origin.
- * This config data is exposed to the implementation of an origin.
- *
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin\Config
  */
 interface IOriginConfig {
 
 	const CONNECTION_TYPE_FILE = 1;
 	const CONNECTION_TYPE_SERVER = 2;
 	const CONNECTION_TYPE_EXTERNAL = 3;
+
+	// Prefix for keys that storing custom config values
+	const CUSTOM_PREFIX = 'custom_';
 
 	/**
 	 * @return bool
@@ -88,6 +88,14 @@ interface IOriginConfig {
 	 * @return string
 	 */
 	public function getActivePeriod();
+
+	/**
+	 * Get the value of a custom config entry or NULL if no config value is found.
+	 *
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function getCustom($key);
 
 	/**
 	 * Returns all the config data as associative array

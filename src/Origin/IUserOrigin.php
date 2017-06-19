@@ -1,8 +1,8 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin;
+<?php namespace SRAG\Hub2\Origin;
 
 /**
  * Interface IUserOrigin
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin
  */
 interface IUserOrigin {
 

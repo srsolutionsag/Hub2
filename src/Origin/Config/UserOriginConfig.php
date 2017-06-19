@@ -1,9 +1,9 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin\Config;
+<?php namespace SRAG\Hub2\Origin\Config;
 
 /**
  * Class UserOriginConfig
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin\Config
  */
 class UserOriginConfig extends OriginConfig implements IUserOriginConfig {
 

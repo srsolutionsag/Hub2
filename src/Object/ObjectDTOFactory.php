@@ -1,12 +1,9 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Object;
-
-
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
+<?php namespace SRAG\Hub2\Object;
 
 /**
  * Class ObjectDTOFactory
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @package SRAG\Hub2\Object
  */
 class ObjectDTOFactory implements IObjectDTOFactory {
 

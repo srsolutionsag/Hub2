@@ -1,4 +1,4 @@
-<?php namespace SRAG\ILIAS\Plugins\Exception;
+<?php namespace SRAG\Hub2\Exception;
 
 /**
  * Class AbortOriginSyncOfCurrentTypeException

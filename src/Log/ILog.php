@@ -1,4 +1,4 @@
-<?php namespace SRAG\ILIAS\Plugins\Log;
+<?php namespace SRAG\Hub2\Log;
 
 require_once('./Services/Logging/classes/class.ilLog.php');
 

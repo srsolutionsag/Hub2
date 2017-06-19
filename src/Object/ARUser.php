@@ -1,4 +1,4 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Object;
+<?php namespace SRAG\Hub2\Object;
 
 /**
  * Class ARUser
@@ -671,7 +671,6 @@ class ARUser extends ARObject {
 	public function setIliasRoles($ilias_roles) {
 		$this->ilias_roles = $ilias_roles;
 	}
-
 
 	/**
 	 * @inheritdoc

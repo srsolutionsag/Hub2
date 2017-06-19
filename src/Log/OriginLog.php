@@ -1,4 +1,4 @@
-<?php namespace SRAG\ILIAS\Plugins\Log;
+<?php namespace SRAG\Hub2\Log;
 
 use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
 

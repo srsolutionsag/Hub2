@@ -1,9 +1,9 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin\Properties;
+<?php namespace SRAG\Hub2\Origin\Properties;
 
 /**
  * Class UserOriginProperties
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin\Properties
  */
 class UserOriginProperties extends OriginProperties {
 

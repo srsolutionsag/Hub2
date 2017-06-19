@@ -1,12 +1,11 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Object;
+<?php namespace SRAG\Hub2\Object;
 
-
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOrigin;
 
 /**
  * Class ObjectFactory
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @package SRAG\Hub2\Object
  */
 class ObjectFactory implements IObjectFactory {
 

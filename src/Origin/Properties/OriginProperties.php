@@ -1,13 +1,11 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin\Properties;
+<?php namespace SRAG\Hub2\Origin\Properties;
 
 /**
  * Class OriginProperties
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin\Properties
  */
 abstract class OriginProperties implements IOriginProperties {
-
-	const PREFIX_UPDATE_DTO = 'hub2_update_dto_';
 
 	/**
 	 * @var array
@@ -48,6 +46,5 @@ abstract class OriginProperties implements IOriginProperties {
 	public function getData() {
 		return $this->data;
 	}
-
 
 }

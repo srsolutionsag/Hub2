@@ -1,18 +1,15 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Sync\Processor;
-
-use SRAG\ILIAS\Plugins\Hub2\Object\IObject;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectDTO;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectFactory;
-use SRAG\ILIAS\Plugins\Hub2\Object\IUser;
-use SRAG\ILIAS\Plugins\Hub2\Origin\Config\IUserOriginConfig;
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
-use SRAG\ILIAS\Plugins\Hub2\Origin\Properties\UserOriginProperties;
-use SRAG\ILIAS\Plugins\Hub2\Sync\IObjectStatusTransition;
+<?php namespace SRAG\Hub2\Sync\Processor;
+use SRAG\Hub2\Object\IObject;
+use SRAG\Hub2\Object\IUser;
+use SRAG\Hub2\Origin\Config\IUserOriginConfig;
+use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\Properties\UserOriginProperties;
+use SRAG\Hub2\Sync\IObjectStatusTransition;
 
 /**
  * Class UserProcessor
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Sync\Processor
+ * @package SRAG\Hub2\Sync\Processor
  */
 class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcessor {
 

@@ -1,12 +1,13 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Sync;
-use SRAG\ILIAS\Plugins\Exception\HubException;
-use SRAG\ILIAS\Plugins\Hub2\Object\IObject;
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
+<?php namespace SRAG\Hub2\Sync;
+
+use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Object\IObject;
+use SRAG\Hub2\Origin\IOrigin;
 
 /**
  * Class ObjectStatusTransition
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Sync
+ * @package SRAG\Hub2\Sync
  */
 class ObjectStatusTransition implements IObjectStatusTransition {
 
@@ -54,9 +55,6 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 				return IObject::STATUS_TO_UPDATE;
 			case IObject::STATUS_DELETED:
 				return IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED;
-			case IObject::STATUS_TO_UPDATE:
-			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
-				return IObject::STATUS_UPDATED;
 			case IObject::STATUS_IGNORED:
 				// Either create or update the ILIAS object
 				return ($object->getILIASId()) ? IObject::STATUS_TO_UPDATE : IObject::STATUS_TO_CREATE;

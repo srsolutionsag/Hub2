@@ -1,6 +1,8 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin;
+<?php namespace SRAG\Hub2\Origin;
 
-use SRAG\ILIAS\Plugins\Hub2\Object\IObjectFactory;
+use SRAG\Hub2\Object\IObjectFactory;
+use SRAG\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class AbstractOriginImplementation
@@ -8,7 +10,7 @@ use SRAG\ILIAS\Plugins\Hub2\Object\IObjectFactory;
  * Any implementation of a origin MUST extend this class.
  *
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin
  */
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 

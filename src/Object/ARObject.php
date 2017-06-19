@@ -1,4 +1,4 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Object;
+<?php namespace SRAG\Hub2\Object;
 
 /**
  * Class ARObject
@@ -56,24 +56,20 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	protected $ext_id = '';
 
 	/**
-	 * @var float
+	 * @var string
 	 *
 	 * @db_has_field    true
-	 * @db_fieldtype    float
-	 * @db_length       8
-	 * @db_index        true
+	 * @db_fieldtype    timestamp
 	 */
-	protected $delivery_date_micro;
+	protected $delivery_date;
 
 	/**
-	 * @var float
+	 * @var string
 	 *
 	 * @db_has_field    true
-	 * @db_fieldtype    float
-	 * @db_length       8
-	 * @db_index        true
+	 * @db_fieldtype    timestamp
 	 */
-	protected $pickup_date_micro;
+	protected $processed_date;
 
 	/**
 	 * @var int
@@ -138,20 +134,20 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this->ext_id;
 	}
 
-	public function getDeliveryDateMicro() {
-		return $this->delivery_date_micro;
+	public function getDeliveryDate() {
+		return new \DateTime($this->delivery_date);
 	}
 
-	public function getPickupDateMicro() {
-		return $this->pickup_date_micro;
+	public function getProcessedDate() {
+		return new \DateTime($this->processed_date);
 	}
 
-	public function setPickupDateMicro($date) {
-		$this->pickup_date_micro = $date;
+	public function setDeliveryDate($unix_timestamp) {
+		$this->delivery_date = date('Y-m-d H:i:s', $unix_timestamp);
 	}
 
-	public function setDeliveryDateMicro($date) {
-		$this->delivery_date_micro = $date;
+	public function setProcessedDate($unix_timestamp) {
+		$this->processed_date = date('Y-m-d H:i:s', $unix_timestamp);
 	}
 
 	public function getILIASId() {
@@ -222,5 +218,19 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			$this->{$key} = $value;
 		}
 	}
+
+	/**
+	 * @return string
+	 */
+	function __toString() {
+		return implode(', ', [
+			"origin_id: " . $this->origin_id,
+			"type: " . get_class($this),
+			"ext_id: " . $this->getExtId(),
+			"ilias_id: " . $this->getILIASId(),
+			"status: " . $this->getStatus(),
+		]);
+	}
+
 
 }

@@ -1,10 +1,10 @@
-<?php namespace SRAG\ILIAS\Plugins\Hub2\Origin\Config;
+<?php namespace SRAG\Hub2\Origin\Config;
 
 /**
  * Class OriginConfig
  *
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Hub2\Origin\Config
  */
 class OriginConfig implements IOriginConfig {
 
@@ -139,6 +139,14 @@ class OriginConfig implements IOriginConfig {
 	 */
 	public function getConnectionType() {
 		return $this->data['connection_type'];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getCustom($key) {
+		$key = self::CUSTOM_PREFIX . $key;
+		return (isset($this->data[$key])) ? $this->data[$key] : null;
 	}
 
 	/**
