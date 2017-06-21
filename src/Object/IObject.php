@@ -110,6 +110,12 @@ interface IObject {
 	public function getILIASId();
 
 	/**
+	 * @param int $id
+	 * @return $this
+	 */
+	public function setILIASId($id);
+
+	/**
 	 * Get the status of this object.
 	 *
 	 * @return int
@@ -166,12 +172,20 @@ interface IObject {
 	 *
 	 * @return string
 	 */
+	public function computeHashCode();
+
+	/**
+	 * Get the current hash code of this object, e.g. the hash stored in db. May not be up to date! Use
+	 * computeHashCode() to get the actual hashcode.
+	 *
+	 * @return string
+	 */
 	public function getHashCode();
 
 	/**
-	 * @return string
+	 * @return array
 	 */
-	public function getHashCodeDatabase();
+	public function getData();
 
 	/**
 	 * Set properties from an associative array.

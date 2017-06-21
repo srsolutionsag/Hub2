@@ -9,10 +9,10 @@ class UserDTO extends ObjectDTO {
 
 	const GENDER_MALE = 'm';
 	const GENDER_FEMALE = 'f';
-	const ACCOUNT_TYPE_ILIAS = 'local';
-	const ACCOUNT_TYPE_SHIB = 'shibboleth';
-	const ACCOUNT_TYPE_LDAP = 'ldap';
-	const ACCOUNT_TYPE_RADIUS = 'radius';
+	const AUTH_MODE_ILIAS = 'local';
+	const AUTH_MODE_SHIB = 'shibboleth';
+	const AUTH_MODE_LDAP = 'ldap';
+	const AUTH_MODE_RADIUS = 'radius';
 
 	/**
 	 * @var array
@@ -25,17 +25,21 @@ class UserDTO extends ObjectDTO {
 	/**
 	 * @var array
 	 */
-	protected static $account_types = [
-		self::ACCOUNT_TYPE_ILIAS,
-		self::ACCOUNT_TYPE_SHIB,
-		self::ACCOUNT_TYPE_LDAP,
-		self::ACCOUNT_TYPE_RADIUS,
+	protected static $auth_modes = [
+		self::AUTH_MODE_ILIAS,
+		self::AUTH_MODE_SHIB,
+		self::AUTH_MODE_LDAP,
+		self::AUTH_MODE_RADIUS,
 	];
 
 	/**
 	 * @var int
 	 */
-	protected $account_type = self::ACCOUNT_TYPE_ILIAS;
+	protected $auth_mode = self::AUTH_MODE_ILIAS;
+	/**
+	 * @var string
+	 */
+	protected $external_account;
 	/**
 	 * @var string
 	 */
@@ -563,18 +567,31 @@ class UserDTO extends ObjectDTO {
 	/**
 	 * @return int
 	 */
-	public function getAccountType() {
-		return $this->account_type;
+	public function getAuthMode() {
+		return $this->auth_mode;
 	}
 
 	/**
-	 * @param int $account_type
+	 * @param int $auth_mode
 	 */
-	public function setAccountType($account_type) {
-		if (!in_array($account_type, self::$account_types)) {
-			throw new \InvalidArgumentException("'$account_type' is not a valid account type");
+	public function setAuthMode($auth_mode) {
+		if (!in_array($auth_mode, self::$auth_modes)) {
+			throw new \InvalidArgumentException("'$auth_mode' is not a valid account type");
 		}
-		$this->account_type = $account_type;
+		$this->auth_mode = $auth_mode;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getExternalAccount() {
+		return $this->external_account;
+	}
+
+	/**
+	 * @param string $external_account
+	 */
+	public function setExternalAccount($external_account) {
+		$this->external_account = $external_account;
+	}
 }

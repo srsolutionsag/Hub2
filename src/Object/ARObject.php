@@ -108,6 +108,13 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 */
 	protected $hash_code;
 
+	/**
+	 * @var array
+	 *
+	 * @db_has_field    true
+	 * @db_fieldtype    clob
+	 */
+	protected $data = array();
 
 	public function update() {
 		$this->hash_code = $this->getHashCode();
@@ -154,6 +161,11 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this->ilias_id;
 	}
 
+	public function setILIASId($id) {
+		$this->ilias_id = (int) $id;
+		return $this;
+	}
+
 	public function getStatus() {
 		return $this->status;
 	}
@@ -191,13 +203,12 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this->period;
 	}
 
-	public function getHashCode() {
+	/**
+	 * @inheritdoc
+	 */
+	public function computeHashCode() {
 		$hash = '';
-		$exclude = ['delivery_date_micro', 'pickup_date_micro', 'status'];
-		foreach ($this->__asArray() as $property => $value) {
-			if (in_array($property, $exclude)) {
-				continue;
-			}
+		foreach ($this->data as $property => $value) {
 			$hash .= (is_array($value)) ? implode('', $value) : (string) $value;
 		}
 		return md5($hash);
@@ -206,7 +217,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function getHashCodeDatabase() {
+	public function getHashCode() {
 		return $this->hash_code;
 	}
 
@@ -214,8 +225,12 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function setData(array $data) {
-		foreach ($data as $key => $value) {
-			$this->{$key} = $value;
+//		foreach ($data as $key => $value) {
+//			$this->{$key} = $value;
+//		}
+		$this->data = $data;
+		if (isset($data['period'])) {
+			$this->period = $data['period'];
 		}
 	}
 

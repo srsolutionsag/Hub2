@@ -1,6 +1,7 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
 use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Exception\ILIASObjectNotFoundException;
 use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
@@ -12,6 +13,8 @@ use SRAG\Hub2\Sync\IObjectStatusTransition;
  * @package SRAG\Hub2\Sync\Processor
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
+
+	use Helper;
 
 	/**
 	 * @var IOrigin
@@ -52,7 +55,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			case IObject::STATUS_TO_DELETE:
 				$this->origin->implementation()->beforeDeleteILIASObject($object);
 				$this->handleDelete($object);
-				$object->setStatus(IObject::STATUS_DELETED);
 				$this->origin->implementation()->afterDeleteILIASObject($object);
 				break;
 			default:
@@ -85,6 +87,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * Update the corresponding ILIAS object.
 	 *
 	 * @param IObject $object
+	 * @throws ILIASObjectNotFoundException
 	 */
 	abstract protected function handleUpdate(IObject $object);
 
@@ -92,6 +95,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * Delete the corresponding ILIAS object.
 	 *
 	 * @param IObject $object
+	 * @throws ILIASObjectNotFoundException
 	 */
 	abstract protected function handleDelete(IObject $object);
 

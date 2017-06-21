@@ -1,15 +1,15 @@
 <?php namespace SRAG\Hub2\Object;
 
 /**
- * Data Transfer Objects of Hub objects.
- * These objects are exposed to the implementation of an origin.
+ * Data Transfer Objects holding all data of objects in the hub context, e.g.
+ * Users, Courses, CourseMemberships...
  *
  * @package SRAG\Hub2\Object
  */
 interface IObjectDTO {
 
 	/**
-	 * Get the external ID of this object. This ID serves as primary key to identify an object.
+	 * Get the external ID of this object. This ID serves as primary key to identify an object of a given object type.
 	 *
 	 * @return string
 	 */
@@ -17,7 +17,7 @@ interface IObjectDTO {
 
 	/**
 	 * Get the period (aka semester) where this object belongs to. The origin sync only processes
-	 * this object if the current period equals the period returned here.
+	 * this object if this period equals to the period defined by the origin.
 	 *
 	 * Return an empty string if this object is active for any period.
 	 *
@@ -39,9 +39,10 @@ interface IObjectDTO {
 	public function getData();
 
 	/**
-	 * Get all properties as array
+	 * Set all data as associative array
 	 *
-	 * @return array
+	 * @param array $data
+	 * @return $this
 	 */
-	public function getProperties();
+	public function setData(array $data);
 }

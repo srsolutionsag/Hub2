@@ -60,7 +60,17 @@ abstract class ObjectDTO implements IObjectDTO {
 	/**
 	 * @inheritdoc
 	 */
-	public function getProperties() {
+	public function setData(array $data) {
+		foreach ($data as $key => $value) {
+			$this->{$key} = $value;
+		}
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getProperties() {
 		return array_keys(get_class_vars(get_class($this)));
 	}
 

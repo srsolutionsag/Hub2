@@ -16,19 +16,19 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$transition = new ObjectStatusTransition($origin);
 
 		// TO_CREATE -> CREATED
-		$object = $this->getObjectMock(IObject::STATUS_TO_CREATE);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_CREATE);
 		$this->assertEquals(IObject::STATUS_CREATED, $transition->intermediateToFinal($object));
 
 		// TO_UPDATE -> UPDATED
-		$object = $this->getObjectMock(IObject::STATUS_TO_UPDATE);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_UPDATE);
 		$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
 
 		// NEWLY_DELIVERD -> UPDATED
-		$object = $this->getObjectMock(IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED);
 		$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
 
 		// TO_DELETE -> DELETED
-		$object = $this->getObjectMock(IObject::STATUS_TO_DELETE);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_DELETE);
 		$this->assertEquals(IObject::STATUS_DELETED, $transition->intermediateToFinal($object));
 	}
 
@@ -42,19 +42,19 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$transition = new ObjectStatusTransition($origin);
 
 		// NEW -> TO_CREATE
-		$object = $this->getObjectMock(IObject::STATUS_NEW, 'Period1');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW, 'Period1');
 		$this->assertEquals(IObject::STATUS_TO_CREATE, $transition->finalToIntermediate($object));
 
 		// CREATED -> TO_UPDATE
-		$object = $this->getObjectMock(IObject::STATUS_CREATED, 'Period1');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_CREATED, 'Period1');
 		$this->assertEquals(IObject::STATUS_TO_UPDATE, $transition->finalToIntermediate($object));
 
 		// UPDATED -> TO_UPDATE
-		$object = $this->getObjectMock(IObject::STATUS_UPDATED, 'Period1');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_UPDATED, 'Period1');
 		$this->assertEquals(IObject::STATUS_TO_UPDATE, $transition->finalToIntermediate($object));
 
 		// DELETED -> TO_UPDATE_NEWLY_DELIVERED
-		$object = $this->getObjectMock(IObject::STATUS_DELETED, 'Period1');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_DELETED, 'Period1');
 		$this->assertEquals(IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED, $transition->finalToIntermediate($object));
 	}
 
@@ -66,7 +66,7 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$origin->shouldReceive("config")
 			->andReturn($config);
 		$transition = new ObjectStatusTransition($origin);
-		$object = $this->getObjectMock(IObject::STATUS_IGNORED, 'Period1');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED, 'Period1');
 		$object->shouldReceive('getILIASId')
 			->andReturn(null);
 		$this->assertEquals(IObject::STATUS_TO_CREATE, $transition->finalToIntermediate($object));
@@ -81,12 +81,12 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 			->andReturn($config);
 		$transition = new ObjectStatusTransition($origin);
 
-		$object = $this->getObjectMock(IObject::STATUS_IGNORED, 'Period1');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED, 'Period1');
 		$object->shouldReceive('getILIASId')
 			->andReturn(123);
 		$this->assertEquals(IObject::STATUS_TO_UPDATE, $transition->finalToIntermediate($object));
 
-		$object = $this->getObjectMock(IObject::STATUS_IGNORED, 'Period2');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED, 'Period2');
 		$object->shouldReceive('getILIASId')
 			->andReturn(123);
 		$this->assertEquals(IObject::STATUS_IGNORED, $transition->finalToIntermediate($object));
@@ -102,10 +102,10 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 			->andReturn($config);
 		$transition = new ObjectStatusTransition($origin);
 
-		$object = $this->getObjectMock(IObject::STATUS_NEW, 'AnotherPeriod');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW, 'AnotherPeriod');
 		$this->assertEquals(IObject::STATUS_IGNORED, $transition->finalToIntermediate($object));
 
-		$object = $this->getObjectMock(IObject::STATUS_NEW, 'ActualPeriod');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW, 'ActualPeriod');
 		$this->assertNotEquals(IObject::STATUS_IGNORED, $transition->finalToIntermediate($object));
 	}
 
@@ -113,19 +113,19 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
 		$transition = new ObjectStatusTransition($origin);
 
-		$object = $this->getObjectMock(IObject::STATUS_UPDATED);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_UPDATED);
 		$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
 
-		$object = $this->getObjectMock(IObject::STATUS_CREATED);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_CREATED);
 		$this->assertEquals(IObject::STATUS_CREATED, $transition->intermediateToFinal($object));
 
-		$object = $this->getObjectMock(IObject::STATUS_DELETED);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_DELETED);
 		$this->assertEquals(IObject::STATUS_DELETED, $transition->intermediateToFinal($object));
 
-		$object = $this->getObjectMock(IObject::STATUS_IGNORED);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED);
 		$this->assertEquals(IObject::STATUS_IGNORED, $transition->intermediateToFinal($object));
 
-		$object = $this->getObjectMock(IObject::STATUS_NEW);
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW);
 		$this->assertEquals(IObject::STATUS_NEW, $transition->intermediateToFinal($object));
 	}
 
@@ -134,7 +134,7 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 	 * @param string $period
 	 * @return \Mockery\MockInterface
 	 */
-	protected function getObjectMock($status, $period = '') {
+	protected function getObjectMockWithStatusAndPeriod($status, $period = '') {
 		$object = \Mockery::mock("SRAG\Hub2\Object\IObject");
 		$object->shouldReceive('getStatus')
 			->andReturn($status);

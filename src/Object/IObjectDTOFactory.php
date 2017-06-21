@@ -6,6 +6,10 @@
  */
 interface IObjectDTOFactory {
 
+	/**
+	 * @param string $ext_id
+	 * @return UserDTO
+	 */
 	public function user($ext_id);
 
 	public function course($ext_id);

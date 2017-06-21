@@ -212,13 +212,13 @@ class ARUser extends ARObject {
 	 */
 	protected $birthday;
 	/**
-	 * @var int
+	 * @var string
 	 *
 	 * @db_has_field        true
-	 * @db_fieldtype        integer
-	 * @db_length           1
+	 * @db_fieldtype        text
+	 * @db_length           128
 	 */
-	protected $account_type;
+	protected $auth_mode;
 	/**
 	 * @var string
 	 *
@@ -633,15 +633,15 @@ class ARUser extends ARObject {
 	/**
 	 * @return int
 	 */
-	public function getAccountType() {
-		return $this->account_type;
+	public function getAuthmode() {
+		return $this->auth_mode;
 	}
 
 	/**
-	 * @param int $account_type
+	 * @param int $auth_mode
 	 */
-	public function setAccountType($account_type) {
-		$this->account_type = $account_type;
+	public function setAuthmode($auth_mode) {
+		$this->auth_mode = $auth_mode;
 	}
 
 	/**
