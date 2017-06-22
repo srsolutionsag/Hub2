@@ -67,13 +67,13 @@ interface IObject {
 	 */
 	public function getExtId();
 
-//	/**
-//	 * Set the external ID of this object. This ID serves as primary key to identify an object.
-//	 *
-//	 * @param $id
-//	 * @return $this
-//	 */
-//	public function setExtId($id);
+	/**
+	 * Set the external ID of this object. This ID serves as primary key to identify an object.
+	 *
+	 * @param string $id
+	 * @return $this
+	 */
+	public function setExtId($id);
 
 	/**
 	 * Get the date where the data of this object was delivered from the external system, e.g. via CSV.
@@ -161,6 +161,12 @@ interface IObject {
 	 * @return string
 	 */
 	public function getPeriod();
+
+	/**
+	 * @param string $period
+	 * @return $this
+	 */
+	public function setPeriod($period);
 
 	/**
 	 * Compute a hashcode of this object hashing all relevant properties.

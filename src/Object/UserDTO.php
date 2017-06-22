@@ -5,10 +5,11 @@
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Object
  */
-class UserDTO extends ObjectDTO {
+class UserDTO extends DataTransferObject {
 
 	const GENDER_MALE = 'm';
 	const GENDER_FEMALE = 'f';
+
 	const AUTH_MODE_ILIAS = 'local';
 	const AUTH_MODE_SHIB = 'shibboleth';
 	const AUTH_MODE_LDAP = 'ldap';
@@ -33,13 +34,13 @@ class UserDTO extends ObjectDTO {
 	];
 
 	/**
-	 * @var int
+	 * @var string
 	 */
-	protected $auth_mode = self::AUTH_MODE_ILIAS;
+	protected $authMode = self::AUTH_MODE_ILIAS;
 	/**
 	 * @var string
 	 */
-	protected $external_account;
+	protected $externalAccount;
 	/**
 	 * @var string
 	 */
@@ -71,7 +72,7 @@ class UserDTO extends ObjectDTO {
 	/**
 	 * @var string
 	 */
-	protected $email_password;
+	protected $emailPassword;
 	/**
 	 * @var string
 	 */
@@ -95,11 +96,11 @@ class UserDTO extends ObjectDTO {
 	/**
 	 * @var string
 	 */
-	protected $selected_country;
+	protected $selectedCountry;
 	/**
 	 * @var string
 	 */
-	protected $phone_office;
+	protected $phoneOffice;
 	/**
 	 * @var string
 	 */
@@ -107,11 +108,11 @@ class UserDTO extends ObjectDTO {
 	/**
 	 * @var string
 	 */
-	protected $phone_home;
+	protected $phoneHome;
 	/**
 	 * @var string
 	 */
-	protected $phone_mobile;
+	protected $phoneMobile;
 	/**
 	 * @var string
 	 */
@@ -119,31 +120,31 @@ class UserDTO extends ObjectDTO {
 	/**
 	 * @var int
 	 */
-	protected $time_limit_owner;
+	protected $timeLimitOwner;
 	/**
 	 * @var bool
 	 */
-	protected $time_limit_unlimited = true;
+	protected $timeLimitUnlimited = true;
 	/**
-	 * @var \DateTime
+	 * @var string
 	 */
-	protected $time_limit_from;
+	protected $timeLimitFrom;
 	/**
-	 * @var \DateTime
+	 * @var string
 	 */
-	protected $time_limit_until;
+	protected $timeLimitUntil;
 	/**
 	 * @var string
 	 */
 	protected $matriculation;
 	/**
-	 * @var \DateTime
+	 * @var string
 	 */
 	protected $birthday;
 	/**
 	 * @var array
 	 */
-	protected $ilias_roles = array();
+	protected $iliasRoles = array();
 
 	/**
 	 * @return string
@@ -264,15 +265,15 @@ class UserDTO extends ObjectDTO {
 	 * @return string
 	 */
 	public function getEmailPassword() {
-		return $this->email_password;
+		return $this->emailPassword;
 	}
 
 	/**
-	 * @param string $email_password
+	 * @param string $emailPassword
 	 * @return UserDTO
 	 */
-	public function setEmailPassword($email_password) {
-		$this->email_password = $email_password;
+	public function setEmailPassword($emailPassword) {
+		$this->emailPassword = $emailPassword;
 		return $this;
 	}
 
@@ -360,15 +361,15 @@ class UserDTO extends ObjectDTO {
 	 * @return string
 	 */
 	public function getSelectedCountry() {
-		return $this->selected_country;
+		return $this->selectedCountry;
 	}
 
 	/**
-	 * @param string $selected_country
+	 * @param string $selectedCountry
 	 * @return UserDTO
 	 */
-	public function setSelectedCountry($selected_country) {
-		$this->selected_country = $selected_country;
+	public function setSelectedCountry($selectedCountry) {
+		$this->selectedCountry = $selectedCountry;
 		return $this;
 	}
 
@@ -376,15 +377,15 @@ class UserDTO extends ObjectDTO {
 	 * @return string
 	 */
 	public function getPhoneOffice() {
-		return $this->phone_office;
+		return $this->phoneOffice;
 	}
 
 	/**
-	 * @param string $phone_office
+	 * @param string $phoneOffice
 	 * @return UserDTO
 	 */
-	public function setPhoneOffice($phone_office) {
-		$this->phone_office = $phone_office;
+	public function setPhoneOffice($phoneOffice) {
+		$this->phoneOffice = $phoneOffice;
 		return $this;
 	}
 
@@ -408,15 +409,15 @@ class UserDTO extends ObjectDTO {
 	 * @return string
 	 */
 	public function getPhoneHome() {
-		return $this->phone_home;
+		return $this->phoneHome;
 	}
 
 	/**
-	 * @param string $phone_home
+	 * @param string $phoneHome
 	 * @return UserDTO
 	 */
-	public function setPhoneHome($phone_home) {
-		$this->phone_home = $phone_home;
+	public function setPhoneHome($phoneHome) {
+		$this->phoneHome = $phoneHome;
 		return $this;
 	}
 
@@ -424,15 +425,15 @@ class UserDTO extends ObjectDTO {
 	 * @return string
 	 */
 	public function getPhoneMobile() {
-		return $this->phone_mobile;
+		return $this->phoneMobile;
 	}
 
 	/**
-	 * @param string $phone_mobile
+	 * @param string $phoneMobile
 	 * @return UserDTO
 	 */
-	public function setPhoneMobile($phone_mobile) {
-		$this->phone_mobile = $phone_mobile;
+	public function setPhoneMobile($phoneMobile) {
+		$this->phoneMobile = $phoneMobile;
 		return $this;
 	}
 
@@ -456,15 +457,15 @@ class UserDTO extends ObjectDTO {
 	 * @return int
 	 */
 	public function getTimeLimitOwner() {
-		return $this->time_limit_owner;
+		return $this->timeLimitOwner;
 	}
 
 	/**
-	 * @param int $time_limit_owner
+	 * @param int $timeLimitOwner
 	 * @return UserDTO
 	 */
-	public function setTimeLimitOwner($time_limit_owner) {
-		$this->time_limit_owner = $time_limit_owner;
+	public function setTimeLimitOwner($timeLimitOwner) {
+		$this->timeLimitOwner = $timeLimitOwner;
 		return $this;
 	}
 
@@ -472,47 +473,47 @@ class UserDTO extends ObjectDTO {
 	 * @return bool
 	 */
 	public function isTimeLimitUnlimited() {
-		return $this->time_limit_unlimited;
+		return $this->timeLimitUnlimited;
 	}
 
 	/**
-	 * @param bool $time_limit_unlimited
+	 * @param bool $timeLimitUnlimited
 	 * @return UserDTO
 	 */
-	public function setTimeLimitUnlimited($time_limit_unlimited) {
-		$this->time_limit_unlimited = $time_limit_unlimited;
+	public function setTimeLimitUnlimited($timeLimitUnlimited) {
+		$this->timeLimitUnlimited = $timeLimitUnlimited;
 		return $this;
 	}
 
 	/**
-	 * @return \DateTime
+	 * @return string
 	 */
 	public function getTimeLimitFrom() {
-		return $this->time_limit_from;
+		return $this->timeLimitFrom;
 	}
 
 	/**
-	 * @param \DateTime $time_limit_from
+	 * @param \DateTime $timeLimitFrom
 	 * @return UserDTO
 	 */
-	public function setTimeLimitFrom(\DateTime $time_limit_from) {
-		$this->time_limit_from = $time_limit_from;
+	public function setTimeLimitFrom(\DateTime $timeLimitFrom) {
+		$this->timeLimitFrom = $timeLimitFrom->format('Y-m-d H:i:s');
 		return $this;
 	}
 
 	/**
-	 * @return \DateTime
+	 * @return string
 	 */
 	public function getTimeLimitUntil() {
-		return $this->time_limit_until;
+		return $this->timeLimitUntil;
 	}
 
 	/**
-	 * @param \DateTime $time_limit_until
+	 * @param \DateTime $timeLimitUntil
 	 * @return UserDTO
 	 */
-	public function setTimeLimitUntil(\DateTime $time_limit_until) {
-		$this->time_limit_until = $time_limit_until;
+	public function setTimeLimitUntil(\DateTime $timeLimitUntil) {
+		$this->timeLimitUntil = $timeLimitUntil->format('Y-m-d H:i:s');
 		return $this;
 	}
 
@@ -533,7 +534,7 @@ class UserDTO extends ObjectDTO {
 	}
 
 	/**
-	 * @return \DateTime
+	 * @return string
 	 */
 	public function getBirthday() {
 		return $this->birthday;
@@ -544,7 +545,7 @@ class UserDTO extends ObjectDTO {
 	 * @return UserDTO
 	 */
 	public function setBirthday(\DateTime $birthday) {
-		$this->birthday = $birthday;
+		$this->birthday = $birthday->format('Y-m-d H:i:s');
 		return $this;
 	}
 
@@ -552,15 +553,15 @@ class UserDTO extends ObjectDTO {
 	 * @return array
 	 */
 	public function getIliasRoles() {
-		return $this->ilias_roles;
+		return $this->iliasRoles;
 	}
 
 	/**
-	 * @param array $ilias_roles
+	 * @param array $iliasRoles
 	 * @return UserDTO
 	 */
-	public function setIliasRoles($ilias_roles) {
-		$this->ilias_roles = $ilias_roles;
+	public function setIliasRoles($iliasRoles) {
+		$this->iliasRoles = $iliasRoles;
 		return $this;
 	}
 
@@ -568,30 +569,40 @@ class UserDTO extends ObjectDTO {
 	 * @return int
 	 */
 	public function getAuthMode() {
-		return $this->auth_mode;
+		return $this->authMode;
 	}
 
 	/**
-	 * @param int $auth_mode
+	 * @param string $authMode
 	 */
-	public function setAuthMode($auth_mode) {
-		if (!in_array($auth_mode, self::$auth_modes)) {
-			throw new \InvalidArgumentException("'$auth_mode' is not a valid account type");
+	public function setAuthMode($authMode) {
+		if (!in_array($authMode, self::$auth_modes)) {
+			throw new \InvalidArgumentException("'$authMode' is not a valid account type");
 		}
-		$this->auth_mode = $auth_mode;
+		$this->authMode = $authMode;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getExternalAccount() {
-		return $this->external_account;
+		return $this->externalAccount;
 	}
 
 	/**
-	 * @param string $external_account
+	 * @param string $externalAccount
 	 */
-	public function setExternalAccount($external_account) {
-		$this->external_account = $external_account;
+	public function setExternalAccount($externalAccount) {
+		$this->externalAccount = $externalAccount;
+	}
+
+	function __toString() {
+		return implode(', ', [
+			"ext_id: " . $this->getExtId(),
+			"period: " . $this->getPeriod(),
+			"firstname: " . $this->getFirstname(),
+			"lastname: " . $this->getLastname(),
+			"email: " . $this->getEmail(),
+		]);
 	}
 }

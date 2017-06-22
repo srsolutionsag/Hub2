@@ -2,7 +2,9 @@
 
 use SRAG\Hub2\Exception\HubException;
 use SRAG\Hub2\Exception\ILIASObjectNotFoundException;
+use SRAG\Hub2\Object\HookObject;
 use SRAG\Hub2\Object\IObject;
+use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
 
@@ -35,27 +37,34 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 		$this->transition = $transition;
 	}
 
-	public function process(IObject $object) {
+	final public function process(IObject $object, IDataTransferObject $dto) {
+		$hook = new HookObject($object);
 		switch ($object->getStatus()) {
 			case IObject::STATUS_TO_CREATE:
-				$this->origin->implementation()->beforeCreateILIASObject($object);
-				$ilias_id = $this->handleCreate($object);
-				$object->setILIASId($ilias_id);
-				$this->origin->implementation()->afterCreateILIASObject($object);
+				$this->origin->implementation()->beforeCreateILIASObject($hook);
+				$ilias_object = $this->handleCreate($dto);
+				$object->setILIASId($this->getILIASId($ilias_object));
+				$this->origin->implementation()->afterCreateILIASObject($hook->withILIASObject($ilias_object));
 				break;
 			case IObject::STATUS_TO_UPDATE:
 			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
 				// Updating the ILIAS object is only needed if some properties were changed
-				if ($object->getHashCode() != $object->getHashCodeDatabase()) {
-					$this->origin->implementation()->beforeUpdateILIASObject($object);
-					$this->handleUpdate($object);
-					$this->origin->implementation()->afterUpdateILIASObject($object);
+				if ($object->computeHashCode() != $object->getHashCode()) {
+					$this->origin->implementation()->beforeUpdateILIASObject($hook);
+					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
+					if ($ilias_object === null) {
+						throw new ILIASObjectNotFoundException($object);
+					}
+					$this->origin->implementation()->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
 				}
 				break;
 			case IObject::STATUS_TO_DELETE:
-				$this->origin->implementation()->beforeDeleteILIASObject($object);
-				$this->handleDelete($object);
-				$this->origin->implementation()->afterDeleteILIASObject($object);
+				$this->origin->implementation()->beforeDeleteILIASObject($hook);
+				$ilias_object = $this->handleDelete($object->getILIASId());
+				if ($ilias_object === null) {
+					throw new ILIASObjectNotFoundException($object);
+				}
+				$this->origin->implementation()->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
 				break;
 			default:
 				throw new HubException("Unrecognized intermediate status '{$object->getStatus()}' while processing {$object}");
@@ -66,37 +75,51 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	}
 
 	/**
+	 * @param \ilObject $object
+	 * @return int
+	 */
+	protected function getILIASId(\ilObject $object) {
+		if ($object instanceof \ilObjUser) {
+			return $object->getId();
+		}
+		return $object->getRefId();
+	}
+
+	/**
 	 * The import ID is set on the ILIAS object.
 	 *
-	 * @param IObject $object
+	 * @param IDataTransferObject $object
 	 * @return string
 	 */
-	protected function getImportId(IObject $object) {
+	protected function getImportId(IDataTransferObject $object) {
 		return self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
 	}
 
 	/**
-	 * Create the corresponding ILIAS object and return the internal ID in ILIAS (object-ID or ref-ID).
+	 * Create a new ILIAS object from the given data transfer object.
 	 *
-	 * @param IObject $object
-	 * @return int
+	 * @param IDataTransferObject $object
+	 * @return \ilObject
 	 */
-	abstract protected function handleCreate(IObject $object);
+	abstract protected function handleCreate(IDataTransferObject $object);
 
 	/**
 	 * Update the corresponding ILIAS object.
+	 * Return the processed ILIAS object or null if the object was not found, e.g. it is deleted in ILIAS.
 	 *
-	 * @param IObject $object
-	 * @throws ILIASObjectNotFoundException
+	 * @param IDataTransferObject $object
+	 * @param int $ilias_id
+	 * @return \ilObject
 	 */
-	abstract protected function handleUpdate(IObject $object);
+	abstract protected function handleUpdate(IDataTransferObject $object, $ilias_id);
 
 	/**
 	 * Delete the corresponding ILIAS object.
+	 * Return the deleted ILIAS object or null if the object was not found in ILIAS.
 	 *
-	 * @param IObject $object
-	 * @throws ILIASObjectNotFoundException
+	 * @param int $ilias_id
+	 * @return \ilObject
 	 */
-	abstract protected function handleDelete(IObject $object);
+	abstract protected function handleDelete($ilias_id);
 
 }

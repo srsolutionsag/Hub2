@@ -25,7 +25,13 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function user($ext_id) {
-		return ARUser::find($this->getId($ext_id));
+		$user = ARUser::find($this->getId($ext_id));
+		if ($user === null) {
+			$user = new ARUser();
+			$user->setOriginId($this->origin->getId());
+			$user->setExtId($ext_id);
+		}
+		return $user;
 	}
 
 	public function course($ext_id) {
@@ -44,23 +50,23 @@ class ObjectFactory implements IObjectFactory {
 		// TODO: Implement session() method.
 	}
 
-	public function courseMembership($ext_course_id, $ext_user_id) {
+	public function courseMembership($ext_id) {
 		// TODO: Implement courseMembership() method.
 	}
 
-	public function groupMembership($ext_group_id, $ext_user_id) {
+	public function groupMembership($ext_id) {
 		// TODO: Implement groupMembership() method.
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function objectFromDTO(IObjectDTO $dto) {
-		if ($dto instanceof UserDTO) {
-			return $this->user($dto->getExtId());
-		}
-		return null;
-	}
+//	/**
+//	 * @inheritdoc
+//	 */
+//	public function objectFromDTO(IObjectDTO $dto) {
+//		if ($dto instanceof UserDTO) {
+//			return $this->user($dto->getExtId());
+//		}
+//		return null;
+//	}
 
 
 	/**

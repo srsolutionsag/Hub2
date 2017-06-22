@@ -6,7 +6,7 @@
  *
  * @package SRAG\Hub2\Object
  */
-interface IObjectDTO {
+interface IDataTransferObject {
 
 	/**
 	 * Get the external ID of this object. This ID serves as primary key to identify an object of a given object type.

@@ -1,10 +1,10 @@
 <?php namespace SRAG\Hub2\Object;
 
 /**
- * Interface IObjectDTOFactory
+ * Interface IDataTransferObjectFactory
  * @package SRAG\Hub2\Object
  */
-interface IObjectDTOFactory {
+interface IDataTransferObjectFactory {
 
 	/**
 	 * @param string $ext_id

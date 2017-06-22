@@ -1,6 +1,6 @@
 <?php namespace SRAG\Hub2\Origin;
 
-use SRAG\Hub2\Object\IObjectDTOFactory;
+use SRAG\Hub2\Object\IDataTransferObjectFactory;
 use SRAG\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Hub2\Origin\Properties\IOriginProperties;
 
@@ -25,7 +25,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	private $props;
 
 	/**
-	 * @var IObjectDTOFactory
+	 * @var IDataTransferObjectFactory
 	 */
 	private $factory;
 
@@ -33,11 +33,11 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 * AbstractOriginImplementation constructor.
 	 * @param IOriginConfig $config
 	 * @param IOriginProperties $props
-	 * @param IObjectDTOFactory $factory
+	 * @param IDataTransferObjectFactory $factory
 	 */
 	public function __construct(IOriginConfig $config,
 	                            IOriginProperties $props,
-	                            IObjectDTOFactory $factory) {
+	                            IDataTransferObjectFactory $factory) {
 		$this->config = $config;
 		$this->props = $props;
 		$this->factory = $factory;
@@ -58,7 +58,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	}
 
 	/**
-	 * @return IObjectDTOFactory
+	 * @return IDataTransferObjectFactory
 	 */
 	protected function factory() {
 		return $this->factory;

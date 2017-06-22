@@ -3,8 +3,9 @@
 use SRAG\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Hub2\Exception\ConnectionFailedException;
 use SRAG\Hub2\Exception\ParseDataFailedException;
+use SRAG\Hub2\Object\HookObject;
 use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\IObjectDTO;
+use SRAG\Hub2\Object\IDataTransferObject;
 
 /**
  * Interface IOriginImplementation
@@ -48,9 +49,9 @@ interface IOriginImplementation {
 	 * Throw a BuildObjectsFailedException to abort the sync at this stage.
 	 *
 	 * @throws BuildObjectsFailedException
-	 * @return IObjectDTO[]
+	 * @return IDataTransferObject[]
 	 */
-	public function buildHubDTOs();
+	public function buildObjects();
 
 
 	// HOOKS
@@ -72,34 +73,34 @@ interface IOriginImplementation {
 	public function handleException(\Exception $e);
 
 	/**
-	 * @param IObject $object
+	 * @param HookObject $object
 	 */
-	public function beforeCreateILIASObject(IObject $object);
+	public function beforeCreateILIASObject(HookObject $object);
 
 	/**
-	 * @param IObject $object
+	 * @param HookObject $object
 	 */
-	public function afterCreateILIASObject(IObject $object);
+	public function afterCreateILIASObject(HookObject $object);
 
 	/**
-	 * @param IObject $object
+	 * @param HookObject $object
 	 */
-	public function beforeUpdateILIASObject(IObject $object);
+	public function beforeUpdateILIASObject(HookObject $object);
 
 	/**
-	 * @param IObject $object
+	 * @param HookObject $object
 	 */
-	public function afterUpdateILIASObject(IObject $object);
+	public function afterUpdateILIASObject(HookObject $object);
 
 	/**
-	 * @param IObject $object
+	 * @param HookObject $object
 	 */
-	public function beforeDeleteILIASObject(IObject $object);
+	public function beforeDeleteILIASObject(HookObject $object);
 
 	/**
-	 * @param IObject $object
+	 * @param HookObject $object
 	 */
-	public function afterDeleteILIASObject(IObject $object);
+	public function afterDeleteILIASObject(HookObject $object);
 
 	/**
 	 * Executed before the synchronization of the origin is executed.

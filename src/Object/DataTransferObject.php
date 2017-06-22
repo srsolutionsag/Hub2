@@ -5,7 +5,7 @@
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Object
  */
-abstract class ObjectDTO implements IObjectDTO {
+abstract class DataTransferObject implements IDataTransferObject {
 
 	/**
 	 * @var string
@@ -72,6 +72,14 @@ abstract class ObjectDTO implements IObjectDTO {
 	 */
 	protected function getProperties() {
 		return array_keys(get_class_vars(get_class($this)));
+	}
+
+
+	function __toString() {
+		return implode(', ', [
+			"ext_id: " . $this->getExtId(),
+			"period: " . $this->getPeriod(),
+		]);
 	}
 
 }

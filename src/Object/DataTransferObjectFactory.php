@@ -6,35 +6,13 @@
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Object
  */
-class ObjectDTOFactory implements IObjectDTOFactory {
-
-//	/**
-//	 * @var IOrigin
-//	 */
-//	protected $origin;
-//	/**
-//	 * @var IObjectFactory
-//	 */
-//	protected $factory;
-
-//	/**
-//	 * @param IOrigin $origin
-//	 */
-//	public function __construct(IOrigin $origin) {
-//		$this->origin = $origin;
-//		$this->factory = $factory;
-//	}
+class DataTransferObjectFactory implements IDataTransferObjectFactory {
 
 	/**
 	 * @inheritdoc
 	 */
 	public function user($ext_id) {
 		return new UserDTO($ext_id);
-//		$user = $this->factory->user($ext_id);
-//		if ($user->getId()) {
-//			$dto->setData($user->getData());
-//		}
-//		return $user;
 	}
 
 	public function course($ext_id) {

@@ -20,14 +20,13 @@ interface IObjectFactory {
 
 	public function session($ext_id);
 
-	public function courseMembership($ext_course_id, $ext_user_id);
+	public function courseMembership($ext_id);
 
-	public function groupMembership($ext_group_id, $ext_user_id);
+	public function groupMembership($ext_id);
 
-	/**
-	 * @param IObjectDTO $dto
-	 * @return IObject
-	 */
-	public function objectFromDTO(IObjectDTO $dto);
-
+//	/**
+//	 * @param IObjectDTO $dto
+//	 * @return IObject
+//	 */
+//	public function objectFromDTO(IObjectDTO $dto);
 }

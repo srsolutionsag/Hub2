@@ -1,6 +1,7 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
 use SRAG\Hub2\Object\IObject;
+use SRAG\Hub2\Object\IDataTransferObject;
 
 /**
  * Interface ObjectProcessor
@@ -12,12 +13,15 @@ interface IObjectSyncProcessor {
 	const IMPORT_PREFIX = 'srhub_';
 
 	/**
-	 * Process the given hub object, meaning:
-	 * Create/update/delete the corresponding ILIAS object based on the status.
-	 * Execute other actions based on the configuration of the origin.
+	 * Process the given hub object and its corresponding DTO:
+	 *
+	 * 1. Depending on the status: Create, Update or Delete corresponding ILIAS object
+	 * 2. Execute other actions based on the configuration of the origin.
+	 * 3. Pass the DTO to the hooks of the origin
 	 *
 	 * @param IObject $object
+	 * @param IDataTransferObject $dto
 	 */
-	public function process(IObject $object);
+	public function process(IObject $object, IDataTransferObject $dto);
 
 }

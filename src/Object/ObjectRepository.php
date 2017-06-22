@@ -44,6 +44,8 @@ abstract class ObjectRepository implements IObjectRepository {
 		$class = $this->getClass();
 		return $class::where([
 			'origin_id' => $this->origin->getId(),
+			// We only can transmit from final states CREATED and UPDATED to TO_DELETE
+			// E.g. not from DELETED or IGNORED
 			'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED],
 			'ext_ID' => $ext_ids,
 		], ['=', 'IN', 'NOT IN'])->get();

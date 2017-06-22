@@ -1,9 +1,11 @@
 <?php namespace SRAG\Hub2\Sync;
 
 use SRAG\Hub2\Exception\AbortOriginSyncException;
+use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
+use SRAG\Hub2\Exception\AbortSyncException;
 use SRAG\Hub2\Exception\HubException;
 use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\IObjectDTO;
+use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Object\IObjectFactory;
 use SRAG\Hub2\Object\IObjectRepository;
 use SRAG\Hub2\Origin\IOrigin;
@@ -33,7 +35,7 @@ class OriginSync implements IOriginSync {
 	protected $factory;
 
 	/**
-	 * @var IObjectDTO[]
+	 * @var IDataTransferObject[]
 	 */
 	protected $objects = [];
 
@@ -60,7 +62,7 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @var array
 	 */
-	protected $count_processed_status = [
+	protected $count_processed = [
 		IObject::STATUS_CREATED => 0,
 		IObject::STATUS_UPDATED => 0,
 		IObject::STATUS_DELETED => 0,
@@ -109,7 +111,7 @@ class OriginSync implements IOriginSync {
 					throw new AbortOriginSyncException($msg);
 				}
 			}
-			$this->objects = $implementation->buildHubDTOs();
+			$this->objects = $implementation->buildObjects();
 		} catch (HubException $e) {
 			$this->exceptions[] = $e;
 			throw $e;
@@ -126,12 +128,17 @@ class OriginSync implements IOriginSync {
 		// 2. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
 		// 3. Let the processor process the corresponding ILIAS object
 
+		$type = $this->origin->getObjectType();
 		foreach ($this->objects as $dto) {
-			$object = $this->factory->objectFromDTO($dto);
+			/** @var IObject $object */
+			$object = $this->factory->$type($dto->getExtId());
 			$object->setDeliveryDate(time());
-			$object->setData($dto->getData());
+			// We merge the existing data with the new data
+			$data = array_merge($object->getData(), $dto->getData());
+			$object->setData($data);
+			$dto->setData($data);
 			$object->setStatus($this->transition->finalToIntermediate($object));
-			$this->processObject($object);
+			$this->processObject($object, $dto);
 		}
 
 		// Start SYNC of objects not being delivered --> DELETE
@@ -142,7 +149,8 @@ class OriginSync implements IOriginSync {
 		}, $this->objects);
 		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
 			$object->setStatus(IObject::STATUS_TO_DELETE);
-			$this->processObject($object);
+			// There is no DTO needed for the deletion
+			$this->processObject($object, null);
 		}
 
 		try {
@@ -164,7 +172,7 @@ class OriginSync implements IOriginSync {
 	 * @inheritdoc
 	 */
 	public function getCountProcessedByStatus($status) {
-		return $this->count_processed_status[$status];
+		return $this->count_processed[$status];
 	}
 
 	/**
@@ -172,7 +180,7 @@ class OriginSync implements IOriginSync {
 	 */
 	public function getCountProcessedTotal() {
 		$sum = 0;
-		foreach ($this->count_processed_status as $count) {
+		foreach ($this->count_processed as $count) {
 			$sum += $count;
 		}
 		return $sum;
@@ -187,22 +195,30 @@ class OriginSync implements IOriginSync {
 
 	/**
 	 * @param IObject $object
+	 * @param IDataTransferObject $dto
 	 * @throws AbortOriginSyncException
 	 * @throws HubException
 	 */
-	protected function processObject(IObject $object) {
+	protected function processObject(IObject $object, IDataTransferObject $dto) {
 		try {
-			$this->processor->process($object);
+			$this->processor->process($object, $dto);
 			$this->incrementProcessed($object->getStatus());
-		} catch (HubException $e) {
-			// Origin implementation could throw HubExceptions, e.g. aborting current sync
-			// Exception is forwarded to global sync
+		} catch (AbortSyncException $e) {
+			// Any exceptions aborting the global or current sync are forwarded
+			$this->exceptions[] = $e;
+			$object->save();
+			throw $e;
+		} catch (AbortOriginSyncOfCurrentTypeException $e) {
+			$this->exceptions[] = $e;
+			$object->save();
+			throw $e;
+		} catch (AbortOriginSyncException $e) {
 			$this->exceptions[] = $e;
 			$object->save();
 			throw $e;
 		} catch (\Exception $e) {
 			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
-			// which decides how to proceed
+			// which decides how to proceed, e.g. continue or abort
 			$this->exceptions[] = $e;
 			$object->save();
 			$this->origin->implementation()->handleException($e);
@@ -218,6 +234,6 @@ class OriginSync implements IOriginSync {
 	 * @param int $status
 	 */
 	protected function incrementProcessed($status) {
-		$this->count_processed_status[$status]++;
+		$this->count_processed[$status]++;
 	}
 }
