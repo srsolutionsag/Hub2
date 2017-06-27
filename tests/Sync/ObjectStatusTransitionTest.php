@@ -12,8 +12,8 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	public function test_intermediate_to_final() {
-		$origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-		$transition = new ObjectStatusTransition($origin);
+		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
+		$transition = new ObjectStatusTransition($config);
 
 		// TO_CREATE -> CREATED
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_CREATE);
@@ -36,10 +36,7 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')
 			->andReturn('Period1');
-		$origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-		$origin->shouldReceive("config")
-			->andReturn($config);
-		$transition = new ObjectStatusTransition($origin);
+		$transition = new ObjectStatusTransition($config);
 
 		// NEW -> TO_CREATE
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW, 'Period1');
@@ -62,10 +59,7 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')
 			->andReturn('Period1');
-		$origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-		$origin->shouldReceive("config")
-			->andReturn($config);
-		$transition = new ObjectStatusTransition($origin);
+		$transition = new ObjectStatusTransition($config);
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED, 'Period1');
 		$object->shouldReceive('getILIASId')
 			->andReturn(null);
@@ -76,10 +70,7 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')
 			->andReturn('Period1');
-		$origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-		$origin->shouldReceive("config")
-			->andReturn($config);
-		$transition = new ObjectStatusTransition($origin);
+		$transition = new ObjectStatusTransition($config);
 
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED, 'Period1');
 		$object->shouldReceive('getILIASId')
@@ -97,10 +88,7 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')
 			->andReturn('ActualPeriod');
-		$origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-		$origin->shouldReceive("config")
-			->andReturn($config);
-		$transition = new ObjectStatusTransition($origin);
+		$transition = new ObjectStatusTransition($config);
 
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW, 'AnotherPeriod');
 		$this->assertEquals(IObject::STATUS_IGNORED, $transition->finalToIntermediate($object));
@@ -110,8 +98,8 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function test_intermediate_to_final_status_does_not_change_if_already_final() {
-		$origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-		$transition = new ObjectStatusTransition($origin);
+		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
+		$transition = new ObjectStatusTransition($config);
 
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_UPDATED);
 		$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
@@ -136,11 +124,9 @@ class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
 	 */
 	protected function getObjectMockWithStatusAndPeriod($status, $period = '') {
 		$object = \Mockery::mock("SRAG\Hub2\Object\IObject");
-		$object->shouldReceive('getStatus')
-			->andReturn($status);
+		$object->shouldReceive('getStatus')->andReturn($status);
 		if ($period) {
-			$object->shouldReceive('getPeriod')
-				->andReturn($period);
+			$object->shouldReceive('getPeriod')->andReturn($period);
 		}
 		return $object;
 	}

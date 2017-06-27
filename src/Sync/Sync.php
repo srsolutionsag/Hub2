@@ -42,13 +42,13 @@ class Sync implements ISync {
 			if ($origin->getObjectType() == $skip_object_type) {
 				continue;
 			}
-			$object_factory = new ObjectFactory($origin);
+			$transition = new ObjectStatusTransition($origin->config());
 			$sync = new OriginSync(
 				$origin,
 				$this->getObjectRepository($origin),
-				$object_factory,
-				$this->getSyncProcessor($origin, $object_factory),
-				new ObjectStatusTransition($origin)
+				new ObjectFactory($origin),
+				$this->getSyncProcessor($origin, $transition),
+				$transition
 			);
 			try {
 				$sync->execute();
@@ -85,11 +85,11 @@ class Sync implements ISync {
 
 	/**
 	 * @param IOrigin $origin
-	 * @param IObjectFactory $factory
+	 * @param IObjectStatusTransition $transition
 	 * @return IObjectSyncProcessor
 	 */
-	protected function getSyncProcessor(IOrigin $origin, IObjectFactory $factory) {
+	protected function getSyncProcessor(IOrigin $origin, IObjectStatusTransition $transition) {
 		$class = ucfirst($origin->getObjectType()) . 'SyncProcessor';
-		return new $class($origin, $factory);
+		return new $class($origin, $transition);
 	}
 }

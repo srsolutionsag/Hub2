@@ -1,12 +1,7 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
-use SRAG\Hub2\Exception\ILIASObjectNotFoundException;
-use SRAG\Hub2\Object\ARUser;
 use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\IUser;
 use SRAG\Hub2\Object\UserDTO;
-use SRAG\Hub2\Origin\Config\IUserOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
@@ -17,11 +12,6 @@ use SRAG\Hub2\Sync\IObjectStatusTransition;
  * @package SRAG\Hub2\Sync\Processor
  */
 class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcessor {
-
-	/**
-	 * @var IUserOriginConfig
-	 */
-	private $config;
 
 	/**
 	 * @var UserOriginProperties
@@ -63,8 +53,14 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 */
 	public function __construct(IOrigin $origin, IObjectStatusTransition $transition) {
 		parent::__construct($origin, $transition);
-		$this->config = $origin->config();
 		$this->props = $origin->properties();
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getProperties() {
+		return self::$properties;
 	}
 
 
@@ -75,6 +71,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$ilObjUser->setDescription($object->getEmail());
 		$ilObjUser->setImportId($this->getImportId($object));
 		$ilObjUser->setLogin($this->buildLogin($object, $ilObjUser));
+		$ilObjUser->setUTitle($object->getTitle());
 		$ilObjUser->create();
 		if ($this->props->get(UserOriginProperties::ACTIVATE_ACCOUNT)) {
 			$ilObjUser->setActive(true);
@@ -89,11 +86,11 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		} else {
 			$ilObjUser->setPasswd($object->getPasswd());
 		}
-		foreach (self::$properties as $property) {
+		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if (method_exists($ilObjUser, $setter) && ($object->$getter() !== null)) {
-				$ilObjUser->$setter($this->$getter());
+			if ($object->$getter() !== null) {
+				$ilObjUser->$setter($object->$getter());
 			}
 		}
 		$ilObjUser->saveAsNew();
@@ -109,7 +106,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
 	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
 		/** @var UserDTO $object */
-		$ilObjUser = $this->findILIASUser($ilias_id, $object);
+		$ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === null) {
 			return null;
 		}
@@ -120,18 +117,22 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		if ($this->props->updateDTOProperty('login')) {
 			$ilObjUser->setLogin($this->buildLogin($object, $ilObjUser));
 		}
+		// Update title?
+		if ($this->props->updateDTOProperty('title')) {
+			$ilObjUser->setUTitle($object->getTitle());
+		}
 		// Reactivate account?
 		if ($this->props->get(UserOriginProperties::REACTIVATE_ACCOUNT)) {
 			$ilObjUser->setActive(true);
 		}
 		// Set all properties if they should be updated depending on the origin config
-		foreach (self::$properties as $property) {
+		foreach (self::getProperties() as $property) {
 			if (!$this->props->updateDTOProperty($property)) {
 				continue;
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if (method_exists($ilObjUser, $setter) && ($object->$getter() !== null)) {
+			if ($object->$getter() !== null) {
 				$ilObjUser->$setter($this->$getter());
 			}
 		}
@@ -148,7 +149,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		if ($ilObjUser === null) {
 			return null;
 		}
-		if (!$this->props->get(UserOriginProperties::DELETE)) {
+		if ($this->props->get(UserOriginProperties::DELETE) == UserOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjUser;
 		}
 		switch ($this->props->get(UserOriginProperties::DELETE)) {
@@ -182,21 +183,24 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 * @return string
 	 */
 	protected function buildLogin(UserDTO $user, \ilObjUser $ilObjUser) {
-		switch ($this->props->get(UserOriginProperties::LOGIN_FIELD)) {
-			case UserOriginProperties::LOGIN_FIELD_EMAIL:
+		switch ($this->props->get(UserOriginProperties::USERNAME_MODE)) {
+			case UserOriginProperties::USERNAME_MODE_EMAIL:
 				$login = $user->getEmail();
 				break;
-			case UserOriginProperties::LOGIN_FIELD_EXT_ACCOUNT:
+			case UserOriginProperties::USERNAME_MODE_EXT_ACCOUNT:
 				$login = $user->getExternalAccount();
 				break;
-			case UserOriginProperties::LOGIN_FIELD_EXT_ID:
+			case UserOriginProperties::USERNAME_MODE_EXT_ID:
 				$login = $user->getExtId();
 				break;
-			case UserOriginProperties::LOGIN_FIELD_FIRST_LASTNAME:
-				$login = $this->clearString($user->getFirstname()) . '.' . $this->clearString($this->getLastname());
+			case UserOriginProperties::USERNAME_MODE_FIRST_LASTNAME:
+				$login = $this->clearString($user->getFirstname()) . '.' . $this->clearString($user->getLastname());
 				break;
-			case UserOriginProperties::LOGIN_FIELD_HUB:
+			case UserOriginProperties::USERNAME_MODE_HUB:
 				$login = $user->getLogin();
+				break;
+			case UserOriginProperties::USERNAME_MODE_SHORTENED_FIRST_LASTNAME:
+				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
 				break;
 			default:
 				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());

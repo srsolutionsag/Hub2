@@ -9,6 +9,7 @@ use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Object\IObjectFactory;
 use SRAG\Hub2\Object\IObjectRepository;
 use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 
@@ -91,9 +92,9 @@ class OriginSync implements IOriginSync {
 
 
 	public function execute() {
-		$implementation = $this->origin->implementation();
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
 		// as the sync of this origin cannot continue.
+		$implementation = $this->origin->implementation();
 		try {
 			$implementation->beforeSync();
 			$implementation->connect();
@@ -103,9 +104,9 @@ class OriginSync implements IOriginSync {
 			if ($this->origin->config()->getCheckAmountData()) {
 				$threshold = $this->origin->config()->getCheckAmountDataPercentage();
 				$total = $this->repository->count();
-				$percentage = 100 / $total * $count;
+				$percentage = ($total > 0 && $count > 0) ? (100 / $total * $count) : 0;
 				if ($percentage < $threshold) {
-					$msg = "Amount of delivered data not sufficient: Got {$count} data, 
+					$msg = "Amount of delivered data not sufficient: Got {$count} datasets, 
 					which is " . number_format($percentage, 2) . "% of the existing data in hub, 
 					need at least {$threshold}% according to origin config";
 					throw new AbortOriginSyncException($msg);
@@ -124,9 +125,8 @@ class OriginSync implements IOriginSync {
 
 		// Start SYNC of delivered objects --> CREATE & UPDATE
 		// ======================================================================================================
-		// 1. Pass new data from DTO
-		// 2. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
-		// 3. Let the processor process the corresponding ILIAS object
+		// 1. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
+		// 2. Let the processor process the corresponding ILIAS object
 
 		$type = $this->origin->getObjectType();
 		foreach ($this->objects as $dto) {
@@ -135,8 +135,8 @@ class OriginSync implements IOriginSync {
 			$object->setDeliveryDate(time());
 			// We merge the existing data with the new data
 			$data = array_merge($object->getData(), $dto->getData());
-			$object->setData($data);
 			$dto->setData($data);
+			// Set the intermediate status before processing the ILIAS object
 			$object->setStatus($this->transition->finalToIntermediate($object));
 			$this->processObject($object, $dto);
 		}
@@ -149,7 +149,7 @@ class OriginSync implements IOriginSync {
 		}, $this->objects);
 		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
 			$object->setStatus(IObject::STATUS_TO_DELETE);
-			// There is no DTO needed for the deletion
+			// There is no DTO available / needed for the deletion process
 			$this->processObject($object, null);
 		}
 
@@ -179,11 +179,7 @@ class OriginSync implements IOriginSync {
 	 * @inheritdoc
 	 */
 	public function getCountProcessedTotal() {
-		$sum = 0;
-		foreach ($this->count_processed as $count) {
-			$sum += $count;
-		}
-		return $sum;
+		return array_sum($this->count_processed);
 	}
 
 	/**
@@ -204,7 +200,7 @@ class OriginSync implements IOriginSync {
 			$this->processor->process($object, $dto);
 			$this->incrementProcessed($object->getStatus());
 		} catch (AbortSyncException $e) {
-			// Any exceptions aborting the global or current sync are forwarded
+			// Any exceptions aborting the global or current sync are forwarded to global sync
 			$this->exceptions[] = $e;
 			$object->save();
 			throw $e;

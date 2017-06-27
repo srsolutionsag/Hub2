@@ -70,6 +70,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				throw new HubException("Unrecognized intermediate status '{$object->getStatus()}' while processing {$object}");
 		}
 		$object->setStatus($this->transition->intermediateToFinal($object));
+		$object->setData($dto->getData());
 		$object->setProcessedDate(time());
 		$object->save();
 	}

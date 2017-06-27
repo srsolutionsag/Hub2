@@ -15,7 +15,7 @@ abstract class OriginProperties implements IOriginProperties {
 	/**
 	 * @param array $data
 	 */
-	public function __construct(array $data) {
+	public function __construct(array $data = array()) {
 		$this->data = array_merge($this->data, $data);
 	}
 

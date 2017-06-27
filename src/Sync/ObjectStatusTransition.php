@@ -2,7 +2,7 @@
 
 use SRAG\Hub2\Exception\HubException;
 use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\Config\IOriginConfig;
 
 /**
  * Class ObjectStatusTransition
@@ -23,16 +23,15 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 	];
 
 	/**
-	 * @var IOrigin
+	 * @var IOriginConfig
 	 */
-	protected $origin;
+	protected $config;
 
 	/**
-	 * Status constructor.
-	 * @param IOrigin $origin
+	 * @param IOriginConfig $config
 	 */
-	public function __construct(IOrigin $origin) {
-		$this->origin = $origin;
+	public function __construct(IOriginConfig $config) {
+		$this->config = $config;
 	}
 
 
@@ -43,7 +42,7 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		if (!$this->isFinal($object->getStatus())) {
 			return $object->getStatus();
 		}
-		$active_period = $this->origin->config()->getActivePeriod();
+		$active_period = $this->config->getActivePeriod();
 		if ($active_period && ($object->getPeriod() != $active_period)) {
 			return IObject::STATUS_IGNORED;
 		}

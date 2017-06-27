@@ -472,7 +472,7 @@ class UserDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function isTimeLimitUnlimited() {
+	public function getTimeLimitUnlimited() {
 		return $this->timeLimitUnlimited;
 	}
 
