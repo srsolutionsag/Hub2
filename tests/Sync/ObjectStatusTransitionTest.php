@@ -3,13 +3,13 @@
 use SRAG\Hub2\Sync\ObjectStatusTransition;
 use SRAG\Hub2\Object\IObject;
 
+require_once(dirname(__DIR__) . '/AbstractHub2Tests.php');
+
 /**
  * Class ObjectStatusTransitionTest
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  */
-class ObjectStatusTransitionTest extends \PHPUnit\Framework\TestCase {
-
-	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
 	public function test_intermediate_to_final() {
 		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");

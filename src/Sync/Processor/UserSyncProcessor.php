@@ -103,7 +103,9 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		return $ilObjUser;
 	}
 
-
+	/**
+	 * @inheritdoc
+	 */
 	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
 		/** @var UserDTO $object */
 		$ilObjUser = $this->findILIASUser($ilias_id);
@@ -144,6 +146,9 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		return $ilObjUser;
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	protected function handleDelete($ilias_id) {
 		$ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === null) {

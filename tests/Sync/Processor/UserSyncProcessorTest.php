@@ -1,6 +1,8 @@
 <?php
 
-require_once(dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php');
+//require_once(dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php');
+
+require_once(dirname(dirname(__DIR__)) . '/AbstractHub2Tests.php');
 
 use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Object\UserDTO;
@@ -20,9 +22,7 @@ use SRAG\Hub2\Sync\Processor\UserSyncProcessor;
  *
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  */
-class UserSyncProcessorTest extends \PHPUnit\Framework\TestCase {
-
-	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+class UserSyncProcessorTest extends AbstractHub2Tests {
 
 	const ILIAS_OBJ_ID = 123;
 
@@ -201,10 +201,6 @@ class UserSyncProcessorTest extends \PHPUnit\Framework\TestCase {
 		$this->ilObjUser->shouldReceive('_exists')->zeroOrMoreTimes()->byDefault();
 		$this->user->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 		$this->user->shouldReceive('getILIASId')->andReturn(self::ILIAS_OBJ_ID);
-//		$this->ilObjUser->shouldReceive('setTitle')->once()->byDefault();
-//		$this->ilObjUser->shouldReceive('setDescription')->once()->with($this->userDTO->getEmail());
-//		$this->ilObjUser->shouldReceive('setImportId')->once()->byDefault();
-//		$this->ilObjUser->shouldReceive('update')->once();
 	}
 
 	/**

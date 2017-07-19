@@ -1,6 +1,7 @@
 <?php namespace SRAG\Hub2\Exception;
 
-require_once('./Services/Exceptions/classes/class.ilException.php');
+//require_once('./Services/Exceptions/classes/class.ilException.php');
+require_once(dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(__DIR__))))))))) . '/Services/Exceptions/classes/class.ilException.php');
 
 /**
  * Class HubException
