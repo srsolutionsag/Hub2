@@ -58,5 +58,3 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI {
 		$this->tpl->setContent($form->getHTML());
 	}
 }
-
-?>

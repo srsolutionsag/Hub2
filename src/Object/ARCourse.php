@@ -1,16 +1,16 @@
 <?php namespace SRAG\Hub2\Object;
 
 /**
- * Class ARUser
+ * Class ARCourse
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\ILIAS\Plugins\Hub2\Object
  */
-class ARUser extends ARObject implements IUser {
+class ARCourse extends ARObject {
 
 	/**
 	 * @inheritdoc
 	 */
 	public static function returnDbTableName() {
-		return 'sr_hub2_user';
+		return 'sr_hub2_course';
 	}
 }

@@ -11,6 +11,11 @@ require_once(dirname(__DIR__) . '/AbstractHub2Tests.php');
  */
 class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
+	public function tearDown() {
+		\Mockery::close();
+	}
+
+
 	public function test_intermediate_to_final() {
 		$config = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
 		$transition = new ObjectStatusTransition($config);

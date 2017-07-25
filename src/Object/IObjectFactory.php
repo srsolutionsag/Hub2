@@ -14,6 +14,10 @@ interface IObjectFactory {
 
 	public function course($ext_id);
 
+	/**
+	 * @param $ext_id
+	 * @return IObject
+	 */
 	public function category($ext_id);
 
 	public function group($ext_id);

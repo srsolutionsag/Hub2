@@ -16,15 +16,6 @@ class UserOriginProperties extends OriginProperties {
 	const PASSWORD_MAIL_DATE_FORMAT = 'password_mail_date_format';
 	const REACTIVATE_ACCOUNT = 'reactivate_account';
 	const DELETE = 'delete';
-	const USERNAME_MODE = 'username_mode';
-
-	// Which field should be picked to build the login name
-	const USERNAME_MODE_SHORTENED_FIRST_LASTNAME = 'shortened_first_and_lastname'; // John Doe => j.doe
-	const USERNAME_MODE_EMAIL = 'email';
-	const USERNAME_MODE_EXT_ACCOUNT = 'external_account';
-	const USERNAME_MODE_FIRST_LASTNAME = 'first_and_lastname'; // John Doe => john.doe
-	const USERNAME_MODE_HUB = 'own'; // Login is picked from the login property on the UserDTO object
-	const USERNAME_MODE_EXT_ID = 'ext_id';
 
 	// How to handle the user if marked as TO_DELETE if data was not delivered
 	// Default is "NONE" which means do nothing
@@ -46,7 +37,6 @@ class UserOriginProperties extends OriginProperties {
 		self::PASSWORD_MAIL_BODY => '',
 		self::PASSWORD_MAIL_DATE_FORMAT => 'd.m.Y',
 		self::REACTIVATE_ACCOUNT => false,
-		self::USERNAME_MODE => self::USERNAME_MODE_SHORTENED_FIRST_LASTNAME,
 		self::DELETE => self::DELETE_MODE_NONE,
 	];
 
@@ -58,20 +48,6 @@ class UserOriginProperties extends OriginProperties {
 			self::DELETE_MODE_NONE,
 			self::DELETE_MODE_DELETE,
 			self::DELETE_MODE_INACTIVE,
-		];
-	}
-
-	/**
-	 * @return array
-	 */
-	public static function getAvailableUsernameModes() {
-		return [
-			self::USERNAME_MODE_SHORTENED_FIRST_LASTNAME,
-			self::USERNAME_MODE_EMAIL, // email
-			self::USERNAME_MODE_EXT_ACCOUNT, // external account
-			self::USERNAME_MODE_EXT_ID, // external ID
-			self::USERNAME_MODE_FIRST_LASTNAME, // firstname.lastname
-			self::USERNAME_MODE_HUB // login field of IUser hub object
 		];
 	}
 

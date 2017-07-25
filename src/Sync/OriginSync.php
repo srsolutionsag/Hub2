@@ -38,7 +38,7 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @var IDataTransferObject[]
 	 */
-	protected $objects = [];
+	protected $dtos = [];
 
 	/**
 	 * @var array
@@ -53,7 +53,7 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @var IObjectStatusTransition
 	 */
-	protected $transition;
+	protected $statusTransition;
 
 	/**
 	 * @var int
@@ -87,7 +87,7 @@ class OriginSync implements IOriginSync {
 		$this->repository = $repository;
 		$this->factory = $factory;
 		$this->processor = $processor;
-		$this->transition = $transition;
+		$this->statusTransition = $transition;
 	}
 
 
@@ -112,7 +112,7 @@ class OriginSync implements IOriginSync {
 					throw new AbortOriginSyncException($msg);
 				}
 			}
-			$this->objects = $implementation->buildObjects();
+			$this->dtos = $implementation->buildObjects();
 		} catch (HubException $e) {
 			$this->exceptions[] = $e;
 			throw $e;
@@ -128,8 +128,10 @@ class OriginSync implements IOriginSync {
 		// 1. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
 		// 2. Let the processor process the corresponding ILIAS object
 
+		$ext_ids_delivered = [];
 		$type = $this->origin->getObjectType();
-		foreach ($this->objects as $dto) {
+		foreach ($this->dtos as $dto) {
+			$ext_ids_delivered[] = $dto->getExtId();
 			/** @var IObject $object */
 			$object = $this->factory->$type($dto->getExtId());
 			$object->setDeliveryDate(time());
@@ -137,19 +139,15 @@ class OriginSync implements IOriginSync {
 			$data = array_merge($object->getData(), $dto->getData());
 			$dto->setData($data);
 			// Set the intermediate status before processing the ILIAS object
-			$object->setStatus($this->transition->finalToIntermediate($object));
+			$object->setStatus($this->statusTransition->finalToIntermediate($object));
 			$this->processObject($object, $dto);
 		}
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
-		$ext_ids_delivered = array_map(function ($object) {
-			/** @var $object IObject */
-			return $object->getExtId();
-		}, $this->objects);
 		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
 			$object->setStatus(IObject::STATUS_TO_DELETE);
-			// There is no DTO available / needed for the deletion process
+			// There is no DTO available / needed for the deletion process (data has not been delivered)
 			$this->processObject($object, null);
 		}
 

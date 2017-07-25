@@ -63,8 +63,8 @@ class HookObject {
 	}
 
 	/**
-	 * Get the ID of the linked ILIAS object
-	 * Note that this ID may be the object or ref-ID depending on the synced object
+	 * Get the ID of the linked ILIAS object.
+	 * Note that this ID may be the object or ref-ID depending on the synced object.
 	 * Also note that this ID may be NULL if the ILIAS object has not been created yet, e.g.
 	 * in the case of IOriginImplementation::beforeCreateILIASObject()
 	 *

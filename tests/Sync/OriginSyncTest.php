@@ -69,6 +69,10 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->statusTransition = \Mockery::mock('SRAG\Hub2\Sync\IObjectStatusTransition');
 	}
 
+	public function tearDown() {
+		\Mockery::close();
+	}
+
 	public function test_fail_connect() {
 		$this->originImplementation->shouldReceive('connect')
 			->andThrow(ConnectionFailedException::class, 'Unable to connect');
@@ -157,11 +161,10 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->origin->shouldReceive('getObjectType')->andReturn('dummy');
 		// Build 4 dummyDTOs returned by the origin implementation
 		$dummyDTOs = [];
-		for ($i = 1; $i <= 4; $i++) {
+		for ($i = 0; $i < 4; $i++) {
 			$dummyDTO = \Mockery::mock('\SRAG\Hub2\Object\IDataTransferObject');
-			$dummyDTO->shouldReceive('getExtId');
+			$dummyDTO->shouldReceive('getExtId', 'setData');
 			$dummyDTO->shouldReceive('getData')->andReturn([]);
-			$dummyDTO->shouldReceive('setData');
 			$dummyDTOs[] = $dummyDTO;
 		}
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn($dummyDTOs);
@@ -170,18 +173,16 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$objects = [];
 		for ($i = 0; $i < 4; $i++) {
 			$object = \Mockery::mock('\SRAG\Hub2\Object\IObject');
-			$object->shouldReceive('setDeliveryDate');
+			$object->shouldReceive('setDeliveryDate', 'setStatus', 'save');
 			$object->shouldReceive('getData')->andReturn([]);
-			$object->shouldReceive('setStatus');
 			$object->shouldReceive('getStatus')->andReturn($status[$i]);
-			$object->shouldReceive('save');
 			$objects[] = $object;
 		}
 		$this->statusTransition->shouldReceive('finalToIntermediate');
 		$this->factory->shouldReceive('dummy')->times(4)->andReturn($objects[0], $objects[1], $objects[2], $objects[3]);
 		$this->repository->shouldReceive('getToDelete')->andReturn([]);
 		$this->processor->shouldReceive('process')->times(4);
-		$this->originImplementation->shouldReceive('afterSync');
+		$this->originImplementation->shouldReceive('afterSync')->once();
 		$originSync = new \SRAG\Hub2\Sync\OriginSync(
 			$this->origin,
 			$this->repository,
@@ -209,16 +210,15 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn([new UserDTO(1)]);
 		$this->statusTransition->shouldReceive('finalToIntermediate');
 		$userMock = \Mockery::mock('\SRAG\Hub2\Object\IUser');
-		$userMock->shouldReceive('setDeliveryDate');
+		$userMock->shouldReceive('setDeliveryDate', 'setStatus');
 		$userMock->shouldReceive('getData')->andReturn([]);
-		$userMock->shouldReceive('setStatus');
 		$this->factory->shouldReceive('user')->andReturn($userMock);
 		$exception = new Exception();
 		$this->processor->shouldReceive('process')->andThrow($exception);
 		$this->originImplementation->shouldReceive('handleException')->with($exception);
 		$userMock->shouldReceive('save');
 		$this->repository->shouldReceive('getToDelete')->andReturn([]);
-		$this->originImplementation->shouldReceive('afterSync');
+		$this->originImplementation->shouldReceive('afterSync')->once();
 		$originSync = new \SRAG\Hub2\Sync\OriginSync(
 			$this->origin,
 			$this->repository,

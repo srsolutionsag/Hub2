@@ -129,13 +129,12 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 
 	public function create() {
 		$this->created_at = date('Y-m-d H:i:s');
-//		$this->setObjectType($this->returnObjectType());
+		$this->setObjectType($this->parseObjectType());
 		parent::create();
 	}
 
 	public function update() {
 		$this->updated_at = date('Y-m-d H:i:s');
-//		$this->setObjectType($this->returnObjectType());
 		parent::update();
 	}
 
@@ -305,11 +304,13 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	abstract protected function getOriginProperties(array $data);
 
 	/**
-	 * Return the object type of this origin.
-	 *
-	 * @return int
+	 * @return string
 	 */
-//	abstract protected function returnObjectType();
+	private function parseObjectType() {
+		$out = [];
+		preg_match('%^AR(.*)Origin$%', get_class($this), $out);
+		return strtolower($out[1]);
+	}
 
 	/**
 	 * @return array

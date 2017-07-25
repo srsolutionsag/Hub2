@@ -1,11 +1,11 @@
 <?php
 
-//require_once(dirname(dirname(dirname(__DIR__))) . '/vendor/autoload.php');
-
 require_once(dirname(dirname(__DIR__)) . '/AbstractHub2Tests.php');
 
 use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Object\UserDTO;
+use SRAG\Hub2\Origin\Config\IUserOriginConfig;
+use SRAG\Hub2\Origin\Config\UserOriginConfig;
 use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 use SRAG\Hub2\Sync\ObjectStatusTransition;
 use SRAG\Hub2\Sync\Processor\UserSyncProcessor;
@@ -37,9 +37,9 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	/**
 	 * @var UserOriginProperties
 	 */
-	protected $properties;
+	protected $originProperties;
 	/**
-	 * @var Mockery\MockInterface
+	 * @var UserOriginConfig
 	 */
 	protected $originConfig;
 	/**
@@ -65,13 +65,15 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	 */
 	protected function setUp() {
 		$this->originImplementation = \Mockery::mock('\SRAG\Hub2\Origin\IOriginImplementation');
-		$this->properties = new UserOriginProperties();
+		$this->originProperties = new UserOriginProperties();
 		$this->origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-		$this->origin->shouldReceive('properties')->andReturn($this->properties);
+		$this->origin->shouldReceive('properties')->andReturn($this->originProperties);
 		$this->origin->shouldReceive('implementation')->andReturn($this->originImplementation);
 		$this->origin->shouldReceive('getId');
-		$this->originConfig = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
-		$this->statusTransition = new ObjectStatusTransition($this->originConfig);
+//		$this->originConfig = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
+		$this->originConfig = new UserOriginConfig([]);
+		$this->origin->shouldReceive('config')->andReturn($this->originConfig);
+		$this->statusTransition = new ObjectStatusTransition(\Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig"));
 		$this->userDTO = new UserDTO('extIdOfJohnDoe');
 		$this->userDTO->setFirstname('John');
 		$this->userDTO->setLastname('Doe');
@@ -100,16 +102,10 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->ilObjUser->shouldReceive('getId')->andReturn(self::ILIAS_OBJ_ID);
 	}
 
-//	protected function tearDown() {
-//		$this->userDTO = null;
-//		$this->user = null;
-//		$this->ilObjUser = null;
-//		$this->origin = null;
-//		$this->originConfig = null;
-//		$this->originImplementation = null;
-//		$this->statusTransition = null;
-//		$this->properties = null;
-//	}
+	public function tearDown() {
+		\Mockery::close();
+	}
+
 
 	/**
 	 * Create ILIAS User
@@ -129,7 +125,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	 * @param string $expectedLoginName
 	 */
 	public function test_create_user_with_different_login_name_modes($mode, $expectedLoginName) {
-		$this->properties->setData([UserOriginProperties::USERNAME_MODE => $mode]);
+		$this->originConfig->setData([IUserOriginConfig::LOGIN_FIELD => $mode]);
 		$this->setDefaultExpectationsForCreationOfILIASUser();
 		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
 		$this->ilObjUser->shouldReceive('setLogin')->once()->with($expectedLoginName);
@@ -140,7 +136,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	 * Create ILIAS user: Test that user is not active AND profile is set to incomplete.
 	 */
 	public function test_create_user_with_inactive_account() {
-		$this->properties->setData([UserOriginProperties::ACTIVATE_ACCOUNT => false]);
+		$this->originProperties->setData([UserOriginProperties::ACTIVATE_ACCOUNT => false]);
 		$this->setDefaultExpectationsForCreationOfILIASUser();
 		$this->ilObjUser->shouldReceive('setActive')->once()->with(false);
 		$this->ilObjUser->shouldReceive('setProfileIncomplete')->once()->with(true);
@@ -153,7 +149,6 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	 */
 	public function test_update_user_with_default_properties() {
 		$this->setDefaultExpectationsForUpdateOfILIASUser();
-		$this->ilObjUser->shouldReceive('_exists')->zeroOrMoreTimes()->andReturn(true);
 		$this->ilObjUser->shouldReceive('setImportId')->once();
 		$this->ilObjUser->shouldReceive('setTitle')->once();
 		$this->ilObjUser->shouldReceive('setDescription')->once()->with($this->userDTO->getEmail());
@@ -171,26 +166,60 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->setDefaultExpectationsForUpdateOfILIASUser();
 		$this->user->shouldReceive('computeHashCode')->once()->andReturn('actualHashCode');
 		$this->user->shouldReceive('getHashCode')->once()->andReturn('actualHashCode');
+		$this->ilObjUser->shouldNotReceive('update');
+		$this->ilObjUser->shouldNotReceive('setTitle');
+		$this->ilObjUser->shouldNotReceive('setDescription');
+		$this->originImplementation->shouldNotReceive('beforeUpdateILIASObject');
+		$this->originImplementation->shouldNotReceive('afterUpdateILIASObject');
 		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
 		$processor->process($this->user, $this->userDTO);
-		$this->originImplementation->shouldNotHaveReceived('beforeUpdateILIASObject');
-		$this->originImplementation->shouldNotHaveReceived('afterUpdateILIASObject');
-		$this->ilObjUser->shouldNotHaveReceived('update');
-		$this->ilObjUser->shouldNotHaveReceived('setTitle');
-		$this->ilObjUser->shouldNotHaveReceived('setDescription');
 	}
+
+	public function test_delete_user_mode_none() {
+		$this->setDefaultExpectationsForDeletionOfILIASUser();
+		$this->originProperties->setData([UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_NONE]);
+		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
+		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
+		$this->ilObjUser->shouldNotReceive('update');
+		$this->ilObjUser->shouldNotReceive('delete');
+		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor->process($this->user, $this->userDTO);
+	}
+
+	public function test_delete_user_mode_inactive() {
+		$this->setDefaultExpectationsForDeletionOfILIASUser();
+		$this->originProperties->setData([UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_INACTIVE]);
+		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
+		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
+		$this->ilObjUser->shouldReceive('setActive')->with(false)->once();
+		$this->ilObjUser->shouldReceive('update')->once();
+		$this->ilObjUser->shouldNotReceive('delete');
+		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor->process($this->user, $this->userDTO);
+	}
+
+	public function test_delete_user_mode_delete_user() {
+		$this->setDefaultExpectationsForDeletionOfILIASUser();
+		$this->originProperties->setData([UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_DELETE]);
+		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
+		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
+		$this->ilObjUser->shouldReceive('delete');
+		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor->process($this->user, $this->userDTO);
+	}
+
 
 	/**
 	 * @return array
 	 */
 	public function getUsernameModes() {
 		return [
-			[UserOriginProperties::USERNAME_MODE_SHORTENED_FIRST_LASTNAME, 'j.doe'],
-			[UserOriginProperties::USERNAME_MODE_EMAIL, 'john.doe@example.com'],
-			[UserOriginProperties::USERNAME_MODE_EXT_ACCOUNT, 'john.doe.external'],
-			[UserOriginProperties::USERNAME_MODE_EXT_ID, 'extidofjohndoe'],
-			[UserOriginProperties::USERNAME_MODE_FIRST_LASTNAME, 'john.doe'],
-			[UserOriginProperties::USERNAME_MODE_HUB, 'johndoe123'],
+			[UserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME, 'j.doe'],
+			[UserOriginConfig::LOGIN_FIELD_EMAIL, 'john.doe@example.com'],
+			[UserOriginConfig::LOGIN_FIELD_EXT_ACCOUNT, 'john.doe.external'],
+			[UserOriginConfig::LOGIN_FIELD_EXT_ID, 'extidofjohndoe'],
+			[UserOriginConfig::LOGIN_FIELD_FIRSTNAME_LASTNAME, 'john.doe'],
+			[UserOriginConfig::LOGIN_FIELD_HUB_LOGIN, 'johndoe123'],
 		];
 	}
 
@@ -198,8 +227,17 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	 * Set some default expectations on the mock objects when updating ILIAS users
 	 */
 	protected function setDefaultExpectationsForUpdateOfILIASUser() {
-		$this->ilObjUser->shouldReceive('_exists')->zeroOrMoreTimes()->byDefault();
+		$this->ilObjUser->shouldReceive('_exists')->with(self::ILIAS_OBJ_ID)->andReturn(true);
 		$this->user->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
+		$this->user->shouldReceive('getILIASId')->andReturn(self::ILIAS_OBJ_ID);
+	}
+
+	/**
+	 * Set some default expectations on the mock objects when deleting ILIAS users
+	 */
+	protected function setDefaultExpectationsForDeletionOfILIASUser() {
+		$this->ilObjUser->shouldReceive('_exists')->with(self::ILIAS_OBJ_ID)->andReturn(true);
+		$this->user->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_DELETE);
 		$this->user->shouldReceive('getILIASId')->andReturn(self::ILIAS_OBJ_ID);
 	}
 
@@ -234,5 +272,4 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 			}
 		}
 	}
-
 }

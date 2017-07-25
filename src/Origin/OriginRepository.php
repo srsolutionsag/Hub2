@@ -7,12 +7,6 @@
  */
 class OriginRepository implements IOriginRepository {
 
-	/**
-	 * @inheritdoc
-	 */
-	public function users() {
-		return ARUserOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_USER])->get();
-	}
 
 	/**
 	 * @inheritdoc
@@ -37,6 +31,13 @@ class OriginRepository implements IOriginRepository {
 			/** @var $origin IOrigin */
 			return $origin->isActive();
 		});
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function users() {
+		return ARUserOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_USER])->get();
 	}
 
 	/**

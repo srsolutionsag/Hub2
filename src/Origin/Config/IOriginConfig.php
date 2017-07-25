@@ -90,6 +90,13 @@ interface IOriginConfig {
 	public function getActivePeriod();
 
 	/**
+	 * Get the ID of another origin which has been selected over the configuration GUI
+	 *
+	 * @return int
+	 */
+	public function getLinkedOriginId();
+
+	/**
 	 * Get the value of a custom config entry or NULL if no config value is found.
 	 *
 	 * @param string $key

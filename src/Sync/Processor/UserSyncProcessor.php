@@ -2,6 +2,8 @@
 
 use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Object\UserDTO;
+use SRAG\Hub2\Origin\Config\IUserOriginConfig;
+use SRAG\Hub2\Origin\Config\UserOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
@@ -17,6 +19,11 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 * @var UserOriginProperties
 	 */
 	private $props;
+
+	/**
+	 * @var UserOriginConfig
+	 */
+	private $config;
 
 	/**
 	 * @var array
@@ -54,6 +61,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	public function __construct(IOrigin $origin, IObjectStatusTransition $transition) {
 		parent::__construct($origin, $transition);
 		$this->props = $origin->properties();
+		$this->config = $origin->config();
 	}
 
 	/**
@@ -188,23 +196,23 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 * @return string
 	 */
 	protected function buildLogin(UserDTO $user, \ilObjUser $ilObjUser) {
-		switch ($this->props->get(UserOriginProperties::USERNAME_MODE)) {
-			case UserOriginProperties::USERNAME_MODE_EMAIL:
+		switch ($this->config->getILIASLoginField()) {
+			case IUserOriginConfig::LOGIN_FIELD_EMAIL:
 				$login = $user->getEmail();
 				break;
-			case UserOriginProperties::USERNAME_MODE_EXT_ACCOUNT:
+			case IUserOriginConfig::LOGIN_FIELD_EXT_ACCOUNT:
 				$login = $user->getExternalAccount();
 				break;
-			case UserOriginProperties::USERNAME_MODE_EXT_ID:
+			case IUserOriginConfig::LOGIN_FIELD_EXT_ID:
 				$login = $user->getExtId();
 				break;
-			case UserOriginProperties::USERNAME_MODE_FIRST_LASTNAME:
+			case IUserOriginConfig::LOGIN_FIELD_FIRSTNAME_LASTNAME:
 				$login = $this->clearString($user->getFirstname()) . '.' . $this->clearString($user->getLastname());
 				break;
-			case UserOriginProperties::USERNAME_MODE_HUB:
+			case IUserOriginConfig::LOGIN_FIELD_HUB_LOGIN:
 				$login = $user->getLogin();
 				break;
-			case UserOriginProperties::USERNAME_MODE_SHORTENED_FIRST_LASTNAME:
+			case IUserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME:
 				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
 				break;
 			default:

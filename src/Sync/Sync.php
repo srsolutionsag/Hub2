@@ -7,6 +7,7 @@ use SRAG\Hub2\Object\ObjectFactory;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginRepository;
 use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Hub2\Sync\Processor\SyncProcessorFactory;
 
 
 /**
@@ -37,7 +38,7 @@ class Sync implements ISync {
 	 * @inheritdoc
 	 */
 	public function execute() {
-		$skip_object_type = 0;
+		$skip_object_type = '';
 		foreach ($this->repository->allActive() as $origin) {
 			if ($origin->getObjectType() == $skip_object_type) {
 				continue;
@@ -89,7 +90,8 @@ class Sync implements ISync {
 	 * @return IObjectSyncProcessor
 	 */
 	protected function getSyncProcessor(IOrigin $origin, IObjectStatusTransition $transition) {
-		$class = ucfirst($origin->getObjectType()) . 'SyncProcessor';
-		return new $class($origin, $transition);
+		$processorFactory = new SyncProcessorFactory($origin, $transition);
+		$processor = $origin->getObjectType() . 'Processor';
+		return $processorFactory->$processor();
 	}
 }

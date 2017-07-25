@@ -27,6 +27,7 @@ class OriginConfig implements IOriginConfig {
 		'server_database' => '',
 		'server_search_base' => '',
 		'active_period' => '',
+		'linked_origin_id' => 0,
 	];
 
 	/**
@@ -139,6 +140,13 @@ class OriginConfig implements IOriginConfig {
 	 */
 	public function getConnectionType() {
 		return $this->data['connection_type'];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getLinkedOriginId() {
+		return $this->data['linked_origin_id'];
 	}
 
 	/**
