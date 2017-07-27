@@ -15,4 +15,10 @@ interface IOriginFactory {
 	 */
 	public function getById($id);
 
+	/**
+	 * @param string $type
+	 * @return IOrigin
+	 */
+	public function createByType($type);
+
 }

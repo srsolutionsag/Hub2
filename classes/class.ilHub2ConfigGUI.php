@@ -63,7 +63,7 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI {
 				$config->save();
 			}
 			ilUtil::sendSuccess($this->pl->txt('msg_successfully_saved'), true);
-			$this->ctrl->redirect($this, 'config');
+			$this->ctrl->redirect($this, 'configure');
 		}
 		$this->setTabs('configure');
 		$form->setValuesByPost();

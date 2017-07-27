@@ -39,6 +39,13 @@ class HubConfig implements IHubConfig {
 	/**
 	 * @inheritdoc
 	 */
+	public function isOriginsConfigLocked() {
+		return (bool) ARConfig::getValueByKey(IHubConfig::LOCK_ORIGINS_CONFIG);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
 	public function getAdministrationRoleIds() {
 		$roles = ARConfig::getValueByKey(IHubConfig::ADMINISTRATE_HUB_ROLE_IDS);
 		$roles = explode(',', $roles);
@@ -46,6 +53,8 @@ class HubConfig implements IHubConfig {
 			return (int) $id;
 		}, $roles);
 	}
+
+
 
 	/**
 	 * @inheritdoc

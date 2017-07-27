@@ -2,6 +2,7 @@
 
 use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Config\HubConfig;
+use SRAG\Hub2\Origin\OriginImplementationTemplateGenerator;
 use SRAG\Hub2\Origin\OriginRepository;
 use SRAG\Hub2\UI\OriginConfigFormGUI;
 
@@ -38,6 +39,10 @@ class hub2ConfigOriginsGUI {
 	 * @var HubConfig
 	 */
 	protected $hubConfig;
+	/**
+	 * @var OriginRepository
+	 */
+	protected $originRepository;
 
 	public function __construct() {
 		global $DIC;
@@ -47,11 +52,12 @@ class hub2ConfigOriginsGUI {
 		$this->pl = ilHub2Plugin::getInstance();
 		$this->originFactory = new \SRAG\Hub2\Origin\OriginFactory($DIC->database());
 		$this->hubConfig = new HubConfig();
+		$this->originRepository = new OriginRepository();
 	}
 
 	public function executeCommand() {
 		$this->checkAccess();
-		$this->tpl->setTitle($this->pl->txt('origins'));
+		$this->tpl->setTitle('Hub2');
 		$cmd = $this->DIC->ctrl()->getCmd('index');
 		$this->$cmd();
 		$this->tpl->show();
@@ -59,10 +65,11 @@ class hub2ConfigOriginsGUI {
 
 	protected function index() {
 		$button = ilLinkButton::getInstance();
-		$button->setCaption($this->pl->txt('add_origin'), false);
+		$button->setCaption($this->pl->txt('origin_table_button_add'), false);
 		$button->setUrl($this->DIC->ctrl()->getLinkTarget($this, 'addOrigin'));
 		$this->DIC->toolbar()->addButtonInstance($button);
-		$this->tpl->setContent('index');
+		$table = new \SRAG\Hub2\UI\OriginsTableGUI($this, 'index', new OriginRepository());
+		$this->tpl->setContent($table->getHTML());
 	}
 
 	protected function cancel() {
@@ -77,9 +84,7 @@ class hub2ConfigOriginsGUI {
 	protected function createOrigin() {
 		$form = new OriginConfigFormGUI($this, $this->hubConfig, new OriginRepository(), new \SRAG\Hub2\Origin\ARUserOrigin());
 		if ($form->checkInput()) {
-			$class = 'SRAG\Hub2\Origin\AR' . ucfirst($form->getInput('object_type')) . 'Origin';
-			/** @var AROrigin $origin */
-			$origin = new $class();
+			$origin = $this->originFactory->createByType($form->getInput('object_type'));
 			$origin->setTitle($form->getInput('title'));
 			$origin->setDescription($form->getInput('description'));
 			$origin->save();
@@ -94,6 +99,7 @@ class hub2ConfigOriginsGUI {
 	protected function saveOrigin() {
 		/** @var AROrigin $origin */
 		$origin = $this->getOrigin((int)$_POST['origin_id']);
+		$this->tpl->setTitle($origin->getTitle());
 		$form = $this->getForm($origin);
 		if ($form->checkInput()) {
 			$origin->setTitle($form->getInput('title'));
@@ -116,6 +122,18 @@ class hub2ConfigOriginsGUI {
 			$origin->properties()->setData($propertyData);
 			$origin->save();
 			ilUtil::sendSuccess($this->pl->txt('msg_origin_saved'), true);
+			// Try to create the implementation class file automatically
+			$generator = new OriginImplementationTemplateGenerator($this->hubConfig);
+			try {
+				$result = $generator->create($origin);
+				if ($result) {
+					ilUtil::sendInfo("Created class implementation file: " . $generator->getClassFilePath($origin), true);
+				}
+			} catch (\SRAG\Hub2\Exception\HubException $e) {
+				$msg = 'Unable to create class implementation file, you must create it manually at: '
+					. $generator->getClassFilePath($origin);
+				ilUtil::sendInfo($msg, true);
+			}
 			$this->DIC->ctrl()->saveParameter($this, 'origin_id');
 			$this->DIC->ctrl()->redirect($this, 'editOrigin');
 		}
@@ -125,12 +143,47 @@ class hub2ConfigOriginsGUI {
 
 	protected function editOrigin() {
 		$origin = $this->getOrigin((int)$_GET['origin_id']);
+		$this->tpl->setTitle($origin->getTitle());
 		$form = $this->getForm($origin);
 		$this->tpl->setContent($form->getHTML());
 	}
 
-	protected function checkAccess() {
+	protected function activateAll() {
+		foreach ($this->originRepository->all() as $repository) {
+			$repository->setActive(true);
+			$repository->save();
+		}
+		ilUtil::sendSuccess($this->pl->txt('msg_origin_activated'), true);
+		$this->DIC->ctrl()->redirect($this);
+	}
+
+	protected function deactivateAll() {
+		foreach ($this->originRepository->all() as $repository) {
+			$repository->setActive(false);
+			$repository->save();
+		}
+		ilUtil::sendSuccess($this->pl->txt('msg_origin_deactivated'), true);
+		$this->DIC->ctrl()->redirect($this);
+	}
+
+	protected function confirmDelete() {
 		// TODO
+		$this->tpl->setContent('TODO');
+	}
+
+	/**
+	 * Check access based on plugin configuration.
+	 * Returns to personal desktop if a user does not have permission to administrate hub.
+	 */
+	protected function checkAccess() {
+		$roles = array_unique(array_merge(
+			$this->hubConfig->getAdministrationRoleIds(),
+			[2]
+		));
+		if (!$this->DIC->rbac()->review()->isAssignedToAtLeastOneGivenRole($this->DIC->user()->getId(), $roles)) {
+			ilUtil::sendFailure($this->DIC->language()->txt('permission_denied'), true);
+			$this->DIC->ctrl()->redirectByClass('ilpersonaldesktopgui');
+		}
 	}
 
 	/**

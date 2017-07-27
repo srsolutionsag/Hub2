@@ -29,4 +29,12 @@ class OriginFactory implements IOriginFactory {
 		$class = 'SRAG\Hub2\Origin\AR' . ucfirst($type) . 'Origin';
 		return $class::find((int)$id);
 	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function createByType($type) {
+		$class = 'SRAG\Hub2\Origin\AR' . $type . 'Origin';
+		return new $class();
+	}
 }

@@ -1,7 +1,6 @@
 <?php namespace SRAG\Hub2\UI;
 use SRAG\Hub2\Origin\ARCourseOrigin;
 use SRAG\Hub2\Origin\Config\ICourseOriginConfig;
-use SRAG\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
 
 /**

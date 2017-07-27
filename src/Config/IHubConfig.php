@@ -12,6 +12,7 @@ interface IHubConfig {
 	const SHORTLINK_NO_ILIAS_ID = 'shortlink_no_ilias_id';
 	const SHORTLINK_NOT_ACTIVE = 'shortlink_not_active';
 	const ADMINISTRATE_HUB_ROLE_IDS = 'administrate_hub_role_ids';
+	const LOCK_ORIGINS_CONFIG = 'lock_origins_config';
 
 	/**
 	 * Get the path to the class files of origin implementations
@@ -47,6 +48,13 @@ interface IHubConfig {
 	 * @return array
 	 */
 	public function getAdministrationRoleIds();
+
+	/**
+	 * Should settings of origins be locked?
+	 *
+	 * @return bool
+	 */
+	public function isOriginsConfigLocked();
 
 	/**
 	 * Get a config value by key.

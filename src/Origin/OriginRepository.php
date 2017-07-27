@@ -44,7 +44,7 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function courses() {
-		return [];
+		return ARCourseOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_COURSE])->get();
 	}
 
 	/**

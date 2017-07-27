@@ -24,6 +24,11 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	private $factory;
 
 	/**
+	 * @var array
+	 */
+	protected $data = [];
+
+	/**
 	 * @param IOriginConfig $config
 	 * @param IDataTransferObjectFactory $factory
 	 */

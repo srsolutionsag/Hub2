@@ -50,15 +50,16 @@ class ConfigFormGUI extends \ilPropertyFormGUI {
 	}
 
 	protected function initForm() {
-		$this->setTitle($this->lng->txt('configuration'));
+		$this->setTitle($this->pl->txt('admin_form_title'));
 
 		$item = new \ilTextInputGUI($this->pl->txt('admin_origins_path'), IHubConfig::ORIGIN_IMPLEMENTATION_PATH);
 		$item->setInfo($this->pl->txt('admin_origins_path_info'));
 		$item->setValue($this->config->get(IHubConfig::ORIGIN_IMPLEMENTATION_PATH));
 		$this->addItem($item);
 
-//		$cb = new ilCheckboxInputGUI($this->pl->txt('admin_lock'), hubConfig::F_LOCK);
-//		$this->addItem($cb);
+		$cb = new \ilCheckboxInputGUI($this->pl->txt('admin_lock'), IHubConfig::LOCK_ORIGINS_CONFIG);
+		$cb->setChecked($this->config->get(IHubConfig::LOCK_ORIGINS_CONFIG));
+		$this->addItem($cb);
 
 		$item = new \ilFormSectionHeaderGUI();
 		$item->setTitle($this->lng->txt('permissions'));
