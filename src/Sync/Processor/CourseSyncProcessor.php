@@ -73,14 +73,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		/** @var CourseDTO $object */
 		$ilObjCourse = new \ilObjCourse();
 		$ilObjCourse->setImportId($this->getImportId($object));
-		// Pass properties from DTO to ilObjUser
-		foreach (self::getProperties() as $property) {
-			$setter = "set" . ucfirst($property);
-			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$ilObjCourse->$setter($object->$getter());
-			}
-		}
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($object);
 		// Check if we should create some dependence categories
@@ -89,6 +81,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$ilObjCourse->createReference();
 		$ilObjCourse->putInTree($parentRefId);
 		$ilObjCourse->setPermissions($parentRefId);
+		// Pass properties from DTO to ilObjUser
+		foreach (self::getProperties() as $property) {
+			$setter = "set" . ucfirst($property);
+			$getter = "get" . ucfirst($property);
+			if ($object->$getter() !== null) {
+				$ilObjCourse->$setter($object->$getter());
+			}
+		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE)) {
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);

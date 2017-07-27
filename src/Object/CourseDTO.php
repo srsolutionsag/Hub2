@@ -25,7 +25,7 @@ class CourseDTO extends DataTransferObject {
 	/**
 	 * @var array
 	 */
-	protected static $subscriptionTypes = [
+	private static $subscriptionTypes = [
 		self::SUBSCRIPTION_TYPE_DEACTIVATED,
 		self::SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP,
 		self::SUBSCRIPTION_TYPE_DIRECTLY,
@@ -35,7 +35,7 @@ class CourseDTO extends DataTransferObject {
 	/**
 	 * @var array
 	 */
-	protected static $viewModes = [
+	private static $viewModes = [
 		self::VIEW_MODE_SESSIONS,
 		self::VIEW_MODE_OBJECTIVES,
 		self::VIEW_MODE_TIMING,
@@ -46,7 +46,7 @@ class CourseDTO extends DataTransferObject {
 	/**
 	 * @var array
 	 */
-	protected static $parentIdTypes = [
+	private static $parentIdTypes = [
 		self::PARENT_ID_TYPE_REF_ID,
 		self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
 	];
@@ -79,32 +79,32 @@ class CourseDTO extends DataTransferObject {
 	/**
 	 * @var string
 	 */
-	protected $parentId;
+	private $parentId;
 
 	/**
 	 * @var int
 	 */
-	protected $parentIdType = self::PARENT_ID_TYPE_REF_ID;
+	private $parentIdType = self::PARENT_ID_TYPE_REF_ID;
 
 	/**
 	 * @var string
 	 */
-	protected $firstDependenceCategory;
+	private $firstDependenceCategory;
 
 	/**
 	 * @var string
 	 */
-	protected $secondDependenceCategory;
+	private $secondDependenceCategory;
 
 	/**
 	 * @var string
 	 */
-	protected $thirdDependenceCategory;
+	private $thirdDependenceCategory;
 
 	/**
 	 * @var array
 	 */
-	protected $notificationEmails = [];
+	private $notificationEmails = [];
 
 	/**
 	 * @var int

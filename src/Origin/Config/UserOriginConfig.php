@@ -32,4 +32,18 @@ class UserOriginConfig extends OriginConfig implements IUserOriginConfig {
 	public function getILIASLoginField() {
 		return $this->data[self::LOGIN_FIELD];
 	}
+
+	/**
+	 * @return array
+	 */
+	public static function getAvailableLoginFields() {
+		return [
+			self::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME,
+			self::LOGIN_FIELD_EMAIL,
+			self::LOGIN_FIELD_EXT_ACCOUNT,
+			self::LOGIN_FIELD_EXT_ID,
+			self::LOGIN_FIELD_FIRSTNAME_LASTNAME,
+			self::LOGIN_FIELD_HUB_LOGIN,
+		];
+	}
 }

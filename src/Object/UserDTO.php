@@ -18,7 +18,7 @@ class UserDTO extends DataTransferObject {
 	/**
 	 * @var array
 	 */
-	protected static $genders = [
+	private static $genders = [
 		self::GENDER_MALE,
 		self::GENDER_FEMALE
 	];
@@ -26,7 +26,7 @@ class UserDTO extends DataTransferObject {
 	/**
 	 * @var array
 	 */
-	protected static $auth_modes = [
+	private static $auth_modes = [
 		self::AUTH_MODE_ILIAS,
 		self::AUTH_MODE_SHIB,
 		self::AUTH_MODE_LDAP,
@@ -143,6 +143,7 @@ class UserDTO extends DataTransferObject {
 	protected $birthday;
 	/**
 	 * @var array
+	 * @description usr_prop_ilias_roles_info
 	 */
 	protected $iliasRoles = array();
 

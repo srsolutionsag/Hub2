@@ -42,6 +42,10 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		if (!$this->isFinal($object->getStatus())) {
 			return $object->getStatus();
 		}
+		// If the config has defined an active period and the period of the object does not match,
+		// we set the status to IGNORED. The sync won't process this object anymore.
+		// If at any time there is no active period defined OR the object matches the period again,
+		// the status will be set to TO_UPDATE or TO_CREATE again.
 		$active_period = $this->config->getActivePeriod();
 		if ($active_period && ($object->getPeriod() != $active_period)) {
 			return IObject::STATUS_IGNORED;

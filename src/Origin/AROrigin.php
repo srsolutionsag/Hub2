@@ -138,12 +138,28 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		parent::update();
 	}
 
+	/**
+	 * Nasty workaround because ActiveRecord also calls sleep when reading from DB
+	 *
+	 * @param $field_name
+	 * @return mixed|string
+	 */
 	public function sleep($field_name) {
 		switch ($field_name) {
 			case 'config':
-				return json_encode($this->config()->getData());
+				if ($this->_config === null) {
+					$config = $this->getOriginConfig([]);
+					return json_encode($config->getData());
+				} else {
+					return json_encode($this->config()->getData());
+				}
 			case 'properties':
-				return json_encode($this->properties()->getData());
+				if ($this->_properties === null) {
+					$properties = $this->getOriginProperties([]);
+					return json_encode($properties->getData());
+				} else {
+					return json_encode($this->properties()->getData());
+				}
 		}
 		return parent::sleep($field_name);
 	}
@@ -156,6 +172,12 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		}
 		return parent::wakeUp($field_name, $field_value);
 	}
+
+	public function afterObjectLoad() {
+		$this->_config = $this->getOriginConfig($this->getConfigData());
+		$this->_properties = $this->getOriginProperties($this->getPropertiesData());
+	}
+
 
 	/**
 	 * @inheritdoc
@@ -197,7 +219,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @inheritdoc
 	 */
 	public function isActive() {
-		return $this->active;
+		return (bool) $this->active;
 	}
 
 	/**
@@ -259,9 +281,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @inheritdoc
 	 */
 	public function config() {
-		if ($this->_config === null) {
-			$this->_config = $this->getOriginConfig($this->getConfigData());
-		}
 		return $this->_config;
 	}
 
@@ -269,9 +288,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @inheritdoc
 	 */
 	public function properties() {
-		if ($this->_properties === null) {
-			$this->_properties = $this->getOriginProperties($this->getPropertiesData());
-		}
 		return $this->_properties;
 	}
 
@@ -308,7 +324,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 */
 	private function parseObjectType() {
 		$out = [];
-		preg_match('%^AR(.*)Origin$%', get_class($this), $out);
+		preg_match('%AR(.*)Origin$%', get_class($this), $out);
 		return strtolower($out[1]);
 	}
 

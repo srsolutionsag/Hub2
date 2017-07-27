@@ -76,7 +76,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 *
 	 * @db_has_field    true
 	 * @db_fieldtype    integer
-	 * @db_length       11
+	 * @db_length       8
 	 */
 	protected $ilias_id;
 
@@ -85,7 +85,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 *
 	 * @db_has_field    true
 	 * @db_fieldtype    integer
-	 * @db_length       11
+	 * @db_length       8
 	 * @db_index        true
 	 */
 	protected $status = IObject::STATUS_NEW;

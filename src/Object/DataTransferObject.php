@@ -10,12 +10,12 @@ abstract class DataTransferObject implements IDataTransferObject {
 	/**
 	 * @var string
 	 */
-	protected $ext_id = '';
+	private $ext_id = '';
 
 	/**
 	 * @var string
 	 */
-	protected $period = '';
+	private $period = '';
 
 	/**
 	 * @param $ext_id

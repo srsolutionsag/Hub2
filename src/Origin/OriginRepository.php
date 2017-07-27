@@ -44,41 +44,41 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function courses() {
-		// TODO: Implement courses() method.
+		return [];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function categories() {
-		// TODO: Implement categories() method.
+		return [];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function courseMemberships() {
-		// TODO: Implement courseMemberships() method.
+		return [];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function groups() {
-		// TODO: Implement groups() method.
+		return [];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function groupMemberships() {
-		// TODO: Implement groupMemberships() method.
+		return [];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function sessions() {
-		// TODO: Implement sessions() method.
+		return [];
 	}
 }

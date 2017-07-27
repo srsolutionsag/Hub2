@@ -7,6 +7,24 @@
  */
 interface IOriginConfig {
 
+	const CHECK_AMOUNT = 'check_amount';
+	const CHECK_AMOUNT_PERCENTAGE = 'check_amount_percentage';
+	const SHORT_LINK = 'shortlink';
+	const SHORT_LINK_FORCE_LOGIN = 'shortlink_force_login';
+	const NOTIFICATION_ERRORS = 'notification_errors';
+	const NOTIFICATION_SUMMARY = 'notification_summary';
+	const CONNECTION_TYPE = 'connection_type';
+	const FILE_PATH = 'file_path';
+	const SERVER_HOST = 'server_host';
+	const SERVER_PORT = 'server_port';
+	const SERVER_USERNAME = 'server_username';
+	const SERVER_PASSWORD = 'server_password';
+	const SERVER_DATABASE = 'server_database';
+	const SERVER_SEARCH_BASE = 'server_search_base';
+	const ACTIVE_PERIOD = 'active_period';
+	const LINKED_ORIGIN_ID = 'linked_origin_id';
+
+
 	const CONNECTION_TYPE_FILE = 1;
 	const CONNECTION_TYPE_SERVER = 2;
 	const CONNECTION_TYPE_EXTERNAL = 3;

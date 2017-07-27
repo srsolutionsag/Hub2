@@ -21,9 +21,15 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		return 'Hub2';
 	}
 
+	protected function init() {
+		if (isset($_GET['ulx'])){
+			$this->updateLanguages();
+		}
+	}
+
 
 	/**
-	 * @return ilHubPlugin
+	 * @return ilHub2Plugin
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {

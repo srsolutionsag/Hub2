@@ -12,22 +12,22 @@ class OriginConfig implements IOriginConfig {
 	 * @var array
 	 */
 	protected $data = [
-		'check_amount' => false,
-		'check_amount_percentage' => 10,
-		'shortlink' => false,
-		'shortlink_force_login' => false,
-		'notification_errors' => [],
-		'notification_summary' => [],
-		'connection_type' => IOriginConfig::CONNECTION_TYPE_FILE,
-		'file_path' => '',
-		'server_host' => '',
-		'server_port' => '',
-		'server_username' => '',
-		'server_password' => '',
-		'server_database' => '',
-		'server_search_base' => '',
-		'active_period' => '',
-		'linked_origin_id' => 0,
+		self::CHECK_AMOUNT => false,
+		self::CHECK_AMOUNT_PERCENTAGE => 10,
+		self::SHORT_LINK => false,
+		self::SHORT_LINK_FORCE_LOGIN => false,
+		self::NOTIFICATION_ERRORS => '',
+		self::NOTIFICATION_SUMMARY => '',
+		self::CONNECTION_TYPE => IOriginConfig::CONNECTION_TYPE_FILE,
+		self::FILE_PATH => '',
+		self::SERVER_HOST => '',
+		self::SERVER_PORT => '',
+		self::SERVER_USERNAME => '',
+		self::SERVER_PASSWORD => '',
+		self::SERVER_DATABASE => '',
+		self::SERVER_SEARCH_BASE => '',
+		self::ACTIVE_PERIOD => '',
+		self::LINKED_ORIGIN_ID => 0,
 	];
 
 	/**
@@ -41,112 +41,112 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getServerHost() {
-		return $this->data['server_host'];
+		return $this->data[self::SERVER_HOST];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerPort() {
-		return $this->data['server_port'];
+		return $this->data[self::SERVER_PORT];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerUsername() {
-		return $this->data['server_username'];
+		return $this->data[self::SERVER_USERNAME];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerPassword() {
-		return $this->data['server_password'];
+		return $this->data[self::SERVER_PASSWORD];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerDatabase() {
-		return $this->data['server_database'];
+		return $this->data[self::SERVER_DATABASE];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerSearchBase() {
-		return $this->data['server_search_base'];
+		return $this->data[self::SERVER_SEARCH_BASE];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getFilePath() {
-		return $this->data['file_path'];
+		return $this->data[self::FILE_PATH];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getActivePeriod() {
-		return $this->data['active_period'];
+		return $this->data[self::ACTIVE_PERIOD];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getCheckAmountData() {
-		return $this->data['check_amount'];
+		return $this->data[self::CHECK_AMOUNT];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getCheckAmountDataPercentage() {
-		return $this->data['check_amount_percentage'];
+		return $this->data[self::CHECK_AMOUNT_PERCENTAGE];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function useShortLink() {
-		return $this->data['shortlink'];
+		return $this->data[self::SHORT_LINK];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function useShortLinkForcedLogin() {
-		return $this->data['shortlink_force_login'];
+		return $this->data[self::SHORT_LINK_FORCE_LOGIN];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getNotificationsErrors() {
-		return $this->data['notification_errors'];
+		return explode(',', $this->data[self::NOTIFICATION_ERRORS]);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getNotificationsSummary() {
-		return $this->data['notification_summary'];
+		return explode(',', $this->data[self::NOTIFICATION_SUMMARY]);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getConnectionType() {
-		return $this->data['connection_type'];
+		return $this->data[self::CONNECTION_TYPE];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getLinkedOriginId() {
-		return $this->data['linked_origin_id'];
+		return $this->data[self::LINKED_ORIGIN_ID];
 	}
 
 	/**
