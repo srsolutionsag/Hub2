@@ -1,5 +1,7 @@
 <?php namespace SRAG\Hub2\Origin;
+use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Hub2\Origin\Config\OriginImplementationFactory;
 use SRAG\Hub2\Origin\Properties\IOriginProperties;
 
 /**
@@ -295,7 +297,8 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @inheritdoc
 	 */
 	public function implementation() {
-		// TODO: Implement implementation() method.
+		$factory = new OriginImplementationFactory(new HubConfig(), $this);
+		return $factory->instance();
 	}
 
 

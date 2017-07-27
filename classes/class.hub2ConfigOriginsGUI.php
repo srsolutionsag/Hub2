@@ -1,5 +1,6 @@
 <?php
 
+use SRAG\Hub2\Exception\HubException;
 use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Origin\OriginImplementationTemplateGenerator;
@@ -20,17 +21,14 @@ class hub2ConfigOriginsGUI {
 	 * @var \ILIAS\DI\Container
 	 */
 	protected $DIC;
-
 	/**
 	 * @var ilTemplate
 	 */
 	protected $tpl;
-
 	/**
 	 * @var ilHub2Plugin
 	 */
 	protected $pl;
-
 	/**
 	 * @var \SRAG\Hub2\Origin\OriginFactory
 	 */
@@ -129,7 +127,7 @@ class hub2ConfigOriginsGUI {
 				if ($result) {
 					ilUtil::sendInfo("Created class implementation file: " . $generator->getClassFilePath($origin), true);
 				}
-			} catch (\SRAG\Hub2\Exception\HubException $e) {
+			} catch (HubException $e) {
 				$msg = 'Unable to create class implementation file, you must create it manually at: '
 					. $generator->getClassFilePath($origin);
 				ilUtil::sendInfo($msg, true);
