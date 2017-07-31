@@ -43,4 +43,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 		global $DIC;
 		return new CourseSyncProcessor($this->origin, $this->statusTransition, new CourseActivities($DIC->database()));
 	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function categoryProcessor() {
+		return new CategorySyncProcessor($this->origin, $this->statusTransition);
+	}
 }

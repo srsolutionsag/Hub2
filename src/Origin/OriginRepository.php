@@ -51,7 +51,7 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function categories() {
-		return [];
+		return ARCategoryOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_CATEGORY])->get();
 	}
 
 	/**

@@ -16,4 +16,9 @@ interface ISyncProcessorFactory {
 	 */
 	public function courseProcessor();
 
+	/**
+	 * @return ICategorySyncProcessor
+	 */
+	public function categoryProcessor();
+
 }

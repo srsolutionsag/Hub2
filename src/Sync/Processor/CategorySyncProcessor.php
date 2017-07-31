@@ -1,0 +1,233 @@
+<?php namespace SRAG\Hub2\Sync\Processor;
+
+use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Object\CategoryDTO;
+use SRAG\Hub2\Object\CourseDTO;
+use SRAG\Hub2\Object\IDataTransferObject;
+use SRAG\Hub2\Object\ObjectFactory;
+use SRAG\Hub2\Origin\Config\CategoryOriginConfig;
+use SRAG\Hub2\Origin\Config\CourseOriginConfig;
+use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\OriginRepository;
+use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
+use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
+use SRAG\Hub2\Sync\IObjectStatusTransition;
+
+/**
+ * Class CategorySyncProcessor
+ * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ * @package SRAG\Hub2\Sync\Processor
+ */
+class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncProcessor {
+
+	/**
+	 * @var CategoryOriginProperties
+	 */
+	protected $props;
+
+	/**
+	 * @var CategoryOriginConfig
+	 */
+	protected $config;
+
+	/**
+	 * @var array
+	 */
+	protected static $properties = [
+		'title',
+		'description',
+		'owner',
+		'orderType',
+	];
+
+	/**
+	 * @param IOrigin $origin
+	 * @param IObjectStatusTransition $transition
+	 */
+	public function __construct(IOrigin $origin,
+	                            IObjectStatusTransition $transition) {
+		parent::__construct($origin, $transition);
+		$this->props = $origin->properties();
+		$this->config = $origin->config();
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getProperties() {
+		return self::$properties;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function handleCreate(IDataTransferObject $object) {
+		global $DIC;
+		/** @var CategoryDTO $object */
+		$ilObjCategory = new \ilObjCategory();
+		$ilObjCategory->setImportId($this->getImportId($object));
+		// Find the refId under which this course should be created
+		$parentRefId = $this->determineParentRefId($object);
+		$ilObjCategory->removeTranslations();
+		$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()->getDefaultLanguage(), true);
+		$ilObjCategory->create();
+		$ilObjCategory->createReference();
+		$ilObjCategory->putInTree($parentRefId);
+		$ilObjCategory->setPermissions($parentRefId);
+		foreach (self::getProperties() as $property) {
+			$setter = "set" . ucfirst($property);
+			$getter = "get" . ucfirst($property);
+			if ($object->$getter() !== null) {
+				$ilObjCategory->$setter($object->$getter());
+			}
+		}
+		if ($this->props->get(CategoryOriginProperties::SHOW_NEWS)) {
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $object->isShowNews());
+		}
+		if ($this->props->get(CategoryOriginProperties::SHOW_INFO_TAB)) {
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $object->isShowInfoPage());
+		}
+		$ilObjCategory->update();
+		return $ilObjCategory;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
+		/** @var CategoryDTO $object */
+		$ilObjCategory = $this->findILIASCategory($ilias_id);
+		if ($ilObjCategory === null) {
+			return null;
+		}
+		// Update some properties if they should be updated depending on the origin config
+		foreach (self::getProperties() as $property) {
+			if (!$this->props->updateDTOProperty($property)) {
+				continue;
+			}
+			$setter = "set" . ucfirst($property);
+			$getter = "get" . ucfirst($property);
+			if ($object->$getter() !== null) {
+				$ilObjCategory->$setter($this->$getter());
+			}
+		}
+		if ($this->props->updateDTOProperty('showNews')) {
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $object->isShowNews());
+		}
+		if ($this->props->updateDTOProperty('showInfoPage')) {
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $object->isShowInfoPage());
+		}
+		return $ilObjCategory;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function handleDelete($ilias_id) {
+//		$ilObjCourse = $this->findILIASCourse($ilias_id);
+//		if ($ilObjCourse === null) {
+//			return null;
+//		}
+//		if ($this->props->get(CourseOriginProperties::DELETE_MODE) == CourseOriginProperties::DELETE_MODE_NONE) {
+//			return $ilObjCourse;
+//		}
+//		global $DIC;
+//		$tree = $DIC->repositoryTree();
+//		switch ($this->props->get(CourseOriginProperties::DELETE_MODE)) {
+//			case CourseOriginProperties::DELETE_MODE_OFFLINE:
+//				$ilObjCourse->setOfflineStatus(true);
+//				$ilObjCourse->update();
+//				break;
+//			case CourseOriginProperties::DELETE_MODE_DELETE:
+//				$ilObjCourse->delete();
+//				break;
+//			case CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
+//				$tree->moveToTrash($ilObjCourse->getRefId(), true);
+//				break;
+//			case CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE:
+//				if ($this->courseActivities->hasActivities($ilObjCourse)) {
+//					$ilObjCourse->setOfflineStatus(true);
+//					$ilObjCourse->update();
+//				} else {
+//					$tree->moveToTrash($ilObjCourse->getRefId(), true);
+//				}
+//				break;
+//		}
+//		return $ilObjCourse;
+	}
+
+
+	/**
+	 * @param CategoryDTO $category
+	 * @return int
+	 * @throws HubException
+	 */
+	protected function determineParentRefId(CategoryDTO $category) {
+		global $DIC;
+		$tree = $DIC->repositoryTree();
+		if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_REF_ID) {
+			if ($tree->isInTree($category->getParentId())) {
+				return $category->getParentId();
+			}
+			// The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
+			$parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
+			if (!$tree->isInTree($parentRefId)) {
+				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
+			}
+			return $parentRefId;
+		}
+		if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
+			// The stored parent-ID is an external-ID from a category of the same origin.
+			// We must search the category and check if its ILIAS ID does exist.
+			$objectFactory = new ObjectFactory($this->origin);
+			$parentCategory = $objectFactory->category($category->getParentId());
+			if (!$parentCategory->getILIASId()) {
+				// The given parent-ID does not yet exist, we check if we find the fallback category
+				$fallbackExtId = $this->config->getExternalParentIdIfNoParentIdFound();
+				$parentCategory = $objectFactory->category($fallbackExtId);
+				if (!$parentCategory->getILIASId()) {
+					throw new HubException("The linked category does not (yet) exist in ILIAS");
+				}
+			}
+			return $parentCategory->getILIASId();
+		}
+		return 0;
+	}
+
+	/**
+	 * @param int $iliasId
+	 * @return \ilObjCategory|null
+	 */
+	protected function findILIASCategory($iliasId) {
+		if (!\ilObjCategory::_exists($iliasId, true)) {
+			return null;
+		}
+		return new \ilObjCategory($iliasId);
+	}
+
+	/**
+	 * Move the course to a new parent.
+	 * Note: May also create the dependence categories
+	 *
+	 * @param $ilObjCategory
+	 * @param CategoryDTO $category
+	 */
+	protected function moveCategory(\ilObjCategory $ilObjCategory, CategoryDTO $category) {
+		global $DIC;
+		$parentRefId = $this->determineParentRefId($category);
+		$parentRefId = $this->buildDependenceCategories($category, $parentRefId);
+		if ($DIC->repositoryTree()->isDeleted($ilObjCategory->getRefId())) {
+			$ilRepUtil = new \ilRepUtil();
+			$ilRepUtil->restoreObjects($parentRefId, [$ilObjCategory->getRefId()]);
+		}
+		$oldParentRefId = $DIC->repositoryTree()->getParentId($ilObjCategory->getRefId());
+		if ($oldParentRefId == $parentRefId) {
+			return;
+		}
+		$DIC->repositoryTree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
+		$DIC->rbac()->admin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
+//			hubLog::getInstance()->write($str);
+//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
+	}
+
+}

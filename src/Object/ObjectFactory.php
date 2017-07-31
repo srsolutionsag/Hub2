@@ -34,13 +34,32 @@ class ObjectFactory implements IObjectFactory {
 		return $user;
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function course($ext_id) {
-		// TODO: Implement course() method.
+		$course = ARCourse::find($this->getId($ext_id));
+		if ($course === null) {
+			$course = new ARCourse();
+			$course->setOriginId($this->origin->getId());
+			$course->setExtId($ext_id);
+		}
+		return $course;
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function category($ext_id) {
-		// TODO: Implement category() method.
+		$category = ARCategory::find($this->getId($ext_id));
+		if ($category === null) {
+			$category = new ARCategory();
+			$category->setOriginId($this->origin->getId());
+			$category->setExtId($ext_id);
+		}
+		return $category;
 	}
+
 
 	public function group($ext_id) {
 		// TODO: Implement group() method.
