@@ -164,6 +164,25 @@ class hub2ConfigOriginsGUI {
 		$this->DIC->ctrl()->redirect($this);
 	}
 
+	protected function runOriginSync() {
+		$origin = $this->getOrigin((int)$_GET['origin_id']);
+		$sync = new \SRAG\Hub2\Sync\Sync([$origin]);
+		$sync->execute();
+		/** @var \SRAG\Hub2\Sync\IOriginSync $originSync */
+		$originSync = array_pop($sync->getOriginSyncs());
+		$info = '';
+		$notifications = $originSync->getNotifications()->getMessages();
+		foreach ($notifications as $context => $messages) {
+			$info .= "$context\n===========\n";
+			foreach ($messages as $message) {
+				$info .= "$message\n";
+			}
+			$info .= "\n";
+		}
+		ilUtil::sendInfo(nl2br($info), true);
+		$this->DIC->ctrl()->redirect($this);
+	}
+
 	protected function confirmDelete() {
 		// TODO
 		$this->tpl->setContent('TODO');

@@ -135,7 +135,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$ilObjUser->setDescription($object->getEmail());
 		// Update Login?
 		if ($this->props->updateDTOProperty('login')) {
-			$ilObjUser->setLogin($this->buildLogin($object, $ilObjUser));
+			$ilObjUser->updateLogin($this->buildLogin($object, $ilObjUser));
 		}
 		// Update title?
 		if ($this->props->updateDTOProperty('title')) {
@@ -153,7 +153,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			if ($object->$getter() !== null) {
-				$ilObjUser->$setter($this->$getter());
+				$ilObjUser->$setter($object->$getter());
 			}
 		}
 		// Update ILIAS roles ?

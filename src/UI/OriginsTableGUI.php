@@ -1,4 +1,6 @@
 <?php namespace SRAG\Hub2\UI;
+use SRAG\Hub2\Object\IObjectRepository;
+use SRAG\Hub2\Object\ObjectRepository;
 use SRAG\Hub2\Origin\IOriginRepository;
 
 /**
@@ -52,15 +54,18 @@ class OriginsTableGUI extends \ilTable2GUI {
 
 	protected function initTableData() {
 		$data = [];
-		foreach ($this->originRepository->all() as $repository) {
+		foreach ($this->originRepository->all() as $origin) {
+			$class = "SRAG\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "Repository";
+			/** @var IObjectRepository $objectRepository */
+			$objectRepository = new $class($origin);
 			$row = [];
-			$row['id'] = $repository->getId();
-			$row['active'] = $repository->isActive();
-			$row['title'] = $repository->getTitle();
-			$row['description'] = $repository->getDescription();
-			$row['object_type'] = $repository->getObjectType();
+			$row['id'] = $origin->getId();
+			$row['active'] = $origin->isActive();
+			$row['title'] = $origin->getTitle();
+			$row['description'] = $origin->getDescription();
+			$row['object_type'] = $origin->getObjectType();
 			$row['last_sync'] = 'TODO';
-			$row['n_objects'] = 'TODO';
+			$row['n_objects'] = $objectRepository->count();
 			$data[] = $row;
 		}
 		$this->setData($data);
@@ -79,41 +84,10 @@ class OriginsTableGUI extends \ilTable2GUI {
 		$DIC->ctrl()->setParameter($this->parent_obj, 'origin_id', $a_set['id']);
 		$actions->addItem($this->pl->txt('common_edit'), 'edit', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'editOrigin'));
 		$actions->addItem($this->pl->txt('common_delete'), 'delete', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'confirmDelete'));
+		$actions->addItem($this->pl->txt('origin_table_button_run'), 'runOriginSync', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'runOriginSync'));
 		$DIC->ctrl()->clearParameters($this->parent_obj);
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $actions->getHTML());
 		$this->tpl->parseCurrentBlock();
 	}
-
-
-
-
-//	/**
-//	 * @return bool
-//	 * @description return false or implements own form action and
-//	 */
-//	protected function initFormActionsAndCmdButtons() {
-//		global $ilToolbar;
-//		/**
-//		 * @var $ilToolbar ilToolbarGUI
-//		 */
-//		$ilToolbar->setFormAction($DIC->ctrl()->getFormAction($this->parent_obj), true);
-//		$ilToolbar->addButton($this->pl->txt('origin_table_button_add'), $this->ctrl->getLinkTarget($this->parent_obj, 'add'));
-//
-//		if (hubConfig::isImportEnabled()) {
-//			$import = new ilFileInputGUI('import', 'import_file');
-//			$import->setSuffixes(array( 'json', 'zip' ));
-//			$ilToolbar->addInputItem($import);
-//			$ilToolbar->addFormButton($this->pl->txt('origin_table_button_import'), 'import');
-//		}
-//		$this->setFormAction($this->ctrl->getFormAction($this->parent_obj));
-//		if (hubConfig::get(hubConfig::F_USE_ASYNC)) {
-//			$this->addCommandButton('runAsync', $this->pl->txt('origin_table_button_run') . ' (Async)');
-//		}
-//		$this->addCommandButton('run', $this->pl->txt('origin_table_button_run'));
-//		$this->addCommandButton('dryRun', $this->pl->txt('origin_table_button_dryrun'));
-//		$this->addCommandButton('deactivateAll', $this->pl->txt('origin_table_button_deactivate_all'));
-//		$this->addCommandButton('activateAll', $this->pl->txt('origin_table_button_activate_all'));
-//	}
-
 }

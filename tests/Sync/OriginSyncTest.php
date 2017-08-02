@@ -61,12 +61,12 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originImplementation = \Mockery::mock('\SRAG\Hub2\Origin\IOriginImplementation');
 		$this->originImplementation->shouldReceive('beforeSync')->once();
 		$this->origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
-//		$this->origin->shouldReceive('implementation')->andReturn($this->originImplementation);
 		$this->repository = \Mockery::mock('\SRAG\Hub2\Object\IObjectRepository');
 		$this->factory = \Mockery::mock('\SRAG\Hub2\Object\IObjectFactory');
 		$this->processor = \Mockery::mock('\SRAG\Hub2\Sync\Processor\IObjectSyncProcessor');
 		$this->originConfig = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
 		$this->statusTransition = \Mockery::mock('SRAG\Hub2\Sync\IObjectStatusTransition');
+		$this->originNotification = new \SRAG\Hub2\Notification\OriginNotifications();
 	}
 
 	public function tearDown() {
@@ -82,7 +82,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 			$this->factory,
 			$this->processor,
 			$this->statusTransition,
-			$this->originImplementation
+			$this->originImplementation,
+			$this->originNotification
 		);
 		$this->expectException(ConnectionFailedException::class);
 		$originSync->execute();
@@ -98,7 +99,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 			$this->factory,
 			$this->processor,
 			$this->statusTransition,
-			$this->originImplementation
+			$this->originImplementation,
+			$this->originNotification
 		);
 		$this->expectException(ParseDataFailedException::class);
 		$originSync->execute();
@@ -121,7 +123,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 			$this->factory,
 			$this->processor,
 			$this->statusTransition,
-			$this->originImplementation
+			$this->originImplementation,
+			$this->originNotification
 		);
 		$this->expectException(AbortOriginSyncException::class);
 		$originSync->execute();
@@ -148,7 +151,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 			$this->factory,
 			$this->processor,
 			$this->statusTransition,
-			$this->originImplementation
+			$this->originImplementation,
+			$this->originNotification
 		);
 		$originSync->execute();
 		$this->assertEquals(100, $originSync->getCountDelivered());
@@ -193,7 +197,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 			$this->factory,
 			$this->processor,
 			$this->statusTransition,
-			$this->originImplementation
+			$this->originImplementation,
+			$this->originNotification
 		);
 		$originSync->execute();
 		$this->assertEquals(4, $originSync->getCountDelivered());
@@ -230,7 +235,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 			$this->factory,
 			$this->processor,
 			$this->statusTransition,
-			$this->originImplementation
+			$this->originImplementation,
+			$this->originNotification
 		);
 		$originSync->execute();
 		$this->assertEquals($exception, array_pop($originSync->getExceptions()));

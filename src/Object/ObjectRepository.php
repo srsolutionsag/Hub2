@@ -23,7 +23,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function all() {
 		$class = $this->getClass();
-		return $class::get();
+		return $class::where(['origin_id' => $this->origin->getId()])->get();
 	}
 
 	/**
@@ -42,13 +42,14 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function getToDelete(array $ext_ids) {
 		$class = $this->getClass();
+		/** @var $class \ActiveRecord */
 		return $class::where([
 			'origin_id' => $this->origin->getId(),
 			// We only can transmit from final states CREATED and UPDATED to TO_DELETE
 			// E.g. not from DELETED or IGNORED
 			'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED],
-			'ext_ID' => $ext_ids,
-		], ['=', 'IN', 'NOT IN'])->get();
+			'ext_id' => $ext_ids,
+		], ['origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN'])->get();
 	}
 
 
@@ -57,7 +58,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function count() {
 		$class = $this->getClass();
-		return $class::count();
+		return $class::where(['origin_id' => $this->origin->getId()])->count();
 	}
 
 	/**
@@ -66,7 +67,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 * @return string
 	 */
 	protected function getClass() {
-		return 'AR' . ucfirst($this->origin->getObjectType());
+		return "SRAG\\Hub2\\Object\\AR" . ucfirst($this->origin->getObjectType());
 	}
 
 }

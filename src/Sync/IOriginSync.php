@@ -5,6 +5,7 @@ use SRAG\Hub2\Exception\AbortSyncException;
 use SRAG\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Hub2\Exception\ConnectionFailedException;
 use SRAG\Hub2\Exception\ParseDataFailedException;
+use SRAG\Hub2\Notification\OriginNotifications;
 
 /**
  * Interface ISync
@@ -56,5 +57,12 @@ interface IOriginSync {
 	 * @return int
 	 */
 	public function getCountDelivered();
+
+	/**
+	 * Get the notifications
+	 *
+	 * @return OriginNotifications
+	 */
+	public function getNotifications();
 
 }

@@ -100,7 +100,6 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->userDTO->setPhoneMobile(null);
 		$this->userDTO->setPhoneOffice(789);
 		$this->user = \Mockery::mock('\SRAG\Hub2\Object\IUser');
-		$this->user->shouldReceive('setData')->once()->with($this->userDTO->getData());
 		$this->user->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->user->shouldReceive('setStatus')->once();
@@ -237,6 +236,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->ilObjUser->shouldReceive('_exists')->with(self::ILIAS_OBJ_ID)->andReturn(true);
 		$this->user->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 		$this->user->shouldReceive('getILIASId')->andReturn(self::ILIAS_OBJ_ID);
+		$this->user->shouldReceive('setData')->once()->with($this->userDTO->getData());
 	}
 
 	/**
@@ -256,6 +256,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
 		$this->user->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->user->shouldReceive('setILIASId')->once()->with(self::ILIAS_OBJ_ID);
+		$this->user->shouldReceive('setData')->once()->with($this->userDTO->getData());
 		$this->ilObjUser->shouldReceive('setTitle')->once();
 		$this->ilObjUser->shouldReceive('setDescription')->once()->with($this->userDTO->getEmail());
 		$this->ilObjUser->shouldReceive('setImportId')->once();

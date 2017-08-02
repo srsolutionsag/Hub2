@@ -49,10 +49,12 @@ class OriginLog implements ILog {
 			return self::$ilLogInstances[$origin->getId()];
 		}
 		$fileName = implode('-', [
+			'hub2',
+			'origin',
 			$origin->getObjectType(),
 			$origin->getId(),
 		]);
-		$ilLog = new \ilLog(ILIAS_DATA_DIR, $fileName);
+		$ilLog = new \ilLog(ILIAS_DATA_DIR, $fileName . '.log');
 		self::$ilLogInstances[$origin->getId()] = $ilLog;
 		return $ilLog;
 	}

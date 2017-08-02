@@ -142,7 +142,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function update() {
-		$this->hash_code = $this->getHashCode();
+		$this->hash_code = $this->computeHashCode();
 		parent::update();
 	}
 
@@ -157,7 +157,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			throw new \Exception("External-ID is missing");
 		}
 		$this->id = $this->origin_id . $this->ext_id;
-		$this->hash_code = $this->getHashCode();
+		$this->hash_code = $this->computeHashCode();
 		parent::create();
 	}
 

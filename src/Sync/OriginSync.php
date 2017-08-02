@@ -4,10 +4,12 @@ use SRAG\Hub2\Exception\AbortOriginSyncException;
 use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use SRAG\Hub2\Exception\AbortSyncException;
 use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Object\IObjectFactory;
 use SRAG\Hub2\Object\IObjectRepository;
+use SRAG\Hub2\Object\NullDTO;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
@@ -24,47 +26,38 @@ class OriginSync implements IOriginSync {
 	 * @var IOrigin
 	 */
 	protected $origin;
-
 	/**
 	 * @var IObjectRepository
 	 */
 	protected $repository;
-
 	/**
 	 * @var IObjectFactory
 	 */
 	protected $factory;
-
 	/**
 	 * @var IDataTransferObject[]
 	 */
 	protected $dtoObjects = [];
-
 	/**
-	 * @var array
+	 * @var \Exception[] array
 	 */
 	protected $exceptions = [];
-
 	/**
 	 * @var IObjectSyncProcessor
 	 */
 	protected $processor;
-
 	/**
 	 * @var IObjectStatusTransition
 	 */
 	protected $statusTransition;
-
 	/**
 	 * @var IOriginImplementation
 	 */
 	protected $implementation;
-
 	/**
 	 * @var int
 	 */
 	protected $countDelivered = 0;
-
 	/**
 	 * @var array
 	 */
@@ -74,6 +67,10 @@ class OriginSync implements IOriginSync {
 		IObject::STATUS_DELETED => 0,
 		IObject::STATUS_IGNORED => 0,
 	];
+	/**
+	 * @var OriginNotifications
+	 */
+	protected $notifications;
 
 	/**
 	 * @param IOrigin $origin
@@ -82,13 +79,15 @@ class OriginSync implements IOriginSync {
 	 * @param IObjectSyncProcessor $processor
 	 * @param IObjectStatusTransition $transition
 	 * @param IOriginImplementation $implementation
+	 * @param OriginNotifications $notifications
 	 */
 	public function __construct(IOrigin $origin,
 	                            IObjectRepository $repository,
 	                            IObjectFactory $factory,
 	                            IObjectSyncProcessor $processor,
 	                            IObjectStatusTransition $transition,
-	                            IOriginImplementation $implementation
+	                            IOriginImplementation $implementation,
+								OriginNotifications $notifications
 	) {
 		$this->origin = $origin;
 		$this->repository = $repository;
@@ -96,6 +95,7 @@ class OriginSync implements IOriginSync {
 		$this->processor = $processor;
 		$this->statusTransition = $transition;
 		$this->implementation = $implementation;
+		$this->notifications = $notifications;
 	}
 
 
@@ -112,7 +112,7 @@ class OriginSync implements IOriginSync {
 				$threshold = $this->origin->config()->getCheckAmountDataPercentage();
 				$total = $this->repository->count();
 				$percentage = ($total > 0 && $count > 0) ? (100 / $total * $count) : 0;
-				if ($percentage < $threshold) {
+				if ($total > 0 && ($percentage < $threshold)) {
 					$msg = "Amount of delivered data not sufficient: Got {$count} datasets, 
 					which is " . number_format($percentage, 2) . "% of the existing data in hub, 
 					need at least {$threshold}% according to origin config";
@@ -152,10 +152,10 @@ class OriginSync implements IOriginSync {
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
+		$nullDTO = new NullDTO(); // There is no DTO available / needed for the deletion process (data has not been delivered)
 		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
 			$object->setStatus(IObject::STATUS_TO_DELETE);
-			// There is no DTO available / needed for the deletion process (data has not been delivered)
-			$this->processObject($object, null);
+			$this->processObject($object, $nullDTO);
 		}
 
 		try {
@@ -164,6 +164,7 @@ class OriginSync implements IOriginSync {
 			$this->exceptions[] = $e;
 			throw $e;
 		}
+		$this->addInfoAndStatisticsToNotifications();
 	}
 
 	/**
@@ -193,6 +194,14 @@ class OriginSync implements IOriginSync {
 	public function getCountDelivered() {
 		return $this->countDelivered;
 	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getNotifications() {
+		return $this->notifications;
+	}
+
 
 	/**
 	 * @param IObject $object
@@ -236,5 +245,20 @@ class OriginSync implements IOriginSync {
 	 */
 	protected function incrementProcessed($status) {
 		$this->countProcessed[$status]++;
+	}
+
+	/**
+	 * Add some statistics and information to the notifications object
+	 */
+	protected function addInfoAndStatisticsToNotifications() {
+		$context = 'Counts';
+		$this->notifications->addMessage('Delivered data sets: ' . $this->getCountDelivered(), $context);
+		$this->notifications->addMessage('Created: ' . $this->getCountProcessedByStatus(IObject::STATUS_CREATED), $context);
+		$this->notifications->addMessage('Updated: ' . $this->getCountProcessedByStatus(IObject::STATUS_UPDATED), $context);
+		$this->notifications->addMessage('Deleted: ' . $this->getCountProcessedByStatus(IObject::STATUS_DELETED), $context);
+		$this->notifications->addMessage('Ignored: ' . $this->getCountProcessedByStatus(IObject::STATUS_IGNORED), $context);
+		foreach ($this->exceptions as $exception) {
+			$this->notifications->addMessage($exception->getMessage(), 'Exceptions');
+		}
 	}
 }
