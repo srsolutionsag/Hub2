@@ -1,6 +1,5 @@
 <?php namespace SRAG\Hub2\Log;
-
-use SRAG\ILIAS\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOrigin;
 
 /**
  * Class OriginLog
@@ -20,10 +19,16 @@ class OriginLog implements ILog {
 	protected $log;
 
 	/**
+	 * @var array
+	 */
+	protected static $ilLogInstances = [];
+
+	/**
 	 * @param IOrigin $origin
 	 */
 	public function __construct(IOrigin $origin) {
 		$this->origin = $origin;
+		$this->log = $this->getLogInstance($origin);
 	}
 
 	/**
@@ -32,6 +37,23 @@ class OriginLog implements ILog {
 	 * @return mixed
 	 */
 	public function write($message, $level = self::LEVEL_INFO) {
-		// TODO: Implement write() method.
+		$this->log->write($message, $level);
+	}
+
+	/**
+	 * @param IOrigin $origin
+	 * @return \ilLog
+	 */
+	private function getLogInstance(IOrigin $origin) {
+		if (isset(self::$ilLogInstances[$origin->getId()])) {
+			return self::$ilLogInstances[$origin->getId()];
+		}
+		$fileName = implode('-', [
+			$origin->getObjectType(),
+			$origin->getId(),
+		]);
+		$ilLog = new \ilLog(ILIAS_DATA_DIR, $fileName);
+		self::$ilLogInstances[$origin->getId()] = $ilLog;
+		return $ilLog;
 	}
 }

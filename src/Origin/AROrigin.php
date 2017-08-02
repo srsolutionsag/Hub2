@@ -293,13 +293,13 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->_properties;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function implementation() {
-		$factory = new OriginImplementationFactory(new HubConfig(), $this);
-		return $factory->instance();
-	}
+//	/**
+//	 * @inheritdoc
+//	 */
+//	public function implementation() {
+//		$factory = new OriginImplementationFactory(new HubConfig(), $this);
+//		return $factory->instance();
+//	}
 
 
 	public static function returnDbTableName() {

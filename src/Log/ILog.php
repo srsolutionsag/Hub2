@@ -1,7 +1,5 @@
 <?php namespace SRAG\Hub2\Log;
 
-require_once('./Services/Logging/classes/class.ilLog.php');
-
 /**
  * Interface ILog
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
@@ -9,9 +7,10 @@ require_once('./Services/Logging/classes/class.ilLog.php');
  */
 interface ILog {
 
-	const LEVEL_INFO = \ilLogLevel::INFO;
-	const LEVEL_WARNING = \ilLogLevel::WARNING;
-	const LEVEL_CRITICAL = \ilLogLevel::CRITICAL;
+	// @see ilLogLevel
+	const LEVEL_INFO = 200;
+	const LEVEL_WARNING = 300;
+	const LEVEL_CRITICAL = 500;
 
 	/**
 	 * @param string $message

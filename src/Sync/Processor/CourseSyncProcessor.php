@@ -1,11 +1,14 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
 use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Log\ILog;
+use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Object\CourseDTO;
 use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Object\ObjectFactory;
 use SRAG\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Origin\OriginRepository;
 use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
@@ -47,13 +50,19 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 	/**
 	 * @param IOrigin $origin
+	 * @param IOriginImplementation $implementation
 	 * @param IObjectStatusTransition $transition
+	 * @param ILog $originLog
+	 * @param OriginNotifications $originNotifications
 	 * @param ICourseActivities $courseActivities
 	 */
 	public function __construct(IOrigin $origin,
+	                            IOriginImplementation $implementation,
 	                            IObjectStatusTransition $transition,
+	                            ILog $originLog,
+	                            OriginNotifications $originNotifications,
 	                            ICourseActivities $courseActivities) {
-		parent::__construct($origin, $transition);
+		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 		$this->courseActivities = $courseActivities;

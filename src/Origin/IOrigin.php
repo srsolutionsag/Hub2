@@ -103,10 +103,10 @@ interface IOrigin {
 	 */
 	public function properties();
 
-	/**
-	 * Get the implementation of this origin.
-	 *
-	 * @return IOriginImplementation
-	 */
-	public function implementation();
+//	/**
+//	 * Get the implementation of this origin.
+//	 *
+//	 * @return IOriginImplementation
+//	 */
+//	public function implementation();
 }

@@ -72,7 +72,6 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 
 //		$cb = new \ilCheckboxInputGUI($this->pl->txt('crs_prop_update_icon'), $this->prop(CourseOriginProperties::));
 //		$this->addItem($cb);
-
 	}
 
 	protected function addPropertiesDelete() {

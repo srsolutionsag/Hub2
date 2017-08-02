@@ -17,8 +17,6 @@ class CourseOriginProperties extends OriginProperties {
 	const DELETE_MODE = 'delete_mode';
 	const MOVE_COURSE = 'move_course';
 
-	// How to handle the course if marked as TO_DELETE if data was not delivered
-	// Default is "NONE" which means do nothing
 	const DELETE_MODE_NONE = 0;
 	const DELETE_MODE_OFFLINE = 1;
 	const DELETE_MODE_DELETE = 2;
@@ -37,6 +35,7 @@ class CourseOriginProperties extends OriginProperties {
 		self::CREATE_NOTIFICATION_BODY => '',
 		self::CREATE_NOTIFICATION_FROM => '',
 		self::MOVE_COURSE => false,
+		self::DELETE_MODE => self::DELETE_MODE_NONE,
 	];
 
 	/**

@@ -38,7 +38,7 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @var IDataTransferObject[]
 	 */
-	protected $dtos = [];
+	protected $dtoObjects = [];
 
 	/**
 	 * @var array
@@ -56,14 +56,19 @@ class OriginSync implements IOriginSync {
 	protected $statusTransition;
 
 	/**
+	 * @var IOriginImplementation
+	 */
+	protected $implementation;
+
+	/**
 	 * @var int
 	 */
-	protected $count_delivered = 0;
+	protected $countDelivered = 0;
 
 	/**
 	 * @var array
 	 */
-	protected $count_processed = [
+	protected $countProcessed = [
 		IObject::STATUS_CREATED => 0,
 		IObject::STATUS_UPDATED => 0,
 		IObject::STATUS_DELETED => 0,
@@ -76,30 +81,32 @@ class OriginSync implements IOriginSync {
 	 * @param IObjectFactory $factory
 	 * @param IObjectSyncProcessor $processor
 	 * @param IObjectStatusTransition $transition
+	 * @param IOriginImplementation $implementation
 	 */
 	public function __construct(IOrigin $origin,
 	                            IObjectRepository $repository,
 	                            IObjectFactory $factory,
 	                            IObjectSyncProcessor $processor,
-	                            IObjectStatusTransition $transition
+	                            IObjectStatusTransition $transition,
+	                            IOriginImplementation $implementation
 	) {
 		$this->origin = $origin;
 		$this->repository = $repository;
 		$this->factory = $factory;
 		$this->processor = $processor;
 		$this->statusTransition = $transition;
+		$this->implementation = $implementation;
 	}
 
 
 	public function execute() {
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
 		// as the sync of this origin cannot continue.
-		$implementation = $this->origin->implementation();
 		try {
-			$implementation->beforeSync();
-			$implementation->connect();
-			$count = $implementation->parseData();
-			$this->count_delivered = $count;
+			$this->implementation->beforeSync();
+			$this->implementation->connect();
+			$count = $this->implementation->parseData();
+			$this->countDelivered = $count;
 			// Check if the origin aborts its sync if the amount of delivered data is not enough
 			if ($this->origin->config()->getCheckAmountData()) {
 				$threshold = $this->origin->config()->getCheckAmountDataPercentage();
@@ -112,7 +119,7 @@ class OriginSync implements IOriginSync {
 					throw new AbortOriginSyncException($msg);
 				}
 			}
-			$this->dtos = $implementation->buildObjects();
+			$this->dtoObjects = $this->implementation->buildObjects();
 		} catch (HubException $e) {
 			$this->exceptions[] = $e;
 			throw $e;
@@ -130,7 +137,7 @@ class OriginSync implements IOriginSync {
 
 		$ext_ids_delivered = [];
 		$type = $this->origin->getObjectType();
-		foreach ($this->dtos as $dto) {
+		foreach ($this->dtoObjects as $dto) {
 			$ext_ids_delivered[] = $dto->getExtId();
 			/** @var IObject $object */
 			$object = $this->factory->$type($dto->getExtId());
@@ -152,7 +159,7 @@ class OriginSync implements IOriginSync {
 		}
 
 		try {
-			$implementation->afterSync();
+			$this->implementation->afterSync();
 		} catch (\Throwable $e) {
 			$this->exceptions[] = $e;
 			throw $e;
@@ -170,21 +177,21 @@ class OriginSync implements IOriginSync {
 	 * @inheritdoc
 	 */
 	public function getCountProcessedByStatus($status) {
-		return $this->count_processed[$status];
+		return $this->countProcessed[$status];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getCountProcessedTotal() {
-		return array_sum($this->count_processed);
+		return array_sum($this->countProcessed);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getCountDelivered() {
-		return $this->count_delivered;
+		return $this->countDelivered;
 	}
 
 	/**
@@ -215,7 +222,7 @@ class OriginSync implements IOriginSync {
 			// which decides how to proceed, e.g. continue or abort
 			$this->exceptions[] = $e;
 			$object->save();
-			$this->origin->implementation()->handleException($e);
+			$this->implementation->handleException($e);
 		} catch (\Error $e) {
 			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
 			$this->exceptions[] = $e;
@@ -228,6 +235,6 @@ class OriginSync implements IOriginSync {
 	 * @param int $status
 	 */
 	protected function incrementProcessed($status) {
-		$this->count_processed[$status]++;
+		$this->countProcessed[$status]++;
 	}
 }

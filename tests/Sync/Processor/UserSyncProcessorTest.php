@@ -59,6 +59,14 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObjUser;
+	/**
+	 * @var Mockery\MockInterface
+	 */
+	protected $originLog;
+	/**
+	 * @var \SRAG\Hub2\Notification\OriginNotifications
+	 */
+	protected $originNotifications;
 
 	/**
 	 * Setup default mocks
@@ -68,12 +76,12 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->originProperties = new UserOriginProperties();
 		$this->origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
 		$this->origin->shouldReceive('properties')->andReturn($this->originProperties);
-		$this->origin->shouldReceive('implementation')->andReturn($this->originImplementation);
 		$this->origin->shouldReceive('getId');
-//		$this->originConfig = \Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig");
 		$this->originConfig = new UserOriginConfig([]);
 		$this->origin->shouldReceive('config')->andReturn($this->originConfig);
 		$this->statusTransition = new ObjectStatusTransition(\Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig"));
+		$this->originNotifications = new \SRAG\Hub2\Notification\OriginNotifications();
+		$this->originLog = \Mockery::mock("SRAG\Hub2\Log\OriginLog");
 		$this->userDTO = new UserDTO('extIdOfJohnDoe');
 		$this->userDTO->setFirstname('John');
 		$this->userDTO->setLastname('Doe');
@@ -81,7 +89,6 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->userDTO->setLogin('JohnDoe123');
 		$this->userDTO->setPasswd('mySuperSecretPassword');
 		$this->userDTO->setCountry('NoMansLand');
-//		$this->userDTO->setBirthday(new \DateTime('1986-06-19'));
 		$this->userDTO->setExternalAccount('john.doe.external');
 		$this->userDTO->setAuthMode(UserDTO::AUTH_MODE_ILIAS);
 		$this->userDTO->setTitle('Doctor');
@@ -111,7 +118,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	 * Create ILIAS User
 	 */
 	public function test_create_user_with_default_properties() {
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$this->setDefaultExpectationsForCreationOfILIASUser();
 		$this->ilObjUser->shouldReceive('setLogin')->once()->with('j.doe');
 		$processor->process($this->user, $this->userDTO);
@@ -127,7 +134,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 	public function test_create_user_with_different_login_name_modes($mode, $expectedLoginName) {
 		$this->originConfig->setData([IUserOriginConfig::LOGIN_FIELD => $mode]);
 		$this->setDefaultExpectationsForCreationOfILIASUser();
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$this->ilObjUser->shouldReceive('setLogin')->once()->with($expectedLoginName);
 		$processor->process($this->user, $this->userDTO);
 	}
@@ -140,7 +147,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->setDefaultExpectationsForCreationOfILIASUser();
 		$this->ilObjUser->shouldReceive('setActive')->once()->with(false);
 		$this->ilObjUser->shouldReceive('setProfileIncomplete')->once()->with(true);
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->user, $this->userDTO);
 	}
 
@@ -157,7 +164,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
 		$this->user->shouldReceive('computeHashCode')->once()->andReturn('actualHashCode');
 		$this->user->shouldReceive('getHashCode')->once()->andReturn('previousHashCode');
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->user, $this->userDTO);
 	}
 
@@ -171,7 +178,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->ilObjUser->shouldNotReceive('setDescription');
 		$this->originImplementation->shouldNotReceive('beforeUpdateILIASObject');
 		$this->originImplementation->shouldNotReceive('afterUpdateILIASObject');
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->user, $this->userDTO);
 	}
 
@@ -182,7 +189,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
 		$this->ilObjUser->shouldNotReceive('update');
 		$this->ilObjUser->shouldNotReceive('delete');
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->user, $this->userDTO);
 	}
 
@@ -194,7 +201,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->ilObjUser->shouldReceive('setActive')->with(false)->once();
 		$this->ilObjUser->shouldReceive('update')->once();
 		$this->ilObjUser->shouldNotReceive('delete');
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->user, $this->userDTO);
 	}
 
@@ -204,7 +211,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
 		$this->ilObjUser->shouldReceive('delete');
-		$processor = new UserSyncProcessor($this->origin, $this->statusTransition);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->user, $this->userDTO);
 	}
 

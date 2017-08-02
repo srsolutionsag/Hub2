@@ -1,7 +1,9 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
-
+use SRAG\Hub2\Log\ILog;
+use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
 
 /**
@@ -19,21 +21,48 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @var IObjectStatusTransition
 	 */
 	protected $statusTransition;
+	/**
+	 * @var ILog
+	 */
+	protected $originLog;
+	/**
+	 * @var OriginNotifications
+	 */
+	protected $originNotifications;
+	/**
+	 * @var IOriginImplementation
+	 */
+	protected $implementation;
 
 	/**
 	 * @param IOrigin $origin
+	 * @param IOriginImplementation $implementation
 	 * @param IObjectStatusTransition $statusTransition
+	 * @param ILog $originLog
+	 * @param OriginNotifications $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IObjectStatusTransition $statusTransition) {
+	public function __construct(IOrigin $origin,
+	                            IOriginImplementation $implementation,
+	                            IObjectStatusTransition $statusTransition,
+	                            ILog $originLog,
+	                            OriginNotifications $originNotifications) {
 		$this->origin = $origin;
 		$this->statusTransition = $statusTransition;
+		$this->originLog = $originLog;
+		$this->originNotifications = $originNotifications;
+		$this->implementation = $implementation;
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function userProcessor() {
-		return new UserSyncProcessor($this->origin, $this->statusTransition);
+		return new UserSyncProcessor($this->origin,
+			$this->implementation,
+			$this->statusTransition,
+			$this->originLog,
+			$this->originNotifications
+		);
 	}
 
 	/**
@@ -41,13 +70,26 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	public function courseProcessor() {
 		global $DIC;
-		return new CourseSyncProcessor($this->origin, $this->statusTransition, new CourseActivities($DIC->database()));
+		return new CourseSyncProcessor(
+			$this->origin,
+			$this->implementation,
+			$this->statusTransition,
+			$this->originLog,
+			$this->originNotifications,
+			new CourseActivities($DIC->database())
+		);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function categoryProcessor() {
-		return new CategorySyncProcessor($this->origin, $this->statusTransition);
+		return new CategorySyncProcessor(
+			$this->origin,
+			$this->implementation,
+			$this->statusTransition,
+			$this->originLog,
+			$this->originNotifications
+		);
 	}
 }

@@ -1,6 +1,8 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
 use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Log\ILog;
+use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Object\CategoryDTO;
 use SRAG\Hub2\Object\CourseDTO;
 use SRAG\Hub2\Object\IDataTransferObject;
@@ -8,6 +10,7 @@ use SRAG\Hub2\Object\ObjectFactory;
 use SRAG\Hub2\Origin\Config\CategoryOriginConfig;
 use SRAG\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Origin\OriginRepository;
 use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
 use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
@@ -42,11 +45,18 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 
 	/**
 	 * @param IOrigin $origin
+	 * @param IOriginImplementation $implementation
 	 * @param IObjectStatusTransition $transition
+	 * @param ILog $originLog
+	 * @param OriginNotifications $originNotifications
 	 */
 	public function __construct(IOrigin $origin,
-	                            IObjectStatusTransition $transition) {
-		parent::__construct($origin, $transition);
+	                            IOriginImplementation $implementation,
+	                            IObjectStatusTransition $transition,
+	                            ILog $originLog,
+	                            OriginNotifications $originNotifications
+	) {
+		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
@@ -95,6 +105,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 	 * @inheritdoc
 	 */
 	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
+		global $DIC;
 		/** @var CategoryDTO $object */
 		$ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === null) {
@@ -111,11 +122,18 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 				$ilObjCategory->$setter($this->$getter());
 			}
 		}
+		if ($this->props->updateDTOProperty('title')) {
+			$ilObjCategory->removeTranslations();
+			$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()->getDefaultLanguage(), true);
+		}
 		if ($this->props->updateDTOProperty('showNews')) {
 			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $object->isShowNews());
 		}
 		if ($this->props->updateDTOProperty('showInfoPage')) {
 			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $object->isShowInfoPage());
+		}
+		if ($this->props->get(CategoryOriginProperties::MOVE_CATEGORY)) {
+			$this->moveCategory($ilObjCategory, $object);
 		}
 		return $ilObjCategory;
 	}
@@ -124,36 +142,23 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id) {
-//		$ilObjCourse = $this->findILIASCourse($ilias_id);
-//		if ($ilObjCourse === null) {
-//			return null;
-//		}
-//		if ($this->props->get(CourseOriginProperties::DELETE_MODE) == CourseOriginProperties::DELETE_MODE_NONE) {
-//			return $ilObjCourse;
-//		}
-//		global $DIC;
-//		$tree = $DIC->repositoryTree();
-//		switch ($this->props->get(CourseOriginProperties::DELETE_MODE)) {
-//			case CourseOriginProperties::DELETE_MODE_OFFLINE:
-//				$ilObjCourse->setOfflineStatus(true);
-//				$ilObjCourse->update();
-//				break;
-//			case CourseOriginProperties::DELETE_MODE_DELETE:
-//				$ilObjCourse->delete();
-//				break;
-//			case CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
-//				$tree->moveToTrash($ilObjCourse->getRefId(), true);
-//				break;
-//			case CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE:
-//				if ($this->courseActivities->hasActivities($ilObjCourse)) {
-//					$ilObjCourse->setOfflineStatus(true);
-//					$ilObjCourse->update();
-//				} else {
-//					$tree->moveToTrash($ilObjCourse->getRefId(), true);
-//				}
-//				break;
-//		}
-//		return $ilObjCourse;
+		$ilObjCategory = $this->findILIASCategory($ilias_id);
+		if ($ilObjCategory === null) {
+			return null;
+		}
+		if ($this->props->get(CategoryOriginProperties::DELETE_MODE) == CategoryOriginProperties::DELETE_MODE_NONE) {
+			return $ilObjCategory;
+		}
+		switch ($this->props->get(CategoryOriginProperties::DELETE_MODE)) {
+			case CategoryOriginProperties::DELETE_MODE_MARK:
+				$ilObjCategory->setTitle($ilObjCategory->getTitle() . ' ' . $this->props->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
+				$ilObjCategory->update();
+				break;
+			case CourseOriginProperties::DELETE_MODE_DELETE:
+				$ilObjCategory->delete();
+				break;
+		}
+		return $ilObjCategory;
 	}
 
 
@@ -206,8 +211,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 	}
 
 	/**
-	 * Move the course to a new parent.
-	 * Note: May also create the dependence categories
+	 * Move the category to a new parent.
 	 *
 	 * @param $ilObjCategory
 	 * @param CategoryDTO $category
@@ -215,7 +219,6 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 	protected function moveCategory(\ilObjCategory $ilObjCategory, CategoryDTO $category) {
 		global $DIC;
 		$parentRefId = $this->determineParentRefId($category);
-		$parentRefId = $this->buildDependenceCategories($category, $parentRefId);
 		if ($DIC->repositoryTree()->isDeleted($ilObjCategory->getRefId())) {
 			$ilRepUtil = new \ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [$ilObjCategory->getRefId()]);

@@ -1,10 +1,13 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
+use SRAG\Hub2\Log\ILog;
+use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Object\UserDTO;
 use SRAG\Hub2\Origin\Config\IUserOriginConfig;
 use SRAG\Hub2\Origin\Config\UserOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
 
@@ -56,10 +59,17 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
 	/**
 	 * @param IOrigin $origin
+	 * @param IOriginImplementation $implementation
 	 * @param IObjectStatusTransition $transition
+	 * @param ILog $originLog
+	 * @param OriginNotifications $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IObjectStatusTransition $transition) {
-		parent::__construct($origin, $transition);
+	public function __construct(IOrigin $origin,
+	                            IOriginImplementation $implementation,
+	                            IObjectStatusTransition $transition,
+	                            ILog $originLog,
+								OriginNotifications $originNotifications) {
+		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
