@@ -1,10 +1,14 @@
 <?php
 
+use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
+use SRAG\Hub2\Exception\AbortSyncException;
 use SRAG\Hub2\Exception\HubException;
+use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Origin\OriginImplementationTemplateGenerator;
 use SRAG\Hub2\Origin\OriginRepository;
+use SRAG\Hub2\Sync\OriginSyncFactory;
 use SRAG\Hub2\UI\OriginConfigFormGUI;
 
 require_once(__DIR__ . '/class.ilHub2Plugin.php');
@@ -166,20 +170,33 @@ class hub2ConfigOriginsGUI {
 
 	protected function runOriginSync() {
 		$origin = $this->getOrigin((int)$_GET['origin_id']);
-		$sync = new \SRAG\Hub2\Sync\Sync([$origin]);
-		$sync->execute();
-		/** @var \SRAG\Hub2\Sync\IOriginSync $originSync */
-		$originSync = array_pop($sync->getOriginSyncs());
-		$info = '';
-		$notifications = $originSync->getNotifications()->getMessages();
-		foreach ($notifications as $context => $messages) {
-			$info .= "$context\n===========\n";
-			foreach ($messages as $message) {
-				$info .= "$message\n";
+		$originSyncFactory = new OriginSyncFactory($origin);
+		$originSync = $originSyncFactory->instance();
+		try {
+			$originSync->execute();
+			// Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
+			$msg =  "Counts:\n**********\n";
+			$msg .= "Delivered data sets: " . $originSync->getCountDelivered() . "\n";
+			$msg .= "Created: " . $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED) . "\n";
+			$msg .= "Updated: " . $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED) . "\n";
+			$msg .= "Deleted: " . $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED) . "\n";
+			$msg .= "Ignored: " . $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) . "\n\n";
+			foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
+				$msg .= "$context:\n**********\n";
+				foreach ($messages as $message) {
+					$msg .= "$message\n";
+				}
+				$msg .= "\n";
 			}
-			$info .= "\n";
+			foreach ($originSync->getExceptions() as $exception) {
+				$msg .= "Exceptions:\n**********\n";
+				$msg .= $exception->getMessage() . "\n";
+			}
+			ilUtil::sendInfo(nl2br($msg), true);
+		} catch (\Exception $e) {
+			// Any exception being forwarded to here means that we failed to execute the sync at some point
+			ilUtil::sendFailure($e->getMessage(), true);
 		}
-		ilUtil::sendInfo(nl2br($info), true);
 		$this->DIC->ctrl()->redirect($this);
 	}
 

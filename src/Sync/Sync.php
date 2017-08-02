@@ -56,21 +56,8 @@ class Sync implements ISync {
 			if ($origin->getObjectType() == $skip_object_type) {
 				continue;
 			}
-			$transition = new ObjectStatusTransition($origin->config());
-			$originLog = new OriginLog($origin);
-			$originNotifications = new OriginNotifications();
-			$implementationFactory = new OriginImplementationFactory(new HubConfig(), $origin, $originLog, $originNotifications);
-			$originImplementation = $implementationFactory->instance();
-			$originSync = new OriginSync(
-				$origin,
-				$this->getObjectRepository($origin),
-				new ObjectFactory($origin),
-				$this->getSyncProcessor($origin, $originImplementation, $transition, $originLog, $originNotifications),
-				$transition,
-				$originImplementation,
-				$originNotifications
-			);
-			$this->originSyncs[$origin->getId()] = $originSync;
+			$originSyncFactory = new OriginSyncFactory($origin);
+			$originSync = $originSyncFactory->instance();
 			try {
 				$originSync->execute();
 			} catch (AbortSyncException $e) {
@@ -98,38 +85,4 @@ class Sync implements ISync {
 		return $this->exceptions;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getOriginSyncs() {
-		return $this->originSyncs;
-	}
-
-
-	/**
-	 * @param IOrigin $origin
-	 * @return IObjectRepository
-	 */
-	protected function getObjectRepository(IOrigin $origin) {
-		$class = "SRAG\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . 'Repository';
-		return new $class($origin);
-	}
-
-	/**
-	 * @param IOrigin $origin
-	 * @param IOriginImplementation $implementation
-	 * @param IObjectStatusTransition $transition
-	 * @param ILog $originLog
-	 * @param OriginNotifications $originNotifications
-	 * @return IObjectSyncProcessor
-	 */
-	protected function getSyncProcessor(IOrigin $origin,
-	                                    IOriginImplementation $implementation,
-	                                    IObjectStatusTransition $transition,
-	                                    ILog $originLog,
-	                                    OriginNotifications $originNotifications) {
-		$processorFactory = new SyncProcessorFactory($origin, $implementation, $transition, $originLog, $originNotifications);
-		$processor = $origin->getObjectType() . 'Processor';
-		return $processorFactory->$processor();
-	}
 }

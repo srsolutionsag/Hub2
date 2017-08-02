@@ -164,7 +164,7 @@ class OriginSync implements IOriginSync {
 			$this->exceptions[] = $e;
 			throw $e;
 		}
-		$this->addInfoAndStatisticsToNotifications();
+//		$this->addInfoAndStatisticsToNotifications();
 	}
 
 	/**
@@ -245,20 +245,5 @@ class OriginSync implements IOriginSync {
 	 */
 	protected function incrementProcessed($status) {
 		$this->countProcessed[$status]++;
-	}
-
-	/**
-	 * Add some statistics and information to the notifications object
-	 */
-	protected function addInfoAndStatisticsToNotifications() {
-		$context = 'Counts';
-		$this->notifications->addMessage('Delivered data sets: ' . $this->getCountDelivered(), $context);
-		$this->notifications->addMessage('Created: ' . $this->getCountProcessedByStatus(IObject::STATUS_CREATED), $context);
-		$this->notifications->addMessage('Updated: ' . $this->getCountProcessedByStatus(IObject::STATUS_UPDATED), $context);
-		$this->notifications->addMessage('Deleted: ' . $this->getCountProcessedByStatus(IObject::STATUS_DELETED), $context);
-		$this->notifications->addMessage('Ignored: ' . $this->getCountProcessedByStatus(IObject::STATUS_IGNORED), $context);
-		foreach ($this->exceptions as $exception) {
-			$this->notifications->addMessage($exception->getMessage(), 'Exceptions');
-		}
 	}
 }

@@ -20,10 +20,4 @@ interface ISync {
 	 */
 	public function getExceptions();
 
-	/**
-	 * Returns the instantiated origin syncs
-	 *
-	 * @return IOriginSync[]
-	 */
-	public function getOriginSyncs();
 }

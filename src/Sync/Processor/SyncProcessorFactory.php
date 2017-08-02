@@ -56,7 +56,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function userProcessor() {
+	public function user() {
 		return new UserSyncProcessor($this->origin,
 			$this->implementation,
 			$this->statusTransition,
@@ -68,7 +68,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function courseProcessor() {
+	public function course() {
 		global $DIC;
 		return new CourseSyncProcessor(
 			$this->origin,
@@ -83,7 +83,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function categoryProcessor() {
+	public function category() {
 		return new CategorySyncProcessor(
 			$this->origin,
 			$this->implementation,

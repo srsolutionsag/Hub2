@@ -9,16 +9,16 @@ interface ISyncProcessorFactory {
 	/**
 	 * @return IUserSyncProcessor
 	 */
-	public function userProcessor();
+	public function user();
 
 	/**
 	 * @return ICourseSyncProcessor
 	 */
-	public function courseProcessor();
+	public function course();
 
 	/**
 	 * @return ICategorySyncProcessor
 	 */
-	public function categoryProcessor();
+	public function category();
 
 }
