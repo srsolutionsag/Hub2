@@ -2,12 +2,14 @@
 
 /**
  * Trait Helper
+ *
  * @package SRAG\Hub2\Sync\Processor
  */
 trait Helper {
 
 	/**
 	 * @param string $string
+	 *
 	 * @return string
 	 */
 	protected function clearString($string) {
@@ -30,11 +32,7 @@ trait Helper {
 			'.'  => '',
 		];
 		$string = strtr($string, $replaces);
-		return strtr(
-			utf8_decode($string),
-			utf8_decode('ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ'),
-			'SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy'
-		);
-	}
 
+		return strtr(utf8_decode($string), utf8_decode('ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ'), 'SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy');
+	}
 }

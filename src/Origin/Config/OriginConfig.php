@@ -3,7 +3,7 @@
 /**
  * Class OriginConfig
  *
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin\Config
  */
 class OriginConfig implements IOriginConfig {
@@ -12,23 +12,24 @@ class OriginConfig implements IOriginConfig {
 	 * @var array
 	 */
 	protected $data = [
-		self::CHECK_AMOUNT => false,
+		self::CHECK_AMOUNT            => false,
 		self::CHECK_AMOUNT_PERCENTAGE => 10,
-		self::SHORT_LINK => false,
-		self::SHORT_LINK_FORCE_LOGIN => false,
-		self::NOTIFICATION_ERRORS => '',
-		self::NOTIFICATION_SUMMARY => '',
-		self::CONNECTION_TYPE => IOriginConfig::CONNECTION_TYPE_FILE,
-		self::FILE_PATH => '',
-		self::SERVER_HOST => '',
-		self::SERVER_PORT => '',
-		self::SERVER_USERNAME => '',
-		self::SERVER_PASSWORD => '',
-		self::SERVER_DATABASE => '',
-		self::SERVER_SEARCH_BASE => '',
-		self::ACTIVE_PERIOD => '',
-		self::LINKED_ORIGIN_ID => 0,
+		self::SHORT_LINK              => false,
+		self::SHORT_LINK_FORCE_LOGIN  => false,
+		self::NOTIFICATION_ERRORS     => '',
+		self::NOTIFICATION_SUMMARY    => '',
+		self::CONNECTION_TYPE         => IOriginConfig::CONNECTION_TYPE_FILE,
+		self::FILE_PATH               => '',
+		self::SERVER_HOST             => '',
+		self::SERVER_PORT             => '',
+		self::SERVER_USERNAME         => '',
+		self::SERVER_PASSWORD         => '',
+		self::SERVER_DATABASE         => '',
+		self::SERVER_SEARCH_BASE      => '',
+		self::ACTIVE_PERIOD           => '',
+		self::LINKED_ORIGIN_ID        => 0,
 	];
+
 
 	/**
 	 * @param array $data
@@ -37,12 +38,14 @@ class OriginConfig implements IOriginConfig {
 		$this->data = array_merge($this->data, $data);
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerHost() {
 		return $this->data[self::SERVER_HOST];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -51,12 +54,14 @@ class OriginConfig implements IOriginConfig {
 		return $this->data[self::SERVER_PORT];
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerUsername() {
 		return $this->data[self::SERVER_USERNAME];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -65,12 +70,14 @@ class OriginConfig implements IOriginConfig {
 		return $this->data[self::SERVER_PASSWORD];
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getServerDatabase() {
 		return $this->data[self::SERVER_DATABASE];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -79,12 +86,14 @@ class OriginConfig implements IOriginConfig {
 		return $this->data[self::SERVER_SEARCH_BASE];
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getFilePath() {
 		return $this->data[self::FILE_PATH];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -93,12 +102,14 @@ class OriginConfig implements IOriginConfig {
 		return $this->data[self::ACTIVE_PERIOD];
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getCheckAmountData() {
 		return $this->data[self::CHECK_AMOUNT];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -107,12 +118,14 @@ class OriginConfig implements IOriginConfig {
 		return $this->data[self::CHECK_AMOUNT_PERCENTAGE];
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function useShortLink() {
 		return $this->data[self::SHORT_LINK];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -121,12 +134,14 @@ class OriginConfig implements IOriginConfig {
 		return $this->data[self::SHORT_LINK_FORCE_LOGIN];
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getNotificationsErrors() {
 		return explode(',', $this->data[self::NOTIFICATION_ERRORS]);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -135,12 +150,14 @@ class OriginConfig implements IOriginConfig {
 		return explode(',', $this->data[self::NOTIFICATION_SUMMARY]);
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getConnectionType() {
 		return $this->data[self::CONNECTION_TYPE];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -149,13 +166,16 @@ class OriginConfig implements IOriginConfig {
 		return $this->data[self::LINKED_ORIGIN_ID];
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getCustom($key) {
 		$key = self::CUSTOM_PREFIX . $key;
+
 		return (isset($this->data[$key])) ? $this->data[$key] : null;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -164,11 +184,11 @@ class OriginConfig implements IOriginConfig {
 		return $this->data;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setData(array $data) {
 		$this->data = array_merge($this->data, $data);
 	}
-
 }

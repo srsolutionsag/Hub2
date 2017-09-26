@@ -6,7 +6,8 @@ use SRAG\Hub2\Origin\Config\IOriginConfig;
 
 /**
  * Class ObjectStatusTransition
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Sync
  */
 class ObjectStatusTransition implements IObjectStatusTransition {
@@ -21,11 +22,11 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		IObject::STATUS_DELETED,
 		IObject::STATUS_IGNORED,
 	];
-
 	/**
 	 * @var IOriginConfig
 	 */
 	protected $config;
+
 
 	/**
 	 * @param IOriginConfig $config
@@ -65,6 +66,7 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		throw new HubException(sprintf("Could not transition to intermediate state from state %s", $object->getStatus()));
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
@@ -84,12 +86,13 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		throw new HubException(sprintf("Could not transition to final state from state %s", $object->getStatus()));
 	}
 
+
 	/**
 	 * @param int $status
+	 *
 	 * @return bool
 	 */
 	protected function isFinal($status) {
 		return in_array($status, self::$final);
 	}
-
 }

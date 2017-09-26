@@ -4,7 +4,8 @@ use SRAG\Hub2\Origin\IOrigin;
 
 /**
  * Class ObjectFactory
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Object
  */
 class ObjectFactory implements IObjectFactory {
@@ -14,12 +15,14 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	protected $origin;
 
+
 	/**
 	 * @param IOrigin $origin
 	 */
 	public function __construct(IOrigin $origin) {
 		$this->origin = $origin;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -31,8 +34,10 @@ class ObjectFactory implements IObjectFactory {
 			$user->setOriginId($this->origin->getId());
 			$user->setExtId($ext_id);
 		}
+
 		return $user;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -44,8 +49,10 @@ class ObjectFactory implements IObjectFactory {
 			$course->setOriginId($this->origin->getId());
 			$course->setExtId($ext_id);
 		}
+
 		return $course;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -57,6 +64,7 @@ class ObjectFactory implements IObjectFactory {
 			$category->setOriginId($this->origin->getId());
 			$category->setExtId($ext_id);
 		}
+
 		return $category;
 	}
 
@@ -65,34 +73,37 @@ class ObjectFactory implements IObjectFactory {
 		// TODO: Implement group() method.
 	}
 
+
 	public function session($ext_id) {
 		// TODO: Implement session() method.
 	}
+
 
 	public function courseMembership($ext_id) {
 		// TODO: Implement courseMembership() method.
 	}
 
+
 	public function groupMembership($ext_id) {
 		// TODO: Implement groupMembership() method.
 	}
 
-//	/**
-//	 * @inheritdoc
-//	 */
-//	public function objectFromDTO(IObjectDTO $dto) {
-//		if ($dto instanceof UserDTO) {
-//			return $this->user($dto->getExtId());
-//		}
-//		return null;
-//	}
-
+	//	/**
+	//	 * @inheritdoc
+	//	 */
+	//	public function objectFromDTO(IObjectDTO $dto) {
+	//		if ($dto instanceof UserDTO) {
+	//			return $this->user($dto->getExtId());
+	//		}
+	//		return null;
+	//	}
 
 	/**
 	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
 	 * concatenation of the origins ID with the external-ID, see IObject::create()
 	 *
 	 * @param string $ext_id
+	 *
 	 * @return string
 	 */
 	protected function getId($ext_id) {

@@ -1,4 +1,5 @@
 <?php namespace SRAG\Hub2\Origin;
+
 use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Hub2\Origin\Config\OriginImplementationFactory;
@@ -7,7 +8,7 @@ use SRAG\Hub2\Origin\Properties\IOriginProperties;
 /**
  * ILIAS ActiveRecord implementation of an Origin
  *
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin
  */
 abstract class AROrigin extends \ActiveRecord implements IOrigin {
@@ -24,7 +25,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
 		IOrigin::OBJECT_TYPE_SESSION,
 	];
-
 	/**
 	 * @var int
 	 *
@@ -36,7 +36,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_sequence           true
 	 */
 	protected $id = 0;
-
 	/**
 	 * @var string
 	 *
@@ -46,7 +45,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_is_notnull
 	 */
 	protected $object_type;
-
 	/**
 	 * @var bool
 	 *
@@ -55,7 +53,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_length              1
 	 */
 	protected $active = 0;
-
 	/**
 	 * @var string
 	 *
@@ -65,7 +62,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_length              2048
 	 */
 	protected $title;
-
 	/**
 	 * @var string
 	 *
@@ -74,7 +70,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_length           2048
 	 */
 	protected $description;
-
 	/**
 	 * @var string
 	 *
@@ -84,7 +79,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_is_notnull          true
 	 */
 	protected $implementation_class_name = '';
-
 	/**
 	 * @var string
 	 *
@@ -92,7 +86,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_fieldtype           timestamp
 	 */
 	protected $updated_at;
-
 	/**
 	 * @var string
 	 *
@@ -100,7 +93,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_fieldtype           timestamp
 	 */
 	protected $created_at;
-
 	/**
 	 * @var array
 	 *
@@ -109,7 +101,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_length           4000
 	 */
 	protected $config = array();
-
 	/**
 	 * @var array
 	 *
@@ -118,16 +109,15 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_length           4000
 	 */
 	protected $properties = array();
-
 	/**
 	 * @var IOriginConfig
 	 */
 	protected $_config;
-
 	/**
 	 * @var IOriginProperties
 	 */
 	protected $_properties;
+
 
 	public function create() {
 		$this->created_at = date('Y-m-d H:i:s');
@@ -135,15 +125,18 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		parent::create();
 	}
 
+
 	public function update() {
 		$this->updated_at = date('Y-m-d H:i:s');
 		parent::update();
 	}
 
+
 	/**
 	 * Nasty workaround because ActiveRecord also calls sleep when reading from DB
 	 *
 	 * @param $field_name
+	 *
 	 * @return mixed|string
 	 */
 	public function sleep($field_name) {
@@ -151,6 +144,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 			case 'config':
 				if ($this->_config === null) {
 					$config = $this->getOriginConfig([]);
+
 					return json_encode($config->getData());
 				} else {
 					return json_encode($this->config()->getData());
@@ -158,13 +152,16 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 			case 'properties':
 				if ($this->_properties === null) {
 					$properties = $this->getOriginProperties([]);
+
 					return json_encode($properties->getData());
 				} else {
 					return json_encode($this->properties()->getData());
 				}
 		}
+
 		return parent::sleep($field_name);
 	}
+
 
 	public function wakeUp($field_name, $field_value) {
 		switch ($field_name) {
@@ -172,8 +169,10 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 			case 'properties':
 				return json_decode($field_value, true);
 		}
+
 		return parent::wakeUp($field_name, $field_value);
 	}
+
 
 	public function afterObjectLoad() {
 		$this->_config = $this->getOriginConfig($this->getConfigData());
@@ -188,6 +187,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->id;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
@@ -195,13 +195,16 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->title;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setTitle($title) {
 		$this->title = $title;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -210,6 +213,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->description;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
@@ -217,20 +221,24 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		$this->description = $description;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function isActive() {
-		return (bool) $this->active;
+		return (bool)$this->active;
 	}
+
 
 	/**
 	 * @inheritdoc
 	 */
 	public function setActive($active) {
 		$this->active = $active;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -239,13 +247,16 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->implementation_class_name;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setImplementationClassName($name) {
 		$this->implementation_class_name = $name;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -254,6 +265,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->created_at;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
@@ -261,12 +273,14 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->updated_at;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getObjectType() {
 		return $this->object_type;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -276,8 +290,10 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 			throw new \InvalidArgumentException("'$type' is not a valid hub object type");
 		}
 		$this->object_type = $type;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -286,6 +302,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->_config;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
@@ -293,34 +310,38 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->_properties;
 	}
 
-//	/**
-//	 * @inheritdoc
-//	 */
-//	public function implementation() {
-//		$factory = new OriginImplementationFactory(new HubConfig(), $this);
-//		return $factory->instance();
-//	}
-
+	//	/**
+	//	 * @inheritdoc
+	//	 */
+	//	public function implementation() {
+	//		$factory = new OriginImplementationFactory(new HubConfig(), $this);
+	//		return $factory->instance();
+	//	}
 
 	public static function returnDbTableName() {
 		return 'sr_hub2_origin';
 	}
 
+
 	/**
 	 * Return the concrete implementation of the IOriginConfig.
 	 *
 	 * @param array $data
+	 *
 	 * @return IOriginConfig
 	 */
 	abstract protected function getOriginConfig(array $data);
+
 
 	/**
 	 * Return the concrete implementation of the origin properties.
 	 *
 	 * @param array $data
+	 *
 	 * @return IOriginProperties
 	 */
 	abstract protected function getOriginProperties(array $data);
+
 
 	/**
 	 * @return string
@@ -328,8 +349,10 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	private function parseObjectType() {
 		$out = [];
 		preg_match('%AR(.*)Origin$%', get_class($this), $out);
+
 		return strtolower($out[1]);
 	}
+
 
 	/**
 	 * @return array
@@ -338,11 +361,11 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		return $this->config;
 	}
 
+
 	/**
 	 * @return array
 	 */
 	protected function getPropertiesData() {
 		return $this->properties;
 	}
-
 }

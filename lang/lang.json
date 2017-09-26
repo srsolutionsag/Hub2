@@ -1,0 +1,1625 @@
+{
+    "plugin_prefix": "cron_crnhk_hub2",
+    "languages": [
+        "en"
+    ],
+    "entries": {
+        "admin": {
+            "async_cli_php": {
+                "translations": {
+                    "en": "Pfad zu PHP (z.B. /usr/bin/php)"
+                }
+            },
+            "async_client": {
+                "translations": {
+                    "en": "Client-Name des Benutzers"
+                }
+            },
+            "async_password": {
+                "translations": {
+                    "en": "Passwort"
+                }
+            },
+            "async_user": {
+                "translations": {
+                    "en": "Benutzername"
+                }
+            },
+            "header_db": {
+                "translations": {
+                    "en": "Externe Middleware-Datenbank"
+                }
+            },
+            "db": {
+                "translations": {
+                    "en": "Einschalten"
+                }
+            },
+            "db_host": {
+                "translations": {
+                    "en": "Host"
+                }
+            },
+            "db_name": {
+                "translations": {
+                    "en": "Datenbankname"
+                }
+            },
+            "db_password": {
+                "translations": {
+                    "en": "Passwort"
+                }
+            },
+            "db_port": {
+                "translations": {
+                    "en": "Port"
+                }
+            },
+            "db_user": {
+                "translations": {
+                    "en": "Benutzer"
+                }
+            },
+            "import_export": {
+                "translations": {
+                    "en": "Import/Export von Anbindungen aktivieren"
+                }
+            },
+            "lock": {
+                "translations": {
+                    "en": "Einstellungen aktiver Anbindungen sperren"
+                },
+                "last_used": "26.09.2017"
+            },
+            "membership": {
+                "translations": {
+                    "en": "Kursteilnehmer"
+                }
+            },
+            "membership_activate": {
+                "translations": {
+                    "en": "Benachrichtigung aktivieren"
+                }
+            },
+            "membership_activate_info": {
+                "translations": {
+                    "en": "Benachrichtigung per Email bei neuer Kursteilnehmerschaft aktivieren."
+                }
+            },
+            "membership_mail_subject": {
+                "translations": {
+                    "en": "Betreff Benachrichtigungs-Mail"
+                }
+            },
+            "membership_mail_subject_info": {
+                "translations": {
+                    "en": "Die Platzhalter der Nachricht (unten) können auch hier verwendet werden."
+                }
+            },
+            "membership_mail_msg": {
+                "translations": {
+                    "en": "Inhalt Benachrichtigungs-Mail"
+                }
+            },
+            "membership_mail_msg_info": {
+                "translations": {
+                    "en": "Es können folgende Platzhalter verwendet werden: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]"
+                }
+            },
+            "msg_shortlink_not_active": {
+                "translations": {
+                    "en": "'Shortlinks nicht aktiviert'-Meldung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "msg_shortlink_not_active_info": {
+                "translations": {
+                    "en": "Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden."
+                }
+            },
+            "msg_shortlink_no_ilias_id": {
+                "translations": {
+                    "en": "'Keine ILIAS-ID für Objekt'-Meldung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "msg_shortlink_no_ilias_id_info": {
+                "translations": {
+                    "en": "Meldung falls für das entsprechende Hub Objekt keine entsprechende ILIAS-ID existiert."
+                },
+                "last_used": "26.09.2017"
+            },
+            "msg_shortlink_not_found": {
+                "translations": {
+                    "en": "'Ungültiger Shortlink'-Meldung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "msg_shortlink_not_found_info": {
+                "translations": {
+                    "en": "Meldung falls Objekt (noch) nicht vorhanden wenn Zugriff via Shortlink erfolgt."
+                },
+                "last_used": "26.09.2017"
+            },
+            "origins_path": {
+                "translations": {
+                    "en": "Pfad des origins-Verzeichnis"
+                },
+                "last_used": "26.09.2017"
+            },
+            "origins_path_info": {
+                "translations": {
+                    "en": "Wenn leer, wird das Standardverzeichnis unter ./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Hub/origins verwendet."
+                },
+                "last_used": "26.09.2017"
+            },
+            "password_email_body": {
+                "translations": {
+                    "en": "E-Mail-Body beim versenden von Passwörtern"
+                }
+            },
+            "roles": {
+                "translations": {
+                    "en": "Rollen"
+                }
+            },
+            "roles_info": {
+                "translations": {
+                    "en": "Rollen-Ids, welche HUB nutzen können."
+                },
+                "last_used": "26.09.2017"
+            },
+            "shortlink": {
+                "translations": {
+                    "en": "Shortlink"
+                },
+                "last_used": "26.09.2017"
+            },
+            "use_async": {
+                "translations": {
+                    "en": "Asynchrone Synchronisation"
+                }
+            },
+            "use_async_info": {
+                "translations": {
+                    "en": "Asynchrone Synchronisation über das GUI ermöglichen. Benötigt einen ILIAS Benutzer."
+                }
+            },
+            "user_creation": {
+                "translations": {
+                    "en": "Benutzererstellung"
+                }
+            },
+            "user_creation_standard_role": {
+                "translations": {
+                    "en": "Rolle bei Benutzererstellung"
+                }
+            },
+            "form_button_cancel": {
+                "translations": {
+                    "en": "Abbrechen"
+                }
+            },
+            "form_button_save": {
+                "translations": {
+                    "en": "Speichern"
+                }
+            },
+            "form_title": {
+                "translations": {
+                    "en": "Einstellungen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "header_sync": {
+                "translations": {
+                    "en": "Synchronisation"
+                }
+            }
+        },
+        "cat": {
+            "prop_base_node_external": {
+                "translations": {
+                    "en": "Basis-Node extern"
+                }
+            },
+            "prop_base_node_external_info": {
+                "translations": {
+                    "en": "Fallback External-ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID."
+                }
+            },
+            "prop_base_node_ilias": {
+                "translations": {
+                    "en": "Basis-Node ILIAS"
+                }
+            },
+            "prop_base_node_ilias_info": {
+                "translations": {
+                    "en": "Fallback Ref-ID used as parent for the category, only if the given parent could not be found via Ref-ID."
+                }
+            },
+            "prop_change_icon": {
+                "translations": {
+                    "en": "Icon ersetzen (%s)"
+                }
+            },
+            "prop_create_icon": {
+                "translations": {
+                    "en": "Icon erstellen"
+                }
+            },
+            "prop_delete_mode": {
+                "translations": {
+                    "en": "Löschverhalten"
+                }
+            },
+            "prop_delete_mode_archive": {
+                "translations": {
+                    "en": "In Kategorie archivieren"
+                }
+            },
+            "prop_delete_mode_archive_node": {
+                "translations": {
+                    "en": "Ref-ID Archiv"
+                }
+            },
+            "prop_delete_mode_delete": {
+                "translations": {
+                    "en": "Kategorie löschen"
+                }
+            },
+            "prop_delete_mode_inactive": {
+                "translations": {
+                    "en": "Append a text to the title of the category, e.g. \"(deleted)\""
+                }
+            },
+            "prop_delete_mode_inactive_text": {
+                "translations": {
+                    "en": "Appended text"
+                }
+            },
+            "prop_delete_mode_none": {
+                "translations": {
+                    "en": "Keine Aktion"
+                }
+            },
+            "prop_header_base": {
+                "translations": {
+                    "en": "Basis-Node Einstellungen"
+                }
+            },
+            "prop_header_icon": {
+                "translations": {
+                    "en": "Icon"
+                }
+            },
+            "prop_header_object": {
+                "translations": {
+                    "en": "Objekt-Einstellungen"
+                }
+            },
+            "prop_move": {
+                "translations": {
+                    "en": "Kategorie verschieben"
+                }
+            },
+            "prop_syncfield": {
+                "translations": {
+                    "en": "Synchronisationsfeld"
+                }
+            },
+            "prop_syncfield_none": {
+                "translations": {
+                    "en": "Kein Feld"
+                }
+            },
+            "prop_syncfield_title": {
+                "translations": {
+                    "en": "Titel"
+                }
+            },
+            "prop_update_description": {
+                "translations": {
+                    "en": "Beschreibung aktualisieren"
+                }
+            },
+            "prop_update_icon": {
+                "translations": {
+                    "en": "Icon updaten"
+                }
+            },
+            "prop_set_news": {
+                "translations": {
+                    "en": "Nachrichten setzen"
+                }
+            },
+            "prop_update_news": {
+                "translations": {
+                    "en": "Nachrichten aktualisieren"
+                }
+            },
+            "prop_set_infopage": {
+                "translations": {
+                    "en": "Info-Reiter setzen"
+                }
+            },
+            "prop_update_infopage": {
+                "translations": {
+                    "en": "Info-Reiter aktualisieren"
+                }
+            },
+            "prop_set_sorting": {
+                "translations": {
+                    "en": "Sortierung setzen"
+                }
+            },
+            "prop_update_sorting": {
+                "translations": {
+                    "en": "Sortierung aktualisieren"
+                }
+            },
+            "prop_update_title": {
+                "translations": {
+                    "en": "Name aktualisieren"
+                }
+            }
+        },
+        "crs": {
+            "prop_delete_mode_delete_or_inactive": {
+                "translations": {
+                    "en": "Kurs löschen oder offline setzen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_delete_mode_delete_or_inactive_info": {
+                "translations": {
+                    "en": "Wenn bereits Aktivitäten im Kurs stattfanden, wird er offline gesetzt, ansonsten gelöscht."
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_activate": {
+                "translations": {
+                    "en": "Online setzen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_create_icon": {
+                "translations": {
+                    "en": "Icon erstellen"
+                }
+            },
+            "prop_delete_mode": {
+                "translations": {
+                    "en": "Löschverhalten"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_delete_mode_delete": {
+                "translations": {
+                    "en": "Kurs löschen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_delete_mode_inactive": {
+                "translations": {
+                    "en": "Kurs offline setzen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_delete_mode_trash": {
+                "translations": {
+                    "en": "Move to Trash"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_delete_mode_none": {
+                "translations": {
+                    "en": "Keine Aktion"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_header_icon": {
+                "translations": {
+                    "en": "Icon-Einstellungen"
+                }
+            },
+            "prop_header_object": {
+                "translations": {
+                    "en": "Objekt-Einstellungen"
+                }
+            },
+            "prop_move": {
+                "translations": {
+                    "en": "Move course"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_move_info": {
+                "translations": {
+                    "en": "If the data contains a new parent ID, Hub tries to move the course under the new parent"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_node_noparent": {
+                "translations": {
+                    "en": "Fallback Parent Ref-ID"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_node_noparent_info": {
+                "translations": {
+                    "en": "Courses are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node."
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_reactivate": {
+                "translations": {
+                    "en": "Wieder online setzen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_update_description": {
+                "translations": {
+                    "en": "Beschreibung aktualisieren"
+                }
+            },
+            "prop_update_icon": {
+                "translations": {
+                    "en": "Icon aktualisieren"
+                }
+            },
+            "prop_update_responsible": {
+                "translations": {
+                    "en": "Verantwortlicher aktualisieren"
+                }
+            },
+            "prop_update_title": {
+                "translations": {
+                    "en": "Titel aktualisieren"
+                }
+            },
+            "prop_check_online": {
+                "translations": {
+                    "en": "Check online-status of course"
+                }
+            },
+            "prop_msg_not_online": {
+                "translations": {
+                    "en": "Message if course offline"
+                }
+            },
+            "prop_notification_subject": {
+                "translations": {
+                    "en": "Subject"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_notification_body": {
+                "translations": {
+                    "en": "Body"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_notification_from": {
+                "translations": {
+                    "en": "From"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_send_notification": {
+                "translations": {
+                    "en": "Activate notification"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_send_notification_info": {
+                "translations": {
+                    "en": "After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails"
+                },
+                "last_used": "26.09.2017"
+            }
+        },
+        "com": {
+            "prop_check_amount": {
+                "translations": {
+                    "en": "Mengenvergleich"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_check_amount_info": {
+                "translations": {
+                    "en": "Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden."
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_check_amount_percentage": {
+                "translations": {
+                    "en": "Prozentwert"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_force_login": {
+                "translations": {
+                    "en": "Login erfordern"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_link_to_origin": {
+                "translations": {
+                    "en": "Verknüpfung mit anderer Anbindung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_mark_deleted_text": {
+                "translations": {
+                    "en": "(gelöscht)"
+                }
+            },
+            "prop_shortlink": {
+                "translations": {
+                    "en": "Shortlink aktivieren"
+                },
+                "last_used": "26.09.2017"
+            },
+            "prop_use_ext_status": {
+                "translations": {
+                    "en": "Externes Statusmodell verwenden"
+                }
+            }
+        },
+        "common": {
+            "status_1": {
+                "translations": {
+                    "en": "New"
+                }
+            },
+            "status_2": {
+                "translations": {
+                    "en": "Delivered"
+                }
+            },
+            "status_3": {
+                "translations": {
+                    "en": "Not delivered"
+                }
+            },
+            "status_4": {
+                "translations": {
+                    "en": "Deleted in ILIAS"
+                }
+            },
+            "status_5": {
+                "translations": {
+                    "en": "Newly delivered"
+                }
+            },
+            "status_6": {
+                "translations": {
+                    "en": "Already deleted"
+                }
+            },
+            "status_7": {
+                "translations": {
+                    "en": "in Trash"
+                }
+            },
+            "actions": {
+                "translations": {
+                    "en": "Aktionen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "activate": {
+                "translations": {
+                    "en": "Aktivieren"
+                }
+            },
+            "deactivate": {
+                "translations": {
+                    "en": "Deaktivieren"
+                }
+            },
+            "delete": {
+                "translations": {
+                    "en": "Löschen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "edit": {
+                "translations": {
+                    "en": "Bearbeiten"
+                },
+                "last_used": "26.09.2017"
+            },
+            "export": {
+                "translations": {
+                    "en": "Einstellungen exportieren"
+                }
+            },
+            "none": {
+                "translations": {
+                    "en": "Keine"
+                }
+            },
+            "on_status": {
+                "translations": {
+                    "en": "Objekt-Status:"
+                },
+                "last_used": "26.09.2017"
+            },
+            "back": {
+                "translations": {
+                    "en": "Back"
+                }
+            },
+            "permissions": {
+                "translations": {
+                    "en": "Permissions"
+                },
+                "last_used": "26.09.2017"
+            },
+            "roles": {
+                "translations": {
+                    "en": "Roles"
+                },
+                "last_used": "26.09.2017"
+            }
+        },
+        "hub": {
+            "categories": {
+                "translations": {
+                    "en": "Kategorien"
+                }
+            },
+            "conf": {
+                "translations": {
+                    "en": "Einstellungen"
+                }
+            },
+            "courses": {
+                "translations": {
+                    "en": "Kurse"
+                }
+            },
+            "memberships": {
+                "translations": {
+                    "en": "Mitgliedschaften"
+                }
+            },
+            "origins": {
+                "translations": {
+                    "en": "Anbindungen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "users": {
+                "translations": {
+                    "en": "Benutzerkonten"
+                }
+            },
+            "categories_table_title": {
+                "translations": {
+                    "en": "Kategorien"
+                }
+            },
+            "courses_table_title": {
+                "translations": {
+                    "en": "Kurse"
+                }
+            },
+            "users_table_title": {
+                "translations": {
+                    "en": "Benutzerkonten"
+                }
+            }
+        },
+        "mem": {
+            "prop_add_notification": {
+                "translations": {
+                    "en": "Benachrichtigung aktivieren (wenn gewünscht)"
+                }
+            },
+            "prop_delete_mode": {
+                "translations": {
+                    "en": "Löschverhalten"
+                }
+            },
+            "prop_delete_mode_delete": {
+                "translations": {
+                    "en": "Mitgliedschaft beenden"
+                }
+            },
+            "prop_delete_mode_delete_or_inactive": {
+                "translations": {
+                    "en": "Mitgliedschaft beenden oder Zugriff sperren"
+                }
+            },
+            "prop_delete_mode_delete_or_inactive_info": {
+                "translations": {
+                    "en": "Wenn das Mitglied bereits Aktivitäten im Kurs hatte, wird der Zugriff gesperrt, <br>ansonsten wird die Mitgliedschaft beendet."
+                }
+            },
+            "prop_delete_mode_inactive": {
+                "translations": {
+                    "en": "Zugriff sperren"
+                }
+            },
+            "prop_delete_mode_none": {
+                "translations": {
+                    "en": "Mitgliedschaft bestehen lassen"
+                }
+            },
+            "prop_deleted_send_mail_admin": {
+                "translations": {
+                    "en": "Admin"
+                }
+            },
+            "prop_deleted_send_mail_member": {
+                "translations": {
+                    "en": "Mitglied"
+                }
+            },
+            "prop_deleted_send_mail_title": {
+                "translations": {
+                    "en": "Mitgliedschaft beendet-Mail versenden an:"
+                }
+            },
+            "prop_deleted_send_mail_tutor": {
+                "translations": {
+                    "en": "Tutor"
+                }
+            },
+            "prop_desktop_new": {
+                "translations": {
+                    "en": "Container auf Schreibtisch"
+                }
+            },
+            "prop_desktop_updated": {
+                "translations": {
+                    "en": "Container auf Schreibtisch"
+                }
+            },
+            "prop_get_usr_id": {
+                "translations": {
+                    "en": "User-ID aus anderer Anbindung"
+                }
+            },
+            "prop_get_usr_id_info": {
+                "translations": {
+                    "en": "Es wird nach Einträgen mit der selben Ext-ID gesucht."
+                }
+            },
+            "prop_new_send_mail_admin": {
+                "translations": {
+                    "en": "Admin"
+                }
+            },
+            "prop_new_send_mail_member": {
+                "translations": {
+                    "en": "Mitglied"
+                }
+            },
+            "prop_new_send_mail_title": {
+                "translations": {
+                    "en": "Willkommens-Mail versenden an:"
+                }
+            },
+            "prop_new_send_mail_tutor": {
+                "translations": {
+                    "en": "Tutor"
+                }
+            },
+            "prop_update_notification": {
+                "translations": {
+                    "en": "Benachrichtigung aktualisieren (wenn gewünscht)"
+                }
+            },
+            "prop_update_role": {
+                "translations": {
+                    "en": "Rolle aktualisieren"
+                }
+            },
+            "prop_updated_send_mail": {
+                "translations": {
+                    "en": "Aufnahmemail verschicken"
+                }
+            },
+            "prop_updated_send_mail_admin": {
+                "translations": {
+                    "en": "Admin"
+                }
+            },
+            "prop_updated_send_mail_member": {
+                "translations": {
+                    "en": "Mitglied"
+                }
+            },
+            "prop_updated_send_mail_title": {
+                "translations": {
+                    "en": "Statuswechsel-Mail versenden an:"
+                }
+            },
+            "prop_updated_send_mail_tutor": {
+                "translations": {
+                    "en": "Tutor"
+                }
+            }
+        },
+        "msg": {
+            "confirm_delete_origin": {
+                "translations": {
+                    "en": "Möchten Sie die Anbindung definitv löschen?"
+                }
+            },
+            "origin_activated": {
+                "translations": {
+                    "en": "Anbindung aktiviert."
+                }
+            },
+            "origin_deactivated": {
+                "translations": {
+                    "en": "Anbindung deaktiviert."
+                }
+            },
+            "saved": {
+                "translations": {
+                    "en": "Gespeichert."
+                }
+            },
+            "success_create_origin": {
+                "translations": {
+                    "en": "MISSING"
+                }
+            },
+            "origin_saved": {
+                "translations": {
+                    "en": "MISSING"
+                }
+            }
+        },
+        "origin": {
+            "subtab_icons": {
+                "translations": {
+                    "en": "Icons"
+                }
+            },
+            "subtab_settings": {
+                "translations": {
+                    "en": "Settings"
+                }
+            },
+            "form_button_create": {
+                "translations": {
+                    "en": "Speichern"
+                }
+            },
+            "form_button_index": {
+                "translations": {
+                    "en": "Abbrechen"
+                }
+            },
+            "form_button_update": {
+                "translations": {
+                    "en": "Save & close"
+                }
+            },
+            "form_button_update_and_stay": {
+                "translations": {
+                    "en": "Speichern"
+                }
+            },
+            "form_properties": {
+                "translations": {
+                    "en": "Einstellungen"
+                }
+            },
+            "form_title_add": {
+                "translations": {
+                    "en": "Herkunft erstellen"
+                },
+                "last_used": "22.09.2017"
+            },
+            "form_title_edit": {
+                "translations": {
+                    "en": "Herkunft bearbeiten"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_active": {
+                "translations": {
+                    "en": "Synchronisation aktiv"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_class_name": {
+                "translations": {
+                    "en": "PHP-Klassenname"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_class_name_info": {
+                "translations": {
+                    "en": "Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location."
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type": {
+                "translations": {
+                    "en": "Verbindungstyp"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db": {
+                "translations": {
+                    "en": "Server"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db_database": {
+                "translations": {
+                    "en": "Datenbank"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db_host": {
+                "translations": {
+                    "en": "Host"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db_info": {
+                "translations": {
+                    "en": "Die Daten stammen aus einer Serververbindung."
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db_password": {
+                "translations": {
+                    "en": "Passwort"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db_port": {
+                "translations": {
+                    "en": "Port"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db_search_base": {
+                "translations": {
+                    "en": "Search-Base"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_db_username": {
+                "translations": {
+                    "en": "Login-Name"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_external": {
+                "translations": {
+                    "en": "Extern"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_external_info": {
+                "translations": {
+                    "en": "Füllen der Hub-Tabelle durch Fremdsystem."
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_file": {
+                "translations": {
+                    "en": "Datei oder Verzeichnis"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_file_info": {
+                "translations": {
+                    "en": "Daten werden aus einer Datei gelesen."
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_conf_type_file_path": {
+                "translations": {
+                    "en": "Pfad zur Datei"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_description": {
+                "translations": {
+                    "en": "Beschreibung"
+                }
+            },
+            "form_field_exec_time": {
+                "translations": {
+                    "en": "Zeitpunkt der Synchronisation"
+                }
+            },
+            "form_field_exec_time_info": {
+                "translations": {
+                    "en": "Format: HH:MM <br>Falls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit <br> ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert."
+                }
+            },
+            "form_field_id": {
+                "translations": {
+                    "en": "ID"
+                }
+            },
+            "form_field_notification_email": {
+                "translations": {
+                    "en": "Benachrichtigung bei Fehler"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_summary_email": {
+                "translations": {
+                    "en": "E-Mailadressen für Zusammenfassung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "from_field_active_period": {
+                "translations": {
+                    "en": "Active period"
+                },
+                "last_used": "26.09.2017"
+            },
+            "from_field_active_period_info": {
+                "translations": {
+                    "en": "The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED."
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_title": {
+                "translations": {
+                    "en": "Titel"
+                }
+            },
+            "form_field_usage_type": {
+                "translations": {
+                    "en": "Sync-Verwendung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_field_usage_type_1": {
+                "translations": {
+                    "en": "Benutzerkonten"
+                }
+            },
+            "form_field_usage_type_2": {
+                "translations": {
+                    "en": "Kurs-Mitgliedschaften"
+                }
+            },
+            "form_field_usage_type_3": {
+                "translations": {
+                    "en": "Kurse"
+                }
+            },
+            "form_field_usage_type_4": {
+                "translations": {
+                    "en": "Kategorien"
+                }
+            },
+            "form_field_update_dto": {
+                "translations": {
+                    "en": "Update %s"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_comma_separated": {
+                "translations": {
+                    "en": "Separate multiple values by a comma"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_header_connection": {
+                "translations": {
+                    "en": "Verbindung zu Daten"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_header_notification": {
+                "translations": {
+                    "en": "Benachrichtigungen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "form_header_sync": {
+                "translations": {
+                    "en": "Synchronisation"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_button_dryrun": {
+                "translations": {
+                    "en": "Dry-Run"
+                },
+                "last_used": "22.09.2017"
+            },
+            "table_button_activate_all": {
+                "translations": {
+                    "en": "Alle aktivieren"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_button_add": {
+                "translations": {
+                    "en": "Anbindung hinzufügen"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_button_deactivate_all": {
+                "translations": {
+                    "en": "Alle deaktivieren"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_button_import": {
+                "translations": {
+                    "en": "Anbindung importieren"
+                }
+            },
+            "table_button_run": {
+                "translations": {
+                    "en": "Synchronisierung starten"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_header_active": {
+                "translations": {
+                    "en": "Aktiv"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_header_count": {
+                "translations": {
+                    "en": "Anzahl"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_header_duration_objects": {
+                "translations": {
+                    "en": "Building Objects"
+                }
+            },
+            "table_header_description": {
+                "translations": {
+                    "en": "Beschreibung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_header_duration": {
+                "translations": {
+                    "en": "Read Data"
+                }
+            },
+            "table_header_last_update": {
+                "translations": {
+                    "en": "Letzte Synchronisierung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_header_title": {
+                "translations": {
+                    "en": "Titel"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_header_usage_type": {
+                "translations": {
+                    "en": "Verwendung"
+                },
+                "last_used": "26.09.2017"
+            },
+            "table_title": {
+                "translations": {
+                    "en": "Anbindungen"
+                }
+            },
+            "title": {
+                "translations": {
+                    "en": "Title"
+                },
+                "last_used": "26.09.2017"
+            },
+            "description": {
+                "translations": {
+                    "en": "Description"
+                },
+                "last_used": "26.09.2017"
+            }
+        },
+        "object": {
+            "type_user": {
+                "translations": {
+                    "en": "User"
+                },
+                "last_used": "22.09.2017"
+            },
+            "type_courseMembership": {
+                "translations": {
+                    "en": "Course Memberships"
+                },
+                "last_used": "22.09.2017"
+            },
+            "type_course": {
+                "translations": {
+                    "en": "Course"
+                },
+                "last_used": "22.09.2017"
+            },
+            "type_category": {
+                "translations": {
+                    "en": "Category"
+                },
+                "last_used": "22.09.2017"
+            },
+            "type_group": {
+                "translations": {
+                    "en": "Group"
+                },
+                "last_used": "22.09.2017"
+            },
+            "type_groupMembership": {
+                "translations": {
+                    "en": "Group Membership"
+                },
+                "last_used": "22.09.2017"
+            },
+            "type_session": {
+                "translations": {
+                    "en": "Session"
+                },
+                "last_used": "22.09.2017"
+            }
+        },
+        "usr": {
+            "prop_activate_account": {
+                "translations": {
+                    "en": "Account aktivieren"
+                }
+            },
+            "prop_create_password": {
+                "translations": {
+                    "en": "Passwort erstellen"
+                }
+            },
+            "prop_delete_mode": {
+                "translations": {
+                    "en": "Löschverhalten"
+                }
+            },
+            "prop_delete_mode_delete": {
+                "translations": {
+                    "en": "Benutzer löschen"
+                }
+            },
+            "prop_delete_mode_inactive": {
+                "translations": {
+                    "en": "Benutzer deaktivieren"
+                }
+            },
+            "prop_delete_mode_none": {
+                "translations": {
+                    "en": "Keine Aktion"
+                }
+            },
+            "prop_header_object": {
+                "translations": {
+                    "en": "Objekt-Einstellungen"
+                }
+            },
+            "config_login_field": {
+                "translations": {
+                    "en": "ILIAS Loginfeld"
+                }
+            },
+            "config_login_field_info": {
+                "translations": {
+                    "en": "Available fields and modes defining the login name of a user in ILIAS. Example user: John Doe"
+                }
+            },
+            "config_login_field_1": {
+                "translations": {
+                    "en": "Shortened firstname and lastname (j.doe)"
+                }
+            },
+            "config_login_field_2": {
+                "translations": {
+                    "en": "E-Mail"
+                }
+            },
+            "config_login_field_3": {
+                "translations": {
+                    "en": "External Account"
+                }
+            },
+            "config_login_field_4": {
+                "translations": {
+                    "en": "External ID"
+                }
+            },
+            "config_login_field_5": {
+                "translations": {
+                    "en": "firstname.lastname (john.doe)"
+                }
+            },
+            "config_login_field_6": {
+                "translations": {
+                    "en": "Hub-field login"
+                }
+            },
+            "prop_password_mail_body": {
+                "translations": {
+                    "en": "Text"
+                }
+            },
+            "prop_password_mail_date_format": {
+                "translations": {
+                    "en": "Datumsformat für Platzhalter"
+                }
+            },
+            "prop_password_mail_placeholders": {
+                "translations": {
+                    "en": "Verfügbare Platzhalter"
+                }
+            },
+            "prop_password_mail_subject": {
+                "translations": {
+                    "en": "Betreff"
+                }
+            },
+            "prop_reactivate_account": {
+                "translations": {
+                    "en": "Account reaktivieren"
+                }
+            },
+            "prop_reactivate_account_info": {
+                "translations": {
+                    "en": "Activates the user account again if it is not active when the sync updates a user"
+                }
+            },
+            "prop_send_password": {
+                "translations": {
+                    "en": "Passwort per Mail versenden"
+                }
+            },
+            "prop_send_password_field": {
+                "translations": {
+                    "en": "Feld mit E-Mailadresse"
+                }
+            },
+            "prop_syncfield": {
+                "translations": {
+                    "en": "Synchronisationsfeld"
+                }
+            },
+            "prop_syncfield_none": {
+                "translations": {
+                    "en": "Kein Feld"
+                }
+            },
+            "prop_ilias_roles_info": {
+                "translations": {
+                    "en": "Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations"
+                }
+            }
+        },
+        "view": {
+            "hubcategory_index": {
+                "translations": {
+                    "en": "Kategorien"
+                }
+            },
+            "hubcourse_index": {
+                "translations": {
+                    "en": "Kurse"
+                }
+            },
+            "hubmembership_index": {
+                "translations": {
+                    "en": "Mitgliedschaften"
+                }
+            },
+            "field_creation_date": {
+                "translations": {
+                    "en": "Erstellungsdatum"
+                }
+            },
+            "field_container_role": {
+                "translations": {
+                    "en": "Rolle in Objekt"
+                }
+            },
+            "field_delivery_date_micro": {
+                "translations": {
+                    "en": "Zustellungsdatum"
+                }
+            },
+            "field_ext_id": {
+                "translations": {
+                    "en": "Externe ID"
+                }
+            },
+            "field_owner": {
+                "translations": {
+                    "en": "Besitzer"
+                }
+            },
+            "field_first_dependence": {
+                "translations": {
+                    "en": "Erste Abhängigkeit"
+                }
+            },
+            "field_ilias_object": {
+                "translations": {
+                    "en": "Kursname"
+                }
+            },
+            "field_important_information": {
+                "translations": {
+                    "en": "Important Information"
+                }
+            },
+            "field_sub_limitation_type": {
+                "translations": {
+                    "en": "Subscription Type"
+                }
+            },
+            "field_notification_email": {
+                "translations": {
+                    "en": "Benachrichtungsmail"
+                }
+            },
+            "field_container_id": {
+                "translations": {
+                    "en": "Objektname"
+                }
+            },
+            "field_order_type": {
+                "translations": {
+                    "en": "Sortierung"
+                }
+            },
+            "field_parent_id": {
+                "translations": {
+                    "en": "Parentobjekt"
+                }
+            },
+            "field_parent_id_type": {
+                "translations": {
+                    "en": "Parent ID Typ"
+                }
+            },
+            "field_second_dependence": {
+                "translations": {
+                    "en": "Zweite Abhängigkeit"
+                }
+            },
+            "field_show_infopage": {
+                "translations": {
+                    "en": "Infoseite anzeigen"
+                }
+            },
+            "field_show_news": {
+                "translations": {
+                    "en": "News anzeigen"
+                }
+            },
+            "field_responsible": {
+                "translations": {
+                    "en": "Verantwortlicher"
+                }
+            },
+            "field_responsible_email": {
+                "translations": {
+                    "en": "Mail Verantwortlicher"
+                }
+            },
+            "field_shortlink": {
+                "translations": {
+                    "en": "Shortlink"
+                }
+            },
+            "field_sr_hub_origin_id": {
+                "translations": {
+                    "en": "Anbindung"
+                }
+            },
+            "field_status": {
+                "translations": {
+                    "en": "Status"
+                }
+            },
+            "field_title": {
+                "translations": {
+                    "en": "Titel"
+                }
+            },
+            "field_user_name": {
+                "translations": {
+                    "en": "Benutzername"
+                }
+            },
+            "field_view_mode": {
+                "translations": {
+                    "en": "View Mode"
+                }
+            }
+        },
+        "icon": {
+            "form_title_dep_1": {
+                "translations": {
+                    "en": "Icons for first Categorie"
+                }
+            },
+            "form_title_dep_2": {
+                "translations": {
+                    "en": "Icons for second Categorie"
+                }
+            },
+            "form_title_dep_3": {
+                "translations": {
+                    "en": "Icons for third Categorie"
+                }
+            },
+            "form_title_obj": {
+                "translations": {
+                    "en": "Icons for Object"
+                }
+            },
+            "title_small": {
+                "translations": {
+                    "en": "Small"
+                }
+            },
+            "title_medium": {
+                "translations": {
+                    "en": "Medium"
+                }
+            },
+            "title_large": {
+                "translations": {
+                    "en": "Large"
+                }
+            },
+            "form_button_save": {
+                "translations": {
+                    "en": "Save"
+                }
+            }
+        },
+        "confirm": {
+            "delete_button": {
+                "translations": {
+                    "en": "Löschen"
+                },
+                "last_used": "22.09.2017"
+            }
+        },
+        "cancel": {
+            "delete_button": {
+                "translations": {
+                    "en": "Cancel"
+                },
+                "last_used": "22.09.2017"
+            }
+        },
+        "button": {
+            "save": {
+                "translations": {
+                    "en": "Save"
+                },
+                "last_used": "26.09.2017"
+            },
+            "cancel": {
+                "translations": {
+                    "en": "Cancel"
+                },
+                "last_used": "26.09.2017"
+            }
+        }
+    }
+}

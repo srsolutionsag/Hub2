@@ -3,7 +3,7 @@
 require_once(dirname(dirname(__DIR__)) . '/AbstractHub2Tests.php');
 
 use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\UserDTO;
+use SRAG\Hub2\Object\User\UserDTO;
 use SRAG\Hub2\Origin\Config\IUserOriginConfig;
 use SRAG\Hub2\Origin\Config\UserOriginConfig;
 use SRAG\Hub2\Origin\Properties\UserOriginProperties;
@@ -99,7 +99,7 @@ class UserSyncProcessorTest extends AbstractHub2Tests {
 		$this->userDTO->setPhoneHome(123);
 		$this->userDTO->setPhoneMobile(null);
 		$this->userDTO->setPhoneOffice(789);
-		$this->user = \Mockery::mock('\SRAG\Hub2\Object\IUser');
+		$this->user = \Mockery::mock('\SRAG\Hub2\Object\User\IUser');
 		$this->user->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->user->shouldReceive('setStatus')->once();

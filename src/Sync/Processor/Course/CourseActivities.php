@@ -1,8 +1,9 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php namespace SRAG\Hub2\Sync\Processor\Course;
 
 /**
  * Class CourseActivities
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Sync\Processor
  */
 class CourseActivities implements ICourseActivities {
@@ -12,12 +13,14 @@ class CourseActivities implements ICourseActivities {
 	 */
 	protected $db;
 
+
 	/**
 	 * @param \ilDBInterface $db
 	 */
 	public function __construct(\ilDBInterface $db) {
 		$this->db = $db;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -33,8 +36,10 @@ class CourseActivities implements ICourseActivities {
 				        JOIN object_data AS dat ON dat.type = 'role' AND dat.title = CONCAT('il_crs_member_', ref.ref_id)				        
 				        JOIN rbac_ua ON rbac_ua.rol_id = dat.obj_id AND rbac_ua.usr_id = wre.usr_id				        
 				WHERE
-				    wre.obj_id = " . $this->db->quote(\ilObject2::_lookupObjId($ilObjCourse->getRefId()), 'integer');
+				    wre.obj_id = "
+		       . $this->db->quote(\ilObject2::_lookupObjId($ilObjCourse->getRefId()), 'integer');
 		$query = $this->db->query($sql);
+
 		return ($this->db->numRows($query) > 0);
 	}
 }

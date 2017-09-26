@@ -2,7 +2,8 @@
 
 /**
  * Interface ILog
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\ILIAS\Plugins\Log
  */
 interface ILog {
@@ -12,11 +13,12 @@ interface ILog {
 	const LEVEL_WARNING = 300;
 	const LEVEL_CRITICAL = 500;
 
+
 	/**
 	 * @param string $message
-	 * @param int $level
+	 * @param int    $level
+	 *
 	 * @return mixed
 	 */
 	public function write($message, $level = self::LEVEL_INFO);
-
 }

@@ -2,6 +2,7 @@
 
 /**
  * Interface IUserOrigin
+ *
  * @package SRAG\Hub2\Origin
  */
 interface IUserOrigin {

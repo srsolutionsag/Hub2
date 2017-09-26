@@ -9,6 +9,7 @@ use SRAG\Hub2\Notification\OriginNotifications;
 
 /**
  * Interface ISync
+ *
  * @package SRAG\Hub2\Sync
  */
 interface IOriginSync {
@@ -24,12 +25,14 @@ interface IOriginSync {
 	 */
 	public function execute();
 
+
 	/**
 	 * Get a collection of all exceptions occurred during executing the sync.
 	 *
 	 * @return array
 	 */
 	public function getExceptions();
+
 
 	/**
 	 * Get the number of objects processed by the final status, e.g.
@@ -40,9 +43,11 @@ interface IOriginSync {
 	 *  * IObject::STATUS_IGNORED: Number of objects ignored
 	 *
 	 * @param int $status
+	 *
 	 * @return int
 	 */
 	public function getCountProcessedByStatus($status);
+
 
 	/**
 	 * Get the number of objects processed by the sync.
@@ -51,6 +56,7 @@ interface IOriginSync {
 	 */
 	public function getCountProcessedTotal();
 
+
 	/**
 	 * Get the amount of delivered data (excludes non-valid data).
 	 *
@@ -58,11 +64,11 @@ interface IOriginSync {
 	 */
 	public function getCountDelivered();
 
+
 	/**
 	 * Get the notifications
 	 *
 	 * @return OriginNotifications
 	 */
 	public function getNotifications();
-
 }

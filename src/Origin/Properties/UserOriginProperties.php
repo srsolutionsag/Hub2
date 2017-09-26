@@ -2,7 +2,8 @@
 
 /**
  * Class UserOriginProperties
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin\Properties
  */
 class UserOriginProperties extends OriginProperties {
@@ -16,29 +17,28 @@ class UserOriginProperties extends OriginProperties {
 	const PASSWORD_MAIL_DATE_FORMAT = 'password_mail_date_format';
 	const REACTIVATE_ACCOUNT = 'reactivate_account';
 	const DELETE = 'delete';
-
 	// How to handle the user if marked as TO_DELETE if data was not delivered
 	// Default is "NONE" which means do nothing
 	const DELETE_MODE_NONE = 0;
 	const DELETE_MODE_DELETE = 1;
 	const DELETE_MODE_INACTIVE = 2;
-
 	/**
 	 * Default values
 	 *
 	 * @var array
 	 */
 	protected $data = [
-		self::ACTIVATE_ACCOUNT => true,
-		self::CREATE_PASSWORD => false,
-		self::SEND_PASSWORD => false,
-		self::SEND_PASSWORD_FIELD => '',
-		self::PASSWORD_MAIL_SUBJECT => '',
-		self::PASSWORD_MAIL_BODY => '',
+		self::ACTIVATE_ACCOUNT          => true,
+		self::CREATE_PASSWORD           => false,
+		self::SEND_PASSWORD             => false,
+		self::SEND_PASSWORD_FIELD       => '',
+		self::PASSWORD_MAIL_SUBJECT     => '',
+		self::PASSWORD_MAIL_BODY        => '',
 		self::PASSWORD_MAIL_DATE_FORMAT => 'd.m.Y',
-		self::REACTIVATE_ACCOUNT => false,
-		self::DELETE => self::DELETE_MODE_NONE,
+		self::REACTIVATE_ACCOUNT        => false,
+		self::DELETE                    => self::DELETE_MODE_NONE,
 	];
+
 
 	/**
 	 * @return array
@@ -50,5 +50,4 @@ class UserOriginProperties extends OriginProperties {
 			self::DELETE_MODE_INACTIVE,
 		];
 	}
-
 }

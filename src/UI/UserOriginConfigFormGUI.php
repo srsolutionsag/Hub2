@@ -1,4 +1,5 @@
 <?php namespace SRAG\Hub2\UI;
+
 use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Origin\ARUserOrigin;
 use SRAG\Hub2\Origin\Config\IUserOriginConfig;
@@ -8,7 +9,8 @@ use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 
 /**
  * Class UserOriginConfigFormGUI
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\UI
  */
 class UserOriginConfigFormGUI extends OriginConfigFormGUI {
@@ -17,6 +19,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 	 * @var ARUserOrigin
 	 */
 	protected $origin;
+
 
 	protected function addSyncConfig() {
 		parent::addSyncConfig();
@@ -31,6 +34,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 		$syncfield->setValue($this->origin->config()->getILIASLoginField());
 		$this->addItem($syncfield);
 	}
+
 
 	protected function addPropertiesNew() {
 		$activate = new \ilCheckboxInputGUI($this->pl->txt('usr_prop_activate_account'), $this->prop(UserOriginProperties::ACTIVATE_ACCOUNT));
@@ -56,7 +60,8 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 		$subject->setValue($this->origin->properties()->get(UserOriginProperties::PASSWORD_MAIL_SUBJECT));
 		$send_password->addSubItem($subject);
 		$mail_body = new \ilTextareaInputGUI($this->pl->txt('usr_prop_password_mail_body'), $this->prop(UserOriginProperties::PASSWORD_MAIL_BODY));
-		$mail_body->setInfo($this->pl->txt('usr_prop_password_mail_placeholders') . ': [LOGIN], [PASSWORD], [VALID_UNTIL], [COURSE_LINK]');
+		$mail_body->setInfo($this->pl->txt('usr_prop_password_mail_placeholders')
+		                    . ': [LOGIN], [PASSWORD], [VALID_UNTIL], [COURSE_LINK]');
 		$mail_body->setCols(80);
 		$mail_body->setRows(15);
 		$mail_body->setValue($this->origin->properties()->get(UserOriginProperties::PASSWORD_MAIL_BODY));
@@ -70,6 +75,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 		parent::addPropertiesNew();
 	}
 
+
 	protected function addPropertiesUpdate() {
 		$activate = new \ilCheckboxInputGUI($this->pl->txt('usr_prop_reactivate_account'), $this->prop(UserOriginProperties::REACTIVATE_ACCOUNT));
 		$activate->setInfo($this->pl->txt('usr_prop_reactivate_account_info'));
@@ -78,6 +84,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		parent::addPropertiesUpdate();
 	}
+
 
 	protected function addPropertiesDelete() {
 		$delete = new \ilRadioGroupInputGUI($this->pl->txt('usr_prop_delete_mode'), $this->prop(UserOriginProperties::DELETE));
@@ -92,5 +99,4 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		parent::addPropertiesDelete();
 	}
-
 }

@@ -4,7 +4,7 @@ use SRAG\Hub2\Exception\AbortOriginSyncException;
 use SRAG\Hub2\Exception\ConnectionFailedException;
 use SRAG\Hub2\Exception\ParseDataFailedException;
 use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\UserDTO;
+use SRAG\Hub2\Object\User\UserDTO;
 
 require_once(dirname(__DIR__) . '/AbstractHub2Tests.php');
 
@@ -219,7 +219,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->origin->shouldReceive('getObjectType')->andReturn('user');
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn([new UserDTO(1)]);
 		$this->statusTransition->shouldReceive('finalToIntermediate');
-		$userMock = \Mockery::mock('\SRAG\Hub2\Object\IUser');
+		$userMock = \Mockery::mock('\SRAG\Hub2\Object\User\IUser');
 		$userMock->shouldReceive('setDeliveryDate', 'setStatus');
 		$userMock->shouldReceive('getData')->andReturn([]);
 		$this->factory->shouldReceive('user')->andReturn($userMock);

@@ -2,7 +2,8 @@
 
 /**
  * Class CategoryOriginProperties
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin\Properties
  */
 class CategoryOriginProperties extends OriginProperties {
@@ -12,21 +13,20 @@ class CategoryOriginProperties extends OriginProperties {
 	const DELETE_MODE = 'delete_mode';
 	const MOVE_CATEGORY = 'move_category';
 	const DELETE_MODE_MARK_TEXT = 'delete_mode_mark_text';
-
 	const DELETE_MODE_NONE = 0;
 	const DELETE_MODE_MARK = 1;
 	const DELETE_MODE_DELETE = 2;
-
 	/**
 	 * @var array
 	 */
 	protected $data = [
-		self::SHOW_INFO_TAB => false,
-		self::SHOW_NEWS => false,
-		self::MOVE_CATEGORY => false,
-		self::DELETE_MODE => self::DELETE_MODE_NONE,
+		self::SHOW_INFO_TAB         => false,
+		self::SHOW_NEWS             => false,
+		self::MOVE_CATEGORY         => false,
+		self::DELETE_MODE           => self::DELETE_MODE_NONE,
 		self::DELETE_MODE_MARK_TEXT => '',
 	];
+
 
 	/**
 	 * @return array

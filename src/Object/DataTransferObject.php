@@ -2,7 +2,8 @@
 
 /**
  * Class ObjectDTO
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Object
  */
 abstract class DataTransferObject implements IDataTransferObject {
@@ -11,11 +12,11 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 * @var string
 	 */
 	private $ext_id = '';
-
 	/**
 	 * @var string
 	 */
 	private $period = '';
+
 
 	/**
 	 * @param $ext_id
@@ -24,12 +25,14 @@ abstract class DataTransferObject implements IDataTransferObject {
 		$this->ext_id = $ext_id;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getExtId() {
 		return $this->ext_id;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -38,13 +41,16 @@ abstract class DataTransferObject implements IDataTransferObject {
 		return $this->period;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setPeriod($period) {
 		$this->period = $period;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -54,8 +60,10 @@ abstract class DataTransferObject implements IDataTransferObject {
 		foreach ($this->getProperties() as $var) {
 			$data[$var] = $this->{$var};
 		}
+
 		return $data;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -64,8 +72,10 @@ abstract class DataTransferObject implements IDataTransferObject {
 		foreach ($data as $key => $value) {
 			$this->{$key} = $value;
 		}
+
 		return $this;
 	}
+
 
 	/**
 	 * @return array
@@ -81,5 +91,4 @@ abstract class DataTransferObject implements IDataTransferObject {
 			"period: " . $this->getPeriod(),
 		]);
 	}
-
 }

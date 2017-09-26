@@ -1,6 +1,7 @@
 <?php namespace SRAG\Hub2\UI;
 
 use SRAG\Hub2\Config\IHubConfig;
+use SRAG\Hub2\Helper\DIC;
 use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
@@ -10,23 +11,18 @@ use SRAG\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class OriginConfigFormGUI
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\UI
  */
 class OriginConfigFormGUI extends \ilPropertyFormGUI {
 
-	/**
-	 * @var \ILIAS\DI\Container
-	 */
-	protected $DIC;
-
+	use DIC;
 	protected $parent_gui;
-
 	/**
 	 * @var \ilHub2Plugin
 	 */
 	protected $pl;
-
 	/**
 	 * @var IOrigin
 	 */
@@ -35,40 +31,37 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 	 * @var IHubConfig
 	 */
 	protected $hubConfig;
-
 	/**
 	 * @var IOriginRepository
 	 */
 	protected $originRepository;
 
+
 	/**
-	 * @param $parent_gui
-	 * @param IHubConfig $hubConfig
+	 * @param                   $parent_gui
+	 * @param IHubConfig        $hubConfig
 	 * @param IOriginRepository $originRepository
-	 * @param IOrigin $origin
+	 * @param IOrigin           $origin
 	 */
-	public function __construct($parent_gui,
-	                            IHubConfig $hubConfig,
-	                            IOriginRepository $originRepository,
-	                            IOrigin $origin) {
-		global $DIC;
-		$this->DIC = $DIC;
+	public function __construct($parent_gui, IHubConfig $hubConfig, IOriginRepository $originRepository, IOrigin $origin) {
 		$this->parent_gui = $parent_gui;
 		$this->pl = \ilHub2Plugin::getInstance();
 		$this->hubConfig = $hubConfig;
 		$this->origin = $origin;
 		$this->originRepository = $originRepository;
-		$this->setFormAction($DIC->ctrl()->getFormAction($this->parent_gui));
+		$this->setFormAction($this->ctrl()->getFormAction($this->parent_gui));
 		$this->initForm();
 		if (!$origin->getId()) {
-			$this->addCommandButton('createOrigin', $DIC->language()->txt('save'));
+			$this->addCommandButton('createOrigin', $this->lng()->txt('button_save'));
 			$this->setTitle($this->pl->txt('origin_form_title_add'));
 		} else {
-			$this->addCommandButton('saveOrigin', $DIC->language()->txt('save'));
+			$this->addCommandButton('saveOrigin', $this->lng()->txt('button_save'));
 			$this->setTitle($this->pl->txt('origin_form_title_edit'));
 		}
-		$this->addCommandButton('cancel', $DIC->language()->txt('cancel'));
+		$this->addCommandButton('cancel', $this->lng()->txt('button_cancel'));
+		parent::__construct();
 	}
+
 
 	protected function initForm() {
 		$this->addGeneral();
@@ -95,9 +88,10 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		}
 	}
 
-	protected function addPropertiesNew() {
 
+	protected function addPropertiesNew() {
 	}
+
 
 	/**
 	 * By default, this method parses the DTO objects and presents a checkbox for each DTO property,
@@ -107,7 +101,8 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 	 * and call parent::addPropertiesUpdate() at the very end
 	 */
 	protected function addPropertiesUpdate() {
-		$parser = new DTOPropertyParser("SRAG\\Hub2\\Object\\" . ucfirst($this->origin->getObjectType()) . 'DTO');
+		$parser = new DTOPropertyParser("SRAG\\Hub2\\Object\\"
+		                                . ucfirst($this->origin->getObjectType()) . 'DTO');
 		foreach ($parser->getProperties() as $property) {
 			$postVar = IOriginProperties::PREFIX_UPDATE_DTO . $property->name;
 			$title = sprintf($this->pl->txt('origin_form_field_update_dto'), ucfirst($property->name));
@@ -120,9 +115,10 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		}
 	}
 
-	protected function addPropertiesDelete() {
 
+	protected function addPropertiesDelete() {
 	}
+
 
 	protected function addNotificationConfig() {
 		$h = new \ilFormSectionHeaderGUI();
@@ -137,6 +133,7 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		$te->setInfo($this->pl->txt('origin_form_comma_separated'));
 		$this->addItem($te);
 	}
+
 
 	protected function addConnectionConfig() {
 		$header = new \ilFormSectionHeaderGUI();
@@ -180,6 +177,7 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		$this->addItem($ro);
 	}
 
+
 	protected function addSyncConfig() {
 		$h = new \ilFormSectionHeaderGUI();
 		$h->setTitle($this->pl->txt('origin_form_header_sync'));
@@ -192,7 +190,7 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		$this->addItem($te);
 
 		$se = new \ilSelectInputGUI($this->pl->txt('com_prop_link_to_origin'), $this->conf(IOriginConfig::LINKED_ORIGIN_ID));
-		$options = ['' => ''];
+		$options = [ '' => '' ];
 		foreach ($this->originRepository->all() as $origin) {
 			if ($origin->getId() == $this->origin->getId()) {
 				continue;
@@ -209,7 +207,7 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 
 		$se = new \ilSelectInputGUI($this->pl->txt('com_prop_check_amount_percentage'), $this->conf(IOriginConfig::CHECK_AMOUNT_PERCENTAGE));
 		$options = [];
-		for ($i = 10; $i <= 100; $i+=10) {
+		for ($i = 10; $i <= 100; $i += 10) {
 			$options[$i] = "$i%";
 		}
 		$se->setOptions($options);
@@ -230,6 +228,7 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		$this->addItem($te);
 	}
 
+
 	protected function addGeneral() {
 		if ($this->origin->getId()) {
 			$item = new \ilNonEditableValueGUI();
@@ -240,11 +239,11 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 			$item->setValue($this->origin->getId());
 			$this->addItem($item);
 		}
-		$item = new \ilTextInputGUI($this->DIC->language()->txt('title'), 'title');
+		$item = new \ilTextInputGUI($this->lng()->txt('origin_title'), 'title');
 		$item->setValue($this->origin->getTitle());
 		$item->setRequired(true);
 		$this->addItem($item);
-		$item = new \ilTextAreaInputGUI($this->DIC->language()->txt('description'), 'description');
+		$item = new \ilTextAreaInputGUI($this->lng()->txt('origin_description'), 'description');
 		$item->setValue($this->origin->getDescription());
 		$item->setRequired(true);
 		$this->addItem($item);
@@ -261,7 +260,7 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 			$item->setRequired(true);
 			$options = [];
 			foreach (AROrigin::$object_types as $type) {
-				$options[$type] = $this->pl->txt('object_type_' . $type);
+				$options[$type] = $this->pl->txt('origin_object_type_' . $type);
 			}
 			$item->setOptions($options);
 			$this->addItem($item);
@@ -271,18 +270,20 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 
 	/**
 	 * @param string $postVar
+	 *
 	 * @return string
 	 */
 	protected function prop($postVar) {
 		return 'prop_' . $postVar;
 	}
 
+
 	/**
 	 * @param string $postVar
+	 *
 	 * @return string
 	 */
 	protected function conf($postVar) {
 		return 'config_' . $postVar;
 	}
-
 }

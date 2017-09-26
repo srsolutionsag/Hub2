@@ -2,6 +2,7 @@
 
 /**
  * Interface ICategoryOriginConfig
+ *
  * @package SRAG\Hub2\Origin\Config
  */
 interface ICategoryOriginConfig extends IOriginConfig {
@@ -19,6 +20,7 @@ interface ICategoryOriginConfig extends IOriginConfig {
 	 */
 	public function getParentRefIdIfNoParentIdFound();
 
+
 	/**
 	 * Get an external ID of another category from the same origin acting as parent,
 	 * only if hub was not able to find the "correct" parent category given by the parent id. If
@@ -28,5 +30,4 @@ interface ICategoryOriginConfig extends IOriginConfig {
 	 * @return mixed
 	 */
 	public function getExternalParentIdIfNoParentIdFound();
-
 }

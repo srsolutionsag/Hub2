@@ -2,6 +2,7 @@
 
 /**
  * Interface ISyncProcessorFactory
+ *
  * @package SRAG\Hub2\Sync\Processor
  */
 interface ISyncProcessorFactory {
@@ -11,14 +12,15 @@ interface ISyncProcessorFactory {
 	 */
 	public function user();
 
+
 	/**
 	 * @return ICourseSyncProcessor
 	 */
 	public function course();
 
+
 	/**
 	 * @return ICategorySyncProcessor
 	 */
 	public function category();
-
 }

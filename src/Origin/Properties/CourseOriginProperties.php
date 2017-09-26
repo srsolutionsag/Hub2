@@ -2,7 +2,8 @@
 
 /**
  * Class CourseOriginProperties
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin\Properties
  */
 class CourseOriginProperties extends OriginProperties {
@@ -16,27 +17,26 @@ class CourseOriginProperties extends OriginProperties {
 	const CREATE_NOTIFICATION_FROM = 'create_notification_from';
 	const DELETE_MODE = 'delete_mode';
 	const MOVE_COURSE = 'move_course';
-
 	const DELETE_MODE_NONE = 0;
 	const DELETE_MODE_OFFLINE = 1;
 	const DELETE_MODE_DELETE = 2;
 	const DELETE_MODE_DELETE_OR_OFFLINE = 3; // Set offline if there were any activities in the course, delete otherwise
 	const DELETE_MODE_MOVE_TO_TRASH = 4;
-
 	/**
 	 * @var array
 	 */
 	protected $data = [
-		self::SET_ONLINE => false,
-		self::SET_ONLINE_AGAIN => false,
-		self::CREATE_ICON => false,
-		self::SEND_CREATE_NOTIFICATION => false,
+		self::SET_ONLINE                  => false,
+		self::SET_ONLINE_AGAIN            => false,
+		self::CREATE_ICON                 => false,
+		self::SEND_CREATE_NOTIFICATION    => false,
 		self::CREATE_NOTIFICATION_SUBJECT => '',
-		self::CREATE_NOTIFICATION_BODY => '',
-		self::CREATE_NOTIFICATION_FROM => '',
-		self::MOVE_COURSE => false,
-		self::DELETE_MODE => self::DELETE_MODE_NONE,
+		self::CREATE_NOTIFICATION_BODY    => '',
+		self::CREATE_NOTIFICATION_FROM    => '',
+		self::MOVE_COURSE                 => false,
+		self::DELETE_MODE                 => self::DELETE_MODE_NONE,
 	];
+
 
 	/**
 	 * @return array
@@ -47,8 +47,7 @@ class CourseOriginProperties extends OriginProperties {
 			self::DELETE_MODE_OFFLINE,
 			self::DELETE_MODE_DELETE,
 			self::DELETE_MODE_DELETE_OR_OFFLINE,
-			self::DELETE_MODE_MOVE_TO_TRASH
+			self::DELETE_MODE_MOVE_TO_TRASH,
 		];
 	}
-
 }

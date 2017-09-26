@@ -1,9 +1,12 @@
-<?php namespace SRAG\Hub2\Object;
+<?php namespace SRAG\Hub2\Object\Category;
+
+use SRAG\Hub2\Object\DataTransferObject;
 
 /**
  * Class CategoryDTO
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @package SRAG\Hub2\Object\Category
  */
 class CategoryDTO extends DataTransferObject {
 
@@ -12,10 +15,8 @@ class CategoryDTO extends DataTransferObject {
 	const ORDER_TYPE_ACTIVATION = \ilContainer::SORT_ACTIVATION;
 	const ORDER_TYPE_INHERIT = \ilContainer::SORT_INHERIT;
 	const ORDER_TYPE_CREATION = \ilContainer::SORT_CREATION;
-
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
-
 	/**
 	 * @var array
 	 */
@@ -26,7 +27,6 @@ class CategoryDTO extends DataTransferObject {
 		self::ORDER_TYPE_INHERIT,
 		self::ORDER_TYPE_CREATION,
 	];
-
 	/**
 	 * @var array
 	 */
@@ -34,46 +34,39 @@ class CategoryDTO extends DataTransferObject {
 		self::PARENT_ID_TYPE_REF_ID,
 		self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
 	];
-
 	/**
 	 * @var string
 	 */
 	protected $title;
-
 	/**
 	 * @var string
 	 */
 	protected $description;
-
 	/**
 	 * @var int
 	 */
 	protected $orderType = self::ORDER_TYPE_TITLE;
-
 	/**
 	 * @var int
 	 */
 	protected $owner = 6;
-
 	/**
 	 * @var string
 	 */
 	private $parentId;
-
 	/**
 	 * @var int
 	 */
 	private $parentIdType = self::PARENT_ID_TYPE_REF_ID;
-
 	/**
 	 * @var bool
 	 */
 	protected $showNews = true;
-
 	/**
 	 * @var bool
 	 */
 	protected $showInfoPage = true;
+
 
 	/**
 	 * @return string
@@ -82,14 +75,18 @@ class CategoryDTO extends DataTransferObject {
 		return $this->title;
 	}
 
+
 	/**
 	 * @param string $title
+	 *
 	 * @return CategoryDTO
 	 */
 	public function setTitle($title) {
 		$this->title = $title;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return string
@@ -98,14 +95,18 @@ class CategoryDTO extends DataTransferObject {
 		return $this->description;
 	}
 
+
 	/**
 	 * @param string $description
+	 *
 	 * @return CategoryDTO
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return int
@@ -114,8 +115,10 @@ class CategoryDTO extends DataTransferObject {
 		return $this->orderType;
 	}
 
+
 	/**
 	 * @param int $orderType
+	 *
 	 * @return CategoryDTO
 	 */
 	public function setOrderType($orderType) {
@@ -123,8 +126,10 @@ class CategoryDTO extends DataTransferObject {
 			throw new \InvalidArgumentException("Given '$orderType' is not a valid order type'");
 		}
 		$this->orderType = $orderType;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return int
@@ -133,14 +138,18 @@ class CategoryDTO extends DataTransferObject {
 		return $this->owner;
 	}
 
+
 	/**
 	 * @param int $owner
+	 *
 	 * @return CategoryDTO
 	 */
 	public function setOwner($owner) {
 		$this->owner = $owner;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return string
@@ -149,14 +158,18 @@ class CategoryDTO extends DataTransferObject {
 		return $this->parentId;
 	}
 
+
 	/**
 	 * @param int $parentId
+	 *
 	 * @return $this
 	 */
 	public function setParentId($parentId) {
 		$this->parentId = $parentId;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return int
@@ -165,8 +178,10 @@ class CategoryDTO extends DataTransferObject {
 		return $this->parentIdType;
 	}
 
+
 	/**
 	 * @param int $parentIdType
+	 *
 	 * @return CategoryDTO
 	 */
 	public function setParentIdType($parentIdType) {
@@ -174,8 +189,10 @@ class CategoryDTO extends DataTransferObject {
 			throw new \InvalidArgumentException("Invalid parentIdType given '$parentIdType'");
 		}
 		$this->parentIdType = $parentIdType;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return bool
@@ -184,14 +201,18 @@ class CategoryDTO extends DataTransferObject {
 		return $this->showNews;
 	}
 
+
 	/**
 	 * @param bool $showNews
+	 *
 	 * @return CategoryDTO
 	 */
 	public function setShowNews($showNews) {
 		$this->showNews = $showNews;
+
 		return $this;
 	}
+
 
 	/**
 	 * @return bool
@@ -200,13 +221,15 @@ class CategoryDTO extends DataTransferObject {
 		return $this->showInfoPage;
 	}
 
+
 	/**
 	 * @param bool $showInfoPage
+	 *
 	 * @return CategoryDTO
 	 */
 	public function setShowInfoPage($showInfoPage) {
 		$this->showInfoPage = $showInfoPage;
+
 		return $this;
 	}
-
 }

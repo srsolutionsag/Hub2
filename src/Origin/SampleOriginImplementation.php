@@ -8,10 +8,10 @@ use SRAG\Hub2\Object\IDataTransferObject;
 
 /**
  * Class [[CLASSNAME]]
+ *
  * @package SRAG\Hub2\Origin
  */
 class SampleOriginImplementation extends AbstractOriginImplementation {
-
 
 	/**
 	 * Connect to the service providing the sync data.
@@ -21,12 +21,13 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * @return bool
 	 */
 	public function connect() {
-//		$file = $this->config()->getFilePath();
-//		if (!is_file($file)) {
-//			throw new ConnectionFailedException("Data file does not exist");
-//		}
+		//		$file = $this->config()->getFilePath();
+		//		if (!is_file($file)) {
+		//			throw new ConnectionFailedException("Data file does not exist");
+		//		}
 		// TODO: Implement connect() method.
 	}
+
 
 	/**
 	 * Parse and prepare (sanitize/validate) the data to fill the DTO objects.
@@ -39,12 +40,13 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData() {
-//		foreach (['userData1', 'userData2', 'userData3'] as $fakeUserData) {
-//			$this->data[] = $fakeUserData;
-//		}
-//		return count($this->data);
+		//		foreach (['userData1', 'userData2', 'userData3'] as $fakeUserData) {
+		//			$this->data[] = $fakeUserData;
+		//		}
+		//		return count($this->data);
 		// TODO: Implement parseData() method.
 	}
+
 
 	/**
 	 * Build the hub DTO objects from the parsed data.
@@ -64,70 +66,79 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects() {
-//		$userDTOs = [];
-//		foreach ($this->data as $userData) {
-//			$userDTO = $this->factory()->user('myExternalI')
-//				->setFirstname('John')
-//				->setLastname('Doe')
-//				->setEmail('john.doe@fbi.com');
-//			$userDTOs[] = $userDTO;
-//		}
-//		return $userDTOs;
+		//		$userDTOs = [];
+		//		foreach ($this->data as $userData) {
+		//			$userDTO = $this->factory()->user('myExternalI')
+		//				->setFirstname('John')
+		//				->setLastname('Doe')
+		//				->setEmail('john.doe@fbi.com');
+		//			$userDTOs[] = $userDTO;
+		//		}
+		//		return $userDTOs;
 		// TODO: Implement buildObjects() method.
 	}
 
+
 	/**
-	 * Called if any exception occurs during processing the ILIAS objects. This hook can be used to influence the
-	 * further processing of the current origin sync or the global sync:
+	 * Called if any exception occurs during processing the ILIAS objects. This hook can be used to
+	 * influence the further processing of the current origin sync or the global sync:
 	 *
 	 * - Throw an AbortOriginSyncException to stop the current sync of this origin.
 	 *   Any other following origins in the processing chain are still getting executed normally.
-	 * - Throw an AbortSyncException to stop the global sync. The sync of any other following origins in the
-	 *   processing chain is NOT getting executed.
+	 * - Throw an AbortSyncException to stop the global sync. The sync of any other following
+	 * origins in the processing chain is NOT getting executed.
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
 	 * @param \Exception $e
 	 */
-	public function handleException(\Exception $e) {}
+	public function handleException(\Exception $e) { }
+
 
 	/**
 	 * @param HookObject $object
 	 */
-	public function beforeCreateILIASObject(HookObject $object) {}
+	public function beforeCreateILIASObject(HookObject $object) { }
+
 
 	/**
 	 * @param HookObject $object
 	 */
-	public function afterCreateILIASObject(HookObject $object) {}
+	public function afterCreateILIASObject(HookObject $object) { }
+
 
 	/**
 	 * @param HookObject $object
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) {}
+	public function beforeUpdateILIASObject(HookObject $object) { }
+
 
 	/**
 	 * @param HookObject $object
 	 */
-	public function afterUpdateILIASObject(HookObject $object) {}
+	public function afterUpdateILIASObject(HookObject $object) { }
+
 
 	/**
 	 * @param HookObject $object
 	 */
-	public function beforeDeleteILIASObject(HookObject $object) {}
+	public function beforeDeleteILIASObject(HookObject $object) { }
+
 
 	/**
 	 * @param HookObject $object
 	 */
-	public function afterDeleteILIASObject(HookObject $object) {}
+	public function afterDeleteILIASObject(HookObject $object) { }
+
 
 	/**
 	 * Executed before the synchronization of the origin is executed.
 	 */
-	public function beforeSync() {}
+	public function beforeSync() { }
+
 
 	/**
 	 * Executed after the synchronization of the origin has been executed.
 	 */
-	public function afterSync() {}
+	public function afterSync() { }
 }

@@ -1,4 +1,3 @@
-<!-- language file start -->
 admin_async_cli_php#:#Pfad zu PHP (z.B. /usr/bin/php)
 admin_async_client#:#Client-Name des Benutzers
 admin_async_password#:#Passwort
@@ -49,8 +48,6 @@ cat_prop_delete_mode#:#Löschverhalten
 cat_prop_delete_mode_archive#:#In Kategorie archivieren
 cat_prop_delete_mode_archive_node#:#Ref-ID Archiv
 cat_prop_delete_mode_delete#:#Kategorie löschen
-crs_prop_delete_mode_delete_or_inactive#:#Kurs löschen oder offline setzen
-crs_prop_delete_mode_delete_or_inactive_info#:#Wenn bereits Aktivitäten im Kurs stattfanden, wird er offline gesetzt, ansonsten gelöscht.
 cat_prop_delete_mode_inactive#:#Append a text to the title of the category, e.g. "(deleted)"
 cat_prop_delete_mode_inactive_text#:#Appended text
 cat_prop_delete_mode_none#:#Keine Aktion
@@ -70,30 +67,8 @@ cat_prop_update_infopage#:#Info-Reiter aktualisieren
 cat_prop_set_sorting#:#Sortierung setzen
 cat_prop_update_sorting#:#Sortierung aktualisieren
 cat_prop_update_title#:#Name aktualisieren
-com_prop_check_amount#:#Mengenvergleich
-com_prop_check_amount_info#:#Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden.
-com_prop_check_amount_percentage#:#Prozentwert
-com_prop_force_login#:#Login erfordern
-com_prop_link_to_origin#:#Verknüpfung mit anderer Anbindung
-com_prop_mark_deleted_text#:#(gelöscht)
-com_prop_shortlink#:#Shortlink aktivieren
-com_prop_use_ext_status#:#Externes Statusmodell verwenden
-common_status_1#:#New
-common_status_2#:#Delivered
-common_status_3#:#Not delivered
-common_status_4#:#Deleted in ILIAS
-common_status_5#:#Newly delivered
-common_status_6#:#Already deleted
-common_status_7#:#in Trash
-common_actions#:#Aktionen
-common_activate#:#Aktivieren
-common_deactivate#:#Deaktivieren
-common_delete#:#Löschen
-common_edit#:#Bearbeiten
-common_export#:#Einstellungen exportieren
-common_none#:#Keine
-common_on_status#:#Objekt-Status:
-common_back#:#Back
+crs_prop_delete_mode_delete_or_inactive#:#Kurs löschen oder offline setzen
+crs_prop_delete_mode_delete_or_inactive_info#:#Wenn bereits Aktivitäten im Kurs stattfanden, wird er offline gesetzt, ansonsten gelöscht.
 crs_prop_activate#:#Online setzen
 crs_prop_create_icon#:#Icon erstellen
 crs_prop_delete_mode#:#Löschverhalten
@@ -119,6 +94,32 @@ crs_prop_notification_body#:#Body
 crs_prop_notification_from#:#From
 crs_prop_send_notification#:#Activate notification
 crs_prop_send_notification_info#:#After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails
+com_prop_check_amount#:#Mengenvergleich
+com_prop_check_amount_info#:#Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden.
+com_prop_check_amount_percentage#:#Prozentwert
+com_prop_force_login#:#Login erfordern
+com_prop_link_to_origin#:#Verknüpfung mit anderer Anbindung
+com_prop_mark_deleted_text#:#(gelöscht)
+com_prop_shortlink#:#Shortlink aktivieren
+com_prop_use_ext_status#:#Externes Statusmodell verwenden
+common_status_1#:#New
+common_status_2#:#Delivered
+common_status_3#:#Not delivered
+common_status_4#:#Deleted in ILIAS
+common_status_5#:#Newly delivered
+common_status_6#:#Already deleted
+common_status_7#:#in Trash
+common_actions#:#Aktionen
+common_activate#:#Aktivieren
+common_deactivate#:#Deaktivieren
+common_delete#:#Löschen
+common_edit#:#Bearbeiten
+common_export#:#Einstellungen exportieren
+common_none#:#Keine
+common_on_status#:#Objekt-Status:
+common_back#:#Back
+common_permissions#:#Permissions
+common_roles#:#Roles
 hub_categories#:#Kategorien
 hub_conf#:#Einstellungen
 hub_courses#:#Kurse
@@ -158,6 +159,8 @@ msg_confirm_delete_origin#:#Möchten Sie die Anbindung definitv löschen?
 msg_origin_activated#:#Anbindung aktiviert.
 msg_origin_deactivated#:#Anbindung deaktiviert.
 msg_saved#:#Gespeichert.
+msg_success_create_origin#:#MISSING
+msg_origin_saved#:#MISSING
 origin_subtab_icons#:#Icons
 origin_subtab_settings#:#Settings
 origin_form_button_create#:#Speichern
@@ -172,13 +175,13 @@ origin_form_field_class_name#:#PHP-Klassenname
 origin_form_field_class_name_info#:#Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location.
 origin_form_field_conf_type#:#Verbindungstyp
 origin_form_field_conf_type_db#:#Server
-origin_form_field_conf_type_db_database#:#Datenbank#:#Datenbank
-origin_form_field_conf_type_db_host#:#Host#:#Host
+origin_form_field_conf_type_db_database#:#Datenbank
+origin_form_field_conf_type_db_host#:#Host
 origin_form_field_conf_type_db_info#:#Die Daten stammen aus einer Serververbindung.
-origin_form_field_conf_type_db_password#:#Passwort#:#Passwort
-origin_form_field_conf_type_db_port#:#Port#:#Port
-origin_form_field_conf_type_db_search_base#:#Search-Base#:#Search-Base
-origin_form_field_conf_type_db_username#:#Login-Name#:#Login-Name
+origin_form_field_conf_type_db_password#:#Passwort
+origin_form_field_conf_type_db_port#:#Port
+origin_form_field_conf_type_db_search_base#:#Search-Base
+origin_form_field_conf_type_db_username#:#Login-Name
 origin_form_field_conf_type_external#:#Extern
 origin_form_field_conf_type_external_info#:#Füllen der Hub-Tabelle durch Fremdsystem.
 origin_form_field_conf_type_file#:#Datei oder Verzeichnis
@@ -198,13 +201,6 @@ origin_form_field_usage_type_1#:#Benutzerkonten
 origin_form_field_usage_type_2#:#Kurs-Mitgliedschaften
 origin_form_field_usage_type_3#:#Kurse
 origin_form_field_usage_type_4#:#Kategorien
-object_type_user#:#User
-object_type_courseMembership#:#Course Memberships
-object_type_course#:#Course
-object_type_category#:#Category
-object_type_group#:#Group
-object_type_groupMembership#:#Group Membership
-object_type_session#:#Session
 origin_form_field_update_dto#:#Update %s
 origin_form_comma_separated#:#Separate multiple values by a comma
 origin_form_header_connection#:#Verbindung zu Daten
@@ -225,6 +221,15 @@ origin_table_header_last_update#:#Letzte Synchronisierung
 origin_table_header_title#:#Titel
 origin_table_header_usage_type#:#Verwendung
 origin_table_title#:#Anbindungen
+origin_title#:#Title
+origin_description#:#Description
+object_type_user#:#User
+object_type_courseMembership#:#Course Memberships
+object_type_course#:#Course
+object_type_category#:#Category
+object_type_group#:#Group
+object_type_groupMembership#:#Group Membership
+object_type_session#:#Session
 usr_prop_activate_account#:#Account aktivieren
 usr_prop_create_password#:#Passwort erstellen
 usr_prop_delete_mode#:#Löschverhalten
@@ -287,3 +292,7 @@ icon_title_small#:#Small
 icon_title_medium#:#Medium
 icon_title_large#:#Large
 icon_form_button_save#:#Save
+confirm_delete_button#:#Löschen
+cancel_delete_button#:#Cancel
+button_save#:#Save
+button_cancel#:#Cancel

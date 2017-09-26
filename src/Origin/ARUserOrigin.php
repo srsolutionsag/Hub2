@@ -5,7 +5,8 @@ use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 
 /**
  * Class ARUserOrigin
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin
  */
 class ARUserOrigin extends AROrigin implements IUserOrigin {
@@ -17,11 +18,11 @@ class ARUserOrigin extends AROrigin implements IUserOrigin {
 		return new UserOriginConfig($data);
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	protected function getOriginProperties(array $data) {
 		return new UserOriginProperties($data);
 	}
-
 }

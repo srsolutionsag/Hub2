@@ -14,10 +14,10 @@ use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
 use SRAG\Hub2\Sync\Processor\SyncProcessorFactory;
 
-
 /**
  * Class Sync
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\ILIAS\Plugins\Hub2\Sync
  */
 class Sync implements ISync {
@@ -35,6 +35,7 @@ class Sync implements ISync {
 	 */
 	protected $originSyncs = [];
 
+
 	/**
 	 * Execute the syncs of the given origins.
 	 *
@@ -46,6 +47,7 @@ class Sync implements ISync {
 	public function __construct($origins) {
 		$this->origins = $origins;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -78,11 +80,11 @@ class Sync implements ISync {
 		}
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getExceptions() {
 		return $this->exceptions;
 	}
-
 }

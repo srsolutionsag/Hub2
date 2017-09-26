@@ -2,7 +2,8 @@
 
 /**
  * Interface IHubConfig
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Config
  */
 interface IHubConfig {
@@ -14,12 +15,14 @@ interface IHubConfig {
 	const ADMINISTRATE_HUB_ROLE_IDS = 'administrate_hub_role_ids';
 	const LOCK_ORIGINS_CONFIG = 'lock_origins_config';
 
+
 	/**
 	 * Get the path to the class files of origin implementations
 	 *
 	 * @return string
 	 */
 	public function getOriginImplementationsPath();
+
 
 	/**
 	 * Get the message presented to the user if the ILIAS object was not found via shortlink.
@@ -28,6 +31,7 @@ interface IHubConfig {
 	 */
 	public function getShortLinkNoObject();
 
+
 	/**
 	 * Get the message presented to the user if no ILIAS-ID is existing for the shortlink.
 	 *
@@ -35,12 +39,15 @@ interface IHubConfig {
 	 */
 	public function getShortLinkNoILIASId();
 
+
 	/**
-	 * Get the message presented to the user if the shortlink feature is not activated for the given shortlink.
+	 * Get the message presented to the user if the shortlink feature is not activated for the
+	 * given shortlink.
 	 *
 	 * @return string
 	 */
 	public function getShortLinkNotActive();
+
 
 	/**
 	 * Get role IDs of ILIAS roles allowing to administrate hub, e.g. add and configure origins
@@ -49,6 +56,7 @@ interface IHubConfig {
 	 */
 	public function getAdministrationRoleIds();
 
+
 	/**
 	 * Should settings of origins be locked?
 	 *
@@ -56,12 +64,13 @@ interface IHubConfig {
 	 */
 	public function isOriginsConfigLocked();
 
+
 	/**
 	 * Get a config value by key.
 	 *
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
 	public function get($key);
-
 }

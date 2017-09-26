@@ -18,7 +18,8 @@ use SRAG\Hub2\Sync\IObjectStatusTransition;
 
 /**
  * Class CategorySyncProcessor
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Sync\Processor
  */
 class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncProcessor {
@@ -27,12 +28,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 	 * @var CategoryOriginProperties
 	 */
 	protected $props;
-
 	/**
 	 * @var CategoryOriginConfig
 	 */
 	protected $config;
-
 	/**
 	 * @var array
 	 */
@@ -43,23 +42,20 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 		'orderType',
 	];
 
+
 	/**
-	 * @param IOrigin $origin
-	 * @param IOriginImplementation $implementation
+	 * @param IOrigin                 $origin
+	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog $originLog
-	 * @param OriginNotifications $originNotifications
+	 * @param ILog                    $originLog
+	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin,
-	                            IOriginImplementation $implementation,
-	                            IObjectStatusTransition $transition,
-	                            ILog $originLog,
-	                            OriginNotifications $originNotifications
-	) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
 		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
+
 
 	/**
 	 * @return array
@@ -67,6 +63,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 	public static function getProperties() {
 		return self::$properties;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -98,8 +95,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $object->isShowInfoPage());
 		}
 		$ilObjCategory->update();
+
 		return $ilObjCategory;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -135,8 +134,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 		if ($this->props->get(CategoryOriginProperties::MOVE_CATEGORY)) {
 			$this->moveCategory($ilObjCategory, $object);
 		}
+
 		return $ilObjCategory;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -146,24 +147,29 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 		if ($ilObjCategory === null) {
 			return null;
 		}
-		if ($this->props->get(CategoryOriginProperties::DELETE_MODE) == CategoryOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CategoryOriginProperties::DELETE_MODE)
+		    == CategoryOriginProperties::DELETE_MODE_NONE
+		) {
 			return $ilObjCategory;
 		}
 		switch ($this->props->get(CategoryOriginProperties::DELETE_MODE)) {
 			case CategoryOriginProperties::DELETE_MODE_MARK:
-				$ilObjCategory->setTitle($ilObjCategory->getTitle() . ' ' . $this->props->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
+				$ilObjCategory->setTitle($ilObjCategory->getTitle() . ' '
+				                         . $this->props->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
 				$ilObjCategory->update();
 				break;
 			case CourseOriginProperties::DELETE_MODE_DELETE:
 				$ilObjCategory->delete();
 				break;
 		}
+
 		return $ilObjCategory;
 	}
 
 
 	/**
 	 * @param CategoryDTO $category
+	 *
 	 * @return int
 	 * @throws HubException
 	 */
@@ -179,6 +185,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 			if (!$tree->isInTree($parentRefId)) {
 				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
 			}
+
 			return $parentRefId;
 		}
 		if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
@@ -194,26 +201,32 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 					throw new HubException("The linked category does not (yet) exist in ILIAS");
 				}
 			}
+
 			return $parentCategory->getILIASId();
 		}
+
 		return 0;
 	}
 
+
 	/**
 	 * @param int $iliasId
+	 *
 	 * @return \ilObjCategory|null
 	 */
 	protected function findILIASCategory($iliasId) {
 		if (!\ilObjCategory::_exists($iliasId, true)) {
 			return null;
 		}
+
 		return new \ilObjCategory($iliasId);
 	}
+
 
 	/**
 	 * Move the category to a new parent.
 	 *
-	 * @param $ilObjCategory
+	 * @param             $ilObjCategory
 	 * @param CategoryDTO $category
 	 */
 	protected function moveCategory(\ilObjCategory $ilObjCategory, CategoryDTO $category) {
@@ -221,7 +234,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 		$parentRefId = $this->determineParentRefId($category);
 		if ($DIC->repositoryTree()->isDeleted($ilObjCategory->getRefId())) {
 			$ilRepUtil = new \ilRepUtil();
-			$ilRepUtil->restoreObjects($parentRefId, [$ilObjCategory->getRefId()]);
+			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjCategory->getRefId() ]);
 		}
 		$oldParentRefId = $DIC->repositoryTree()->getParentId($ilObjCategory->getRefId());
 		if ($oldParentRefId == $parentRefId) {
@@ -229,8 +242,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 		}
 		$DIC->repositoryTree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
 		$DIC->rbac()->admin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
-//			hubLog::getInstance()->write($str);
-//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
+		//			hubLog::getInstance()->write($str);
+		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}
-
 }

@@ -11,16 +11,15 @@ use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
 
-
 /**
  * Class ObjectProcessor
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Sync\Processor
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 	use Helper;
-
 	/**
 	 * @var IOrigin
 	 */
@@ -42,24 +41,22 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 */
 	protected $implementation;
 
+
 	/**
-	 * @param IOrigin $origin
-	 * @param IOriginImplementation $implementation
+	 * @param IOrigin                 $origin
+	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog $originLog
-	 * @param OriginNotifications $originNotifications
+	 * @param ILog                    $originLog
+	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin,
-								IOriginImplementation $implementation,
-	                            IObjectStatusTransition $transition,
-	                            ILog $originLog,
-	                            OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
 		$this->origin = $origin;
 		$this->transition = $transition;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
 		$this->implementation = $implementation;
 	}
+
 
 	final public function process(IObject $object, IDataTransferObject $dto) {
 		$hook = new HookObject($object);
@@ -108,52 +105,63 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 		$object->save();
 	}
 
+
 	/**
 	 * @param \ilObject $object
+	 *
 	 * @return int
 	 */
 	protected function getILIASId(\ilObject $object) {
 		if ($object instanceof \ilObjUser) {
 			return $object->getId();
 		}
+
 		return $object->getRefId();
 	}
+
 
 	/**
 	 * The import ID is set on the ILIAS object.
 	 *
 	 * @param IDataTransferObject $object
+	 *
 	 * @return string
 	 */
 	protected function getImportId(IDataTransferObject $object) {
 		return self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
 	}
 
+
 	/**
 	 * Create a new ILIAS object from the given data transfer object.
 	 *
 	 * @param IDataTransferObject $object
+	 *
 	 * @return \ilObject
 	 */
 	abstract protected function handleCreate(IDataTransferObject $object);
 
+
 	/**
 	 * Update the corresponding ILIAS object.
-	 * Return the processed ILIAS object or null if the object was not found, e.g. it is deleted in ILIAS.
+	 * Return the processed ILIAS object or null if the object was not found, e.g. it is deleted in
+	 * ILIAS.
 	 *
 	 * @param IDataTransferObject $object
-	 * @param int $iliasId
+	 * @param int                 $iliasId
+	 *
 	 * @return \ilObject
 	 */
 	abstract protected function handleUpdate(IDataTransferObject $object, $iliasId);
+
 
 	/**
 	 * Delete the corresponding ILIAS object.
 	 * Return the deleted ILIAS object or null if the object was not found in ILIAS.
 	 *
 	 * @param int $iliasId
+	 *
 	 * @return \ilObject
 	 */
 	abstract protected function handleDelete($iliasId);
-
 }

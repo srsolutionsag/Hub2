@@ -14,10 +14,10 @@ use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
 
-
 /**
  * Class Sync
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Sync
  */
 class OriginSync implements IOriginSync {
@@ -72,23 +72,17 @@ class OriginSync implements IOriginSync {
 	 */
 	protected $notifications;
 
+
 	/**
-	 * @param IOrigin $origin
-	 * @param IObjectRepository $repository
-	 * @param IObjectFactory $factory
-	 * @param IObjectSyncProcessor $processor
+	 * @param IOrigin                 $origin
+	 * @param IObjectRepository       $repository
+	 * @param IObjectFactory          $factory
+	 * @param IObjectSyncProcessor    $processor
 	 * @param IObjectStatusTransition $transition
-	 * @param IOriginImplementation $implementation
-	 * @param OriginNotifications $notifications
+	 * @param IOriginImplementation   $implementation
+	 * @param OriginNotifications     $notifications
 	 */
-	public function __construct(IOrigin $origin,
-	                            IObjectRepository $repository,
-	                            IObjectFactory $factory,
-	                            IObjectSyncProcessor $processor,
-	                            IObjectStatusTransition $transition,
-	                            IOriginImplementation $implementation,
-								OriginNotifications $notifications
-	) {
+	public function __construct(IOrigin $origin, IObjectRepository $repository, IObjectFactory $factory, IObjectSyncProcessor $processor, IObjectStatusTransition $transition, IOriginImplementation $implementation, OriginNotifications $notifications) {
 		$this->origin = $origin;
 		$this->repository = $repository;
 		$this->factory = $factory;
@@ -164,8 +158,9 @@ class OriginSync implements IOriginSync {
 			$this->exceptions[] = $e;
 			throw $e;
 		}
-//		$this->addInfoAndStatisticsToNotifications();
+		//		$this->addInfoAndStatisticsToNotifications();
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -174,12 +169,14 @@ class OriginSync implements IOriginSync {
 		return $this->exceptions;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getCountProcessedByStatus($status) {
 		return $this->countProcessed[$status];
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -188,12 +185,14 @@ class OriginSync implements IOriginSync {
 		return array_sum($this->countProcessed);
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getCountDelivered() {
 		return $this->countDelivered;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -204,8 +203,9 @@ class OriginSync implements IOriginSync {
 
 
 	/**
-	 * @param IObject $object
+	 * @param IObject             $object
 	 * @param IDataTransferObject $dto
+	 *
 	 * @throws AbortOriginSyncException
 	 * @throws HubException
 	 */
@@ -240,10 +240,11 @@ class OriginSync implements IOriginSync {
 		}
 	}
 
+
 	/**
 	 * @param int $status
 	 */
 	protected function incrementProcessed($status) {
-		$this->countProcessed[$status]++;
+		$this->countProcessed[$status] ++;
 	}
 }

@@ -2,6 +2,7 @@
 
 /**
  * Interface ICourseOrigin
+ *
  * @package SRAG\Hub2\Origin
  */
 interface ICourseOrigin {

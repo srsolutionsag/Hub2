@@ -2,6 +2,7 @@
 
 /**
  * Interface IObjectRepository
+ *
  * @package SRAG\Hub2\Object
  */
 interface IObjectRepository {
@@ -13,13 +14,16 @@ interface IObjectRepository {
 	 */
 	public function all();
 
+
 	/**
 	 * Return only the objects having the given status
 	 *
 	 * @param int $status
+	 *
 	 * @return IObject[]
 	 */
 	public function getByStatus($status);
+
 
 	/**
 	 * Return all objects where the status TO_DELETE should be applied.
@@ -27,9 +31,11 @@ interface IObjectRepository {
 	 * e.g. SELECT * FROM x WHERE ext_id NOT IN ($ext_ids).
 	 *
 	 * @param array $ext_ids
+	 *
 	 * @return IObject[]
 	 */
 	public function getToDelete(array $ext_ids);
+
 
 	/**
 	 * Return the number of objects
@@ -37,5 +43,4 @@ interface IObjectRepository {
 	 * @return int
 	 */
 	public function count();
-
 }

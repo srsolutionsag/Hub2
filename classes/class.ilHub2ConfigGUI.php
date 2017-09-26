@@ -9,6 +9,7 @@ use SRAG\Hub2\UI\ConfigFormGUI;
 
 /**
  * Class ilHub2ConfigGUI
+ *
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
  */
 class ilHub2ConfigGUI extends ilPluginConfigGUI {
@@ -25,6 +26,7 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI {
 	 * @var ilHub2Plugin
 	 */
 	protected $pl;
+
 
 	public function __construct() {
 		global $DIC;
@@ -53,6 +55,7 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI {
 		$this->tpl->setContent($form->getHTML());
 	}
 
+
 	protected function saveConfig() {
 		$form = new ConfigFormGUI($this, new HubConfig());
 		if ($form->checkInput()) {
@@ -74,7 +77,10 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI {
 	protected function setTabs($activeId) {
 		global $DIC;
 		$DIC->tabs()->addTab('config', 'Plugin Configuration', $this->ctrl->getLinkTarget($this, 'configure'));
-		$DIC->tabs()->addTab('originConfig', 'Anbindungen', $this->ctrl->getLinkTargetByClass(['ilUIPluginRouterGUI', 'hub2ConfigOriginsGUI']));
+		$DIC->tabs()->addTab('originConfig', 'Anbindungen', $this->ctrl->getLinkTargetByClass([
+			'ilUIPluginRouterGUI',
+			'hub2ConfigOriginsGUI',
+		]));
 		$DIC->tabs()->activateTab($activeId);
 	}
 }

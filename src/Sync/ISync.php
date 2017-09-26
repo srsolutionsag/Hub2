@@ -2,6 +2,7 @@
 
 /**
  * Interface ISync
+ *
  * @package SRAG\Hub2\Sync
  */
 interface ISync {
@@ -13,11 +14,11 @@ interface ISync {
 	 */
 	public function execute();
 
+
 	/**
 	 * Collects the exceptions from all syncs over all origins
 	 *
 	 * @return array
 	 */
 	public function getExceptions();
-
 }

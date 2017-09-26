@@ -2,7 +2,8 @@
 
 /**
  * Class CategoryOriginConfig
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin\Config
  */
 class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig {
@@ -15,9 +16,11 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
 		self::EXT_ID_NO_PARENT_ID_FOUND => '',
 	];
 
+
 	public function __construct(array $data) {
 		parent::__construct(array_merge($this->categoryData, $data));
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -25,6 +28,7 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
 	public function getParentRefIdIfNoParentIdFound() {
 		return $this->data[self::REF_ID_NO_PARENT_ID_FOUND];
 	}
+
 
 	/**
 	 * @inheritdoc

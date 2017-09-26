@@ -10,7 +10,7 @@ use SRAG\Hub2\Origin\Config\IOriginConfig;
  *
  * Any implementation of a origin MUST extend this class.
  *
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin
  */
 abstract class AbstractOriginImplementation implements IOriginImplementation {
@@ -36,21 +36,20 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	protected $data = [];
 
+
 	/**
-	 * @param IOriginConfig $config
+	 * @param IOriginConfig              $config
 	 * @param IDataTransferObjectFactory $factory
-	 * @param ILog $originLog
-	 * @param OriginNotifications $originNotifications
+	 * @param ILog                       $originLog
+	 * @param OriginNotifications        $originNotifications
 	 */
-	public function __construct(IOriginConfig $config,
-	                            IDataTransferObjectFactory $factory,
-	                            ILog $originLog,
-								OriginNotifications $originNotifications) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
 	}
+
 
 	/**
 	 * @return IOriginConfig
@@ -59,6 +58,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 		return $this->originConfig;
 	}
 
+
 	/**
 	 * @return IDataTransferObjectFactory
 	 */
@@ -66,12 +66,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 		return $this->factory;
 	}
 
+
 	/**
 	 * @return ILog
 	 */
 	final protected function log() {
 		return $this->originLog;
 	}
+
 
 	/**
 	 * @return OriginNotifications

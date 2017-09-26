@@ -2,7 +2,8 @@
 
 /**
  * Class ARObject
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\ILIAS\Plugins\Hub2\Object
  */
 abstract class ARObject extends \ActiveRecord implements IObject {
@@ -21,7 +22,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED,
 		IObject::STATUS_IGNORED,
 	];
-
 	/**
 	 * The primary ID is a composition of the origin-ID and ext_id
 	 *
@@ -33,7 +33,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_length       255
 	 */
 	protected $id;
-
 	/**
 	 * @var int
 	 *
@@ -44,7 +43,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_index        true
 	 */
 	protected $origin_id;
-
 	/**
 	 * @var string
 	 *
@@ -54,7 +52,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_index        true
 	 */
 	protected $ext_id = '';
-
 	/**
 	 * @var string
 	 *
@@ -62,7 +59,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_fieldtype    timestamp
 	 */
 	protected $delivery_date;
-
 	/**
 	 * @var string
 	 *
@@ -70,7 +66,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_fieldtype    timestamp
 	 */
 	protected $processed_date;
-
 	/**
 	 * @var int
 	 *
@@ -79,7 +74,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_length       8
 	 */
 	protected $ilias_id;
-
 	/**
 	 * @var int
 	 *
@@ -89,7 +83,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_index        true
 	 */
 	protected $status = IObject::STATUS_NEW;
-
 	/**
 	 * @var string
 	 *
@@ -98,7 +91,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_length       255
 	 */
 	protected $period = '';
-
 	/**
 	 * @var string
 	 *
@@ -107,7 +99,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_length       512
 	 */
 	protected $hash_code;
-
 	/**
 	 * @var array
 	 *
@@ -115,6 +106,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @db_fieldtype    clob
 	 */
 	protected $data = array();
+
 
 	/**
 	 * @inheritdoc
@@ -124,8 +116,10 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			case 'data':
 				return json_encode($this->getData());
 		}
+
 		return parent::sleep($field_name);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -135,8 +129,10 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			case 'data':
 				return json_decode($field_value, true);
 		}
+
 		return parent::wakeUp($field_name, $field_value);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -145,6 +141,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		$this->hash_code = $this->computeHashCode();
 		parent::update();
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -161,12 +158,14 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		parent::create();
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getId() {
 		return $this->id;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -175,13 +174,16 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this->ext_id;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setExtId($id) {
 		$this->ext_id = $id;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -190,12 +192,14 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return new \DateTime($this->delivery_date);
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getProcessedDate() {
 		return new \DateTime($this->processed_date);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -204,12 +208,14 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		$this->delivery_date = date('Y-m-d H:i:s', $unix_timestamp);
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setProcessedDate($unix_timestamp) {
 		$this->processed_date = date('Y-m-d H:i:s', $unix_timestamp);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -218,13 +224,16 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this->ilias_id;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setILIASId($id) {
 		$this->ilias_id = (int)$id;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -232,6 +241,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	public function getStatus() {
 		return $this->status;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -241,29 +251,33 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			throw new \InvalidArgumentException("'{$status}' is not a valid status");
 		}
 		$this->status = $status;
+
 		return $this;
 	}
 
+
 	/**
 	 * @param int $origin_id
+	 *
 	 * @return $this
 	 */
 	public function setOriginId($origin_id) {
 		$this->origin_id = $origin_id;
+
 		return $this;
 	}
 
-//	public function hasStatus($status) {
-//		return (bool)$status & $this->status;
-//	}
-//
-//	public function addStatus($status) {
-//		$this->status = $this->status | $status;
-//	}
-//
-//	public function removeStatus($status) {
-//		$this->status = $this->status & ~$status;
-//	}
+	//	public function hasStatus($status) {
+	//		return (bool)$status & $this->status;
+	//	}
+	//
+	//	public function addStatus($status) {
+	//		$this->status = $this->status | $status;
+	//	}
+	//
+	//	public function removeStatus($status) {
+	//		$this->status = $this->status & ~$status;
+	//	}
 
 	/**
 	 * @inheritdoc
@@ -272,13 +286,16 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this->period;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function setPeriod($period) {
 		$this->period = $period;
+
 		return $this;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -288,8 +305,10 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		foreach ($this->data as $property => $value) {
 			$hash .= (is_array($value)) ? implode('', $value) : (string)$value;
 		}
+
 		return md5($hash);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -298,12 +317,14 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this->hash_code;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getData() {
 		return $this->data;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -314,6 +335,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			$this->period = $data['period'];
 		}
 	}
+
 
 	/**
 	 * @return string
@@ -327,6 +349,4 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			"status: " . $this->getStatus(),
 		]);
 	}
-
-
 }

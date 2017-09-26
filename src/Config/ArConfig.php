@@ -2,7 +2,8 @@
 
 /**
  * Class ArConfig
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Config
  */
 class ArConfig extends \ActiveRecord {
@@ -16,7 +17,6 @@ class ArConfig extends \ActiveRecord {
 	 * @var string
 	 */
 	protected $identifier;
-
 	/**
 	 * @db_has_field    true
 	 * @db_fieldtype    clob
@@ -25,20 +25,25 @@ class ArConfig extends \ActiveRecord {
 	 */
 	protected $value;
 
+
 	/**
 	 * Get a config value by key.
 	 *
 	 * @param $key
+	 *
 	 * @return mixed
 	 */
 	public static function getValueByKey($key) {
 		/** @var ARConfig $config */
 		$config = self::find($key);
+
 		return ($config) ? $config->getValue() : null;
 	}
 
+
 	/**
 	 * @param string $key
+	 *
 	 * @return ArConfig
 	 */
 	public static function getInstanceByKey($key) {
@@ -47,13 +52,16 @@ class ArConfig extends \ActiveRecord {
 			$instance = new self();
 			$instance->setKey($key);
 		}
+
 		return $instance;
 	}
+
 
 	/**
 	 * Encode array data as JSON in database
 	 *
 	 * @param string $field_name
+	 *
 	 * @return mixed|string
 	 */
 	public function sleep($field_name) {
@@ -61,8 +69,10 @@ class ArConfig extends \ActiveRecord {
 			case 'value':
 				return (is_array($this->value)) ? json_encode($this->value) : $this->value;
 		}
+
 		return parent::sleep($field_name);
 	}
+
 
 	/**
 	 * @return string
@@ -71,6 +81,7 @@ class ArConfig extends \ActiveRecord {
 		return $this->identifier;
 	}
 
+
 	/**
 	 * @param string $key
 	 */
@@ -78,12 +89,14 @@ class ArConfig extends \ActiveRecord {
 		$this->identifier = $key;
 	}
 
+
 	/**
 	 * @return string
 	 */
 	public function getValue() {
 		return $this->value;
 	}
+
 
 	/**
 	 * @param string $value
@@ -96,5 +109,4 @@ class ArConfig extends \ActiveRecord {
 	public static function returnDbTableName() {
 		return 'sr_hub2_config';
 	}
-
 }

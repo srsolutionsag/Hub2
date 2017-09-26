@@ -1,31 +1,38 @@
 <?php namespace SRAG\Hub2\Origin;
+
 use SRAG\Hub2\Config\IHubConfig;
 use SRAG\Hub2\Exception\HubException;
 
 /**
  * Class OriginImplementationTemplateGenerator
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin
  */
 class OriginImplementationTemplateGenerator {
+
 	/**
 	 * @var IHubConfig
 	 */
 	private $hubConfig;
 
+
 	/**
 	 * OriginImplementationTemplateGenerator constructor.
+	 *
 	 * @param IHubConfig $hubConfig
 	 */
 	public function __construct(IHubConfig $hubConfig) {
 		$this->hubConfig = $hubConfig;
 	}
 
+
 	/**
 	 * Create the implementation class file from a given template at the correct location
 	 * based on the hub config.
 	 *
 	 * @param IOrigin $origin
+	 *
 	 * @return bool False if file exists, true if created
 	 * @throws HubException
 	 */
@@ -50,28 +57,34 @@ class OriginImplementationTemplateGenerator {
 		if ($result === false) {
 			throw new HubException("Unable to create template for origin implementation");
 		}
+
 		return true;
 	}
 
+
 	/**
 	 * @param IOrigin $origin
+	 *
 	 * @return string
 	 */
 	public function getClassFilePath(IOrigin $origin) {
 		$path = $this->getPath($origin);
 		$className = $origin->getImplementationClassName();
 		$classFile = $path . $className . '.php';
+
 		return $classFile;
 	}
 
+
 	/**
 	 * @param IOrigin $origin
+	 *
 	 * @return string
 	 */
 	protected function getPath(IOrigin $origin) {
 		$basePath = rtrim($this->hubConfig->getOriginImplementationsPath(), '/') . '/';
 		$path = $basePath . $origin->getObjectType() . '/';
+
 		return $path;
 	}
-
 }

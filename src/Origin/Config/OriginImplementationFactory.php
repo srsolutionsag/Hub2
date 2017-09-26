@@ -10,7 +10,8 @@ use SRAG\Hub2\Origin\IOriginImplementation;
 
 /**
  * Class OriginImplementationFactory
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin\Config
  */
 class OriginImplementationFactory {
@@ -32,21 +33,20 @@ class OriginImplementationFactory {
 	 */
 	protected $originNotifications;
 
+
 	/**
-	 * @param IHubConfig $hubConfig
-	 * @param IOrigin $origin
-	 * @param ILog $originLog
+	 * @param IHubConfig          $hubConfig
+	 * @param IOrigin             $origin
+	 * @param ILog                $originLog
 	 * @param OriginNotifications $originNotifications
 	 */
-	public function __construct(IHubConfig $hubConfig,
-	                            IOrigin $origin,
-	                            ILog $originLog,
-	                            OriginNotifications $originNotifications) {
+	public function __construct(IHubConfig $hubConfig, IOrigin $origin, ILog $originLog, OriginNotifications $originNotifications) {
 		$this->hubConfig = $hubConfig;
 		$this->origin = $origin;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
 	}
+
 
 	/**
 	 * @return IOriginImplementation
@@ -62,13 +62,8 @@ class OriginImplementationFactory {
 		}
 		require_once($classFile);
 		$class = "SRAG\\Hub2\\Origin\\" . $className;
-		$instance = new $class(
-			$this->origin->config(),
-			new DataTransferObjectFactory(),
-			$this->originLog,
-			$this->originNotifications
-		);
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications);
+
 		return $instance;
 	}
-
 }

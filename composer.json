@@ -8,6 +8,7 @@
   },
   "classmap": [
     "classes",
+    "../../../../../../../Services/Container",
     "../../../../../../../Services/ActiveRecord",
     "../../../../../../../Services/Cron",
     "../../../../../../../Modules/Course",

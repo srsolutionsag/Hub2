@@ -2,13 +2,13 @@
 
 /**
  * Class OriginNotifications
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Notification
  */
 class OriginNotifications {
 
 	const CONTEXT_COMMON = 'common';
-
 	/**
 	 * Holds all messages of all contexts
 	 *
@@ -16,11 +16,13 @@ class OriginNotifications {
 	 */
 	protected $messages = [];
 
+
 	/**
 	 * Add a new message
 	 *
 	 * @param string $message
 	 * @param string $context
+	 *
 	 * @return $this
 	 */
 	public function addMessage($message, $context = '') {
@@ -29,6 +31,7 @@ class OriginNotifications {
 			$this->messages[$context] = [];
 		}
 		$this->messages[$context][] = $message;
+
 		return $this;
 	}
 
@@ -38,9 +41,11 @@ class OriginNotifications {
 	 * context are returned.
 	 *
 	 * @param string $context
+	 *
 	 * @return array
 	 */
 	public function getMessages($context = '') {
-		return ($context && isset($this->messages[$context])) ? $this->messages[$context] : $this->messages;
+		return ($context
+		        && isset($this->messages[$context])) ? $this->messages[$context] : $this->messages;
 	}
 }

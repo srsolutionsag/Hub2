@@ -6,7 +6,8 @@ use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
 
 /**
  * Class CategoryOriginConfigFormGUI
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\UI
  */
 class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
@@ -15,6 +16,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 	 * @var ARCategoryOrigin
 	 */
 	protected $origin;
+
 
 	protected function addSyncConfig() {
 		parent::addSyncConfig();
@@ -30,6 +32,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$this->addItem($te);
 	}
 
+
 	protected function addPropertiesNew() {
 		parent::addPropertiesNew();
 
@@ -42,14 +45,15 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$this->addItem($cb);
 	}
 
+
 	protected function addPropertiesUpdate() {
 		$cb = new \ilCheckboxInputGUI($this->pl->txt('cat_prop_move'), $this->prop(CategoryOriginProperties::MOVE_CATEGORY));
 		$cb->setChecked($this->origin->properties()->get(CategoryOriginProperties::MOVE_CATEGORY));
 		$this->addItem($cb);
 
 		parent::addPropertiesUpdate();
-
 	}
+
 
 	protected function addPropertiesDelete() {
 		$delete = new \ilRadioGroupInputGUI($this->pl->txt('cat_prop_delete_mode'), $this->prop(CategoryOriginProperties::DELETE_MODE));
@@ -58,8 +62,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_none'), $this->prop(CategoryOriginProperties::DELETE_MODE_NONE));
 		$delete->addOption($opt);
 
-		$opt = new \ilRadioOption(sprintf($this->pl->txt('cat_prop_delete_mode_inactive'), $this->pl->txt('com_prop_mark_deleted_text')),
-			$this->prop(CategoryOriginProperties::DELETE_MODE_MARK));
+		$opt = new \ilRadioOption(sprintf($this->pl->txt('cat_prop_delete_mode_inactive'), $this->pl->txt('com_prop_mark_deleted_text')), $this->prop(CategoryOriginProperties::DELETE_MODE_MARK));
 		$delete->addOption($opt);
 
 		$te = new \ilTextInputGUI($this->pl->txt('cat_prop_delete_mode_inactive_text'), $this->prop(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
@@ -73,5 +76,4 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		parent::addPropertiesDelete();
 	}
-
 }

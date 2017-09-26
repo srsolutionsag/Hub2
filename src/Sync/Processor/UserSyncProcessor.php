@@ -3,7 +3,7 @@
 use SRAG\Hub2\Log\ILog;
 use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\UserDTO;
+use SRAG\Hub2\Object\User\UserDTO;
 use SRAG\Hub2\Origin\Config\IUserOriginConfig;
 use SRAG\Hub2\Origin\Config\UserOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
@@ -13,7 +13,8 @@ use SRAG\Hub2\Sync\IObjectStatusTransition;
 
 /**
  * Class UserProcessor
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Sync\Processor
  */
 class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcessor {
@@ -22,12 +23,10 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 * @var UserOriginProperties
 	 */
 	private $props;
-
 	/**
 	 * @var UserOriginConfig
 	 */
 	private $config;
-
 	/**
 	 * @var array
 	 */
@@ -57,22 +56,20 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		'birthday',
 	);
 
+
 	/**
-	 * @param IOrigin $origin
-	 * @param IOriginImplementation $implementation
+	 * @param IOrigin                 $origin
+	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog $originLog
-	 * @param OriginNotifications $originNotifications
+	 * @param ILog                    $originLog
+	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin,
-	                            IOriginImplementation $implementation,
-	                            IObjectStatusTransition $transition,
-	                            ILog $originLog,
-								OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
 		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
+
 
 	/**
 	 * @return array
@@ -115,11 +112,12 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$ilObjUser->writePrefs();
 		$this->assignILIASRoles($object, $ilObjUser);
 
-//		if ($this->props->get(UserOriginProperties::SEND_PASSWORD)) {
-//			$this->sendPasswordMail($object, $ilObjUser);
-//		}
+		//		if ($this->props->get(UserOriginProperties::SEND_PASSWORD)) {
+		//			$this->sendPasswordMail($object, $ilObjUser);
+		//		}
 		return $ilObjUser;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -161,8 +159,10 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$this->assignILIASRoles($object, $ilObjUser);
 		}
 		$ilObjUser->update();
+
 		return $ilObjUser;
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -172,7 +172,9 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		if ($ilObjUser === null) {
 			return null;
 		}
-		if ($this->props->get(UserOriginProperties::DELETE) == UserOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(UserOriginProperties::DELETE)
+		    == UserOriginProperties::DELETE_MODE_NONE
+		) {
 			return $ilObjUser;
 		}
 		switch ($this->props->get(UserOriginProperties::DELETE)) {
@@ -184,11 +186,13 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 				$ilObjUser->delete();
 				break;
 		}
+
 		return $ilObjUser;
 	}
 
+
 	/**
-	 * @param UserDTO $user
+	 * @param UserDTO    $user
 	 * @param \ilObjUser $ilObjUser
 	 */
 	protected function assignILIASRoles(UserDTO $user, \ilObjUser $ilObjUser) {
@@ -198,11 +202,13 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		}
 	}
 
+
 	/**
 	 * Build the login name depending on the origin properties
 	 *
-	 * @param UserDTO $user
+	 * @param UserDTO    $user
 	 * @param \ilObjUser $ilObjUser
+	 *
 	 * @return string
 	 */
 	protected function buildLogin(UserDTO $user, \ilObjUser $ilObjUser) {
@@ -217,16 +223,19 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 				$login = $user->getExtId();
 				break;
 			case IUserOriginConfig::LOGIN_FIELD_FIRSTNAME_LASTNAME:
-				$login = $this->clearString($user->getFirstname()) . '.' . $this->clearString($user->getLastname());
+				$login = $this->clearString($user->getFirstname()) . '.'
+				         . $this->clearString($user->getLastname());
 				break;
 			case IUserOriginConfig::LOGIN_FIELD_HUB_LOGIN:
 				$login = $user->getLogin();
 				break;
 			case IUserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME:
-				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
+				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.'
+				         . $this->clearString($user->getLastname());
 				break;
 			default:
-				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
+				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.'
+				         . $this->clearString($user->getLastname());
 		}
 		$login = mb_strtolower($login);
 
@@ -235,21 +244,26 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$_login = $login;
 		while (\ilObjUser::_loginExists($login, $ilObjUser->getId())) {
 			$login = $_login . $appendix;
-			$appendix++;
+			$appendix ++;
 		}
+
 		return $login;
 	}
 
+
 	/**
 	 * @param int $ilias_id
+	 *
 	 * @return \ilObjUser|null
 	 */
 	protected function findILIASUser($ilias_id) {
 		if (!\ilObjUser::_exists($ilias_id)) {
 			return null;
 		}
+
 		return new \ilObjUser($ilias_id);
 	}
+
 
 	/**
 	 * @return string
@@ -257,5 +271,4 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	protected function generatePassword() {
 		return array_pop(\ilUtil::generatePasswords(1));
 	}
-
 }

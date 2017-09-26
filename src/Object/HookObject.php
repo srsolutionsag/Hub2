@@ -2,7 +2,8 @@
 
 /**
  * Class HookObject
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Object
  */
 class HookObject {
@@ -16,12 +17,14 @@ class HookObject {
 	 */
 	private $ilias_object;
 
+
 	/**
 	 * @param IObject $object
 	 */
 	public function __construct(IObject $object) {
 		$this->object = $object;
 	}
+
 
 	/**
 	 * Get the external ID of the object helps to identify the object
@@ -32,6 +35,7 @@ class HookObject {
 		return $this->object->getExtId();
 	}
 
+
 	/**
 	 * Get the current status, see constants in IObject
 	 *
@@ -41,26 +45,32 @@ class HookObject {
 		return $this->object->getStatus();
 	}
 
+
 	/**
 	 * @param \ilObject $object
+	 *
 	 * @return HookObject
 	 */
 	public function withILIASObject(\ilObject $object) {
 		$clone = clone $this;
 		$clone->ilias_object = $object;
+
 		return $clone;
 	}
 
+
 	/**
 	 * Get the ILIAS object which has been processed.
-	 * Note that this object is only available in the IOriginImplementation::after(Create|Update|Delete)Object
-	 * callbacks, it is NOT set for any before callbacks
+	 * Note that this object is only available in the
+	 * IOriginImplementation::after(Create|Update|Delete)Object callbacks, it is NOT set for any
+	 * before callbacks
 	 *
 	 * @return \ilObject|null
 	 */
 	public function getILIASObject() {
 		return $this->ilias_object;
 	}
+
 
 	/**
 	 * Get the ID of the linked ILIAS object.
@@ -73,5 +83,4 @@ class HookObject {
 	public function getILIASId() {
 		return $this->object->getILIASId();
 	}
-
 }

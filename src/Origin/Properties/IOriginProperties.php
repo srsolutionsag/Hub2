@@ -2,19 +2,23 @@
 
 /**
  * Interface Properties
+ *
  * @package SRAG\Hub2\Origin\Properties
  */
 interface IOriginProperties {
 
 	const PREFIX_UPDATE_DTO = 'update_dto_';
 
+
 	/**
 	 * Get a property value by key, returns NULL if no property is found.
 	 *
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
 	public function get($key);
+
 
 	/**
 	 * Checks if the given property of a DTO object should be updated on the ILIAS object,
@@ -23,9 +27,11 @@ interface IOriginProperties {
 	 * TODO Better documentation
 	 *
 	 * @param string $property
+	 *
 	 * @return bool
 	 */
 	public function updateDTOProperty($property);
+
 
 	/**
 	 * Get all properties as associative array
@@ -34,12 +40,13 @@ interface IOriginProperties {
 	 */
 	public function getData();
 
+
 	/**
 	 * Set all properties as associative array
+	 *
 	 * @param array $data
 	 *
 	 * @return $this
 	 */
 	public function setData(array $data);
-
 }

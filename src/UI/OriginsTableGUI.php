@@ -1,14 +1,17 @@
 <?php namespace SRAG\Hub2\UI;
+
 use SRAG\Hub2\Object\IObjectRepository;
 use SRAG\Hub2\Object\ObjectRepository;
 use SRAG\Hub2\Origin\IOriginRepository;
 
 /**
  * class OriginsTableGUI
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\UI
  */
 class OriginsTableGUI extends \ilTable2GUI {
+
 	/**
 	 * @var int
 	 */
@@ -16,10 +19,12 @@ class OriginsTableGUI extends \ilTable2GUI {
 	protected $pl;
 	protected $originRepository;
 
+
 	/**
-	 * @param $a_parent_obj
-	 * @param string $a_parent_cmd
+	 * @param                   $a_parent_obj
+	 * @param string            $a_parent_cmd
 	 * @param IOriginRepository $originRepository
+	 *
 	 * @internal param
 	 */
 	public function __construct($a_parent_obj, $a_parent_cmd, IOriginRepository $originRepository) {
@@ -36,10 +41,11 @@ class OriginsTableGUI extends \ilTable2GUI {
 		$this->initColumns();
 		$this->initTableData();
 		$this->addCommandButton('run', $this->pl->txt('origin_table_button_run'));
-		$this->addCommandButton('dryRun', $this->pl->txt('origin_table_button_dryrun'));
+//		$this->addCommandButton('dryRun', $this->pl->txt('origin_table_button_dryrun'));
 		$this->addCommandButton('deactivateAll', $this->pl->txt('origin_table_button_deactivate_all'));
 		$this->addCommandButton('activateAll', $this->pl->txt('origin_table_button_activate_all'));
 	}
+
 
 	protected function initColumns() {
 		$this->addColumn('ID', 'id');
@@ -51,6 +57,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 		$this->addColumn($this->pl->txt('origin_table_header_count'), 'n_objects');
 		$this->addColumn($this->pl->txt('common_actions'));
 	}
+
 
 	protected function initTableData() {
 		$data = [];
@@ -70,6 +77,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 		}
 		$this->setData($data);
 	}
+
 
 	protected function fillRow($a_set) {
 		foreach ($a_set as $key => $value) {

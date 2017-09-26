@@ -2,12 +2,14 @@
 
 /**
  * Class DTOPropertyParser
- * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ *
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Origin\Properties
  */
 class DTOPropertyParser {
 
 	private $dtoClass;
+
 
 	/**
 	 * @param string $dtoClass Fully qualified name of a DTO class, e.g. UserDTO
@@ -15,6 +17,7 @@ class DTOPropertyParser {
 	public function __construct($dtoClass) {
 		$this->dtoClass = $dtoClass;
 	}
+
 
 	/**
 	 * @return DTOProperty[]
@@ -30,6 +33,7 @@ class DTOPropertyParser {
 			$descriptionKey = count($out) ? $out[1] : '';
 			$properties[] = new DTOProperty($reflectionProperty->name, $descriptionKey);
 		}
+
 		return $properties;
 	}
 }

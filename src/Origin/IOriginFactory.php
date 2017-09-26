@@ -2,6 +2,7 @@
 
 /**
  * Interface IOriginFactory
+ *
  * @package SRAG\Hub2\Origin
  */
 interface IOriginFactory {
@@ -11,14 +12,22 @@ interface IOriginFactory {
 	 * to a origin of object type 'user'.
 	 *
 	 * @param int $id
+	 *
 	 * @return IOrigin
 	 */
 	public function getById($id);
 
+
 	/**
 	 * @param string $type
+	 *
 	 * @return IOrigin
 	 */
 	public function createByType($type);
 
+
+	/**
+	 * @return IOrigin[]
+	 */
+	public function getAllActive();
 }
