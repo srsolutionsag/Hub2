@@ -1,4 +1,8 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php
+
+namespace SRAG\Hub2\Sync\Processor\User;
+
+use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Interface IUserSyncProcessor

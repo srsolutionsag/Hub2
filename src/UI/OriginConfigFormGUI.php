@@ -101,8 +101,8 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 	 * and call parent::addPropertiesUpdate() at the very end
 	 */
 	protected function addPropertiesUpdate() {
-		$parser = new DTOPropertyParser("SRAG\\Hub2\\Object\\"
-		                                . ucfirst($this->origin->getObjectType()) . 'DTO');
+		$ucfirst = ucfirst($this->origin->getObjectType());
+		$parser = new DTOPropertyParser("SRAG\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}DTO");
 		foreach ($parser->getProperties() as $property) {
 			$postVar = IOriginProperties::PREFIX_UPDATE_DTO . $property->name;
 			$title = sprintf($this->pl->txt('origin_form_field_update_dto'), ucfirst($property->name));

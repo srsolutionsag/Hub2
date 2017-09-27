@@ -247,4 +247,12 @@ class OriginSync implements IOriginSync {
 	protected function incrementProcessed($status) {
 		$this->countProcessed[$status] ++;
 	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getOrigin() {
+		return $this->origin;
+	}
 }

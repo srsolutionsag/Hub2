@@ -21,6 +21,7 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		IObject::STATUS_UPDATED,
 		IObject::STATUS_DELETED,
 		IObject::STATUS_IGNORED,
+		IObject::STATUS_NOTHING_TO_UPDATE,
 	];
 	/**
 	 * @var IOriginConfig

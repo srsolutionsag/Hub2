@@ -137,7 +137,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			if ($object->$getter() !== null) {
-				$ilObjCourse->$setter($this->$getter());
+				$ilObjCourse->$setter($object->$getter());
 			}
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {

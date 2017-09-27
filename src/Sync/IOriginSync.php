@@ -29,7 +29,7 @@ interface IOriginSync {
 	/**
 	 * Get a collection of all exceptions occurred during executing the sync.
 	 *
-	 * @return array
+	 * @return \Exception[]
 	 */
 	public function getExceptions();
 
@@ -71,4 +71,12 @@ interface IOriginSync {
 	 * @return OriginNotifications
 	 */
 	public function getNotifications();
+
+
+	/**
+	 * Return the current origin
+	 *
+	 * @return \SRAG\Hub2\Origin\IOrigin
+	 */
+	public function getOrigin();
 }

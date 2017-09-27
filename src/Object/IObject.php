@@ -41,6 +41,10 @@ interface IObject {
 	 */
 	const STATUS_TO_UPDATE_NEWLY_DELIVERED = 128;
 	/**
+	 * The object has not been modified since the last sync
+	 */
+	const STATUS_NOTHING_TO_UPDATE = 256;
+	/**
 	 * Final status indicating that the object is ignored and not processed by the sync,
 	 * e.g. the period of the object does not match the actual period defined by the origin.
 	 */
@@ -139,6 +143,14 @@ interface IObject {
 	 * @return $this
 	 */
 	public function setStatus($status);
+
+
+	/**
+	 * @param $status
+	 *
+	 * @return $this
+	 */
+	public function updateStatus($status);
 
 	//	/**
 	//	 * Check if the object has the given status.

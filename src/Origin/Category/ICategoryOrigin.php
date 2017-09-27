@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Hub2\Origin\Category;
 
 /**
  * Interface ICategoryOrigin

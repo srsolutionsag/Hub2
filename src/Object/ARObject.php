@@ -11,6 +11,12 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	/**
 	 * @var array
 	 */
+	protected static $status_allowed_to_update_to = [
+		IObject::STATUS_NOTHING_TO_UPDATE,
+	];
+	/**
+	 * @var array
+	 */
 	protected static $available_status = [
 		IObject::STATUS_NEW,
 		IObject::STATUS_TO_CREATE,
@@ -21,6 +27,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		IObject::STATUS_DELETED,
 		IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED,
 		IObject::STATUS_IGNORED,
+		IObject::STATUS_NOTHING_TO_UPDATE,
 	];
 	/**
 	 * The primary ID is a composition of the origin-ID and ext_id
@@ -249,6 +256,19 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	public function setStatus($status) {
 		if (!in_array($status, self::$available_status)) {
 			throw new \InvalidArgumentException("'{$status}' is not a valid status");
+		}
+		$this->status = $status;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function updateStatus($status) {
+		if (!in_array($status, self::$status_allowed_to_update_to)) {
+			throw new \InvalidArgumentException("'{$status}' is not valid to switch to");
 		}
 		$this->status = $status;
 

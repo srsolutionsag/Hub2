@@ -1,5 +1,10 @@
 <?php namespace SRAG\Hub2\Origin;
 
+use SRAG\Hub2\Origin\Category\ARCategoryOrigin;
+use SRAG\Hub2\Origin\Course\ARCourseOrigin;
+use SRAG\Hub2\Origin\Session\ARSessionOrigin;
+use SRAG\Hub2\Origin\User\ARUserOrigin;
+
 /**
  * Class OriginRepository
  *
@@ -79,6 +84,6 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function sessions() {
-		return [];
+		return ARSessionOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_SESSION ])->get();
 	}
 }

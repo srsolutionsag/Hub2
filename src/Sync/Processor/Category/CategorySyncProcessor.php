@@ -1,20 +1,20 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php
+
+namespace SRAG\Hub2\Sync\Processor\Category;
 
 use SRAG\Hub2\Exception\HubException;
 use SRAG\Hub2\Log\ILog;
 use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\CategoryDTO;
-use SRAG\Hub2\Object\CourseDTO;
+use SRAG\Hub2\Object\Category\CategoryDTO;
 use SRAG\Hub2\Object\IDataTransferObject;
 use SRAG\Hub2\Object\ObjectFactory;
 use SRAG\Hub2\Origin\Config\CategoryOriginConfig;
-use SRAG\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Origin\OriginRepository;
 use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
 use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class CategorySyncProcessor
@@ -22,7 +22,7 @@ use SRAG\Hub2\Sync\IObjectStatusTransition;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Sync\Processor
  */
-class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncProcessor {
+class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySyncProcessor {
 
 	/**
 	 * @var CategoryOriginProperties
@@ -76,7 +76,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($object);
 		$ilObjCategory->removeTranslations();
-		$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()->getDefaultLanguage(), true);
+		$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()
+		                                                                                   ->getDefaultLanguage(), true);
 		$ilObjCategory->create();
 		$ilObjCategory->createReference();
 		$ilObjCategory->putInTree($parentRefId);
@@ -123,7 +124,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 		}
 		if ($this->props->updateDTOProperty('title')) {
 			$ilObjCategory->removeTranslations();
-			$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()->getDefaultLanguage(), true);
+			$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()
+			                                                                                   ->getDefaultLanguage(), true);
 		}
 		if ($this->props->updateDTOProperty('showNews')) {
 			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $object->isShowNews());
@@ -148,8 +150,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 			return null;
 		}
 		if ($this->props->get(CategoryOriginProperties::DELETE_MODE)
-		    == CategoryOriginProperties::DELETE_MODE_NONE
-		) {
+		    == CategoryOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjCategory;
 		}
 		switch ($this->props->get(CategoryOriginProperties::DELETE_MODE)) {
@@ -241,7 +242,9 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICourseSyncPr
 			return;
 		}
 		$DIC->repositoryTree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
-		$DIC->rbac()->admin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
+		$DIC->rbac()
+		    ->admin()
+		    ->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
 		//			hubLog::getInstance()->write($str);
 		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}

@@ -223,6 +223,13 @@ origin_table_header_usage_type#:#Verwendung
 origin_table_title#:#Anbindungen
 origin_title#:#Title
 origin_description#:#Description
+origin_object_type_user#:#User
+origin_object_type_courseMembership#:#Course Member
+origin_object_type_course#:#Course
+origin_object_type_category#:#Category
+origin_object_type_group#:#Group
+origin_object_type_groupMembership#:#Group Member
+origin_object_type_session#:#Session
 object_type_user#:#User
 object_type_courseMembership#:#Course Memberships
 object_type_course#:#Course

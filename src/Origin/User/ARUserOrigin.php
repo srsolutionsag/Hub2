@@ -1,5 +1,8 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php
 
+namespace SRAG\Hub2\Origin\User;
+
+use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Origin\Config\UserOriginConfig;
 use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 

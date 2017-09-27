@@ -1,5 +1,9 @@
 <?php namespace SRAG\Hub2\Object;
 
+use SRAG\Hub2\Object\Category\ARCategory;
+use SRAG\Hub2\Object\Course\ARCourse;
+use SRAG\Hub2\Object\Session\ARSession;
+use SRAG\Hub2\Object\User\ARUser;
 use SRAG\Hub2\Origin\IOrigin;
 
 /**
@@ -69,13 +73,26 @@ class ObjectFactory implements IObjectFactory {
 	}
 
 
+	/**
+	 * @inheritdoc
+	 */
 	public function group($ext_id) {
 		// TODO: Implement group() method.
 	}
 
 
+	/**
+	 * @inheritdoc
+	 */
 	public function session($ext_id) {
-		// TODO: Implement session() method.
+		$session = ARSession::find($this->getId($ext_id));
+		if ($session === null) {
+			$session = new ARSession();
+			$session->setOriginId($this->origin->getId());
+			$session->setExtId($ext_id);
+		}
+
+		return $session;
 	}
 
 

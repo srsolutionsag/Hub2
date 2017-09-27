@@ -1,4 +1,5 @@
-<?php namespace SRAG\Hub2\Sync;
+<?php
+namespace SRAG\Hub2\Sync;
 
 use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Log\ILog;
@@ -53,7 +54,8 @@ class OriginSyncFactory {
 	 * @return IObjectRepository
 	 */
 	protected function getObjectRepository() {
-		$class = "SRAG\\Hub2\\Object\\" . ucfirst($this->origin->getObjectType()) . 'Repository';
+		$ucfirst = ucfirst($this->origin->getObjectType());
+		$class = "SRAG\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}Repository";
 
 		return new $class($this->origin);
 	}

@@ -5,6 +5,11 @@ use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use SRAG\Hub2\Sync\Processor\Course\CourseActivities;
+use SRAG\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use SRAG\Hub2\Sync\Processor\Session\SessionSyncProcessor;
+use SRAG\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
  * Class SyncProcessorFactory
@@ -75,5 +80,12 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	public function category() {
 		return new CategorySyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function session() {
+		return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 	}
 }

@@ -58,6 +58,9 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	}
 
 
+	/**
+	 * @inheritdoc
+	 */
 	final public function process(IObject $object, IDataTransferObject $dto) {
 		$hook = new HookObject($object);
 		// We keep the old data if the object is getting deleted, as there is no "real" DTO available, because
@@ -82,6 +85,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 						throw new ILIASObjectNotFoundException($object);
 					}
 					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
+				} else {
+					$object->updateStatus(IObject::STATUS_NOTHING_TO_UPDATE);
 				}
 				break;
 			case IObject::STATUS_TO_DELETE:
@@ -99,10 +104,13 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				throw new HubException("Unrecognized intermediate status '{$object->getStatus()}' while processing {$object}");
 		}
 		$object->setStatus($this->transition->intermediateToFinal($object));
-		if ($object->getStatus() != IObject::STATUS_IGNORED) {
+		if ($object->getStatus() != IObject::STATUS_IGNORED
+		    && $object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
 			$object->setProcessedDate(time());
 		}
-		$object->save();
+		if ($object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
+			$object->save();
+		}
 	}
 
 

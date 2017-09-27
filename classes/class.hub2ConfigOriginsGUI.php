@@ -9,6 +9,7 @@ use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Origin\OriginImplementationTemplateGenerator;
 use SRAG\Hub2\Origin\OriginRepository;
 use SRAG\Hub2\Sync\OriginSyncFactory;
+use SRAG\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use SRAG\Hub2\UI\OriginConfigFormGUI;
 
 require_once(__DIR__ . '/class.ilHub2Plugin.php');
@@ -25,6 +26,10 @@ class hub2ConfigOriginsGUI {
 	const CMD_DELETE = 'delete';
 	const CMD_INDEX = 'index';
 	const ORIGIN_ID = 'origin_id';
+	/**
+	 * @var \SRAG\Hub2\Sync\Summary\OriginSyncSummaryFactory
+	 */
+	protected $summaryFactory;
 	/**
 	 * @var ilHub2Plugin
 	 */
@@ -50,6 +55,7 @@ class hub2ConfigOriginsGUI {
 		$this->originFactory = new \SRAG\Hub2\Origin\OriginFactory($this->db());
 		$this->hubConfig = new HubConfig();
 		$this->originRepository = new OriginRepository();
+		$this->summaryFactory = new OriginSyncSummaryFactory();
 	}
 
 
@@ -78,13 +84,13 @@ class hub2ConfigOriginsGUI {
 
 
 	protected function addOrigin() {
-		$form = new OriginConfigFormGUI($this, $this->hubConfig, new OriginRepository(), new \SRAG\Hub2\Origin\ARUserOrigin());
+		$form = new OriginConfigFormGUI($this, $this->hubConfig, new OriginRepository(), new \SRAG\Hub2\Origin\User\ARUserOrigin());
 		$this->tpl()->setContent($form->getHTML());
 	}
 
 
 	protected function createOrigin() {
-		$form = new OriginConfigFormGUI($this, $this->hubConfig, new OriginRepository(), new \SRAG\Hub2\Origin\ARUserOrigin());
+		$form = new OriginConfigFormGUI($this, $this->hubConfig, new OriginRepository(), new \SRAG\Hub2\Origin\User\ARUserOrigin());
 		if ($form->checkInput()) {
 			$origin = $this->originFactory->createByType($form->getInput('object_type'));
 			$origin->setTitle($form->getInput('title'));
@@ -177,16 +183,36 @@ class hub2ConfigOriginsGUI {
 
 
 	protected function run() {
+		$summary = $this->summaryFactory->web();
 		foreach ($this->originFactory->getAllActive() as $origin) {
-			$this->runOrigin($origin);
+			$originSyncFactory = new OriginSyncFactory($origin);
+			$originSync = $originSyncFactory->instance();
+			try {
+				$originSync->execute();
+			} catch (\Exception $e) {
+				// Any exception being forwarded to here means that we failed to execute the sync at some point
+				ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
+			}
+			$summary->addOriginSync($originSync);
 		}
+		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
 		$this->ctrl()->redirect($this);
 	}
 
 
 	protected function runOriginSync() {
 		$origin = $this->getOrigin((int)$_GET[self::ORIGIN_ID]);
-		$this->runOrigin($origin);
+		$summary = $this->summaryFactory->web();
+		$originSyncFactory = new OriginSyncFactory($origin);
+		$originSync = $originSyncFactory->instance();
+		try {
+			$originSync->execute();
+		} catch (\Exception $e) {
+			// Any exception being forwarded to here means that we failed to execute the sync at some point
+			ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
+		}
+		$summary->addOriginSync($originSync);
+		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
 		$this->ctrl()->redirect($this);
 	}
 
@@ -254,43 +280,5 @@ class hub2ConfigOriginsGUI {
 		}
 
 		return $origin;
-	}
-
-
-	/**
-	 * @param $origin
-	 */
-	protected function runOrigin($origin) {
-		$originSyncFactory = new OriginSyncFactory($origin);
-		$originSync = $originSyncFactory->instance();
-		try {
-			$originSync->execute();
-			// Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
-			$msg = "Counts:\n**********\n";
-			$msg .= "Delivered data sets: " . $originSync->getCountDelivered() . "\n";
-			$msg .= "Created: " . $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)
-			        . "\n";
-			$msg .= "Updated: " . $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)
-			        . "\n";
-			$msg .= "Deleted: " . $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED)
-			        . "\n";
-			$msg .= "Ignored: " . $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)
-			        . "\n\n";
-			foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
-				$msg .= "$context:\n**********\n";
-				foreach ($messages as $message) {
-					$msg .= "$message\n";
-				}
-				$msg .= "\n";
-			}
-			foreach ($originSync->getExceptions() as $exception) {
-				$msg .= "Exceptions:\n**********\n";
-				$msg .= $exception->getMessage() . "\n";
-			}
-			ilUtil::sendInfo(nl2br($msg), true);
-		} catch (\Exception $e) {
-			// Any exception being forwarded to here means that we failed to execute the sync at some point
-			ilUtil::sendFailure($e->getMessage(), true);
-		}
 	}
 }

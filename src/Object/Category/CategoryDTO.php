@@ -10,11 +10,11 @@ use SRAG\Hub2\Object\DataTransferObject;
  */
 class CategoryDTO extends DataTransferObject {
 
-	const ORDER_TYPE_TITLE = \ilContainer::SORT_TITLE;
-	const ORDER_TYPE_MANUAL = \ilContainer::SORT_MANUAL;
-	const ORDER_TYPE_ACTIVATION = \ilContainer::SORT_ACTIVATION;
-	const ORDER_TYPE_INHERIT = \ilContainer::SORT_INHERIT;
-	const ORDER_TYPE_CREATION = \ilContainer::SORT_CREATION;
+	const ORDER_TYPE_TITLE = 0;
+	const ORDER_TYPE_MANUAL = 1;
+	const ORDER_TYPE_ACTIVATION = 2;
+	const ORDER_TYPE_INHERIT = 3;
+	const ORDER_TYPE_CREATION = 4;
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**

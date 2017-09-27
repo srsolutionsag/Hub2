@@ -10,25 +10,40 @@ interface IObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return IUser
+	 * @return \SRAG\Hub2\Object\User\IUser
 	 */
 	public function user($ext_id);
 
 
+	/**
+	 * @param $ext_id
+	 *
+	 * @return \SRAG\Hub2\Object\Course\ICourse
+	 */
 	public function course($ext_id);
 
 
 	/**
 	 * @param $ext_id
 	 *
-	 * @return IObject
+	 * @return \SRAG\Hub2\Object\Category\ICategory
 	 */
 	public function category($ext_id);
 
 
+	/**
+	 * @param $ext_id
+	 *
+	 * @return \SRAG\Hub2\Object\Group\IGroup
+	 */
 	public function group($ext_id);
 
 
+	/**
+	 * @param $ext_id
+	 *
+	 * @return \SRAG\Hub2\Object\Session\ISession
+	 */
 	public function session($ext_id);
 
 

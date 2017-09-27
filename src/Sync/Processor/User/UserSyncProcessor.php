@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php namespace SRAG\Hub2\Sync\Processor\User;
 
 use SRAG\Hub2\Log\ILog;
 use SRAG\Hub2\Notification\OriginNotifications;
@@ -10,6 +10,7 @@ use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginImplementation;
 use SRAG\Hub2\Origin\Properties\UserOriginProperties;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class UserProcessor
@@ -173,8 +174,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			return null;
 		}
 		if ($this->props->get(UserOriginProperties::DELETE)
-		    == UserOriginProperties::DELETE_MODE_NONE
-		) {
+		    == UserOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjUser;
 		}
 		switch ($this->props->get(UserOriginProperties::DELETE)) {

@@ -1,4 +1,6 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php
+
+namespace SRAG\Hub2\Sync\Processor;
 
 /**
  * Interface ISyncProcessorFactory
@@ -8,19 +10,25 @@
 interface ISyncProcessorFactory {
 
 	/**
-	 * @return IUserSyncProcessor
+	 * @return \SRAG\Hub2\Sync\Processor\User\IUserSyncProcessor
 	 */
 	public function user();
 
 
 	/**
-	 * @return ICourseSyncProcessor
+	 * @return \SRAG\Hub2\Sync\Processor\Course\ICourseSyncProcessor
 	 */
 	public function course();
 
 
 	/**
-	 * @return ICategorySyncProcessor
+	 * @return \SRAG\Hub2\Sync\Processor\Category\ICategorySyncProcessor
 	 */
 	public function category();
+
+
+	/**
+	 * @return \SRAG\Hub2\Sync\Processor\Session\ISessionSyncProcessor
+	 */
+	public function session();
 }

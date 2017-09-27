@@ -1,5 +1,9 @@
 <?php namespace SRAG\Hub2\Object;
 
+use SRAG\Hub2\Object\Category\CategoryDTO;
+use SRAG\Hub2\Object\Course\CourseDTO;
+use SRAG\Hub2\Object\User\UserDTO;
+
 /**
  * Interface IDataTransferObjectFactory
  *
@@ -10,7 +14,7 @@ interface IDataTransferObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return UserDTO
+	 * @return \SRAG\Hub2\Object\User\UserDTO
 	 */
 	public function user($ext_id);
 
@@ -18,7 +22,7 @@ interface IDataTransferObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return CourseDTO
+	 * @return \SRAG\Hub2\Object\Course\CourseDTO
 	 */
 	public function course($ext_id);
 
@@ -26,7 +30,7 @@ interface IDataTransferObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return CategoryDTO
+	 * @return \SRAG\Hub2\Object\Category\CategoryDTO
 	 */
 	public function category($ext_id);
 
@@ -34,7 +38,7 @@ interface IDataTransferObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return GroupDTO
+	 * @return GroupD
 	 */
 	public function group($ext_id);
 
@@ -42,7 +46,7 @@ interface IDataTransferObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return SessionDTO
+	 * @return \SRAG\Hub2\Object\Session\SessionDTO
 	 */
 	public function session($ext_id);
 

@@ -29,7 +29,7 @@ class OriginFactory implements IOriginFactory {
 		$sql = 'SELECT object_type FROM sr_hub2_origin WHERE id = %s';
 		$set = $this->db->queryF($sql, [ 'integer' ], [ $id ]);
 		$type = $this->db->fetchObject($set)->object_type;
-		$class = 'SRAG\Hub2\Origin\AR' . ucfirst($type) . 'Origin';
+		$class = $this->getClass($type);
 
 		return $class::find((int)$id);
 	}
@@ -39,7 +39,7 @@ class OriginFactory implements IOriginFactory {
 	 * @inheritdoc
 	 */
 	public function createByType($type) {
-		$class = 'SRAG\Hub2\Origin\AR' . $type . 'Origin';
+		$class = $this->getClass($type);
 
 		return new $class();
 	}
@@ -58,5 +58,18 @@ class OriginFactory implements IOriginFactory {
 		}
 
 		return $origins;
+	}
+
+
+	/**
+	 * @param $type
+	 *
+	 * @return string
+	 */
+	protected function getClass($type) {
+		$ucfirst = ucfirst($type);
+		$class = "SRAG\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
+
+		return $class;
 	}
 }

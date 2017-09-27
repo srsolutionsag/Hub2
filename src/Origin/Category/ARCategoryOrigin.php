@@ -1,5 +1,7 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php
+namespace SRAG\Hub2\Origin\Category;
 
+use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Origin\Config\CategoryOriginConfig;
 use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
 

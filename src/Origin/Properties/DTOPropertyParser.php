@@ -1,4 +1,6 @@
-<?php namespace SRAG\Hub2\Origin\Properties;
+<?php
+
+namespace SRAG\Hub2\Origin\Properties;
 
 /**
  * Class DTOPropertyParser
@@ -8,6 +10,9 @@
  */
 class DTOPropertyParser {
 
+	/**
+	 * @var string
+	 */
 	private $dtoClass;
 
 

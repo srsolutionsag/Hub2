@@ -16,6 +16,11 @@ abstract class ObjectRepository implements IObjectRepository {
 	protected $origin;
 
 
+	/**
+	 * ObjectRepository constructor.
+	 *
+	 * @param \SRAG\Hub2\Origin\IOrigin $origin
+	 */
 	public function __construct(IOrigin $origin) {
 		$this->origin = $origin;
 	}
@@ -77,6 +82,8 @@ abstract class ObjectRepository implements IObjectRepository {
 	 * @return string
 	 */
 	protected function getClass() {
-		return "SRAG\\Hub2\\Object\\AR" . ucfirst($this->origin->getObjectType());
+		$ucfirst = ucfirst($this->origin->getObjectType());
+
+		return "SRAG\\Hub2\\Object\\" . $ucfirst . "\\AR" . $ucfirst;
 	}
 }

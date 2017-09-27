@@ -1,7 +1,6 @@
 <?php namespace SRAG\Hub2\UI;
 
 use SRAG\Hub2\Object\IObjectRepository;
-use SRAG\Hub2\Object\ObjectRepository;
 use SRAG\Hub2\Origin\IOriginRepository;
 
 /**
@@ -41,7 +40,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 		$this->initColumns();
 		$this->initTableData();
 		$this->addCommandButton('run', $this->pl->txt('origin_table_button_run'));
-//		$this->addCommandButton('dryRun', $this->pl->txt('origin_table_button_dryrun'));
+		//		$this->addCommandButton('dryRun', $this->pl->txt('origin_table_button_dryrun'));
 		$this->addCommandButton('deactivateAll', $this->pl->txt('origin_table_button_deactivate_all'));
 		$this->addCommandButton('activateAll', $this->pl->txt('origin_table_button_activate_all'));
 	}
@@ -62,7 +61,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 	protected function initTableData() {
 		$data = [];
 		foreach ($this->originRepository->all() as $origin) {
-			$class = "SRAG\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "Repository";
+			$class = "SRAG\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\" . ucfirst($origin->getObjectType()) . "Repository";
 			/** @var IObjectRepository $objectRepository */
 			$objectRepository = new $class($origin);
 			$row = [];
@@ -90,9 +89,12 @@ class OriginsTableGUI extends \ilTable2GUI {
 		$actions->setId('actions_' . $a_set['id']);
 		$actions->setListTitle($this->pl->txt('common_actions'));
 		$DIC->ctrl()->setParameter($this->parent_obj, 'origin_id', $a_set['id']);
-		$actions->addItem($this->pl->txt('common_edit'), 'edit', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'editOrigin'));
-		$actions->addItem($this->pl->txt('common_delete'), 'delete', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'confirmDelete'));
-		$actions->addItem($this->pl->txt('origin_table_button_run'), 'runOriginSync', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'runOriginSync'));
+		$actions->addItem($this->pl->txt('common_edit'), 'edit', $DIC->ctrl()
+		                                                             ->getLinkTarget($this->parent_obj, 'editOrigin'));
+		$actions->addItem($this->pl->txt('common_delete'), 'delete', $DIC->ctrl()
+		                                                                 ->getLinkTarget($this->parent_obj, 'confirmDelete'));
+		$actions->addItem($this->pl->txt('origin_table_button_run'), 'runOriginSync', $DIC->ctrl()
+		                                                                                  ->getLinkTarget($this->parent_obj, 'runOriginSync'));
 		$DIC->ctrl()->clearParameters($this->parent_obj);
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $actions->getHTML());

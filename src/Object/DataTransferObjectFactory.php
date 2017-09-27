@@ -1,6 +1,11 @@
-<?php namespace SRAG\Hub2\Object;
+<?php
 
-//use SRAG\Hub2\Origin\IOrigin;
+namespace SRAG\Hub2\Object;
+
+use SRAG\Hub2\Object\Category\CategoryDTO;
+use SRAG\Hub2\Object\Course\CourseDTO;
+use SRAG\Hub2\Object\Session\SessionDTO;
+use SRAG\Hub2\Object\User\UserDTO;
 
 /**
  * Class ObjectDTOFactory
@@ -25,12 +30,14 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 		return new CourseDTO($ext_id);
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function category($ext_id) {
 		return new CategoryDTO($ext_id);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -39,12 +46,14 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 		// TODO: Implement group() method.
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function session($ext_id) {
-		// TODO: Implement session() method.
+		return new SessionDTO($ext_id);
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -52,6 +61,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 	public function courseMembership($ext_course_id, $ext_user_id) {
 		// TODO: Implement courseMembership() method.
 	}
+
 
 	/**
 	 * @inheritdoc
