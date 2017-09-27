@@ -25,7 +25,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 	const REF_ID = 57;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Sync\Processor\ICategorySyncProcessor
+	 * @var Mockery\MockInterface|\SRAG\Hub2\Sync\Processor\Category\ICategorySyncProcessor
 	 */
 	protected $activities;
 	/**
