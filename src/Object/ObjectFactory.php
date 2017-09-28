@@ -2,6 +2,7 @@
 
 use SRAG\Hub2\Object\Category\ARCategory;
 use SRAG\Hub2\Object\Course\ARCourse;
+use SRAG\Hub2\Object\CourseMembership\ARCourseMembership;
 use SRAG\Hub2\Object\Session\ARSession;
 use SRAG\Hub2\Object\User\ARUser;
 use SRAG\Hub2\Origin\IOrigin;
@@ -96,11 +97,23 @@ class ObjectFactory implements IObjectFactory {
 	}
 
 
+	/**
+	 * @inheritdoc
+	 */
 	public function courseMembership($ext_id) {
-		// TODO: Implement courseMembership() method.
+		$category = ARCourseMembership::find($this->getId($ext_id));
+		if ($category === null) {
+			$category = new ARCourseMembership();
+			$category->setOriginId($this->origin->getId());
+			$category->setExtId($ext_id);
+		}
+
+		return $category;
 	}
 
-
+	/**
+	 * @inheritdoc
+	 */
 	public function groupMembership($ext_id) {
 		// TODO: Implement groupMembership() method.
 	}

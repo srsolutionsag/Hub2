@@ -259,7 +259,8 @@ class hub2ConfigOriginsGUI {
 	 * @return OriginConfigFormGUI
 	 */
 	protected function getForm(AROrigin $origin) {
-		$formClass = "SRAG\\Hub2\\UI\\" . ucfirst($origin->getObjectType()) . 'OriginConfigFormGUI';
+		$formFactory = new \SRAG\Hub2\UI\OriginFormFactory();
+		$formClass = $formFactory->getFormClassNameByOrigin($origin);
 		$form = new $formClass($this, $this->hubConfig, new OriginRepository(), $origin);
 
 		return $form;

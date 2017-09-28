@@ -1,4 +1,6 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php
+
+namespace SRAG\Hub2\Sync\Processor;
 
 /**
  * Trait Helper

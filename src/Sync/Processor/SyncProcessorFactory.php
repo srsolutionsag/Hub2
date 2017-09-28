@@ -8,6 +8,7 @@ use SRAG\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Hub2\Sync\Processor\Category\CategorySyncProcessor;
 use SRAG\Hub2\Sync\Processor\Course\CourseActivities;
 use SRAG\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use SRAG\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
 use SRAG\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 use SRAG\Hub2\Sync\Processor\User\UserSyncProcessor;
 
@@ -87,5 +88,13 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	public function session() {
 		return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function courseMembership() {
+		return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 	}
 }

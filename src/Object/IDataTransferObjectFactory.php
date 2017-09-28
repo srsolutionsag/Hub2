@@ -2,6 +2,7 @@
 
 use SRAG\Hub2\Object\Category\CategoryDTO;
 use SRAG\Hub2\Object\Course\CourseDTO;
+use SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use SRAG\Hub2\Object\User\UserDTO;
 
 /**

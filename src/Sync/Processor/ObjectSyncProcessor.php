@@ -115,12 +115,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 
 	/**
-	 * @param \ilObject $object
+	 * @param \ilObject|\SRAG\Hub2\Sync\Processor\FakeIliasObject $object
 	 *
 	 * @return int
 	 */
-	protected function getILIASId(\ilObject $object) {
-		if ($object instanceof \ilObjUser) {
+	protected function getILIASId($object) {
+		if ($object instanceof \ilObjUser || $object instanceof FakeIliasObject) {
 			return $object->getId();
 		}
 

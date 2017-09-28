@@ -19,7 +19,9 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return string
 	 */
 	function getPluginName() {
-		return 'Hub2';
+		$PLUGIN_NAME = 'Hub2';
+
+		return $PLUGIN_NAME;
 	}
 
 
@@ -47,6 +49,9 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	}
 
 
+	/**
+	 * @param $a_job_id
+	 */
 	public function getCronJobInstance($a_job_id) {
 		// TODO: Implement getCronJobInstance() method.
 	}

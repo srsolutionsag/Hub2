@@ -2,6 +2,7 @@
 
 use SRAG\Hub2\Origin\Category\ARCategoryOrigin;
 use SRAG\Hub2\Origin\Course\ARCourseOrigin;
+use SRAG\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
 use SRAG\Hub2\Origin\Session\ARSessionOrigin;
 use SRAG\Hub2\Origin\User\ARUserOrigin;
 
@@ -60,7 +61,7 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function courseMemberships() {
-		return [];
+		return ARCourseMembershipOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP ])->get();
 	}
 
 

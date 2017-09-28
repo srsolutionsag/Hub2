@@ -350,7 +350,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		$out = [];
 		preg_match('%AR(.*)Origin$%', get_class($this), $out);
 
-		return strtolower($out[1]);
+		return lcfirst($out[1]);
 	}
 
 

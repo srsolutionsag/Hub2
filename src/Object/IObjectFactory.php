@@ -47,9 +47,19 @@ interface IObjectFactory {
 	public function session($ext_id);
 
 
+	/**
+	 * @param $ext_id
+	 *
+	 * @return \SRAG\Hub2\Object\CourseMembership\ICourseMembership
+	 */
 	public function courseMembership($ext_id);
 
 
+	/**
+	 * @param $ext_id
+	 *
+	 * @return mixed
+	 */
 	public function groupMembership($ext_id);
 
 	//	/**
