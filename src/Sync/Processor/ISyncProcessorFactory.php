@@ -37,4 +37,10 @@ interface ISyncProcessorFactory {
 	 * @return \SRAG\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor
 	 */
 	public function courseMembership();
+
+
+	/**
+	 * @return mixed
+	 */
+	public function group();
 }

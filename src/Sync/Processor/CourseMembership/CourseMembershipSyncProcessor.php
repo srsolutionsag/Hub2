@@ -109,7 +109,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 * @return \ilObjCourse|null
 	 */
 	protected function findILIASCourse($iliasId) {
-		if (!\ilObjCourse::_exists($iliasId, true)) {
+		if (!\ilObject2::_exists($iliasId, true)) {
 			return null;
 		}
 

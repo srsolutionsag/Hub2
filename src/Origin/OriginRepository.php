@@ -3,6 +3,7 @@
 use SRAG\Hub2\Origin\Category\ARCategoryOrigin;
 use SRAG\Hub2\Origin\Course\ARCourseOrigin;
 use SRAG\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
+use SRAG\Hub2\Origin\Group\ARGroupOrigin;
 use SRAG\Hub2\Origin\Session\ARSessionOrigin;
 use SRAG\Hub2\Origin\User\ARUserOrigin;
 
@@ -69,7 +70,7 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function groups() {
-		return [];
+		return ARGroupOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_GROUP ])->get();
 	}
 
 
