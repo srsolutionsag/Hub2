@@ -11,6 +11,19 @@ use SRAG\Hub2\Object\DataTransferObject;
  */
 class GroupDTO extends DataTransferObject {
 
+	// Registration
+	const GRP_REGISTRATION_DEACTIVATED = - 1;
+	const GRP_REGISTRATION_DIRECT = 0;
+	const GRP_REGISTRATION_REQUEST = 1;
+	const GRP_REGISTRATION_PASSWORD = 2;
+	// Type
+	const GRP_REGISTRATION_LIMITED = 1;
+	const GRP_REGISTRATION_UNLIMITED = 2;
+	const GRP_TYPE_UNKNOWN = 0;
+	const GRP_TYPE_CLOSED = 1;
+	const GRP_TYPE_OPEN = 2;
+	const GRP_TYPE_PUBLIC = 3;
+	// Other
 	const MAIL_ALLOWED_ALL = 1;
 	const MAIL_ALLOWED_TUTORS = 2;
 	const PARENT_ID_TYPE_REF_ID = 1;
@@ -32,6 +45,10 @@ class GroupDTO extends DataTransferObject {
 	 */
 	protected $groupType;
 	/**
+	 * @var int
+	 */
+	protected $regType;
+	/**
 	 * @var bool
 	 */
 	protected $regEnabled;
@@ -48,6 +65,10 @@ class GroupDTO extends DataTransferObject {
 	 */
 	protected $regEnd;
 	/**
+	 * @var int
+	 */
+	protected $owner;
+	/**
 	 * @var string
 	 */
 	protected $regPassword;
@@ -62,7 +83,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var int
 	 */
-	protected $reg_MaxMembers;
+	protected $regMaxMembers;
 	/**
 	 * @var bool
 	 */
@@ -111,6 +132,14 @@ class GroupDTO extends DataTransferObject {
 	 * @var int
 	 */
 	protected $viewMode;
+	/**
+	 * @var string
+	 */
+	private $parentId;
+	/**
+	 * @var int
+	 */
+	private $parentIdType = self::PARENT_ID_TYPE_REF_ID;
 
 
 	/**
@@ -148,6 +177,26 @@ class GroupDTO extends DataTransferObject {
 	 */
 	public function setDescription($description) {
 		$this->description = $description;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getRegType() {
+		return $this->regType;
+	}
+
+
+	/**
+	 * @param int $regType
+	 *
+	 * @return GroupDTO
+	 */
+	public function setRegType($regType) {
+		$this->regType = $regType;
 
 		return $this;
 	}
@@ -194,9 +243,29 @@ class GroupDTO extends DataTransferObject {
 
 
 	/**
+	 * @return int
+	 */
+	public function getOwner() {
+		return $this->owner;
+	}
+
+
+	/**
+	 * @param int $owner
+	 *
+	 * @return GroupDTO
+	 */
+	public function setOwner($owner) {
+		$this->owner = $owner;
+
+		return $this;
+	}
+
+
+	/**
 	 * @return bool
 	 */
-	public function isRegEnabled() {
+	public function getRegEnabled() {
 		return $this->regEnabled;
 	}
 
@@ -216,7 +285,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function isRegUnlimited() {
+	public function getRegUnlimited() {
 		return $this->regUnlimited;
 	}
 
@@ -296,7 +365,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function isRegMembershipLimitation() {
+	public function getRegMembershipLimitation() {
 		return $this->regMembershipLimitation;
 	}
 
@@ -337,17 +406,17 @@ class GroupDTO extends DataTransferObject {
 	 * @return int
 	 */
 	public function getRegMaxMembers() {
-		return $this->reg_MaxMembers;
+		return $this->regMaxMembers;
 	}
 
 
 	/**
-	 * @param int $reg_MaxMembers
+	 * @param int $regMaxMembers
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegMaxMembers($reg_MaxMembers) {
-		$this->reg_MaxMembers = $reg_MaxMembers;
+	public function setRegMaxMembers($regMaxMembers) {
+		$this->regMaxMembers = $regMaxMembers;
 
 		return $this;
 	}
@@ -356,7 +425,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function isWaitingList() {
+	public function getWaitingList() {
 		return $this->waitingList;
 	}
 
@@ -376,7 +445,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function isAutoFillFromWaiting() {
+	public function getAutoFillFromWaiting() {
 		return $this->autoFillFromWaiting;
 	}
 
@@ -536,7 +605,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function isRegAccessCodeEnabled() {
+	public function getRegAccessCodeEnabled() {
 		return $this->regAccessCodeEnabled;
 	}
 
@@ -588,6 +657,46 @@ class GroupDTO extends DataTransferObject {
 	 */
 	public function setViewMode($viewMode) {
 		$this->viewMode = $viewMode;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getParentId() {
+		return $this->parentId;
+	}
+
+
+	/**
+	 * @param string $parentId
+	 *
+	 * @return GroupDTO
+	 */
+	public function setParentId($parentId) {
+		$this->parentId = $parentId;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getParentIdType() {
+		return $this->parentIdType;
+	}
+
+
+	/**
+	 * @param int $parentIdType
+	 *
+	 * @return GroupDTO
+	 */
+	public function setParentIdType($parentIdType) {
+		$this->parentIdType = $parentIdType;
 
 		return $this;
 	}
