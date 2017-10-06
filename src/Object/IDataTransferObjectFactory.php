@@ -3,6 +3,7 @@
 use SRAG\Hub2\Object\Category\CategoryDTO;
 use SRAG\Hub2\Object\Course\CourseDTO;
 use SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Hub2\Object\GroupMembership\GroupMembershipDTO;
 use SRAG\Hub2\Object\User\UserDTO;
 
 /**
@@ -39,7 +40,7 @@ interface IDataTransferObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return GroupD
+	 * @return \SRAG\Hub2\Object\Group\GroupDTO
 	 */
 	public function group($ext_id);
 
@@ -53,7 +54,8 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param string $ext_course_id , $ext_user_id
+	 * @param $ext_course_id
+	 * @param $ext_user_id
 	 *
 	 * @return CourseMembershipDTO
 	 */
@@ -61,9 +63,10 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param string $ext_group_id , $ext_user_id
+	 * @param $ext_group_id
+	 * @param $ext_user_id
 	 *
-	 * @return GroupMembershipDTO
+	 * @return \SRAG\Hub2\Object\GroupMembership\GroupMembershipDTO
 	 */
 	public function groupMembership($ext_group_id, $ext_user_id);
 }

@@ -12,11 +12,17 @@ interface IOriginSyncSummaryFactory {
 	/**
 	 * @return \SRAG\Hub2\Sync\Summary\IOriginSyncSummary
 	 */
-	public function common(): IOriginSyncSummary;
+	public function common();
 
 
 	/**
 	 * @return \SRAG\Hub2\Sync\Summary\IOriginSyncSummary
 	 */
-	public function web(): IOriginSyncSummary;
+	public function web();
+
+
+	/**
+	 * @return \SRAG\Hub2\Sync\Summary\IOriginSyncSummary
+	 */
+	public function cron();
 }

@@ -117,6 +117,13 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @var IOriginProperties
 	 */
 	protected $_properties;
+	/**
+	 * @var string
+	 *
+	 * @db_has_field           true
+	 * @db_fieldtype           timestamp
+	 */
+	protected $last_run;
 
 
 	public function create() {
@@ -133,11 +140,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 
 
 	/**
-	 * Nasty workaround because ActiveRecord also calls sleep when reading from DB
-	 *
-	 * @param $field_name
-	 *
-	 * @return mixed|string
+	 * @inheritdoc
 	 */
 	public function sleep($field_name) {
 		switch ($field_name) {
@@ -163,6 +166,9 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	}
 
 
+	/**
+	 * @inheritdoc
+	 */
 	public function wakeUp($field_name, $field_value) {
 		switch ($field_name) {
 			case 'config':
@@ -279,6 +285,22 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 */
 	public function getObjectType() {
 		return $this->object_type;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getLastRun() {
+		return $this->last_run;
+	}
+
+
+	/**
+	 * @param string $last_run
+	 */
+	public function setLastRun($last_run) {
+		$this->last_run = $last_run;
 	}
 
 

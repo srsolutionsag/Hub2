@@ -28,6 +28,11 @@ use SRAG\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	const REF_ID = 57;
+	const USER_ID_OF_MEMBER_TO_DELETE = 22;
+	/**
+	 * @var Mockery\MockInterface|\ilSessionParticipants
+	 */
+	protected $participants;
 	/**
 	 * @var Mockery\MockInterface|\ilSessionAppointment
 	 */
@@ -54,7 +59,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$arr = [
 			'update_dto_title'       => true,
 			'update_dto_description' => true,
-			'update_dto_location' => true,
+			'update_dto_location'    => true,
 		];
 		$this->initOrigin(new SessionOriginProperties($arr), new SessionOriginConfig([]));
 		$this->setupGeneralDependencies();
@@ -88,6 +93,16 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldReceive("getAppointments")->andReturn($this->appointments);
 		$this->ilObject->shouldReceive("getFirstAppointment")->andReturn($this->appointments[0]);
 		$this->ilObject->shouldReceive("setAppointments")->with($this->appointments);
+
+		$this->participants = \Mockery::mock('overload:\ilSessionParticipants', '\ilParticipants');
+		$this->participants->shouldReceive("getMembers")
+		                   ->andReturn([ self::USER_ID_OF_MEMBER_TO_DELETE ]);
+		$this->participants->shouldReceive("register")->once()->with($this->dto->getMembers()[0]);
+		$this->participants->shouldReceive("unregister")
+		                   ->once()
+		                   ->with(self::USER_ID_OF_MEMBER_TO_DELETE);
+
+		$this->ilObject->shouldReceive("getMembersObject")->andReturn($this->participants);
 	}
 
 
@@ -114,11 +129,12 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	protected function initDTO() {
 		$this->dto = new SessionDTO('extIdOfSession');
-		$this->dto->setParentIdType(SessionDTO::PARENT_ID_TYPE_REF_ID);
-		$this->dto->setParentId(1);
-		$this->dto->setTitle('Title');
-		$this->dto->setDescription('Description');
-		$this->dto->setLocation('Location');
+		$this->dto->setParentId(1)
+		          ->setParentIdType(SessionDTO::PARENT_ID_TYPE_REF_ID)
+		          ->setTitle('Title')
+		          ->setDescription('Description')
+		          ->setLocation('Location')
+		          ->setMembers([ 6 ]);
 	}
 
 

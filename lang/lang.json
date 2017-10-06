@@ -1,7 +1,8 @@
 {
     "plugin_prefix": "cron_crnhk_hub2",
     "languages": [
-        "en"
+        "en",
+        "de"
     ],
     "entries": {
         "admin": {
@@ -67,7 +68,8 @@
             },
             "lock": {
                 "translations": {
-                    "en": "Einstellungen aktiver Anbindungen sperren"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
@@ -108,7 +110,8 @@
             },
             "msg_shortlink_not_active": {
                 "translations": {
-                    "en": "'Shortlinks nicht aktiviert'-Meldung"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
@@ -119,37 +122,42 @@
             },
             "msg_shortlink_no_ilias_id": {
                 "translations": {
-                    "en": "'Keine ILIAS-ID für Objekt'-Meldung"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
             "msg_shortlink_no_ilias_id_info": {
                 "translations": {
-                    "en": "Meldung falls für das entsprechende Hub Objekt keine entsprechende ILIAS-ID existiert."
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
             "msg_shortlink_not_found": {
                 "translations": {
-                    "en": "'Ungültiger Shortlink'-Meldung"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
             "msg_shortlink_not_found_info": {
                 "translations": {
-                    "en": "Meldung falls Objekt (noch) nicht vorhanden wenn Zugriff via Shortlink erfolgt."
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
             "origins_path": {
                 "translations": {
-                    "en": "Pfad des origins-Verzeichnis"
+                    "en": "Path to Origins"
                 },
-                "last_used": "02.10.2017"
+                "last_used": "05.10.2017"
             },
             "origins_path_info": {
                 "translations": {
-                    "en": "Wenn leer, wird das Standardverzeichnis unter ./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/Hub/origins verwendet."
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
@@ -165,13 +173,15 @@
             },
             "roles_info": {
                 "translations": {
-                    "en": "Rollen-Ids, welche HUB nutzen können."
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
             "shortlink": {
                 "translations": {
-                    "en": "Shortlink"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
@@ -207,9 +217,9 @@
             },
             "form_title": {
                 "translations": {
-                    "en": "Einstellungen"
+                    "en": "General"
                 },
-                "last_used": "02.10.2017"
+                "last_used": "05.10.2017"
             },
             "header_sync": {
                 "translations": {
@@ -369,19 +379,19 @@
                 "translations": {
                     "en": "Kurs löschen oder offline setzen"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_delete_mode_delete_or_inactive_info": {
                 "translations": {
                     "en": "Wenn bereits Aktivitäten im Kurs stattfanden, wird er offline gesetzt, ansonsten gelöscht."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_activate": {
                 "translations": {
                     "en": "Online setzen"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "05.10.2017"
             },
             "prop_create_icon": {
                 "translations": {
@@ -392,31 +402,31 @@
                 "translations": {
                     "en": "Löschverhalten"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_delete_mode_delete": {
                 "translations": {
                     "en": "Kurs löschen"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_delete_mode_inactive": {
                 "translations": {
                     "en": "Kurs offline setzen"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_delete_mode_trash": {
                 "translations": {
                     "en": "Move to Trash"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_delete_mode_none": {
                 "translations": {
                     "en": "Keine Aktion"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_header_icon": {
                 "translations": {
@@ -432,31 +442,31 @@
                 "translations": {
                     "en": "Move course"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_move_info": {
                 "translations": {
                     "en": "If the data contains a new parent ID, Hub tries to move the course under the new parent"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_node_noparent": {
                 "translations": {
                     "en": "Fallback Parent Ref-ID"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_node_noparent_info": {
                 "translations": {
                     "en": "Courses are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_reactivate": {
                 "translations": {
                     "en": "Wieder online setzen"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "05.10.2017"
             },
             "prop_update_description": {
                 "translations": {
@@ -492,31 +502,31 @@
                 "translations": {
                     "en": "Subject"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "05.10.2017"
             },
             "prop_notification_body": {
                 "translations": {
                     "en": "Body"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "05.10.2017"
             },
             "prop_notification_from": {
                 "translations": {
                     "en": "From"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "05.10.2017"
             },
             "prop_send_notification": {
                 "translations": {
                     "en": "Activate notification"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "05.10.2017"
             },
             "prop_send_notification_info": {
                 "translations": {
                     "en": "After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "05.10.2017"
             }
         },
         "com": {
@@ -524,31 +534,31 @@
                 "translations": {
                     "en": "Mengenvergleich"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "prop_check_amount_info": {
                 "translations": {
                     "en": "Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "prop_check_amount_percentage": {
                 "translations": {
                     "en": "Prozentwert"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "prop_force_login": {
                 "translations": {
                     "en": "Login erfordern"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "prop_link_to_origin": {
                 "translations": {
                     "en": "Verknüpfung mit anderer Anbindung"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "prop_mark_deleted_text": {
                 "translations": {
@@ -559,7 +569,7 @@
                 "translations": {
                     "en": "Shortlink aktivieren"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "prop_use_ext_status": {
                 "translations": {
@@ -605,9 +615,10 @@
             },
             "actions": {
                 "translations": {
-                    "en": "Aktionen"
+                    "en": "Aktionen",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "activate": {
                 "translations": {
@@ -623,13 +634,13 @@
                 "translations": {
                     "en": "Löschen"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "edit": {
                 "translations": {
                     "en": "Bearbeiten"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "export": {
                 "translations": {
@@ -645,7 +656,7 @@
                 "translations": {
                     "en": "Objekt-Status:"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "back": {
                 "translations": {
@@ -654,13 +665,15 @@
             },
             "permissions": {
                 "translations": {
-                    "en": "Permissions"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             },
             "roles": {
                 "translations": {
-                    "en": "Roles"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "02.10.2017"
             }
@@ -688,9 +701,10 @@
             },
             "origins": {
                 "translations": {
-                    "en": "Anbindungen"
+                    "en": "Anbindungen",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "users": {
                 "translations": {
@@ -854,7 +868,8 @@
             "origin_activated": {
                 "translations": {
                     "en": "Anbindung aktiviert."
-                }
+                },
+                "last_used": "06.10.2017"
             },
             "origin_deactivated": {
                 "translations": {
@@ -868,12 +883,21 @@
             },
             "success_create_origin": {
                 "translations": {
-                    "en": "MISSING"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 }
             },
             "origin_saved": {
                 "translations": {
-                    "en": "MISSING"
+                    "en": "Saved",
+                    "de": "Gespeichert"
+                },
+                "last_used": "06.10.2017"
+            },
+            "successfully_saved": {
+                "translations": {
+                    "en": "Saved",
+                    "de": "Gespeichert"
                 }
             }
         },
@@ -917,115 +941,115 @@
                 "translations": {
                     "en": "Herkunft erstellen"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_title_edit": {
                 "translations": {
                     "en": "Herkunft bearbeiten"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_active": {
                 "translations": {
                     "en": "Synchronisation aktiv"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_class_name": {
                 "translations": {
                     "en": "PHP-Klassenname"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_class_name_info": {
                 "translations": {
                     "en": "Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type": {
                 "translations": {
                     "en": "Verbindungstyp"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db": {
                 "translations": {
                     "en": "Server"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db_database": {
                 "translations": {
                     "en": "Datenbank"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db_host": {
                 "translations": {
                     "en": "Host"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db_info": {
                 "translations": {
                     "en": "Die Daten stammen aus einer Serververbindung."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db_password": {
                 "translations": {
                     "en": "Passwort"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db_port": {
                 "translations": {
                     "en": "Port"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db_search_base": {
                 "translations": {
                     "en": "Search-Base"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_db_username": {
                 "translations": {
                     "en": "Login-Name"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_external": {
                 "translations": {
                     "en": "Extern"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_external_info": {
                 "translations": {
                     "en": "Füllen der Hub-Tabelle durch Fremdsystem."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_file": {
                 "translations": {
                     "en": "Datei oder Verzeichnis"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_file_info": {
                 "translations": {
                     "en": "Daten werden aus einer Datei gelesen."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_conf_type_file_path": {
                 "translations": {
                     "en": "Pfad zur Datei"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_description": {
                 "translations": {
@@ -1051,25 +1075,25 @@
                 "translations": {
                     "en": "Benachrichtigung bei Fehler"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_summary_email": {
                 "translations": {
                     "en": "E-Mailadressen für Zusammenfassung"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "from_field_active_period": {
                 "translations": {
                     "en": "Active period"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "from_field_active_period_info": {
                 "translations": {
                     "en": "The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED."
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_title": {
                 "translations": {
@@ -1080,7 +1104,7 @@
                 "translations": {
                     "en": "Sync-Verwendung"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_field_usage_type_1": {
                 "translations": {
@@ -1106,31 +1130,31 @@
                 "translations": {
                     "en": "Update %s"
                 },
-                "last_used": "28.09.2017"
+                "last_used": "06.10.2017"
             },
             "form_comma_separated": {
                 "translations": {
                     "en": "Separate multiple values by a comma"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_header_connection": {
                 "translations": {
                     "en": "Verbindung zu Daten"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_header_notification": {
                 "translations": {
                     "en": "Benachrichtigungen"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "form_header_sync": {
                 "translations": {
                     "en": "Synchronisation"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_button_dryrun": {
                 "translations": {
@@ -1140,21 +1164,24 @@
             },
             "table_button_activate_all": {
                 "translations": {
-                    "en": "Alle aktivieren"
+                    "en": "Alle aktivieren",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_button_add": {
                 "translations": {
-                    "en": "Anbindung hinzufügen"
+                    "en": "Anbindung hinzufügen",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_button_deactivate_all": {
                 "translations": {
-                    "en": "Alle deaktivieren"
+                    "en": "Alle deaktivieren",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_button_import": {
                 "translations": {
@@ -1163,21 +1190,24 @@
             },
             "table_button_run": {
                 "translations": {
-                    "en": "Synchronisierung starten"
+                    "en": "Synchronisierung starten",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_header_active": {
                 "translations": {
-                    "en": "Aktiv"
+                    "en": "Aktiv",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_header_count": {
                 "translations": {
-                    "en": "Anzahl"
+                    "en": "Anzahl",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_header_duration_objects": {
                 "translations": {
@@ -1186,9 +1216,10 @@
             },
             "table_header_description": {
                 "translations": {
-                    "en": "Beschreibung"
+                    "en": "Beschreibung",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_header_duration": {
                 "translations": {
@@ -1197,21 +1228,24 @@
             },
             "table_header_last_update": {
                 "translations": {
-                    "en": "Letzte Synchronisierung"
+                    "en": "Letzte Synchronisierung",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_header_title": {
                 "translations": {
-                    "en": "Titel"
+                    "en": "Titel",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_header_usage_type": {
                 "translations": {
-                    "en": "Verwendung"
+                    "en": "Verwendung",
+                    "de": "MISSING"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "table_title": {
                 "translations": {
@@ -1222,55 +1256,55 @@
                 "translations": {
                     "en": "Title"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "description": {
                 "translations": {
                     "en": "Description"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "object_type_user": {
                 "translations": {
                     "en": "User"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "object_type_courseMembership": {
                 "translations": {
                     "en": "Course Member"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "object_type_course": {
                 "translations": {
                     "en": "Course"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "object_type_category": {
                 "translations": {
                     "en": "Category"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "object_type_group": {
                 "translations": {
                     "en": "Group"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "object_type_groupMembership": {
                 "translations": {
                     "en": "Group Member"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             },
             "object_type_session": {
                 "translations": {
                     "en": "Session"
                 },
-                "last_used": "01.10.2017"
+                "last_used": "06.10.2017"
             }
         },
         "object": {
@@ -1322,37 +1356,37 @@
                 "translations": {
                     "en": "Account aktivieren"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_create_password": {
                 "translations": {
                     "en": "Passwort erstellen"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_delete_mode": {
                 "translations": {
                     "en": "Löschverhalten"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_delete_mode_delete": {
                 "translations": {
                     "en": "Benutzer löschen"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_delete_mode_inactive": {
                 "translations": {
                     "en": "Benutzer deaktivieren"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_delete_mode_none": {
                 "translations": {
                     "en": "Keine Aktion"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_header_object": {
                 "translations": {
@@ -1363,97 +1397,97 @@
                 "translations": {
                     "en": "ILIAS Loginfeld"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "config_login_field_info": {
                 "translations": {
                     "en": "Available fields and modes defining the login name of a user in ILIAS. Example user: John Doe"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "config_login_field_1": {
                 "translations": {
                     "en": "Shortened firstname and lastname (j.doe)"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "config_login_field_2": {
                 "translations": {
                     "en": "E-Mail"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "config_login_field_3": {
                 "translations": {
                     "en": "External Account"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "config_login_field_4": {
                 "translations": {
                     "en": "External ID"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "config_login_field_5": {
                 "translations": {
                     "en": "firstname.lastname (john.doe)"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "config_login_field_6": {
                 "translations": {
                     "en": "Hub-field login"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_password_mail_body": {
                 "translations": {
                     "en": "Text"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_password_mail_date_format": {
                 "translations": {
                     "en": "Datumsformat für Platzhalter"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_password_mail_placeholders": {
                 "translations": {
                     "en": "Verfügbare Platzhalter"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_password_mail_subject": {
                 "translations": {
                     "en": "Betreff"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_reactivate_account": {
                 "translations": {
                     "en": "Account reaktivieren"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_reactivate_account_info": {
                 "translations": {
                     "en": "Activates the user account again if it is not active when the sync updates a user"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_send_password": {
                 "translations": {
                     "en": "Passwort per Mail versenden"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_send_password_field": {
                 "translations": {
                     "en": "Feld mit E-Mailadresse"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             },
             "prop_syncfield": {
                 "translations": {
@@ -1469,7 +1503,7 @@
                 "translations": {
                     "en": "Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations"
                 },
-                "last_used": "27.09.2017"
+                "last_used": "06.10.2017"
             }
         },
         "view": {
@@ -1675,15 +1709,17 @@
         "button": {
             "save": {
                 "translations": {
-                    "en": "Save"
+                    "en": "Save",
+                    "de": "Speichern"
                 },
-                "last_used": "02.10.2017"
+                "last_used": "06.10.2017"
             },
             "cancel": {
                 "translations": {
-                    "en": "Cancel"
+                    "en": "Cancel",
+                    "de": "Abbrechen"
                 },
-                "last_used": "02.10.2017"
+                "last_used": "06.10.2017"
             }
         }
     }

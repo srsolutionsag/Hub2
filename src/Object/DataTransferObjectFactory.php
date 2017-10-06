@@ -5,6 +5,7 @@ namespace SRAG\Hub2\Object;
 use SRAG\Hub2\Object\Category\CategoryDTO;
 use SRAG\Hub2\Object\Course\CourseDTO;
 use SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Hub2\Object\Group\GroupDTO;
 use SRAG\Hub2\Object\Session\SessionDTO;
 use SRAG\Hub2\Object\User\UserDTO;
 
@@ -44,7 +45,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 	 * @inheritdoc
 	 */
 	public function group($ext_id) {
-		// TODO: Implement group() method.
+		return new GroupDTO($ext_id);
 	}
 
 

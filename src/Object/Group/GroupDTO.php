@@ -11,6 +11,8 @@ use SRAG\Hub2\Object\DataTransferObject;
  */
 class GroupDTO extends DataTransferObject {
 
+	// View
+	const VIEW_BY_TYPE = 5;
 	// Registration
 	const GRP_REGISTRATION_DEACTIVATED = - 1;
 	const GRP_REGISTRATION_DIRECT = 0;
@@ -47,11 +49,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var int
 	 */
-	protected $regType;
-	/**
-	 * @var bool
-	 */
-	protected $regEnabled;
+	protected $registerMode;
 	/**
 	 * @var bool
 	 */
@@ -59,11 +57,11 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var int timestamp
 	 */
-	protected $regStart;
+	protected $registrationStart;
 	/**
 	 * @var int timestamp
 	 */
-	protected $regEnd;
+	protected $registrationEnd;
 	/**
 	 * @var int
 	 */
@@ -71,7 +69,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var string
 	 */
-	protected $regPassword;
+	protected $password;
 	/**
 	 * @var bool
 	 */
@@ -79,11 +77,11 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var int
 	 */
-	protected $regMinMembers;
+	protected $minMembers;
 	/**
 	 * @var int
 	 */
-	protected $regMaxMembers;
+	protected $maxMembers;
 	/**
 	 * @var bool
 	 */
@@ -91,11 +89,11 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var bool
 	 */
-	protected $autoFillFromWaiting;
+	protected $waitingListAutoFill;
 	/**
 	 * @var int timestamp
 	 */
-	protected $leaveEnd;
+	protected $cancellationEnd;
 	/**
 	 * @var int timestamp
 	 */
@@ -119,7 +117,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var int
 	 */
-	protected $enablemap;
+	protected $enableGroupMap;
 	/**
 	 * @var bool
 	 */
@@ -127,7 +125,7 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @var string
 	 */
-	protected $regAccessCode;
+	protected $registrationAccessCode;
 	/**
 	 * @var int
 	 */
@@ -185,18 +183,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getRegType() {
-		return $this->regType;
+	public function getRegisterMode() {
+		return $this->registerMode;
 	}
 
 
 	/**
-	 * @param int $regType
+	 * @param int $registerMode
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegType($regType) {
-		$this->regType = $regType;
+	public function setRegisterMode($registerMode) {
+		$this->registerMode = $registerMode;
 
 		return $this;
 	}
@@ -265,26 +263,6 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function getRegEnabled() {
-		return $this->regEnabled;
-	}
-
-
-	/**
-	 * @param bool $regEnabled
-	 *
-	 * @return GroupDTO
-	 */
-	public function setRegEnabled($regEnabled) {
-		$this->regEnabled = $regEnabled;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return bool
-	 */
 	public function getRegUnlimited() {
 		return $this->regUnlimited;
 	}
@@ -305,18 +283,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getRegStart() {
-		return $this->regStart;
+	public function getRegistrationStart() {
+		return $this->registrationStart;
 	}
 
 
 	/**
-	 * @param int $regStart
+	 * @param int $registrationStart
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegStart($regStart) {
-		$this->regStart = $regStart;
+	public function setRegistrationStart($registrationStart) {
+		$this->registrationStart = $registrationStart;
 
 		return $this;
 	}
@@ -325,18 +303,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getRegEnd() {
-		return $this->regEnd;
+	public function getRegistrationEnd() {
+		return $this->registrationEnd;
 	}
 
 
 	/**
-	 * @param int $regEnd
+	 * @param int $registrationEnd
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegEnd($regEnd) {
-		$this->regEnd = $regEnd;
+	public function setRegistrationEnd($registrationEnd) {
+		$this->registrationEnd = $registrationEnd;
 
 		return $this;
 	}
@@ -345,18 +323,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return string
 	 */
-	public function getRegPassword() {
-		return $this->regPassword;
+	public function getPassword() {
+		return $this->password;
 	}
 
 
 	/**
-	 * @param string $regPassword
+	 * @param string $password
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegPassword($regPassword) {
-		$this->regPassword = $regPassword;
+	public function setPassword($password) {
+		$this->password = $password;
 
 		return $this;
 	}
@@ -385,18 +363,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getRegMinMembers() {
-		return $this->regMinMembers;
+	public function getMinMembers() {
+		return $this->minMembers;
 	}
 
 
 	/**
-	 * @param int $regMinMembers
+	 * @param int $minMembers
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegMinMembers($regMinMembers) {
-		$this->regMinMembers = $regMinMembers;
+	public function setMinMembers($minMembers) {
+		$this->minMembers = $minMembers;
 
 		return $this;
 	}
@@ -405,18 +383,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getRegMaxMembers() {
-		return $this->regMaxMembers;
+	public function getMaxMembers() {
+		return $this->maxMembers;
 	}
 
 
 	/**
-	 * @param int $regMaxMembers
+	 * @param int $maxMembers
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegMaxMembers($regMaxMembers) {
-		$this->regMaxMembers = $regMaxMembers;
+	public function setMaxMembers($maxMembers) {
+		$this->maxMembers = $maxMembers;
 
 		return $this;
 	}
@@ -445,18 +423,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return bool
 	 */
-	public function getAutoFillFromWaiting() {
-		return $this->autoFillFromWaiting;
+	public function getWaitingListAutoFill() {
+		return $this->waitingListAutoFill;
 	}
 
 
 	/**
-	 * @param bool $autoFillFromWaiting
+	 * @param bool $waitingListAutoFill
 	 *
 	 * @return GroupDTO
 	 */
-	public function setAutoFillFromWaiting($autoFillFromWaiting) {
-		$this->autoFillFromWaiting = $autoFillFromWaiting;
+	public function setWaitingListAutoFill($waitingListAutoFill) {
+		$this->waitingListAutoFill = $waitingListAutoFill;
 
 		return $this;
 	}
@@ -465,18 +443,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getLeaveEnd() {
-		return $this->leaveEnd;
+	public function getCancellationEnd() {
+		return $this->cancellationEnd;
 	}
 
 
 	/**
-	 * @param int $leaveEnd
+	 * @param int $cancellationEnd
 	 *
 	 * @return GroupDTO
 	 */
-	public function setLeaveEnd($leaveEnd) {
-		$this->leaveEnd = $leaveEnd;
+	public function setCancellationEnd($cancellationEnd) {
+		$this->cancellationEnd = $cancellationEnd;
 
 		return $this;
 	}
@@ -585,18 +563,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getEnablemap() {
-		return $this->enablemap;
+	public function getEnableGroupMap() {
+		return $this->enableGroupMap;
 	}
 
 
 	/**
-	 * @param int $enablemap
+	 * @param int $enableGroupMap
 	 *
 	 * @return GroupDTO
 	 */
-	public function setEnablemap($enablemap) {
-		$this->enablemap = $enablemap;
+	public function setEnableGroupMap($enableGroupMap) {
+		$this->enableGroupMap = $enableGroupMap;
 
 		return $this;
 	}
@@ -625,18 +603,18 @@ class GroupDTO extends DataTransferObject {
 	/**
 	 * @return string
 	 */
-	public function getRegAccessCode() {
-		return $this->regAccessCode;
+	public function getRegistrationAccessCode() {
+		return $this->registrationAccessCode;
 	}
 
 
 	/**
-	 * @param string $regAccessCode
+	 * @param string $registrationAccessCode
 	 *
 	 * @return GroupDTO
 	 */
-	public function setRegAccessCode($regAccessCode) {
-		$this->regAccessCode = $regAccessCode;
+	public function setRegistrationAccessCode($registrationAccessCode) {
+		$this->registrationAccessCode = $registrationAccessCode;
 
 		return $this;
 	}

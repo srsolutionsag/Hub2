@@ -15,7 +15,7 @@ class OriginLog implements ILog {
 	 */
 	protected $origin;
 	/**
-	 * @var \ilLog
+	 * @var Logger
 	 */
 	protected $log;
 	/**
@@ -36,32 +36,31 @@ class OriginLog implements ILog {
 	/**
 	 * @param string $message
 	 * @param int    $level
-	 *
-	 * @return mixed
 	 */
 	public function write($message, $level = self::LEVEL_INFO) {
-		$this->log->write($message, $level);
+		$this->log->write($message);
 	}
 
 
 	/**
 	 * @param IOrigin $origin
 	 *
-	 * @return \ilLog
+	 * @return \SRAG\Hub2\Log\Logger
 	 */
 	private function getLogInstance(IOrigin $origin) {
 		if (isset(self::$ilLogInstances[$origin->getId()])) {
-			return self::$ilLogInstances[$origin->getId()];
+			// return self::$ilLogInstances[$origin->getId()];
 		}
-		$fileName = implode('-', [
+		$filename = implode('-', [
 			'hub2',
 			'origin',
 			$origin->getObjectType(),
 			$origin->getId(),
 		]);
-		$ilLog = new \ilLog(ILIAS_DATA_DIR, $fileName . '.log');
-		self::$ilLogInstances[$origin->getId()] = $ilLog;
 
-		return $ilLog;
+		$logger = new Logger('hub/' . $filename . '.log');
+		self::$ilLogInstances[$origin->getId()] = $logger;
+
+		return $logger;
 	}
 }

@@ -85,6 +85,10 @@ class SessionDTO extends DataTransferObject {
 	 * @var int
 	 */
 	protected $end;
+	/**
+	 * @var array of ILIAS-User_IDs
+	 */
+	protected $members = array();
 
 
 	/**
@@ -120,7 +124,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setDescription(string $description): SessionDTO {
+	public function setDescription($description) {
 		$this->description = $description;
 
 		return $this;
@@ -140,7 +144,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setLocation(string $location): SessionDTO {
+	public function setLocation($location) {
 		$this->location = $location;
 
 		return $this;
@@ -160,7 +164,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setDetails(string $details): SessionDTO {
+	public function setDetails($details) {
 		$this->details = $details;
 
 		return $this;
@@ -180,7 +184,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setName($name): SessionDTO {
+	public function setName($name) {
 		$this->name = $name;
 
 		return $this;
@@ -200,7 +204,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setPhone($phone): SessionDTO {
+	public function setPhone($phone) {
 		$this->phone = $phone;
 
 		return $this;
@@ -220,7 +224,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setEmail($email): SessionDTO {
+	public function setEmail($email) {
 		$this->email = $email;
 
 		return $this;
@@ -240,7 +244,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setRegistrationType($registrationType): SessionDTO {
+	public function setRegistrationType($registrationType) {
 		$this->registrationType = $registrationType;
 
 		return $this;
@@ -260,7 +264,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setRegistrationLimited($registrationLimited): SessionDTO {
+	public function setRegistrationLimited($registrationLimited) {
 		$this->registrationLimited = $registrationLimited;
 
 		return $this;
@@ -280,7 +284,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setRegistrationMinUsers($registrationMinUsers): SessionDTO {
+	public function setRegistrationMinUsers($registrationMinUsers) {
 		$this->registrationMinUsers = $registrationMinUsers;
 
 		return $this;
@@ -300,7 +304,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setRegistrationMaxUsers(int $registrationMaxUsers): SessionDTO {
+	public function setRegistrationMaxUsers($registrationMaxUsers) {
 		$this->registrationMaxUsers = $registrationMaxUsers;
 
 		return $this;
@@ -320,7 +324,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setRegistrationWaitingList(bool $registrationWaitingList): SessionDTO {
+	public function setRegistrationWaitingList($registrationWaitingList) {
 		$this->registrationWaitingList = $registrationWaitingList;
 
 		return $this;
@@ -340,7 +344,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setWaitingListAutoFill(bool $waitingListAutoFill): SessionDTO {
+	public function setWaitingListAutoFill($waitingListAutoFill) {
 		$this->waitingListAutoFill = $waitingListAutoFill;
 
 		return $this;
@@ -360,7 +364,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setParentId(string $parentId): SessionDTO {
+	public function setParentId($parentId) {
 		$this->parentId = $parentId;
 
 		return $this;
@@ -380,7 +384,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setParentIdType(int $parentIdType): SessionDTO {
+	public function setParentIdType($parentIdType) {
 		$this->parentIdType = $parentIdType;
 
 		return $this;
@@ -400,7 +404,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setFullDay(bool $fullDay): SessionDTO {
+	public function setFullDay($fullDay) {
 		$this->fullDay = $fullDay;
 
 		return $this;
@@ -420,7 +424,7 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setStart(int $start): SessionDTO {
+	public function setStart($start) {
 		$this->start = $start;
 
 		return $this;
@@ -440,8 +444,28 @@ class SessionDTO extends DataTransferObject {
 	 *
 	 * @return SessionDTO
 	 */
-	public function setEnd(int $end): SessionDTO {
+	public function setEnd($end) {
 		$this->end = $end;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function getMembers() {
+		return $this->members;
+	}
+
+
+	/**
+	 * @param array $members
+	 *
+	 * @return SessionDTO
+	 */
+	public function setMembers(array $members) {
+		$this->members = $members;
 
 		return $this;
 	}

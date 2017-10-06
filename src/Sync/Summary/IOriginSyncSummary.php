@@ -21,4 +21,12 @@ interface IOriginSyncSummary {
 	 * @param \SRAG\Hub2\Sync\IOriginSync $originSync add another already ran IOriginSync
 	 */
 	public function addOriginSync(IOriginSync $originSync);
+
+
+	/**
+	 * @param \SRAG\Hub2\Sync\IOriginSync $originSync
+	 *
+	 * @return string
+	 */
+	public function getSummaryOfOrigin(IOriginSync $originSync);
 }

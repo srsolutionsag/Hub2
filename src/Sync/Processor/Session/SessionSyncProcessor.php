@@ -87,6 +87,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$ilObjSession->putInTree($a_parent_ref);
 		$ilObjSession->setPermissions($a_parent_ref);
 
+		$this->handleMembers($object, $ilObjSession);
+
 		$this->handleFirstAppointment($object, $ilObjSession, true);
 		$ilObjSession->getFirstAppointment()->create();
 
@@ -114,6 +116,9 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				$ilObjSession->$setter($object->$getter());
 			}
 		}
+
+		$this->handleMembers($object, $ilObjSession);
+
 		$ilObjSession->update();
 		$ilObjSession = $this->handleFirstAppointment($object, $ilObjSession);
 		$ilObjSession->getFirstAppointment()->update();
@@ -188,5 +193,27 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$ilObjSession->setAppointments($appointments);
 
 		return $ilObjSession;
+	}
+
+
+	/**
+	 * @param \SRAG\Hub2\Object\Session\SessionDTO $object
+	 * @param \ilObjSession                        $ilObjSession
+	 */
+	protected function handleMembers(SessionDTO $object, \ilObjSession $ilObjSession) {
+		$ilSessionParticipants = $ilObjSession->getMembersObject();
+		$current_members = $ilSessionParticipants->getMembers();
+		$members = $object->getMembers();
+		$member_to_delete = array_diff($current_members, $members);
+		if (count($members) > 0) {
+			foreach ($members as $member) {
+				$ilSessionParticipants->register((int)$member);
+			}
+		}
+		if (count($member_to_delete) > 0) {
+			foreach ($member_to_delete as $member) {
+				$ilSessionParticipants->unregister((int)$member);
+			}
+		}
 	}
 }

@@ -6,9 +6,11 @@ require_once(dirname(__DIR__) . '/vendor/autoload.php');
  * Class ilHub2Plugin
  *
  * @author Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author Fabian Schmid <fs@studer-raimann.ch>
  */
 class ilHub2Plugin extends ilCronHookPlugin {
 
+	const PLUGIN_NAME = 'Hub2';
 	/**
 	 * @var ilHubPlugin
 	 */
@@ -18,17 +20,8 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return string
 	 */
-	function getPluginName() {
-		$PLUGIN_NAME = 'Hub2';
-
-		return $PLUGIN_NAME;
-	}
-
-
-	protected function init() {
-		if (isset($_GET['ulx'])) {
-			$this->updateLanguages();
-		}
+	public function getPluginName() {
+		return self::PLUGIN_NAME;
 	}
 
 
@@ -44,19 +37,29 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	}
 
 
+	/**
+	 * @return \ilCronJob[]
+	 */
 	public function getCronJobInstances() {
-		return [];
+		return [ new \SRAG\Hub2\Jobs\RunSync() ];
 	}
 
 
 	/**
 	 * @param $a_job_id
+	 *
+	 * @return \ilCronJob
 	 */
 	public function getCronJobInstance($a_job_id) {
-		// TODO: Implement getCronJobInstance() method.
+		return new $a_job_id();
 	}
 
 
+	/**
+	 * @param $a_var
+	 *
+	 * @return string
+	 */
 	public function txt($a_var) {
 		require_once('./Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php');
 

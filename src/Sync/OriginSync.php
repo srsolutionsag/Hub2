@@ -158,7 +158,9 @@ class OriginSync implements IOriginSync {
 			$this->exceptions[] = $e;
 			throw $e;
 		}
-		//		$this->addInfoAndStatisticsToNotifications();
+		$this->getOrigin()->setLastRun(date(DATE_ATOM));
+
+		$this->getOrigin()->update();
 	}
 
 

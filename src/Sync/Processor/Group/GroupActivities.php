@@ -1,5 +1,6 @@
 <?php
-namespace SRAG\Hub2\Sync\Processor\Course;
+
+namespace SRAG\Hub2\Sync\Processor\Group;
 
 /**
  * Class GroupActivities

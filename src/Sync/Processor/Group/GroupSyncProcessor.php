@@ -1,4 +1,5 @@
 <?php
+
 namespace SRAG\Hub2\Sync\Processor\Group;
 
 use SRAG\Hub2\Exception\HubException;
@@ -38,20 +39,38 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * @var array
 	 */
 	protected static $properties = [
-		'title',
-		'description',
-		'importantInformation',
-		'contactResponsibility',
-		'contactEmail',
-		'owner',
-		'subscriptionLimitationType',
-		'viewMode',
-		'contactName',
-		'syllabus',
-		'contactConsultation',
-		'contactPhone',
-		'activationType',
+		"title",
+		"description",
+		"information",
+		"groupType",
+		"owner",
+		"viewMode",
+		"registrationStart",
+		"registrationEnd",
+		"password",
+		"registerMode",
+		"minMembers",
+		"maxMembers",
+		"waitingListAutoFill",
+		"cancellationEnd",
+		"start",
+		"end",
+		"latitude",
+		"longitude",
+		"locationzoom",
+		"registrationAccessCode",
+		"enableGroupMap",
 	];
+	/**
+	 * @var array
+	 */
+	protected static $ildate_fields = array(
+		"cancellationEnd",
+		"start",
+		"end",
+		"registrationStart",
+		"registrationEnd",
+	);
 
 
 	/**
@@ -60,7 +79,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * @param IObjectStatusTransition $transition
 	 * @param ILog                    $originLog
 	 * @param OriginNotifications     $originNotifications
-	 * @param IGroupActivities       $groupActivities
+	 * @param IGroupActivities        $groupActivities
 	 */
 	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications, IGroupActivities $groupActivities) {
 		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
@@ -87,33 +106,52 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->setImportId($this->getImportId($object));
 		// Find the refId under which this group should be created
 		$parentRefId = $this->determineParentRefId($object);
-		// Check if we should create some dependence categories
-		$parentRefId = $this->buildDependenceCategories($object, $parentRefId);
-		$ilObjGroup->create();
-		$ilObjGroup->createReference();
-		$ilObjGroup->putInTree($parentRefId);
-		$ilObjGroup->setPermissions($parentRefId);
 		// Pass properties from DTO to ilObjUser
+		require_once('./Services/Calendar/classes/class.ilDate.php');
+
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			if ($object->$getter() !== null) {
-				$ilObjGroup->$setter($object->$getter());
+				$var = $object->$getter();
+				if (in_array($property, self::$ildate_fields)) {
+					$var = new \ilDate($var, IL_CAL_UNIX);
+				}
+
+				$ilObjGroup->$setter($var);
 			}
 		}
+
+		if ($object->getRegUnlimited() !== null) {
+			$ilObjGroup->enableUnlimitedRegistration($object->getRegUnlimited());
+		}
+
+		if ($object->getRegMembershipLimitation() !== null) {
+			$ilObjGroup->enableMembershipLimitation($object->getRegMembershipLimitation());
+		}
+
+		if ($object->getWaitingList() !== null) {
+			$ilObjGroup->enableWaitingList($object->getWaitingList());
+		}
+
+		if ($object->getRegAccessCodeEnabled() !== null) {
+			$ilObjGroup->enableRegistrationAccessCode($object->getRegAccessCodeEnabled());
+		}
+
 		if ($this->props->get(GroupOriginProperties::SET_ONLINE)) {
-			$ilObjGroup->setOfflineStatus(false);
-			$ilObjGroup->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
+			//			$ilObjGroup->setA(false);
+			//			$ilObjGroup->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 		if ($this->props->get(GroupOriginProperties::CREATE_ICON)) {
 			// TODO
 			//			$this->updateIcon($this->ilias_object);
 			//			$this->ilias_object->update();
 		}
-		if ($this->props->get(GroupOriginProperties::SEND_CREATE_NOTIFICATION)) {
-			// TODO
-		}
-		$ilObjGroup->update();
+
+		$ilObjGroup->create();
+		$ilObjGroup->createReference();
+		$ilObjGroup->putInTree($parentRefId);
+		$ilObjGroup->setPermissions($parentRefId);
 
 		return $ilObjGroup;
 	}
@@ -136,12 +174,45 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			if ($object->$getter() !== null) {
-				$ilObjGroup->$setter($object->$getter());
+				$var = $object->$getter();
+				if (in_array($property, self::$ildate_fields)) {
+					$var = new \ilDate($var, IL_CAL_UNIX);
+				}
+
+				$ilObjGroup->$setter($var);
 			}
 		}
+		if ($this->props->updateDTOProperty("registrationMode")
+		    && $object->getRegisterMode() !== null) {
+			$ilObjGroup->setRegisterMode($object->getRegisterMode());
+		}
+
+		if ($this->props->updateDTOProperty("regUnlimited")
+		    && $object->getRegUnlimited() !== null) {
+			$ilObjGroup->enableUnlimitedRegistration($object->getRegUnlimited());
+		}
+
+		if ($this->props->updateDTOProperty("regMembershipLimitation")
+		    && $object->getRegMembershipLimitation() !== null) {
+			$ilObjGroup->enableMembershipLimitation($object->getRegMembershipLimitation());
+		}
+
+		if ($this->props->updateDTOProperty("waitingList") && $object->getWaitingList() !== null) {
+			$ilObjGroup->enableWaitingList($object->getWaitingList());
+		}
+
+		if ($this->props->updateDTOProperty("regAccessCodeEnabled")
+		    && $object->getRegAccessCodeEnabled() !== null) {
+			$ilObjGroup->enableRegistrationAccessCode($object->getRegAccessCodeEnabled());
+		}
+
+		if ($this->props->updateDTOProperty("regUnlimited")
+		    && $object->getRegUnlimited() !== null) {
+			$ilObjGroup->enableUnlimitedRegistration($object->getRegisterMode());
+		}
 		if ($this->props->get(GroupOriginProperties::SET_ONLINE_AGAIN)) {
-			$ilObjGroup->setOfflineStatus(false);
-			$ilObjGroup->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
+			//			$ilObjGroup->setOfflineStatus(false);
+			//			$ilObjGroup->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 		if ($this->props->get(GroupOriginProperties::MOVE_GROUP)) {
 			$this->moveGroup($ilObjGroup, $object);
@@ -246,82 +317,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
 
 	/**
-	 * @param GroupDTO $object
-	 * @param           $parentRefId
-	 *
-	 * @return int
-	 */
-	protected function buildDependenceCategories(GroupDTO $object, $parentRefId) {
-		if ($object->getFirstDependenceCategory() !== null) {
-			$parentRefId = $this->buildDependenceCategory($object->getFirstDependenceCategory(), $parentRefId, 1);
-		}
-		if ($object->getFirstDependenceCategory() !== null
-		    && $object->getSecondDependenceCategory() !== null) {
-			$parentRefId = $this->buildDependenceCategory($object->getSecondDependenceCategory(), $parentRefId, 2);
-		}
-		if ($object->getFirstDependenceCategory() !== null
-		    && $object->getSecondDependenceCategory() !== null
-		    && $object->getThirdDependenceCategory() !== null) {
-			$parentRefId = $this->buildDependenceCategory($object->getThirdDependenceCategory(), $parentRefId, 3);
-		}
-
-		return $parentRefId;
-	}
-
-
-	/**
-	 * Creates a category under the given $parentRefId if it does not yet exist.
-	 * Note that this implementation is copied over from the old hub plugin: We check if we
-	 * find a category having the same title. If not, a new category is created.
-	 * It would be better to identify the category over the unique import ID and then update
-	 * the title of the category, if necessary.
-	 *
-	 * @param string $title
-	 * @param int    $parentRefId
-	 * @param int    $level
-	 *
-	 * @return int
-	 */
-	protected function buildDependenceCategory($title, $parentRefId, $level) {
-		global $DIC;
-		static $cache = [];
-		// We use a cache for created dependence categories to save some SQL queries
-		$cacheKey = md5($title . $parentRefId . $level);
-		if (isset($cache[$cacheKey])) {
-			return $cache[$cacheKey];
-		}
-		$categories = $DIC->repositoryTree()->getChildsByType($parentRefId, 'cat');
-		$matches = array_filter($categories, function ($category) use ($title) {
-			return $category['title'] == $title;
-		});
-		if (count($matches) > 0) {
-			$category = array_pop($matches);
-			$cache[$cacheKey] = $category['ref_id'];
-
-			return $category['ref_id'];
-		}
-		// No category with the given title found, create it!
-		$importId = implode('_', [
-			'srhub',
-			$this->origin->getId(),
-			$parentRefId,
-			'depth',
-			$level,
-		]);
-		$ilObjCategory = new \ilObjCategory();
-		$ilObjCategory->setTitle($title);
-		$ilObjCategory->setImportId($importId);
-		$ilObjCategory->create();
-		$ilObjCategory->createReference();
-		$ilObjCategory->putInTree($parentRefId);
-		$ilObjCategory->setPermissions($parentRefId);
-		$cache[$cacheKey] = $ilObjCategory->getRefId();
-
-		return $ilObjCategory->getRefId();
-	}
-
-
-	/**
 	 * @param int $iliasId
 	 *
 	 * @return \ilObjGroup|null
@@ -340,12 +335,11 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * Note: May also create the dependence categories
 	 *
 	 * @param           $ilObjGroup
-	 * @param GroupDTO $group
+	 * @param GroupDTO  $group
 	 */
 	protected function moveGroup(\ilObjGroup $ilObjGroup, GroupDTO $group) {
 		global $DIC;
 		$parentRefId = $this->determineParentRefId($group);
-		$parentRefId = $this->buildDependenceCategories($group, $parentRefId);
 		if ($DIC->repositoryTree()->isDeleted($ilObjGroup->getRefId())) {
 			$ilRepUtil = new \ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjGroup->getRefId() ]);
@@ -358,7 +352,5 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$DIC->rbac()
 		    ->admin()
 		    ->adjustMovedObjectPermissions($ilObjGroup->getRefId(), $oldParentRefId);
-		//			hubLog::getInstance()->write($str);
-		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}
 }

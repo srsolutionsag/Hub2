@@ -58,13 +58,15 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return mixed
+	 * @return \SRAG\Hub2\Object\GroupMembership\IGroupMembership
 	 */
 	public function groupMembership($ext_id);
 
-	//	/**
-	//	 * @param IObjectDTO $dto
-	//	 * @return IObject
-	//	 */
-	//	public function objectFromDTO(IObjectDTO $dto);
+
+	/**
+	 * @param $ext_id
+	 *
+	 * @return \SRAG\Hub2\Object\SessionMembership\ISessionMembership
+	 */
+	public function sessionMembership($ext_id);
 }

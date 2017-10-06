@@ -17,8 +17,6 @@ interface ILog {
 	/**
 	 * @param string $message
 	 * @param int    $level
-	 *
-	 * @return mixed
 	 */
 	public function write($message, $level = self::LEVEL_INFO);
 }

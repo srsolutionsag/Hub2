@@ -182,6 +182,9 @@ class hub2ConfigOriginsGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function run() {
 		$summary = $this->summaryFactory->web();
 		foreach ($this->originFactory->getAllActive() as $origin) {
@@ -193,6 +196,9 @@ class hub2ConfigOriginsGUI {
 				// Any exception being forwarded to here means that we failed to execute the sync at some point
 				ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
 			}
+			$OriginLog = new \SRAG\Hub2\Log\OriginLog($originSync->getOrigin());
+			$OriginLog->write($summary->getSummaryOfOrigin($originSync));
+
 			$summary->addOriginSync($originSync);
 		}
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);

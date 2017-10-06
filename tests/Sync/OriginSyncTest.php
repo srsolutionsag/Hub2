@@ -144,7 +144,9 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn([]);
 		$this->origin->shouldReceive('getObjectType');
 		$this->repository->shouldReceive('getToDelete')->andReturn([]);
-		$this->originImplementation->shouldReceive('afterSync');
+		$this->originImplementation->shouldReceive('afterSync')->once();
+		$this->origin->shouldReceive('setLastRun')->once();
+		$this->origin->shouldReceive('update')->once();
 		$originSync = new \SRAG\Hub2\Sync\OriginSync(
 			$this->origin,
 			$this->repository,
@@ -191,6 +193,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->repository->shouldReceive('getToDelete')->andReturn([]);
 		$this->processor->shouldReceive('process')->times(4);
 		$this->originImplementation->shouldReceive('afterSync')->once();
+		$this->origin->shouldReceive('setLastRun')->once();
+		$this->origin->shouldReceive('update')->once();
 		$originSync = new \SRAG\Hub2\Sync\OriginSync(
 			$this->origin,
 			$this->repository,
@@ -229,6 +233,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$userMock->shouldReceive('save');
 		$this->repository->shouldReceive('getToDelete')->andReturn([]);
 		$this->originImplementation->shouldReceive('afterSync')->once();
+		$this->origin->shouldReceive('setLastRun')->once();
+		$this->origin->shouldReceive('update')->once();
 		$originSync = new \SRAG\Hub2\Sync\OriginSync(
 			$this->origin,
 			$this->repository,

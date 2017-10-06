@@ -51,26 +51,28 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 		          ->setDescription("Description")
 		          ->setTitle("Title")
 		          ->setInformation("Information")
-		          ->setRegType(GroupDTO::GRP_REGISTRATION_LIMITED)
+		          ->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)
 		          ->setGroupType(GroupDTO::GRP_TYPE_CLOSED)
-		          ->setRegEnabled(true)
 		          ->setRegUnlimited(false)
-		          ->setRegStart(time())
-		          ->setRegEnd(time() + 30)
-		          ->setRegPassword("Password")
+		          ->setRegistrationStart(1507202887)
+		          ->setRegistrationEnd(1507202887 + 30)
+		          ->setPassword("Password")
 		          ->setRegMembershipLimitation(true)
-		          ->setRegMinMembers(1)
-		          ->setRegMaxMembers(10)
+		          ->setMinMembers(1)
+		          ->setMaxMembers(10)
 		          ->setWaitingList(true)
-		          ->setAutoFillFromWaiting(true)
-		          ->setStart(time())
-		          ->setEnd(time() + 30)
+		          ->setWaitingListAutoFill(true)
+		          ->setStart(1507202887)
+		          ->setEnd(1507202887 + 30)
 		          ->setLatitude(7.1234)
 		          ->setLongitude(45.1234)
 		          ->setLocationzoom(5)
-		          ->setEnablemap(true)
+		          ->setEnableGroupMap(true)
 		          ->setRegAccessCodeEnabled(true)
-		          ->setRegAccessCode("AccessCode");
+		          ->setRegistrationAccessCode("AccessCode")
+		          ->setOwner(6)
+		          ->setViewMode(GroupDTO::VIEW_BY_TYPE)
+		          ->setCancellationEnd(1507202887);
 	}
 
 
@@ -116,6 +118,8 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
+		$this->iobject->shouldReceive('setILIASId')->once()->with(self::GROUP_REF_ID);
+
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
 
@@ -124,13 +128,9 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldReceive('createReference')->once();
 		$this->ilObject->shouldReceive('putInTree')->once();
 		$this->ilObject->shouldReceive('setPermissions')->once();
-
-		$this->initDataExpectations();
-
-		$this->ilObject->shouldReceive('update')->once();
 		$this->ilObject->shouldReceive('getRefId')->once()->andReturn(self::GROUP_REF_ID);
 
-		$this->iobject->shouldReceive('setILIASId')->once()->with(self::GROUP_REF_ID);
+		$this->initDataExpectations();
 
 		$processor->process($this->iobject, $this->dto);
 	}
@@ -181,64 +181,55 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 		               ->once()
 		               ->with($this->dto->getInformation());
 		$this->ilObject->shouldReceive('setGroupType')->once()->with($this->dto->getGroupType());
-		$this->ilObject->shouldReceive('setRegType')->once()->with($this->dto->getRegType());
-		$this->ilObject->shouldReceive('setRegEnabled')->once()->with($this->dto->getRegEnabled());
+		$this->ilObject->shouldReceive('setRegisterMode')
+		               ->once()
+		               ->with($this->dto->getRegisterMode());
 		$this->ilObject->shouldReceive('setOwner')->once()->with($this->dto->getOwner());
-		$this->ilObject->shouldReceive('setRegUnlimited')
+		$this->ilObject->shouldReceive('enableUnlimitedRegistration')
 		               ->once()
 		               ->with($this->dto->getRegUnlimited());
 		$this->ilObject->shouldReceive('setViewMode')->once()->with($this->dto->getViewMode());
-		$this->ilObject->shouldReceive('setRegStart')
+		$this->ilObject->shouldReceive('setRegistrationStart')
 		               ->once()
-		               ->with($this->dto->getRegStart());
-		$this->ilObject->shouldReceive('setRegEnd')->once()->with($this->dto->getRegEnd());
-		$this->ilObject->shouldReceive('setRegPassword')
+		               ->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setRegistrationEnd')
 		               ->once()
-		               ->with($this->dto->getRegPassword());
-		$this->ilObject->shouldReceive('setRegMembershipLimitation')
+		               ->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setPassword')->once()->with($this->dto->getPassword());
+		$this->ilObject->shouldReceive('enableMembershipLimitation')
 		               ->once()
 		               ->with($this->dto->getRegMembershipLimitation());
-		$this->ilObject->shouldReceive('setRegMinMembers')
-		               ->once()
-		               ->with($this->dto->getRegMinMembers());
-		$this->ilObject->shouldReceive('setRegMaxMembers')
-		               ->once()
-		               ->with($this->dto->getRegMaxMembers());
-		$this->ilObject->shouldReceive('setWaitingList')
+		$this->ilObject->shouldReceive('setMinMembers')->once()->with($this->dto->getMinMembers());
+		$this->ilObject->shouldReceive('setMaxMembers')->once()->with($this->dto->getMaxMembers());
+		$this->ilObject->shouldReceive('enableWaitingList')
 		               ->once()
 		               ->with($this->dto->getWaitingList());
-		$this->ilObject->shouldReceive('setAutoFillFromWaiting')
+		$this->ilObject->shouldReceive('setWaitingListAutoFill')
 		               ->once()
-		               ->with($this->dto->getAutoFillFromWaiting());
-		$this->ilObject->shouldReceive('setLeaveEnd')
+		               ->with($this->dto->getWaitingListAutoFill());
+
+		$this->ilObject->shouldReceive('setCancellationEnd')
 		               ->once()
-		               ->with($this->dto->getLeaveEnd());
+		               ->withAnyArgs(); // Currently not possible to have ilDate here
 		$this->ilObject->shouldReceive('setStart')
 		               ->once()
-		               ->with($this->dto->getStart());
+		               ->withAnyArgs(); // Currently not possible to have ilDate here
 		$this->ilObject->shouldReceive('setEnd')
 		               ->once()
-		               ->with($this->dto->getEnd());
-		$this->ilObject->shouldReceive('setLatitude')
-		               ->once()
-		               ->with($this->dto->getLatitude());
-		$this->ilObject->shouldReceive('setLongitude')
-		               ->once()
-		               ->with($this->dto->getLongitude());
+		               ->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setLatitude')->once()->with($this->dto->getLatitude());
+		$this->ilObject->shouldReceive('setLongitude')->once()->with($this->dto->getLongitude());
 		$this->ilObject->shouldReceive('setLocationzoom')
 		               ->once()
 		               ->with($this->dto->getLocationzoom());
-		$this->ilObject->shouldReceive('setEnablemap')
+		$this->ilObject->shouldReceive('setEnableGroupMap')
 		               ->once()
-		               ->with($this->dto->getEnablemap());
-		$this->ilObject->shouldReceive('setRegAccessCodeEnabled')
+		               ->with($this->dto->getEnableGroupMap());
+		$this->ilObject->shouldReceive('enableRegistrationAccessCode')
 		               ->once()
 		               ->with($this->dto->getRegAccessCodeEnabled());
-		$this->ilObject->shouldReceive('setRegAccessCode')
+		$this->ilObject->shouldReceive('setRegistrationAccessCode')
 		               ->once()
-		               ->with($this->dto->getRegAccessCode());
-		$this->ilObject->shouldReceive('setViewMode')
-		               ->once()
-		               ->with($this->dto->getViewMode());
+		               ->with($this->dto->getRegistrationAccessCode());
 	}
 }

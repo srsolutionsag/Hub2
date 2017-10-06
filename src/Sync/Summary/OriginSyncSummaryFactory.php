@@ -12,7 +12,7 @@ class OriginSyncSummaryFactory implements IOriginSyncSummaryFactory {
 	/**
 	 * @inheritDoc
 	 */
-	public function common(): IOriginSyncSummary {
+	public function common() {
 		return $this->web();
 	}
 
@@ -20,7 +20,15 @@ class OriginSyncSummaryFactory implements IOriginSyncSummaryFactory {
 	/**
 	 * @inheritDoc
 	 */
-	public function web(): IOriginSyncSummary {
+	public function web() {
 		return new OriginSyncSummaryWeb();
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function cron() {
+		return new OriginSyncSummaryCron();
 	}
 }

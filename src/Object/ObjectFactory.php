@@ -1,9 +1,14 @@
-<?php namespace SRAG\Hub2\Object;
+<?php
+
+namespace SRAG\Hub2\Object;
 
 use SRAG\Hub2\Object\Category\ARCategory;
 use SRAG\Hub2\Object\Course\ARCourse;
 use SRAG\Hub2\Object\CourseMembership\ARCourseMembership;
+use SRAG\Hub2\Object\Group\ARGroup;
+use SRAG\Hub2\Object\GroupMembership\ARGroupMembership;
 use SRAG\Hub2\Object\Session\ARSession;
+use SRAG\Hub2\Object\SessionMembership\ARSessionMembership;
 use SRAG\Hub2\Object\User\ARUser;
 use SRAG\Hub2\Origin\IOrigin;
 
@@ -11,7 +16,7 @@ use SRAG\Hub2\Origin\IOrigin;
  * Class ObjectFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ObjectFactory implements IObjectFactory {
 
@@ -78,7 +83,14 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function group($ext_id) {
-		// TODO: Implement group() method.
+		$group = ARGroup::find($this->getId($ext_id));
+		if ($group === null) {
+			$group = new ARGroup();
+			$group->setOriginId($this->origin->getId());
+			$group->setExtId($ext_id);
+		}
+
+		return $group;
 	}
 
 
@@ -101,32 +113,46 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function courseMembership($ext_id) {
-		$category = ARCourseMembership::find($this->getId($ext_id));
-		if ($category === null) {
-			$category = new ARCourseMembership();
-			$category->setOriginId($this->origin->getId());
-			$category->setExtId($ext_id);
+		$course_membership = ARCourseMembership::find($this->getId($ext_id));
+		if ($course_membership === null) {
+			$course_membership = new ARCourseMembership();
+			$course_membership->setOriginId($this->origin->getId());
+			$course_membership->setExtId($ext_id);
 		}
 
-		return $category;
+		return $course_membership;
 	}
+
 
 	/**
 	 * @inheritdoc
 	 */
 	public function groupMembership($ext_id) {
-		// TODO: Implement groupMembership() method.
+		$group_membership = ARGroupMembership::find($this->getId($ext_id));
+		if ($group_membership === null) {
+			$group_membership = new ARGroupMembership();
+			$group_membership->setOriginId($this->origin->getId());
+			$group_membership->setExtId($ext_id);
+		}
+
+		return $group_membership;
 	}
 
-	//	/**
-	//	 * @inheritdoc
-	//	 */
-	//	public function objectFromDTO(IObjectDTO $dto) {
-	//		if ($dto instanceof UserDTO) {
-	//			return $this->user($dto->getExtId());
-	//		}
-	//		return null;
-	//	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function sessionMembership($ext_id) {
+		$session_membership = ARSessionMembership::find($this->getId($ext_id));
+		if ($session_membership === null) {
+			$session_membership = new ARSessionMembership();
+			$session_membership->setOriginId($this->origin->getId());
+			$session_membership->setExtId($ext_id);
+		}
+
+		return $session_membership;
+	}
+
 
 	/**
 	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a

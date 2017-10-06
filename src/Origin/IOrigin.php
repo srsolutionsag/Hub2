@@ -125,10 +125,20 @@ interface IOrigin {
 	 */
 	public function properties();
 
-	//	/**
-	//	 * Get the implementation of this origin.
-	//	 *
-	//	 * @return IOriginImplementation
-	//	 */
-	//	public function implementation();
+
+	/**
+	 * @return string
+	 */
+	public function getLastRun();
+
+
+	/**
+	 * @param string $last_run
+	 */
+	public function setLastRun($last_run);
+
+
+	public function update();
+
+	public function create();
 }
