@@ -16,4 +16,3 @@ class ARCourseMembership extends ARObject implements ICourseMembership {
 		return 'sr_hub2_course_mem';
 	}
 }
-ARCourseMembership::installDB();
