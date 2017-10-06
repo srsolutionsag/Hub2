@@ -1,7 +1,7 @@
 <?php namespace SRAG\Hub2\Sync\Processor;
 
-use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Object\IDataTransferObject;
+use SRAG\Hub2\Object\IObject;
 
 /**
  * Interface ObjectProcessor

@@ -1,18 +1,8 @@
 <?php namespace SRAG\Hub2\Sync;
 
-use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use SRAG\Hub2\Exception\AbortSyncException;
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Log\OriginLog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\IObjectRepository;
-use SRAG\Hub2\Object\ObjectFactory;
-use SRAG\Hub2\Origin\Config\OriginImplementationFactory;
 use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
-use SRAG\Hub2\Sync\Processor\SyncProcessorFactory;
 
 /**
  * Class Sync

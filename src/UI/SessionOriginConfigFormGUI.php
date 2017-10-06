@@ -1,11 +1,6 @@
 <?php namespace SRAG\Hub2\UI;
 
-use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Origin\Session\ARSessionOrigin;
-use SRAG\Hub2\Origin\Config\ISessionOriginConfig;
-use SRAG\Hub2\Origin\Config\SessionOriginConfig;
-use SRAG\Hub2\Origin\Properties\IOriginProperties;
-use SRAG\Hub2\Origin\Properties\SessionOriginProperties;
 
 /**
  * Class UserOriginConfigFormGUI

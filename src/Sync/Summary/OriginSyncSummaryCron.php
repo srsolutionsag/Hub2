@@ -2,9 +2,7 @@
 
 namespace SRAG\Hub2\Sync\Summary;
 
-use SRAG\Hub2\Log\OriginLog;
 use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Sync\IOriginSync;
 
 /**

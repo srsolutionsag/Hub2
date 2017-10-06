@@ -4,7 +4,6 @@ use SRAG\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Hub2\Exception\ConnectionFailedException;
 use SRAG\Hub2\Exception\ParseDataFailedException;
 use SRAG\Hub2\Object\HookObject;
-use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Object\IDataTransferObject;
 
 /**
