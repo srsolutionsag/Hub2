@@ -1,4 +1,6 @@
-<?php namespace SRAG\Hub2\Config;
+<?php
+
+namespace SRAG\Hub2\Config;
 
 /**
  * Class HubConfig

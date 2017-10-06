@@ -1,4 +1,5 @@
 <?php
+
 namespace SRAG\Hub2\Config;
 
 /**

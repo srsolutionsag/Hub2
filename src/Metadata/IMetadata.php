@@ -1,5 +1,7 @@
 <?php
 
+namespace SRAG\Hub2\Metadata;
+
 /**
  * Interface IMetadata
  *

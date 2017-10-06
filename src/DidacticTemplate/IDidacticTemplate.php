@@ -7,4 +7,8 @@
  */
 interface IDidacticTemplate {
 
+	/**
+	 * @param $id
+	 */
+	public function setTemplateId($id);
 }

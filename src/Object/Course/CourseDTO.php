@@ -1,6 +1,8 @@
 <?php namespace SRAG\Hub2\Object\Course;
 
-use SRAG\Hub2\Object\DataTransferObject;
+use SRAG\Hub2\Metadata\Course\CourseMetadataCollection;
+use SRAG\Hub2\Metadata\IMetadata;
+use SRAG\Hub2\Object\MetadataAwareDataTransferObject;
 
 /**
  * Class CourseDTO
@@ -8,7 +10,7 @@ use SRAG\Hub2\Object\DataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Hub2\Object
  */
-class CourseDTO extends DataTransferObject {
+class CourseDTO extends MetadataAwareDataTransferObject {
 
 	// @see ilCourseConstants
 	const SUBSCRIPTION_TYPE_DEACTIVATED = 1;
@@ -515,5 +517,13 @@ class CourseDTO extends DataTransferObject {
 		$this->activationType = $activationType;
 
 		return $this;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function metadataCollection() {
+		return new CourseMetadataCollection();
 	}
 }

@@ -1,4 +1,5 @@
-<?php namespace SRAG\Hub2\Exception;
+<?php
+namespace SRAG\Hub2\Exception;
 
 /**
  * Class AbortOriginSyncException
