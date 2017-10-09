@@ -15,8 +15,6 @@ interface IMetadataSet {
 	public function getTitle();
 
 
-
-
 	/**
 	 * @return \SRAG\Hub2\Metadata\IMetadata[]
 	 */

@@ -86,7 +86,7 @@ class SessionDTO extends DataTransferObject {
 	 */
 	protected $end;
 	/**
-	 * @var array of ILIAS-User_IDs
+	 * @var array of ILIAS-User-IDs
 	 */
 	protected $members = array();
 

@@ -253,6 +253,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setILIASId')->once()->with(self::ILIAS_ID);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
+
 		$this->ilObject->shouldReceive('setTitle')->once();
 		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getEmail());
 		$this->ilObject->shouldReceive('setImportId')->once();
