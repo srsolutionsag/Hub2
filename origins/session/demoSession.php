@@ -1,6 +1,6 @@
 <?php namespace SRAG\Hub2\Origin;
 
-require_once('./Customizing/global/origins/courseMembership/demoCourseMember.php');
+//require_once('./Customizing/global/origins/courseMembership/demoCourseMember.php');
 
 use SRAG\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Hub2\Exception\ConnectionFailedException;

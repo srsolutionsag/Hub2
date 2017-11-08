@@ -1,9 +1,6 @@
 <?php
 
-use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
-use SRAG\Hub2\Exception\AbortSyncException;
 use SRAG\Hub2\Exception\HubException;
-use SRAG\Hub2\Object\IObject;
 use SRAG\Hub2\Origin\AROrigin;
 use SRAG\Hub2\Config\HubConfig;
 use SRAG\Hub2\Origin\OriginImplementationTemplateGenerator;
@@ -18,14 +15,18 @@ require_once(__DIR__ . '/class.ilHub2Plugin.php');
  * Class hub2ConfigOriginsGUI
  *
  * @author            Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author            Fabian Schmid <fs@studer-raimann.ch>
  *
  * @ilCtrl_IsCalledBy hub2ConfigOriginsGUI: ilUIPluginRouterGUI
+ * @ilCtrl_calls      hub2ConfigOriginsGUI: hub2DataGUI
  */
 class hub2ConfigOriginsGUI {
 
 	const CMD_DELETE = 'delete';
 	const CMD_INDEX = 'index';
 	const ORIGIN_ID = 'origin_id';
+	const TAB_DATA = 'tab_data';
+	const TAB_ORIGINS = 'tab_origins';
 	/**
 	 * @var \SRAG\Hub2\Sync\Summary\OriginSyncSummaryFactory
 	 */
@@ -61,9 +62,24 @@ class hub2ConfigOriginsGUI {
 
 	public function executeCommand() {
 		$this->checkAccess();
-		$this->tpl()->setTitle('Hub2');
+		$this->tabs()->addTab(self::TAB_ORIGINS, $this->pl->txt('tab_origins'), $this->ctrl()
+		                                                                             ->getLinkTarget($this, self::CMD_INDEX));
+		$this->tabs()->addTab(self::TAB_DATA, $this->pl->txt('tab_data'), $this->ctrl()
+		                                                                       ->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
+		$this->tpl()->setTitle('Hub 2');
 		$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);
-		$this->$cmd();
+		$next_class = $this->ctrl()->getNextClass();
+		switch ($next_class) {
+			case strtolower(hub2DataGUI::class):
+				$this->tabs()->activateTab(self::TAB_DATA);
+				$this->ctrl()->forwardCommand(new hub2DataGUI());
+				break;
+			default:
+				$this->tabs()->activateTab(self::TAB_ORIGINS);
+				$this->$cmd();
+				break;
+		}
+
 		$this->tpl()->show();
 	}
 

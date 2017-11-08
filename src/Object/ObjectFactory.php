@@ -37,6 +37,31 @@ class ObjectFactory implements IObjectFactory {
 	/**
 	 * @inheritdoc
 	 */
+	public function undefined($ext_id) {
+		switch ($this->origin->getObjectType()) {
+			case IOrigin::OBJECT_TYPE_USER:
+				return $this->user($ext_id);
+			case IOrigin::OBJECT_TYPE_COURSE:
+				return $this->course($ext_id);
+			case IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP:
+				return $this->courseMembership($ext_id);
+			case IOrigin::OBJECT_TYPE_CATEGORY:
+				return $this->category($ext_id);
+			case IOrigin::OBJECT_TYPE_GROUP:
+				return $this->group($ext_id);
+			case IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP:
+				return $this->groupMembership($ext_id);
+			case IOrigin::OBJECT_TYPE_SESSION:
+				return $this->session($ext_id);
+			default:
+				throw new \LogicException('no object-type for this origin found');
+		}
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
 	public function user($ext_id) {
 		$user = ARUser::find($this->getId($ext_id));
 		if ($user === null) {

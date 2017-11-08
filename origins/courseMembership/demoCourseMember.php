@@ -16,7 +16,7 @@ use SRAG\Hub2\Origin\Config\OriginImplementationFactory;
  */
 class demoCourseMember extends AbstractOriginImplementation {
 
-	const EXT_COURSE_ID = 79;
+	const EXT_COURSE_ID = 71;
 	const EXT_USER_ID = 6;
 
 

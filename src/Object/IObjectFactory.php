@@ -1,4 +1,6 @@
-<?php namespace SRAG\Hub2\Object;
+<?php
+
+namespace SRAG\Hub2\Object;
 
 /**
  * Interface IObjectFactory
@@ -6,6 +8,14 @@
  * @package SRAG\Hub2\Object
  */
 interface IObjectFactory {
+
+	/**
+	 * @param string $ext_id
+	 *
+	 * @return \ActiveRecord|\SRAG\Hub2\Object\Category\ARCategory|\SRAG\Hub2\Object\Category\ICategory|\SRAG\Hub2\Object\Course\ARCourse|\SRAG\Hub2\Object\Course\ICourse|\SRAG\Hub2\Object\CourseMembership\ARCourseMembership|\SRAG\Hub2\Object\CourseMembership\ICourseMembership|\SRAG\Hub2\Object\Group\ARGroup|\SRAG\Hub2\Object\Group\IGroup|\SRAG\Hub2\Object\GroupMembership\ARGroupMembership|\SRAG\Hub2\Object\GroupMembership\IGroupMembership|\SRAG\Hub2\Object\Session\ARSession|\SRAG\Hub2\Object\Session\ISession|\SRAG\Hub2\Object\User\ARUser|\SRAG\Hub2\Object\User\IUser
+	 */
+	public function undefined($ext_id);
+
 
 	/**
 	 * @param string $ext_id

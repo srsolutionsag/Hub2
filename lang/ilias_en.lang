@@ -10,7 +10,7 @@ admin_db_password#:#Passwort
 admin_db_port#:#Port
 admin_db_user#:#Benutzer
 admin_import_export#:#Import/Export von Anbindungen aktivieren
-admin_lock#:#MISSING
+admin_lock#:#Lock active Origins
 admin_membership#:#Kursteilnehmer
 admin_membership_activate#:#Benachrichtigung aktivieren
 admin_membership_activate_info#:#Benachrichtigung per Email bei neuer Kursteilnehmerschaft aktivieren.
@@ -22,14 +22,14 @@ admin_msg_shortlink_not_active#:#MISSING
 admin_msg_shortlink_not_active_info#:#Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden.
 admin_msg_shortlink_no_ilias_id#:#MISSING
 admin_msg_shortlink_no_ilias_id_info#:#MISSING
-admin_msg_shortlink_not_found#:#MISSING
-admin_msg_shortlink_not_found_info#:#MISSING
+admin_msg_shortlink_not_found#:#Not-Found-Message
+admin_msg_shortlink_not_found_info#:#Is shown if a Shortlink is used which does not exist
 admin_origins_path#:#Path to Origins
-admin_origins_path_info#:#MISSING
+admin_origins_path_info#:#Location of the 'origins' directory
 admin_password_email_body#:#E-Mail-Body beim versenden von Passwörtern
 admin_roles#:#Rollen
-admin_roles_info#:#MISSING
-admin_shortlink#:#MISSING
+admin_roles_info#:#Role-IDs which can use HUB2 (commaseparated
+admin_shortlink#:#Shortlink
 admin_use_async#:#Asynchrone Synchronisation
 admin_use_async_info#:#Asynchrone Synchronisation über das GUI ermöglichen. Benötigt einen ILIAS Benutzer.
 admin_user_creation#:#Benutzererstellung
@@ -118,8 +118,8 @@ common_export#:#Einstellungen exportieren
 common_none#:#Keine
 common_on_status#:#Objekt-Status:
 common_back#:#Back
-common_permissions#:#MISSING
-common_roles#:#MISSING
+common_permissions#:#Permissions
+common_roles#:#Role-IDs
 hub_categories#:#Kategorien
 hub_conf#:#Einstellungen
 hub_courses#:#Kurse
@@ -304,3 +304,16 @@ confirm_delete_button#:#Löschen
 cancel_delete_button#:#Cancel
 button_save#:#Save
 button_cancel#:#Cancel
+tab_origins#:#Origins
+tab_data#:#Daten
+data_table_header_origin_id#:#Origin
+data_table_header_ext_id#:#Ext-ID
+data_table_header_delivery_date#:#Delivery-Date
+data_table_header_processed_date#:#Process-Date
+data_table_header_ilias_id#:#ILIAS-ID
+data_table_header_status#:#Status
+data_table_header_period#:#Period
+data_table_header_actions#:#Actions
+data_table_header_view#:#View
+status_4#:#Created
+status_16#:#Updated

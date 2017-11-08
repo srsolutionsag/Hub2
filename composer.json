@@ -4,16 +4,18 @@
     "mockery/mockery": "dev-master"
   },
   "autoload": {
-    "psr-4": {"SRAG\\Hub2\\": "src/"}
-  },
-  "classmap": [
-    "classes",
-    "../../../../../../../Services/Container",
-    "../../../../../../../Services/ActiveRecord",
-    "../../../../../../../Services/Cron",
-    "../../../../../../../Modules/Course",
-    "../../../../../../../Modules/Category",
-    "../../../../../../../Services/User",
-    "../../../../../../../Modules/Group"
-  ]
+    "psr-4": {
+      "SRAG\\Hub2\\": "src/"
+    },
+    "classmap": [
+      "classes",
+      "../../../../../../../Services/Container",
+      "../../../../../../../Services/ActiveRecord",
+      "../../../../../../../Services/Cron",
+      "../../../../../../../Modules/Course",
+      "../../../../../../../Modules/Category",
+      "../../../../../../../Services/User",
+      "../../../../../../../Modules/Group"
+    ]
+  }
 }
