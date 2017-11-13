@@ -1,6 +1,6 @@
 <?php namespace SRAG\Hub2\Origin;
 
-//require_once('./Customizing/global/origins/courseMembership/demoCourseMember.php');
+require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/origins/courseMembership/demoCourseMember.php');
 
 use SRAG\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Hub2\Exception\ConnectionFailedException;
@@ -53,8 +53,8 @@ class demoSession extends AbstractOriginImplementation {
 			                   ->setPhone("Phone {$rand}")
 			                   ->setFullDay(false)
 			                   ->setMembers([ 6, 294 ])
-			                   ->setStart(time())
-			                   ->setEnd(time() + 3600);
+			                   ->setStart(time() + ($x * 600))
+			                   ->setEnd(time() + ($x * 600) + 3600);
 			$this->data[] = $sessionDTO;
 			$this->log()->write("Start:" . date(DATE_ATOM, $sessionDTO->getStart()));
 		}

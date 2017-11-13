@@ -89,7 +89,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 		$this->handleMembers($object, $ilObjSession);
 
-		$this->handleFirstAppointment($object, $ilObjSession, true);
+		$this->setDataForFirstAppointment($object, $ilObjSession, true);
 		$ilObjSession->getFirstAppointment()->create();
 
 		return $ilObjSession;
@@ -120,7 +120,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$this->handleMembers($object, $ilObjSession);
 
 		$ilObjSession->update();
-		$ilObjSession = $this->handleFirstAppointment($object, $ilObjSession);
+		$ilObjSession = $this->setDataForFirstAppointment($object, $ilObjSession);
 		$ilObjSession->getFirstAppointment()->update();
 
 		return $ilObjSession;
@@ -173,17 +173,21 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	 *
 	 * @return \ilObjSession
 	 */
-	protected function handleFirstAppointment(SessionDTO $object, \ilObjSession $ilObjSession, $force = false) {
+	protected function setDataForFirstAppointment(SessionDTO $object, \ilObjSession $ilObjSession, $force = false) {
 		/**
 		 * @var $first \ilSessionAppointment
 		 */
 		$appointments = $ilObjSession->getAppointments();
 		$first = $ilObjSession->getFirstAppointment();
 		if ($this->props->updateDTOProperty('start') || $force) {
-			$first->setStart(new \ilDateTime((int)$object->getStart(), IL_CAL_UNIX));
+			$start = new \ilDateTime((int)$object->getStart(), IL_CAL_UNIX);
+			$first->setStart($start->get(IL_CAL_DATETIME));
+			$first->setStartingTime($start->get(IL_CAL_UNIX));
 		}
 		if ($this->props->updateDTOProperty('end') || $force) {
-			$first->setEnd(new \ilDateTime((int)$object->getEnd(), IL_CAL_UNIX));
+			$end = new \ilDateTime((int)$object->getEnd(), IL_CAL_UNIX);
+			$first->setEnd($end->get(IL_CAL_DATETIME));
+			$first->setEndingTime($end->get(IL_CAL_UNIX));
 		}
 		if ($this->props->updateDTOProperty('fullDay') || $force) {
 			$first->toggleFullTime($object->isFullDay());
