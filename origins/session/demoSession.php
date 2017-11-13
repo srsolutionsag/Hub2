@@ -7,6 +7,7 @@ use SRAG\Hub2\Exception\ConnectionFailedException;
 use SRAG\Hub2\Exception\ParseDataFailedException;
 use SRAG\Hub2\Object\HookObject;
 use SRAG\Hub2\Object\IDataTransferObject;
+use SRAG\Hub2\Object\Session\SessionDTO;
 
 /**
  * Class demoSession
@@ -38,12 +39,11 @@ class demoSession extends AbstractOriginImplementation {
 	public function parseData() {
 		$this->log()->write("HELLO");
 		for ($x = 1; $x <= 14; $x ++) {
-			$date = time();
-			$hour = $x + 7;
 			$rand = rand();
 			$sessionDTO = $this->factory()
 			                   ->session($x)
-			                   ->setParentId(demoCourseMember::EXT_COURSE_ID)
+			                   ->setParentId("0001")// see demoCourse
+			                   ->setParentIdType(SessionDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
 			                   ->setTitle("Title {$rand}")
 			                   ->setDescription("Description {$rand}")
 			                   ->setLocation("Location {$rand}")

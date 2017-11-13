@@ -2,12 +2,15 @@
 
 namespace SRAG\Hub2\Sync\Processor\Session;
 
+use SRAG\Hub2\Exception\HubException;
 use SRAG\Hub2\Log\ILog;
 use SRAG\Hub2\Notification\OriginNotifications;
 use SRAG\Hub2\Object\IDataTransferObject;
+use SRAG\Hub2\Object\ObjectFactory;
 use SRAG\Hub2\Object\Session\SessionDTO;
 use SRAG\Hub2\Origin\IOrigin;
 use SRAG\Hub2\Origin\IOriginImplementation;
+use SRAG\Hub2\Origin\OriginRepository;
 use SRAG\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
 
@@ -83,7 +86,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 		$ilObjSession->create();
 		$ilObjSession->createReference();
-		$a_parent_ref = $this->buildParentRefId($object); // TODO
+		$a_parent_ref = $this->buildParentRefId($object);
 		$ilObjSession->putInTree($a_parent_ref);
 		$ilObjSession->setPermissions($a_parent_ref);
 
@@ -116,6 +119,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				$ilObjSession->$setter($object->$getter());
 			}
 		}
+
+		$a_parent_ref = $this->buildParentRefId($object);
 
 		$this->handleMembers($object, $ilObjSession);
 
@@ -155,14 +160,49 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 
 	/**
-	 * @param \SRAG\Hub2\Object\IDataTransferObject $object
+	 * @param \SRAG\Hub2\Object\Session\SessionDTO $session
 	 *
-	 * @return mixed
+	 * @return int
+	 * @throws \SRAG\Hub2\Exception\HubException
 	 */
-	protected function buildParentRefId(IDataTransferObject $object) {
-		$a_parent_ref = $object->getParentId();
+	protected function buildParentRefId(SessionDTO $session) {
+		global $DIC;
+		$tree = $DIC->repositoryTree();
+		if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_REF_ID) {
+			if ($tree->isInTree($session->getParentId())) {
+				return (int)$session->getParentId();
+			}
+		}
+		if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
+			// The stored parent-ID is an external-ID from a category.
+			// We must search the parent ref-ID from a category object synced by a linked origin.
+			// --> Get an instance of the linked origin and lookup the category by the given external ID.
+			$linkedOriginId = $this->config->getLinkedOriginId();
+			if (!$linkedOriginId) {
+				throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
+			}
+			$originRepository = new OriginRepository();
+			$origin = array_pop(array_filter($originRepository->courses(), function ($origin) use ($linkedOriginId) {
+				/** @var $origin IOrigin */
+				return (int)$origin->getId() == $linkedOriginId;
+			}));
+			if ($origin === null) {
+				$msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
+				throw new HubException($msg);
+			}
+			$objectFactory = new ObjectFactory($origin);
+			$course = $objectFactory->course($session->getParentId());
+			if (!$course->getILIASId()) {
+				throw new HubException("The linked course does not (yet) exist in ILIAS");
+			}
+			if (!$tree->isInTree($course->getILIASId())) {
+				throw new HubException("Could not find the ref-ID of the parent course in the tree: '{$course->getILIASId()}'");
+			}
 
-		return $a_parent_ref;
+			return (int)$course->getILIASId();
+		}
+
+		return 0;
 	}
 
 
