@@ -18,10 +18,10 @@ admin_membership_mail_subject#:#Betreff Benachrichtigungs-Mail
 admin_membership_mail_subject_info#:#Die Platzhalter der Nachricht (unten) können auch hier verwendet werden.
 admin_membership_mail_msg#:#Inhalt Benachrichtigungs-Mail
 admin_membership_mail_msg_info#:#Es können folgende Platzhalter verwendet werden: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]
-admin_msg_shortlink_not_active#:#MISSING
+admin_msg_shortlink_not_active#:#Object-not-active Message
 admin_msg_shortlink_not_active_info#:#Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden.
-admin_msg_shortlink_no_ilias_id#:#MISSING
-admin_msg_shortlink_no_ilias_id_info#:#MISSING
+admin_msg_shortlink_no_ilias_id#:#ILIAS-ID-Not-Found-Message
+admin_msg_shortlink_no_ilias_id_info#:#ILIAS-ID-Not-Found-Message
 admin_msg_shortlink_not_found#:#Not-Found-Message
 admin_msg_shortlink_not_found_info#:#Is shown if a Shortlink is used which does not exist
 admin_origins_path#:#Path to Origins

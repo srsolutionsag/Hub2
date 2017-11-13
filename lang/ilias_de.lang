@@ -1,7 +1,7 @@
 admin_lock#:#Aktive Origins sperren
-admin_msg_shortlink_not_active#:#MISSING
-admin_msg_shortlink_no_ilias_id#:#MISSING
-admin_msg_shortlink_no_ilias_id_info#:#MISSING
+admin_msg_shortlink_not_active#:#Object-not-active Message
+admin_msg_shortlink_no_ilias_id#:#ILIAS-ID-Not-Found-Message
+admin_msg_shortlink_no_ilias_id_info#:#ILIAS-ID-Not-Found-Message
 admin_msg_shortlink_not_found#:#Nicht gefunden Nachricht
 admin_msg_shortlink_not_found_info#:#Wird angezeigt wenn ein nciht existierender Shortlink genutzt wird
 admin_origins_path_info#:#Ort des 'origin'-Verzeichnisses
