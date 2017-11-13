@@ -699,9 +699,11 @@ class UserDTO extends DataTransferObject {
 
 	/**
 	 * @param string $externalAccount
+	 * @return UserDTO $this
 	 */
 	public function setExternalAccount($externalAccount) {
 		$this->externalAccount = $externalAccount;
+		return $this;
 	}
 
 
