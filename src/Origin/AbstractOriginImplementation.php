@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\IDataTransferObjectFactory;
-use SRAG\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\IDataTransferObjectFactory;
+use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 
 /**
  * Class AbstractOriginImplementation
@@ -11,7 +11,7 @@ use SRAG\Hub2\Origin\Config\IOriginConfig;
  * Any implementation of a origin MUST extend this class.
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 

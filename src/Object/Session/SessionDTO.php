@@ -1,8 +1,8 @@
 <?php // declare(strict_types=1);
 
-namespace SRAG\Hub2\Object\Session;
+namespace SRAG\Plugins\Hub2\Object\Session;
 
-use SRAG\Hub2\Object\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DataTransferObject;
 
 /**
  * Class SessionDTO

@@ -2,11 +2,11 @@
 
 require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
 
-use SRAG\Hub2\Object\Category\CategoryDTO;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Origin\Config\CategoryOriginConfig;
-use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
-use SRAG\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use SRAG\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
 
 /**
  * Class CategorySyncProcessorTest
@@ -25,11 +25,11 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 	const REF_ID = 57;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Sync\Processor\Category\ICategorySyncProcessor
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Object\Category\ICategory
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Category\ICategory
 	 */
 	protected $iobject;
 	/**
@@ -47,7 +47,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Hub2\Sync\Processor\Category\ICategoryActivities');
+		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\ICategoryActivities');
 		$this->initOrigin(new CategoryOriginProperties(), new CategoryOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -132,7 +132,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Hub2\Object\Category\ICategory');
+		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Category\ICategory');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();

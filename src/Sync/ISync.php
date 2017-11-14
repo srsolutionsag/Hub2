@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Sync;
+<?php namespace SRAG\Plugins\Hub2\Sync;
 
 /**
  * Interface ISync
  *
- * @package SRAG\Hub2\Sync
+ * @package SRAG\Plugins\Hub2\Sync
  */
 interface ISync {
 

@@ -1,10 +1,10 @@
-<?php namespace SRAG\Hub2\Sync\Processor\Course;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor\Course;
 
 /**
  * Class CourseActivities
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 class CourseActivities implements ICourseActivities {
 

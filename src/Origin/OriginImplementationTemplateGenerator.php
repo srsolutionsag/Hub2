@@ -1,13 +1,13 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
-use SRAG\Hub2\Config\IHubConfig;
-use SRAG\Hub2\Exception\HubException;
+use SRAG\Plugins\Hub2\Config\IHubConfig;
+use SRAG\Plugins\Hub2\Exception\HubException;
 
 /**
  * Class OriginImplementationTemplateGenerator
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class OriginImplementationTemplateGenerator {
 
@@ -38,7 +38,7 @@ class OriginImplementationTemplateGenerator {
 	 */
 	public function create(IOrigin $origin) {
 		$classFile = $this->getClassFilePath($origin);
-		if (is_file($classFile)) {
+		if ($this->classFileExists($origin)) {
 			return false;
 		}
 		$path = $this->getPath($origin);
@@ -59,6 +59,12 @@ class OriginImplementationTemplateGenerator {
 		}
 
 		return true;
+	}
+
+
+	public function classFileExists(IOrigin $origin) {
+		$classFile = $this->getClassFilePath($origin);
+		return is_file($classFile);
 	}
 
 

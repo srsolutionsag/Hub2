@@ -1,11 +1,11 @@
-<?php namespace SRAG\Hub2\Object\Category;
+<?php namespace SRAG\Plugins\Hub2\Object\Category;
 
-use SRAG\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\IObject;
 
 /**
  * Interface ICategory
  *
- * @package SRAG\Hub2\Object\Category
+ * @package SRAG\Plugins\Hub2\Object\Category
  */
 interface ICategory extends IObject {
 

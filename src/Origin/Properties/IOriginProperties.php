@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Origin\Properties;
+<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Interface Properties
  *
- * @package SRAG\Hub2\Origin\Properties
+ * @package SRAG\Plugins\Hub2\Origin\Properties
  */
 interface IOriginProperties {
 

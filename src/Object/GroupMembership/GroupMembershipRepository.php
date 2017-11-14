@@ -1,6 +1,6 @@
-<?php namespace SRAG\Hub2\Object\GroupMembership;
+<?php namespace SRAG\Plugins\Hub2\Object\GroupMembership;
 
-use SRAG\Hub2\Object\ObjectRepository;
+use SRAG\Plugins\Hub2\Object\ObjectRepository;
 
 /**
  * Class GroupMembershipRepository

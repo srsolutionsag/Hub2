@@ -1,17 +1,17 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
-use SRAG\Hub2\Origin\Category\ARCategoryOrigin;
-use SRAG\Hub2\Origin\Course\ARCourseOrigin;
-use SRAG\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
-use SRAG\Hub2\Origin\Group\ARGroupOrigin;
-use SRAG\Hub2\Origin\Session\ARSessionOrigin;
-use SRAG\Hub2\Origin\User\ARUserOrigin;
+use SRAG\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
+use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
+use SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
+use SRAG\Plugins\Hub2\Origin\Group\ARGroupOrigin;
+use SRAG\Plugins\Hub2\Origin\Session\ARSessionOrigin;
+use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
 
 /**
  * Class OriginRepository
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class OriginRepository implements IOriginRepository {
 

@@ -1,16 +1,16 @@
-<?php namespace SRAG\Hub2\Sync;
+<?php namespace SRAG\Plugins\Hub2\Sync;
 
-use SRAG\Hub2\Exception\AbortOriginSyncException;
-use SRAG\Hub2\Exception\AbortSyncException;
-use SRAG\Hub2\Exception\BuildObjectsFailedException;
-use SRAG\Hub2\Exception\ConnectionFailedException;
-use SRAG\Hub2\Exception\ParseDataFailedException;
-use SRAG\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
+use SRAG\Plugins\Hub2\Exception\AbortSyncException;
+use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
+use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
+use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 
 /**
  * Interface ISync
  *
- * @package SRAG\Hub2\Sync
+ * @package SRAG\Plugins\Hub2\Sync
  */
 interface IOriginSync {
 
@@ -76,7 +76,7 @@ interface IOriginSync {
 	/**
 	 * Return the current origin
 	 *
-	 * @return \SRAG\Hub2\Origin\IOrigin
+	 * @return \SRAG\Plugins\Hub2\Origin\IOrigin
 	 */
 	public function getOrigin();
 }

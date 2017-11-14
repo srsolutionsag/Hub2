@@ -1,10 +1,10 @@
-<?php namespace SRAG\Hub2\Origin\Properties;
+<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class CourseOriginProperties
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin\Properties
+ * @package SRAG\Plugins\Hub2\Origin\Properties
  */
 class CourseOriginProperties extends OriginProperties {
 

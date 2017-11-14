@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Hub2\Object;
+namespace SRAG\Plugins\Hub2\Object;
 
-use SRAG\Hub2\Object\Category\ARCategory;
-use SRAG\Hub2\Object\Course\ARCourse;
-use SRAG\Hub2\Object\CourseMembership\ARCourseMembership;
-use SRAG\Hub2\Object\Group\ARGroup;
-use SRAG\Hub2\Object\GroupMembership\ARGroupMembership;
-use SRAG\Hub2\Object\Session\ARSession;
-use SRAG\Hub2\Object\SessionMembership\ARSessionMembership;
-use SRAG\Hub2\Object\User\ARUser;
-use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Object\Category\ARCategory;
+use SRAG\Plugins\Hub2\Object\Course\ARCourse;
+use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use SRAG\Plugins\Hub2\Object\Group\ARGroup;
+use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use SRAG\Plugins\Hub2\Object\Session\ARSession;
+use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
+use SRAG\Plugins\Hub2\Object\User\ARUser;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class ObjectFactory

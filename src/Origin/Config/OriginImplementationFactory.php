@@ -1,18 +1,18 @@
-<?php namespace SRAG\Hub2\Origin\Config;
+<?php namespace SRAG\Plugins\Hub2\Origin\Config;
 
-use SRAG\Hub2\Config\IHubConfig;
-use SRAG\Hub2\Exception\HubException;
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\DataTransferObjectFactory;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Config\IHubConfig;
+use SRAG\Plugins\Hub2\Exception\HubException;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\DataTransferObjectFactory;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 
 /**
  * Class OriginImplementationFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin\Config
+ * @package SRAG\Plugins\Hub2\Origin\Config
  */
 class OriginImplementationFactory {
 
@@ -61,7 +61,7 @@ class OriginImplementationFactory {
 			throw new HubException("Origin implementation class file does not exist, should be at: $classFile");
 		}
 		require_once($classFile);
-		$class = "SRAG\\Hub2\\Origin\\" . $className;
+		$class = "SRAG\\Plugins\\Hub2\\Origin\\" . $className;
 		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications);
 
 		return $instance;

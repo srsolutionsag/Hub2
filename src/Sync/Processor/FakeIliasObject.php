@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor;
+namespace SRAG\Plugins\Hub2\Sync\Processor;
 
 /**
  * Class FakeIliasObject

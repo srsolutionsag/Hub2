@@ -1,8 +1,8 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor\Group;
+namespace SRAG\Plugins\Hub2\Sync\Processor\Group;
 
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Interface IGroupSyncProcessor

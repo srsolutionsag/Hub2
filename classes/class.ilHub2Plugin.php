@@ -41,7 +41,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return \ilCronJob[]
 	 */
 	public function getCronJobInstances() {
-		return [ new \SRAG\Hub2\Jobs\RunSync() ];
+		return [ new \SRAG\Plugins\Hub2\Jobs\RunSync() ];
 	}
 
 

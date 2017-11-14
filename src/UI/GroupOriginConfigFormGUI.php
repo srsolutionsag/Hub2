@@ -1,8 +1,8 @@
-<?php namespace SRAG\Hub2\UI;
+<?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Origin\ARCourseOrigin;
-use SRAG\Hub2\Origin\Config\ICourseOriginConfig;
-use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
+use SRAG\Plugins\Hub2\Origin\ARCourseOrigin;
+use SRAG\Plugins\Hub2\Origin\Config\ICourseOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 
 /**
  * Class GroupOriginConfigFormGUI
@@ -12,7 +12,7 @@ use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
 class GroupOriginConfigFormGUI extends OriginConfigFormGUI {
 
 	/**
-	 * @var \SRAG\Hub2\Origin\Group\ARGroupOrigin
+	 * @var \SRAG\Plugins\Hub2\Origin\Group\ARGroupOrigin
 	 */
 	protected $origin;
 

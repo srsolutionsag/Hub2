@@ -1,15 +1,15 @@
-<?php namespace SRAG\Hub2\UI;
+<?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Origin\ARUserOrigin;
-use SRAG\Hub2\Origin\Config\IUserOriginConfig;
-use SRAG\Hub2\Origin\Config\UserOriginConfig;
-use SRAG\Hub2\Origin\Properties\UserOriginProperties;
+use SRAG\Plugins\Hub2\Origin\ARUserOrigin;
+use SRAG\Plugins\Hub2\Origin\Config\IUserOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Config\UserOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
 
 /**
  * Class UserOriginConfigFormGUI
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\UI
+ * @package SRAG\Plugins\Hub2\UI
  */
 class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 

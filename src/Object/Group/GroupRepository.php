@@ -1,8 +1,8 @@
 <?php
 
-namespace SRAG\Hub2\Object\Group;
+namespace SRAG\Plugins\Hub2\Object\Group;
 
-use SRAG\Hub2\Object\ObjectRepository;
+use SRAG\Plugins\Hub2\Object\ObjectRepository;
 
 /**
  * Class GroupRepository

@@ -18,7 +18,7 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'S' => 
         array (
             'Symfony\\Component\\Yaml\\' => 23,
-            'SRAG\\Hub2\\' => 10,
+            'SRAG\\Plugins\\Hub2\\' => 18,
         ),
         'D' => 
         array (
@@ -42,7 +42,7 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
-        'SRAG\\Hub2\\' => 
+        'SRAG\\Plugins\\Hub2\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -734,6 +734,7 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilCourseLPBadgeGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/Badges/class.ilCourseLPBadgeGUI.php',
         'ilCourseMailTemplateMemberContext' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilCourseMailTemplateMemberContext.php',
         'ilCourseMailTemplateTutorContext' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilCourseMailTemplateTutorContext.php',
+        'ilCourseMailTemplateTutorContextTest' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/test/ilCourseMailTemplateTutorContextTest.php',
         'ilCourseMembershipGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilCourseMembershipGUI.php',
         'ilCourseMembershipMailNotification' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilCourseMembershipMailNotification.php',
         'ilCourseMeritBadge' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/Badges/class.ilCourseMeritBadge.php',

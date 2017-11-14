@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Exception;
+<?php namespace SRAG\Plugins\Hub2\Exception;
 
 /**
  * Class ParseDataFailedException

@@ -1,12 +1,12 @@
 <?php
 
-namespace SRAG\Hub2\Jobs;
+namespace SRAG\Plugins\Hub2\Jobs;
 
-use SRAG\Hub2\Jobs\Result\ResultFactory;
-use SRAG\Hub2\Log\OriginLog;
-use SRAG\Hub2\Origin\OriginFactory;
-use SRAG\Hub2\Sync\OriginSyncFactory;
-use SRAG\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use SRAG\Plugins\Hub2\Jobs\Result\ResultFactory;
+use SRAG\Plugins\Hub2\Log\OriginLog;
+use SRAG\Plugins\Hub2\Origin\OriginFactory;
+use SRAG\Plugins\Hub2\Sync\OriginSyncFactory;
+use SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 
 /**
  * Class RunSync
@@ -56,7 +56,7 @@ class RunSync extends AbstractJob {
 
 
 	/**
-	 * @return \SRAG\Hub2\Jobs\Result\AbstractResult
+	 * @return \SRAG\Plugins\Hub2\Jobs\Result\AbstractResult
 	 */
 	public function run() {
 		global $DIC;

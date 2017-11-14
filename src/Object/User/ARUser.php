@@ -1,6 +1,6 @@
-<?php namespace SRAG\Hub2\Object\User;
+<?php namespace SRAG\Plugins\Hub2\Object\User;
 
-use SRAG\Hub2\Object\ARObject;
+use SRAG\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class ARUser

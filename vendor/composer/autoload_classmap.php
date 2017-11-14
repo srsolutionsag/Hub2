@@ -666,6 +666,7 @@ return array(
     'ilCourseLPBadgeGUI' => $baseDir . '/../../../../../../../Modules/Course/classes/Badges/class.ilCourseLPBadgeGUI.php',
     'ilCourseMailTemplateMemberContext' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilCourseMailTemplateMemberContext.php',
     'ilCourseMailTemplateTutorContext' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilCourseMailTemplateTutorContext.php',
+    'ilCourseMailTemplateTutorContextTest' => $baseDir . '/../../../../../../../Modules/Course/test/ilCourseMailTemplateTutorContextTest.php',
     'ilCourseMembershipGUI' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilCourseMembershipGUI.php',
     'ilCourseMembershipMailNotification' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilCourseMembershipMailNotification.php',
     'ilCourseMeritBadge' => $baseDir . '/../../../../../../../Modules/Course/classes/Badges/class.ilCourseMeritBadge.php',

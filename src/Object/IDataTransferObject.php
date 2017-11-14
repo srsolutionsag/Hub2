@@ -1,10 +1,10 @@
-<?php namespace SRAG\Hub2\Object;
+<?php namespace SRAG\Plugins\Hub2\Object;
 
 /**
  * Data Transfer Objects holding all data of objects in the hub context, e.g.
  * Users, Courses, CourseMemberships...
  *
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 interface IDataTransferObject {
 

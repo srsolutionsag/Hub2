@@ -1,26 +1,26 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor\Category;
+namespace SRAG\Plugins\Hub2\Sync\Processor\Category;
 
-use SRAG\Hub2\Exception\HubException;
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\Category\CategoryDTO;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\ObjectFactory;
-use SRAG\Hub2\Origin\Config\CategoryOriginConfig;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
-use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Exception\HubException;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\ObjectFactory;
+use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class CategorySyncProcessor
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySyncProcessor {
 

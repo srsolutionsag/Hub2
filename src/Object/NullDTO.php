@@ -1,10 +1,10 @@
-<?php namespace SRAG\Hub2\Object;
+<?php namespace SRAG\Plugins\Hub2\Object;
 
 /**
  * Class NullDTO
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 class NullDTO extends DataTransferObject {
 

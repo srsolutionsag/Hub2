@@ -1,5 +1,5 @@
 <?php
-namespace SRAG\Hub2\UI;
+namespace SRAG\Plugins\Hub2\UI;
 
 /**
  * Class CourseMembershipOriginConfigFormGUI
@@ -9,7 +9,7 @@ namespace SRAG\Hub2\UI;
 class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI {
 
 	/**
-	 * @var \SRAG\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin
+	 * @var \SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin
 	 */
 	protected $origin;
 

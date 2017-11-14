@@ -1,14 +1,14 @@
-<?php namespace SRAG\Hub2\UI;
+<?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Origin\ARCategoryOrigin;
-use SRAG\Hub2\Origin\Config\ICategoryOriginConfig;
-use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
+use SRAG\Plugins\Hub2\Origin\ARCategoryOrigin;
+use SRAG\Plugins\Hub2\Origin\Config\ICategoryOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 
 /**
  * Class CategoryOriginConfigFormGUI
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\UI
+ * @package SRAG\Plugins\Hub2\UI
  */
 class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 

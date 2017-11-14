@@ -1,7 +1,7 @@
-<?php namespace SRAG\Hub2\Object;
+<?php namespace SRAG\Plugins\Hub2\Object;
 
-use SRAG\Hub2\Metadata\IMetadata;
-use SRAG\Hub2\Metadata\IMetadataAware;
+use SRAG\Plugins\Hub2\Metadata\IMetadata;
+use SRAG\Plugins\Hub2\Metadata\IMetadataAware;
 
 /**
  * Class MetadataAwareDataTransferObject
@@ -13,14 +13,14 @@ abstract class MetadataAwareDataTransferObject extends DataTransferObject implem
 	/**
 	 * @var array
 	 */
-	protected $_metadata = array();
+	protected $_meta_data = array();
 
 
 	/**
 	 * @inheritDoc
 	 */
 	public function addMetadataForProcessing(IMetadata $metadata) {
-		$this->_metadata[] = $metadata;
+		$this->_meta_data[] = $metadata;
 	}
 
 
@@ -28,6 +28,6 @@ abstract class MetadataAwareDataTransferObject extends DataTransferObject implem
 	 * @inheritDoc
 	 */
 	public function getMetadataForProcessing() {
-		return $this->_metadata;
+		return $this->_meta_data;
 	}
 }

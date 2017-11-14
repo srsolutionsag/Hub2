@@ -1,8 +1,8 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor\Session;
+namespace SRAG\Plugins\Hub2\Sync\Processor\Session;
 
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Interface ISessionSyncProcessor

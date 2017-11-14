@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor\Category;
+namespace SRAG\Plugins\Hub2\Sync\Processor\Category;
 
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Interface ICategorySyncProcessor
  *
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 interface ICategorySyncProcessor extends IObjectSyncProcessor {
 

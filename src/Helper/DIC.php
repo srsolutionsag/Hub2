@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Helper;
+namespace SRAG\Plugins\Hub2\Helper;
 
 /**
  * Trait DIC

@@ -1,24 +1,24 @@
-<?php namespace SRAG\Hub2\Sync;
+<?php namespace SRAG\Plugins\Hub2\Sync;
 
-use SRAG\Hub2\Exception\AbortOriginSyncException;
-use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
-use SRAG\Hub2\Exception\AbortSyncException;
-use SRAG\Hub2\Exception\HubException;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\IObjectFactory;
-use SRAG\Hub2\Object\IObjectRepository;
-use SRAG\Hub2\Object\NullDTO;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
+use SRAG\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
+use SRAG\Plugins\Hub2\Exception\AbortSyncException;
+use SRAG\Plugins\Hub2\Exception\HubException;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\IObjectFactory;
+use SRAG\Plugins\Hub2\Object\IObjectRepository;
+use SRAG\Plugins\Hub2\Object\NullDTO;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Class Sync
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync
+ * @package SRAG\Plugins\Hub2\Sync
  */
 class OriginSync implements IOriginSync {
 

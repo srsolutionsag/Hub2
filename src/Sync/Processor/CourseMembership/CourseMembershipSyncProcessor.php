@@ -1,24 +1,24 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor\CourseMembership;
+namespace SRAG\Plugins\Hub2\Sync\Processor\CourseMembership;
 
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Origin\Config\CourseOriginConfig;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Hub2\Sync\Processor\FakeIliasObject;
-use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
+use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class CourseMembershipSyncProcessor
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICourseMembershipSyncProcessor {
 
@@ -52,7 +52,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 */
 	protected function handleCreate(IDataTransferObject $object) {
 		/**
-		 * @var $object \SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO
+		 * @var $object \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
 		$ilias_course_ref_id = $object->getIliasCourseRefId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
@@ -71,7 +71,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 */
 	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
 		/**
-		 * @var $object \SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO
+		 * @var $object \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
 		$ilias_course_ref_id = $object->getIliasCourseRefId();
 		$user_id = $object->getUserId();
@@ -137,7 +137,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 
 	/**
-	 * @param \SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO $object
+	 * @param \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO $object
 	 * @param \ilObjCourse                                           $course
 	 *
 	 * @return int

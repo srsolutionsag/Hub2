@@ -1,19 +1,19 @@
 <?php
 
-namespace SRAG\Hub2\Object;
+namespace SRAG\Plugins\Hub2\Object;
 
-use SRAG\Hub2\Object\Category\CategoryDTO;
-use SRAG\Hub2\Object\Course\CourseDTO;
-use SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Hub2\Object\Group\GroupDTO;
-use SRAG\Hub2\Object\Session\SessionDTO;
-use SRAG\Hub2\Object\User\UserDTO;
+use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
+use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
+use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
+use SRAG\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class ObjectDTOFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 class DataTransferObjectFactory implements IDataTransferObjectFactory {
 

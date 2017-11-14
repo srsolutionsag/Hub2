@@ -1,12 +1,12 @@
-<?php namespace SRAG\Hub2\Object;
+<?php namespace SRAG\Plugins\Hub2\Object;
 
-use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class ObjectRepository
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 abstract class ObjectRepository implements IObjectRepository {
 
@@ -19,7 +19,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * ObjectRepository constructor.
 	 *
-	 * @param \SRAG\Hub2\Origin\IOrigin $origin
+	 * @param \SRAG\Plugins\Hub2\Origin\IOrigin $origin
 	 */
 	public function __construct(IOrigin $origin) {
 		$this->origin = $origin;
@@ -84,6 +84,6 @@ abstract class ObjectRepository implements IObjectRepository {
 	protected function getClass() {
 		$ucfirst = ucfirst($this->origin->getObjectType());
 
-		return "SRAG\\Hub2\\Object\\" . $ucfirst . "\\AR" . $ucfirst;
+		return "SRAG\\Plugins\\Hub2\\Object\\" . $ucfirst . "\\AR" . $ucfirst;
 	}
 }

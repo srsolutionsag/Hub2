@@ -1,6 +1,6 @@
-<?php namespace SRAG\Hub2\Log;
+<?php namespace SRAG\Plugins\Hub2\Log;
 
-use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class OriginLog
@@ -45,7 +45,7 @@ class OriginLog implements ILog {
 	/**
 	 * @param IOrigin $origin
 	 *
-	 * @return \SRAG\Hub2\Log\Logger
+	 * @return \SRAG\Plugins\Hub2\Log\Logger
 	 */
 	private function getLogInstance(IOrigin $origin) {
 		if (isset(self::$ilLogInstances[$origin->getId()])) {

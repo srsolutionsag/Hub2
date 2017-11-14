@@ -1,12 +1,12 @@
 <?php
 
-namespace SRAG\Hub2\Config;
+namespace SRAG\Plugins\Hub2\Config;
 
 /**
  * Class ArConfig
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Config
+ * @package SRAG\Plugins\Hub2\Config
  */
 class ArConfig extends \ActiveRecord {
 

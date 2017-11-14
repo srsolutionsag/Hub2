@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Object;
+<?php namespace SRAG\Plugins\Hub2\Object;
 
 /**
  * Interface IObjectRepository
  *
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 interface IObjectRepository {
 

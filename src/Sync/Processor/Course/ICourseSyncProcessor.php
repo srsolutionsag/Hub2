@@ -1,11 +1,11 @@
-<?php namespace SRAG\Hub2\Sync\Processor\Course;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor\Course;
 
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Interface ICourseSyncProcessor
  *
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 interface ICourseSyncProcessor extends IObjectSyncProcessor {
 

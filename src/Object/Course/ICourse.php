@@ -1,11 +1,12 @@
-<?php namespace SRAG\Hub2\Object\Course;
+<?php namespace SRAG\Plugins\Hub2\Object\Course;
 
-use SRAG\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Metadata\IMetadataAware;
+use SRAG\Plugins\Hub2\Object\IObject;
 
 /**
  * Interface ICourse
  *
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 interface ICourse extends IObject {
 

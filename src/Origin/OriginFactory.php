@@ -1,10 +1,10 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
 /**
  * Class OriginFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class OriginFactory implements IOriginFactory {
 
@@ -68,7 +68,7 @@ class OriginFactory implements IOriginFactory {
 	 */
 	protected function getClass($type) {
 		$ucfirst = ucfirst($type);
-		$class = "SRAG\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
+		$class = "SRAG\\Plugins\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
 
 		return $class;
 	}

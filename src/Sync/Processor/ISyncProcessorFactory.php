@@ -1,40 +1,40 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor;
+namespace SRAG\Plugins\Hub2\Sync\Processor;
 
 /**
  * Interface ISyncProcessorFactory
  *
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 interface ISyncProcessorFactory {
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Processor\User\IUserSyncProcessor
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor
 	 */
 	public function user();
 
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Processor\Course\ICourseSyncProcessor
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseSyncProcessor
 	 */
 	public function course();
 
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Processor\Category\ICategorySyncProcessor
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor
 	 */
 	public function category();
 
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Processor\Session\ISessionSyncProcessor
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Session\ISessionSyncProcessor
 	 */
 	public function session();
 
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor
 	 */
 	public function courseMembership();
 

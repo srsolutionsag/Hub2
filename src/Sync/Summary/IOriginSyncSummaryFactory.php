@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Summary;
+namespace SRAG\Plugins\Hub2\Sync\Summary;
 
 /**
  * Interface IOriginSyncSummaryFactory
@@ -10,19 +10,19 @@ namespace SRAG\Hub2\Sync\Summary;
 interface IOriginSyncSummaryFactory {
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Summary\IOriginSyncSummary
+	 * @return \SRAG\Plugins\Hub2\Sync\Summary\IOriginSyncSummary
 	 */
 	public function common();
 
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Summary\IOriginSyncSummary
+	 * @return \SRAG\Plugins\Hub2\Sync\Summary\IOriginSyncSummary
 	 */
 	public function web();
 
 
 	/**
-	 * @return \SRAG\Hub2\Sync\Summary\IOriginSyncSummary
+	 * @return \SRAG\Plugins\Hub2\Sync\Summary\IOriginSyncSummary
 	 */
 	public function cron();
 }

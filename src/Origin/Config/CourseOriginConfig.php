@@ -1,10 +1,10 @@
-<?php namespace SRAG\Hub2\Origin\Config;
+<?php namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Class CourseOriginConfig
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin\Config
+ * @package SRAG\Plugins\Hub2\Origin\Config
  */
 class CourseOriginConfig extends OriginConfig implements ICourseOriginConfig {
 

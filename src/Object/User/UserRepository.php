@@ -1,12 +1,12 @@
-<?php namespace SRAG\Hub2\Object\User;
+<?php namespace SRAG\Plugins\Hub2\Object\User;
 
-use SRAG\Hub2\Object\ObjectRepository;
+use SRAG\Plugins\Hub2\Object\ObjectRepository;
 
 /**
  * Class UserRepository
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object\User
+ * @package SRAG\Plugins\Hub2\Object\User
  */
 class UserRepository extends ObjectRepository {
 

@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Origin\Config;
+<?php namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Interface IOriginConfig
  *
- * @package SRAG\Hub2\Origin\Config
+ * @package SRAG\Plugins\Hub2\Origin\Config
  */
 interface IOriginConfig {
 

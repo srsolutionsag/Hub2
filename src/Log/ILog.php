@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Log;
+<?php namespace SRAG\Plugins\Hub2\Log;
 
 /**
  * Interface ILog

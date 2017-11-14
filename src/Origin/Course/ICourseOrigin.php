@@ -1,10 +1,10 @@
 <?php
-namespace SRAG\Hub2\Origin\Course;
+namespace SRAG\Plugins\Hub2\Origin\Course;
 
 /**
  * Interface ICourseOrigin
  *
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 interface ICourseOrigin {
 

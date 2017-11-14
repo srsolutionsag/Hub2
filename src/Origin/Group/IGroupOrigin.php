@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Origin\Group;
+namespace SRAG\Plugins\Hub2\Origin\Group;
 
 /**
  * Interface IGroupOrigin

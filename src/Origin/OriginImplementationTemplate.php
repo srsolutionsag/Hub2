@@ -1,11 +1,11 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
-use SRAG\Hub2\Object\HookObject;
+use SRAG\Plugins\Hub2\Object\HookObject;
 
 /**
  * Class Template
  *
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class Template extends AbstractOriginImplementation {
 

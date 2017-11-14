@@ -1,19 +1,19 @@
-<?php namespace SRAG\Hub2\UI;
+<?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Config\IHubConfig;
-use SRAG\Hub2\Helper\DIC;
-use SRAG\Hub2\Origin\AROrigin;
-use SRAG\Hub2\Origin\Config\IOriginConfig;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginRepository;
-use SRAG\Hub2\Origin\Properties\DTOPropertyParser;
-use SRAG\Hub2\Origin\Properties\IOriginProperties;
+use SRAG\Plugins\Hub2\Config\IHubConfig;
+use SRAG\Plugins\Hub2\Helper\DIC;
+use SRAG\Plugins\Hub2\Origin\AROrigin;
+use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginRepository;
+use SRAG\Plugins\Hub2\Origin\Properties\DTOPropertyParser;
+use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class OriginConfigFormGUI
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\UI
+ * @package SRAG\Plugins\Hub2\UI
  */
 class OriginConfigFormGUI extends \ilPropertyFormGUI {
 
@@ -102,7 +102,7 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 	 */
 	protected function addPropertiesUpdate() {
 		$ucfirst = ucfirst($this->origin->getObjectType());
-		$parser = new DTOPropertyParser("SRAG\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}DTO");
+		$parser = new DTOPropertyParser("SRAG\\Plugins\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}DTO");
 		foreach ($parser->getProperties() as $property) {
 			$postVar = IOriginProperties::PREFIX_UPDATE_DTO . $property->name;
 			$title = sprintf($this->pl->txt('origin_form_field_update_dto'), ucfirst($property->name));

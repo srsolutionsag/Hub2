@@ -1,17 +1,17 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
 use ILIAS\Filesystem\Util\LegacyPathHelper;
-use SRAG\Hub2\Exception\BuildObjectsFailedException;
-use SRAG\Hub2\Exception\ConnectionFailedException;
-use SRAG\Hub2\Exception\ParseDataFailedException;
-use SRAG\Hub2\Object\Course\CourseDTO;
-use SRAG\Hub2\Object\HookObject;
-use SRAG\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
+use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
+use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
+use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use SRAG\Plugins\Hub2\Object\HookObject;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
 
 /**
  * Class demoCourse
  *
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class demoCourse extends AbstractOriginImplementation {
 

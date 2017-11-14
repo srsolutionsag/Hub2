@@ -1,22 +1,22 @@
-<?php namespace SRAG\Hub2\Sync\Processor\User;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor\User;
 
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\User\UserDTO;
-use SRAG\Hub2\Origin\Config\IUserOriginConfig;
-use SRAG\Hub2\Origin\Config\UserOriginConfig;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Origin\Properties\UserOriginProperties;
-use SRAG\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\User\UserDTO;
+use SRAG\Plugins\Hub2\Origin\Config\IUserOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Config\UserOriginConfig;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
+use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class UserProcessor
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcessor {
 

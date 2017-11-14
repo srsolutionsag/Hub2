@@ -1,10 +1,10 @@
-<?php namespace SRAG\Hub2\Notification;
+<?php namespace SRAG\Plugins\Hub2\Notification;
 
 /**
  * Class OriginNotifications
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Notification
+ * @package SRAG\Plugins\Hub2\Notification
  */
 class OriginNotifications {
 

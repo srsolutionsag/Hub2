@@ -1,6 +1,6 @@
-<?php namespace SRAG\Hub2\Object\CourseMembership;
+<?php namespace SRAG\Plugins\Hub2\Object\CourseMembership;
 
-use SRAG\Hub2\Object\ObjectRepository;
+use SRAG\Plugins\Hub2\Object\ObjectRepository;
 
 /**
  * Class CourseMembershipRepository

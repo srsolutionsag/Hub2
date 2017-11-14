@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Origin\Session;
+<?php namespace SRAG\Plugins\Hub2\Origin\Session;
 
 /**
  * Interface ISessionOrigin

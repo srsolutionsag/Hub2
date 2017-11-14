@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Origin\Category;
+<?php namespace SRAG\Plugins\Hub2\Origin\Category;
 
 /**
  * Interface ICategoryOrigin
  *
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 interface ICategoryOrigin {
 

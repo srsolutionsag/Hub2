@@ -2,12 +2,12 @@
 
 require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
 
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\User\UserDTO;
-use SRAG\Hub2\Origin\Config\IUserOriginConfig;
-use SRAG\Hub2\Origin\Config\UserOriginConfig;
-use SRAG\Hub2\Origin\Properties\UserOriginProperties;
-use SRAG\Hub2\Sync\Processor\User\UserSyncProcessor;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\User\UserDTO;
+use SRAG\Plugins\Hub2\Origin\Config\IUserOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Config\UserOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
+use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
  * Class UserSyncProcessorTest
@@ -25,11 +25,11 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	const ILIAS_ID = 123;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Sync\Processor\IUserSyncProcessor
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\IUserSyncProcessor
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Object\User\IUser
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\User\IUser
 	 */
 	protected $iobject;
 	/**
@@ -47,7 +47,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Hub2\Sync\Processor\Category\IUserActivities');
+		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\IUserActivities');
 		$this->initOrigin(new UserOriginProperties(), new UserOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -83,7 +83,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Hub2\Object\User\IUser');
+		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\User\IUser');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();

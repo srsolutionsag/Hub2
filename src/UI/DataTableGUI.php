@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Hub2\UI;
+namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Object\Course\ARCourse;
-use SRAG\Hub2\Object\CourseMembership\ARCourseMembership;
-use SRAG\Hub2\Object\Group\ARGroup;
-use SRAG\Hub2\Object\GroupMembership\ARGroupMembership;
-use SRAG\Hub2\Object\IObjectRepository;
-use SRAG\Hub2\Object\Session\ARSession;
-use SRAG\Hub2\Object\User\ARUser;
-use SRAG\Hub2\Origin\IOriginRepository;
-use SRAG\Hub2\Origin\OriginFactory;
+use SRAG\Plugins\Hub2\Object\Course\ARCourse;
+use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use SRAG\Plugins\Hub2\Object\Group\ARGroup;
+use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use SRAG\Plugins\Hub2\Object\IObjectRepository;
+use SRAG\Plugins\Hub2\Object\Session\ARSession;
+use SRAG\Plugins\Hub2\Object\User\ARUser;
+use SRAG\Plugins\Hub2\Origin\IOriginRepository;
+use SRAG\Plugins\Hub2\Origin\OriginFactory;
 
 /**
  * class OriginsTableGUI
@@ -22,7 +22,7 @@ class DataTableGUI extends \ilTable2GUI {
 	const F_ORIGIN_ID = 'origin_id';
 	const F_EXT_ID = 'ext_id';
 	/**
-	 * @var \SRAG\Hub2\Origin\OriginFactory
+	 * @var \SRAG\Plugins\Hub2\Origin\OriginFactory
 	 */
 	protected $originFactory;
 	/**

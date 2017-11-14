@@ -1,10 +1,10 @@
 <?php
 
 // Autoload Hub2
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Origin\Config\IOriginConfig;
-use SRAG\Hub2\Origin\Properties\IOriginProperties;
-use SRAG\Hub2\Sync\ObjectStatusTransition;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use SRAG\Plugins\Hub2\Sync\ObjectStatusTransition;
 
 require_once('AbstractHub2Tests.php');
 require_once(dirname(__DIR__) . '/vendor/autoload.php');
@@ -23,23 +23,23 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 	/**
-	 * @var SRAG\Hub2\Origin\IOrigin
+	 * @var SRAG\Plugins\Hub2\Origin\IOrigin
 	 */
 	protected $origin;
 	/**
-	 * @var \SRAG\Hub2\Notification\OriginNotifications
+	 * @var \SRAG\Plugins\Hub2\Notification\OriginNotifications
 	 */
 	protected $originNotifications;
 	/**
-	 * @var \SRAG\Hub2\Sync\ObjectStatusTransition
+	 * @var \SRAG\Plugins\Hub2\Sync\ObjectStatusTransition
 	 */
 	protected $statusTransition;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Log\ILog
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Log\ILog
 	 */
 	protected $originLog;
 	/**
-	 * @var \SRAG\Hub2\Object\IDataTransferObject
+	 * @var \SRAG\Plugins\Hub2\Object\IDataTransferObject
 	 */
 	protected $dto;
 	/**
@@ -60,13 +60,13 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	 */
 	protected $originProperties;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Origin\IOriginImplementation
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Origin\IOriginImplementation
 	 */
 	protected $originImplementation;
 
 
 	protected function initLog() {
-		$this->originLog = \Mockery::mock("SRAG\Hub2\Log\OriginLog");
+		$this->originLog = \Mockery::mock("SRAG\Plugins\Hub2\Log\OriginLog");
 	}
 
 
@@ -76,7 +76,7 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
 
 	protected function initStatusTransitions() {
-		$this->statusTransition = new ObjectStatusTransition(\Mockery::mock("SRAG\Hub2\Origin\Config\IOriginConfig"));
+		$this->statusTransition = new ObjectStatusTransition(\Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig"));
 	}
 
 
@@ -89,17 +89,17 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
 
 	/**
-	 * @param \SRAG\Hub2\Origin\Properties\IOriginProperties $properties
-	 * @param \SRAG\Hub2\Origin\Config\IOriginConfig         $config
+	 * @param \SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties $properties
+	 * @param \SRAG\Plugins\Hub2\Origin\Config\IOriginConfig         $config
 	 */
 	protected function initOrigin(IOriginProperties $properties, IOriginConfig $config) {
 		$this->originProperties = $properties;
 		$this->originConfig = $config;
-		$this->origin = \Mockery::mock("SRAG\Hub2\Origin\IOrigin");
+		$this->origin = \Mockery::mock("SRAG\Plugins\Hub2\Origin\IOrigin");
 		$this->origin->shouldReceive('properties')->andReturn($properties);
 		$this->origin->shouldReceive('getId');
 		$this->origin->shouldReceive('config')->andReturn($config);
-		$this->originImplementation = \Mockery::mock('\SRAG\Hub2\Origin\IOriginImplementation');
+		$this->originImplementation = \Mockery::mock('\SRAG\Plugins\Hub2\Origin\IOriginImplementation');
 	}
 
 

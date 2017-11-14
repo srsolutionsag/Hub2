@@ -1,12 +1,12 @@
-<?php namespace SRAG\Hub2\Object\User;
+<?php namespace SRAG\Plugins\Hub2\Object\User;
 
-use SRAG\Hub2\Object\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DataTransferObject;
 
 /**
  * Class UserDTO
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object\User
+ * @package SRAG\Plugins\Hub2\Object\User
  */
 class UserDTO extends DataTransferObject {
 

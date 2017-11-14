@@ -1,6 +1,6 @@
-<?php namespace SRAG\Hub2\Sync\Processor\CourseMembership;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor\CourseMembership;
 
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Interface ICourseMembershipSyncProcessor

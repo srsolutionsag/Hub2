@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Hub2\Origin\User;
+namespace SRAG\Plugins\Hub2\Origin\User;
 
-use SRAG\Hub2\Origin\AROrigin;
-use SRAG\Hub2\Origin\Config\UserOriginConfig;
-use SRAG\Hub2\Origin\Properties\UserOriginProperties;
+use SRAG\Plugins\Hub2\Origin\AROrigin;
+use SRAG\Plugins\Hub2\Origin\Config\UserOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
 
 /**
  * Class ARUserOrigin
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class ARUserOrigin extends AROrigin implements IUserOrigin {
 

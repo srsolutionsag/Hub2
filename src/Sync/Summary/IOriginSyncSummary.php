@@ -1,8 +1,8 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Summary;
+namespace SRAG\Plugins\Hub2\Sync\Summary;
 
-use SRAG\Hub2\Sync\IOriginSync;
+use SRAG\Plugins\Hub2\Sync\IOriginSync;
 
 /**
  * Interface IOriginSyncSummary
@@ -18,13 +18,13 @@ interface IOriginSyncSummary {
 
 
 	/**
-	 * @param \SRAG\Hub2\Sync\IOriginSync $originSync add another already ran IOriginSync
+	 * @param \SRAG\Plugins\Hub2\Sync\IOriginSync $originSync add another already ran IOriginSync
 	 */
 	public function addOriginSync(IOriginSync $originSync);
 
 
 	/**
-	 * @param \SRAG\Hub2\Sync\IOriginSync $originSync
+	 * @param \SRAG\Plugins\Hub2\Sync\IOriginSync $originSync
 	 *
 	 * @return string
 	 */

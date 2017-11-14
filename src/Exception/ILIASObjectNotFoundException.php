@@ -1,12 +1,12 @@
-<?php namespace SRAG\Hub2\Exception;
+<?php namespace SRAG\Plugins\Hub2\Exception;
 
-use SRAG\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\IObject;
 
 /**
  * Class ILIASObjectNotFoundException
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Exception
+ * @package SRAG\Plugins\Hub2\Exception
  */
 class ILIASObjectNotFoundException extends HubException {
 

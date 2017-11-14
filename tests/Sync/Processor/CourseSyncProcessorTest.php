@@ -2,11 +2,11 @@
 
 require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
 
-use SRAG\Hub2\Object\Course\CourseDTO;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Origin\Config\CourseOriginConfig;
-use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
 
 /**
  * Class CourseSyncProcessorTest
@@ -27,11 +27,11 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	const COURSE_REF_ID = 57;
 
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Sync\Processor\Course\ICourseActivities
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Object\Course\ICourse
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Course\ICourse
 	 */
 	protected $iobject;
 	/**
@@ -65,7 +65,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Hub2\Object\Course\ICourse');
+		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Course\ICourse');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -83,7 +83,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Hub2\Sync\Processor\Course\ICourseActivities');
+		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
 
 		$this->initOrigin(new CourseOriginProperties(), new CourseOriginConfig([]));
 		$this->setupGeneralDependencies();

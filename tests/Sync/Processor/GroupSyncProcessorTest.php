@@ -2,11 +2,11 @@
 
 require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
 
-use SRAG\Hub2\Object\Group\GroupDTO;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Origin\Config\GroupOriginConfig;
-use SRAG\Hub2\Origin\Properties\GroupOriginProperties;
-use SRAG\Hub2\Sync\Processor\Group\GroupSyncProcessor;
+use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Origin\Config\GroupOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
+use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
 
 /**
  * Class GroupSyncProcessorTest
@@ -26,11 +26,11 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	const ILIAS_USER_ID = 123;
 	const GROUP_REF_ID = 57;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Sync\Processor\Group\IGroupActivities
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Object\Group\IGroup
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Group\IGroup
 	 */
 	protected $iobject;
 	/**
@@ -77,7 +77,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Hub2\Object\Group\IGroup');
+		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Group\IGroup');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -95,7 +95,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Hub2\Sync\Processor\Group\IGroupActivities');
+		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities');
 
 		$this->initOrigin(new GroupOriginProperties(), new GroupOriginConfig([]));
 		$this->setupGeneralDependencies();

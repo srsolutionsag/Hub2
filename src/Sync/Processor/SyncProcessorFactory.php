@@ -1,24 +1,24 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor;
 
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Hub2\Sync\Processor\Category\CategorySyncProcessor;
-use SRAG\Hub2\Sync\Processor\Course\CourseActivities;
-use SRAG\Hub2\Sync\Processor\Course\CourseSyncProcessor;
-use SRAG\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
-use SRAG\Hub2\Sync\Processor\Group\GroupActivities;
-use SRAG\Hub2\Sync\Processor\Group\GroupSyncProcessor;
-use SRAG\Hub2\Sync\Processor\Session\SessionSyncProcessor;
-use SRAG\Hub2\Sync\Processor\User\UserSyncProcessor;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseActivities;
+use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupActivities;
+use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
  * Class SyncProcessorFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 class SyncProcessorFactory implements ISyncProcessorFactory {
 

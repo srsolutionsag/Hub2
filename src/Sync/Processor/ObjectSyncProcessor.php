@@ -1,21 +1,21 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor;
 
-use SRAG\Hub2\Exception\HubException;
-use SRAG\Hub2\Exception\ILIASObjectNotFoundException;
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\HookObject;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Exception\HubException;
+use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\HookObject;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 
 /**
  * Class ObjectProcessor
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
@@ -115,7 +115,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 
 	/**
-	 * @param \ilObject|\SRAG\Hub2\Sync\Processor\FakeIliasObject $object
+	 * @param \ilObject|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject $object
 	 *
 	 * @return int
 	 */

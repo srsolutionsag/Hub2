@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Sync\Processor\Group;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor\Group;
 
 /**
  * Interface IGroupActivities

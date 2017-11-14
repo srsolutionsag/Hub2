@@ -1,13 +1,13 @@
-<?php namespace SRAG\Hub2\UI;
+<?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Config\IHubConfig;
-use SRAG\Hub2\Helper\DIC;
+use SRAG\Plugins\Hub2\Config\IHubConfig;
+use SRAG\Plugins\Hub2\Helper\DIC;
 
 /**
  * Class ConfigFOrmGUI
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\UI
+ * @package SRAG\Plugins\Hub2\UI
  */
 class ConfigFormGUI extends \ilPropertyFormGUI {
 

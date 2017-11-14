@@ -1,14 +1,14 @@
-<?php namespace SRAG\Hub2\Object\Course;
+<?php namespace SRAG\Plugins\Hub2\Object\Course;
 
-use SRAG\Hub2\Metadata\Course\CourseMetadataCollection;
-use SRAG\Hub2\Metadata\IMetadata;
-use SRAG\Hub2\Object\MetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Metadata\Course\CourseMetadataCollection;
+use SRAG\Plugins\Hub2\Metadata\IMetadata;
+use SRAG\Plugins\Hub2\Object\MetadataAwareDataTransferObject;
 
 /**
  * Class CourseDTO
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 class CourseDTO extends MetadataAwareDataTransferObject {
 

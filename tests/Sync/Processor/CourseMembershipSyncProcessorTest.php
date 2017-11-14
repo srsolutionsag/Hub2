@@ -2,15 +2,15 @@
 
 require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
 
-use SRAG\Hub2\Object\Course\CourseDTO;
-use SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Origin\Config\CourseMembershipOriginConfig;
-use SRAG\Hub2\Origin\Config\CourseOriginConfig;
-use SRAG\Hub2\Origin\Properties\CourseMembershipOriginProperties;
-use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Hub2\Sync\Processor\Course\CourseSyncProcessor;
-use SRAG\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Origin\Config\CourseMembershipOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
 
 /**
  * Class CourseMembershipSyncProcessorTest
@@ -39,15 +39,15 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected $ilObjCourse;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Object\CourseMembership\ICourseMembership
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership
 	 */
 	protected $iobject;
 	/**
-	 * @var \SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO
+	 * @var \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Sync\Processor\FakeIliasObject
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
@@ -62,7 +62,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Hub2\Object\CourseMembership\ICourseMembership');
+		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -71,7 +71,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = \Mockery::mock(\SRAG\Hub2\Sync\Processor\FakeIliasObject::class);
+		$this->ilObject = \Mockery::mock(\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::COURSE_REF_ID . "|||"
 		                                                   . self::USER_ID);
 

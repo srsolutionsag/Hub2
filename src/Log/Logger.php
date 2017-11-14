@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Log;
+namespace SRAG\Plugins\Hub2\Log;
 
 /**
  * Class Logger

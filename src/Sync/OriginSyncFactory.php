@@ -1,23 +1,23 @@
 <?php
-namespace SRAG\Hub2\Sync;
+namespace SRAG\Plugins\Hub2\Sync;
 
-use SRAG\Hub2\Config\HubConfig;
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Log\OriginLog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\IObjectRepository;
-use SRAG\Hub2\Object\ObjectFactory;
-use SRAG\Hub2\Origin\Config\OriginImplementationFactory;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Sync\Processor\IObjectSyncProcessor;
-use SRAG\Hub2\Sync\Processor\SyncProcessorFactory;
+use SRAG\Plugins\Hub2\Config\HubConfig;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Log\OriginLog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\IObjectRepository;
+use SRAG\Plugins\Hub2\Object\ObjectFactory;
+use SRAG\Plugins\Hub2\Origin\Config\OriginImplementationFactory;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\SyncProcessorFactory;
 
 /**
  * Class OriginSyncFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Sync
+ * @package SRAG\Plugins\Hub2\Sync
  */
 class OriginSyncFactory {
 
@@ -55,7 +55,7 @@ class OriginSyncFactory {
 	 */
 	protected function getObjectRepository() {
 		$ucfirst = ucfirst($this->origin->getObjectType());
-		$class = "SRAG\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}Repository";
+		$class = "SRAG\\Plugins\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}Repository";
 
 		return new $class($this->origin);
 	}

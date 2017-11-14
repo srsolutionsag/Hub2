@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Jobs\Result;
+namespace SRAG\Plugins\Hub2\Jobs\Result;
 
 /**
  * Class AbstractResult

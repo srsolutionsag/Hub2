@@ -1,10 +1,10 @@
 <?php
 
-namespace SRAG\Hub2\Origin\Session;
+namespace SRAG\Plugins\Hub2\Origin\Session;
 
-use SRAG\Hub2\Origin\AROrigin;
-use SRAG\Hub2\Origin\Config\SessionOriginConfig;
-use SRAG\Hub2\Origin\Properties\SessionOriginProperties;
+use SRAG\Plugins\Hub2\Origin\AROrigin;
+use SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
 
 /**
  * Class ARSessionOrigin

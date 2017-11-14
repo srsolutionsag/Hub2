@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Origin\Config;
+<?php namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Interface ICourseOriginConfig
  *
- * @package SRAG\Hub2\Origin\Config
+ * @package SRAG\Plugins\Hub2\Origin\Config
  */
 interface ICourseOriginConfig extends IOriginConfig {
 

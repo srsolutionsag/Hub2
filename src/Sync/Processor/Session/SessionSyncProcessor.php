@@ -1,18 +1,18 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Processor\Session;
+namespace SRAG\Plugins\Hub2\Sync\Processor\Session;
 
-use SRAG\Hub2\Exception\HubException;
-use SRAG\Hub2\Log\ILog;
-use SRAG\Hub2\Notification\OriginNotifications;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\ObjectFactory;
-use SRAG\Hub2\Object\Session\SessionDTO;
-use SRAG\Hub2\Origin\IOrigin;
-use SRAG\Hub2\Origin\IOriginImplementation;
-use SRAG\Hub2\Origin\OriginRepository;
-use SRAG\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Exception\HubException;
+use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\ObjectFactory;
+use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Origin\OriginRepository;
+use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class SessionSyncProcessor
@@ -22,11 +22,11 @@ use SRAG\Hub2\Sync\Processor\ObjectSyncProcessor;
 class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncProcessor {
 
 	/**
-	 * @var \SRAG\Hub2\Origin\Properties\SessionOriginProperties
+	 * @var \SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties
 	 */
 	private $props;
 	/**
-	 * @var \SRAG\Hub2\Origin\Config\SessionOriginConfig
+	 * @var \SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig
 	 */
 	private $config;
 	/**
@@ -71,7 +71,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 
 	protected function handleCreate(IDataTransferObject $object) {
-		/** @var \SRAG\Hub2\Object\Session\SessionDTO $object */
+		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object */
 		$ilObjSession = new \ilObjSession();
 		$ilObjSession->setImportId($this->getImportId($object));
 
@@ -103,7 +103,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	 * @inheritdoc
 	 */
 	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
-		/** @var \SRAG\Hub2\Object\Session\SessionDTO $object */
+		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object */
 		$ilObjSession = $this->findILIASObject($ilias_id);
 		if ($ilObjSession === null) {
 			return null;
@@ -160,10 +160,10 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 
 	/**
-	 * @param \SRAG\Hub2\Object\Session\SessionDTO $session
+	 * @param \SRAG\Plugins\Hub2\Object\Session\SessionDTO $session
 	 *
 	 * @return int
-	 * @throws \SRAG\Hub2\Exception\HubException
+	 * @throws \SRAG\Plugins\Hub2\Exception\HubException
 	 */
 	protected function buildParentRefId(SessionDTO $session) {
 		global $DIC;
@@ -207,7 +207,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 
 	/**
-	 * @param \SRAG\Hub2\Object\Session\SessionDTO $object
+	 * @param \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object
 	 * @param \ilObjSession                        $ilObjSession
 	 * @param bool                                 $force
 	 *
@@ -241,7 +241,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 
 	/**
-	 * @param \SRAG\Hub2\Object\Session\SessionDTO $object
+	 * @param \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object
 	 * @param \ilObjSession                        $ilObjSession
 	 */
 	protected function handleMembers(SessionDTO $object, \ilObjSession $ilObjSession) {

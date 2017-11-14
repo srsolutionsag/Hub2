@@ -1,18 +1,18 @@
 <?php
 
-namespace SRAG\Hub2\Object;
+namespace SRAG\Plugins\Hub2\Object;
 
 /**
  * Interface IObjectFactory
  *
- * @package SRAG\Hub2\Object
+ * @package SRAG\Plugins\Hub2\Object
  */
 interface IObjectFactory {
 
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return \ActiveRecord|\SRAG\Hub2\Object\Category\ARCategory|\SRAG\Hub2\Object\Category\ICategory|\SRAG\Hub2\Object\Course\ARCourse|\SRAG\Hub2\Object\Course\ICourse|\SRAG\Hub2\Object\CourseMembership\ARCourseMembership|\SRAG\Hub2\Object\CourseMembership\ICourseMembership|\SRAG\Hub2\Object\Group\ARGroup|\SRAG\Hub2\Object\Group\IGroup|\SRAG\Hub2\Object\GroupMembership\ARGroupMembership|\SRAG\Hub2\Object\GroupMembership\IGroupMembership|\SRAG\Hub2\Object\Session\ARSession|\SRAG\Hub2\Object\Session\ISession|\SRAG\Hub2\Object\User\ARUser|\SRAG\Hub2\Object\User\IUser
+	 * @return \ActiveRecord|\SRAG\Plugins\Hub2\Object\Category\ARCategory|\SRAG\Plugins\Hub2\Object\Category\ICategory|\SRAG\Plugins\Hub2\Object\Course\ARCourse|\SRAG\Plugins\Hub2\Object\Course\ICourse|\SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership|\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership|\SRAG\Plugins\Hub2\Object\Group\ARGroup|\SRAG\Plugins\Hub2\Object\Group\IGroup|\SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership|\SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership|\SRAG\Plugins\Hub2\Object\Session\ARSession|\SRAG\Plugins\Hub2\Object\Session\ISession|\SRAG\Plugins\Hub2\Object\User\ARUser|\SRAG\Plugins\Hub2\Object\User\IUser
 	 */
 	public function undefined($ext_id);
 
@@ -20,7 +20,7 @@ interface IObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\User\IUser
+	 * @return \SRAG\Plugins\Hub2\Object\User\IUser
 	 */
 	public function user($ext_id);
 
@@ -28,7 +28,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\Course\ICourse
+	 * @return \SRAG\Plugins\Hub2\Object\Course\ICourse
 	 */
 	public function course($ext_id);
 
@@ -36,7 +36,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\Category\ICategory
+	 * @return \SRAG\Plugins\Hub2\Object\Category\ICategory
 	 */
 	public function category($ext_id);
 
@@ -44,7 +44,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\Group\IGroup
+	 * @return \SRAG\Plugins\Hub2\Object\Group\IGroup
 	 */
 	public function group($ext_id);
 
@@ -52,7 +52,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\Session\ISession
+	 * @return \SRAG\Plugins\Hub2\Object\Session\ISession
 	 */
 	public function session($ext_id);
 
@@ -60,7 +60,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\CourseMembership\ICourseMembership
+	 * @return \SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership
 	 */
 	public function courseMembership($ext_id);
 
@@ -68,7 +68,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\GroupMembership\IGroupMembership
+	 * @return \SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership
 	 */
 	public function groupMembership($ext_id);
 
@@ -76,7 +76,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Hub2\Object\SessionMembership\ISessionMembership
+	 * @return \SRAG\Plugins\Hub2\Object\SessionMembership\ISessionMembership
 	 */
 	public function sessionMembership($ext_id);
 }

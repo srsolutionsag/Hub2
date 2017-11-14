@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Sync\Summary;
+namespace SRAG\Plugins\Hub2\Sync\Summary;
 
 /**
  * Class OriginSyncSummaryFactory

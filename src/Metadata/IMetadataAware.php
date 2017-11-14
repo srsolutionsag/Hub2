@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Metadata;
+namespace SRAG\Plugins\Hub2\Metadata;
 
 /**
  * Interface IMetadataAware
@@ -10,19 +10,19 @@ namespace SRAG\Hub2\Metadata;
 interface IMetadataAware {
 
 	/**
-	 * @return \SRAG\Hub2\Metadata\IMetadataSetCollection
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataSetCollection
 	 */
 	public function metadataCollection();
 
 
 	/**
-	 * @param \SRAG\Hub2\Metadata\IMetadata $metadata
+	 * @param \SRAG\Plugins\Hub2\Metadata\IMetadata $metadata
 	 */
 	public function addMetadataForProcessing(IMetadata $metadata);
 
 
 	/**
-	 * @return \SRAG\Hub2\Metadata\IMetadata[]
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata[]
 	 */
 	public function getMetadataForProcessing();
 }

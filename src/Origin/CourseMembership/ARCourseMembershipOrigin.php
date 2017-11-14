@@ -1,10 +1,10 @@
 <?php
 
-namespace SRAG\Hub2\Origin\CourseMembership;
+namespace SRAG\Plugins\Hub2\Origin\CourseMembership;
 
-use SRAG\Hub2\Origin\AROrigin;
-use SRAG\Hub2\Origin\Config\CourseMembershipOriginConfig;
-use SRAG\Hub2\Origin\Properties\CourseMembershipOriginProperties;
+use SRAG\Plugins\Hub2\Origin\AROrigin;
+use SRAG\Plugins\Hub2\Origin\Config\CourseMembershipOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 
 /**
  * Class ARCourseMembershipOrigin

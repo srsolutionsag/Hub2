@@ -1,8 +1,8 @@
-<?php namespace SRAG\Hub2\Sync;
+<?php namespace SRAG\Plugins\Hub2\Sync;
 
-use SRAG\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
-use SRAG\Hub2\Exception\AbortSyncException;
-use SRAG\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
+use SRAG\Plugins\Hub2\Exception\AbortSyncException;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class Sync

@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\UI;
+namespace SRAG\Plugins\Hub2\UI;
 
 /**
  * Class OriginFormFactory
@@ -17,6 +17,6 @@ class OriginFormFactory {
 	public function getFormClassNameByOrigin($origin) {
 		$type = $origin->getObjectType();
 
-		return "SRAG\\Hub2\\UI\\" . ucfirst($type) . 'OriginConfigFormGUI';
+		return "SRAG\\Plugins\\Hub2\\UI\\" . ucfirst($type) . 'OriginConfigFormGUI';
 	}
 }

@@ -1,18 +1,18 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
 require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/origins/courseMembership/demoCourseMember.php');
 
-use SRAG\Hub2\Exception\BuildObjectsFailedException;
-use SRAG\Hub2\Exception\ConnectionFailedException;
-use SRAG\Hub2\Exception\ParseDataFailedException;
-use SRAG\Hub2\Object\HookObject;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\Session\SessionDTO;
+use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
+use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
+use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
+use SRAG\Plugins\Hub2\Object\HookObject;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 
 /**
  * Class demoSession
  *
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class demoSession extends AbstractOriginImplementation {
 

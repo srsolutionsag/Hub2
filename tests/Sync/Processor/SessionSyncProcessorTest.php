@@ -2,15 +2,15 @@
 
 require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
 
-use SRAG\Hub2\Object\Category\CategoryDTO;
-use SRAG\Hub2\Object\IObject;
-use SRAG\Hub2\Object\Session\SessionDTO;
-use SRAG\Hub2\Origin\Config\CategoryOriginConfig;
-use SRAG\Hub2\Origin\Config\SessionOriginConfig;
-use SRAG\Hub2\Origin\Properties\CategoryOriginProperties;
-use SRAG\Hub2\Origin\Properties\SessionOriginProperties;
-use SRAG\Hub2\Sync\Processor\Category\CategorySyncProcessor;
-use SRAG\Hub2\Sync\Processor\Session\SessionSyncProcessor;
+use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
+use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
+use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
+use SRAG\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 
 /**
  * Class SessionSyncProcessorTest
@@ -38,11 +38,11 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected $appointments;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Hub2\Object\Session\ISession
+	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Session\ISession
 	 */
 	protected $iobject;
 	/**
-	 * @var \SRAG\Hub2\Object\Session\SessionDTO
+	 * @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO
 	 */
 	protected $dto;
 	/**
@@ -107,7 +107,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Hub2\Object\Session\ISession');
+		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Session\ISession');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();

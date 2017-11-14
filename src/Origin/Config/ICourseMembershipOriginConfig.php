@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Origin\Config;
+namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Interface ICourseMembershipOriginConfig

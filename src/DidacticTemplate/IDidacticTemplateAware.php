@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Interface IDidacticTemplate
+ * Interface IDidacticTemplateAware
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IDidacticTemplate {
+interface IDidacticTemplateAware {
 
 	/**
 	 * @param $id

@@ -1,14 +1,14 @@
-<?php namespace SRAG\Hub2\UI;
+<?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Origin\ARCourseOrigin;
-use SRAG\Hub2\Origin\Config\ICourseOriginConfig;
-use SRAG\Hub2\Origin\Properties\CourseOriginProperties;
+use SRAG\Plugins\Hub2\Origin\ARCourseOrigin;
+use SRAG\Plugins\Hub2\Origin\Config\ICourseOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 
 /**
  * Class CourseOriginConfigFormGUI
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\UI
+ * @package SRAG\Plugins\Hub2\UI
  */
 class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 

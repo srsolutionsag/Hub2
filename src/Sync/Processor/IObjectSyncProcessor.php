@@ -1,12 +1,12 @@
-<?php namespace SRAG\Hub2\Sync\Processor;
+<?php namespace SRAG\Plugins\Hub2\Sync\Processor;
 
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\IObject;
 
 /**
  * Interface ObjectProcessor
  *
- * @package SRAG\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor
  */
 interface IObjectSyncProcessor {
 

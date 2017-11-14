@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Hub2\Origin\Properties;
+namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class CourseMembershipOriginProperties

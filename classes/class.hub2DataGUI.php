@@ -1,8 +1,8 @@
 <?php
 
-use SRAG\Hub2\Object\ObjectFactory;
-use SRAG\Hub2\Origin\OriginFactory;
-use SRAG\Hub2\UI\DataTableGUI;
+use SRAG\Plugins\Hub2\Object\ObjectFactory;
+use SRAG\Plugins\Hub2\Origin\OriginFactory;
+use SRAG\Plugins\Hub2\UI\DataTableGUI;
 
 require_once(__DIR__ . '/class.ilHub2Plugin.php');
 
@@ -13,7 +13,7 @@ require_once(__DIR__ . '/class.ilHub2Plugin.php');
  */
 class hub2DataGUI {
 
-	use \SRAG\Hub2\Helper\DIC;
+	use \SRAG\Plugins\Hub2\Helper\DIC;
 	const CMD_INDEX = 'index';
 
 

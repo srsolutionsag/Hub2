@@ -1,18 +1,18 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
-use SRAG\Hub2\Exception\BuildObjectsFailedException;
-use SRAG\Hub2\Exception\ConnectionFailedException;
-use SRAG\Hub2\Exception\ParseDataFailedException;
-use SRAG\Hub2\Object\Course\CourseDTO;
-use SRAG\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Hub2\Object\HookObject;
-use SRAG\Hub2\Object\IDataTransferObject;
-use SRAG\Hub2\Origin\Config\OriginImplementationFactory;
+use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
+use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
+use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
+use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Plugins\Hub2\Object\HookObject;
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Origin\Config\OriginImplementationFactory;
 
 /**
  * Class demoCourseMember
  *
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 class demoCourseMember extends AbstractOriginImplementation {
 
@@ -44,7 +44,7 @@ class demoCourseMember extends AbstractOriginImplementation {
 		//		global $DIC;
 		//		$f = new OriginFactory($DIC->database());
 		//		/**
-		//		 * @var $demoCourse \SRAG\Hub2\Origin\demoCourse
+		//		 * @var $demoCourse \SRAG\Plugins\Hub2\Origin\demoCourse
 		//		 */
 		//		$demoCourse = $f->getById(3);
 		//		$demoCourse->parseData();
@@ -52,8 +52,8 @@ class demoCourseMember extends AbstractOriginImplementation {
 		//
 		//		}
 		//		/**
-		//		 * @var $demoUser \SRAG\Hub2\Origin\demoUser
-		//		 * @var $UserDTO  \SRAG\Hub2\Object\User\UserDTO
+		//		 * @var $demoUser \SRAG\Plugins\Hub2\Origin\demoUser
+		//		 * @var $UserDTO  \SRAG\Plugins\Hub2\Object\User\UserDTO
 		//		 */
 		//		$demoUser = $f->getById(4);
 		//

@@ -3,9 +3,9 @@
 require_once(__DIR__ . '/class.ilHub2Plugin.php');
 require_once(__DIR__ . '/class.hub2ConfigOriginsGUI.php');
 
-use SRAG\Hub2\Config\ArConfig;
-use SRAG\Hub2\Config\HubConfig;
-use SRAG\Hub2\UI\ConfigFormGUI;
+use SRAG\Plugins\Hub2\Config\ArConfig;
+use SRAG\Plugins\Hub2\Config\HubConfig;
+use SRAG\Plugins\Hub2\UI\ConfigFormGUI;
 
 /**
  * Class ilHub2ConfigGUI

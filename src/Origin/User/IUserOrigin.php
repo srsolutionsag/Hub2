@@ -1,9 +1,9 @@
-<?php namespace SRAG\Hub2\Origin\User;
+<?php namespace SRAG\Plugins\Hub2\Origin\User;
 
 /**
  * Interface IUserOrigin
  *
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 interface IUserOrigin {
 

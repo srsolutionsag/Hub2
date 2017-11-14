@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Exception;
+<?php namespace SRAG\Plugins\Hub2\Exception;
 
 //require_once('./Services/Exceptions/classes/class.ilException.php');
 require_once(dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))))))

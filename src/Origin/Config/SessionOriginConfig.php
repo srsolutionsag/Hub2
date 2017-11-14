@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Origin\Config;
+<?php namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Class SessionOriginConfig

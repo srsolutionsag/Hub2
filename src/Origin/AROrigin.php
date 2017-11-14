@@ -1,13 +1,13 @@
-<?php namespace SRAG\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
-use SRAG\Hub2\Origin\Config\IOriginConfig;
-use SRAG\Hub2\Origin\Properties\IOriginProperties;
+use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
  */
 abstract class AROrigin extends \ActiveRecord implements IOrigin {
 

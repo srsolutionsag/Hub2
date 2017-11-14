@@ -1,13 +1,13 @@
-<?php namespace SRAG\Hub2\UI;
+<?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Hub2\Object\IObjectRepository;
-use SRAG\Hub2\Origin\IOriginRepository;
+use SRAG\Plugins\Hub2\Object\IObjectRepository;
+use SRAG\Plugins\Hub2\Origin\IOriginRepository;
 
 /**
  * class OriginsTableGUI
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Hub2\UI
+ * @package SRAG\Plugins\Hub2\UI
  */
 class OriginsTableGUI extends \ilTable2GUI {
 
@@ -61,7 +61,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 	protected function initTableData() {
 		$data = [];
 		foreach ($this->originRepository->all() as $origin) {
-			$class = "SRAG\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\" . ucfirst($origin->getObjectType()) . "Repository";
+			$class = "SRAG\\Plugins\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\" . ucfirst($origin->getObjectType()) . "Repository";
 			/** @var IObjectRepository $objectRepository */
 			$objectRepository = new $class($origin);
 			$row = [];

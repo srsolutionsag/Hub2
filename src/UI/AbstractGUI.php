@@ -1,10 +1,10 @@
 <?php
-namespace SRAG\Hub2\UI;
+namespace SRAG\Plugins\Hub2\UI;
 
 /**
  * Class AbstractGUI
  *
- * @package SRAG\Hub2\UI
+ * @package SRAG\Plugins\Hub2\UI
  */
 abstract class AbstractGUI {
 

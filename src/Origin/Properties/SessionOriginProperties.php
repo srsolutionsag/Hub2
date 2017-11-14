@@ -1,4 +1,4 @@
-<?php namespace SRAG\Hub2\Origin\Properties;
+<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class SessionOriginProperties

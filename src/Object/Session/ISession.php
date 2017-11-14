@@ -1,7 +1,7 @@
 <?php
-namespace SRAG\Hub2\Object\Session;
+namespace SRAG\Plugins\Hub2\Object\Session;
 
-use SRAG\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\IObject;
 
 /**
  * Interface ISession
