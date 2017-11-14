@@ -2,8 +2,6 @@
 
 namespace SRAG\Plugins\Hub2\Metadata;
 
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
-
 /**
  * Interface IMetadata
  *
@@ -14,17 +12,17 @@ interface IMetadata {
 	/**
 	 * @param $value
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\IDataTransferObject
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataAwareDataTransferObject
 	 */
-	public function setValue($value): IDataTransferObject;
+	public function setValue($value): IMetadataAwareDataTransferObject;
 
 
 	/**
 	 * @param int $identifier
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\IDataTransferObject
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataAwareDataTransferObject
 	 */
-	public function setIdentifier(int $identifier): IDataTransferObject;
+	public function setIdentifier(int $identifier): IMetadataAwareDataTransferObject;
 
 
 	/**

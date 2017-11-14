@@ -2,14 +2,14 @@
 
 namespace SRAG\Plugins\Hub2\Object\Session;
 
-use SRAG\Plugins\Hub2\Object\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\MetadataAwareDataTransferObjectDataTransferObject;
 
 /**
  * Class SessionDTO
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionDTO extends DataTransferObject {
+class SessionDTO extends MetadataAwareDataTransferObjectDataTransferObject {
 
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;

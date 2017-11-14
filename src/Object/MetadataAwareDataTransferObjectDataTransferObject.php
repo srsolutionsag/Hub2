@@ -1,15 +1,15 @@
 <?php namespace SRAG\Plugins\Hub2\Object;
 
 use SRAG\Plugins\Hub2\Metadata\IMetadata;
-use SRAG\Plugins\Hub2\Metadata\IMetadataAware;
+use SRAG\Plugins\Hub2\Metadata\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Metadata\Metadata;
 
 /**
- * Class MetadataAwareDataTransferObject
+ * Class MetadataAwareDataTransferObjectDataTransferObject
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class MetadataAwareDataTransferObject extends DataTransferObject implements IMetadataAware {
+abstract class MetadataAwareDataTransferObjectDataTransferObject extends DataTransferObject implements IMetadataAwareDataTransferObject {
 
 	/**
 	 * @var IMetadata
@@ -18,7 +18,7 @@ abstract class MetadataAwareDataTransferObject extends DataTransferObject implem
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function metadata(int $ilias_metadata_id): IMetadata {
 		if (!isset($this->_meta_data[$ilias_metadata_id])) {

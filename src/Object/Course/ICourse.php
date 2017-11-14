@@ -1,6 +1,6 @@
 <?php namespace SRAG\Plugins\Hub2\Object\Course;
 
-use SRAG\Plugins\Hub2\Metadata\IMetadataAware;
+use SRAG\Plugins\Hub2\Metadata\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\IObject;
 
 /**

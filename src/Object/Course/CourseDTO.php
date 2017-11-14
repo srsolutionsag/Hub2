@@ -2,7 +2,7 @@
 
 use SRAG\Plugins\Hub2\Metadata\Course\CourseMetadataCollection;
 use SRAG\Plugins\Hub2\Metadata\IMetadata;
-use SRAG\Plugins\Hub2\Object\MetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\MetadataAwareDataTransferObjectDataTransferObject;
 
 /**
  * Class CourseDTO
@@ -10,7 +10,7 @@ use SRAG\Plugins\Hub2\Object\MetadataAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object
  */
-class CourseDTO extends MetadataAwareDataTransferObject {
+class CourseDTO extends MetadataAwareDataTransferObjectDataTransferObject {
 
 	// @see ilCourseConstants
 	const SUBSCRIPTION_TYPE_DEACTIVATED = 1;
