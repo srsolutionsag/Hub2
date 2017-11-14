@@ -10,19 +10,9 @@ namespace SRAG\Plugins\Hub2\Metadata;
 interface IMetadataAware {
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataSetCollection
+	 * @param int $ilias_metadata_id
+	 *
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata
 	 */
-	public function metadataCollection();
-
-
-	/**
-	 * @param \SRAG\Plugins\Hub2\Metadata\IMetadata $metadata
-	 */
-	public function addMetadataForProcessing(IMetadata $metadata);
-
-
-	/**
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata[]
-	 */
-	public function getMetadataForProcessing();
+	public function metadata(int $ilias_metadata_id): IMetadata;
 }

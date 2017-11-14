@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
+use SRAG\Plugins\Hub2\Metadata\IMetadataAware;
+
 /**
  * Class ARMetadataAwareObject
  *

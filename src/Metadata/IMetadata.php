@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Metadata;
 
+use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+
 /**
  * Interface IMetadata
  *
@@ -10,13 +12,29 @@ namespace SRAG\Plugins\Hub2\Metadata;
 interface IMetadata {
 
 	/**
-	 * @return string Identifier of the User-Defined-Field or Advanced metadata
+	 * @param $value
+	 *
+	 * @return \SRAG\Plugins\Hub2\Object\IDataTransferObject
 	 */
-	public function getIdentifier(): string;
+	public function setValue($value): IDataTransferObject;
 
 
 	/**
-	 * @return string
+	 * @param int $identifier
+	 *
+	 * @return \SRAG\Plugins\Hub2\Object\IDataTransferObject
 	 */
-	public function getValue(): string;
+	public function setIdentifier(int $identifier): IDataTransferObject;
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getValue();
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getIdentifier();
 }
