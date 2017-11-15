@@ -1,4 +1,4 @@
-<?php namespace SRAG\Plugins\Hub2\Object;
+<?php namespace SRAG\Plugins\Hub2\Object\DTO;
 
 /**
  * Class ObjectDTO

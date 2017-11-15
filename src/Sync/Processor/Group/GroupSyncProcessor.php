@@ -160,8 +160,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
-		/** @var GroupDTO $object */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
+		/** @var GroupDTO $dto */
 		$ilObjGroup = $this->findILIASGroup($ilias_id);
 		if ($ilObjGroup === null) {
 			return null;
@@ -173,8 +173,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$var = $object->$getter();
+			if ($dto->$getter() !== null) {
+				$var = $dto->$getter();
 				if (in_array($property, self::$ildate_fields)) {
 					$var = new \ilDate($var, IL_CAL_UNIX);
 				}
@@ -183,39 +183,39 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			}
 		}
 		if ($this->props->updateDTOProperty("registrationMode")
-		    && $object->getRegisterMode() !== null) {
-			$ilObjGroup->setRegisterMode($object->getRegisterMode());
+		    && $dto->getRegisterMode() !== null) {
+			$ilObjGroup->setRegisterMode($dto->getRegisterMode());
 		}
 
 		if ($this->props->updateDTOProperty("regUnlimited")
-		    && $object->getRegUnlimited() !== null) {
-			$ilObjGroup->enableUnlimitedRegistration($object->getRegUnlimited());
+		    && $dto->getRegUnlimited() !== null) {
+			$ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
 		}
 
 		if ($this->props->updateDTOProperty("regMembershipLimitation")
-		    && $object->getRegMembershipLimitation() !== null) {
-			$ilObjGroup->enableMembershipLimitation($object->getRegMembershipLimitation());
+		    && $dto->getRegMembershipLimitation() !== null) {
+			$ilObjGroup->enableMembershipLimitation($dto->getRegMembershipLimitation());
 		}
 
-		if ($this->props->updateDTOProperty("waitingList") && $object->getWaitingList() !== null) {
-			$ilObjGroup->enableWaitingList($object->getWaitingList());
+		if ($this->props->updateDTOProperty("waitingList") && $dto->getWaitingList() !== null) {
+			$ilObjGroup->enableWaitingList($dto->getWaitingList());
 		}
 
 		if ($this->props->updateDTOProperty("regAccessCodeEnabled")
-		    && $object->getRegAccessCodeEnabled() !== null) {
-			$ilObjGroup->enableRegistrationAccessCode($object->getRegAccessCodeEnabled());
+		    && $dto->getRegAccessCodeEnabled() !== null) {
+			$ilObjGroup->enableRegistrationAccessCode($dto->getRegAccessCodeEnabled());
 		}
 
 		if ($this->props->updateDTOProperty("regUnlimited")
-		    && $object->getRegUnlimited() !== null) {
-			$ilObjGroup->enableUnlimitedRegistration($object->getRegisterMode());
+		    && $dto->getRegUnlimited() !== null) {
+			$ilObjGroup->enableUnlimitedRegistration($dto->getRegisterMode());
 		}
 		if ($this->props->get(GroupOriginProperties::SET_ONLINE_AGAIN)) {
 			//			$ilObjGroup->setOfflineStatus(false);
 			//			$ilObjGroup->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 		if ($this->props->get(GroupOriginProperties::MOVE_GROUP)) {
-			$this->moveGroup($ilObjGroup, $object);
+			$this->moveGroup($ilObjGroup, $dto);
 		}
 		$ilObjGroup->update();
 

@@ -1,6 +1,6 @@
 <?php namespace SRAG\Plugins\Hub2\Sync\Processor;
 
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\IObject;
 
 /**

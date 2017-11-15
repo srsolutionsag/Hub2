@@ -104,9 +104,9 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		global $DIC;
-		/** @var CategoryDTO $object */
+		/** @var CategoryDTO $dto */
 		$ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === null) {
 			return null;
@@ -118,23 +118,23 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
+			if ($dto->$getter() !== null) {
 				$ilObjCategory->$setter($this->$getter());
 			}
 		}
 		if ($this->props->updateDTOProperty('title')) {
 			$ilObjCategory->removeTranslations();
-			$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()
-			                                                                                   ->getDefaultLanguage(), true);
+			$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $DIC->language()
+			                                                                             ->getDefaultLanguage(), true);
 		}
 		if ($this->props->updateDTOProperty('showNews')) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $object->isShowNews());
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
 		}
 		if ($this->props->updateDTOProperty('showInfoPage')) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $object->isShowInfoPage());
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
 		}
 		if ($this->props->get(CategoryOriginProperties::MOVE_CATEGORY)) {
-			$this->moveCategory($ilObjCategory, $object);
+			$this->moveCategory($ilObjCategory, $dto);
 		}
 
 		return $ilObjCategory;

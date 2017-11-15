@@ -3,9 +3,11 @@
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\IMetadataAwareObject;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
@@ -67,6 +69,10 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 		// the data has not been delivered...
 		if ($object->getStatus() != IObject::STATUS_TO_DELETE) {
 			$object->setData($dto->getData());
+			if ($dto instanceof IMetadataAwareDataTransferObject
+			    && $object instanceof IMetadataAwareObject) {
+				$object->setMetaData($dto->getMetaData());
+			}
 		}
 		switch ($object->getStatus()) {
 			case IObject::STATUS_TO_CREATE:
@@ -155,12 +161,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * Return the processed ILIAS object or null if the object was not found, e.g. it is deleted in
 	 * ILIAS.
 	 *
-	 * @param IDataTransferObject $object
+	 * @param IDataTransferObject $dto
 	 * @param int                 $iliasId
 	 *
 	 * @return \ilObject
 	 */
-	abstract protected function handleUpdate(IDataTransferObject $object, $iliasId);
+	abstract protected function handleUpdate(IDataTransferObject $dto, $iliasId);
 
 
 	/**

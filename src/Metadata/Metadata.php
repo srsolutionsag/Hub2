@@ -2,9 +2,6 @@
 
 namespace SRAG\Plugins\Hub2\Metadata;
 
-use SRAG\Plugins\Hub2\Object\DataTransferObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
-
 /**
  * Class Metadata
  *
@@ -20,41 +17,35 @@ class Metadata implements IMetadata {
 	 * @var mixed
 	 */
 	protected $value;
-	/**
-	 * @var \SRAG\Plugins\Hub2\Object\DataTransferObject
-	 */
-	protected $dto;
 
 
 	/**
 	 * Metadata constructor.
 	 *
-	 * @param int                                          $identifier
-	 * @param \SRAG\Plugins\Hub2\Object\DataTransferObject $dto
+	 * @param $identifier
 	 */
-	public function __construct($identifier, DataTransferObject $dto) {
+	public function __construct($identifier) {
 		$this->identifier = $identifier;
-		$this->dto = $dto;
 	}
 
 
 	/**
 	 * @inheritDoc
 	 */
-	public function setValue($value): IDataTransferObject {
+	public function setValue($value): IMetadata {
 		$this->value = $value;
 
-		return $this->dto;
+		return $this;
 	}
 
 
 	/**
 	 * @inheritDoc
 	 */
-	public function setIdentifier(int $identifier): IDataTransferObject {
+	public function setIdentifier(int $identifier): IMetadata {
 		$this->identifier = $identifier;
 
-		return $this->dto;
+		return $this;
 	}
 
 
@@ -71,5 +62,15 @@ class Metadata implements IMetadata {
 	 */
 	public function getIdentifier() {
 		return $this->identifier;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string {
+		$json_encode = json_encode([ $this->getIdentifier() => $this->getValue() ]);
+
+		return $json_encode;
 	}
 }

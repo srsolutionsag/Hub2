@@ -1,4 +1,5 @@
-<?php namespace SRAG\Plugins\Hub2\Object;
+<?php
+namespace SRAG\Plugins\Hub2\Object\DTO;
 
 /**
  * Data Transfer Objects holding all data of objects in the hub context, e.g.

@@ -287,17 +287,6 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		return $this;
 	}
 
-	//	public function hasStatus($status) {
-	//		return (bool)$status & $this->status;
-	//	}
-	//
-	//	public function addStatus($status) {
-	//		$this->status = $this->status | $status;
-	//	}
-	//
-	//	public function removeStatus($status) {
-	//		$this->status = $this->status & ~$status;
-	//	}
 
 	/**
 	 * @inheritdoc

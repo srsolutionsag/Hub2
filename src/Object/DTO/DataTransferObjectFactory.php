@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace SRAG\Plugins\Hub2\Object\DTO;
 
 use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;

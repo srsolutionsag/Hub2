@@ -123,8 +123,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
-		/** @var CourseDTO $object */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
+		/** @var CourseDTO $dto */
 		$ilObjCourse = $this->findILIASCourse($ilias_id);
 		if ($ilObjCourse === null) {
 			return null;
@@ -136,8 +136,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$ilObjCourse->$setter($object->$getter());
+			if ($dto->$getter() !== null) {
+				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
@@ -145,7 +145,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 		if ($this->props->get(CourseOriginProperties::MOVE_COURSE)) {
-			$this->moveCourse($ilObjCourse, $object);
+			$this->moveCourse($ilObjCourse, $dto);
 		}
 		$ilObjCourse->update();
 

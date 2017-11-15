@@ -123,22 +123,22 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
-		/** @var UserDTO $object */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
+		/** @var UserDTO $dto */
 		$ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === null) {
 			return null;
 		}
-		$ilObjUser->setImportId($this->getImportId($object));
-		$ilObjUser->setTitle($object->getFirstname() . ' ' . $object->getLastname());
-		$ilObjUser->setDescription($object->getEmail());
+		$ilObjUser->setImportId($this->getImportId($dto));
+		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
+		$ilObjUser->setDescription($dto->getEmail());
 		// Update Login?
 		if ($this->props->updateDTOProperty('login')) {
-			$ilObjUser->updateLogin($this->buildLogin($object, $ilObjUser));
+			$ilObjUser->updateLogin($this->buildLogin($dto, $ilObjUser));
 		}
 		// Update title?
 		if ($this->props->updateDTOProperty('title')) {
-			$ilObjUser->setUTitle($object->getTitle());
+			$ilObjUser->setUTitle($dto->getTitle());
 		}
 		// Reactivate account?
 		if ($this->props->get(UserOriginProperties::REACTIVATE_ACCOUNT)) {
@@ -151,13 +151,13 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$ilObjUser->$setter($object->$getter());
+			if ($dto->$getter() !== null) {
+				$ilObjUser->$setter($dto->$getter());
 			}
 		}
 		// Update ILIAS roles ?
 		if ($this->props->updateDTOProperty('iliasRoles')) {
-			$this->assignILIASRoles($object, $ilObjUser);
+			$this->assignILIASRoles($dto, $ilObjUser);
 		}
 		$ilObjUser->update();
 

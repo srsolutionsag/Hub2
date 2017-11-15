@@ -4,8 +4,9 @@ namespace SRAG\Plugins\Hub2\Sync\Processor\Session;
 
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
@@ -102,8 +103,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
-		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
+		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $dto */
 		$ilObjSession = $this->findILIASObject($ilias_id);
 		if ($ilObjSession === null) {
 			return null;
@@ -115,18 +116,24 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$ilObjSession->$setter($object->$getter());
+			if ($dto->$getter() !== null) {
+				$ilObjSession->$setter($dto->$getter());
 			}
 		}
 
-		$a_parent_ref = $this->buildParentRefId($object);
-
-		$this->handleMembers($object, $ilObjSession);
+		$this->handleMembers($dto, $ilObjSession);
 
 		$ilObjSession->update();
-		$ilObjSession = $this->setDataForFirstAppointment($object, $ilObjSession);
+		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession);
 		$ilObjSession->getFirstAppointment()->update();
+
+		// MD
+		$f = new MetadataImplementationFactory();
+		if (count($dto->getMetaData()) > 0) {
+			foreach ($dto->getMetaData() as $metaDatum) {
+				$f->customMetadata($metaDatum, (int)$ilObjSession->getId())->write();
+			}
+		}
 
 		return $ilObjSession;
 	}
@@ -208,8 +215,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 	/**
 	 * @param \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object
-	 * @param \ilObjSession                        $ilObjSession
-	 * @param bool                                 $force
+	 * @param \ilObjSession                                $ilObjSession
+	 * @param bool                                         $force
 	 *
 	 * @return \ilObjSession
 	 */
@@ -242,7 +249,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 	/**
 	 * @param \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object
-	 * @param \ilObjSession                        $ilObjSession
+	 * @param \ilObjSession                                $ilObjSession
 	 */
 	protected function handleMembers(SessionDTO $object, \ilObjSession $ilObjSession) {
 		$ilSessionParticipants = $ilObjSession->getMembersObject();

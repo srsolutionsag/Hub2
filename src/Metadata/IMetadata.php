@@ -12,17 +12,17 @@ interface IMetadata {
 	/**
 	 * @param $value
 	 *
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataAwareDataTransferObject
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata
 	 */
-	public function setValue($value): IMetadataAwareDataTransferObject;
+	public function setValue($value): IMetadata;
 
 
 	/**
 	 * @param int $identifier
 	 *
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataAwareDataTransferObject
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata
 	 */
-	public function setIdentifier(int $identifier): IMetadataAwareDataTransferObject;
+	public function setIdentifier(int $identifier): IMetadata;
 
 
 	/**
@@ -35,4 +35,10 @@ interface IMetadata {
 	 * @return mixed
 	 */
 	public function getIdentifier();
+
+
+	/**
+	 * @return string
+	 */
+	public function __toString(): string;
 }

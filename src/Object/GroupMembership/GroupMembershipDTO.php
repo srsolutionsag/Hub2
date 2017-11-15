@@ -1,6 +1,6 @@
 <?php namespace SRAG\Plugins\Hub2\Object\GroupMembership;
 
-use SRAG\Plugins\Hub2\Object\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 
 /**
  * Class GroupMembershipDTO

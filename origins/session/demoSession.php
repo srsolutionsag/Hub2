@@ -7,6 +7,7 @@ use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 
 /**
@@ -54,7 +55,13 @@ class demoSession extends AbstractOriginImplementation {
 			                   ->setFullDay(false)
 			                   ->setMembers([ 6, 294 ])
 			                   ->setStart(time() + ($x * 600))
-			                   ->setEnd(time() + ($x * 600) + 3600);
+			                   ->setEnd(time() + ($x * 600) + 3600)
+			                   ->addMetadata($this->metadata()
+			                                      ->getDTOWithIliasId(1)
+			                                      ->setValue("Meine Metadaten"))
+			                   ->addMetadata($this->metadata()
+			                                      ->getDTOWithIliasId(2)
+			                                      ->setValue(time()));
 			$this->data[] = $sessionDTO;
 			$this->log()->write("Start:" . date(DATE_ATOM, $sessionDTO->getStart()));
 		}

@@ -2,7 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Object\Group;
 
-use SRAG\Plugins\Hub2\Object\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 
 /**
  * Class GroupDTO

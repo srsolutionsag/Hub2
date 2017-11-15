@@ -1,15 +1,15 @@
-<?php // declare(strict_types=1);
+<?php
 
 namespace SRAG\Plugins\Hub2\Object\Session;
 
-use SRAG\Plugins\Hub2\Object\MetadataAwareDataTransferObjectDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
  * Class SessionDTO
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionDTO extends MetadataAwareDataTransferObjectDataTransferObject {
+class SessionDTO extends MetadataAwareDataTransferObject {
 
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;

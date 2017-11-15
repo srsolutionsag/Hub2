@@ -69,12 +69,12 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleUpdate(IDataTransferObject $object, $ilias_id) {
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/**
-		 * @var $object \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
+		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
-		$ilias_course_ref_id = $object->getIliasCourseRefId();
-		$user_id = $object->getUserId();
+		$ilias_course_ref_id = $dto->getIliasCourseRefId();
+		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
 			return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
 		}
@@ -85,7 +85,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		}
 
 		$course->getMembersObject()
-		       ->updateRoleAssignments($user_id, [ $this->getILIASRole($object, $course) ]);
+		       ->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
 
 		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
 	}

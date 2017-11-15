@@ -1,8 +1,10 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Metadata\IMetadataFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\IDataTransferObjectFactory;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 
 /**
@@ -15,6 +17,10 @@ use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 
+	/**
+	 * @var \SRAG\Plugins\Hub2\Metadata\IMetadataFactory
+	 */
+	private $metadataFactory;
 	/**
 	 * @var IOriginConfig
 	 */
@@ -43,11 +49,12 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 * @param ILog                       $originLog
 	 * @param OriginNotifications        $originNotifications
 	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
+		$this->metadataFactory = $metadataFactory;
 	}
 
 
@@ -64,6 +71,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function factory() {
 		return $this->factory;
+	}
+
+
+	/**
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataFactory
+	 */
+	final protected function metadata() {
+		return $this->metadataFactory;
 	}
 
 
