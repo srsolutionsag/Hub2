@@ -9,24 +9,21 @@ use SRAG\Plugins\Hub2\Sync\OriginSyncFactory;
 use SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use SRAG\Plugins\Hub2\UI\OriginConfigFormGUI;
 
-require_once(__DIR__ . '/class.ilHub2Plugin.php');
-
 /**
  * Class hub2ConfigOriginsGUI
  *
  * @author            Stefan Wanzenried <sw@studer-raimann.ch>
  * @author            Fabian Schmid <fs@studer-raimann.ch>
  *
- * @ilCtrl_IsCalledBy hub2ConfigOriginsGUI: ilUIPluginRouterGUI
  * @ilCtrl_calls      hub2ConfigOriginsGUI: hub2DataGUI
  */
-class hub2ConfigOriginsGUI {
+class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 	const CMD_DELETE = 'delete';
 	const CMD_INDEX = 'index';
 	const ORIGIN_ID = 'origin_id';
-	const TAB_DATA = 'tab_data';
-	const TAB_ORIGINS = 'tab_origins';
+	const SUBTAB_DATA = 'subtab_data';
+	const SUBTAB_ORIGINS = 'subtab_origins';
 	/**
 	 * @var \SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory
 	 */
@@ -51,8 +48,7 @@ class hub2ConfigOriginsGUI {
 
 
 	public function __construct() {
-		$this->tpl()->getStandardTemplate();
-		$this->pl = ilHub2Plugin::getInstance();
+		parent::__construct();
 		$this->originFactory = new \SRAG\Plugins\Hub2\Origin\OriginFactory($this->db());
 		$this->hubConfig = new HubConfig();
 		$this->originRepository = new OriginRepository();
@@ -62,25 +58,24 @@ class hub2ConfigOriginsGUI {
 
 	public function executeCommand() {
 		$this->checkAccess();
-		$this->tabs()->addTab(self::TAB_ORIGINS, $this->pl->txt('tab_origins'), $this->ctrl()
-		                                                                             ->getLinkTarget($this, self::CMD_INDEX));
-		$this->tabs()->addTab(self::TAB_DATA, $this->pl->txt('tab_data'), $this->ctrl()
-		                                                                       ->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
-		$this->tpl()->setTitle('Hub 2');
-		$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);
-		$next_class = $this->ctrl()->getNextClass();
-		switch ($next_class) {
+		parent::executeCommand();
+		switch ($this->ctrl()->getNextClass()) {
 			case strtolower(hub2DataGUI::class):
-				$this->tabs()->activateTab(self::TAB_DATA);
 				$this->ctrl()->forwardCommand(new hub2DataGUI());
 				break;
-			default:
-				$this->tabs()->activateTab(self::TAB_ORIGINS);
-				$this->$cmd();
-				break;
 		}
+	}
 
-		$this->tpl()->show();
+
+	protected function initTabs() {
+		$this->tabs()
+		     ->addSubTab(self::SUBTAB_ORIGINS, $this->pl->txt(self::SUBTAB_ORIGINS), $this->ctrl()
+		                                                                                  ->getLinkTarget($this, self::CMD_INDEX));
+		$this->tabs()->addSubTab(self::SUBTAB_DATA, $this->pl->txt(self::SUBTAB_DATA), $this->ctrl()
+		                                                                                    ->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
+
+		$this->tabs()->activateTab(self::TAB_ORIGINS);
+		$this->tabs()->activateSubTab(self::SUBTAB_ORIGINS);
 	}
 
 
@@ -235,7 +230,7 @@ class hub2ConfigOriginsGUI {
 		}
 		$summary->addOriginSync($originSync);
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
-		$this->ctrl()->redirect($this);
+		//		$this->ctrl()->redirect($this);
 	}
 
 

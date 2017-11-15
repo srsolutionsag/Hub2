@@ -28,6 +28,7 @@ button_save#:#Speichern
 button_cancel#:#Abbrechen
 tab_origins#:#Origins
 tab_data#:#Daten
+tab_plugin_config#:#Konfiguration
 data_table_header_origin_id#:#Origin
 data_table_header_ext_id#:#Ext-ID
 data_table_header_delivery_date#:#Lieferdatum
@@ -39,3 +40,5 @@ data_table_header_actions#:#Aktionen
 data_table_header_view#:#Anzeigen
 status_4#:#Erstellt
 status_16#:#Aktualisiert
+subtab_origins#:#Übersicht
+subtab_data#:#Historie

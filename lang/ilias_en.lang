@@ -306,6 +306,7 @@ button_save#:#Save
 button_cancel#:#Cancel
 tab_origins#:#Origins
 tab_data#:#Daten
+tab_plugin_config#:#Configuration
 data_table_header_origin_id#:#Origin
 data_table_header_ext_id#:#Ext-ID
 data_table_header_delivery_date#:#Delivery-Date
@@ -317,3 +318,5 @@ data_table_header_actions#:#Actions
 data_table_header_view#:#View
 status_4#:#Created
 status_16#:#Updated
+subtab_origins#:#Overview
+subtab_data#:#History

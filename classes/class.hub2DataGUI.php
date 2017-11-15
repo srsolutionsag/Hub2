@@ -11,22 +11,21 @@ require_once(__DIR__ . '/class.ilHub2Plugin.php');
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class hub2DataGUI {
+class hub2DataGUI extends hub2MainGUI {
 
 	use \SRAG\Plugins\Hub2\Helper\DIC;
 	const CMD_INDEX = 'index';
-
-
-	public function executeCommand() {
-		$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);
-		$this->{$cmd}();
-	}
 
 
 	protected function index() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 
 		$this->tpl()->setContent($table->getHTML());
+	}
+
+
+	protected function initTabs() {
+		$this->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
 	}
 
 
