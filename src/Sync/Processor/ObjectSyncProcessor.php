@@ -3,6 +3,7 @@
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\HookObject;
@@ -149,11 +150,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	/**
 	 * Create a new ILIAS object from the given data transfer object.
 	 *
-	 * @param IDataTransferObject $object
+	 * @param IDataTransferObject $dto
 	 *
 	 * @return \ilObject
 	 */
-	abstract protected function handleCreate(IDataTransferObject $object);
+	abstract protected function handleCreate(IDataTransferObject $dto);
 
 
 	/**
@@ -178,4 +179,18 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @return \ilObject
 	 */
 	abstract protected function handleDelete($iliasId);
+
+
+	/**
+	 * @param \SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject $dto
+	 * @param \ilObject                                                      $object
+	 */
+	protected function handleMetadata(IMetadataAwareDataTransferObject $dto, \ilObject $object) {
+		$f = new MetadataImplementationFactory();
+		if (count($dto->getMetaData()) > 0) {
+			foreach ($dto->getMetaData() as $metaDatum) {
+				$f->getImplementationForDTO($dto, $metaDatum, (int)$object->getId())->write();
+			}
+		}
+	}
 }

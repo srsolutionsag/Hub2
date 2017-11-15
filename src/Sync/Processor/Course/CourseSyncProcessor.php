@@ -5,7 +5,7 @@ use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
@@ -82,14 +82,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleCreate(IDataTransferObject $object) {
-		/** @var CourseDTO $object */
+	protected function handleCreate(IDataTransferObject $dto) {
+		/** @var CourseDTO $dto */
 		$ilObjCourse = new \ilObjCourse();
-		$ilObjCourse->setImportId($this->getImportId($object));
+		$ilObjCourse->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
-		$parentRefId = $this->determineParentRefId($object);
+		$parentRefId = $this->determineParentRefId($dto);
 		// Check if we should create some dependence categories
-		$parentRefId = $this->buildDependenceCategories($object, $parentRefId);
+		$parentRefId = $this->buildDependenceCategories($dto, $parentRefId);
 		$ilObjCourse->create();
 		$ilObjCourse->createReference();
 		$ilObjCourse->putInTree($parentRefId);
@@ -98,8 +98,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$ilObjCourse->$setter($object->$getter());
+			if ($dto->$getter() !== null) {
+				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE)) {
@@ -115,6 +115,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			// TODO
 		}
 		$ilObjCourse->update();
+
+		$this->handleMetadata($dto, $ilObjCourse);
 
 		return $ilObjCourse;
 	}
@@ -148,6 +150,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$this->moveCourse($ilObjCourse, $dto);
 		}
 		$ilObjCourse->update();
+
+		$this->handleMetadata($dto, $ilObjCourse);
 
 		return $ilObjCourse;
 	}

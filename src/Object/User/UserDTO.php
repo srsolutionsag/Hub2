@@ -1,6 +1,6 @@
 <?php namespace SRAG\Plugins\Hub2\Object\User;
 
-use SRAG\Plugins\Hub2\Object\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
  * Class UserDTO
@@ -8,7 +8,7 @@ use SRAG\Plugins\Hub2\Object\DataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object\User
  */
-class UserDTO extends DataTransferObject {
+class UserDTO extends MetadataAwareDataTransferObject {
 
 	const GENDER_MALE = 'm';
 	const GENDER_FEMALE = 'f';

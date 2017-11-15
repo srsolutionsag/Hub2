@@ -38,13 +38,17 @@ class demoUser extends AbstractOriginImplementation {
 	 */
 	public function parseData() {
 		for ($x = 1; $x <= 10; $x ++) {
+			$t = time();
 			$this->data[] = $this->factory()
 			                     ->user($x)
-			                     ->setTitle("Title {$x}")
+			                     ->setTitle("Title {$x} {$t}")
 			                     ->setFirstname("Firstname {$x}")
 			                     ->setLastname("Lastname {$x}")
 			                     ->setEmail("email{$x}@domain.com")
-			                     ->setGender(UserDTO::GENDER_MALE);
+			                     ->setGender(UserDTO::GENDER_MALE)
+			                     ->addMetadata($this->metadata()
+			                                        ->getDTOWithIliasId(1)
+			                                        ->setValue('Von der Hubberei'));
 		}
 
 		return count($this->data);

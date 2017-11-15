@@ -6,7 +6,7 @@ use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Origin\Config\GroupOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
@@ -100,20 +100,20 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleCreate(IDataTransferObject $object) {
-		/** @var GroupDTO $object */
+	protected function handleCreate(IDataTransferObject $dto) {
+		/** @var GroupDTO $dto */
 		$ilObjGroup = new \ilObjGroup();
-		$ilObjGroup->setImportId($this->getImportId($object));
+		$ilObjGroup->setImportId($this->getImportId($dto));
 		// Find the refId under which this group should be created
-		$parentRefId = $this->determineParentRefId($object);
+		$parentRefId = $this->determineParentRefId($dto);
 		// Pass properties from DTO to ilObjUser
 		require_once('./Services/Calendar/classes/class.ilDate.php');
 
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$var = $object->$getter();
+			if ($dto->$getter() !== null) {
+				$var = $dto->$getter();
 				if (in_array($property, self::$ildate_fields)) {
 					$var = new \ilDate($var, IL_CAL_UNIX);
 				}
@@ -122,20 +122,20 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			}
 		}
 
-		if ($object->getRegUnlimited() !== null) {
-			$ilObjGroup->enableUnlimitedRegistration($object->getRegUnlimited());
+		if ($dto->getRegUnlimited() !== null) {
+			$ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
 		}
 
-		if ($object->getRegMembershipLimitation() !== null) {
-			$ilObjGroup->enableMembershipLimitation($object->getRegMembershipLimitation());
+		if ($dto->getRegMembershipLimitation() !== null) {
+			$ilObjGroup->enableMembershipLimitation($dto->getRegMembershipLimitation());
 		}
 
-		if ($object->getWaitingList() !== null) {
-			$ilObjGroup->enableWaitingList($object->getWaitingList());
+		if ($dto->getWaitingList() !== null) {
+			$ilObjGroup->enableWaitingList($dto->getWaitingList());
 		}
 
-		if ($object->getRegAccessCodeEnabled() !== null) {
-			$ilObjGroup->enableRegistrationAccessCode($object->getRegAccessCodeEnabled());
+		if ($dto->getRegAccessCodeEnabled() !== null) {
+			$ilObjGroup->enableRegistrationAccessCode($dto->getRegAccessCodeEnabled());
 		}
 
 		if ($this->props->get(GroupOriginProperties::SET_ONLINE)) {
@@ -152,6 +152,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->createReference();
 		$ilObjGroup->putInTree($parentRefId);
 		$ilObjGroup->setPermissions($parentRefId);
+
+		$this->handleMetadata($dto, $ilObjGroup);
 
 		return $ilObjGroup;
 	}
@@ -218,6 +220,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			$this->moveGroup($ilObjGroup, $dto);
 		}
 		$ilObjGroup->update();
+
+		$this->handleMetadata($dto, $ilObjGroup);
 
 		return $ilObjGroup;
 	}

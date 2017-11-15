@@ -58,7 +58,10 @@ class demoCourse extends AbstractOriginImplementation {
 			                     ->setParentId(1)
 			                     ->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)
 			                     ->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)
-			                     ->setSyllabus("Syllabus {$x}");
+			                     ->setSyllabus("Syllabus {$x}")
+			                     ->addMetadata($this->metadata()
+			                                        ->getDTOWithIliasId(1)
+			                                        ->setValue("Meine Metadaten"));
 		}
 
 		return count($this->data);

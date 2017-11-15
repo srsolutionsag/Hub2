@@ -5,7 +5,7 @@ namespace SRAG\Plugins\Hub2\Sync\Processor\CourseMembership;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
@@ -50,17 +50,17 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleCreate(IDataTransferObject $object) {
+	protected function handleCreate(IDataTransferObject $dto) {
 		/**
-		 * @var $object \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
+		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
-		$ilias_course_ref_id = $object->getIliasCourseRefId();
+		$ilias_course_ref_id = $dto->getIliasCourseRefId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
 			return null;
 		}
-		$user_id = $object->getUserId();
-		$course->getMembersObject()->add($user_id, $this->mapRole($object));
+		$user_id = $dto->getUserId();
+		$course->getMembersObject()->add($user_id, $this->mapRole($dto));
 
 		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
 	}

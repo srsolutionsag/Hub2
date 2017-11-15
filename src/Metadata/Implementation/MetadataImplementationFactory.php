@@ -3,6 +3,13 @@
 namespace SRAG\Plugins\Hub2\Metadata\Implementation;
 
 use SRAG\Plugins\Hub2\Metadata\IMetadata;
+use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
+use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
+use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
+use SRAG\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class IMetadataImplementationFactory
@@ -24,6 +31,22 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory {
 	 */
 	public function customMetadata(IMetadata $metadata, int $ilias_id): IMetadataImplementation {
 		return new CustomMetadata($metadata, $ilias_id);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getImplementationForDTO(IMetadataAwareDataTransferObject $dto, IMetadata $metadata, int $ilias_id): IMetadataImplementation {
+		switch (true) {
+			case is_a($dto, GroupDTO::class):
+			case is_a($dto, CourseDTO::class):
+			case is_a($dto, CategoryDTO::class):
+			case is_a($dto, SessionDTO::class):
+				return $this->customMetadata($metadata, $ilias_id);
+			case is_a($dto, UserDTO::class):
+				return $this->userDefinedField($metadata, $ilias_id);
+		}
 	}
 }
 

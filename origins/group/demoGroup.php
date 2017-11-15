@@ -65,7 +65,10 @@ class demoGroup extends AbstractOriginImplementation {
 			                     ->setRegistrationAccessCode("AccessCode {$xrand}")
 			                     ->setOwner(6)
 			                     ->setViewMode(GroupDTO::VIEW_BY_TYPE)
-			                     ->setCancellationEnd(1507202887);
+			                     ->setCancellationEnd(1507202887)
+			                     ->addMetadata($this->metadata()
+			                                        ->getDTOWithIliasId(1)
+			                                        ->setValue("Meine Metadaten"));
 		}
 
 		return count($this->data);

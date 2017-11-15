@@ -4,7 +4,6 @@ namespace SRAG\Plugins\Hub2\Sync\Processor\Session;
 
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
@@ -71,30 +70,32 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	}
 
 
-	protected function handleCreate(IDataTransferObject $object) {
-		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object */
+	protected function handleCreate(IDataTransferObject $dto) {
+		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $dto */
 		$ilObjSession = new \ilObjSession();
-		$ilObjSession->setImportId($this->getImportId($object));
+		$ilObjSession->setImportId($this->getImportId($dto));
 
 		// Properties
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$ilObjSession->$setter($object->$getter());
+			if ($dto->$getter() !== null) {
+				$ilObjSession->$setter($dto->$getter());
 			}
 		}
 
 		$ilObjSession->create();
 		$ilObjSession->createReference();
-		$a_parent_ref = $this->buildParentRefId($object);
+		$a_parent_ref = $this->buildParentRefId($dto);
 		$ilObjSession->putInTree($a_parent_ref);
 		$ilObjSession->setPermissions($a_parent_ref);
 
-		$this->handleMembers($object, $ilObjSession);
+		$this->handleMembers($dto, $ilObjSession);
 
-		$this->setDataForFirstAppointment($object, $ilObjSession, true);
+		$this->setDataForFirstAppointment($dto, $ilObjSession, true);
 		$ilObjSession->getFirstAppointment()->create();
+
+		$this->handleMetadata($dto, $ilObjSession);
 
 		return $ilObjSession;
 	}
@@ -127,13 +128,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession);
 		$ilObjSession->getFirstAppointment()->update();
 
-		// MD
-		$f = new MetadataImplementationFactory();
-		if (count($dto->getMetaData()) > 0) {
-			foreach ($dto->getMetaData() as $metaDatum) {
-				$f->customMetadata($metaDatum, (int)$ilObjSession->getId())->write();
-			}
-		}
+		$this->handleMetadata($dto, $ilObjSession);
 
 		return $ilObjSession;
 	}

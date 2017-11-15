@@ -6,7 +6,7 @@ use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
@@ -68,16 +68,16 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleCreate(IDataTransferObject $object) {
+	protected function handleCreate(IDataTransferObject $dto) {
 		global $DIC;
-		/** @var CategoryDTO $object */
+		/** @var CategoryDTO $dto */
 		$ilObjCategory = new \ilObjCategory();
-		$ilObjCategory->setImportId($this->getImportId($object));
+		$ilObjCategory->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
-		$parentRefId = $this->determineParentRefId($object);
+		$parentRefId = $this->determineParentRefId($dto);
 		$ilObjCategory->removeTranslations();
-		$ilObjCategory->addTranslation($object->getTitle(), $object->getDescription(), $DIC->language()
-		                                                                                   ->getDefaultLanguage(), true);
+		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $DIC->language()
+		                                                                             ->getDefaultLanguage(), true);
 		$ilObjCategory->create();
 		$ilObjCategory->createReference();
 		$ilObjCategory->putInTree($parentRefId);
@@ -85,15 +85,15 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($object->$getter() !== null) {
-				$ilObjCategory->$setter($object->$getter());
+			if ($dto->$getter() !== null) {
+				$ilObjCategory->$setter($dto->$getter());
 			}
 		}
 		if ($this->props->get(CategoryOriginProperties::SHOW_NEWS)) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $object->isShowNews());
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
 		}
 		if ($this->props->get(CategoryOriginProperties::SHOW_INFO_TAB)) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $object->isShowInfoPage());
+			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
 		}
 		$ilObjCategory->update();
 

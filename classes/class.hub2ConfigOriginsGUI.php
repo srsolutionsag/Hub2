@@ -59,6 +59,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	public function executeCommand() {
 		$this->checkAccess();
 		parent::executeCommand();
+		// require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/sql/dbupdate.php');
 		switch ($this->ctrl()->getNextClass()) {
 			case strtolower(hub2DataGUI::class):
 				$this->ctrl()->forwardCommand(new hub2DataGUI());

@@ -1,6 +1,6 @@
 <?php namespace SRAG\Plugins\Hub2\Object\Category;
 
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
  * Class CategoryDTO
@@ -8,7 +8,7 @@ use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object\Category
  */
-class CategoryDTO extends DataTransferObject {
+class CategoryDTO extends MetadataAwareDataTransferObject {
 
 	const ORDER_TYPE_TITLE = 0;
 	const ORDER_TYPE_MANUAL = 1;

@@ -14,9 +14,9 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 	 */
 	public function write() {
 		$id = $this->getMetadata()->getIdentifier();
-		$values = new \ilAdvancedMDValues(1, $this->getIliasId(), null, "-");
+		$ilAdvancedMDValues = new \ilAdvancedMDValues(1, $this->getIliasId(), null, "-");
 
-		$ilADTGroup = $values->getADTGroup();
+		$ilADTGroup = $ilAdvancedMDValues->getADTGroup();
 		$value = $this->getMetadata()->getValue();
 		$ilADT = $ilADTGroup->getElement($id);
 		switch (true) {
@@ -24,9 +24,10 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 				$ilADT->setText($value);
 				break;
 			case ($ilADT instanceof \ilADTDate):
-				$ilADT->setDate(new \ilDate(time(), 3));
+				$ilADT->setDate(new \ilDateTime(time(), 3));
 				break;
 		}
+		$ilAdvancedMDValues->write();
 	}
 
 
