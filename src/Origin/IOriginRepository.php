@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin;
 
 /**
  * Interface IOriginFactory
@@ -28,43 +30,49 @@ interface IOriginRepository {
 	/**
 	 * Returns the origins of object type user
 	 *
-	 * @return IUserOrigin[]
+	 * @return \SRAG\Plugins\Hub2\Origin\User\IUserOrigin[]
 	 */
 	public function users();
 
 
 	/**
-	 * @return ICourseOrigin[]
+	 * @return \SRAG\Plugins\Hub2\Origin\Course\ICourseOrigin[]
 	 */
 	public function courses();
 
 
 	/**
-	 * @return ICategoryOrigin[]
+	 * @return \SRAG\Plugins\Hub2\Origin\Category\ICategoryOrigin[]
 	 */
 	public function categories();
 
 
 	/**
-	 * @return ICourseMembershipOrigin[]
+	 * @return \SRAG\Plugins\Hub2\Origin\CourseMembership\ICourseMembershipOrigin[]
 	 */
 	public function courseMemberships();
 
 
 	/**
-	 * @return IGroupOrigin[]
+	 * @return \SRAG\Plugins\Hub2\Origin\Group\IGroupOrigin[]
 	 */
 	public function groups();
 
 
 	/**
-	 * @return IGroupMembershipOrigin[]
+	 * @return \SRAG\Plugins\Hub2\Origin\GroupMembership\IGroupMembershipOrigin[]
 	 */
 	public function groupMemberships();
 
 
 	/**
-	 * @return ISessionOrigin[]
+	 * @return \SRAG\Plugins\Hub2\Origin\Session\ISessionOrigin[]
 	 */
 	public function sessions();
+
+
+	/**
+	 * @return \SRAG\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin[]
+	 */
+	public function sessionsMemeberships();
 }

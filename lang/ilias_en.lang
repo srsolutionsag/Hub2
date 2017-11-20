@@ -231,6 +231,7 @@ origin_object_type_category#:#Category
 origin_object_type_group#:#Group
 origin_object_type_groupMembership#:#Group Member
 origin_object_type_session#:#Session
+origin_object_type_sessionMembership#:#Session Membership
 object_type_user#:#User
 object_type_courseMembership#:#Course Memberships
 object_type_course#:#Course

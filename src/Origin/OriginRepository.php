@@ -4,7 +4,9 @@ use SRAG\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
 use SRAG\Plugins\Hub2\Origin\Group\ARGroupOrigin;
+use SRAG\Plugins\Hub2\Origin\GroupMembership\ARGroupMembershipOrigin;
 use SRAG\Plugins\Hub2\Origin\Session\ARSessionOrigin;
+use SRAG\Plugins\Hub2\Origin\SessionMembership\ARSessionMembershipOrigin;
 use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
 
 /**
@@ -62,7 +64,8 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function courseMemberships() {
-		return ARCourseMembershipOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP ])->get();
+		return ARCourseMembershipOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP ])
+		                               ->get();
 	}
 
 
@@ -78,7 +81,8 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function groupMemberships() {
-		return [];
+		return ARGroupMembershipOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP ])
+		                              ->get();
 	}
 
 
@@ -87,5 +91,14 @@ class OriginRepository implements IOriginRepository {
 	 */
 	public function sessions() {
 		return ARSessionOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_SESSION ])->get();
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function sessionsMemeberships() {
+		return ARSessionMembershipOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP ])
+		                                ->get();
 	}
 }

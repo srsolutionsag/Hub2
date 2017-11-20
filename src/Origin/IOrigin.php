@@ -17,6 +17,7 @@ interface IOrigin {
 	const OBJECT_TYPE_GROUP = 'group';
 	const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
 	const OBJECT_TYPE_SESSION = 'session';
+	const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
 
 
 	/**
@@ -139,6 +140,7 @@ interface IOrigin {
 
 
 	public function update();
+
 
 	public function create();
 }

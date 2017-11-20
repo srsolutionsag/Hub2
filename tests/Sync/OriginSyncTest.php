@@ -172,7 +172,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		// Build 4 dummyDTOs returned by the origin implementation
 		$dummyDTOs = [];
 		for ($i = 0; $i < 4; $i++) {
-			$dummyDTO = \Mockery::mock('\SRAG\Plugins\Hub2\Object\IDataTransferObject');
+			$dummyDTO = \Mockery::mock('\SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject');
 			$dummyDTO->shouldReceive('getExtId', 'setData');
 			$dummyDTO->shouldReceive('getData')->andReturn([]);
 			$dummyDTOs[] = $dummyDTO;

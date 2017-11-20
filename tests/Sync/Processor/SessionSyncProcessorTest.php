@@ -78,7 +78,9 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		require_once('./Services/Calendar/classes/class.ilDateTime.php');
 		$session_appointment_mock = \Mockery::mock('overload:\ilSessionAppointment', '\ilDatePeriod');
 		$session_appointment_mock->shouldReceive("setStart");
+		$session_appointment_mock->shouldReceive("setStartingTime");
 		$session_appointment_mock->shouldReceive("setEnd");
+		$session_appointment_mock->shouldReceive("setEndingTime");
 		$session_appointment_mock->shouldReceive("toggleFullTime");
 		$session_appointment_mock->shouldReceive("setSessionId")->with(self::REF_ID);
 		$session_appointment_mock->shouldReceive("create");

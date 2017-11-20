@@ -40,7 +40,19 @@ interface ISyncProcessorFactory {
 
 
 	/**
-	 * @return mixed
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupSyncProcessor
 	 */
 	public function group();
+
+
+	/**
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\IGroupMembershipSyncProcessor
+	 */
+	public function groupMembership();
+
+
+	/**
+	 * @return \SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\ISessionMembershipSyncProcessor
+	 */
+	public function sessionMembership();
 }

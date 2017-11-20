@@ -24,6 +24,7 @@ origin_table_header_description#:#MISSING
 origin_table_header_last_update#:#MISSING
 origin_table_header_title#:#MISSING
 origin_table_header_usage_type#:#MISSING
+origin_object_type_sessionMembership#:#Session Membership
 button_save#:#Speichern
 button_cancel#:#Abbrechen
 tab_origins#:#Origins

@@ -22,6 +22,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		IOrigin::OBJECT_TYPE_GROUP,
 		IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
 		IOrigin::OBJECT_TYPE_SESSION,
+		IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
 	];
 	/**
 	 * @var int
