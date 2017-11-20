@@ -21,7 +21,7 @@ class OriginRepository implements IOriginRepository {
 	 * @inheritdoc
 	 */
 	public function all() {
-		return array_merge($this->users(), $this->categories(), $this->courses(), $this->courseMemberships(), $this->groups(), $this->groupMemberships(), $this->sessions());
+		return array_merge($this->users(), $this->categories(), $this->courses(), $this->courseMemberships(), $this->groups(), $this->groupMemberships(), $this->sessions(), $this->sessionsMemeberships());
 	}
 
 

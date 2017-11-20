@@ -81,6 +81,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	protected function index() {
+		SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::installDB();
 		$button = ilLinkButton::getInstance();
 		$button->setCaption($this->pl->txt('origin_table_button_add'), false);
 		$button->setUrl($this->ctrl()->getLinkTarget($this, 'addOrigin'));

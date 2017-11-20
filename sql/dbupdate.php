@@ -9,6 +9,7 @@ SRAG\Plugins\Hub2\Object\Category\ARCategory::installDB();
 SRAG\Plugins\Hub2\Object\Session\ARSession::installDB();
 SRAG\Plugins\Hub2\Object\Group\ARGroup::installDB();
 SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::installDB();
+SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::installDB();
 SRAG\Plugins\Hub2\Config\ArConfig::installDB();
 $config = new \SRAG\Plugins\Hub2\Config\ArConfig();
 $config->save();

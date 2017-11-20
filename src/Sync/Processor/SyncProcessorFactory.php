@@ -12,7 +12,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProces
 use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupActivities;
 use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\GroupMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 

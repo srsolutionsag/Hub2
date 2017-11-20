@@ -1,16 +1,12 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Session;
+namespace SRAG\Plugins\Hub2\Sync\Processor\SessionMembership;
 
-use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
@@ -19,7 +15,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISessionSyncProcessor {
+class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISessionMembershipSyncProcessor {
 
 	/**
 	 * @var \SRAG\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties
