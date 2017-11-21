@@ -39,7 +39,11 @@ data_table_header_status#:#Status
 data_table_header_period#:#Periode
 data_table_header_actions#:#Aktionen
 data_table_header_view#:#Anzeigen
+data_table_header_data#:#Data
+data_table_header_origin#:#MISSING
 status_4#:#Erstellt
 status_16#:#Aktualisiert
+status_2#:#Zu Erstellen
+status_32#:#Zu Löschen
 subtab_origins#:#Übersicht
 subtab_data#:#Historie

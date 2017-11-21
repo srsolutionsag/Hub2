@@ -317,7 +317,11 @@ data_table_header_status#:#Status
 data_table_header_period#:#Period
 data_table_header_actions#:#Actions
 data_table_header_view#:#View
+data_table_header_data#:#Data
+data_table_header_origin#:#MISSING
 status_4#:#Created
 status_16#:#Updated
+status_2#:#To Create
+status_32#:#To Delete
 subtab_origins#:#Overview
 subtab_data#:#History

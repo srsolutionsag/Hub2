@@ -33,12 +33,15 @@ class hub2MainGUI {
 
 	public function executeCommand() {
 		$this->initTabs();
-		switch ($this->ctrl()->getNextClass()) {
+		$nextClass = $this->ctrl()->getNextClass();
+		switch ($nextClass) {
 			case strtolower(hub2ConfigGUI::class):
 				$this->ctrl()->forwardCommand(new hub2ConfigGUI());
 				break;
 			case strtolower(hub2ConfigOriginsGUI::class):
 				$this->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
+				break;
+			case strtolower(hub2DataGUI::class):
 				break;
 			default:
 				$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);

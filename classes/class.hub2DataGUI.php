@@ -1,5 +1,6 @@
 <?php
 
+use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
 use SRAG\Plugins\Hub2\UI\DataTableGUI;
@@ -13,14 +14,36 @@ require_once(__DIR__ . '/class.ilHub2Plugin.php');
  */
 class hub2DataGUI extends hub2MainGUI {
 
-	use \SRAG\Plugins\Hub2\Helper\DIC;
+	use DIC;
 	const CMD_INDEX = 'index';
+
+
+	public function executeCommand() {
+		$this->initTabs();
+		$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);
+		$this->{$cmd}();
+	}
 
 
 	protected function index() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
-
 		$this->tpl()->setContent($table->getHTML());
+	}
+
+
+	protected function applyFilter() {
+		$table = new DataTableGUI($this, self::CMD_INDEX);
+		$table->writeFilterToSession();
+		$table->resetOffset();
+		$this->ctrl()->redirect($this, self::CMD_INDEX);
+	}
+
+
+	protected function resetFilter() {
+		$table = new DataTableGUI($this, self::CMD_INDEX);
+		$table->resetFilter();
+		$table->resetOffset();
+		$this->ctrl()->redirect($this, self::CMD_INDEX);
 	}
 
 
@@ -32,7 +55,6 @@ class hub2DataGUI extends hub2MainGUI {
 	protected function renderData() {
 		$ext_id = $this->http()->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
 		$origin_id = $this->http()->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
-		$is_async = ($this->http()->request()->getQueryParams()["cmdMode"] == "async");
 
 		$origin_factory = new OriginFactory($this->db());
 		$object_factory = new ObjectFactory($origin_factory->getById($origin_id));
@@ -70,8 +92,5 @@ class hub2DataGUI extends hub2MainGUI {
 
 		echo $renderer->renderAsync($modal);
 		exit;
-
-		$button = $factory->button()->standard('Open', '')->withOnClick($modal->getShowSignal());
-		$this->tpl()->setContent($renderer->render([ $button, $modal ]));
 	}
 }
