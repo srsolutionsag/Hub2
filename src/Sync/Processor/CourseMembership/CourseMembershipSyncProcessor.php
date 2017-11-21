@@ -54,7 +54,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		/**
 		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
-		$ilias_course_ref_id = $dto->getIliasCourseRefId();
+		$ilias_course_ref_id = $dto->getCourseId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
 			return null;
@@ -73,7 +73,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		/**
 		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
-		$ilias_course_ref_id = $dto->getIliasCourseRefId();
+		$ilias_course_ref_id = $dto->getCourseId();
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
 			return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");

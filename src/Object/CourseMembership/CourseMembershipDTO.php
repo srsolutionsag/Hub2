@@ -14,22 +14,30 @@ class CourseMembershipDTO extends DataTransferObject {
 	 */
 	public function __construct($course_ext_id, $user_id) {
 		parent::__construct("{$course_ext_id}|||{$user_id}");
+		$this->courseId = $course_ext_id;
+		$this->userId = $user_id;
 	}
 
 
 	const ROLE_MEMBER = 2;
 	const ROLE_TUTOR = 3;
 	const ROLE_ADMIN = 1;
+	const PARENT_ID_TYPE_REF_ID = 1;
+	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**
 	 * @var int
 	 */
-	private $ilias_course_ref_id;
+	private $courseIdType = self::PARENT_ID_TYPE_REF_ID;
 	/**
 	 * @var int
 	 */
-	private $user_id;
+	private $courseId;
 	/**
-	 * @var
+	 * @var int
+	 */
+	private $userId;
+	/**
+	 * @var int
 	 */
 	protected $role = self::ROLE_MEMBER;
 
@@ -37,18 +45,18 @@ class CourseMembershipDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getIliasCourseRefId() {
-		return $this->ilias_course_ref_id;
+	public function getCourseId() {
+		return $this->courseId;
 	}
 
 
 	/**
-	 * @param int $ilias_course_ref_id
+	 * @param int $courseId
 	 *
 	 * @return CourseMembershipDTO
 	 */
-	public function setIliasCourseRefId(int $ilias_course_ref_id): CourseMembershipDTO {
-		$this->ilias_course_ref_id = $ilias_course_ref_id;
+	public function setCourseId(int $courseId): CourseMembershipDTO {
+		$this->courseId = $courseId;
 
 		return $this;
 	}
@@ -58,17 +66,17 @@ class CourseMembershipDTO extends DataTransferObject {
 	 * @return int
 	 */
 	public function getUserId() {
-		return $this->user_id;
+		return $this->userId;
 	}
 
 
 	/**
-	 * @param int $user_id
+	 * @param int $userId
 	 *
 	 * @return CourseMembershipDTO
 	 */
-	public function setUserId(int $user_id): CourseMembershipDTO {
-		$this->user_id = $user_id;
+	public function setUserId(int $userId): CourseMembershipDTO {
+		$this->userId = $userId;
 
 		return $this;
 	}
@@ -89,6 +97,26 @@ class CourseMembershipDTO extends DataTransferObject {
 	 */
 	public function setRole($role) {
 		$this->role = $role;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getCourseIdType(): int {
+		return $this->courseIdType;
+	}
+
+
+	/**
+	 * @param int $courseIdType
+	 *
+	 * @return CourseMembershipDTO
+	 */
+	public function setCourseIdType(int $courseIdType): CourseMembershipDTO {
+		$this->courseIdType = $courseIdType;
 
 		return $this;
 	}

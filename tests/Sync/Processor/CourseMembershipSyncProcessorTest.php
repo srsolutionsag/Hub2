@@ -57,7 +57,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->dto = new CourseMembershipDTO('extIdOfCourse', 'extIdOfUser');
 		$this->dto->setRole(CourseMembershipDTO::ROLE_TUTOR)
 		          ->setUserId(self::USER_ID)
-		          ->setIliasCourseRefId(self::COURSE_REF_ID);
+		          ->setCourseId(self::COURSE_REF_ID);
 	}
 
 
