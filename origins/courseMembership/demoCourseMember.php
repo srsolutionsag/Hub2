@@ -1,13 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
-use SRAG\Plugins\Hub2\Origin\Config\OriginImplementationFactory;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class demoCourseMember
@@ -15,10 +15,6 @@ use SRAG\Plugins\Hub2\Origin\Config\OriginImplementationFactory;
  * @package SRAG\Plugins\Hub2\Origin
  */
 class demoCourseMember extends AbstractOriginImplementation {
-
-	const EXT_COURSE_ID = 71;
-	const EXT_USER_ID = 6;
-
 
 	/**
 	 * Connect to the service providing the sync data.
@@ -41,36 +37,12 @@ class demoCourseMember extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData() {
-		//		global $DIC;
-		//		$f = new OriginFactory($DIC->database());
-		//		/**
-		//		 * @var $demoCourse \SRAG\Plugins\Hub2\Origin\demoCourse
-		//		 */
-		//		$demoCourse = $f->getById(3);
-		//		$demoCourse->parseData();
-		//		foreach ($demoCourse->buildObjects() as $CourseDTO) {
-		//
-		//		}
-		//		/**
-		//		 * @var $demoUser \SRAG\Plugins\Hub2\Origin\demoUser
-		//		 * @var $UserDTO  \SRAG\Plugins\Hub2\Object\User\UserDTO
-		//		 */
-		//		$demoUser = $f->getById(4);
-		//
-		//		foreach ($demoUser->buildObjects() as $UserDTO) {
-		//
-		//		}
-
 		$this->data[] = $this->factory()
-		                     ->courseMembership(self::EXT_COURSE_ID, self::EXT_USER_ID)
-		                     ->setIliasCourseRefId(self::EXT_COURSE_ID)
+		                     ->courseMembership(1, 6)
+		                     ->setCourseId(1)
 		                     ->setRole(CourseMembershipDTO::ROLE_TUTOR)
-		                     ->setUserId(self::EXT_USER_ID);
-		//		$this->data[] = $this->factory()
-		//		                     ->courseMembership(69, 6)
-		//		                     ->setIliasCourseRefId(69)
-		//		                     ->setRole(CourseMembershipDTO::ROLE_TUTOR)
-		//		                     ->setUserId(10458);
+		                     ->setUserId(6)
+		                     ->setCourseIdType(CourseMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID);
 
 		return count($this->data);
 	}

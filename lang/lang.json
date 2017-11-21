@@ -1760,49 +1760,49 @@
                     "en": "Origin",
                     "de": "Origin"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "table_header_ext_id": {
                 "translations": {
                     "en": "Ext-ID",
                     "de": "Ext-ID"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "table_header_delivery_date": {
                 "translations": {
                     "en": "Delivery-Date",
                     "de": "Lieferdatum"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "table_header_processed_date": {
                 "translations": {
                     "en": "Process-Date",
                     "de": "verarbeitung"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "table_header_ilias_id": {
                 "translations": {
                     "en": "ILIAS-ID",
                     "de": "ILIAS-ID"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "table_header_status": {
                 "translations": {
                     "en": "Status",
                     "de": "Status"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "table_header_period": {
                 "translations": {
                     "en": "Period",
                     "de": "Periode"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "table_header_actions": {
                 "translations": {
@@ -1816,7 +1816,7 @@
                     "en": "View",
                     "de": "Anzeigen"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             }
         },
         "status": {
@@ -1825,14 +1825,14 @@
                     "en": "Created",
                     "de": "Erstellt"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             },
             "16": {
                 "translations": {
                     "en": "Updated",
                     "de": "Aktualisiert"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "21.11.2017"
             }
         },
         "subtab": {

@@ -1,12 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
-use ILIAS\Filesystem\Util\LegacyPathHelper;
+namespace SRAG\Plugins\Hub2\Origin;
+
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class demoCourse
@@ -48,7 +49,7 @@ class demoCourse extends AbstractOriginImplementation {
 		$time = time();
 		for ($x = 1; $x <= 10; $x ++) {
 			$this->data[] = $this->factory()
-			                     ->course("000{$x}")
+			                     ->course($x)
 			                     ->setTitle("Title {$x} {$time}")
 			                     ->setDescription("Description {$x}")
 			                     ->setActivationType(CourseDTO::ACTIVATION_OFFLINE)

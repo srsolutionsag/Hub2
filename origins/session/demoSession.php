@@ -1,13 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
-require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/origins/courseMembership/demoCourseMember.php');
+namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\Session\ARSession;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 
 /**
@@ -38,12 +37,11 @@ class demoSession extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData() {
-		$this->log()->write("HELLO");
 		for ($x = 1; $x <= 14; $x ++) {
 			$rand = rand();
 			$sessionDTO = $this->factory()
 			                   ->session($x)
-			                   ->setParentId("0001")// see demoCourse
+			                   ->setParentId(1)
 			                   ->setParentIdType(SessionDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
 			                   ->setTitle("Title {$rand}")
 			                   ->setDescription("Description {$rand}")
