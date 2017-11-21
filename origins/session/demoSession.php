@@ -53,7 +53,6 @@ class demoSession extends AbstractOriginImplementation {
 			                   ->setEmail("Email {$rand}")
 			                   ->setPhone("Phone {$rand}")
 			                   ->setFullDay(false)
-			                   ->setMembers([ 6, 294 ])
 			                   ->setStart(time() + ($x * 600))
 			                   ->setEnd(time() + ($x * 600) + 3600)
 			                   ->addMetadata($this->metadata()

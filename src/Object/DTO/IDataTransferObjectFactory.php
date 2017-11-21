@@ -50,19 +50,28 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param $ext_course_id
-	 * @param $ext_user_id
+	 * @param $course_id
+	 * @param $user_id
 	 *
 	 * @return CourseMembershipDTO
 	 */
-	public function courseMembership($ext_course_id, $ext_user_id);
+	public function courseMembership($course_id, $user_id);
 
 
 	/**
-	 * @param $ext_group_id
-	 * @param $ext_user_id
+	 * @param $group_id
+	 * @param $user_id
 	 *
 	 * @return \SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO
 	 */
-	public function groupMembership($ext_group_id, $ext_user_id);
+	public function groupMembership($group_id, $user_id);
+
+
+	/**
+	 * @param $session_id
+	 * @param $user_id
+	 *
+	 * @return \SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO
+	 */
+	public function sessionMembership($session_id, $user_id);
 }

@@ -4,12 +4,14 @@ use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
 
 /**
-* Class demoSessionMembership
-* @package SRAG\Plugins\Hub2\Origin
-*/
+ * Class demoSessionMembership
+ *
+ * @package SRAG\Plugins\Hub2\Origin
+ */
 class demoSessionMembership extends AbstractOriginImplementation {
 
 	/**
@@ -19,7 +21,9 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() {   }
+	public function connect() {
+		return true;
+	}
 
 
 	/**
@@ -32,94 +36,102 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {   }
+	public function parseData() {
+		$this->data[] = $this->factory()
+		                     ->sessionMembership(1, 6)
+		                     ->setSessionIdType(SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
+		                     ->setSessionId(1)
+		                     ->setRole(SessionMembershipDTO::ROLE_MEMBER);
+	}
 
 
 	/**
 	 * Build the hub DTO objects from the parsed data.
 	 * An instance of such objects MUST be obtained over the DTOObjectFactory. The factory
 	 * is available via $this->factory().
-*
-* Example for an origin syncing users:
-*
-* $user = $this->factory()->user($data->extId) {   }
-* $user->setFirstname($data->firstname)
-*  ->setLastname($data->lastname)
-*  ->setGender(UserDTO::GENDER_FEMALE) {   }
-*
-* Throw a BuildObjectsFailedException to abort the sync at this stage.
-*
-* @throws BuildObjectsFailedException
-* @return IDataTransferObject[]
-*/
-public function buildObjects() {   }
+	 *
+	 * Example for an origin syncing users:
+	 *
+	 * $user = $this->factory()->user($data->extId) {   }
+	 * $user->setFirstname($data->firstname)
+	 *  ->setLastname($data->lastname)
+	 *  ->setGender(UserDTO::GENDER_FEMALE) {   }
+	 *
+	 * Throw a BuildObjectsFailedException to abort the sync at this stage.
+	 *
+	 * @throws BuildObjectsFailedException
+	 * @return IDataTransferObject[]
+	 */
+	public function buildObjects() {
+		return $this->data;
+	}
 
 
-// HOOKS
-// ------------------------------------------------------------------------------------------------------------
+	// HOOKS
+	// ------------------------------------------------------------------------------------------------------------
 
-/**
-* Called if any exception occurs during processing the ILIAS objects. This hook can be used to
-* influence the further processing of the current origin sync or the global sync:
-*
-* - Throw an AbortOriginSyncException to stop the current sync of this origin.
-*   Any other following origins in the processing chain are still getting executed normally.
-* - Throw an AbortOriginSyncOfCurrentTypeException to abort the current sync of the origin AND
-*   all also skip following syncs from origins of the same object type, e.g. User, Course etc.
-* - Throw an AbortSyncException to stop the global sync. The sync of any other following
-* origins in the processing chain is NOT getting executed.
-*
-* Note that if you do not throw any of the exceptions above, the sync will continue.
-*
-* @param \Exception $e
-*/
-public function handleException(\Exception $e) {   }
-
-
-/**
-* @param HookObject $object
-*/
-public function beforeCreateILIASObject(HookObject $object) {   }
+	/**
+	 * Called if any exception occurs during processing the ILIAS objects. This hook can be used to
+	 * influence the further processing of the current origin sync or the global sync:
+	 *
+	 * - Throw an AbortOriginSyncException to stop the current sync of this origin.
+	 *   Any other following origins in the processing chain are still getting executed normally.
+	 * - Throw an AbortOriginSyncOfCurrentTypeException to abort the current sync of the origin AND
+	 *   all also skip following syncs from origins of the same object type, e.g. User, Course etc.
+	 * - Throw an AbortSyncException to stop the global sync. The sync of any other following
+	 * origins in the processing chain is NOT getting executed.
+	 *
+	 * Note that if you do not throw any of the exceptions above, the sync will continue.
+	 *
+	 * @param \Exception $e
+	 */
+	public function handleException(\Exception $e) { }
 
 
-/**
-* @param HookObject $object
-*/
-public function afterCreateILIASObject(HookObject $object) {   }
+	/**
+	 * @param HookObject $object
+	 */
+	public function beforeCreateILIASObject(HookObject $object) { }
 
 
-/**
-* @param HookObject $object
-*/
-public function beforeUpdateILIASObject(HookObject $object) {   }
+	/**
+	 * @param HookObject $object
+	 */
+	public function afterCreateILIASObject(HookObject $object) { }
 
 
-/**
-* @param HookObject $object
-*/
-public function afterUpdateILIASObject(HookObject $object) {   }
+	/**
+	 * @param HookObject $object
+	 */
+	public function beforeUpdateILIASObject(HookObject $object) { }
 
 
-/**
-* @param HookObject $object
-*/
-public function beforeDeleteILIASObject(HookObject $object) {   }
+	/**
+	 * @param HookObject $object
+	 */
+	public function afterUpdateILIASObject(HookObject $object) { }
 
 
-/**
-* @param HookObject $object
-*/
-public function afterDeleteILIASObject(HookObject $object) {   }
+	/**
+	 * @param HookObject $object
+	 */
+	public function beforeDeleteILIASObject(HookObject $object) { }
 
 
-/**
-* Executed before the synchronization of the origin is executed.
-*/
-public function beforeSync() {   }
+	/**
+	 * @param HookObject $object
+	 */
+	public function afterDeleteILIASObject(HookObject $object) { }
 
 
-/**
-* Executed after the synchronization of the origin has been executed.
-*/
-public function afterSync() {   }
+	/**
+	 * Executed before the synchronization of the origin is executed.
+	 */
+	public function beforeSync() { }
+
+
+	/**
+	 * Executed after the synchronization of the origin has been executed.
+	 */
+	public function afterSync() { }
 }

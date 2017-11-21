@@ -6,7 +6,9 @@ use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
+use SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
+use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
 use SRAG\Plugins\Hub2\Object\User\UserDTO;
 
 /**
@@ -60,15 +62,23 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function courseMembership($ext_course_id, $ext_user_id) {
-		return new CourseMembershipDTO($ext_course_id, $ext_user_id);
+	public function courseMembership($course_id, $user_id) {
+		return new CourseMembershipDTO($course_id, $user_id);
 	}
 
 
 	/**
 	 * @inheritdoc
 	 */
-	public function groupMembership($ext_group_id, $ext_user_id) {
-		// TODO: Implement groupMembership() method.
+	public function groupMembership($group_id, $user_id) {
+		return new GroupMembershipDTO($group_id, $user_id);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function sessionMembership($session_id, $user_id) {
+		return new SessionMembershipDTO($session_id, $user_id);
 	}
 }

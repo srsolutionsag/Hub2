@@ -11,16 +11,17 @@ use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
  */
 class SessionMembershipDTO extends DataTransferObject {
 
+	const ROLE_MEMBER = 1;
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**
 	 * @var string
 	 */
-	protected $parentId;
+	protected $sessionId;
 	/**
 	 * @var int
 	 */
-	protected $parentIdType = self::PARENT_ID_TYPE_REF_ID;
+	protected $sessionIdType = self::PARENT_ID_TYPE_REF_ID;
 	/**
 	 * @var int
 	 */
@@ -28,38 +29,56 @@ class SessionMembershipDTO extends DataTransferObject {
 	/**
 	 * @var int
 	 */
-	protected $user_id;
+	protected $userId;
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct($session_id, $user_id) {
+		parent::__construct("{$session_id}|||{$user_id}");
+		$this->sessionId = $session_id;
+		$this->userId = $user_id;
+	}
 
 
 	/**
 	 * @return string
 	 */
-	public function getParentId(): string {
-		return $this->parentId;
+	public function getSessionId(): string {
+		return $this->sessionId;
 	}
 
 
 	/**
-	 * @param string $parentId
+	 * @param string $sessionId
+	 *
+	 * @return SessionMembershipDTO
 	 */
-	public function setParentId(string $parentId) {
-		$this->parentId = $parentId;
+	public function setSessionId(string $sessionId): SessionMembershipDTO {
+		$this->sessionId = $sessionId;
+
+		return $this;
 	}
 
 
 	/**
 	 * @return int
 	 */
-	public function getParentIdType(): int {
-		return $this->parentIdType;
+	public function getSessionIdType(): int {
+		return $this->sessionIdType;
 	}
 
 
 	/**
-	 * @param int $parentIdType
+	 * @param int $sessionIdType
+	 *
+	 * @return SessionMembershipDTO
 	 */
-	public function setParentIdType(int $parentIdType) {
-		$this->parentIdType = $parentIdType;
+	public function setSessionIdType(int $sessionIdType): SessionMembershipDTO {
+		$this->sessionIdType = $sessionIdType;
+
+		return $this;
 	}
 
 
@@ -73,9 +92,13 @@ class SessionMembershipDTO extends DataTransferObject {
 
 	/**
 	 * @param int $role
+	 *
+	 * @return SessionMembershipDTO
 	 */
-	public function setRole(int $role) {
+	public function setRole(int $role): SessionMembershipDTO {
 		$this->role = $role;
+
+		return $this;
 	}
 
 
@@ -83,14 +106,18 @@ class SessionMembershipDTO extends DataTransferObject {
 	 * @return int
 	 */
 	public function getUserId(): int {
-		return $this->user_id;
+		return $this->userId;
 	}
 
 
 	/**
-	 * @param int $user_id
+	 * @param int $userId
+	 *
+	 * @return SessionMembershipDTO
 	 */
-	public function setUserId(int $user_id) {
-		$this->user_id = $user_id;
+	public function setUserId(int $userId): SessionMembershipDTO {
+		$this->userId = $userId;
+
+		return $this;
 	}
 }
