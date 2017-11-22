@@ -8,6 +8,7 @@ use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Sync\OriginSyncFactory;
 use SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use SRAG\Plugins\Hub2\UI\OriginConfigFormGUI;
+use SRAG\Plugins\Hub2\UI\OriginsTableGUI;
 
 /**
  * Class hub2ConfigOriginsGUI
@@ -24,6 +25,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	const ORIGIN_ID = 'origin_id';
 	const SUBTAB_DATA = 'subtab_data';
 	const SUBTAB_ORIGINS = 'subtab_origins';
+	const CMD_RUN = 'run';
+	const CMD_ADD_ORIGIN = 'addOrigin';
 	/**
 	 * @var \SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory
 	 */
@@ -81,12 +84,22 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	protected function index() {
-		SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::installDB();
+		require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/sql/dbupdate.php'); // TODO remove after release
 		$button = ilLinkButton::getInstance();
 		$button->setCaption($this->pl->txt('origin_table_button_add'), false);
-		$button->setUrl($this->ctrl()->getLinkTarget($this, 'addOrigin'));
+		$button->setPrimary(true);
+		$button->setUrl($this->ctrl()->getLinkTarget($this, self::CMD_ADD_ORIGIN));
 		$this->toolbar()->addButtonInstance($button);
-		$table = new \SRAG\Plugins\Hub2\UI\OriginsTableGUI($this, self::CMD_INDEX, new OriginRepository());
+
+		$this->toolbar()->addSeparator();
+
+		$button = ilLinkButton::getInstance();
+		$button->setCaption($this->pl->txt('origin_table_button_run'), false);
+		$button->setUrl($this->ctrl()->getLinkTarget($this, self::CMD_RUN));
+		$this->toolbar()->addButtonInstance($button);
+
+
+		$table = new OriginsTableGUI($this, self::CMD_INDEX, new OriginRepository());
 		$this->tpl()->setContent($table->getHTML());
 	}
 

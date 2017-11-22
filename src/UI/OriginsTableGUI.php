@@ -39,8 +39,6 @@ class OriginsTableGUI extends \ilTable2GUI {
 		$this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
 		$this->initColumns();
 		$this->initTableData();
-		$this->addCommandButton('run', $this->pl->txt('origin_table_button_run'));
-		//		$this->addCommandButton('dryRun', $this->pl->txt('origin_table_button_dryrun'));
 		$this->addCommandButton('deactivateAll', $this->pl->txt('origin_table_button_deactivate_all'));
 		$this->addCommandButton('activateAll', $this->pl->txt('origin_table_button_activate_all'));
 	}
@@ -61,7 +59,8 @@ class OriginsTableGUI extends \ilTable2GUI {
 	protected function initTableData() {
 		$data = [];
 		foreach ($this->originRepository->all() as $origin) {
-			$class = "SRAG\\Plugins\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\" . ucfirst($origin->getObjectType()) . "Repository";
+			$class = "SRAG\\Plugins\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\"
+			         . ucfirst($origin->getObjectType()) . "Repository";
 			/** @var IObjectRepository $objectRepository */
 			$objectRepository = new $class($origin);
 			$row = [];
@@ -81,7 +80,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 	protected function fillRow($a_set) {
 		foreach ($a_set as $key => $value) {
 			$this->tpl->setCurrentBlock('cell');
-			$this->tpl->setVariable('VALUE', $value);
+			$this->tpl->setVariable('VALUE', $value ? $value : "&nbsp;");
 			$this->tpl->parseCurrentBlock();
 		}
 		global $DIC;
