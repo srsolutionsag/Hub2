@@ -3,6 +3,7 @@
 namespace SRAG\Plugins\Hub2\Shortlink;
 
 use SRAG\Plugins\Hub2\Helper\DIC;
+use SRAG\Plugins\Hub2\Object\ARObject;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
 use SRAG\Plugins\Hub2\Object\Group\ARGroup;
@@ -29,13 +30,14 @@ class Shortlink {
 	 * @param $ext_id
 	 */
 	public function __construct($ext_id) {
-		require_once('./include/inc.header.php');
+		$this->initILIAS();
 		$this->ext_id = $ext_id;
 	}
 
 
 	public function doRedirect() {
 		$of = new OriginFactory($this->db());
+		$object = false;
 		foreach ($of->getAllActive() as $origin) {
 			$f = new ObjectFactory($origin);
 			$object = $f->undefined($this->getExtId());
@@ -49,7 +51,7 @@ class Shortlink {
 					}
 			}
 		}
-		if ($object && $object->getILIASId()) {
+		if ($object instanceof ARObject && $object->getILIASId()) {
 			$link = \ilLink::_getLink($object->getILIASId());
 			$link = str_replace(self::PLUGIN_BASE, "", $link);
 			$this->ctrl()->redirectToURL($link);
@@ -70,5 +72,10 @@ class Shortlink {
 	 */
 	public function setExtId(string $ext_id) {
 		$this->ext_id = $ext_id;
+	}
+
+
+	private function initILIAS() {
+		require_once('./include/inc.header.php');
 	}
 }
