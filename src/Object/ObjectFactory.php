@@ -53,6 +53,8 @@ class ObjectFactory implements IObjectFactory {
 				return $this->groupMembership($ext_id);
 			case IOrigin::OBJECT_TYPE_SESSION:
 				return $this->session($ext_id);
+			case IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP:
+				return $this->sessionMembership($ext_id);
 			default:
 				throw new \LogicException('no object-type for this origin found');
 		}
