@@ -218,7 +218,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$originSync = $originSyncFactory->instance();
 			try {
 				$originSync->execute();
-			} catch (\Exception $e) {
+			} catch (Throwable $e) {
 				// Any exception being forwarded to here means that we failed to execute the sync at some point
 				ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
 			}
@@ -227,6 +227,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 			$summary->addOriginSync($originSync);
 		}
+		$summary->sendNotifications();
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
 		$this->ctrl()->redirect($this);
 	}
@@ -239,13 +240,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$originSync = $originSyncFactory->instance();
 		try {
 			$originSync->execute();
-		} catch (\Exception $e) {
+		} catch (Throwable $e) {
 			// Any exception being forwarded to here means that we failed to execute the sync at some point
 			ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
 		}
 		$summary->addOriginSync($originSync);
+		$summary->sendNotifications();
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
-		//		$this->ctrl()->redirect($this);
+		$this->ctrl()->redirect($this);
 	}
 
 

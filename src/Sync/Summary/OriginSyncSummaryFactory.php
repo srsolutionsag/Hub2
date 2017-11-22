@@ -31,4 +31,10 @@ class OriginSyncSummaryFactory implements IOriginSyncSummaryFactory {
 	public function cron() {
 		return new OriginSyncSummaryCron();
 	}
+	/**
+	 * @inheritDoc
+	 */
+	public function mail() {
+		return new OriginSyncSummaryCron();
+	}
 }

@@ -10,7 +10,7 @@ use SRAG\Plugins\Hub2\Sync\IOriginSync;
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class OriginSyncSummaryWeb implements IOriginSyncSummary {
+class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncSummary {
 
 	/**
 	 * @var IOriginSync[]

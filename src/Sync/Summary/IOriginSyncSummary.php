@@ -29,4 +29,10 @@ interface IOriginSyncSummary {
 	 * @return string
 	 */
 	public function getSummaryOfOrigin(IOriginSync $originSync);
+
+
+	/**
+	 * @return void
+	 */
+	public function sendNotifications();
 }

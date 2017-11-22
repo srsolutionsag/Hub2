@@ -10,7 +10,7 @@ use SRAG\Plugins\Hub2\Sync\IOriginSync;
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class OriginSyncSummarymail implements IOriginSyncSummary {
+abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 	/**
 	 * @var IOriginSync[]
@@ -81,6 +81,43 @@ class OriginSyncSummarymail implements IOriginSyncSummary {
 	 */
 	public function getSummaryOfOrigin(IOriginSync $originSync) {
 		return $this->renderOneSync($originSync);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function sendNotifications() {
+		global $DIC;
+		$mail = new \ilMimeMail();
+		/** @var \ilMailMimeSenderFactory $senderFactory */
+		$senderFactory = $DIC["mail.mime.sender.factory"];
+		$mail->From($senderFactory->system());
+
+		foreach ($this->syncs as $originSync) {
+			$summary_email = $originSync->getOrigin()->config()->getNotificationsSummary();
+			$error_email = $originSync->getOrigin()->config()->getNotificationsErrors();
+			$title = $originSync->getOrigin()->getTitle();
+			if ($summary_email) {
+				$mail->Subject("HUB2: Summary for {$title}");
+				$mail->To($summary_email);
+				$mail->Body($this->renderOneSync($originSync));
+				$mail->Send();
+			}
+			if ($error_email && $originSync->getExceptions()) {
+				$mail->To($error_email);
+				$mail->Subject("HUB2: Exceptions in {$title}");
+				$msg = "Exceptions:";
+				foreach ($originSync->getExceptions() as $exception) {
+					$msg .= "{$exception->getMessage()}\n";
+					$msg .= "in: {$exception->getFile()}\n";
+				}
+				$msg = rtrim($msg, "\n");
+
+				$mail->Body($msg);
+				$mail->Send();
+			}
+		}
 	}
 }
 
