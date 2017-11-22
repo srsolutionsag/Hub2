@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\UI;
+<?php
+
+namespace SRAG\Plugins\Hub2\UI;
 
 use SRAG\Plugins\Hub2\Object\IObjectRepository;
 use SRAG\Plugins\Hub2\Origin\IOriginRepository;
@@ -80,7 +82,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 	protected function fillRow($a_set) {
 		foreach ($a_set as $key => $value) {
 			$this->tpl->setCurrentBlock('cell');
-			$this->tpl->setVariable('VALUE', $value ? $value : "&nbsp;");
+			$this->tpl->setVariable('VALUE', !is_null($value) ? $value : "&nbsp;");
 			$this->tpl->parseCurrentBlock();
 		}
 		global $DIC;
