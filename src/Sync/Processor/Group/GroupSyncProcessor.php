@@ -15,6 +15,7 @@ use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 
 /**
  * Class GroupSyncProcessor
@@ -296,24 +297,35 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 				throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
 			}
 			$originRepository = new OriginRepository();
-			$origin = array_pop(array_filter($originRepository->categories(), function ($origin) use ($linkedOriginId) {
+			$possible_parents = array_merge($originRepository->categories(),
+					$originRepository->courses());
+			$origin = array_pop(array_filter($possible_parents, function ($origin) use ($linkedOriginId) {
 				/** @var $origin IOrigin */
 				return $origin->getId() == $linkedOriginId;
 			}));
 			if ($origin === null) {
-				$msg = "The linked origin syncing categories was not found, please check that the correct origin is linked";
+				$msg = "The linked origin syncing categories or courses was not found,
+				please check that the correct origin is linked";
 				throw new HubException($msg);
 			}
+
 			$objectFactory = new ObjectFactory($origin);
-			$category = $objectFactory->category($group->getParentId());
-			if (!$category->getILIASId()) {
-				throw new HubException("The linked category does not (yet) exist in ILIAS");
-			}
-			if (!$tree->isInTree($category->getILIASId())) {
-				throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
+
+			if($origin instanceof ARCourseOrigin){
+				$parent = $objectFactory->course($group->getParentId());
+
+			}else{
+				$parent = $objectFactory->category($group->getParentId());
 			}
 
-			return $category->getILIASId();
+			if (!$parent->getILIASId()) {
+				throw new HubException("The linked category or course does not (yet) exist in ILIAS");
+			}
+			if (!$tree->isInTree($parent->getILIASId())) {
+				throw new HubException("Could not find the ref-ID of the parent category or course in the tree: '{$parent->getILIASId()}'");
+			}
+
+			return $parent->getILIASId();
 		}
 
 		return 0;
