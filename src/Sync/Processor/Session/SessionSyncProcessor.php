@@ -83,14 +83,13 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				$ilObjSession->$setter($dto->$getter());
 			}
 		}
+		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession, true);
 
 		$ilObjSession->create();
 		$ilObjSession->createReference();
 		$a_parent_ref = $this->buildParentRefId($dto);
 		$ilObjSession->putInTree($a_parent_ref);
 		$ilObjSession->setPermissions($a_parent_ref);
-
-		$this->setDataForFirstAppointment($dto, $ilObjSession, true);
 		$ilObjSession->getFirstAppointment()->create();
 
 		$this->handleMetadata($dto, $ilObjSession);
