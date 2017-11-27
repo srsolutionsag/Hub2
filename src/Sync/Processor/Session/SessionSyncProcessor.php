@@ -177,24 +177,33 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
 			}
 			$originRepository = new OriginRepository();
-			$origin = array_pop(array_filter($originRepository->courses(), function ($origin) use ($linkedOriginId) {
+			$possible_parents = array_merge($originRepository->groups(),
+					$originRepository->courses());
+			$origin = array_pop(array_filter($possible_parents, function ($origin) use ($linkedOriginId) {
 				/** @var $origin IOrigin */
 				return (int)$origin->getId() == $linkedOriginId;
 			}));
 			if ($origin === null) {
-				$msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
+				$msg = "The linked origin syncing courses or groups was not found, please check that the correct origin is linked";
 				throw new HubException($msg);
 			}
 			$objectFactory = new ObjectFactory($origin);
-			$course = $objectFactory->course($session->getParentId());
-			if (!$course->getILIASId()) {
-				throw new HubException("The linked course does not (yet) exist in ILIAS");
-			}
-			if (!$tree->isInTree($course->getILIASId())) {
-				throw new HubException("Could not find the ref-ID of the parent course in the tree: '{$course->getILIASId()}'");
+
+			if($origin instanceof ARCourseOrigin){
+				$parent = $objectFactory->course($session->getParentId());
+
+			}else{
+				$parent = $objectFactory->group($session->getParentId());
 			}
 
-			return (int)$course->getILIASId();
+			if (!$parent->getILIASId()) {
+				throw new HubException("The linked course or group does not (yet) exist in ILIAS");
+			}
+			if (!$tree->isInTree($parent->getILIASId())) {
+				throw new HubException("Could not find the ref-ID of the parent course or group in the tree: '{$parent->getILIASId()}'");
+			}
+
+			return (int)$parent->getILIASId();
 		}
 
 		return 0;
