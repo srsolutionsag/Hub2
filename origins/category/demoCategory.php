@@ -57,13 +57,7 @@ class demoCategory extends AbstractOriginImplementation {
 			                     ->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)
 			                     ->addMetadata($this->metadata()
 			                                        ->getDTOWithIliasId(1)
-			                                        ->setValue("Meine Metadaten"))
-								->addTaxonomy($this->taxonomy()
-				                   ->create("Tax 1")
-				                   ->addNode("node 1")->addNode("Node 2")->addNode("Node 3"))
-
-
-			;
+			                                        ->setValue("Meine Metadaten"));;
 		}
 
 		return count($this->data);
@@ -131,13 +125,7 @@ class demoCategory extends AbstractOriginImplementation {
 	/**
 	 * @param HookObject $object
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) {
-		if($object->getILIASId() == self::ROOT_NODE_STUDMED) {
-			$object->
-		}
-
-
-	}
+	public function beforeUpdateILIASObject(HookObject $object) { }
 
 
 	/**
