@@ -22,12 +22,13 @@ class CourseMembershipDTO extends DataTransferObject {
 	const ROLE_MEMBER = 2;
 	const ROLE_TUTOR = 3;
 	const ROLE_ADMIN = 1;
-	const PARENT_ID_TYPE_REF_ID = 1;
-	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
+
+	const COURSE_ID_TYPE_REF_ID = 1;
+	const COURSE_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**
 	 * @var int
 	 */
-	private $courseIdType = self::PARENT_ID_TYPE_REF_ID;
+	private $courseIdType = self::COURSE_ID_TYPE_REF_ID;
 	/**
 	 * @var int
 	 */
@@ -51,11 +52,11 @@ class CourseMembershipDTO extends DataTransferObject {
 
 
 	/**
-	 * @param int $courseId
+	 * @param $courseId
 	 *
 	 * @return CourseMembershipDTO
 	 */
-	public function setCourseId(int $courseId): CourseMembershipDTO {
+	public function setCourseId( $courseId): CourseMembershipDTO {
 		$this->courseId = $courseId;
 
 		return $this;

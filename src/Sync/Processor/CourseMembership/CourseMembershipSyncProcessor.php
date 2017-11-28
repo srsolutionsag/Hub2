@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor\CourseMembership;
 
+use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
@@ -13,6 +14,8 @@ use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Origin\OriginRepository;
+use SRAG\Plugins\Hub2\Object\ObjectFactory;
 
 /**
  * Class CourseMembershipSyncProcessor
@@ -54,7 +57,8 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		/**
 		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
-		$ilias_course_ref_id = $dto->getCourseId();
+		$ilias_course_ref_id = $this->determineCourseRefId($dto);
+		$dto->getCourseId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
 			return null;
@@ -153,5 +157,45 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 			default:
 				return $course->getDefaultMemberRole();
 		}
+	}
+
+	/**
+	 * @param CourseMembershipDTO $course_membership
+	 * @return int
+	 * @throws HubException
+	 */
+	protected function determineCourseRefId(CourseMembershipDTO $course_membership) {
+
+		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_REF_ID) {
+			return $course_membership->getCourseId();
+		}
+		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID) {
+			// The stored course-ID is an external-ID from a course.
+			// We must search the course ref-ID from a category object synced by
+			// a linked origin. --> Get an instance of the linked origin and lookup the
+			// category by the given external ID.
+			$linkedOriginId = $this->config->getLinkedOriginId();
+			if (!$linkedOriginId) {
+				throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
+			}
+			$originRepository = new OriginRepository();
+			$origin = array_pop(array_filter($originRepository->courses(), function ($origin) use ($linkedOriginId) {
+				/** @var $origin IOrigin */
+				return $origin->getId() == $linkedOriginId;
+			}));
+			if ($origin === null) {
+				$msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
+				throw new HubException($msg);
+			}
+			$objectFactory = new ObjectFactory($origin);
+			$course = $objectFactory->course($course_membership->getCourseId());
+			if (!$course->getILIASId()) {
+				throw new HubException("The linked course does not (yet) exist in ILIAS");
+			}
+
+			return $course->getILIASId();
+		}
+
+		return 0;
 	}
 }
