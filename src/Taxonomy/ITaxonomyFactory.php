@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy;
 
+use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+
 /**
  * Class ITaxonomyFactory
  *
@@ -10,9 +12,25 @@ namespace SRAG\Plugins\Hub2\Taxonomy;
 interface ITaxonomyFactory {
 
 	/**
-	 * @param int $id
+	 * @param string $title
 	 *
 	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
 	 */
-	public function getDTOWithIliasId(int $id): ITaxonomy;
+	public function select(string $title): ITaxonomy;
+
+
+	/**
+	 * @param string $title
+	 *
+	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
+	 */
+	public function create(string $title): ITaxonomy;
+
+
+	/**
+	 * @param string $node_title
+	 *
+	 * @return \SRAG\Plugins\Hub2\Taxonomy\Node\INode
+	 */
+	public function node(string $node_title): INode;
 }

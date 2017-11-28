@@ -1,6 +1,10 @@
-<?php namespace SRAG\Plugins\Hub2\Object\Category;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object\Category;
 
 use SRAG\Plugins\Hub2\Object\ARMetadataAwareObject;
+use SRAG\Plugins\Hub2\Object\ARObject;
+use SRAG\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 
 /**
  * Class ARCategory
@@ -8,7 +12,11 @@ use SRAG\Plugins\Hub2\Object\ARMetadataAwareObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object\Category
  */
-class ARCategory extends ARMetadataAwareObject implements ICategory {
+class ARCategory extends ARObject implements ICategory {
+
+	use ARMetadataAwareObject;
+	use ARTaxonomyAwareObject;
+
 
 	/**
 	 * @inheritdoc

@@ -152,29 +152,6 @@ interface IObject {
 	 */
 	public function updateStatus($status);
 
-	//	/**
-	//	 * Check if the object has the given status.
-	//	 *
-	//	 * @param int $status
-	//	 * @return bool
-	//	 */
-	//	public function hasStatus($status);
-	//
-	//	/**
-	//	 * Add a new status to the objects status bitmask.
-	//	 *
-	//	 * @param int $status
-	//	 * @return $this
-	//	 */
-	//	public function addStatus($status);
-	//
-	//	/**
-	//	 * Remove the given status from the status bitmask.
-	//	 *
-	//	 * @param $status
-	//	 * @return $this
-	//	 */
-	//	public function removeStatus($status);
 
 	/**
 	 * Get the period (aka semester) where this object belongs to. The origin sync only processes

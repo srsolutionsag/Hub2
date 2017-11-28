@@ -14,6 +14,7 @@ use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 
@@ -24,6 +25,7 @@ use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
  */
 class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProcessor {
 
+	use MetadataSyncProcessor;
 	/**
 	 * @var GroupOriginProperties
 	 */
@@ -154,8 +156,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->putInTree($parentRefId);
 		$ilObjGroup->setPermissions($parentRefId);
 
-		$this->handleMetadata($dto, $ilObjGroup);
-
 		return $ilObjGroup;
 	}
 
@@ -221,8 +221,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			$this->moveGroup($ilObjGroup, $dto);
 		}
 		$ilObjGroup->update();
-
-		$this->handleMetadata($dto, $ilObjGroup);
 
 		return $ilObjGroup;
 	}
@@ -297,8 +295,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 				throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
 			}
 			$originRepository = new OriginRepository();
-			$possible_parents = array_merge($originRepository->categories(),
-					$originRepository->courses());
+			$possible_parents = array_merge($originRepository->categories(), $originRepository->courses());
 			$origin = array_pop(array_filter($possible_parents, function ($origin) use ($linkedOriginId) {
 				/** @var $origin IOrigin */
 				return $origin->getId() == $linkedOriginId;
@@ -311,10 +308,9 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
 			$objectFactory = new ObjectFactory($origin);
 
-			if($origin instanceof ARCourseOrigin){
+			if ($origin instanceof ARCourseOrigin) {
 				$parent = $objectFactory->course($group->getParentId());
-
-			}else{
+			} else {
 				$parent = $objectFactory->category($group->getParentId());
 			}
 

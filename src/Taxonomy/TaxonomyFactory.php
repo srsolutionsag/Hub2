@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy;
 
+use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
+
 /**
  * Class TaxonomyFactory
  *
@@ -10,11 +13,25 @@ namespace SRAG\Plugins\Hub2\Taxonomy;
 class TaxonomyFactory implements ITaxonomyFactory {
 
 	/**
-	 * @param int $id
-	 *
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
+	 * @inheritDoc
 	 */
-	public function getDTOWithIliasId(int $id): ITaxonomy {
-		return new Taxonomy($id);
+	public function select(string $title): ITaxonomy {
+		return new Taxonomy($title, ITaxonomy::MODE_SELECT);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function create(string $title): ITaxonomy {
+		return new Taxonomy($title, ITaxonomy::MODE_CREATE);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function node(string $node_title): INode {
+		return new Node($node_title);
 	}
 }

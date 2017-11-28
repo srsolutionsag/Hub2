@@ -9,7 +9,7 @@ use SRAG\Plugins\Hub2\Metadata\IMetadata;
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class MetadataAwareDataTransferObject extends DataTransferObject implements IMetadataAwareDataTransferObject {
+trait MetadataAwareDataTransferObject {
 
 	/**
 	 * @var IMetadata[]

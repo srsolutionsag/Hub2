@@ -1,15 +1,18 @@
 <?php namespace SRAG\Plugins\Hub2\Object\Category;
 
-use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 
 /**
  * Class CategoryDTO
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Object\Category
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CategoryDTO extends MetadataAwareDataTransferObject {
+class CategoryDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareDataTransferObject {
 
+	use TaxonomyAndMetadataAwareDataTransferObject;
 	const ORDER_TYPE_TITLE = 0;
 	const ORDER_TYPE_MANUAL = 1;
 	const ORDER_TYPE_ACTIVATION = 2;

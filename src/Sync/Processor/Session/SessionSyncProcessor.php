@@ -12,6 +12,7 @@ use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
@@ -21,6 +22,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncProcessor {
 
+	use MetadataSyncProcessor;
 	/**
 	 * @var \SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties
 	 */
@@ -103,8 +105,6 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$ilObjSession->getFirstAppointment()->setSessionId($ilObjSession->getId());
 		$ilObjSession->getFirstAppointment()->create();
 
-		$this->handleMetadata($dto, $ilObjSession);
-
 		return $ilObjSession;
 	}
 
@@ -130,7 +130,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			}
 		}
 
-		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession,true);
+		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession, true);
 		$ilObjSession->update();
 		$ilObjSession->getFirstAppointment()->update();
 
@@ -188,8 +188,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
 			}
 			$originRepository = new OriginRepository();
-			$possible_parents = array_merge($originRepository->groups(),
-					$originRepository->courses());
+			$possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
 			$origin = array_pop(array_filter($possible_parents, function ($origin) use ($linkedOriginId) {
 				/** @var $origin IOrigin */
 				return (int)$origin->getId() == $linkedOriginId;
@@ -200,10 +199,9 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			}
 			$objectFactory = new ObjectFactory($origin);
 
-			if($origin instanceof ARCourseOrigin){
+			if ($origin instanceof ARCourseOrigin) {
 				$parent = $objectFactory->course($session->getParentId());
-
-			}else{
+			} else {
 				$parent = $objectFactory->group($session->getParentId());
 			}
 

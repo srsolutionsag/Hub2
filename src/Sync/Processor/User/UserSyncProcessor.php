@@ -12,6 +12,7 @@ use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
@@ -22,6 +23,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcessor {
 
+	use MetadataSyncProcessor;
 	/**
 	 * @var UserOriginProperties
 	 */
@@ -115,8 +117,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$ilObjUser->writePrefs();
 		$this->assignILIASRoles($dto, $ilObjUser);
 
-		$this->handleMetadata($dto, $ilObjUser);
-
 		//		if ($this->props->get(UserOriginProperties::SEND_PASSWORD)) {
 		//			$this->sendPasswordMail($object, $ilObjUser);
 		//		}
@@ -164,8 +164,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$this->assignILIASRoles($dto, $ilObjUser);
 		}
 		$ilObjUser->update();
-
-		$this->handleMetadata($dto, $ilObjUser);
 
 		return $ilObjUser;
 	}

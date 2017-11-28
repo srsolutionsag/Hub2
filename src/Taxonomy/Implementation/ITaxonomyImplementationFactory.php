@@ -13,10 +13,9 @@ interface ITaxonomyImplementationFactory {
 
 	/**
 	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy $Taxonomy
-	 * @param int                                   $ilias_id
 	 *
 	 * @return \SRAG\Plugins\Hub2\Taxonomy\Implementation\ITaxonomyImplementation
 	 */
-	public function taxanomy(ITaxonomy $Taxonomy, int $ilias_id): ITaxonomyImplementation;
+	public function taxonomy(ITaxonomy $Taxonomy): ITaxonomyImplementation;
 }
 

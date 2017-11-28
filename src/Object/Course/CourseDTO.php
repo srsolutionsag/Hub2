@@ -1,15 +1,24 @@
-<?php namespace SRAG\Plugins\Hub2\Object\Course;
+<?php
 
-use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+namespace SRAG\Plugins\Hub2\Object\Course;
+
+use SRAG\Plugins\Hub2\Metadata\IMetadata;
+use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**
  * Class CourseDTO
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseDTO extends MetadataAwareDataTransferObject {
+class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareDataTransferObject {
 
+	use TaxonomyAndMetadataAwareDataTransferObject;
 	// @see ilCourseConstants
 	const SUBSCRIPTION_TYPE_DEACTIVATED = 1;
 	const SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP = 2;
@@ -515,13 +524,5 @@ class CourseDTO extends MetadataAwareDataTransferObject {
 		$this->activationType = $activationType;
 
 		return $this;
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function metadataCollection() {
-		return new CourseMetadataCollection();
 	}
 }

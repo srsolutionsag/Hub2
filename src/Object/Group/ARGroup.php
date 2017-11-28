@@ -9,9 +9,12 @@ use SRAG\Plugins\Hub2\Object\ARObject;
  * Class ARGroup
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARGroup extends ARMetadataAwareObject implements IGroup {
+class ARGroup extends ARObject implements IGroup {
+
+	use ARMetadataAwareObject;
+
 
 	/**
 	 * @inheritdoc

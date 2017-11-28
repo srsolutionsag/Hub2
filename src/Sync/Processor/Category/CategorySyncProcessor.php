@@ -14,7 +14,9 @@ use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class CategorySyncProcessor
@@ -24,6 +26,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySyncProcessor {
 
+	use MetadataSyncProcessor;
+	use TaxonomySyncProcessor;
 	/**
 	 * @var CategoryOriginProperties
 	 */
@@ -245,7 +249,5 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		$DIC->rbac()
 		    ->admin()
 		    ->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
-		//			hubLog::getInstance()->write($str);
-		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}
 }

@@ -6,10 +6,12 @@ use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\IMetadataAwareObject;
 use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
@@ -74,11 +76,21 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			    && $object instanceof IMetadataAwareObject) {
 				$object->setMetaData($dto->getMetaData());
 			}
+			if ($dto instanceof ITaxonomyAwareDataTransferObject
+			    && $object instanceof ITaxonomyAwareObject) {
+				$object->setTaxonomies($dto->getTaxonomies());
+			}
 		}
 		switch ($object->getStatus()) {
 			case IObject::STATUS_TO_CREATE:
 				$this->implementation->beforeCreateILIASObject($hook);
 				$ilias_object = $this->handleCreate($dto);
+				if ($this instanceof IMetadataSyncProcessor) {
+					$this->handleMetadata($dto, $ilias_object);
+				}
+				if ($this instanceof ITaxonomySyncProcessor) {
+					$this->handleTaxonomies($dto, $ilias_object);
+				}
 				$object->setILIASId($this->getILIASId($ilias_object));
 				$this->implementation->afterCreateILIASObject($hook->withILIASObject($ilias_object));
 				break;
@@ -90,6 +102,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
 					if ($ilias_object === null) {
 						throw new ILIASObjectNotFoundException($object);
+					}
+					if ($this instanceof IMetadataSyncProcessor) {
+						$this->handleMetadata($dto, $ilias_object);
+					}
+					if ($this instanceof ITaxonomySyncProcessor) {
+						$this->handleTaxonomies($dto, $ilias_object);
 					}
 					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
 				} else {
@@ -179,18 +197,4 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @return \ilObject
 	 */
 	abstract protected function handleDelete($iliasId);
-
-
-	/**
-	 * @param \SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject $dto
-	 * @param \ilObject                                                      $object
-	 */
-	protected function handleMetadata(IMetadataAwareDataTransferObject $dto, \ilObject $object) {
-		$f = new MetadataImplementationFactory();
-		if (count($dto->getMetaData()) > 0) {
-			foreach ($dto->getMetaData() as $metaDatum) {
-				$f->getImplementationForDTO($dto, $metaDatum, (int)$object->getId())->write();
-			}
-		}
-	}
 }

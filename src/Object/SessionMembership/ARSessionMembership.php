@@ -2,14 +2,14 @@
 
 namespace SRAG\Plugins\Hub2\Object\SessionMembership;
 
-use SRAG\Plugins\Hub2\Object\ARMetadataAwareObject;
+use SRAG\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class ARSessionMembership
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARSessionMembership extends ARMetadataAwareObject implements ISessionMembership {
+class ARSessionMembership extends ARObject implements ISessionMembership {
 
 	/**
 	 * @inheritdoc

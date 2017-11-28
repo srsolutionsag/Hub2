@@ -8,13 +8,13 @@
 interface IMetadataAwareObject extends IObject {
 
 	/**
-	 * @return array
+	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata[]
 	 */
 	public function getMetaData(): array;
 
 
 	/**
-	 * @param array $metadata
+	 * @param \SRAG\Plugins\Hub2\Metadata\IMetadata[] $metadata
 	 *
 	 * @return void
 	 */

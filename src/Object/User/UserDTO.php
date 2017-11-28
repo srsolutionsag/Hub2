@@ -1,5 +1,9 @@
-<?php namespace SRAG\Plugins\Hub2\Object\User;
+<?php
 
+namespace SRAG\Plugins\Hub2\Object\User;
+
+use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
@@ -8,8 +12,9 @@ use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object\User
  */
-class UserDTO extends MetadataAwareDataTransferObject {
+class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferObject {
 
+	use MetadataAwareDataTransferObject;
 	const GENDER_MALE = 'm';
 	const GENDER_FEMALE = 'f';
 	const AUTH_MODE_ILIAS = 'local';
@@ -699,10 +704,12 @@ class UserDTO extends MetadataAwareDataTransferObject {
 
 	/**
 	 * @param string $externalAccount
+	 *
 	 * @return UserDTO $this
 	 */
 	public function setExternalAccount($externalAccount) {
 		$this->externalAccount = $externalAccount;
+
 		return $this;
 	}
 

@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy;
 
+use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+
 /**
  * Interface ITaxonomy
  *
@@ -9,32 +11,34 @@ namespace SRAG\Plugins\Hub2\Taxonomy;
  */
 interface ITaxonomy {
 
+	const MODE_SELECT = 1;
+	const MODE_CREATE = 2;
+
+
 	/**
-	 * @param $value
+	 * @return string
+	 */
+	public function getTitle(): string;
+
+
+	/**
+	 * @return int ITaxonomy::MODE_SELECT or ITaxonomy::MODE_CREATE
+	 */
+	public function getMode(): int;
+
+
+	/**
+	 * @return INode[]
+	 */
+	public function getNodes(): array;
+
+
+	/**
+	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $node
 	 *
 	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
 	 */
-	public function setValue($value): ITaxonomy;
-
-
-	/**
-	 * @param int $identifier
-	 *
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
-	 */
-	public function setIdentifier(int $identifier): ITaxonomy;
-
-
-	/**
-	 * @return mixed
-	 */
-	public function getValue();
-
-
-	/**
-	 * @return mixed
-	 */
-	public function getIdentifier();
+	public function attach(INode $node): ITaxonomy;
 
 
 	/**

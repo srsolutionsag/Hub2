@@ -16,5 +16,16 @@ use SRAG\Plugins\Hub2\Object\User\UserDTO;
  */
 class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory {
 
+	/**
+	 * @inheritDoc
+	 */
+	public function taxonomy(ITaxonomy $Taxonomy): ITaxonomyImplementation {
+		switch ($Taxonomy->getMode()) {
+			case ITaxonomy::MODE_CREATE:
+				return new TaxonomyCreate($Taxonomy);
+			case ITaxonomy::MODE_SELECT:
+				return new TaxonomySelect($Taxonomy);
+		}
+	}
 }
 

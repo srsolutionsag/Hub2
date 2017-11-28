@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy;
 
+use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+
 /**
  * Class Taxonomy
  *
@@ -10,58 +12,62 @@ namespace SRAG\Plugins\Hub2\Taxonomy;
 class Taxonomy implements ITaxonomy {
 
 	/**
+	 * @var INode[]
+	 */
+	protected $nodes = [];
+	/**
+	 * @var string
+	 */
+	protected $title = '';
+	/**
 	 * @var int
 	 */
-	protected $identifier = 0;
-	/**
-	 * @var mixed
-	 */
-	protected $value;
+	protected $mode;
 
 
 	/**
-	 * Metadata constructor.
+	 * Taxonomy constructor.
 	 *
-	 * @param $identifier
+	 * @param string $title
+	 * @param int    $mode
 	 */
-	public function __construct($identifier) {
-		$this->identifier = $identifier;
+	public function __construct(string $title, int $mode) {
+		$this->title = $title;
+		$this->mode = $mode;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getTitle(): string {
+		return $this->title;
 	}
 
 
 	/**
 	 * @inheritDoc
 	 */
-	public function setValue($value): ITaxonomy {
-		$this->value = $value;
+	public function getMode(): int {
+		return $this->mode;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getNodes(): array {
+		return $this->nodes;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function attach(INode $node): ITaxonomy {
+		$this->nodes[] = $node;
 
 		return $this;
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function setIdentifier(int $identifier): ITaxonomy {
-		$this->identifier = $identifier;
-
-		return $this;
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getValue() {
-		return $this->value;
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getIdentifier() {
-		return $this->identifier;
 	}
 
 
@@ -69,8 +75,6 @@ class Taxonomy implements ITaxonomy {
 	 * @inheritDoc
 	 */
 	public function __toString(): string {
-		$json_encode = json_encode([ $this->getIdentifier() => $this->getValue() ]);
-
-		return $json_encode;
+		return "// TODO: Implement __toString() method.";
 	}
 }

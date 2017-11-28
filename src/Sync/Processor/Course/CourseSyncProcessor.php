@@ -1,4 +1,5 @@
 <?php
+
 namespace SRAG\Plugins\Hub2\Sync\Processor\Course;
 
 use SRAG\Plugins\Hub2\Exception\HubException;
@@ -13,6 +14,7 @@ use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
@@ -23,6 +25,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProcessor {
 
+	use MetadataSyncProcessor;
 	/**
 	 * @var CourseOriginProperties
 	 */
@@ -116,8 +119,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		$ilObjCourse->update();
 
-		$this->handleMetadata($dto, $ilObjCourse);
-
 		return $ilObjCourse;
 	}
 
@@ -150,8 +151,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$this->moveCourse($ilObjCourse, $dto);
 		}
 		$ilObjCourse->update();
-
-		$this->handleMetadata($dto, $ilObjCourse);
 
 		return $ilObjCourse;
 	}

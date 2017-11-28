@@ -1,5 +1,10 @@
 <?php namespace SRAG\Plugins\Hub2\Object;
 
+use SRAG\Plugins\Hub2\Metadata\Metadata;
+use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
+use SRAG\Plugins\Hub2\Taxonomy\Taxonomy;
+
 /**
  * Class ARObject
  *
@@ -122,6 +127,36 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		switch ($field_name) {
 			case 'data':
 				return json_encode($this->getData());
+			case "meta_data":
+				/**
+				 * @var $this \SRAG\Plugins\Hub2\Object\IMetadataAwareObject
+				 */
+				$metadataObjects = [];
+				$metadata = $this->getMetaData();
+				foreach ($metadata as $metadatum) {
+					$metadataObjects[$metadatum->getIdentifier()] = $metadatum->getValue();
+				}
+
+				$json_encode = json_encode($metadataObjects);
+
+				return $json_encode;
+			case "taxonomies":
+				/**
+				 * @var $this \SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject
+				 */
+				$taxonomyObjects = [];
+				$taxonomies = $this->getTaxonomies();
+				foreach ($taxonomies as $tax) {
+					$nodes = [];
+					foreach ($tax->getNodes() as $node) {
+						$nodes[] = $node->getTitle();
+					}
+					$taxonomyObjects[$tax->getTitle()] = $nodes;
+				}
+
+				$json_encode = json_encode($taxonomyObjects);
+
+				return $json_encode;
 		}
 
 		return parent::sleep($field_name);
@@ -135,6 +170,28 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		switch ($field_name) {
 			case 'data':
 				return json_decode($field_value, true);
+			case 'meta_data':
+				$json_decode = json_decode($field_value, true);
+				$IMetadata = [];
+				if (is_array($json_decode)) {
+					foreach ($json_decode as $metaDatum) {
+						$IMetadata[] = (new Metadata($metaDatum[0]))->setValue($metaDatum[1]);
+					}
+				}
+
+				return $IMetadata;
+			case 'taxonomies':
+				$json_decode = json_decode($field_value, true);
+				$taxonomies = [];
+				foreach ($json_decode as $tax_title => $nodes) {
+					$taxonomy = new Taxonomy($tax_title, ITaxonomy::MODE_CREATE);
+					foreach ($nodes as $node) {
+						$taxonomy->attach(new Node($node));
+					}
+					$taxonomies[] = $taxonomy;
+				}
+
+				return $taxonomies;
 		}
 
 		return parent::wakeUp($field_name, $field_value);

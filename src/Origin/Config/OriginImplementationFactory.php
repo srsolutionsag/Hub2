@@ -8,6 +8,7 @@ use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Taxonomy\TaxonomyFactory;
 
 /**
  * Class OriginImplementationFactory
@@ -63,7 +64,7 @@ class OriginImplementationFactory {
 		}
 		require_once($classFile);
 		$class = "SRAG\\Plugins\\Hub2\\Origin\\" . $className;
-		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory());
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory());
 
 		return $instance;
 	}

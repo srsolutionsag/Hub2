@@ -1,4 +1,5 @@
 <?php
+
 namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Log\ILog;
@@ -6,6 +7,7 @@ use SRAG\Plugins\Hub2\Metadata\IMetadataFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
 
 /**
  * Class AbstractOriginImplementation
@@ -17,6 +19,10 @@ use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 
+	/**
+	 * @var \SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory
+	 */
+	private $taxonomyFactory;
 	/**
 	 * @var \SRAG\Plugins\Hub2\Metadata\IMetadataFactory
 	 */
@@ -44,17 +50,22 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 
 	/**
-	 * @param IOriginConfig              $config
-	 * @param IDataTransferObjectFactory $factory
-	 * @param ILog                       $originLog
-	 * @param OriginNotifications        $originNotifications
+	 * AbstractOriginImplementation constructor.
+	 *
+	 * @param \SRAG\Plugins\Hub2\Origin\Config\IOriginConfig           $config
+	 * @param \SRAG\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory $factory
+	 * @param \SRAG\Plugins\Hub2\Log\ILog                              $originLog
+	 * @param \SRAG\Plugins\Hub2\Notification\OriginNotifications      $originNotifications
+	 * @param \SRAG\Plugins\Hub2\Metadata\IMetadataFactory             $metadataFactory
+	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory             $taxonomyFactory
 	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
 		$this->metadataFactory = $metadataFactory;
+		$this->taxonomyFactory = $taxonomyFactory;
 	}
 
 
@@ -79,6 +90,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function metadata() {
 		return $this->metadataFactory;
+	}
+
+
+	/**
+	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory
+	 */
+	final protected function taxonomy() {
+		return $this->taxonomyFactory;
 	}
 
 

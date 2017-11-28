@@ -25,10 +25,4 @@ interface ITaxonomyImplementation {
 	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
 	 */
 	public function getTaxonomy(): ITaxonomy;
-
-
-	/**
-	 * @return int
-	 */
-	public function getIliasId(): int;
 }

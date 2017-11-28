@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Object\Group;
 
+use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
@@ -9,8 +11,9 @@ use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupDTO extends MetadataAwareDataTransferObject {
+class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject {
 
+	use MetadataAwareDataTransferObject;
 	// View
 	const VIEW_BY_TYPE = 5;
 	// Registration

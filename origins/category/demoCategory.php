@@ -57,7 +57,19 @@ class demoCategory extends AbstractOriginImplementation {
 			                     ->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)
 			                     ->addMetadata($this->metadata()
 			                                        ->getDTOWithIliasId(1)
-			                                        ->setValue("Meine Metadaten"));;
+			                                        ->setValue("Meine Metadaten"))
+			                     ->addTaxonomy($this->taxonomy()
+			                                        ->create("Taxonomy 1")
+			                                        ->attach($this->taxonomy()
+			                                                      ->node("Node Title 1.1"))
+			                                        ->attach($this->taxonomy()
+			                                                      ->node("Node Title 1.2")))
+			                     ->addTaxonomy($this->taxonomy()
+			                                        ->create("Taxonomy 2")
+			                                        ->attach($this->taxonomy()
+			                                                      ->node("Node Title 2.1"))
+			                                        ->attach($this->taxonomy()
+			                                                      ->node("Node Title 2.2")));
 		}
 
 		return count($this->data);
