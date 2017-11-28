@@ -35,7 +35,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function all() {
 		$class = $this->getClass();
-
+		/** @var $class \ActiveRecord */
 		return $class::where([ 'origin_id' => $this->origin->getId() ])->get();
 	}
 
@@ -45,7 +45,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function getByStatus($status) {
 		$class = $this->getClass();
-
+		/** @var $class \ActiveRecord */
 		return $class::where([
 			'origin_id' => $this->origin->getId(),
 			'status'    => (int)$status,
@@ -59,26 +59,24 @@ abstract class ObjectRepository implements IObjectRepository {
 	public function getToDelete(array $ext_ids) {
 		$class = $this->getClass();
 
-		if(count($ext_ids)> 0){
+		if (count($ext_ids) > 0) {
 			/** @var $class \ActiveRecord */
 			return $class::where([
-					'origin_id' => $this->origin->getId(),
+				'origin_id' => $this->origin->getId(),
 				// We only can transmit from final states CREATED and UPDATED to TO_DELETE
 				// E.g. not from DELETED or IGNORED
-					'status'    => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ],
-					'ext_id'    => $ext_ids,
+				'status'    => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ],
+				'ext_id'    => $ext_ids,
 			], [ 'origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN' ])->get();
-		}
-		else{
+		} else {
 			/** @var $class \ActiveRecord */
 			return $class::where([
-					'origin_id' => $this->origin->getId(),
+				'origin_id' => $this->origin->getId(),
 				// We only can transmit from final states CREATED and UPDATED to TO_DELETE
 				// E.g. not from DELETED or IGNORED
-					'status'    => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ]
-			], [ 'origin_id' => '=', 'status' => 'IN'])->get();
+				'status'    => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ],
+			], [ 'origin_id' => '=', 'status' => 'IN' ])->get();
 		}
-
 	}
 
 
@@ -87,7 +85,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function count() {
 		$class = $this->getClass();
-
+		/** @var $class \ActiveRecord */
 		return $class::where([ 'origin_id' => $this->origin->getId() ])->count();
 	}
 
