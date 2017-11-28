@@ -123,6 +123,8 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 			if ($tree->isInTree($dto->getSessionId())) {
 				return (int)$dto->getSessionId();
 			}
+			throw new HubException("Could not find the ref-ID of the parent session in the tree: '{$dto->getGroupId()}'");
+
 		}
 		if ($dto->getSessionIdType() == SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
 			// The stored parent-ID is an external-ID from a category.

@@ -9,13 +9,8 @@ use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
  */
 class GroupMembershipDTO extends DataTransferObject {
 
-	/**
-	 * @inheritDoc
-	 */
-	public function __construct($group_ext_id, $user_id) {
-		parent::__construct("{$group_ext_id}|||{$user_id}");
-	}
-
+	const PARENT_ID_TYPE_REF_ID = 1;
+	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 
 	const ROLE_MEMBER = 2;
 	const ROLE_ADMIN = 1;
@@ -32,22 +27,49 @@ class GroupMembershipDTO extends DataTransferObject {
 	 */
 	protected $role = self::ROLE_MEMBER;
 
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct($group_id, $user_id) {
+		parent::__construct("{$group_id}|||{$user_id}");
+		$this->groupId = $group_id;
+		$this->userId = $user_id;
+	}
 
 	/**
-	 * @return int
+	 * @return string
 	 */
-	public function getIliasGroupRefId() {
-		return $this->ilias_group_ref_id;
+	public function getGroupId(): string {
+		return $this->groupId;
 	}
 
 
 	/**
-	 * @param int $ilias_group_ref_id
+	 * @param string $groupId
+	 * @return GroupMembershipDTO
+	 */
+	public function setGroupId(string $groupId): GroupMembershipDTO {
+		$this->groupId = $groupId;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getGroupIdType(): int {
+		return $this->groupIdType;
+	}
+
+
+	/**
+	 * @param int $groupIdType
 	 *
 	 * @return GroupMembershipDTO
 	 */
-	public function setIliasGroupRefId(int $ilias_group_ref_id): GroupMembershipDTO {
-		$this->ilias_group_ref_id = $ilias_group_ref_id;
+	public function setGroupIdType(int $groupIdType): GroupMembershipDTO {
+		$this->groupIdType = $groupIdType;
 
 		return $this;
 	}
