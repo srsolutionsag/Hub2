@@ -83,13 +83,24 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				$ilObjSession->$setter($dto->$getter());
 			}
 		}
-		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession, true);
 
+		/**
+		 * Dates for first appointment need to be fixed before create since create raises
+		 * create prepareCalendarAppointments by ilAppEventHandler. At this point the
+		 * correct dates need to be set, otherwise, the current date will be used.
+		 **/
+		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession, true);
 		$ilObjSession->create();
 		$ilObjSession->createReference();
 		$a_parent_ref = $this->buildParentRefId($dto);
 		$ilObjSession->putInTree($a_parent_ref);
 		$ilObjSession->setPermissions($a_parent_ref);
+		/**
+		 * Since the id is only known after create, it has to be set again before
+		 * creation of the firs appointment, otherwise no event_appointment will be
+		 * generated for the session.
+		 */
+		$ilObjSession->getFirstAppointment()->setSessionId($ilObjSession->getId());
 		$ilObjSession->getFirstAppointment()->create();
 
 		$this->handleMetadata($dto, $ilObjSession);
@@ -119,8 +130,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			}
 		}
 
+		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession,true);
 		$ilObjSession->update();
-		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession);
 		$ilObjSession->getFirstAppointment()->update();
 
 		return $ilObjSession;
