@@ -14,6 +14,10 @@ abstract class ObjectRepository implements IObjectRepository {
 	 * @var IOrigin
 	 */
 	protected $origin;
+	/**
+	 * @var array
+	 */
+	protected static $classmap = [];
 
 
 	/**
@@ -94,8 +98,16 @@ abstract class ObjectRepository implements IObjectRepository {
 	 * @return string
 	 */
 	protected function getClass() {
-		$ucfirst = ucfirst($this->origin->getObjectType());
+		$object_type = $this->origin->getObjectType();
 
-		return "SRAG\\Plugins\\Hub2\\Object\\" . $ucfirst . "\\AR" . $ucfirst;
+		if (isset(self::$classmap[$object_type])) {
+			return self::$classmap[$object_type];
+		}
+
+		$ucfirst = ucfirst($object_type);
+		self::$classmap[$object_type] = "SRAG\\Plugins\\Hub2\\Object\\" . $ucfirst . "\\AR"
+		                                . $ucfirst;
+
+		return self::$classmap[$object_type];
 	}
 }
