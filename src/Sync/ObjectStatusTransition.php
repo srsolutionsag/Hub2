@@ -21,7 +21,6 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		IObject::STATUS_UPDATED,
 		IObject::STATUS_DELETED,
 		IObject::STATUS_IGNORED,
-		IObject::STATUS_NOTHING_TO_UPDATE,
 	];
 	/**
 	 * @var IOriginConfig
@@ -83,6 +82,8 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 				return IObject::STATUS_UPDATED;
 			case IObject::STATUS_TO_DELETE:
 				return IObject::STATUS_DELETED;
+			case IObject::STATUS_NOTHING_TO_UPDATE:
+				return IObject::STATUS_IGNORED;
 		}
 		throw new HubException(sprintf("Could not transition to final state from state %s", $object->getStatus()));
 	}
