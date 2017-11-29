@@ -40,10 +40,13 @@ class demoGroup extends AbstractOriginImplementation {
 		$this->log()->write("This is a test-log entry");
 
 		for ($x = 1; $x < 14; $x ++) {
-			$xrand = $x;
+			if (rand(1, 10) === $x) {
+				continue; // Simulate some random deletions
+			}
+			$xrand = rand();
 			$this->data[] = $this->factory()
 			                     ->group($x)
-			                     ->setParentIdType(GroupDTO::PARENT_ID_TYPE_REF_ID)
+			                     ->setParentIdType(GroupDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
 			                     ->setParentId(1)
 			                     ->setDescription("Description {$xrand}")
 			                     ->setTitle("Title {$xrand}")
@@ -60,7 +63,7 @@ class demoGroup extends AbstractOriginImplementation {
 			                     ->setWaitingList(true)
 			                     ->setWaitingListAutoFill(true)
 			                     ->setStart(1507202887)
-			                     ->setEnd(1507202887 + 30)
+			                     ->setEnd(1507202887 + 3600)
 			                     ->setLatitude(7.1234)
 			                     ->setLongitude(45.1234)
 			                     ->setLocationzoom(5)

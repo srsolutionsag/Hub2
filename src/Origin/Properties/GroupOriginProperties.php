@@ -15,9 +15,9 @@ class GroupOriginProperties extends OriginProperties {
 	const DELETE_MODE = 'delete_mode';
 	const MOVE_GROUP = 'move_group';
 	const DELETE_MODE_NONE = 0;
-	const DELETE_MODE_OFFLINE = 1;
+	const DELETE_MODE_CLOSED = 1;
 	const DELETE_MODE_DELETE = 2;
-	const DELETE_MODE_DELETE_OR_OFFLINE = 3;
+	const DELETE_MODE_DELETE_OR_CLOSE = 3;
 	const DELETE_MODE_MOVE_TO_TRASH = 4;
 	/**
 	 * @var array
@@ -37,9 +37,9 @@ class GroupOriginProperties extends OriginProperties {
 	public static function getAvailableDeleteModes() {
 		return [
 			self::DELETE_MODE_NONE,
-			self::DELETE_MODE_OFFLINE,
+			self::DELETE_MODE_CLOSED,
 			self::DELETE_MODE_DELETE,
-			self::DELETE_MODE_DELETE_OR_OFFLINE,
+			self::DELETE_MODE_DELETE_OR_CLOSE,
 			self::DELETE_MODE_MOVE_TO_TRASH,
 		];
 	}

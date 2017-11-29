@@ -1902,6 +1902,97 @@
                 },
                 "last_used": "29.11.2017"
             }
+        },
+        "grp": {
+            "prop_node_noparent": {
+                "translations": {
+                    "en": "Fallback Parent Ref-ID",
+                    "de": "Fallback Parent Ref-ID"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_node_noparent_info": {
+                "translations": {
+                    "en": "Groups are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node.",
+                    "de": "Groups are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node."
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_activate": {
+                "translations": {
+                    "en": "MISSING",
+                    "de": "MISSING"
+                }
+            },
+            "prop_move": {
+                "translations": {
+                    "en": "Move Group",
+                    "de": "Gruppe verschieben"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_move_info": {
+                "translations": {
+                    "en": "Groups is moved to Parent-Id if this has changed",
+                    "de": "Groups is moved to Parent-Id if this has changed"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_reactivate": {
+                "translations": {
+                    "en": "MISSING",
+                    "de": "MISSING"
+                }
+            },
+            "prop_delete_mode": {
+                "translations": {
+                    "en": "Deletion Mode",
+                    "de": "Löschverhalten"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_none": {
+                "translations": {
+                    "en": "No Action",
+                    "de": "Keine Aktion"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_close": {
+                "translations": {
+                    "en": "Make Group a Closed Group",
+                    "de": "Gruppe zu \"geschlossene Gruppe\" umwandeln"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_delete": {
+                "translations": {
+                    "en": "Delete Group",
+                    "de": "Gruppe löschen"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_delete_or_close": {
+                "translations": {
+                    "en": "Delete or Close Group",
+                    "de": "Löschen oder Schliessen"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_delete_or_close_info": {
+                "translations": {
+                    "en": "Deletes the Group if there wasn't any activity",
+                    "de": "Deletes the Group if there wasn't any activity"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_trash": {
+                "translations": {
+                    "en": "Move to Trash",
+                    "de": "In Papierkorb verschieben"
+                },
+                "last_used": "29.11.2017"
+            }
         }
     }
 }

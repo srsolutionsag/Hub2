@@ -327,3 +327,16 @@ status_2#:#To Create
 status_32#:#To Delete
 subtab_origins#:#Overview
 subtab_data#:#History
+grp_prop_node_noparent#:#Fallback Parent Ref-ID
+grp_prop_node_noparent_info#:#Groups are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node.
+grp_prop_activate#:#MISSING
+grp_prop_move#:#Move Group
+grp_prop_move_info#:#Groups is moved to Parent-Id if this has changed
+grp_prop_reactivate#:#MISSING
+grp_prop_delete_mode#:#Deletion Mode
+grp_prop_delete_mode_none#:#No Action
+grp_prop_delete_mode_close#:#Make Group a Closed Group
+grp_prop_delete_mode_delete#:#Delete Group
+grp_prop_delete_mode_delete_or_close#:#Delete or Close Group
+grp_prop_delete_mode_delete_or_close_info#:#Deletes the Group if there wasn't any activity
+grp_prop_delete_mode_trash#:#Move to Trash
