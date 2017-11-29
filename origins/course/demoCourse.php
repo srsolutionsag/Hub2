@@ -1,6 +1,7 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+//namespace SRAG\Plugins\Hub2\Origin;
+namespace SRAG\Plugins\Hub2\Demo\Origin;
 
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
