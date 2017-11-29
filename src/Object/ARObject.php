@@ -171,6 +171,9 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			case 'data':
 				return json_decode($field_value, true);
 			case 'meta_data':
+				if (is_null($field_value)) {
+					return [];
+				}
 				$json_decode = json_decode($field_value, true);
 				$IMetadata = [];
 				if (is_array($json_decode)) {
@@ -181,6 +184,9 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 
 				return $IMetadata;
 			case 'taxonomies':
+				if (is_null($field_value)) {
+					return [];
+				}
 				$json_decode = json_decode($field_value, true);
 				$taxonomies = [];
 				foreach ($json_decode as $tax_title => $nodes) {

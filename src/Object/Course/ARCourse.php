@@ -4,6 +4,7 @@ namespace SRAG\Plugins\Hub2\Object\Course;
 
 use SRAG\Plugins\Hub2\Object\ARMetadataAwareObject;
 use SRAG\Plugins\Hub2\Object\ARObject;
+use SRAG\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 
 /**
  * Class ARCourse
@@ -14,6 +15,7 @@ use SRAG\Plugins\Hub2\Object\ARObject;
 class ARCourse extends ARObject implements ICourse {
 
 	use ARMetadataAwareObject;
+	use ARTaxonomyAwareObject;
 
 
 	/**

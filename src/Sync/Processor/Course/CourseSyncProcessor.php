@@ -16,6 +16,7 @@ use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class CourseSyncProcessor
@@ -25,6 +26,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProcessor {
 
+	use TaxonomySyncProcessor;
 	use MetadataSyncProcessor;
 	/**
 	 * @var CourseOriginProperties

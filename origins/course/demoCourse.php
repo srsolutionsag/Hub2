@@ -64,17 +64,9 @@ class demoCourse extends AbstractOriginImplementation {
 			                                        ->getDTOWithIliasId(1)
 			                                        ->setValue("Meine Metadaten {$time}"))
 			                     ->addTaxonomy($this->taxonomy()
-			                                        ->create("Taxonomy 1")
+			                                        ->select("Taxonomy 1")
 			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 1.1"))
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 1.2")))
-			                     ->addTaxonomy($this->taxonomy()
-			                                        ->create("Taxonomy 2")
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 2.1"))
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 2.2")));
+			                                                      ->node("Node Title 1.1")));
 		}
 
 		return count($this->data);
