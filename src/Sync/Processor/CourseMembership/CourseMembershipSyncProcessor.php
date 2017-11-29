@@ -12,6 +12,7 @@ use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
@@ -66,7 +67,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		$user_id = $dto->getUserId();
 		$course->getMembersObject()->add($user_id, $this->mapRole($dto));
 
-		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+		return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 	}
 
 
@@ -77,10 +78,11 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		/**
 		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 		 */
+		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 		$ilias_course_ref_id = $dto->getCourseId();
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
-			return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+			return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 		}
 
 		$course = $this->findILIASCourse($ilias_course_ref_id);
@@ -91,7 +93,11 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		$course->getMembersObject()
 		       ->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
 
-		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+		$obj->setUserIdIlias($dto->getUserId());
+		$obj->setContainerIdIlias($course->getRefId());
+		$obj->initId();
+
+		return $obj;
 	}
 
 
@@ -99,11 +105,12 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id) {
-		list ($user_id, $ilias_course_ref_id) = explode(self::SPLIT, $ilias_id);
-		$course = $this->findILIASCourse($ilias_course_ref_id);
-		$course->getMembersObject()->delete($user_id);
+		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+		$course = $this->findILIASCourse($obj->getContainerIdIlias());
+		$course->getMembersObject()->delete($obj->getUserIdIlias());
+
+		return $obj;
 	}
 
 
@@ -142,7 +149,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 	/**
 	 * @param \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO $object
-	 * @param \ilObjCourse                                           $course
+	 * @param \ilObjCourse                                                   $course
 	 *
 	 * @return int
 	 */
@@ -159,8 +166,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		}
 	}
 
+
 	/**
 	 * @param CourseMembershipDTO $course_membership
+	 *
 	 * @return int
 	 * @throws HubException
 	 */
@@ -169,7 +178,8 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_REF_ID) {
 			return $course_membership->getCourseId();
 		}
-		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID) {
+		if ($course_membership->getCourseIdType()
+		    == CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID) {
 			// The stored course-ID is an external-ID from a course.
 			// We must search the course ref-ID from a category object synced by
 			// a linked origin. --> Get an instance of the linked origin and lookup the

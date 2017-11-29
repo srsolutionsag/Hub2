@@ -12,6 +12,7 @@ use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
@@ -61,27 +62,6 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var \SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO $dto */
-
-		$ilObjSession = $this->findILIASObject($ilias_id);
-		$this->handleMembership($ilObjSession, $dto);
-
-		return new FakeIliasObject($ilias_id);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function handleDelete($ilias_id) {
-		$ilObjSession = $this->findILIASObject($ilias_id);
-		$this->removeMembership($ilObjSession, $dto);
-
-		return new FakeIliasObject($ilias_id);
-	}
-
-
 	protected function handleCreate(IDataTransferObject $dto) {
 		/** @var \SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO $dto */
 
@@ -89,7 +69,37 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		$ilObjSession = $this->findILIASObject($session_ref_id);
 		$this->handleMembership($ilObjSession, $dto);
 
-		return new FakeIliasObject($session_ref_id);
+		return new FakeIliasMembershipObject($session_ref_id, $dto->getUserId());
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
+		/** @var \SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO $dto */
+		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+
+		$ilObjSession = $this->findILIASObject($obj->getContainerIdIlias());
+		$this->handleMembership($ilObjSession, $dto);
+
+		$obj->setUserIdIlias($dto->getUserId());
+		$obj->setContainerIdIlias($ilObjSession->getRefId());
+		$obj->initId();
+
+		return $obj;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	protected function handleDelete($ilias_id) {
+		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+		$ilObjSession = $this->findILIASObject($obj->getContainerIdIlias());
+		$this->removeMembership($ilObjSession, $obj->getUserIdIlias());
+
+		return $obj;
 	}
 
 
@@ -177,18 +187,17 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 
 
 	/**
-	 * @param \ilObjSession                                                    $ilObjSession
-	 * @param \SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO $dto
+	 * @param \ilObjSession $ilObjSession
+	 * @param    int        $user_id
 	 *
 	 * @throws \SRAG\Plugins\Hub2\Exception\HubException
 	 */
-	protected function removeMembership(\ilObjSession $ilObjSession, SessionMembershipDTO $dto) {
+	protected function removeMembership(\ilObjSession $ilObjSession, $user_id) {
 		/**
 		 * @var $ilSessionParticipants \ilSessionParticipants
 		 */
 		$ilSessionParticipants = $ilObjSession->getMembersObject();
 
-		$user_id = $dto->getUserId();
 		if (!\ilObjUser::_exists($user_id)) {
 			throw new HubException("user with id {$user_id} does not exist");
 		}

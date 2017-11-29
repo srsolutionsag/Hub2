@@ -122,7 +122,7 @@ interface IObject {
 
 
 	/**
-	 * @param int $id
+	 * @param int|string $id
 	 *
 	 * @return $this
 	 */

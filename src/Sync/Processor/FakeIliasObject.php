@@ -20,7 +20,9 @@ class FakeIliasObject {
 	 *
 	 * @param string $id
 	 */
-	public function __construct($id) { $this->id = $id; }
+	public function __construct($id) {
+		$this->id = $id;
+	}
 
 
 	/**

@@ -6,6 +6,7 @@ use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
+use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
 
 /**
  * Class demoSessionMembership
@@ -42,7 +43,7 @@ class demoSessionMembership extends AbstractOriginImplementation {
 		$this->data[] = $this->factory()
 		                     ->sessionMembership(1, 6)
 		                     ->setSessionIdType(SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
-		                     ->setSessionId(1)
+		                     ->setSessionId(rand(1, 10))
 		                     ->setRole(SessionMembershipDTO::ROLE_MEMBER);
 	}
 

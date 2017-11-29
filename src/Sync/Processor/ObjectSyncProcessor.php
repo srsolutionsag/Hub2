@@ -109,6 +109,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 					if ($this instanceof ITaxonomySyncProcessor) {
 						$this->handleTaxonomies($dto, $ilias_object);
 					}
+					$object->setILIASId($this->getILIASId($ilias_object));
 					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
 				} else {
 					$object->updateStatus(IObject::STATUS_NOTHING_TO_UPDATE);
@@ -145,7 +146,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @return int
 	 */
 	protected function getILIASId($object) {
-		if ($object instanceof \ilObjUser || $object instanceof FakeIliasObject) {
+		if ($object instanceof \ilObjUser || $object instanceof FakeIliasObject
+		    || $object instanceof FakeIliasMembershipObject) {
 			return $object->getId();
 		}
 

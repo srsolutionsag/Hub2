@@ -79,11 +79,11 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 */
 	protected $processed_date;
 	/**
-	 * @var int
+	 * @var string
 	 *
 	 * @db_has_field    true
-	 * @db_fieldtype    integer
-	 * @db_length       8
+	 * @db_fieldtype    text
+	 * @db_length       256
 	 */
 	protected $ilias_id;
 	/**
@@ -299,7 +299,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function setILIASId($id) {
-		$this->ilias_id = (int)$id;
+		$this->ilias_id = $id;
 
 		return $this;
 	}
