@@ -17,14 +17,14 @@ use SRAG\Plugins\Hub2\Object\User\UserDTO;
 class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
-	public function taxonomy(ITaxonomy $Taxonomy): ITaxonomyImplementation {
+	public function taxonomy(ITaxonomy $Taxonomy, \ilObject $ilias_object): ITaxonomyImplementation {
 		switch ($Taxonomy->getMode()) {
 			case ITaxonomy::MODE_CREATE:
-				return new TaxonomyCreate($Taxonomy);
+				return new TaxonomyCreate($Taxonomy, (int)$ilias_object->getRefId());
 			case ITaxonomy::MODE_SELECT:
-				return new TaxonomySelect($Taxonomy);
+				return new TaxonomySelect($Taxonomy, (int)$ilias_object->getRefId());
 		}
 	}
 }

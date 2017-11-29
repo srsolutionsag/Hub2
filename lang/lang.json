@@ -71,7 +71,7 @@
                     "en": "Lock active Origins",
                     "de": "Aktive Origins sperren"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "membership": {
                 "translations": {
@@ -113,7 +113,7 @@
                     "en": "Object-not-active Message",
                     "de": "Object-not-active Message"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "msg_shortlink_not_active_info": {
                 "translations": {
@@ -125,41 +125,41 @@
                     "en": "ILIAS-ID-Not-Found-Message",
                     "de": "ILIAS-ID-Not-Found-Message"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "msg_shortlink_no_ilias_id_info": {
                 "translations": {
                     "en": "ILIAS-ID-Not-Found-Message",
                     "de": "ILIAS-ID-Not-Found-Message"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "msg_shortlink_not_found": {
                 "translations": {
                     "en": "Not-Found-Message",
                     "de": "Nicht gefunden Nachricht"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "msg_shortlink_not_found_info": {
                 "translations": {
                     "en": "Is shown if a Shortlink is used which does not exist",
                     "de": "Wird angezeigt wenn ein nciht existierender Shortlink genutzt wird"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "origins_path": {
                 "translations": {
                     "en": "Path to Origins"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "origins_path_info": {
                 "translations": {
                     "en": "Location of the 'origins' directory",
                     "de": "Ort des 'origin'-Verzeichnisses"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "password_email_body": {
                 "translations": {
@@ -176,14 +176,14 @@
                     "en": "Role-IDs which can use HUB2 (commaseparated",
                     "de": "Rollen-IDs die HUB2 verwenden können (kommasepariert"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "shortlink": {
                 "translations": {
                     "en": "Shortlink",
                     "de": "Shortlink"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "use_async": {
                 "translations": {
@@ -219,7 +219,7 @@
                 "translations": {
                     "en": "General"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "header_sync": {
                 "translations": {
@@ -629,7 +629,7 @@
                     "en": "Aktionen",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "activate": {
                 "translations": {
@@ -645,13 +645,13 @@
                 "translations": {
                     "en": "Löschen"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "edit": {
                 "translations": {
                     "en": "Bearbeiten"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "export": {
                 "translations": {
@@ -679,14 +679,14 @@
                     "en": "Permissions",
                     "de": "Rechte"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "roles": {
                 "translations": {
                     "en": "Role-IDs",
                     "de": "Rollen-IDs"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             }
         },
         "hub": {
@@ -715,7 +715,7 @@
                     "en": "Anbindungen",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "users": {
                 "translations": {
@@ -1180,21 +1180,21 @@
                     "en": "Alle aktivieren",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_button_add": {
                 "translations": {
                     "en": "Anbindung hinzufügen",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_button_deactivate_all": {
                 "translations": {
                     "en": "Alle deaktivieren",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_button_import": {
                 "translations": {
@@ -1206,21 +1206,21 @@
                     "en": "Synchronisierung starten",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_header_active": {
                 "translations": {
                     "en": "Aktiv",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_header_count": {
                 "translations": {
                     "en": "Anzahl",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_header_duration_objects": {
                 "translations": {
@@ -1232,7 +1232,7 @@
                     "en": "Beschreibung",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_header_duration": {
                 "translations": {
@@ -1244,21 +1244,21 @@
                     "en": "Letzte Synchronisierung",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_header_title": {
                 "translations": {
                     "en": "Titel",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_header_usage_type": {
                 "translations": {
                     "en": "Verwendung",
                     "de": "MISSING"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "table_title": {
                 "translations": {
@@ -1732,14 +1732,14 @@
                     "en": "Save",
                     "de": "Speichern"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "cancel": {
                 "translations": {
                     "en": "Cancel",
                     "de": "Abbrechen"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             }
         },
         "tab": {
@@ -1748,7 +1748,7 @@
                     "en": "Origins",
                     "de": "Origins"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "data": {
                 "translations": {
@@ -1762,7 +1762,7 @@
                     "en": "Configuration",
                     "de": "Konfiguration"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             }
         },
         "data": {
@@ -1879,14 +1879,14 @@
                     "en": "Overview",
                     "de": "Übersicht"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "data": {
                 "translations": {
                     "en": "History",
                     "de": "Historie"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             }
         }
     }

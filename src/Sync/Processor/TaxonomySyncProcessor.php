@@ -27,7 +27,7 @@ trait TaxonomySyncProcessor {
 
 			$f = new TaxonomyImplementationFactory();
 			foreach ($dto->getTaxonomies() as $taxonomy) {
-				$f->taxonomy($taxonomy)->write();
+				$f->taxonomy($taxonomy, $object)->write();
 			}
 		}
 	}
