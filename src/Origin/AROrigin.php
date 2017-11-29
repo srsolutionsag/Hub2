@@ -82,6 +82,14 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @var string
 	 *
 	 * @db_has_field           true
+	 * @db_fieldtype           text
+	 * @db_length              256
+	 */
+	protected $implementation_namespace = IOrigin::ORIGIN_MAIN_NAMESPACE;
+	/**
+	 * @var string
+	 *
+	 * @db_has_field           true
 	 * @db_fieldtype           timestamp
 	 */
 	protected $updated_at;
@@ -260,6 +268,22 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		$this->implementation_class_name = $name;
 
 		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getImplementationNamespace() {
+		return $this->implementation_namespace ? $this->implementation_namespace : IOrigin::ORIGIN_MAIN_NAMESPACE;
+	}
+
+
+	/**
+	 * @param string $implementation_namespace
+	 */
+	public function setImplementationNamespace($implementation_namespace) {
+		$this->implementation_namespace = $implementation_namespace;
 	}
 
 

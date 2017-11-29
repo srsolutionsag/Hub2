@@ -189,6 +189,12 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		$te->setRequired(true);
 		$this->addItem($te);
 
+		$te = new \ilTextInputGUI($this->pl->txt('origin_form_field_namespace'), 'implementation_namespace');
+		$te->setInfo($this->pl->txt('origin_form_field_namespace_info'));
+		$te->setValue($this->origin->getImplementationNamespace());
+		$te->setRequired(true);
+		$this->addItem($te);
+
 		$se = new \ilSelectInputGUI($this->pl->txt('com_prop_link_to_origin'), $this->conf(IOriginConfig::LINKED_ORIGIN_ID));
 		$options = [ '' => '' ];
 		foreach ($this->originRepository->all() as $origin) {

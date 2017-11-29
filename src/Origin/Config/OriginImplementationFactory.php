@@ -58,12 +58,13 @@ class OriginImplementationFactory {
 		$basePath = rtrim($this->hubConfig->getOriginImplementationsPath(), '/') . '/';
 		$path = $basePath . $this->origin->getObjectType() . '/';
 		$className = $this->origin->getImplementationClassName();
+		$namespace = $this->origin->getImplementationNamespace();
 		$classFile = $path . $className . '.php';
 		if (!is_file($classFile)) {
 			throw new HubException("Origin implementation class file does not exist, should be at: $classFile");
 		}
 		require_once($classFile);
-		$class = "SRAG\\Plugins\\Hub2\\Origin\\" . $className;
+		$class = rtrim($namespace, "\\") . "\\" . $className;
 		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory());
 
 		return $instance;

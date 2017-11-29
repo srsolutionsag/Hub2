@@ -18,6 +18,7 @@ interface IOrigin {
 	const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
 	const OBJECT_TYPE_SESSION = 'session';
 	const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
+	const ORIGIN_MAIN_NAMESPACE = "SRAG\\Plugins\\Hub2\\Origin";
 
 
 	/**
@@ -80,6 +81,18 @@ interface IOrigin {
 	 * @return $this
 	 */
 	public function setImplementationClassName($name);
+
+
+	/**
+	 * @return string
+	 */
+	public function getImplementationNamespace();
+
+
+	/**
+	 * @param string $implementation_namespace
+	 */
+	public function setImplementationNamespace($implementation_namespace);
 
 
 	/**

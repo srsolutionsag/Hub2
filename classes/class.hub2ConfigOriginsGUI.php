@@ -141,6 +141,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$origin->setDescription($form->getInput('description'));
 			$origin->setActive($form->getInput('active'));
 			$origin->setImplementationClassName($form->getInput('implementation_class_name'));
+			$origin->setImplementationNamespace($form->getInput('implementation_namespace'));
 			// Get the config data as an array
 			$configData = [];
 			$propertyData = [];
