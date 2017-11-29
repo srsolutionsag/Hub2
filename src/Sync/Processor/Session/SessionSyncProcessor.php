@@ -14,6 +14,7 @@ use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class SessionSyncProcessor
@@ -23,6 +24,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncProcessor {
 
 	use MetadataSyncProcessor;
+	use TaxonomySyncProcessor;
 	/**
 	 * @var \SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties
 	 */

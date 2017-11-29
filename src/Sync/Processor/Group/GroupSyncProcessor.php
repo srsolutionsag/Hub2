@@ -17,6 +17,7 @@ use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
+use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class GroupSyncProcessor
@@ -25,6 +26,7 @@ use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
  */
 class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProcessor {
 
+	use TaxonomySyncProcessor;
 	use MetadataSyncProcessor;
 	/**
 	 * @var GroupOriginProperties
@@ -142,13 +144,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		}
 
 		if ($this->props->get(GroupOriginProperties::SET_ONLINE)) {
-			//			$ilObjGroup->setA(false);
+			// $ilObjGroup->set(false);
 			//			$ilObjGroup->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
-		}
-		if ($this->props->get(GroupOriginProperties::CREATE_ICON)) {
-			// TODO
-			//			$this->updateIcon($this->ilias_object);
-			//			$this->ilias_object->update();
 		}
 
 		$ilObjGroup->create();

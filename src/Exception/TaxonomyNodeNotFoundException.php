@@ -2,36 +2,36 @@
 
 namespace SRAG\Plugins\Hub2\Exception;
 
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
- * Class TaxonomyNotFoundException
+ * Class TaxonomyNodeNotFoundException
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class TaxonomyNotFoundException extends HubException {
+class TaxonomyNodeNotFoundException extends HubException {
 
 	/**
-	 * @var ITaxonomy
+	 * @var \SRAG\Plugins\Hub2\Taxonomy\Node\INode
 	 */
-	protected $taxonomy;
+	protected $node;
 
 
 	/**
-	 * TaxonomyNotFoundException constructor.
+	 * TaxonomyNodeNotFoundException constructor.
 	 *
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy $ta
+	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $node
 	 */
-	public function __construct(ITaxonomy $ta) {
-		parent::__construct("ILIAS Taxonomy object not found for: {$ta->getTitle()}");
-		$this->taxonomy = $ta;
+	public function __construct(INode $node) {
+		parent::__construct("ILIAS Taxonomy Node not found for: {$node->getTitle()}");
+		$this->node = $node;
 	}
 
 
 	/**
-	 * @return ITaxonomy
+	 * @return \SRAG\Plugins\Hub2\Taxonomy\Node\INode
 	 */
-	public function getTaxonomy(): ITaxonomy {
-		return $this->taxonomy;
+	public function getNode(): INode {
+		return $this->node;
 	}
 }

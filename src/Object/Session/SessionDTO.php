@@ -4,16 +4,19 @@ namespace SRAG\Plugins\Hub2\Object\Session;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 
 /**
  * Class SessionDTO
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionDTO extends DataTransferObject implements IMetadataAwareDataTransferObject {
+class SessionDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject {
 
 	use MetadataAwareDataTransferObject;
+	use TaxonomyAwareDataTransferObject;
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**

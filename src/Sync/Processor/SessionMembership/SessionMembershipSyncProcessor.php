@@ -75,8 +75,6 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id) {
-		/** @var \SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO $dto */
-
 		$ilObjSession = $this->findILIASObject($ilias_id);
 		$this->removeMembership($ilObjSession, $dto);
 

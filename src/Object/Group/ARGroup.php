@@ -4,6 +4,7 @@ namespace SRAG\Plugins\Hub2\Object\Group;
 
 use SRAG\Plugins\Hub2\Object\ARMetadataAwareObject;
 use SRAG\Plugins\Hub2\Object\ARObject;
+use SRAG\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 
 /**
  * Class ARGroup
@@ -14,6 +15,7 @@ use SRAG\Plugins\Hub2\Object\ARObject;
 class ARGroup extends ARObject implements IGroup {
 
 	use ARMetadataAwareObject;
+	use ARTaxonomyAwareObject;
 
 
 	/**

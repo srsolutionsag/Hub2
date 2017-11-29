@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
 
+use SRAG\Plugins\Hub2\Exception\TaxonomyNodeNotFoundException;
 use SRAG\Plugins\Hub2\Exception\TaxonomyNotFoundException;
 use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 
@@ -44,7 +45,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 		$this->initTaxTree();
 		foreach ($this->getTaxonomy()->getNodes() as $node) {
 			if (!$this->nodeExists($node)) {
-				throw new TaxonomyNotFoundException($this->getTaxonomy());
+				throw new TaxonomyNodeNotFoundException($node);
 			}
 			$this->selectNode($node);
 		}
@@ -58,14 +59,15 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 		}
 		$this->ilObjTaxonomy = new \ilObjTaxonomy($tax_id);
 		$this->container_obj_id = \ilObject2::_lookupObjId($this->getILIASParentId());
-		$this->ilTaxNodeAssignment = new \ilTaxNodeAssignment('crs', $this->container_obj_id, "obj", $tax_id);
+		$a_component_id = \ilObject2::_lookupType($this->container_obj_id);
+		$this->ilTaxNodeAssignment = new \ilTaxNodeAssignment($a_component_id, $this->container_obj_id, "obj", $tax_id);
 	}
 
 
 	private function selectNode(INode $node) {
 		$node_id = array_search($node->getTitle(), $this->childs);
 		if (!$node_id) {
-			throw new TaxonomyNotFoundException($this->getTaxonomy());
+			throw new TaxonomyNodeNotFoundException($node);
 		}
 
 		$this->ilTaxNodeAssignment->addAssignment($node_id, $this->container_obj_id);

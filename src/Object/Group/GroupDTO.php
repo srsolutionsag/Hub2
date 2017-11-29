@@ -4,16 +4,19 @@ namespace SRAG\Plugins\Hub2\Object\Group;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 
 /**
  * Class GroupDTO
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject {
+class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject {
 
 	use MetadataAwareDataTransferObject;
+	use TaxonomyAwareDataTransferObject;
 	// View
 	const VIEW_BY_TYPE = 5;
 	// Registration
