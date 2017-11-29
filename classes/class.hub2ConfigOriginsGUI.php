@@ -149,11 +149,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 				if (strpos($item->getPostVar(), 'config_') === 0) {
 					$key = substr($item->getPostVar(), 7);
 					$configData[$key] = $form->getInput($item->getPostVar());
-				} else {
-					if (strpos($item->getPostVar(), 'prop_') === 0) {
-						$key = substr($item->getPostVar(), 5);
-						$propertyData[$key] = $form->getInput($item->getPostVar());
-					}
+				} elseif (strpos($item->getPostVar(), 'prop_') === 0) {
+					$key = substr($item->getPostVar(), 5);
+					$propertyData[$key] = $form->getInput($item->getPostVar());
 				}
 			}
 			$origin->config()->setData($configData);
