@@ -232,25 +232,25 @@
                 "translations": {
                     "en": "Basis-Node extern"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_base_node_external_info": {
                 "translations": {
                     "en": "Fallback External-ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID."
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_base_node_ilias": {
                 "translations": {
                     "en": "Basis-Node ILIAS"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_base_node_ilias_info": {
                 "translations": {
                     "en": "Fallback Ref-ID used as parent for the category, only if the given parent could not be found via Ref-ID."
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_change_icon": {
                 "translations": {
@@ -266,7 +266,7 @@
                 "translations": {
                     "en": "Löschverhalten"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_delete_mode_archive": {
                 "translations": {
@@ -287,13 +287,13 @@
                 "translations": {
                     "en": "Append a text to the title of the category, e.g. \"(deleted)\""
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_delete_mode_inactive_text": {
                 "translations": {
                     "en": "Appended text"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_delete_mode_none": {
                 "translations": {
@@ -319,7 +319,7 @@
                 "translations": {
                     "en": "Kategorie verschieben"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_syncfield": {
                 "translations": {
@@ -350,7 +350,7 @@
                 "translations": {
                     "en": "Nachrichten setzen"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_update_news": {
                 "translations": {
@@ -361,7 +361,7 @@
                 "translations": {
                     "en": "Info-Reiter setzen"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_update_infopage": {
                 "translations": {
@@ -574,7 +574,7 @@
                 "translations": {
                     "en": "(gelöscht)"
                 },
-                "last_used": "28.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_shortlink": {
                 "translations": {
@@ -1390,37 +1390,37 @@
                 "translations": {
                     "en": "Account aktivieren"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_create_password": {
                 "translations": {
                     "en": "Passwort erstellen"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_delete_mode": {
                 "translations": {
                     "en": "Löschverhalten"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_delete_mode_delete": {
                 "translations": {
                     "en": "Benutzer löschen"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_delete_mode_inactive": {
                 "translations": {
                     "en": "Benutzer deaktivieren"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_delete_mode_none": {
                 "translations": {
                     "en": "Keine Aktion"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_header_object": {
                 "translations": {
@@ -1431,97 +1431,97 @@
                 "translations": {
                     "en": "ILIAS Loginfeld"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "config_login_field_info": {
                 "translations": {
                     "en": "Available fields and modes defining the login name of a user in ILIAS. Example user: John Doe"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "config_login_field_1": {
                 "translations": {
                     "en": "Shortened firstname and lastname (j.doe)"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "config_login_field_2": {
                 "translations": {
                     "en": "E-Mail"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "config_login_field_3": {
                 "translations": {
                     "en": "External Account"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "config_login_field_4": {
                 "translations": {
                     "en": "External ID"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "config_login_field_5": {
                 "translations": {
                     "en": "firstname.lastname (john.doe)"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "config_login_field_6": {
                 "translations": {
                     "en": "Hub-field login"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_password_mail_body": {
                 "translations": {
                     "en": "Text"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_password_mail_date_format": {
                 "translations": {
                     "en": "Datumsformat für Platzhalter"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_password_mail_placeholders": {
                 "translations": {
                     "en": "Verfügbare Platzhalter"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_password_mail_subject": {
                 "translations": {
                     "en": "Betreff"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_reactivate_account": {
                 "translations": {
                     "en": "Account reaktivieren"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_reactivate_account_info": {
                 "translations": {
                     "en": "Activates the user account again if it is not active when the sync updates a user"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_send_password": {
                 "translations": {
                     "en": "Passwort per Mail versenden"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_send_password_field": {
                 "translations": {
                     "en": "Feld mit E-Mailadresse"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             },
             "prop_syncfield": {
                 "translations": {
@@ -1537,7 +1537,7 @@
                 "translations": {
                     "en": "Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations"
                 },
-                "last_used": "03.11.2017"
+                "last_used": "29.11.2017"
             }
         },
         "view": {

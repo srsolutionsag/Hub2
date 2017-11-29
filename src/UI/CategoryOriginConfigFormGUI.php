@@ -1,6 +1,5 @@
 <?php namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Plugins\Hub2\Origin\ARCategoryOrigin;
 use SRAG\Plugins\Hub2\Origin\Config\ICategoryOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 
@@ -13,7 +12,7 @@ use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 
 	/**
-	 * @var ARCategoryOrigin
+	 * @var \SRAG\Plugins\Hub2\Origin\Category\ARCategoryOrigin
 	 */
 	protected $origin;
 
@@ -59,17 +58,18 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$delete = new \ilRadioGroupInputGUI($this->pl->txt('cat_prop_delete_mode'), $this->prop(CategoryOriginProperties::DELETE_MODE));
 		$delete->setValue($this->origin->properties()->get(CategoryOriginProperties::DELETE_MODE));
 
-		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_none'), $this->prop(CategoryOriginProperties::DELETE_MODE_NONE));
+		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_none'), CategoryOriginProperties::DELETE_MODE_NONE);
 		$delete->addOption($opt);
 
-		$opt = new \ilRadioOption(sprintf($this->pl->txt('cat_prop_delete_mode_inactive'), $this->pl->txt('com_prop_mark_deleted_text')), $this->prop(CategoryOriginProperties::DELETE_MODE_MARK));
+		$opt = new \ilRadioOption(sprintf($this->pl->txt('cat_prop_delete_mode_inactive'), $this->pl->txt('com_prop_mark_deleted_text')), CategoryOriginProperties::DELETE_MODE_MARK);
 		$delete->addOption($opt);
 
 		$te = new \ilTextInputGUI($this->pl->txt('cat_prop_delete_mode_inactive_text'), $this->prop(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
-		$te->setValue($this->origin->properties()->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
+		$te->setValue($this->origin->properties()
+		                           ->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
 		$opt->addSubItem($te);
 
-		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_delete'), $this->prop(CategoryOriginProperties::DELETE_MODE_DELETE));
+		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_delete'), CategoryOriginProperties::DELETE_MODE_DELETE);
 		$delete->addOption($opt);
 
 		$this->addItem($delete);

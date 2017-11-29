@@ -37,8 +37,14 @@ class demoUser extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData() {
+		$this->log()->write("This is a test-log entry");
+
 		for ($x = 1; $x <= 10; $x ++) {
 			$t = time();
+			if (rand(1, 10) === $x) {
+				continue; // Simulate deletion of random users
+			}
+
 			$this->data[] = $this->factory()
 			                     ->user($x)
 			                     ->setTitle("Title {$x} {$t}")

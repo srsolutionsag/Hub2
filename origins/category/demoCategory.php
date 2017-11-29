@@ -45,9 +45,14 @@ class demoCategory extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData() {
-		$this->log()->write("This is a demo");
+		$this->log()->write("This is a test-log entry");
+
 		$time = time();
 		for ($x = 1; $x <= 10; $x ++) {
+			if (rand(1, 10) === $x) {
+				continue; // Simulate some random deletions
+			}
+
 			$this->data[] = $this->factory()
 			                     ->category($x)
 			                     ->setTitle("Title {$x} {$time}")

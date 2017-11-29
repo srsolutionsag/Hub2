@@ -74,9 +74,6 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		$this->addItem($cb);
 
 		parent::addPropertiesUpdate();
-
-		//		$cb = new \ilCheckboxInputGUI($this->pl->txt('crs_prop_update_icon'), $this->prop(CourseOriginProperties::));
-		//		$this->addItem($cb);
 	}
 
 
@@ -84,20 +81,20 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		$delete = new \ilRadioGroupInputGUI($this->pl->txt('crs_prop_delete_mode'), $this->prop(CourseOriginProperties::DELETE_MODE));
 		$delete->setValue($this->origin->properties()->get(CourseOriginProperties::DELETE_MODE));
 
-		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_none'), $this->prop(CourseOriginProperties::DELETE_MODE_NONE));
+		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_none'), CourseOriginProperties::DELETE_MODE_NONE);
 		$delete->addOption($opt);
 
-		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_inactive'), $this->prop(CourseOriginProperties::DELETE_MODE_OFFLINE));
+		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_inactive'), CourseOriginProperties::DELETE_MODE_OFFLINE);
 		$delete->addOption($opt);
 
-		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_delete'), $this->prop(CourseOriginProperties::DELETE_MODE_DELETE));
+		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_delete'), CourseOriginProperties::DELETE_MODE_DELETE);
 		$delete->addOption($opt);
 
-		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_delete_or_inactive'), $this->prop(CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE));
+		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_delete_or_inactive'), CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE);
 		$opt->setInfo($this->pl->txt('crs_prop_delete_mode_delete_or_inactive_info'));
 		$delete->addOption($opt);
 
-		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_trash'), $this->prop(CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH));
+		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_trash'), CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH);
 		$delete->addOption($opt);
 
 		$this->addItem($delete);

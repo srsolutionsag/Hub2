@@ -37,6 +37,8 @@ class demoGroup extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData() {
+		$this->log()->write("This is a test-log entry");
+
 		for ($x = 1; $x < 14; $x ++) {
 			$xrand = $x;
 			$this->data[] = $this->factory()

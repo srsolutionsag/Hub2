@@ -37,6 +37,8 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData() {
+		$this->log()->write("This is a test-log entry");
+
 		$this->data[] = $this->factory()
 		                     ->sessionMembership(1, 6)
 		                     ->setSessionIdType(SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
