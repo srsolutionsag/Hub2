@@ -177,8 +177,8 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 				$json_decode = json_decode($field_value, true);
 				$IMetadata = [];
 				if (is_array($json_decode)) {
-					foreach ($json_decode as $metaDatum) {
-						$IMetadata[] = (new Metadata($metaDatum[0]))->setValue($metaDatum[1]);
+					foreach ($json_decode as $key => $value) {
+						$IMetadata[] = (new Metadata($key))->setValue($value);
 					}
 				}
 
@@ -376,6 +376,18 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 		$hash = '';
 		foreach ($this->data as $property => $value) {
 			$hash .= (is_array($value)) ? implode('', $value) : (string)$value;
+		}
+
+		if (isset($this->meta_data)) {
+			foreach ($this->meta_data as $property => $value) {
+				$hash .= (is_array($value)) ? implode('', $value) : (string)$value;
+			}
+		}
+
+		if (isset($this->taxonomies)) {
+			foreach ($this->taxonomies as $property => $value) {
+				$hash .= (is_array($value)) ? implode('', $value) : (string)$value;
+			}
 		}
 
 		return md5($hash);

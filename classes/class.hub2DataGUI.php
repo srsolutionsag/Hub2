@@ -70,10 +70,27 @@ class hub2DataGUI extends hub2MainGUI {
 			"ilias_id"       => $object->getILIASId(),
 			"status"         => $object->getStatus(),
 		], $object->getData());
+
+		if ($object instanceof \SRAG\Plugins\Hub2\Object\IMetadataAwareObject) {
+			foreach ($object->getMetaData() as $metadata) {
+				$properties['MD: ' . $metadata->getIdentifier()] = $metadata->getValue();
+			}
+		}
+
+		if ($object instanceof \SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject) {
+			foreach ($object->getTaxonomies() as $taxonomy) {
+				$properties['TAX: '
+				            . $taxonomy->getTitle()] = implode(", ", $taxonomy->getNodeTitlesAsArray());
+			}
+		}
+
 		$filtered = [];
 		foreach ($properties as $key => $property) {
 			if (!is_null($property)) {
 				$filtered[$key] = (string)$property;
+			}
+			if ($property === '') {
+				$filtered[$key] = "&nbsp;";
 			}
 		}
 

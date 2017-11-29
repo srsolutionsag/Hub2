@@ -34,6 +34,12 @@ interface ITaxonomy {
 
 
 	/**
+	 * @return string[]
+	 */
+	public function getNodeTitlesAsArray(): array;
+
+
+	/**
 	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $node
 	 *
 	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy

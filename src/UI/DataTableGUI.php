@@ -180,7 +180,7 @@ class DataTableGUI extends \ilTable2GUI {
 		                 ->withAsyncRenderUrl($this->ctrl()
 		                                           ->getLinkTarget($this->parent_obj, 'renderData', '', true));
 
-		$button = $factory->button()->shy("View", "")->withOnClick($modal->getShowSignal());
+		$button = $factory->button()->shy("View", "#")->withOnClick($modal->getShowSignal());
 
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $renderer->render([ $button, $modal ]));

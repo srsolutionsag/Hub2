@@ -64,6 +64,19 @@ class Taxonomy implements ITaxonomy {
 	/**
 	 * @inheritDoc
 	 */
+	public function getNodeTitlesAsArray(): array {
+		$titles = [];
+		foreach ($this->nodes as $node) {
+			$titles[] = $node->getTitle();
+		}
+
+		return $titles;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
 	public function attach(INode $node): ITaxonomy {
 		$this->nodes[] = $node;
 
