@@ -11,6 +11,7 @@ use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
+use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -147,6 +148,21 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$ilObjSession = $this->findILIASObject($ilias_id);
 		if ($ilObjSession === null) {
 			return null;
+		}
+
+		if ($this->props->get(SessionOriginProperties::DELETE_MODE)
+		    == SessionOriginProperties::DELETE_MODE_NONE) {
+			return $ilObjSession;
+		}
+		global $DIC;
+		$tree = $DIC->repositoryTree();
+		switch ($this->props->get(SessionOriginProperties::DELETE_MODE)) {
+			case SessionOriginProperties::DELETE_MODE_DELETE:
+				$ilObjSession->delete();
+				break;
+			case SessionOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
+				$tree->moveToTrash($ilObjSession->getRefId(), true);
+				break;
 		}
 
 		return $ilObjSession;

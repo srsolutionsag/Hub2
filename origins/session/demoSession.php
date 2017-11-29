@@ -40,12 +40,15 @@ class demoSession extends AbstractOriginImplementation {
 		$this->log()->write("This is a test-log entry");
 
 		for ($x = 1; $x <= 14; $x ++) {
+			if (rand(1, 14) === $x) {
+				continue; // Simulate some random deletions
+			}
 			$rand = rand();
 			$sessionDTO = $this->factory()
 			                   ->session($x)
 			                   ->setParentId(1)
 			                   ->setParentIdType(SessionDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
-			                   ->setTitle("Title {$rand}")
+			                   ->setTitle("Title $x")
 			                   ->setDescription("Description {$rand}")
 			                   ->setLocation("Location {$rand}")
 			                   ->setDetails("Details {$rand}")

@@ -1993,6 +1993,50 @@
                 },
                 "last_used": "29.11.2017"
             }
+        },
+        "sess": {
+            "prop_delete_mode": {
+                "translations": {
+                    "en": "Deletion Mode",
+                    "de": "Löschverhalten"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_none": {
+                "translations": {
+                    "en": "No Action",
+                    "de": "Keine Aktion"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_delete": {
+                "translations": {
+                    "en": "Delete",
+                    "de": "Löschen"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_delete_mode_trash": {
+                "translations": {
+                    "en": "Move to trash",
+                    "de": "In Papierkorb verschieben"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_move": {
+                "translations": {
+                    "en": "Move Session",
+                    "de": "Sitzung verschieben"
+                },
+                "last_used": "29.11.2017"
+            },
+            "prop_move_info": {
+                "translations": {
+                    "en": "Move to Parent if changed",
+                    "de": "In neuen Container verschieben"
+                },
+                "last_used": "29.11.2017"
+            }
         }
     }
 }
