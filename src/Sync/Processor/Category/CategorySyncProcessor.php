@@ -79,9 +79,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		$ilObjCategory->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
-		$ilObjCategory->removeTranslations();
-		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $DIC->language()
-		                                                                             ->getDefaultLanguage(), true);
+
 		$ilObjCategory->create();
 		$ilObjCategory->createReference();
 		$ilObjCategory->putInTree($parentRefId);
@@ -100,6 +98,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
 		}
 		$ilObjCategory->update();
+
+
+		$ilObjCategory->removeTranslations();
+		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $DIC->language()
+				->getDefaultLanguage(), true);
 
 		return $ilObjCategory;
 	}
@@ -123,7 +126,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			if ($dto->$getter() !== null) {
-				$ilObjCategory->$setter($this->$getter());
+				$ilObjCategory->$setter($dto->$getter());
 			}
 		}
 		if ($this->props->updateDTOProperty('title')) {
