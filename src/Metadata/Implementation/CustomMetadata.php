@@ -16,9 +16,11 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 		$id = $this->getMetadata()->getIdentifier();
 		$ilAdvancedMDValues = new \ilAdvancedMDValues(1, $this->getIliasId(), null, "-");
 
+		$ilAdvancedMDValues->read();
 		$ilADTGroup = $ilAdvancedMDValues->getADTGroup();
 		$value = $this->getMetadata()->getValue();
 		$ilADT = $ilADTGroup->getElement($id);
+
 		switch (true) {
 			case ($ilADT instanceof \ilADTText):
 				$ilADT->setText($value);
@@ -34,6 +36,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 				$ilADT->setTargetRefId($value);
 				break;
 		}
+
 		$ilAdvancedMDValues->write();
 	}
 
