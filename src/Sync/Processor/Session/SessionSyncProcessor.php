@@ -16,6 +16,7 @@ use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 
 /**
  * Class SessionSyncProcessor
@@ -216,6 +217,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				throw new HubException($msg);
 			}
 			$objectFactory = new ObjectFactory($origin);
+
 
 			if ($origin instanceof ARCourseOrigin) {
 				$parent = $objectFactory->course($session->getParentId());
