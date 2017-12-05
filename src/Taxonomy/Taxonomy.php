@@ -24,6 +24,11 @@ class Taxonomy implements ITaxonomy {
 	 */
 	protected $mode;
 
+	/**
+	 * @var string
+	 */
+	protected $description = "";
+
 
 	/**
 	 * Taxonomy constructor.
@@ -80,6 +85,24 @@ class Taxonomy implements ITaxonomy {
 	public function attach(INode $node): ITaxonomy {
 		$this->nodes[] = $node;
 
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	/**
+	 * @param string $description
+	 * @return Taxonomy
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
 		return $this;
 	}
 

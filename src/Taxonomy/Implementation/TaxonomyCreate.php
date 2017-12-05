@@ -27,6 +27,7 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 	private function createTaxonomy() {
 		$tax = new \ilObjTaxonomy();
 		$tax->setTitle($this->getTaxonomy()->getTitle());
+		$tax->setDescription($this->getTaxonomy()->getDescription());
 		$tax->create();
 		$tax->createReference();
 		$tax->putInTree($this->getILIASParentId());
@@ -49,13 +50,23 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 	/**
 	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $nodeDTO
 	 */
-	private function createNode(INode $nodeDTO) {
+	private function createNode(INode $nodeDTO, $parent_id = 0) {
 		$node = new \ilTaxonomyNode();
 		$node->setTitle($nodeDTO->getTitle());
 		$node->setOrderNr(1);
 		$node->setTaxonomyId($this->ilObjTaxonomy->getId());
 		$node->create();
-		\ilTaxonomyNode::putInTree($this->ilObjTaxonomy->getId(), $node, $this->tree_root_id);
-		\ilTaxonomyNode::fixOrderNumbers($this->ilObjTaxonomy->getId(), $this->tree_root_id);
+
+		if($parent_id == 0){
+			\ilTaxonomyNode::putInTree($this->ilObjTaxonomy->getId(), $node, $this->tree_root_id);
+			\ilTaxonomyNode::fixOrderNumbers($this->ilObjTaxonomy->getId(), $this->tree_root_id);
+		}else{
+			\ilTaxonomyNode::putInTree($this->ilObjTaxonomy->getId(), $node, $parent_id);
+			\ilTaxonomyNode::fixOrderNumbers($this->ilObjTaxonomy->getId(), $parent_id);
+		}
+
+		foreach($nodeDTO->getNodes() as $node_dto){
+			$this->createNode($node_dto, $node->getId());
+		}
 	}
 }

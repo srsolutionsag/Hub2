@@ -73,8 +73,16 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 	protected function initTaxTree() {
 		$this->tree = $this->ilObjTaxonomy->getTree();
 		$this->tree_root_id = $this->tree->readRootId();
-		foreach ($this->tree->getChildsByTypeFilter($this->tree_root_id, array( "taxn" )) as $item) {
+		$this->setChildrenByParentId($this->tree_root_id);
+	}
+
+	/**
+	 * @param $parent_id
+	 */
+	protected function setChildrenByParentId($parent_id){
+		foreach ($this->tree->getChildsByTypeFilter($parent_id, array( "taxn" )) as $item) {
 			$this->childs[$item['obj_id']] = $item['title'];
+			$this->setChildrenByParentId($item['obj_id']);
 		}
 	}
 
