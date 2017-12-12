@@ -14,6 +14,10 @@ class Node implements INode {
 	 */
 	protected $title = '';
 
+	/**
+	 * @var INode[]
+	 */
+	protected $nodes = [];
 
 	/**
 	 * Node constructor.
@@ -37,4 +41,35 @@ class Node implements INode {
 	public function setTitle(string $title) {
 		$this->title = $title;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getNodes(): array {
+		return $this->nodes;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getNodeTitlesAsArray(): array {
+		$titles = [];
+		foreach ($this->nodes as $node) {
+			$titles[] = $node->getTitle();
+		}
+
+		return $titles;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function attach(INode $node): INode {
+		$this->nodes[] = $node;
+
+		return $this;
+	}
+
 }

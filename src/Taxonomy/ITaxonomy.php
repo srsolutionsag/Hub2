@@ -26,6 +26,16 @@ interface ITaxonomy {
 	 */
 	public function getMode(): int;
 
+	/**
+	 * @return string
+	 */
+	public function getDescription();
+
+	/**
+	 * @param string $description
+	 * @return INode
+	 */
+	public function setDescription($description);
 
 	/**
 	 * @return INode[]
