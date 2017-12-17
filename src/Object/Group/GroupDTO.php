@@ -1,23 +1,41 @@
 <?php
 
-namespace srag\Plugins\Hub2\Object\Group;
+namespace SRAG\Plugins\Hub2\Object\Group;
 
-use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 
 /**
  * Class GroupDTO
  *
- * @package srag\Plugins\Hub2\Object\Group
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupDTO extends DataTransferObject implements IGroupDTO {
+class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject {
 
 	use MetadataAwareDataTransferObject;
 	use TaxonomyAwareDataTransferObject;
-	use MappingStrategyAwareDataTransferObject;
+	// View
+	const VIEW_BY_TYPE = 5;
+	// Registration
+	const GRP_REGISTRATION_DEACTIVATED = - 1;
+	const GRP_REGISTRATION_DIRECT = 0;
+	const GRP_REGISTRATION_REQUEST = 1;
+	const GRP_REGISTRATION_PASSWORD = 2;
+	// Type
+	const GRP_REGISTRATION_LIMITED = 1;
+	const GRP_REGISTRATION_UNLIMITED = 2;
+	const GRP_TYPE_UNKNOWN = 0;
+	const GRP_TYPE_CLOSED = 1;
+	const GRP_TYPE_OPEN = 2;
+	const GRP_TYPE_PUBLIC = 3;
+	// Other
+	const MAIL_ALLOWED_ALL = 1;
+	const MAIL_ALLOWED_TUTORS = 2;
+	const PARENT_ID_TYPE_REF_ID = 1;
+	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**
 	 * @var string
 	 */
@@ -95,7 +113,7 @@ class GroupDTO extends DataTransferObject implements IGroupDTO {
 	 */
 	protected $latitude;
 	/**
-	 * @var float
+	 * @var  float
 	 */
 	protected $longitude;
 	/**
@@ -127,6 +145,10 @@ class GroupDTO extends DataTransferObject implements IGroupDTO {
 	 */
 	private $parentIdType = self::PARENT_ID_TYPE_REF_ID;
 
+	/**
+	 * @var null
+	 */
+	protected $appointementsColor = null;
 
 	/**
 	 * @return string
@@ -664,6 +686,24 @@ class GroupDTO extends DataTransferObject implements IGroupDTO {
 	public function setParentIdType($parentIdType) {
 		$this->parentIdType = $parentIdType;
 
+		return $this;
+	}
+
+	/**
+	 * @return null
+	 */
+	public function getAppointementsColor()
+	{
+		return $this->appointementsColor;
+	}
+
+	/**
+	 * @param $appointementsColor
+	 * @return $this
+	 */
+	public function setAppointementsColor($appointementsColor)
+	{
+		$this->appointementsColor = $appointementsColor;
 		return $this;
 	}
 }

@@ -18,8 +18,9 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 	use TaxonomyAndMetadataAwareDataTransferObject;
+<<<<<<< HEAD
 	use MappingStrategyAwareDataTransferObject;
-
+=======
 	// @see ilCourseConstants
 	const SUBSCRIPTION_TYPE_DEACTIVATED = 1;
 	const SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP = 2;
@@ -52,6 +53,10 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	const SORT_DIRECTION_ASC = \ilContainer::SORT_DIRECTION_ASC;
 	const SORT_DIRECTION_DESC = \ilContainer::SORT_DIRECTION_DESC;
 
+
+
+
+>>>>>>> d7ad294... Add Colors and different views
 	/**
 	 * @var array
 	 */
@@ -307,6 +312,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 * @var int
 	 */
 	protected $activationType = self::ACTIVATION_OFFLINE;
+<<<<<<< HEAD
 	/**
 	 * @var string
 	 */
@@ -319,6 +325,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 * @var string
 	 */
 	protected $icon;
+=======
 
 	/**
 	 * @var bool
@@ -349,6 +356,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 * @var null
 	 */
 	protected $appointementsColor = null;
+>>>>>>> d7ad294... Add Colors and different views
 
 	/**
 	 * @return string
@@ -758,6 +766,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		return $this;
 	}
 
+<<<<<<< HEAD
 
 	/**
 	 * @return string
@@ -831,7 +840,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	public static function isLanguageCode($languageCode): bool {
 		return in_array($languageCode, self::$available_languages);
 	}
-
+}
+=======
 	/**
 	 * @return boolean
 	 */
@@ -930,3 +940,4 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		return $this;
 	}
 }
+>>>>>>> d7ad294... Add Colors and different views
