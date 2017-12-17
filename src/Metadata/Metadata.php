@@ -32,8 +32,9 @@ class Metadata implements IMetadata {
 	 *
 	 * @param int $identifier
 	 */
-	public function __construct($identifier) {
+	public function __construct($identifier, $record_id = 1) {
 		$this->identifier = $identifier;
+		$this->record_id = $record_id;
 	}
 
 
@@ -71,6 +72,15 @@ class Metadata implements IMetadata {
 	public function getIdentifier() {
 		return $this->identifier;
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getRecordId()
+	{
+		return $this->record_id;
+	}
+
 
 
 	/**
