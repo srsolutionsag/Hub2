@@ -84,7 +84,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	protected function index() {
-		require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/sql/dbupdate.php'); // TODO remove after release
 		$button = ilLinkButton::getInstance();
 		$button->setCaption($this->pl->txt('origin_table_button_add'), false);
 		$button->setPrimary(true);
