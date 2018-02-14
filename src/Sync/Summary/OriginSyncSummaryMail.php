@@ -12,19 +12,6 @@ use SRAG\Plugins\Hub2\Sync\IOriginSync;
  */
 class OriginSyncSummaryMail extends OriginSyncSummaryBase  implements IOriginSyncSummary {
 
-	/**
-	 * @var IOriginSync[]
-	 */
-	protected $syncs;
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function addOriginSync(IOriginSync $originSync) {
-		$this->syncs[] = $originSync;
-	}
-
 
 	/**
 	 * @inheritDoc
