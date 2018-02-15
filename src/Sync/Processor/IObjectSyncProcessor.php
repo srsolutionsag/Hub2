@@ -23,6 +23,7 @@ interface IObjectSyncProcessor {
 	 *
 	 * @param IObject             $object
 	 * @param IDataTransferObject $dto
+	 * @param bool                $force Update all Objects without Hash comparison
 	 */
-	public function process(IObject $object, IDataTransferObject $dto);
+	public function process(IObject $object, IDataTransferObject $dto, bool $force = false);
 }

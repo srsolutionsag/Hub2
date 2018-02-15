@@ -25,7 +25,7 @@ class OriginFactory implements IOriginFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function getById($id) {
+	public function getById($id): IOrigin {
 		$sql = 'SELECT object_type FROM sr_hub2_origin WHERE id = %s';
 		$set = $this->db->queryF($sql, [ 'integer' ], [ $id ]);
 		$type = $this->db->fetchObject($set)->object_type;
@@ -38,7 +38,7 @@ class OriginFactory implements IOriginFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function createByType($type) {
+	public function createByType(string $type) {
 		$class = $this->getClass($type);
 
 		return new $class();
@@ -48,7 +48,7 @@ class OriginFactory implements IOriginFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function getAllActive() {
+	public function getAllActive(): array {
 		$origins = [];
 
 		$sql = 'SELECT id FROM sr_hub2_origin WHERE active = %s';

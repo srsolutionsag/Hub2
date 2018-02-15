@@ -131,6 +131,10 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_fieldtype           timestamp
 	 */
 	protected $last_run;
+	/**
+	 * @var bool 
+	 */
+	protected $force_update = false;
 
 
 	public function create() {
@@ -412,5 +416,21 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 */
 	protected function getPropertiesData() {
 		return $this->properties;
+	}
+
+
+	/**
+	 * Run Sync without Hash comparison
+	 */
+	public function forceUpdate() {
+		$this->force_update = true;
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isUpdateForced(): bool {
+		return $this->force_update;
 	}
 }

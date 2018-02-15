@@ -156,4 +156,16 @@ interface IOrigin {
 
 
 	public function create();
+
+
+	/**
+	 * Run Sync without Hash comparison
+	 */
+	public function forceUpdate();
+
+
+	/**
+	 * @return bool
+	 */
+	public function isUpdateForced(): bool;
 }

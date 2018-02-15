@@ -15,7 +15,7 @@ interface IOriginFactory {
 	 *
 	 * @return IOrigin
 	 */
-	public function getById($id);
+	public function getById($id): IOrigin;
 
 
 	/**
@@ -23,11 +23,11 @@ interface IOriginFactory {
 	 *
 	 * @return IOrigin
 	 */
-	public function createByType($type);
+	public function createByType(string $type);
 
 
 	/**
 	 * @return IOrigin[]
 	 */
-	public function getAllActive();
+	public function getAllActive(): array;
 }

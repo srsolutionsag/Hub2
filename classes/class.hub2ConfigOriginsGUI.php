@@ -27,6 +27,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	const SUBTAB_ORIGINS = 'subtab_origins';
 	const CMD_RUN = 'run';
 	const CMD_ADD_ORIGIN = 'addOrigin';
+	const Q_FORCE_UPDATE = 'force_update';
 	/**
 	 * @var \SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory
 	 */
@@ -84,17 +85,21 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	protected function index() {
-		$button = ilLinkButton::getInstance();
+		$this->toolbar()->setFormAction($this->ctrl()->getFormAction($this));
+
+		$button = ilSubmitButton::getInstance();
 		$button->setCaption($this->pl->txt('origin_table_button_add'), false);
 		$button->setPrimary(true);
-		$button->setUrl($this->ctrl()->getLinkTarget($this, self::CMD_ADD_ORIGIN));
+		$button->setCommand(self::CMD_ADD_ORIGIN);
 		$this->toolbar()->addButtonInstance($button);
 
 		$this->toolbar()->addSeparator();
 
-		$button = ilLinkButton::getInstance();
+		$this->toolbar()->addInputItem(new ilCheckboxInputGUI('Force', self::Q_FORCE_UPDATE));
+
+		$button = ilSubmitButton::getInstance();
 		$button->setCaption($this->pl->txt('origin_table_button_run'), false);
-		$button->setUrl($this->ctrl()->getLinkTarget($this, self::CMD_RUN));
+		$button->setCommand(self::CMD_RUN);
 		$this->toolbar()->addButtonInstance($button);
 
 
@@ -210,8 +215,16 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function run() {
+		global $DIC;
+		$force = (bool)$DIC->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE];
 		$summary = $this->summaryFactory->web();
 		foreach ($this->originFactory->getAllActive() as $origin) {
+			/**
+			 * @var $origin \SRAG\Plugins\Hub2\Origin\IOrigin
+			 */
+			if ($force) {
+				$origin->forceUpdate();
+			}
 			$originSyncFactory = new OriginSyncFactory($origin);
 			$originSync = $originSyncFactory->instance();
 			try {
@@ -232,7 +245,17 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	protected function runOriginSync() {
+		global $DIC;
+
+		$force = (bool)$DIC->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE];
+		/**
+		 * @var $origin \SRAG\Plugins\Hub2\Origin\IOrigin
+		 */
+
 		$origin = $this->getOrigin((int)$_GET[self::ORIGIN_ID]);
+		if ($force) {
+			$origin->forceUpdate();
+		}
 		$summary = $this->summaryFactory->web();
 		$originSyncFactory = new OriginSyncFactory($origin);
 		$originSync = $originSyncFactory->instance();

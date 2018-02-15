@@ -93,6 +93,11 @@ class OriginSync implements IOriginSync {
 	}
 
 
+	/**
+	 * @throws AbortOriginSyncException
+	 * @throws HubException
+	 * @throws \Throwable
+	 */
 	public function execute() {
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
 		// as the sync of this origin cannot continue.
@@ -213,7 +218,7 @@ class OriginSync implements IOriginSync {
 	 */
 	protected function processObject(IObject $object, IDataTransferObject $dto) {
 		try {
-			$this->processor->process($object, $dto);
+			$this->processor->process($object, $dto, $this->origin->isUpdateForced());
 			$this->incrementProcessed($object->getStatus());
 		} catch (AbortSyncException $e) {
 			// Any exceptions aborting the global or current sync are forwarded to global sync

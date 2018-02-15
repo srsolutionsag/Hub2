@@ -66,7 +66,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	/**
 	 * @inheritdoc
 	 */
-	final public function process(IObject $object, IDataTransferObject $dto) {
+	final public function process(IObject $object, IDataTransferObject $dto, bool $force = false) {
 		$hook = new HookObject($object);
 		// We keep the old data if the object is getting deleted, as there is no "real" DTO available, because
 		// the data has not been delivered...
@@ -97,7 +97,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			case IObject::STATUS_TO_UPDATE:
 			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
 				// Updating the ILIAS object is only needed if some properties were changed
-				if ($object->computeHashCode() != $object->getHashCode()) {
+				if (($object->computeHashCode() != $object->getHashCode()) || $force) {
 					$this->implementation->beforeUpdateILIASObject($hook);
 					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
 					if ($ilias_object === null) {
