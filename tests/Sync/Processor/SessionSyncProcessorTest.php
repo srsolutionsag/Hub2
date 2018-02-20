@@ -97,12 +97,6 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldReceive("setAppointments")->with($this->appointments);
 
 		$this->participants = \Mockery::mock('overload:\ilSessionParticipants', '\ilParticipants');
-		$this->participants->shouldReceive("getMembers")
-		                   ->andReturn([ self::USER_ID_OF_MEMBER_TO_DELETE ]);
-		$this->participants->shouldReceive("register")->once()->with($this->dto->getMembers()[0]);
-		$this->participants->shouldReceive("unregister")
-		                   ->once()
-		                   ->with(self::USER_ID_OF_MEMBER_TO_DELETE);
 
 		$this->ilObject->shouldReceive("getMembersObject")->andReturn($this->participants);
 	}
@@ -114,6 +108,8 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
 		$this->iobject->shouldReceive('save')->once();
+		$this->iobject->shouldReceive('setMetaData')->once();
+		$this->iobject->shouldReceive('setTaxonomies')->once();
 	}
 
 
@@ -135,8 +131,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		          ->setParentIdType(SessionDTO::PARENT_ID_TYPE_REF_ID)
 		          ->setTitle('Title')
 		          ->setDescription('Description')
-		          ->setLocation('Location')
-		          ->setMembers([ 6 ]);
+		          ->setLocation('Location');
 	}
 
 
@@ -180,6 +175,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn("myHash");
 		$this->iobject->shouldReceive('updateStatus')->with(IObject::STATUS_NOTHING_TO_UPDATE);
 		$this->iobject->shouldReceive('getILIASId')->andReturn(self::REF_ID);
+		$this->iobject->shouldReceive('setILIASId')->with(self::REF_ID);
 
 		$this->originImplementation->shouldReceive('beforeUpdateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
@@ -188,6 +184,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldNotReceive('createReference');
 		$this->ilObject->shouldNotReceive('putInTree');
 		$this->ilObject->shouldNotReceive('setPermissions');
+		$this->ilObject->shouldReceive('getRefId')->once()->andReturn(self::REF_ID);
 
 		$this->initDataExpectations();
 

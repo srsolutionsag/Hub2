@@ -152,6 +152,8 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
 		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn('actualHashCode');
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn('previousHashCode');
+		$this->iobject->shouldReceive('setMetaData')->once();
+		$this->iobject->shouldReceive('setILIASId')->once()->with(self::ILIAS_ID);
 		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->iobject, $this->dto);
 	}
@@ -162,6 +164,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
 		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn('actualHashCode');
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn('actualHashCode');
+		$this->iobject->shouldReceive('setMetaData')->once();
 		$this->ilObject->shouldNotReceive('update');
 		$this->ilObject->shouldNotReceive('setTitle');
 		$this->ilObject->shouldNotReceive('setDescription');
@@ -253,7 +256,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setILIASId')->once()->with(self::ILIAS_ID);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
-
+		$this->iobject->shouldReceive('setMetaData')->once($this->dto->getMetaData());
 		$this->ilObject->shouldReceive('setTitle')->once();
 		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getEmail());
 		$this->ilObject->shouldReceive('setImportId')->once();

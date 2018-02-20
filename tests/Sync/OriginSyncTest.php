@@ -165,6 +165,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 	public function test_processing() {
 		$this->originImplementation->shouldReceive('connect');
 		$this->originImplementation->shouldReceive('parseData')->andReturn(4);
+		$this->originImplementation->shouldReceive('handleException')->once()->withAnyArgs();
 		$this->origin->shouldReceive('config')->andReturn($this->originConfig);
 		$this->originConfig->shouldReceive('getCheckAmountData')->andReturn(false);
 		$this->repository->shouldReceive('count');
@@ -217,6 +218,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 	public function test_that_any_exception_during_processing_is_forwarded_to_the_origin_implementation() {
 		$this->originImplementation->shouldReceive('connect');
 		$this->originImplementation->shouldReceive('parseData')->andReturn(1);
+		$this->originImplementation->shouldReceive('handleException')->once()->withAnyArgs();
 		$this->origin->shouldReceive('config')->andReturn($this->originConfig);
 		$this->originConfig->shouldReceive('getCheckAmountData')->andReturn(false);
 		$this->repository->shouldReceive('count');

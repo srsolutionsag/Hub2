@@ -69,6 +69,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
+
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
 
@@ -137,6 +138,8 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
 		$this->iobject->shouldReceive('save')->once();
+		$this->iobject->shouldReceive('setMetaData')->once();
+		$this->iobject->shouldReceive('setTaxonomies')->once();
 	}
 
 
