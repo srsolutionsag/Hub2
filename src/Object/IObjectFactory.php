@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
+use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
+
 /**
  * Interface IObjectFactory
  *
@@ -79,4 +81,12 @@ interface IObjectFactory {
 	 * @return \SRAG\Plugins\Hub2\Object\SessionMembership\ISessionMembership
 	 */
 	public function sessionMembership($ext_id);
+
+
+	/**
+	 * @param string $ext_id
+	 *
+	 * @return IOrgUnit
+	 */
+	public function orgUnit(string $ext_id): IOrgUnit;
 }

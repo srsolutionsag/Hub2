@@ -190,7 +190,8 @@
             },
             "roles": {
                 "translations": {
-                    "en": "MISSING"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 }
             },
             "roles_info": {
@@ -234,13 +235,13 @@
             "form_button_cancel": {
                 "translations": {
                     "de": "Abbrechen",
-                    "en": "MISSING"
+                    "en": "Cancel"
                 }
             },
             "form_button_save": {
                 "translations": {
                     "de": "Speichern",
-                    "en": "MISSING"
+                    "en": "Save"
                 }
             },
             "form_title": {
@@ -352,7 +353,7 @@
             "prop_header_icon": {
                 "translations": {
                     "de": "Icon",
-                    "en": "MISSING"
+                    "en": "Icon"
                 }
             },
             "prop_header_object": {
@@ -686,7 +687,7 @@
             "status_1": {
                 "translations": {
                     "en": "New",
-                    "de": "MISSING"
+                    "de": "Neu"
                 }
             },
             "status_2": {
@@ -704,7 +705,7 @@
             "status_4": {
                 "translations": {
                     "en": "Deleted in ILIAS",
-                    "de": "MISSING"
+                    "de": "In ILIAS löschen"
                 }
             },
             "status_5": {
@@ -747,14 +748,14 @@
             "delete": {
                 "translations": {
                     "de": "Löschen",
-                    "en": "MISSING"
+                    "en": "Delete"
                 },
                 "last_used": "29.11.2017"
             },
             "edit": {
                 "translations": {
                     "de": "Bearbeiten",
-                    "en": "MISSING"
+                    "en": "Edit"
                 },
                 "last_used": "29.11.2017"
             },
@@ -772,8 +773,8 @@
             },
             "on_status": {
                 "translations": {
-                    "de": "Objekt-Status:",
-                    "en": "MISSING"
+                    "de": "Objekt-Status: %s",
+                    "en": "Object status: %s"
                 },
                 "last_used": "29.11.2017"
             },
@@ -796,6 +797,24 @@
                     "de": "Rollen-IDs"
                 },
                 "last_used": "29.11.2017"
+            },
+            "on_status_new": {
+                "translations": {
+                    "de": "NEU",
+                    "en": "NEW"
+                }
+            },
+            "on_status_update": {
+                "translations": {
+                    "de": "AKTUALISIEREN",
+                    "en": "UPDATE"
+                }
+            },
+            "on_status_delete": {
+                "translations": {
+                    "de": "LÖSCHEN",
+                    "en": "DELETE"
+                }
             }
         },
         "hub": {
@@ -808,7 +827,7 @@
             "conf": {
                 "translations": {
                     "de": "Einstellungen",
-                    "en": "MISSING"
+                    "en": "Settings"
                 }
             },
             "courses": {
@@ -825,8 +844,8 @@
             },
             "origins": {
                 "translations": {
-                    "en": "Anbindungen",
-                    "de": "MISSING"
+                    "en": "MISSING",
+                    "de": "Anbindungen"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1048,8 +1067,8 @@
             },
             "origin_saved": {
                 "translations": {
-                    "de": "Saved",
-                    "en": "Gespeichert"
+                    "en": "Saved",
+                    "de": "Gespeichert"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1059,49 +1078,61 @@
                     "de": "Gespeichert"
                 },
                 "last_used": "15.11.2017"
+            },
+            "created_class_implementation_file": {
+                "translations": {
+                    "en": "Created class implementation file: %s",
+                    "de": "MISSING"
+                }
+            },
+            "created_class_implementation_file_failed": {
+                "translations": {
+                    "en": "Unable to create class implementation file, you must create it manually at: %s",
+                    "de": "MISSING"
+                }
             }
         },
         "origin": {
             "subtab_icons": {
                 "translations": {
                     "en": "Icons",
-                    "de": "MISSING"
+                    "de": "Icons"
                 }
             },
             "subtab_settings": {
                 "translations": {
                     "en": "Settings",
-                    "de": "MISSING"
+                    "de": "Einstellungen"
                 }
             },
             "form_button_create": {
                 "translations": {
                     "de": "Speichern",
-                    "en": "MISSING"
+                    "en": "Save"
                 }
             },
             "form_button_index": {
                 "translations": {
                     "de": "Abbrechen",
-                    "en": "MISSING"
+                    "en": "Cancel"
                 }
             },
             "form_button_update": {
                 "translations": {
                     "en": "Save & close",
-                    "de": "MISSING"
+                    "de": "Speichern & schliessen"
                 }
             },
             "form_button_update_and_stay": {
                 "translations": {
                     "de": "Speichern",
-                    "en": "MISSING"
+                    "en": "Save"
                 }
             },
             "form_properties": {
                 "translations": {
                     "de": "Einstellungen",
-                    "en": "MISSING"
+                    "en": "Settings"
                 }
             },
             "form_title_add": {
@@ -1149,21 +1180,21 @@
             "form_field_conf_type_db": {
                 "translations": {
                     "en": "Server",
-                    "de": "MISSING"
+                    "de": "Server"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_database": {
                 "translations": {
                     "de": "Datenbank",
-                    "en": "MISSING"
+                    "en": "Database"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_host": {
                 "translations": {
                     "en": "Host",
-                    "de": "MISSING"
+                    "de": "Host"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1184,7 +1215,7 @@
             "form_field_conf_type_db_port": {
                 "translations": {
                     "en": "Port",
-                    "de": "MISSING"
+                    "de": "Port"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1258,7 +1289,7 @@
             "form_field_id": {
                 "translations": {
                     "de": "ID",
-                    "en": "MISSING"
+                    "en": "ID"
                 }
             },
             "form_field_notification_email": {
@@ -1329,7 +1360,7 @@
             "form_field_update_dto": {
                 "translations": {
                     "en": "Update %s",
-                    "de": "MISSING"
+                    "de": "%s aktualisieren"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1545,6 +1576,13 @@
                     "de": "Überschreiben des Standard-namespaces für Origin"
                 },
                 "last_used": "29.11.2017"
+            },
+            "object_type_orgUnit": {
+                "translations": {
+                    "en": "Organisational units",
+                    "de": "Organisationseinheiten"
+                },
+                "last_used": "08.06.2018"
             }
         },
         "object": {
@@ -1995,7 +2033,7 @@
             "form_button_save": {
                 "translations": {
                     "en": "Save",
-                    "de": "MISSING"
+                    "de": "Speichern"
                 }
             }
         },
@@ -2003,7 +2041,7 @@
             "delete_button": {
                 "translations": {
                     "en": "Löschen",
-                    "de": "MISSING"
+                    "de": "Delete"
                 },
                 "last_used": "22.11.2017"
             }
@@ -2012,7 +2050,7 @@
             "delete_button": {
                 "translations": {
                     "en": "Cancel",
-                    "de": "MISSING"
+                    "de": "Abbrechen"
                 },
                 "last_used": "22.11.2017"
             }

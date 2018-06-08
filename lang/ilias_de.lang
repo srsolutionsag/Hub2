@@ -27,6 +27,7 @@ admin_msg_shortlink_not_found_info#:#Wird angezeigt wenn ein nciht existierender
 admin_origins_path#:#Pfad zu den Origins
 admin_origins_path_info#:#Ort des 'origins'-Verzeichnisses
 admin_password_email_body#:#E-Mail-Body beim versenden von Passwörtern
+admin_roles#:#MISSING
 admin_roles_info#:#Rollen-IDs die HUB2 verwenden können (kommasepariert
 admin_shortlink#:#Shortlink
 admin_use_async#:#Asynchrone Synchronisation
@@ -101,10 +102,10 @@ com_prop_link_to_origin#:#Verknüpfung mit anderer Anbindung
 com_prop_mark_deleted_text#:#(gelöscht)
 com_prop_shortlink#:#Shortlink aktivieren
 com_prop_use_ext_status#:#Externes Statusmodell verwenden
-common_status_1#:#MISSING
+common_status_1#:#Neu
 common_status_2#:#MISSING
 common_status_3#:#MISSING
-common_status_4#:#MISSING
+common_status_4#:#In ILIAS löschen
 common_status_5#:#MISSING
 common_status_6#:#MISSING
 common_status_7#:#MISSING
@@ -115,15 +116,18 @@ common_delete#:#Löschen
 common_edit#:#Bearbeiten
 common_export#:#Einstellungen exportieren
 common_none#:#Keine
-common_on_status#:#Objekt-Status:
+common_on_status#:#Objekt-Status: %s
 common_back#:#MISSING
 common_permissions#:#Rechte
 common_roles#:#Rollen-IDs
+common_on_status_new#:#NEU
+common_on_status_update#:#AKTUALISIEREN
+common_on_status_delete#:#LÖSCHEN
 hub_categories#:#Kategorien
 hub_conf#:#Einstellungen
 hub_courses#:#Kurse
 hub_memberships#:#Mitgliedschaften
-hub_origins#:#MISSING
+hub_origins#:#Anbindungen
 hub_users#:#Benutzerkonten
 hub_categories_table_title#:#Kategorien
 hub_courses_table_title#:#Kurse
@@ -159,13 +163,15 @@ msg_origin_activated#:#Anbindung aktiviert.
 msg_origin_deactivated#:#Anbindung deaktiviert.
 msg_saved#:#Gespeichert.
 msg_success_create_origin#:#MISSING
-msg_origin_saved#:#Saved
+msg_origin_saved#:#Gespeichert
 msg_successfully_saved#:#Gespeichert
-origin_subtab_icons#:#MISSING
-origin_subtab_settings#:#MISSING
+msg_created_class_implementation_file#:#MISSING
+msg_created_class_implementation_file_failed#:#MISSING
+origin_subtab_icons#:#Icons
+origin_subtab_settings#:#Einstellungen
 origin_form_button_create#:#Speichern
 origin_form_button_index#:#Abbrechen
-origin_form_button_update#:#MISSING
+origin_form_button_update#:#Speichern & schliessen
 origin_form_button_update_and_stay#:#Speichern
 origin_form_properties#:#Einstellungen
 origin_form_title_add#:#Herkunft erstellen
@@ -174,12 +180,12 @@ origin_form_field_active#:#Synchronisation aktiv
 origin_form_field_class_name#:#PHP-Klassenname
 origin_form_field_class_name_info#:#MISSING
 origin_form_field_conf_type#:#Verbindungstyp
-origin_form_field_conf_type_db#:#MISSING
+origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Datenbank
-origin_form_field_conf_type_db_host#:#MISSING
+origin_form_field_conf_type_db_host#:#Host
 origin_form_field_conf_type_db_info#:#Die Daten stammen aus einer Serververbindung.
 origin_form_field_conf_type_db_password#:#Passwort
-origin_form_field_conf_type_db_port#:#MISSING
+origin_form_field_conf_type_db_port#:#Port
 origin_form_field_conf_type_db_search_base#:#MISSING
 origin_form_field_conf_type_db_username#:#Login-Name
 origin_form_field_conf_type_external#:#Extern
@@ -201,7 +207,7 @@ origin_form_field_usage_type_1#:#Benutzerkonten
 origin_form_field_usage_type_2#:#Kurs-Mitgliedschaften
 origin_form_field_usage_type_3#:#Kurse
 origin_form_field_usage_type_4#:#Kategorien
-origin_form_field_update_dto#:#MISSING
+origin_form_field_update_dto#:#%s aktualisieren
 origin_form_comma_separated#:#MISSING
 origin_form_header_connection#:#Verbindung zu Daten
 origin_form_header_notification#:#Benachrichtigungen
@@ -233,6 +239,7 @@ origin_object_type_session#:#Sitzung
 origin_object_type_sessionMembership#:#Sitzung-Mitgliedschaft
 origin_form_field_namespace#:#MISSING
 origin_form_field_namespace_info#:#Überschreiben des Standard-namespaces für Origin
+origin_object_type_orgUnit#:#Organisationseinheiten
 object_type_user#:#MISSING
 object_type_courseMembership#:#MISSING
 object_type_course#:#MISSING
@@ -301,9 +308,9 @@ icon_form_title_obj#:#MISSING
 icon_title_small#:#MISSING
 icon_title_medium#:#MISSING
 icon_title_large#:#MISSING
-icon_form_button_save#:#MISSING
-confirm_delete_button#:#MISSING
-cancel_delete_button#:#MISSING
+icon_form_button_save#:#Speichern
+confirm_delete_button#:#Delete
+cancel_delete_button#:#Abbrechen
 button_save#:#Speichern
 button_cancel#:#Abbrechen
 tab_origins#:#Origins

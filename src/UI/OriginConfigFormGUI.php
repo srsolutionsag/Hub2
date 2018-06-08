@@ -72,17 +72,17 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 
 			// Properties for object status: NEW, UPDATE, DELETE
 			$header = new \ilFormSectionHeaderGUI();
-			$header->setTitle($this->pl->txt('common_on_status') . ' NEW');
+			$header->setTitle(sprintf($this->pl->txt('common_on_status'), $this->pl->txt('common_on_status_new')));
 			$this->addItem($header);
 			$this->addPropertiesNew();
 
 			$header = new \ilFormSectionHeaderGUI();
-			$header->setTitle($this->pl->txt('common_on_status') . ' UPDATE');
+			$header->setTitle(sprintf($this->pl->txt('common_on_status'), $this->pl->txt('common_on_status_update')));
 			$this->addItem($header);
 			$this->addPropertiesUpdate();
 
 			$header = new \ilFormSectionHeaderGUI();
-			$header->setTitle($this->pl->txt('common_on_status') . ' DELETE');
+			$header->setTitle(sprintf($this->pl->txt('common_on_status'), $this->pl->txt('common_on_status_delete')));
 			$this->addItem($header);
 			$this->addPropertiesDelete();
 		}

@@ -31,3 +31,8 @@ $ilDB->modifyTableColumn(SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembers
 	"length" => 256,
 ));
 ?>
+<#3>
+<?php
+require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/autoload.php');
+\SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit::updateDB();
+?>

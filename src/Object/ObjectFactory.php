@@ -7,10 +7,12 @@ use SRAG\Plugins\Hub2\Object\Course\ARCourse;
 use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use SRAG\Plugins\Hub2\Object\Group\ARGroup;
 use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
 use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use SRAG\Plugins\Hub2\Object\User\ARUser;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
 
 /**
  * Class ObjectFactory
@@ -55,6 +57,8 @@ class ObjectFactory implements IObjectFactory {
 				return $this->session($ext_id);
 			case IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP:
 				return $this->sessionMembership($ext_id);
+			case IOrigin::OBJECT_TYPE_ORGNUNIT;
+				return $this->orgUnit($ext_id);
 			default:
 				throw new \LogicException('no object-type for this origin found');
 		}
@@ -66,7 +70,7 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function user($ext_id) {
 		$user = ARUser::find($this->getId($ext_id));
-		if ($user === null) {
+		if ($user === NULL) {
 			$user = new ARUser();
 			$user->setOriginId($this->origin->getId());
 			$user->setExtId($ext_id);
@@ -81,7 +85,7 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function course($ext_id) {
 		$course = ARCourse::find($this->getId($ext_id));
-		if ($course === null) {
+		if ($course === NULL) {
 			$course = new ARCourse();
 			$course->setOriginId($this->origin->getId());
 			$course->setExtId($ext_id);
@@ -96,7 +100,7 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function category($ext_id) {
 		$category = ARCategory::find($this->getId($ext_id));
-		if ($category === null) {
+		if ($category === NULL) {
 			$category = new ARCategory();
 			$category->setOriginId($this->origin->getId());
 			$category->setExtId($ext_id);
@@ -111,7 +115,7 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function group($ext_id) {
 		$group = ARGroup::find($this->getId($ext_id));
-		if ($group === null) {
+		if ($group === NULL) {
 			$group = new ARGroup();
 			$group->setOriginId($this->origin->getId());
 			$group->setExtId($ext_id);
@@ -126,7 +130,7 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function session($ext_id) {
 		$session = ARSession::find($this->getId($ext_id));
-		if ($session === null) {
+		if ($session === NULL) {
 			$session = new ARSession();
 			$session->setOriginId($this->origin->getId());
 			$session->setExtId($ext_id);
@@ -141,7 +145,7 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function courseMembership($ext_id) {
 		$course_membership = ARCourseMembership::find($this->getId($ext_id));
-		if ($course_membership === null) {
+		if ($course_membership === NULL) {
 			$course_membership = new ARCourseMembership();
 			$course_membership->setOriginId($this->origin->getId());
 			$course_membership->setExtId($ext_id);
@@ -156,7 +160,7 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function groupMembership($ext_id) {
 		$group_membership = ARGroupMembership::find($this->getId($ext_id));
-		if ($group_membership === null) {
+		if ($group_membership === NULL) {
 			$group_membership = new ARGroupMembership();
 			$group_membership->setOriginId($this->origin->getId());
 			$group_membership->setExtId($ext_id);
@@ -171,13 +175,28 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function sessionMembership($ext_id) {
 		$session_membership = ARSessionMembership::find($this->getId($ext_id));
-		if ($session_membership === null) {
+		if ($session_membership === NULL) {
 			$session_membership = new ARSessionMembership();
 			$session_membership->setOriginId($this->origin->getId());
 			$session_membership->setExtId($ext_id);
 		}
 
 		return $session_membership;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function orgUnit(string $ext_id): IOrgUnit {
+		$org_unit = AROrgUnit::find($this->getId($ext_id));
+		if ($org_unit === NULL) {
+			$org_unit = new AROrgUnit();
+			$org_unit->setOriginId($this->origin->getId());
+			$org_unit->setExtId($ext_id);
+		}
+
+		return $org_unit;
 	}
 
 

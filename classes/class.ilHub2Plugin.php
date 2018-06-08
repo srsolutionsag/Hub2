@@ -73,13 +73,16 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, false);
 		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, false);
 		$this->db()->dropTable(SRAG\Plugins\Hub2\Config\ArConfig::TABLE_NAME, false);
+		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit::TABLE_NAME, false);
+
+		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 
 		return true;
 	}
 
 
 	//	/**
-	//	 * @param $a_var
+	//	 * @param string $a_var
 	//	 *
 	//	 * @return string
 	//	 */
@@ -88,4 +91,22 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	//
 	//		return sragPluginTranslator::getInstance($this)->active()->write()->txt($a_var);
 	//	}
+	/**
+	 * @param string $a_var
+	 *
+	 * @return string
+	 */
+	public function txt($a_var) {
+		require_once "Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php";
+
+		sragPluginTranslator::getInstance($this)->active()->write();
+
+		$txt = parent::txt($a_var);
+
+		if ($txt === sragPluginTranslatorJson::MISSING) {
+			$txt .= " " . $a_var;
+		}
+
+		return $txt;
+	}
 }
