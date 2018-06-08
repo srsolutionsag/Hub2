@@ -14,6 +14,29 @@ use SRAG\Plugins\Hub2\Taxonomy\Taxonomy;
 abstract class ARObject extends \ActiveRecord implements IObject {
 
 	/**
+	 * @abstract
+	 */
+	const TABLE_NAME = '';
+
+
+	/**
+	 * @return string
+	 */
+	public function getConnectorContainerName() {
+		return static::TABLE_NAME;
+	}
+
+
+	/**
+	 * @return string
+	 * @deprecated
+	 */
+	public static function returnDbTableName() {
+		return static::TABLE_NAME;
+	}
+
+
+	/**
 	 * @var array
 	 */
 	protected static $status_allowed_to_update_to = [

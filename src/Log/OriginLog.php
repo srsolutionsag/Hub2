@@ -52,7 +52,7 @@ class OriginLog implements ILog {
 			// return self::$ilLogInstances[$origin->getId()];
 		}
 		$filename = implode('-', [
-			'hub2',
+			\ilHub2Plugin::PLUGIN_ID,
 			'origin',
 			$origin->getObjectType(),
 			$origin->getId(),

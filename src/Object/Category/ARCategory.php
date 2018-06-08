@@ -16,12 +16,5 @@ class ARCategory extends ARObject implements ICategory {
 
 	use ARMetadataAwareObject;
 	use ARTaxonomyAwareObject;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_category';
-	}
+	const TABLE_NAME = 'sr_hub2_category';
 }

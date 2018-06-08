@@ -15,12 +15,5 @@ class ARSession extends ARObject implements ISession {
 
 	use ARMetadataAwareObject;
 	use ARTaxonomyAwareObject;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_session';
-	}
+	const TABLE_NAME = 'sr_hub2_session';
 }

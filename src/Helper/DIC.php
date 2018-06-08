@@ -47,7 +47,7 @@ trait DIC {
 	 * @return \ilLanguage
 	 */
 	protected function lng() {
-		return \ilHub2Plugin::getInstance();
+		return $this->dic()->language();
 	}
 
 

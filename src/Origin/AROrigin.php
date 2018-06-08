@@ -11,6 +11,7 @@ use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
  */
 abstract class AROrigin extends \ActiveRecord implements IOrigin {
 
+	const TABLE_NAME = 'sr_hub2_origin';
 	/**
 	 * @var array
 	 */
@@ -24,6 +25,25 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		IOrigin::OBJECT_TYPE_SESSION,
 		IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
 	];
+
+
+	/**
+	 * @return string
+	 */
+	public function getConnectorContainerName() {
+		return self::TABLE_NAME;
+	}
+
+
+	/**
+	 * @return string
+	 * @deprecated
+	 */
+	public static function returnDbTableName() {
+		return self::TABLE_NAME;
+	}
+
+
 	/**
 	 * @var int
 	 *
@@ -132,7 +152,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 */
 	protected $last_run;
 	/**
-	 * @var bool 
+	 * @var bool
 	 */
 	protected $force_update = false;
 
@@ -156,7 +176,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	public function sleep($field_name) {
 		switch ($field_name) {
 			case 'config':
-				if ($this->_config === null) {
+				if ($this->_config === NULL) {
 					$config = $this->getOriginConfig([]);
 
 					return json_encode($config->getData());
@@ -164,7 +184,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 					return json_encode($this->config()->getData());
 				}
 			case 'properties':
-				if ($this->_properties === null) {
+				if ($this->_properties === NULL) {
 					$properties = $this->getOriginProperties([]);
 
 					return json_encode($properties->getData());
@@ -366,11 +386,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	//		$factory = new OriginImplementationFactory(new HubConfig(), $this);
 	//		return $factory->instance();
 	//	}
-
-	public static function returnDbTableName() {
-		return 'sr_hub2_origin';
-	}
-
 
 	/**
 	 * Return the concrete implementation of the IOriginConfig.

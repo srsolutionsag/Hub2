@@ -14,12 +14,5 @@ use SRAG\Plugins\Hub2\Object\ARObject;
 class ARUser extends ARObject implements IUser {
 
 	use ARMetadataAwareObject;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_user';
-	}
+	const TABLE_NAME = 'sr_hub2_user';
 }

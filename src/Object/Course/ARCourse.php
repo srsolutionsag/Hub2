@@ -16,12 +16,5 @@ class ARCourse extends ARObject implements ICourse {
 
 	use ARMetadataAwareObject;
 	use ARTaxonomyAwareObject;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_course';
-	}
+	const TABLE_NAME = 'sr_hub2_course';
 }
