@@ -52,13 +52,13 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 		$this->setFormAction($this->ctrl()->getFormAction($this->parent_gui));
 		$this->initForm();
 		if (!$origin->getId()) {
-			$this->addCommandButton('createOrigin', $this->lng()->txt('button_save'));
+			$this->addCommandButton('createOrigin', $this->pl->txt('button_save'));
 			$this->setTitle($this->pl->txt('origin_form_title_add'));
 		} else {
-			$this->addCommandButton('saveOrigin', $this->lng()->txt('button_save'));
+			$this->addCommandButton('saveOrigin', $this->pl->txt('button_save'));
 			$this->setTitle($this->pl->txt('origin_form_title_edit'));
 		}
-		$this->addCommandButton('cancel', $this->lng()->txt('button_cancel'));
+		$this->addCommandButton('cancel', $this->pl->txt('button_cancel'));
 		parent::__construct();
 	}
 
@@ -245,11 +245,11 @@ class OriginConfigFormGUI extends \ilPropertyFormGUI {
 			$item->setValue($this->origin->getId());
 			$this->addItem($item);
 		}
-		$item = new \ilTextInputGUI($this->lng()->txt('origin_title'), 'title');
+		$item = new \ilTextInputGUI($this->pl->txt('origin_title'), 'title');
 		$item->setValue($this->origin->getTitle());
 		$item->setRequired(true);
 		$this->addItem($item);
-		$item = new \ilTextAreaInputGUI($this->lng()->txt('origin_description'), 'description');
+		$item = new \ilTextAreaInputGUI($this->pl->txt('origin_description'), 'description');
 		$item->setValue($this->origin->getDescription());
 		$item->setRequired(true);
 		$this->addItem($item);

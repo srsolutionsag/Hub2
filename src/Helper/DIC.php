@@ -25,15 +25,14 @@ trait DIC {
 	}
 
 
-	/**
-	 * @param $variable
+	/*/* *
+	 * @param string $variable
 	 *
 	 * @return string
-	 */
+	 * /
 	public function txt($variable) {
-		return $this->lng()->txt($variable);
-	}
-
+		return \ilHub2Plugin::getInstance()->txt($variable);
+	}*/
 
 	/**
 	 * @return \ilTemplate

@@ -8,62 +8,74 @@
         "admin": {
             "async_cli_php": {
                 "translations": {
-                    "en": "Pfad zu PHP (z.B. /usr/bin/php)"
+                    "de": "Pfad zu PHP (z.B. /usr/bin/php)",
+                    "en": "MISSING"
                 }
             },
             "async_client": {
                 "translations": {
-                    "en": "Client-Name des Benutzers"
+                    "de": "Client-Name des Benutzers",
+                    "en": "MISSING"
                 }
             },
             "async_password": {
                 "translations": {
-                    "en": "Passwort"
+                    "de": "Passwort",
+                    "en": "MISSING"
                 }
             },
             "async_user": {
                 "translations": {
-                    "en": "Benutzername"
+                    "de": "Benutzername",
+                    "en": "MISSING"
                 }
             },
             "header_db": {
                 "translations": {
-                    "en": "Externe Middleware-Datenbank"
+                    "de": "Externe Middleware-Datenbank",
+                    "en": "MISSING"
                 }
             },
             "db": {
                 "translations": {
-                    "en": "Einschalten"
+                    "de": "Einschalten",
+                    "en": "MISSING"
                 }
             },
             "db_host": {
                 "translations": {
-                    "en": "Host"
+                    "de": "Host",
+                    "en": "MISSING"
                 }
             },
             "db_name": {
                 "translations": {
-                    "en": "Datenbankname"
+                    "de": "Datenbankname",
+                    "en": "MISSING"
                 }
             },
             "db_password": {
                 "translations": {
-                    "en": "Passwort"
+                    "de": "Passwort",
+                    "en": "MISSING"
                 }
             },
             "db_port": {
                 "translations": {
-                    "en": "Port"
+                    "de": "Port",
+                    "en": "MISSING"
                 }
             },
             "db_user": {
                 "translations": {
-                    "en": "Benutzer"
+                    "de": "Benutzer",
+                    "en": "MISSING"
                 }
             },
             "import_export": {
                 "translations": {
-                    "en": "Import/Export von Anbindungen aktivieren"
+                    "de": "Import/Export von Anbindungen aktivieren",
+                    "en": "MISSING"
                 }
             },
             "lock": {
@@ -75,62 +87,70 @@
             },
             "membership": {
                 "translations": {
-                    "en": "Kursteilnehmer"
+                    "de": "Kursteilnehmer",
+                    "en": "MISSING"
                 }
             },
             "membership_activate": {
                 "translations": {
-                    "en": "Benachrichtigung aktivieren"
+                    "de": "Benachrichtigung aktivieren",
+                    "en": "MISSING"
                 }
             },
             "membership_activate_info": {
                 "translations": {
-                    "en": "Benachrichtigung per Email bei neuer Kursteilnehmerschaft aktivieren."
+                    "de": "Benachrichtigung per Email bei neuer Kursteilnehmerschaft aktivieren.",
+                    "en": "MISSING"
                 }
             },
             "membership_mail_subject": {
                 "translations": {
-                    "en": "Betreff Benachrichtigungs-Mail"
+                    "de": "Betreff Benachrichtigungs-Mail",
+                    "en": "MISSING"
                 }
             },
             "membership_mail_subject_info": {
                 "translations": {
-                    "en": "Die Platzhalter der Nachricht (unten) können auch hier verwendet werden."
+                    "de": "Die Platzhalter der Nachricht (unten) können auch hier verwendet werden.",
+                    "en": "MISSING"
                 }
             },
             "membership_mail_msg": {
                 "translations": {
-                    "en": "Inhalt Benachrichtigungs-Mail"
+                    "de": "Inhalt Benachrichtigungs-Mail",
+                    "en": "MISSING"
                 }
             },
             "membership_mail_msg_info": {
                 "translations": {
-                    "en": "Es können folgende Platzhalter verwendet werden: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]"
+                    "de": "Es können folgende Platzhalter verwendet werden: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]",
+                    "en": "MISSING"
                 }
             },
             "msg_shortlink_not_active": {
                 "translations": {
                     "en": "Object-not-active Message",
-                    "de": "Object-not-active Message"
+                    "de": "Nicht gefunden Objekt-Nachricht"
                 },
                 "last_used": "29.11.2017"
             },
             "msg_shortlink_not_active_info": {
                 "translations": {
-                    "en": "Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden."
+                    "de": "Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden.",
+                    "en": "MISSING"
                 }
             },
             "msg_shortlink_no_ilias_id": {
                 "translations": {
-                    "en": "ILIAS-ID-Not-Found-Message",
-                    "de": "ILIAS-ID-Not-Found-Message"
+                    "en": "Not-Found-ILIAS-ID-Message",
+                    "de": "Nicht gefunden ILIAS-ID-Nachricht"
                 },
                 "last_used": "29.11.2017"
             },
             "msg_shortlink_no_ilias_id_info": {
                 "translations": {
-                    "en": "ILIAS-ID-Not-Found-Message",
-                    "de": "ILIAS-ID-Not-Found-Message"
+                    "en": "MISSING",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
@@ -150,25 +170,27 @@
             },
             "origins_path": {
                 "translations": {
-                    "en": "Path to Origins"
+                    "en": "Path to Origins",
+                    "de": "Pfad zu den Origins"
                 },
                 "last_used": "29.11.2017"
             },
             "origins_path_info": {
                 "translations": {
                     "en": "Location of the 'origins' directory",
-                    "de": "Ort des 'origin'-Verzeichnisses"
+                    "de": "Ort des 'origins'-Verzeichnisses"
                 },
                 "last_used": "29.11.2017"
             },
             "password_email_body": {
                 "translations": {
-                    "en": "E-Mail-Body beim versenden von Passwörtern"
+                    "de": "E-Mail-Body beim versenden von Passwörtern",
+                    "en": "MISSING"
                 }
             },
             "roles": {
                 "translations": {
-                    "en": "Rollen"
+                    "en": "MISSING"
                 }
             },
             "roles_info": {
@@ -187,354 +209,418 @@
             },
             "use_async": {
                 "translations": {
-                    "en": "Asynchrone Synchronisation"
+                    "de": "Asynchrone Synchronisation",
+                    "en": "MISSING"
                 }
             },
             "use_async_info": {
                 "translations": {
-                    "en": "Asynchrone Synchronisation über das GUI ermöglichen. Benötigt einen ILIAS Benutzer."
+                    "de": "Asynchrone Synchronisation über das GUI ermöglichen. Benötigt einen ILIAS Benutzer.",
+                    "en": "MISSING"
                 }
             },
             "user_creation": {
                 "translations": {
-                    "en": "Benutzererstellung"
+                    "de": "Benutzererstellung",
+                    "en": "MISSING"
                 }
             },
             "user_creation_standard_role": {
                 "translations": {
-                    "en": "Rolle bei Benutzererstellung"
+                    "de": "Rolle bei Benutzererstellung",
+                    "en": "MISSING"
                 }
             },
             "form_button_cancel": {
                 "translations": {
-                    "en": "Abbrechen"
+                    "de": "Abbrechen",
+                    "en": "MISSING"
                 }
             },
             "form_button_save": {
                 "translations": {
-                    "en": "Speichern"
+                    "de": "Speichern",
+                    "en": "MISSING"
                 }
             },
             "form_title": {
                 "translations": {
-                    "en": "General"
+                    "en": "General",
+                    "de": "Allgemein"
                 },
                 "last_used": "29.11.2017"
             },
             "header_sync": {
                 "translations": {
-                    "en": "Synchronisation"
+                    "de": "Synchronisation",
+                    "en": "MISSING"
                 }
             }
         },
         "cat": {
             "prop_base_node_external": {
                 "translations": {
-                    "en": "Basis-Node extern"
+                    "de": "Basis-Node extern",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_base_node_external_info": {
                 "translations": {
-                    "en": "Fallback External-ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID."
+                    "de": "Fallback External-ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID.",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_base_node_ilias": {
                 "translations": {
-                    "en": "Basis-Node ILIAS"
+                    "de": "Basis-Node ILIAS",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_base_node_ilias_info": {
                 "translations": {
-                    "en": "Fallback Ref-ID used as parent for the category, only if the given parent could not be found via Ref-ID."
+                    "de": "Fallback Ref-ID used as parent for the category, only if the given parent could not be found via Ref-ID.",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_change_icon": {
                 "translations": {
-                    "en": "Icon ersetzen (%s)"
+                    "de": "Icon ersetzen (%s)",
+                    "en": "MISSING"
                 }
             },
             "prop_create_icon": {
                 "translations": {
-                    "en": "Icon erstellen"
+                    "de": "Icon erstellen",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode": {
                 "translations": {
-                    "en": "Löschverhalten"
+                    "de": "Löschverhalten",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_archive": {
                 "translations": {
-                    "en": "In Kategorie archivieren"
+                    "de": "In Kategorie archivieren",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_archive_node": {
                 "translations": {
-                    "en": "Ref-ID Archiv"
+                    "de": "Ref-ID Archiv",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_delete": {
                 "translations": {
-                    "en": "Kategorie löschen"
+                    "de": "Kategorie löschen",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_inactive": {
                 "translations": {
-                    "en": "Append a text to the title of the category, e.g. \"(deleted)\""
+                    "en": "Append a text to the title of the category, e.g. \"(deleted)\"",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_inactive_text": {
                 "translations": {
-                    "en": "Appended text"
+                    "en": "Appended text",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_none": {
                 "translations": {
-                    "en": "Keine Aktion"
+                    "de": "Keine Aktion",
+                    "en": "MISSING"
                 }
             },
             "prop_header_base": {
                 "translations": {
-                    "en": "Basis-Node Einstellungen"
+                    "de": "Basis-Node Einstellungen",
+                    "en": "MISSING"
                 }
             },
             "prop_header_icon": {
                 "translations": {
-                    "en": "Icon"
+                    "de": "Icon",
+                    "en": "MISSING"
                 }
             },
             "prop_header_object": {
                 "translations": {
-                    "en": "Objekt-Einstellungen"
+                    "de": "Objekt-Einstellungen",
+                    "en": "MISSING"
                 }
             },
             "prop_move": {
                 "translations": {
-                    "en": "Kategorie verschieben"
+                    "de": "Kategorie verschieben",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_syncfield": {
                 "translations": {
-                    "en": "Synchronisationsfeld"
+                    "de": "Synchronisationsfeld",
+                    "en": "MISSING"
                 }
             },
             "prop_syncfield_none": {
                 "translations": {
-                    "en": "Kein Feld"
+                    "de": "Kein Feld",
+                    "en": "MISSING"
                 }
             },
             "prop_syncfield_title": {
                 "translations": {
-                    "en": "Titel"
+                    "de": "Titel",
+                    "en": "MISSING"
                 }
             },
             "prop_update_description": {
                 "translations": {
-                    "en": "Beschreibung aktualisieren"
+                    "de": "Beschreibung aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_update_icon": {
                 "translations": {
-                    "en": "Icon updaten"
+                    "de": "Icon updaten",
+                    "en": "MISSING"
                 }
             },
             "prop_set_news": {
                 "translations": {
-                    "en": "Nachrichten setzen"
+                    "de": "Nachrichten setzen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_update_news": {
                 "translations": {
-                    "en": "Nachrichten aktualisieren"
+                    "de": "Nachrichten aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_set_infopage": {
                 "translations": {
-                    "en": "Info-Reiter setzen"
+                    "de": "Info-Reiter setzen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_update_infopage": {
                 "translations": {
-                    "en": "Info-Reiter aktualisieren"
+                    "de": "Info-Reiter aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_set_sorting": {
                 "translations": {
-                    "en": "Sortierung setzen"
+                    "de": "Sortierung setzen",
+                    "en": "MISSING"
                 }
             },
             "prop_update_sorting": {
                 "translations": {
-                    "en": "Sortierung aktualisieren"
+                    "de": "Sortierung aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_update_title": {
                 "translations": {
-                    "en": "Name aktualisieren"
+                    "de": "Name aktualisieren",
+                    "en": "MISSING"
                 }
             }
         },
         "crs": {
             "prop_delete_mode_delete_or_inactive": {
                 "translations": {
-                    "en": "Kurs löschen oder offline setzen"
+                    "de": "Kurs löschen oder offline setzen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_delete_or_inactive_info": {
                 "translations": {
-                    "en": "Wenn bereits Aktivitäten im Kurs stattfanden, wird er offline gesetzt, ansonsten gelöscht."
+                    "de": "Wenn bereits Aktivitäten im Kurs stattfanden, wird er offline gesetzt, ansonsten gelöscht.",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_activate": {
                 "translations": {
-                    "en": "Online setzen"
+                    "de": "Online setzen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_create_icon": {
                 "translations": {
-                    "en": "Icon erstellen"
+                    "de": "Icon erstellen",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode": {
                 "translations": {
-                    "en": "Löschverhalten"
+                    "de": "Löschverhalten",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_delete": {
                 "translations": {
-                    "en": "Kurs löschen"
+                    "de": "Kurs löschen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_inactive": {
                 "translations": {
-                    "en": "Kurs offline setzen"
+                    "de": "Kurs offline setzen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_trash": {
                 "translations": {
-                    "en": "Move to Trash"
+                    "en": "Move to Trash",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_none": {
                 "translations": {
-                    "en": "Keine Aktion"
+                    "de": "Keine Aktion",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_header_icon": {
                 "translations": {
-                    "en": "Icon-Einstellungen"
+                    "de": "Icon-Einstellungen",
+                    "en": "MISSING"
                 }
             },
             "prop_header_object": {
                 "translations": {
-                    "en": "Objekt-Einstellungen"
+                    "de": "Objekt-Einstellungen",
+                    "en": "MISSING"
                 }
             },
             "prop_move": {
                 "translations": {
-                    "en": "Move course"
+                    "en": "Move course",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_move_info": {
                 "translations": {
-                    "en": "If the data contains a new parent ID, Hub tries to move the course under the new parent"
+                    "en": "If the data contains a new parent ID, Hub tries to move the course under the new parent",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_node_noparent": {
                 "translations": {
-                    "en": "Fallback Parent Ref-ID"
+                    "en": "Fallback Parent Ref-ID",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_node_noparent_info": {
                 "translations": {
-                    "en": "Courses are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node."
+                    "en": "Courses are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node.",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_reactivate": {
                 "translations": {
-                    "en": "Wieder online setzen"
+                    "de": "Wieder online setzen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_update_description": {
                 "translations": {
-                    "en": "Beschreibung aktualisieren"
+                    "de": "Beschreibung aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_update_icon": {
                 "translations": {
-                    "en": "Icon aktualisieren"
+                    "de": "Icon aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_update_responsible": {
                 "translations": {
-                    "en": "Verantwortlicher aktualisieren"
+                    "de": "Verantwortlicher aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_update_title": {
                 "translations": {
-                    "en": "Titel aktualisieren"
+                    "de": "Titel aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_check_online": {
                 "translations": {
-                    "en": "Check online-status of course"
+                    "en": "Check online-status of course",
+                    "de": "MISSING"
                 }
             },
             "prop_msg_not_online": {
                 "translations": {
-                    "en": "Message if course offline"
+                    "en": "Message if course offline",
+                    "de": "MISSING"
                 }
             },
             "prop_notification_subject": {
                 "translations": {
-                    "en": "Subject"
+                    "en": "Subject",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_notification_body": {
                 "translations": {
-                    "en": "Body"
+                    "en": "Body",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_notification_from": {
                 "translations": {
-                    "en": "From"
+                    "en": "From",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_send_notification": {
                 "translations": {
-                    "en": "Activate notification"
+                    "en": "Activate notification",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_send_notification_info": {
                 "translations": {
-                    "en": "After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails"
+                    "en": "After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             }
@@ -542,136 +628,159 @@
         "com": {
             "prop_check_amount": {
                 "translations": {
-                    "en": "Mengenvergleich"
+                    "de": "Mengenvergleich",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_check_amount_info": {
                 "translations": {
-                    "en": "Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden."
+                    "de": "Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden.",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_check_amount_percentage": {
                 "translations": {
-                    "en": "Prozentwert"
+                    "de": "Prozentwert",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_force_login": {
                 "translations": {
-                    "en": "Login erfordern"
+                    "de": "Login erfordern",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_link_to_origin": {
                 "translations": {
-                    "en": "Verknüpfung mit anderer Anbindung"
+                    "de": "Verknüpfung mit anderer Anbindung",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_mark_deleted_text": {
                 "translations": {
-                    "en": "(gelöscht)"
+                    "de": "(gelöscht)",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_shortlink": {
                 "translations": {
-                    "en": "Shortlink aktivieren"
+                    "de": "Shortlink aktivieren",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_use_ext_status": {
                 "translations": {
-                    "en": "Externes Statusmodell verwenden"
+                    "de": "Externes Statusmodell verwenden",
+                    "en": "MISSING"
                 }
             }
         },
         "common": {
             "status_1": {
                 "translations": {
-                    "en": "New"
+                    "en": "New",
+                    "de": "MISSING"
                 }
             },
             "status_2": {
                 "translations": {
-                    "en": "Delivered"
+                    "en": "Delivered",
+                    "de": "MISSING"
                 }
             },
             "status_3": {
                 "translations": {
-                    "en": "Not delivered"
+                    "en": "Not delivered",
+                    "de": "MISSING"
                 }
             },
             "status_4": {
                 "translations": {
-                    "en": "Deleted in ILIAS"
+                    "en": "Deleted in ILIAS",
+                    "de": "MISSING"
                 }
             },
             "status_5": {
                 "translations": {
-                    "en": "Newly delivered"
+                    "en": "Newly delivered",
+                    "de": "MISSING"
                 }
             },
             "status_6": {
                 "translations": {
-                    "en": "Already deleted"
+                    "en": "Already deleted",
+                    "de": "MISSING"
                 }
             },
             "status_7": {
                 "translations": {
-                    "en": "in Trash"
+                    "en": "in Trash",
+                    "de": "MISSING"
                 }
             },
             "actions": {
                 "translations": {
-                    "en": "Aktionen",
-                    "de": "MISSING"
+                    "de": "Aktionen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "activate": {
                 "translations": {
-                    "en": "Aktivieren"
+                    "de": "Aktivieren",
+                    "en": "MISSING"
                 }
             },
             "deactivate": {
                 "translations": {
-                    "en": "Deaktivieren"
+                    "de": "Deaktivieren",
+                    "en": "MISSING"
                 }
             },
             "delete": {
                 "translations": {
-                    "en": "Löschen"
+                    "de": "Löschen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "edit": {
                 "translations": {
-                    "en": "Bearbeiten"
+                    "de": "Bearbeiten",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "export": {
                 "translations": {
-                    "en": "Einstellungen exportieren"
+                    "de": "Einstellungen exportieren",
+                    "en": "MISSING"
                 }
             },
             "none": {
                 "translations": {
-                    "en": "Keine"
+                    "de": "Keine",
+                    "en": "MISSING"
                 }
             },
             "on_status": {
                 "translations": {
-                    "en": "Objekt-Status:"
+                    "de": "Objekt-Status:",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "back": {
                 "translations": {
-                    "en": "Back"
+                    "en": "Back",
+                    "de": "MISSING"
                 }
             },
             "permissions": {
@@ -692,22 +801,26 @@
         "hub": {
             "categories": {
                 "translations": {
-                    "en": "Kategorien"
+                    "de": "Kategorien",
+                    "en": "MISSING"
                 }
             },
             "conf": {
                 "translations": {
-                    "en": "Einstellungen"
+                    "de": "Einstellungen",
+                    "en": "MISSING"
                 }
             },
             "courses": {
                 "translations": {
-                    "en": "Kurse"
+                    "de": "Kurse",
+                    "en": "MISSING"
                 }
             },
             "memberships": {
                 "translations": {
-                    "en": "Mitgliedschaften"
+                    "de": "Mitgliedschaften",
+                    "en": "MISSING"
                 }
             },
             "origins": {
@@ -719,178 +832,212 @@
             },
             "users": {
                 "translations": {
-                    "en": "Benutzerkonten"
+                    "de": "Benutzerkonten",
+                    "en": "MISSING"
                 }
             },
             "categories_table_title": {
                 "translations": {
-                    "en": "Kategorien"
+                    "de": "Kategorien",
+                    "en": "MISSING"
                 }
             },
             "courses_table_title": {
                 "translations": {
-                    "en": "Kurse"
+                    "de": "Kurse",
+                    "en": "MISSING"
                 }
             },
             "users_table_title": {
                 "translations": {
-                    "en": "Benutzerkonten"
+                    "de": "Benutzerkonten",
+                    "en": "MISSING"
                 }
             }
         },
         "mem": {
             "prop_add_notification": {
                 "translations": {
-                    "en": "Benachrichtigung aktivieren (wenn gewünscht)"
+                    "de": "Benachrichtigung aktivieren (wenn gewünscht)",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode": {
                 "translations": {
-                    "en": "Löschverhalten"
+                    "de": "Löschverhalten",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_delete": {
                 "translations": {
-                    "en": "Mitgliedschaft beenden"
+                    "de": "Mitgliedschaft beenden",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_delete_or_inactive": {
                 "translations": {
-                    "en": "Mitgliedschaft beenden oder Zugriff sperren"
+                    "de": "Mitgliedschaft beenden oder Zugriff sperren",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_delete_or_inactive_info": {
                 "translations": {
-                    "en": "Wenn das Mitglied bereits Aktivitäten im Kurs hatte, wird der Zugriff gesperrt, <br>ansonsten wird die Mitgliedschaft beendet."
+                    "de": "Wenn das Mitglied bereits Aktivitäten im Kurs hatte, wird der Zugriff gesperrt, <br>ansonsten wird die Mitgliedschaft beendet.",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_inactive": {
                 "translations": {
-                    "en": "Zugriff sperren"
+                    "de": "Zugriff sperren",
+                    "en": "MISSING"
                 }
             },
             "prop_delete_mode_none": {
                 "translations": {
-                    "en": "Mitgliedschaft bestehen lassen"
+                    "de": "Mitgliedschaft bestehen lassen",
+                    "en": "MISSING"
                 }
             },
             "prop_deleted_send_mail_admin": {
                 "translations": {
-                    "en": "Admin"
+                    "de": "Admin",
+                    "en": "MISSING"
                 }
             },
             "prop_deleted_send_mail_member": {
                 "translations": {
-                    "en": "Mitglied"
+                    "de": "Mitglied",
+                    "en": "MISSING"
                 }
             },
             "prop_deleted_send_mail_title": {
                 "translations": {
-                    "en": "Mitgliedschaft beendet-Mail versenden an:"
+                    "de": "Mitgliedschaft beendet-Mail versenden an:",
+                    "en": "MISSING"
                 }
             },
             "prop_deleted_send_mail_tutor": {
                 "translations": {
-                    "en": "Tutor"
+                    "de": "Tutor",
+                    "en": "MISSING"
                 }
             },
             "prop_desktop_new": {
                 "translations": {
-                    "en": "Container auf Schreibtisch"
+                    "de": "Container auf Schreibtisch",
+                    "en": "MISSING"
                 }
             },
             "prop_desktop_updated": {
                 "translations": {
-                    "en": "Container auf Schreibtisch"
+                    "de": "Container auf Schreibtisch",
+                    "en": "MISSING"
                 }
             },
             "prop_get_usr_id": {
                 "translations": {
-                    "en": "User-ID aus anderer Anbindung"
+                    "de": "User-ID aus anderer Anbindung",
+                    "en": "MISSING"
                 }
             },
             "prop_get_usr_id_info": {
                 "translations": {
-                    "en": "Es wird nach Einträgen mit der selben Ext-ID gesucht."
+                    "de": "Es wird nach Einträgen mit der selben Ext-ID gesucht.",
+                    "en": "MISSING"
                 }
             },
             "prop_new_send_mail_admin": {
                 "translations": {
-                    "en": "Admin"
+                    "de": "Admin",
+                    "en": "MISSING"
                 }
             },
             "prop_new_send_mail_member": {
                 "translations": {
-                    "en": "Mitglied"
+                    "de": "Mitglied",
+                    "en": "MISSING"
                 }
             },
             "prop_new_send_mail_title": {
                 "translations": {
-                    "en": "Willkommens-Mail versenden an:"
+                    "de": "Willkommens-Mail versenden an:",
+                    "en": "MISSING"
                 }
             },
             "prop_new_send_mail_tutor": {
                 "translations": {
-                    "en": "Tutor"
+                    "de": "Tutor",
+                    "en": "MISSING"
                 }
             },
             "prop_update_notification": {
                 "translations": {
-                    "en": "Benachrichtigung aktualisieren (wenn gewünscht)"
+                    "de": "Benachrichtigung aktualisieren (wenn gewünscht)",
+                    "en": "MISSING"
                 }
             },
             "prop_update_role": {
                 "translations": {
-                    "en": "Rolle aktualisieren"
+                    "de": "Rolle aktualisieren",
+                    "en": "MISSING"
                 }
             },
             "prop_updated_send_mail": {
                 "translations": {
-                    "en": "Aufnahmemail verschicken"
+                    "de": "Aufnahmemail verschicken",
+                    "en": "MISSING"
                 }
             },
             "prop_updated_send_mail_admin": {
                 "translations": {
-                    "en": "Admin"
+                    "de": "Admin",
+                    "en": "MISSING"
                 }
             },
             "prop_updated_send_mail_member": {
                 "translations": {
-                    "en": "Mitglied"
+                    "de": "Mitglied",
+                    "en": "MISSING"
                 }
             },
             "prop_updated_send_mail_title": {
                 "translations": {
-                    "en": "Statuswechsel-Mail versenden an:"
+                    "de": "Statuswechsel-Mail versenden an:",
+                    "en": "MISSING"
                 }
             },
             "prop_updated_send_mail_tutor": {
                 "translations": {
-                    "en": "Tutor"
+                    "de": "Tutor",
+                    "en": "MISSING"
                 }
             }
         },
         "msg": {
             "confirm_delete_origin": {
                 "translations": {
-                    "en": "Möchten Sie die Anbindung definitv löschen?"
+                    "de": "Möchten Sie die Anbindung definitv löschen?",
+                    "en": "MISSING"
                 }
             },
             "origin_activated": {
                 "translations": {
-                    "en": "Anbindung aktiviert."
+                    "de": "Anbindung aktiviert.",
+                    "en": "MISSING"
                 },
                 "last_used": "22.11.2017"
             },
             "origin_deactivated": {
                 "translations": {
-                    "en": "Anbindung deaktiviert."
+                    "de": "Anbindung deaktiviert.",
+                    "en": "MISSING"
                 },
                 "last_used": "22.11.2017"
             },
             "saved": {
                 "translations": {
-                    "en": "Gespeichert."
+                    "de": "Gespeichert.",
+                    "en": "MISSING"
                 }
             },
             "success_create_origin": {
@@ -901,8 +1048,8 @@
             },
             "origin_saved": {
                 "translations": {
-                    "en": "Saved",
-                    "de": "Gespeichert"
+                    "de": "Saved",
+                    "en": "Gespeichert"
                 },
                 "last_used": "29.11.2017"
             },
@@ -917,419 +1064,478 @@
         "origin": {
             "subtab_icons": {
                 "translations": {
-                    "en": "Icons"
+                    "en": "Icons",
+                    "de": "MISSING"
                 }
             },
             "subtab_settings": {
                 "translations": {
-                    "en": "Settings"
+                    "en": "Settings",
+                    "de": "MISSING"
                 }
             },
             "form_button_create": {
                 "translations": {
-                    "en": "Speichern"
+                    "de": "Speichern",
+                    "en": "MISSING"
                 }
             },
             "form_button_index": {
                 "translations": {
-                    "en": "Abbrechen"
+                    "de": "Abbrechen",
+                    "en": "MISSING"
                 }
             },
             "form_button_update": {
                 "translations": {
-                    "en": "Save & close"
+                    "en": "Save & close",
+                    "de": "MISSING"
                 }
             },
             "form_button_update_and_stay": {
                 "translations": {
-                    "en": "Speichern"
+                    "de": "Speichern",
+                    "en": "MISSING"
                 }
             },
             "form_properties": {
                 "translations": {
-                    "en": "Einstellungen"
+                    "de": "Einstellungen",
+                    "en": "MISSING"
                 }
             },
             "form_title_add": {
                 "translations": {
-                    "en": "Herkunft erstellen"
+                    "de": "Herkunft erstellen",
+                    "en": "MISSING"
                 },
                 "last_used": "28.11.2017"
             },
             "form_title_edit": {
                 "translations": {
-                    "en": "Herkunft bearbeiten"
+                    "de": "Herkunft bearbeiten",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_active": {
                 "translations": {
-                    "en": "Synchronisation aktiv"
+                    "de": "Synchronisation aktiv",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_class_name": {
                 "translations": {
-                    "en": "PHP-Klassenname"
+                    "de": "PHP-Klassenname",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_class_name_info": {
                 "translations": {
-                    "en": "Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location."
+                    "en": "Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location.",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type": {
                 "translations": {
-                    "en": "Verbindungstyp"
+                    "de": "Verbindungstyp",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db": {
                 "translations": {
-                    "en": "Server"
+                    "en": "Server",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_database": {
                 "translations": {
-                    "en": "Datenbank"
+                    "de": "Datenbank",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_host": {
                 "translations": {
-                    "en": "Host"
+                    "en": "Host",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_info": {
                 "translations": {
-                    "en": "Die Daten stammen aus einer Serververbindung."
+                    "de": "Die Daten stammen aus einer Serververbindung.",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_password": {
                 "translations": {
-                    "en": "Passwort"
+                    "de": "Passwort",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_port": {
                 "translations": {
-                    "en": "Port"
+                    "en": "Port",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_search_base": {
                 "translations": {
-                    "en": "Search-Base"
+                    "en": "Search-Base",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_db_username": {
                 "translations": {
-                    "en": "Login-Name"
+                    "de": "Login-Name",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_external": {
                 "translations": {
-                    "en": "Extern"
+                    "de": "Extern",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_external_info": {
                 "translations": {
-                    "en": "Füllen der Hub-Tabelle durch Fremdsystem."
+                    "de": "Füllen der Hub-Tabelle durch Fremdsystem.",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_file": {
                 "translations": {
-                    "en": "Datei oder Verzeichnis"
+                    "de": "Datei oder Verzeichnis",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_file_info": {
                 "translations": {
-                    "en": "Daten werden aus einer Datei gelesen."
+                    "de": "Daten werden aus einer Datei gelesen.",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_conf_type_file_path": {
                 "translations": {
-                    "en": "Pfad zur Datei"
+                    "de": "Pfad zur Datei",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_description": {
                 "translations": {
-                    "en": "Beschreibung"
+                    "de": "Beschreibung",
+                    "en": "MISSING"
                 }
             },
             "form_field_exec_time": {
                 "translations": {
-                    "en": "Zeitpunkt der Synchronisation"
+                    "de": "Zeitpunkt der Synchronisation",
+                    "en": "MISSING"
                 }
             },
             "form_field_exec_time_info": {
                 "translations": {
-                    "en": "Format: HH:MM <br>Falls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit <br> ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert."
+                    "de": "Format: HH:MM <br>Falls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit <br> ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert.",
+                    "en": "MISSING"
                 }
             },
             "form_field_id": {
                 "translations": {
-                    "en": "ID"
+                    "de": "ID",
+                    "en": "MISSING"
                 }
             },
             "form_field_notification_email": {
                 "translations": {
-                    "en": "Benachrichtigung bei Fehler"
+                    "de": "Benachrichtigung bei Fehler",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_summary_email": {
                 "translations": {
-                    "en": "E-Mailadressen für Zusammenfassung"
+                    "de": "E-Mailadressen für Zusammenfassung",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "from_field_active_period": {
                 "translations": {
-                    "en": "Active period"
+                    "en": "Active period",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "from_field_active_period_info": {
                 "translations": {
-                    "en": "The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED."
+                    "en": "The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED.",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_title": {
                 "translations": {
-                    "en": "Titel"
+                    "de": "Titel",
+                    "en": "MISSING"
                 }
             },
             "form_field_usage_type": {
                 "translations": {
-                    "en": "Sync-Verwendung"
+                    "de": "Sync-Verwendung",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_field_usage_type_1": {
                 "translations": {
-                    "en": "Benutzerkonten"
+                    "de": "Benutzerkonten",
+                    "en": "MISSING"
                 }
             },
             "form_field_usage_type_2": {
                 "translations": {
-                    "en": "Kurs-Mitgliedschaften"
+                    "de": "Kurs-Mitgliedschaften",
+                    "en": "MISSING"
                 }
             },
             "form_field_usage_type_3": {
                 "translations": {
-                    "en": "Kurse"
+                    "de": "Kurse",
+                    "en": "MISSING"
                 }
             },
             "form_field_usage_type_4": {
                 "translations": {
-                    "en": "Kategorien"
+                    "de": "Kategorien",
+                    "en": "MISSING"
                 }
             },
             "form_field_update_dto": {
                 "translations": {
-                    "en": "Update %s"
+                    "en": "Update %s",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_comma_separated": {
                 "translations": {
-                    "en": "Separate multiple values by a comma"
+                    "en": "Separate multiple values by a comma",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_header_connection": {
                 "translations": {
-                    "en": "Verbindung zu Daten"
+                    "de": "Verbindung zu Daten",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_header_notification": {
                 "translations": {
-                    "en": "Benachrichtigungen"
+                    "de": "Benachrichtigungen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "form_header_sync": {
                 "translations": {
-                    "en": "Synchronisation"
+                    "de": "Synchronisation",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_button_dryrun": {
                 "translations": {
-                    "en": "Dry-Run"
+                    "en": "Dry-Run",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             },
             "table_button_activate_all": {
                 "translations": {
-                    "en": "Alle aktivieren",
-                    "de": "MISSING"
+                    "de": "Alle aktivieren",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_button_add": {
                 "translations": {
-                    "en": "Anbindung hinzufügen",
-                    "de": "MISSING"
+                    "de": "Anbindung hinzufügen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_button_deactivate_all": {
                 "translations": {
-                    "en": "Alle deaktivieren",
-                    "de": "MISSING"
+                    "de": "Alle deaktivieren",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_button_import": {
                 "translations": {
-                    "en": "Anbindung importieren"
+                    "de": "Anbindung importieren",
+                    "en": "MISSING"
                 }
             },
             "table_button_run": {
                 "translations": {
-                    "en": "Synchronisierung starten",
-                    "de": "MISSING"
+                    "de": "Synchronisierung starten",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_header_active": {
                 "translations": {
-                    "en": "Aktiv",
-                    "de": "MISSING"
+                    "de": "Aktiv",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_header_count": {
                 "translations": {
-                    "en": "Anzahl",
-                    "de": "MISSING"
+                    "de": "Anzahl",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_header_duration_objects": {
                 "translations": {
-                    "en": "Building Objects"
+                    "en": "Building Objects",
+                    "de": "MISSING"
                 }
             },
             "table_header_description": {
                 "translations": {
-                    "en": "Beschreibung",
-                    "de": "MISSING"
+                    "de": "Beschreibung",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_header_duration": {
                 "translations": {
-                    "en": "Read Data"
+                    "en": "Read Data",
+                    "de": "MISSING"
                 }
             },
             "table_header_last_update": {
                 "translations": {
-                    "en": "Letzte Synchronisierung",
-                    "de": "MISSING"
+                    "de": "Letzte Synchronisierung",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_header_title": {
                 "translations": {
-                    "en": "Titel",
-                    "de": "MISSING"
+                    "de": "Titel",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_header_usage_type": {
                 "translations": {
-                    "en": "Verwendung",
-                    "de": "MISSING"
+                    "de": "Verwendung",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "table_title": {
                 "translations": {
-                    "en": "Anbindungen"
+                    "de": "Anbindungen",
+                    "en": "MISSING"
                 }
             },
             "title": {
                 "translations": {
-                    "en": "Title"
+                    "en": "Title",
+                    "de": "Titel"
                 },
                 "last_used": "29.11.2017"
             },
             "description": {
                 "translations": {
-                    "en": "Description"
+                    "en": "Description",
+                    "de": "Beschreibung"
                 },
                 "last_used": "29.11.2017"
             },
             "object_type_user": {
                 "translations": {
-                    "en": "User"
+                    "en": "User",
+                    "de": "Benutzer"
                 },
                 "last_used": "28.11.2017"
             },
             "object_type_courseMembership": {
                 "translations": {
-                    "en": "Course Member"
+                    "en": "Course Member",
+                    "de": "Kurs-Mitgliedschaft"
                 },
                 "last_used": "28.11.2017"
             },
             "object_type_course": {
                 "translations": {
-                    "en": "Course"
+                    "en": "Course",
+                    "de": "Kurse"
                 },
                 "last_used": "28.11.2017"
             },
             "object_type_category": {
                 "translations": {
-                    "en": "Category"
+                    "en": "Category",
+                    "de": "Kategorie"
                 },
                 "last_used": "28.11.2017"
             },
             "object_type_group": {
                 "translations": {
-                    "en": "Group"
+                    "en": "Group",
+                    "de": "Gruppe"
                 },
                 "last_used": "28.11.2017"
             },
             "object_type_groupMembership": {
                 "translations": {
-                    "en": "Group Member"
+                    "en": "Group Member",
+                    "de": "Gruppe-Mitgliedschaft"
                 },
                 "last_used": "28.11.2017"
             },
             "object_type_session": {
                 "translations": {
-                    "en": "Session"
+                    "en": "Session",
+                    "de": "Sitzung"
                 },
                 "last_used": "28.11.2017"
             },
             "object_type_sessionMembership": {
                 "translations": {
                     "en": "Session Membership",
-                    "de": "Session Membership"
+                    "de": "Sitzung-Mitgliedschaft"
                 },
                 "last_used": "28.11.2017"
             },
             "form_field_namespace": {
                 "translations": {
                     "en": "Namespace",
-                    "de": "Namespace"
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1344,43 +1550,50 @@
         "object": {
             "type_user": {
                 "translations": {
-                    "en": "User"
+                    "en": "User",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             },
             "type_courseMembership": {
                 "translations": {
-                    "en": "Course Memberships"
+                    "en": "Course Memberships",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             },
             "type_course": {
                 "translations": {
-                    "en": "Course"
+                    "en": "Course",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             },
             "type_category": {
                 "translations": {
-                    "en": "Category"
+                    "en": "Category",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             },
             "type_group": {
                 "translations": {
-                    "en": "Group"
+                    "en": "Group",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             },
             "type_groupMembership": {
                 "translations": {
-                    "en": "Group Membership"
+                    "en": "Group Membership",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             },
             "type_session": {
                 "translations": {
-                    "en": "Session"
+                    "en": "Session",
+                    "de": "MISSING"
                 },
                 "last_used": "22.09.2017"
             }
@@ -1388,154 +1601,180 @@
         "usr": {
             "prop_activate_account": {
                 "translations": {
-                    "en": "Account aktivieren"
+                    "de": "Account aktivieren",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_create_password": {
                 "translations": {
-                    "en": "Passwort erstellen"
+                    "de": "Passwort erstellen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode": {
                 "translations": {
-                    "en": "Löschverhalten"
+                    "de": "Löschverhalten",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_delete": {
                 "translations": {
-                    "en": "Benutzer löschen"
+                    "de": "Benutzer löschen",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_inactive": {
                 "translations": {
-                    "en": "Benutzer deaktivieren"
+                    "de": "Benutzer deaktivieren",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_delete_mode_none": {
                 "translations": {
-                    "en": "Keine Aktion"
+                    "de": "Keine Aktion",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_header_object": {
                 "translations": {
-                    "en": "Objekt-Einstellungen"
+                    "de": "Objekt-Einstellungen",
+                    "en": "MISSING"
                 }
             },
             "config_login_field": {
                 "translations": {
-                    "en": "ILIAS Loginfeld"
+                    "de": "ILIAS Loginfeld",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_info": {
                 "translations": {
-                    "en": "Available fields and modes defining the login name of a user in ILIAS. Example user: John Doe"
+                    "en": "Available fields and modes defining the login name of a user in ILIAS. Example user: John Doe",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_1": {
                 "translations": {
-                    "en": "Shortened firstname and lastname (j.doe)"
+                    "en": "Shortened firstname and lastname (j.doe)",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_2": {
                 "translations": {
-                    "en": "E-Mail"
+                    "de": "E-Mail",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_3": {
                 "translations": {
-                    "en": "External Account"
+                    "en": "External Account",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_4": {
                 "translations": {
-                    "en": "External ID"
+                    "en": "External ID",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_5": {
                 "translations": {
-                    "en": "firstname.lastname (john.doe)"
+                    "en": "firstname.lastname (john.doe)",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_6": {
                 "translations": {
-                    "en": "Hub-field login"
+                    "en": "Hub-field login",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_password_mail_body": {
                 "translations": {
-                    "en": "Text"
+                    "en": "Text",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_password_mail_date_format": {
                 "translations": {
-                    "en": "Datumsformat für Platzhalter"
+                    "de": "Datumsformat für Platzhalter",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_password_mail_placeholders": {
                 "translations": {
-                    "en": "Verfügbare Platzhalter"
+                    "de": "Verfügbare Platzhalter",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_password_mail_subject": {
                 "translations": {
-                    "en": "Betreff"
+                    "de": "Betreff",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_reactivate_account": {
                 "translations": {
-                    "en": "Account reaktivieren"
+                    "de": "Account reaktivieren",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_reactivate_account_info": {
                 "translations": {
-                    "en": "Activates the user account again if it is not active when the sync updates a user"
+                    "en": "Activates the user account again if it is not active when the sync updates a user",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_send_password": {
                 "translations": {
-                    "en": "Passwort per Mail versenden"
+                    "de": "Passwort per Mail versenden",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_send_password_field": {
                 "translations": {
-                    "en": "Feld mit E-Mailadresse"
+                    "de": "Feld mit E-Mailadresse",
+                    "en": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_syncfield": {
                 "translations": {
-                    "en": "Synchronisationsfeld"
+                    "de": "Synchronisationsfeld",
+                    "en": "MISSING"
                 }
             },
             "prop_syncfield_none": {
                 "translations": {
-                    "en": "Kein Feld"
+                    "de": "Kein Feld",
+                    "en": "MISSING"
                 }
             },
             "prop_ilias_roles_info": {
                 "translations": {
-                    "en": "Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations"
+                    "en": "Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations",
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             }
@@ -1543,191 +1782,228 @@
         "view": {
             "hubcategory_index": {
                 "translations": {
-                    "en": "Kategorien"
+                    "de": "Kategorien",
+                    "en": "MISSING"
                 }
             },
             "hubcourse_index": {
                 "translations": {
-                    "en": "Kurse"
+                    "de": "Kurse",
+                    "en": "MISSING"
                 }
             },
             "hubmembership_index": {
                 "translations": {
-                    "en": "Mitgliedschaften"
+                    "de": "Mitgliedschaften",
+                    "en": "MISSING"
                 }
             },
             "field_creation_date": {
                 "translations": {
-                    "en": "Erstellungsdatum"
+                    "de": "Erstellungsdatum",
+                    "en": "MISSING"
                 }
             },
             "field_container_role": {
                 "translations": {
-                    "en": "Rolle in Objekt"
+                    "de": "Rolle in Objekt",
+                    "en": "MISSING"
                 }
             },
             "field_delivery_date_micro": {
                 "translations": {
-                    "en": "Zustellungsdatum"
+                    "de": "Zustellungsdatum",
+                    "en": "MISSING"
                 }
             },
             "field_ext_id": {
                 "translations": {
-                    "en": "Externe ID"
+                    "de": "Externe ID",
+                    "en": "MISSING"
                 }
             },
             "field_owner": {
                 "translations": {
-                    "en": "Besitzer"
+                    "de": "Besitzer",
+                    "en": "MISSING"
                 }
             },
             "field_first_dependence": {
                 "translations": {
-                    "en": "Erste Abhängigkeit"
+                    "de": "Erste Abhängigkeit",
+                    "en": "MISSING"
                 }
             },
             "field_ilias_object": {
                 "translations": {
-                    "en": "Kursname"
+                    "de": "Kursname",
+                    "en": "MISSING"
                 }
             },
             "field_important_information": {
                 "translations": {
-                    "en": "Important Information"
+                    "en": "Important Information",
+                    "de": "MISSING"
                 }
             },
             "field_sub_limitation_type": {
                 "translations": {
-                    "en": "Subscription Type"
+                    "en": "Subscription Type",
+                    "de": "MISSING"
                 }
             },
             "field_notification_email": {
                 "translations": {
-                    "en": "Benachrichtungsmail"
+                    "de": "Benachrichtungsmail",
+                    "en": "MISSING"
                 }
             },
             "field_container_id": {
                 "translations": {
-                    "en": "Objektname"
+                    "de": "Objektname",
+                    "en": "MISSING"
                 }
             },
             "field_order_type": {
                 "translations": {
-                    "en": "Sortierung"
+                    "de": "Sortierung",
+                    "en": "MISSING"
                 }
             },
             "field_parent_id": {
                 "translations": {
-                    "en": "Parentobjekt"
+                    "de": "Parentobjekt",
+                    "en": "MISSING"
                 }
             },
             "field_parent_id_type": {
                 "translations": {
-                    "en": "Parent ID Typ"
+                    "de": "Parent ID Typ",
+                    "en": "MISSING"
                 }
             },
             "field_second_dependence": {
                 "translations": {
-                    "en": "Zweite Abhängigkeit"
+                    "de": "Zweite Abhängigkeit",
+                    "en": "MISSING"
                 }
             },
             "field_show_infopage": {
                 "translations": {
-                    "en": "Infoseite anzeigen"
+                    "de": "Infoseite anzeigen",
+                    "en": "MISSING"
                 }
             },
             "field_show_news": {
                 "translations": {
-                    "en": "News anzeigen"
+                    "de": "News anzeigen",
+                    "en": "MISSING"
                 }
             },
             "field_responsible": {
                 "translations": {
-                    "en": "Verantwortlicher"
+                    "de": "Verantwortlicher",
+                    "en": "MISSING"
                 }
             },
             "field_responsible_email": {
                 "translations": {
-                    "en": "Mail Verantwortlicher"
+                    "de": "Mail Verantwortlicher",
+                    "en": "MISSING"
                 }
             },
             "field_shortlink": {
                 "translations": {
-                    "en": "Shortlink"
+                    "de": "Shortlink",
+                    "en": "MISSING"
                 }
             },
             "field_sr_hub_origin_id": {
                 "translations": {
-                    "en": "Anbindung"
+                    "de": "Anbindung",
+                    "en": "MISSING"
                 }
             },
             "field_status": {
                 "translations": {
-                    "en": "Status"
+                    "de": "Status",
+                    "en": "MISSING"
                 }
             },
             "field_title": {
                 "translations": {
-                    "en": "Titel"
+                    "de": "Titel",
+                    "en": "MISSING"
                 }
             },
             "field_user_name": {
                 "translations": {
-                    "en": "Benutzername"
+                    "de": "Benutzername",
+                    "en": "MISSING"
                 }
             },
             "field_view_mode": {
                 "translations": {
-                    "en": "View Mode"
+                    "en": "View Mode",
+                    "de": "MISSING"
                 }
             }
         },
         "icon": {
             "form_title_dep_1": {
                 "translations": {
-                    "en": "Icons for first Categorie"
+                    "en": "Icons for first Categorie",
+                    "de": "MISSING"
                 }
             },
             "form_title_dep_2": {
                 "translations": {
-                    "en": "Icons for second Categorie"
+                    "en": "Icons for second Categorie",
+                    "de": "MISSING"
                 }
             },
             "form_title_dep_3": {
                 "translations": {
-                    "en": "Icons for third Categorie"
+                    "en": "Icons for third Categorie",
+                    "de": "MISSING"
                 }
             },
             "form_title_obj": {
                 "translations": {
-                    "en": "Icons for Object"
+                    "en": "Icons for Object",
+                    "de": "MISSING"
                 }
             },
             "title_small": {
                 "translations": {
-                    "en": "Small"
+                    "en": "Small",
+                    "de": "MISSING"
                 }
             },
             "title_medium": {
                 "translations": {
-                    "en": "Medium"
+                    "en": "Medium",
+                    "de": "MISSING"
                 }
             },
             "title_large": {
                 "translations": {
-                    "en": "Large"
+                    "en": "Large",
+                    "de": "MISSING"
                 }
             },
             "form_button_save": {
                 "translations": {
-                    "en": "Save"
+                    "en": "Save",
+                    "de": "MISSING"
                 }
             }
         },
         "confirm": {
             "delete_button": {
                 "translations": {
-                    "en": "Löschen"
+                    "en": "Löschen",
+                    "de": "MISSING"
                 },
                 "last_used": "22.11.2017"
             }
@@ -1735,7 +2011,8 @@
         "cancel": {
             "delete_button": {
                 "translations": {
-                    "en": "Cancel"
+                    "en": "Cancel",
+                    "de": "MISSING"
                 },
                 "last_used": "22.11.2017"
             }
@@ -1804,7 +2081,7 @@
             "table_header_processed_date": {
                 "translations": {
                     "en": "Process-Date",
-                    "de": "verarbeitung"
+                    "de": "Verarbeitung"
                 },
                 "last_used": "22.11.2017"
             },
@@ -1907,14 +2184,14 @@
             "prop_node_noparent": {
                 "translations": {
                     "en": "Fallback Parent Ref-ID",
-                    "de": "Fallback Parent Ref-ID"
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_node_noparent_info": {
                 "translations": {
                     "en": "Groups are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node.",
-                    "de": "Groups are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node."
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1934,7 +2211,7 @@
             "prop_move_info": {
                 "translations": {
                     "en": "Groups is moved to Parent-Id if this has changed",
-                    "de": "Groups is moved to Parent-Id if this has changed"
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1982,7 +2259,7 @@
             "prop_delete_mode_delete_or_close_info": {
                 "translations": {
                     "en": "Deletes the Group if there wasn't any activity",
-                    "de": "Deletes the Group if there wasn't any activity"
+                    "de": "MISSING"
                 },
                 "last_used": "29.11.2017"
             },

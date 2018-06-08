@@ -37,8 +37,8 @@ class ConfigFormGUI extends \ilPropertyFormGUI {
 		$this->pl = \ilHub2Plugin::getInstance();
 		$this->setFormAction($this->ctrl()->getFormAction($this->parent_gui));
 		$this->initForm();
-		$this->addCommandButton('saveConfig', $this->lng()->txt('button_save'));
-		$this->addCommandButton('cancel', $this->lng()->txt('button_cancel'));
+		$this->addCommandButton('saveConfig', $this->pl->txt('button_save'));
+		$this->addCommandButton('cancel', $this->pl->txt('button_cancel'));
 		parent::__construct();
 	}
 

@@ -56,11 +56,17 @@ class hub2MainGUI {
 
 
 	protected function initTabs() {
-		$this->tabs()
-		     ->addTab(self::TAB_PLUGIN_CONFIG, $this->pl->txt(self::TAB_PLUGIN_CONFIG), $this->ctrl()
-		                                                                                     ->getLinkTargetByClass(hub2ConfigGUI::class));
+		$this->tabs()->addTab(self::TAB_PLUGIN_CONFIG, $this->pl->txt(self::TAB_PLUGIN_CONFIG), $this->ctrl()
+				->getLinkTargetByClass(hub2ConfigGUI::class));
 
-		$this->tabs()->addTab(self::TAB_ORIGINS, $this->pl->txt(self::TAB_ORIGINS), $this->ctrl()
-		                                                                                 ->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
+		$this->tabs()->addTab(self::TAB_ORIGINS, $this->pl->txt(self::TAB_ORIGINS), $this->ctrl()->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
+	}
+
+
+	/**
+	 *
+	 */
+	protected function cancel() {
+		$this->index();
 	}
 }
