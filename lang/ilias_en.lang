@@ -240,6 +240,7 @@ origin_object_type_sessionMembership#:#Session Membership
 origin_form_field_namespace#:#Namespace
 origin_form_field_namespace_info#:#Overload Standard-Namespace of Origins
 origin_object_type_orgUnit#:#Organisational units
+origin_object_type_orgUnitMembership#:#Organisational unit memberships
 object_type_user#:#User
 object_type_courseMembership#:#Course Memberships
 object_type_course#:#Course
@@ -309,7 +310,7 @@ icon_title_small#:#Small
 icon_title_medium#:#Medium
 icon_title_large#:#Large
 icon_form_button_save#:#Save
-confirm_delete_button#:#Löschen
+confirm_delete_button#:#Delete
 cancel_delete_button#:#Cancel
 button_save#:#Save
 button_cancel#:#Cancel

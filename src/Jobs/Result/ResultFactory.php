@@ -2,8 +2,6 @@
 
 namespace SRAG\Plugins\Hub2\Jobs\Result;
 
-require_once('./Services/Cron/classes/class.ilCronJobResult.php');
-
 /**
  * Class AbstractResult
  *

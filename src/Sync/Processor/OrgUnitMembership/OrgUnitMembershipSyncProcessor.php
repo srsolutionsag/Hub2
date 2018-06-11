@@ -1,34 +1,34 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnit;
+namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 
 use ilObject;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
- * Class OrgUnitSyncProcessor
+ * Class OrgUnitMembershipSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\OrgUnit
+ * @package SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncProcessor {
+class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrgUnitMembershipSyncProcessor {
 
 	use DIC;
 	/**
-	 * @var IOrgUnitOriginProperties
+	 * @var IOrgUnitMembershipOriginProperties
 	 */
 	private $props;
 	/**
-	 * @var IOrgUnitOriginConfig
+	 * @var IOrgUnitMembershipOriginConfig
 	 */
 	private $config;
 	/**

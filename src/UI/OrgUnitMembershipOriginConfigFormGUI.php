@@ -2,18 +2,18 @@
 
 namespace SRAG\Plugins\Hub2\UI;
 
-use SRAG\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
+use SRAG\Plugins\Hub2\Origin\OrgUnitMembership\AROrgUnitMembershipOrigin;
 
 /**
- * Class OrgUnitOriginConfigFormGUI
+ * Class OrgUnitMembershipOriginConfigFormGUI
  *
  * @package SRAG\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI {
+class OrgUnitMembershipOriginConfigFormGUI extends OriginConfigFormGUI {
 
 	/**
-	 * @var AROrgUnitOrigin
+	 * @var AROrgUnitMembershipOrigin
 	 */
 	protected $origin;
 

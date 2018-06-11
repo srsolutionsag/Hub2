@@ -3,11 +3,11 @@
 namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
- * Class OrgUnitOriginProperties
+ * Interface IOrgUnitOriginProperties
  *
  * @package SRAG\Plugins\Hub2\Origin\Properties
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OrgUnitOriginProperties extends OriginProperties implements IOrgUnitOriginProperties {
+interface IOrgUnitMembershipOriginProperties extends IOriginProperties {
 
 }

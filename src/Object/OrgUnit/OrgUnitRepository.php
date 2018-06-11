@@ -7,8 +7,9 @@ use SRAG\Plugins\Hub2\Object\ObjectRepository;
 /**
  * Class OrgUnitRepository
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\OrgUnit
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OrgUnitRepository extends ObjectRepository {
+class OrgUnitRepository extends ObjectRepository implements IOrgUnitRepository {
 
 }

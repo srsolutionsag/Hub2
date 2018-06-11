@@ -8,6 +8,8 @@ use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use SRAG\Plugins\Hub2\Object\Group\ARGroup;
 use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
 use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembership;
 use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use SRAG\Plugins\Hub2\Object\User\ARUser;
@@ -59,6 +61,8 @@ class ObjectFactory implements IObjectFactory {
 				return $this->sessionMembership($ext_id);
 			case IOrigin::OBJECT_TYPE_ORGNUNIT;
 				return $this->orgUnit($ext_id);
+			case IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP;
+				return $this->orgUnitMembership($ext_id);
 			default:
 				throw new \LogicException('no object-type for this origin found');
 		}
@@ -197,6 +201,21 @@ class ObjectFactory implements IObjectFactory {
 		}
 
 		return $org_unit;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function orgUnitMembership(string $ext_id): IOrgUnitMembership {
+		$org_unit_membership = AROrgUnitMembership::find($this->getId($ext_id));
+		if ($org_unit_membership === NULL) {
+			$org_unit_membership = new AROrgUnitMembership();
+			$org_unit_membership->setOriginId($this->origin->getId());
+			$org_unit_membership->setExtId($ext_id);
+		}
+
+		return $org_unit_membership;
 	}
 
 

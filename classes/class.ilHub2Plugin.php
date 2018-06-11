@@ -1,8 +1,10 @@
 <?php
 
-require_once(dirname(__DIR__) . '/vendor/autoload.php');
+require_once __DIR__ . "/../vendor/autoload.php";
 
 use SRAG\Plugins\Hub2\Helper\DIC;
+use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
 
 /**
  * Class ilHub2Plugin
@@ -73,7 +75,8 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, false);
 		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, false);
 		$this->db()->dropTable(SRAG\Plugins\Hub2\Config\ArConfig::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit::TABLE_NAME, false);
+		$this->db()->dropTable(AROrgUnit::TABLE_NAME, false);
+		$this->db()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
 
 		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 
@@ -99,12 +102,23 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	public function txt($a_var) {
 		require_once "Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php";
 
-		sragPluginTranslator::getInstance($this)->active()->write();
+		$a = sragPluginTranslator::getInstance($this)->active()->write();
 
 		$txt = parent::txt($a_var);
 
 		if ($txt === sragPluginTranslatorJson::MISSING) {
 			$txt .= " " . $a_var;
+
+			if (preg_match(sragPluginTranslator::REGEX, $a_var, $index)) {
+				$key = $index[2];
+				$category = $index[1];
+			} else {
+				$key = $a_var;
+				$category = 'common';
+			}
+
+			$a->sragPluginTranslaterJson->addEntry($category, $key, $txt, $this->lng()->getLangKey());
+			$a->sragPluginTranslaterJson->save();
 		}
 
 		return $txt;

@@ -7,9 +7,10 @@ use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 /**
  * Class OrgUnitDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\OrgUnit
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OrgUnitDTO extends DataTransferObject {
+class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
@@ -28,26 +29,27 @@ class OrgUnitDTO extends DataTransferObject {
 	/**
 	 * @var string
 	 */
-	private $parentId;
+	private $parent_id;
 	/**
 	 * @var int
 	 */
-	private $parentIdType = self::PARENT_ID_TYPE_REF_ID;
+	private $parent_id_type = self::PARENT_ID_TYPE_REF_ID;
 	/**
 	 * @var string
 	 */
-	protected $orguType;
+	protected $orgu_type;
 	/**
 	 * @var string
 	 */
-	protected $extId;
+	protected $ext_id;
 
 
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct() {
-		//TODO
+	public function __construct(string $ext_id) {
+		parent::__construct($ext_id);
+		$this->ext_id = $ext_id;
 	}
 
 
@@ -62,9 +64,9 @@ class OrgUnitDTO extends DataTransferObject {
 	/**
 	 * @param string $title
 	 *
-	 * @return OrgUnitDTO
+	 * @return IOrgUnitDTO
 	 */
-	public function setTitle(string $title): OrgUnitDTO {
+	public function setTitle(string $title): IOrgUnitDTO {
 		$this->title = $title;
 
 		return $this;
@@ -82,9 +84,9 @@ class OrgUnitDTO extends DataTransferObject {
 	/**
 	 * @param string $description
 	 *
-	 * @return OrgUnitDTO
+	 * @return IOrgUnitDTO
 	 */
-	public function setDescription(string $description): OrgUnitDTO {
+	public function setDescription(string $description): IOrgUnitDTO {
 		$this->description = $description;
 
 		return $this;
@@ -102,9 +104,9 @@ class OrgUnitDTO extends DataTransferObject {
 	/**
 	 * @param int $owner
 	 *
-	 * @return OrgUnitDTO
+	 * @return IOrgUnitDTO
 	 */
-	public function setOwner(int $owner): OrgUnitDTO {
+	public function setOwner(int $owner): IOrgUnitDTO {
 		$this->owner = $owner;
 
 		return $this;
@@ -115,17 +117,17 @@ class OrgUnitDTO extends DataTransferObject {
 	 * @return string
 	 */
 	public function getParentId(): string {
-		return $this->parentId;
+		return $this->parent_id;
 	}
 
 
 	/**
-	 * @param string $parentId
+	 * @param string $parent_id
 	 *
-	 * @return OrgUnitDTO
+	 * @return IOrgUnitDTO
 	 */
-	public function setParentId(string $parentId): OrgUnitDTO {
-		$this->parentId = $parentId;
+	public function setParentId(string $parent_id): IOrgUnitDTO {
+		$this->parent_id = $parent_id;
 
 		return $this;
 	}
@@ -134,18 +136,18 @@ class OrgUnitDTO extends DataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getParentIdType(): int {
-		return $this->parentIdType;
+	public function getParentIdtype(): int {
+		return $this->parent_id_type;
 	}
 
 
 	/**
-	 * @param int $parentIdType
+	 * @param int $parent_id_type
 	 *
-	 * @return OrgUnitDTO
+	 * @return IOrgUnitDTO
 	 */
-	public function setParentIdType(int $parentIdType): OrgUnitDTO {
-		$this->parentIdType = $parentIdType;
+	public function setParentIdtype(int $parent_id_type): IOrgUnitDTO {
+		$this->parent_id_type = $parent_id_type;
 
 		return $this;
 	}
@@ -155,17 +157,17 @@ class OrgUnitDTO extends DataTransferObject {
 	 * @return string
 	 */
 	public function getOrguType(): string {
-		return $this->orguType;
+		return $this->orgu_type;
 	}
 
 
 	/**
-	 * @param string $orguType
+	 * @param string $orgu_type
 	 *
-	 * @return OrgUnitDTO
+	 * @return IOrgUnitDTO
 	 */
-	public function setOrguType(string $orguType): OrgUnitDTO {
-		$this->orguType = $orguType;
+	public function setOrguType(string $orgu_type): IOrgUnitDTO {
+		$this->orgu_type = $orgu_type;
 
 		return $this;
 	}
@@ -175,17 +177,17 @@ class OrgUnitDTO extends DataTransferObject {
 	 * @return string
 	 */
 	public function getExtId(): string {
-		return $this->extId;
+		return $this->ext_id;
 	}
 
 
 	/**
-	 * @param string $extId
+	 * @param string $ext_id
 	 *
-	 * @return OrgUnitDTO
+	 * @return IOrgUnitDTO
 	 */
-	public function setExtId(string $extId): OrgUnitDTO {
-		$this->extId = $extId;
+	public function setExtId(string $ext_id): IOrgUnitDTO {
+		$this->ext_id = $ext_id;
 
 		return $this;
 	}

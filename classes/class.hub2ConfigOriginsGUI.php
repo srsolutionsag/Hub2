@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../vendor/autoload.php";
 
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Origin\AROrigin;

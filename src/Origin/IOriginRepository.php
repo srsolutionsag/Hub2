@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
+use SRAG\Plugins\Hub2\Origin\OrgUnitMembership\IOrgUnitMembershipOrigin;
+
 /**
  * Interface IOriginFactory
  *
@@ -74,5 +77,17 @@ interface IOriginRepository {
 	/**
 	 * @return \SRAG\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin[]
 	 */
-	public function sessionsMemeberships();
+	public function sessionsMemberships();
+
+
+	/**
+	 * @return IOrgUnitOrigin[]
+	 */
+	public function orgUnits(): array;
+
+
+	/**
+	 * @return IOrgUnitMembershipOrigin[]
+	 */
+	public function orgUnitMemberships(): array;
 }

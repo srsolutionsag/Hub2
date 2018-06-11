@@ -1,6 +1,4 @@
-<?php
-
-namespace SRAG\Plugins\Hub2\Origin;
+<?php namespace SRAG\Plugins\Hub2\Origin;
 
 use ilCSVReader;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
@@ -12,12 +10,12 @@ use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use stdClass;
 
 /**
- * Class demoOrgUnit
+ * Class demoOrgUnitMembership
  *
  * @package SRAG\Plugins\Hub2\Origin
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class demoOrgUnit extends AbstractOriginImplementation {
+class demoOrgUnitMembership extends AbstractOriginImplementation {
 
 	/**
 	 * Connect to the service providing the sync data.
@@ -48,8 +46,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData(): int {
-		// Parse csv file
+	public function parseData(): int {// Parse csv file
 		$csv_file = $this->config()->getFilePath();
 
 		$csv = new ilCSVReader();
@@ -122,7 +119,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 		$org_units = [];
 
 		foreach ($this->data as $data) {
-			$org_unit = $this->factory()->orgUnit($data->extId);
+			$org_unit = $this->factory()->orgUnitMembership($data->extId);
 
 			$org_unit->setTitle($data->title);
 

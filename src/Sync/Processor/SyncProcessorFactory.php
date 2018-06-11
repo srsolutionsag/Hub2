@@ -12,6 +12,10 @@ use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProces
 use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupActivities;
 use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\GroupMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\OrgUnitSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\OrgUnitMembershipSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
@@ -127,5 +131,21 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	public function sessionMembership() {
 		return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function orgUnit(): IOrgUnitSyncProcessor {
+		return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor {
+		return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 	}
 }

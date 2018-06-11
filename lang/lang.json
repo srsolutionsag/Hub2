@@ -150,7 +150,7 @@
             "msg_shortlink_no_ilias_id_info": {
                 "translations": {
                     "en": "MISSING",
-                    "de": "MISSING"
+                    "de": "MISSING admin_msg_shortlink_no_ilias_id_info"
                 },
                 "last_used": "29.11.2017"
             },
@@ -164,7 +164,7 @@
             "msg_shortlink_not_found_info": {
                 "translations": {
                     "en": "Is shown if a Shortlink is used which does not exist",
-                    "de": "Wird angezeigt wenn ein nciht existierender Shortlink genutzt wird"
+                    "de": "Wird angezeigt wenn ein nicht existierender Shortlink genutzt wird"
                 },
                 "last_used": "29.11.2017"
             },
@@ -196,8 +196,8 @@
             },
             "roles_info": {
                 "translations": {
-                    "en": "Role-IDs which can use HUB2 (commaseparated",
-                    "de": "Rollen-IDs die HUB2 verwenden können (kommasepariert"
+                    "en": "Role-IDs which can use HUB2 (commaseparated)",
+                    "de": "Rollen-IDs die HUB2 verwenden können (kommasepariert)"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1062,7 +1062,7 @@
             "success_create_origin": {
                 "translations": {
                     "en": "MISSING",
-                    "de": "MISSING"
+                    "de": "MISSING msg_success_create_origin"
                 }
             },
             "origin_saved": {
@@ -1082,7 +1082,7 @@
             "created_class_implementation_file": {
                 "translations": {
                     "en": "Created class implementation file: %s",
-                    "de": "MISSING"
+                    "de": "MISSING msg_created_class_implementation_file"
                 }
             },
             "created_class_implementation_file_failed": {
@@ -1166,7 +1166,7 @@
             "form_field_class_name_info": {
                 "translations": {
                     "en": "Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location.",
-                    "de": "MISSING"
+                    "de": "MISSING origin_form_field_class_name_info"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1222,7 +1222,7 @@
             "form_field_conf_type_db_search_base": {
                 "translations": {
                     "en": "Search-Base",
-                    "de": "MISSING"
+                    "de": "MISSING origin_form_field_conf_type_db_search_base"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1309,14 +1309,14 @@
             "from_field_active_period": {
                 "translations": {
                     "en": "Active period",
-                    "de": "MISSING"
+                    "de": "MISSING origin_from_field_active_period"
                 },
                 "last_used": "29.11.2017"
             },
             "from_field_active_period_info": {
                 "translations": {
                     "en": "The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED.",
-                    "de": "MISSING"
+                    "de": "MISSING origin_from_field_active_period_info"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1367,7 +1367,7 @@
             "form_comma_separated": {
                 "translations": {
                     "en": "Separate multiple values by a comma",
-                    "de": "MISSING"
+                    "de": "MISSING origin_form_comma_separated"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1566,7 +1566,7 @@
             "form_field_namespace": {
                 "translations": {
                     "en": "Namespace",
-                    "de": "MISSING"
+                    "de": "MISSING origin_form_field_namespace"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1583,6 +1583,13 @@
                     "de": "Organisationseinheiten"
                 },
                 "last_used": "08.06.2018"
+            },
+            "object_type_orgUnitMembership": {
+                "translations": {
+                    "en": "Organisational unit memberships",
+                    "de": "Organisationseinheit-Mitgliedschaften"
+                },
+                "last_used": "11.06.2018"
             }
         },
         "object": {
@@ -1695,14 +1702,14 @@
             "config_login_field_info": {
                 "translations": {
                     "en": "Available fields and modes defining the login name of a user in ILIAS. Example user: John Doe",
-                    "de": "MISSING"
+                    "de": "MISSING usr_config_login_field_info"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_1": {
                 "translations": {
                     "en": "Shortened firstname and lastname (j.doe)",
-                    "de": "MISSING"
+                    "de": "MISSING usr_config_login_field_1"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1716,35 +1723,35 @@
             "config_login_field_3": {
                 "translations": {
                     "en": "External Account",
-                    "de": "MISSING"
+                    "de": "MISSING usr_config_login_field_3"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_4": {
                 "translations": {
                     "en": "External ID",
-                    "de": "MISSING"
+                    "de": "MISSING usr_config_login_field_4"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_5": {
                 "translations": {
                     "en": "firstname.lastname (john.doe)",
-                    "de": "MISSING"
+                    "de": "MISSING usr_config_login_field_5"
                 },
                 "last_used": "29.11.2017"
             },
             "config_login_field_6": {
                 "translations": {
                     "en": "Hub-field login",
-                    "de": "MISSING"
+                    "de": "MISSING usr_config_login_field_6"
                 },
                 "last_used": "29.11.2017"
             },
             "prop_password_mail_body": {
                 "translations": {
                     "en": "Text",
-                    "de": "MISSING"
+                    "de": "MISSING usr_prop_password_mail_body"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1779,7 +1786,7 @@
             "prop_reactivate_account_info": {
                 "translations": {
                     "en": "Activates the user account again if it is not active when the sync updates a user",
-                    "de": "MISSING"
+                    "de": "MISSING usr_prop_reactivate_account_info"
                 },
                 "last_used": "29.11.2017"
             },
@@ -1812,7 +1819,7 @@
             "prop_ilias_roles_info": {
                 "translations": {
                     "en": "Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations",
-                    "de": "MISSING"
+                    "de": "MISSING usr_prop_ilias_roles_info"
                 },
                 "last_used": "29.11.2017"
             }
@@ -2040,8 +2047,8 @@
         "confirm": {
             "delete_button": {
                 "translations": {
-                    "en": "Löschen",
-                    "de": "Delete"
+                    "en": "Delete",
+                    "de": "Löschen"
                 },
                 "last_used": "22.11.2017"
             }

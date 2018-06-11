@@ -26,7 +26,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 				$ilADT->setText($value);
 				break;
 			case ($ilADT instanceof \ilADTDate):
-				$ilADT->setDate(new \ilDateTime(time(), 3));
+				$ilADT->setDate(new \ilDateTime(time(), IL_CAL_UNIX));
 				break;
 			case ($ilADT instanceof \ilADTExternalLink):
 				$ilADT->setUrl($value['url']);

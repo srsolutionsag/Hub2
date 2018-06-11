@@ -7,12 +7,16 @@ use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
 use SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
+use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
+use SRAG\Plugins\Hub2\Object\OrgUnit\OrgUnitDTO;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
 use SRAG\Plugins\Hub2\Object\User\UserDTO;
 
 /**
- * Class ObjectDTOFactory
+ * Class DataTransferObjectFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object
@@ -80,5 +84,21 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 	 */
 	public function sessionMembership($session_id, $user_id) {
 		return new SessionMembershipDTO($session_id, $user_id);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function orgUnit(string $ext_id): IOrgUnitDTO {
+		return new OrgUnitDTO($ext_id);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function orgUnitMembership(string $ext_id): IOrgUnitMembershipDTO {
+		return new OrgUnitMembershipDTO($ext_id);
 	}
 }

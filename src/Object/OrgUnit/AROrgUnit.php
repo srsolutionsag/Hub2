@@ -7,9 +7,10 @@ use SRAG\Plugins\Hub2\Object\ARObject;
 /**
  * Class AROrgUnit
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\OrgUnit
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class AROrgUnit extends ARObject implements IOrgUnit {
 
-	const TABLE_NAME = 'sr_hub2_org_unit';
+	const TABLE_NAME = "sr_hub2_org_unit";
 }

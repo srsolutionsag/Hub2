@@ -18,7 +18,8 @@ interface IOrigin {
 	const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
 	const OBJECT_TYPE_SESSION = 'session';
 	const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
-	const OBJECT_TYPE_ORGNUNIT = 'orgUnit';
+	const OBJECT_TYPE_ORGNUNIT = "orgUnit";
+	const OBJECT_TYPE_ORGNUNIT_MEMBERSHIP = "orgUnitMembership";
 	const ORIGIN_MAIN_NAMESPACE = "SRAG\\Plugins\\Hub2\\Origin";
 
 
