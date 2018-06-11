@@ -24,8 +24,6 @@ interface IOriginProperties {
 	 * Checks if the given property of a DTO object should be updated on the ILIAS object,
 	 * e.g. the first- or lastname of a user.
 	 *
-	 * TODO Better documentation
-	 *
 	 * @param string $property
 	 *
 	 * @return bool

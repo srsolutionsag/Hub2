@@ -202,8 +202,6 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 		switch ($object->getRole()) {
 			case GroupMembershipDTO::ROLE_ADMIN:
 				return $group->getDefaultAdminRole();
-			case GroupMembershipDTO::ROLE_TUTOR:
-				return $group->getDefaultTutorRole();
 			case GroupMembershipDTO::ROLE_MEMBER:
 				return $group->getDefaultMemberRole();
 			default:

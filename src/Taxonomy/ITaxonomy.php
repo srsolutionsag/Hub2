@@ -55,10 +55,4 @@ interface ITaxonomy {
 	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
 	 */
 	public function attach(INode $node): ITaxonomy;
-
-
-	/**
-	 * @return string
-	 */
-	public function __toString(): string;
 }

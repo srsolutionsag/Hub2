@@ -364,7 +364,5 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$DIC->rbac()
 		    ->admin()
 		    ->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
-		//			hubLog::getInstance()->write($str);
-		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}
 }

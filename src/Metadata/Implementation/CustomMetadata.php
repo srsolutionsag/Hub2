@@ -45,6 +45,6 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 	 * @inheritDoc
 	 */
 	public function read() {
-		// TODO: Implement read() method.
+		// no need for a read-Method since wo have to update them anyways due to performance-issues when reading all metadata everytime
 	}
 }
