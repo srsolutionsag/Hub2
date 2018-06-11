@@ -49,10 +49,12 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		$send_mail->setInfo($this->pl->txt('crs_prop_send_notification_info'));
 		$send_mail->setChecked($this->origin->properties()->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION));
 		$notification_subject = new \ilTextInputGUI($this->pl->txt('crs_prop_notification_subject'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
+		$notification_subject->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
+
 		$send_mail->addSubItem($notification_subject);
 		$notification_body = new \ilTextAreaInputGUI($this->pl->txt('crs_prop_notification_body'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_BODY));
 		//		$notification_body->setInfo(\hubCourseFields::getPlaceHolderStrings());
-		$notification_body->setInfo('TODO');
+		$notification_body->setInfo(CourseOriginProperties::getPlaceHolderStrings());
 		$notification_body->setRows(6);
 		$notification_body->setCols(100);
 		$notification_body->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY));

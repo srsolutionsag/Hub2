@@ -22,6 +22,30 @@ class CourseOriginProperties extends OriginProperties {
 	const DELETE_MODE_DELETE = 2;
 	const DELETE_MODE_DELETE_OR_OFFLINE = 3; // Set offline if there were any activities in the course, delete otherwise
 	const DELETE_MODE_MOVE_TO_TRASH = 4;
+
+	/**
+	 * @var array
+	 */
+	public static $mail_notification_placeholder = array(
+			'title',
+			'description',
+			'responsible',
+			'notification_email',
+			'shortlink',
+	);
+
+	/**
+	 * @return string
+	 */
+	public static function getPlaceHolderStrings() {
+		$return = '[';
+		$return .= implode('], [', self::$mail_notification_placeholder);
+		$return .= ']';
+
+		return strtoupper($return);
+	}
+
+
 	/**
 	 * @var array
 	 */

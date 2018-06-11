@@ -88,6 +88,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
+		global $DIC;
+
 		/** @var CourseDTO $dto */
 		$ilObjCourse = new \ilObjCourse();
 		$ilObjCourse->setImportId($this->getImportId($dto));
@@ -117,11 +119,60 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			//			$this->ilias_object->update();
 		}
 		if ($this->props->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)) {
-			// TODO
+			$this->sendMailNotifications($dto,$ilObjCourse);
 		}
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
+	}
+
+	/**
+	 * @param CourseDTO $dto
+	 */
+	protected function sendMailNotifications(CourseDTO $dto, \ilObjCourse $ilObjCourse){
+		global $DIC;
+
+		$mail = new \ilMimeMail();
+		$sender_factory = new \ilMailMimeSenderFactory($DIC->settings());
+		$sender = null;
+		if($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM)){
+			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
+		}
+		else{
+			$sender = $sender_factory->system();
+		}
+		$mail->From($sender);
+		$mail->To($dto->getNotificationEmails());
+		$mail->Subject($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
+		$mail->Body($this->replaceBodyTextForMail($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY), $ilObjCourse));
+		$mail->Send();
+	}
+
+	protected function replaceBodyTextForMail($body, \ilObjCourse $ilObjCourse){
+		foreach (CourseOriginProperties::$mail_notification_placeholder as $ph) {
+			$replacement = '[' . $ph . ']';
+
+			switch($ph){
+				case 'title':
+					$replacement = $ilObjCourse->getTitle();
+					break;
+				case 'description':
+					$replacement = $ilObjCourse->getDescription();
+					break;
+				case 'responsible':
+					$replacement = $ilObjCourse->getContactResponsibility();
+					break;
+				case 'notification_email':
+					$replacement = $ilObjCourse->getContactEmail();
+					break;
+				case 'shortlink':
+					$replacement =\ilLink::_getStaticLink($ilObjCourse->getRefId(), 'crs');
+					break;
+			}
+			$body = str_ireplace('[' . strtoupper($ph) . ']', $replacement, $body);
+		}
+
+		return $body;
 	}
 
 
@@ -144,6 +195,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			if ($dto->$getter() !== null) {
 				$ilObjCourse->$setter($dto->$getter());
 			}
+		}
+
+		if ($this->props->updateDTOProperty("enableSessionLimit")) {
+			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
@@ -364,5 +419,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$DIC->rbac()
 		    ->admin()
 		    ->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
+		//			hubLog::getInstance()->write($str);
+		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}
 }
