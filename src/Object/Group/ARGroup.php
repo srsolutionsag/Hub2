@@ -16,12 +16,5 @@ class ARGroup extends ARObject implements IGroup {
 
 	use ARMetadataAwareObject;
 	use ARTaxonomyAwareObject;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_group';
-	}
+	const TABLE_NAME = 'sr_hub2_group';
 }
