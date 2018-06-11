@@ -4,7 +4,6 @@ test:
     - php7
   before_script:
     - php --version
-    - composer install
   script:
     - echo "Running unit tests..."
     - vendor/bin/phpunit tests
