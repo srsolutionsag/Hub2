@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Object\Course;
 
+use SRAG\Plugins\Hub2\Exception\LanguageCodeException;
 use SRAG\Plugins\Hub2\Metadata\IMetadata;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
@@ -137,6 +138,11 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	protected $activationType = self::ACTIVATION_OFFLINE;
 
+
+	/**
+	 * @var string
+	 */
+	protected $languageCode = 'en';
 
 	/**
 	 * @return string
@@ -524,5 +530,27 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 		$this->activationType = $activationType;
 
 		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLanguageCode()
+	{
+		return $this->languageCode;
+	}
+
+	/**
+	 * @param $languageCode
+	 * @throws LanguageCodeException
+	 */
+	public function setLanguageCode($languageCode)
+	{
+		if(!in_array($languageCode,\ilMDLanguageItem::_getPossibleLanguageCodes()))
+		{
+			throw new LanguageCodeException($languageCode);
+		}
+
+		$this->languageCode = $languageCode;
 	}
 }

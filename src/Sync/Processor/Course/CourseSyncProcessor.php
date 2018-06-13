@@ -113,6 +113,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
+
 		if ($this->props->get(CourseOriginProperties::CREATE_ICON)) {
 			// TODO
 			//			$this->updateIcon($this->ilias_object);
@@ -121,9 +122,28 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)) {
 			$this->sendMailNotifications($dto,$ilObjCourse);
 		}
+
+		$this->setLanguage($dto,$ilObjCourse);
+
+
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
+	}
+
+	/**
+	 * @param CourseDTO $dto
+	 * @param \ilObjCourse $ilObjCourse
+	 */
+	protected function setLanguage(CourseDTO $dto, \ilObjCourse $ilObjCourse){
+		$md_general = (new \ilMD($ilObjCourse->getId()))->getGeneral();
+		//Note: this is terribly stupid, but the best (only) way if found to get to the
+		//lang id of the primary language of some object. There seems to be multy lng
+		//support however, not through the GUI. Maybe there is some bug in the generation
+		//of the respective metadata form. See: initQuickEditForm() in ilMDEditorGUI
+		$language = $md_general->getLanguage(array_pop($md_general->getLanguageIds()));
+		$language->setLanguage(new \ilMDLanguageItem($dto->getLanguageCode()));
+		$language->update();
 	}
 
 	/**
@@ -199,6 +219,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
 			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
+		}
+		if ($this->props->updateDTOProperty("languageCode")){
+			$this->setLanguage($dto,$ilObjCourse);
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
