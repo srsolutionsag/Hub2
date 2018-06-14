@@ -5,6 +5,7 @@ namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnit;
 use ilObject;
 use ilObjectFactory;
 use ilObjOrgUnit;
+use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
@@ -14,6 +15,7 @@ use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
+use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -67,6 +69,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 * @param IOrgUnitDTO $dto
 	 *
 	 * @return ilObject
+	 * @throws HubException
 	 */
 	protected function handleCreate(IDataTransferObject $dto): ilObject {
 		/**
@@ -79,11 +82,36 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		$orgUnit->setDescription($dto->getDescription());
 		$orgUnit->setOwner($dto->getOwner());
 		//$dto->getParentId();
-		//$dto->getParentIdType();
 		//$orgUnit->setOrgUnitTypeId($dto->getOrguType());
 
 		$orgUnit->create();
 		$orgUnit->createReference();
+		switch ($dto->getParentIdType()) {
+			case IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID:
+				$linkedOriginId = $this->config->getLinkedOriginId();
+				if (!$linkedOriginId) {
+					throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked!");
+				}
+				$originRepository = new OriginRepository();
+				/**
+				 * @var IOrgUnitOrigin $origin
+				 */
+				$origin = array_pop(array_filter($originRepository->orgUnits(), function (IOrgUnitOrigin $origin) use ($linkedOriginId) {
+					return ($origin->getId() == $linkedOriginId);
+				}));
+				if ($origin === NULL) {
+					$msg = "The linked origin syncing origin unit was not found, please check that the correct origin is linked!";
+					throw new HubException($msg);
+				}
+
+				$orgUnit->putInTree($origin->getId());
+				break;
+
+			case IOrgUnitDTO::PARENT_ID_TYPE_REF_ID:
+			default:
+				$orgUnit->putInTree($dto->getParentId());
+				break;
+		}
 
 		return $orgUnit;
 	}
@@ -93,27 +121,21 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 * @param IOrgUnitDTO $dto
 	 * @param int         $ilias_id
 	 *
-	 * @return ilObject
+	 * @return ilObject|null
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id): ilObject {
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/**
 		 * @var ilObjOrgUnit $orgUnit
 		 */
 
 		$orgUnit = ilObjectFactory::getInstanceByObjId($ilias_id);
 		if ($orgUnit === false) {
-			$orgUnit = new ilObjOrgUnit();
-
-			$orgUnit->create();
-			$orgUnit->createReference();
+			return NULL;
 		}
 
 		$orgUnit->setTitle($dto->getTitle());
 		$orgUnit->setDescription($dto->getDescription());
 		$orgUnit->setOwner($dto->getOwner());
-		//$dto->getParentId();
-		//$dto->getParentIdType();
-		//$orgUnit->setOrgUnitTypeId($dto->getOrguType());
 
 		$orgUnit->update();
 
@@ -122,18 +144,21 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 
 	/**
-	 * @inheritdoc
+	 * @param int $ilias_id
+	 *
+	 * @return ilObject|null
 	 */
-	protected function handleDelete($ilias_id): ilObject {
+	protected function handleDelete($ilias_id) {
 		/**
 		 * @var ilObjOrgUnit $orgUnit
 		 */
 
 		$orgUnit = ilObjectFactory::getInstanceByObjId($ilias_id);
-
-		if ($orgUnit !== false) {
-			$orgUnit->delete();
+		if ($orgUnit === false) {
+			return NULL;
 		}
+
+		$orgUnit->delete();
 
 		return $orgUnit;
 	}

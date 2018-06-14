@@ -12,6 +12,10 @@ use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 interface IOrgUnitDTO extends IDataTransferObject {
 
+	const PARENT_ID_TYPE_REF_ID = 1;
+	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
+
+
 	/**
 	 * @return string
 	 */
@@ -55,17 +59,17 @@ interface IOrgUnitDTO extends IDataTransferObject {
 
 
 	/**
-	 * @return string
+	 * @return int
 	 */
-	public function getParentId(): string;
+	public function getParentId(): int;
 
 
 	/**
-	 * @param string $parentId
+	 * @param int $parentId
 	 *
 	 * @return IOrgUnitDTO
 	 */
-	public function setParentId(string $parentId): IOrgUnitDTO;
+	public function setParentId(int $parentId): IOrgUnitDTO;
 
 
 	/**

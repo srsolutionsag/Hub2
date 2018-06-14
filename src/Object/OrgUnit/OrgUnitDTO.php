@@ -12,8 +12,6 @@ use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
  */
 class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
-	const PARENT_ID_TYPE_REF_ID = 1;
-	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**
 	 * @var string
 	 */
@@ -27,9 +25,9 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 	 */
 	protected $owner = 6;
 	/**
-	 * @var string
+	 * @var int
 	 */
-	private $parent_id = "";
+	private $parent_id = 0;
 	/**
 	 * @var int
 	 */
@@ -114,19 +112,19 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @return string
+	 * @return int
 	 */
-	public function getParentId(): string {
+	public function getParentId(): int {
 		return $this->parent_id;
 	}
 
 
 	/**
-	 * @param string $parent_id
+	 * @param int $parent_id
 	 *
 	 * @return IOrgUnitDTO
 	 */
-	public function setParentId(string $parent_id): IOrgUnitDTO {
+	public function setParentId(int $parent_id): IOrgUnitDTO {
 		$this->parent_id = $parent_id;
 
 		return $this;
