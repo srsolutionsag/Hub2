@@ -28,7 +28,7 @@ admin_origins_path#:#Pfad zu den Origins
 admin_origins_path_info#:#Ort des 'origins'-Verzeichnisses
 admin_password_email_body#:#E-Mail-Body beim versenden von Passwörtern
 admin_roles#:#MISSING
-admin_roles_info#:#Rollen-IDs die HUB2 verwenden können (kommasepariert
+admin_roles_info#:#Rollen-IDs die HUB2 verwenden können (kommasepariert)
 admin_shortlink#:#Shortlink
 admin_use_async#:#Asynchrone Synchronisation
 admin_use_async_info#:#Asynchrone Synchronisation über das GUI ermöglichen. Benötigt einen ILIAS Benutzer.
@@ -353,3 +353,14 @@ sess_prop_delete_mode_delete#:#Löschen
 sess_prop_delete_mode_trash#:#In Papierkorb verschieben
 sess_prop_move#:#Sitzung verschieben
 sess_prop_move_info#:#In neuen Container verschieben
+summary_for#:#Zusammenfassung für %s: 
+summary_delivered_data_sets#:#Gelieferte Datensätze: %s
+summary_created#:#Erstellt: %s
+summary_updated#:#Aktualisiert: %s
+summary_deleted#:#Gelöscht: %s
+summary_ignored#:#Ignoriert: %s
+summary_no_changes#:#Keine Änderungen: %s
+summary_exceptions#:#Ausnahmen: 
+summary_notification#:#HUB2: Zusammenfassung für %s
+summary_exceptions_in#:#HUB2: Ausnahmen in %s
+summary_in#:#in: 

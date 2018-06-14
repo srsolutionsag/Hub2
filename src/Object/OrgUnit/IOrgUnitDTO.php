@@ -71,7 +71,7 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	/**
 	 * @return int
 	 */
-	public function getParentIdtype(): int;
+	public function getParentIdType(): int;
 
 
 	/**
@@ -79,7 +79,7 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	 *
 	 * @return IOrgUnitDTO
 	 */
-	public function setParentIdtype(int $parentIdType): IOrgUnitDTO;
+	public function setParentIdType(int $parentIdType): IOrgUnitDTO;
 
 
 	/**
