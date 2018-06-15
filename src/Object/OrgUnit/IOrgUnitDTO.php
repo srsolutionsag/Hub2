@@ -65,11 +65,11 @@ interface IOrgUnitDTO extends IDataTransferObject {
 
 
 	/**
-	 * @param int $parentId
+	 * @param int $parent_id
 	 *
 	 * @return IOrgUnitDTO
 	 */
-	public function setParentId(int $parentId): IOrgUnitDTO;
+	public function setParentId(int $parent_id): IOrgUnitDTO;
 
 
 	/**
@@ -79,25 +79,25 @@ interface IOrgUnitDTO extends IDataTransferObject {
 
 
 	/**
-	 * @param int $parentIdType
+	 * @param int $parent_id_type
 	 *
 	 * @return IOrgUnitDTO
 	 */
-	public function setParentIdType(int $parentIdType): IOrgUnitDTO;
+	public function setParentIdType(int $parent_id_type): IOrgUnitDTO;
 
 
 	/**
 	 * @return string
 	 */
-	public function getOrguType(): string;
+	public function getOrgUnitType(): string;
 
 
 	/**
-	 * @param string $orguType
+	 * @param string $org_unit_type
 	 *
 	 * @return IOrgUnitDTO
 	 */
-	public function setOrguType(string $orguType): IOrgUnitDTO;
+	public function setOrgUnitType(string $org_unit_type): IOrgUnitDTO;
 
 
 	/**
@@ -107,9 +107,9 @@ interface IOrgUnitDTO extends IDataTransferObject {
 
 
 	/**
-	 * @param string $extId
+	 * @param string $ext_id
 	 *
 	 * @return IOrgUnitDTO
 	 */
-	public function setExtId(string $extId): IOrgUnitDTO;
+	public function setExtId(string $ext_id): IOrgUnitDTO;
 }

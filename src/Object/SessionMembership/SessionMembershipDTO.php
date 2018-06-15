@@ -3,6 +3,7 @@
 namespace SRAG\Plugins\Hub2\Object\SessionMembership;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class SessionMembershipDTO
@@ -36,7 +37,7 @@ class SessionMembershipDTO extends DataTransferObject {
 	 * @inheritDoc
 	 */
 	public function __construct($session_id, $user_id) {
-		parent::__construct("{$session_id}|||{$user_id}");
+		parent::__construct($session_id . FakeIliasMembershipObject::GLUE . $user_id);
 		$this->sessionId = $session_id;
 		$this->userId = $user_id;
 	}

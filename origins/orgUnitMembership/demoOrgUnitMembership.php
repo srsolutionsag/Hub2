@@ -6,6 +6,7 @@ use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use stdClass;
 
@@ -57,9 +58,9 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 
 		// Map columns
 		$columns_map = [
-			"Titel Organisationseinheit" => "title",
-			"Externe ID" => "extId",
-			"Parent ID" => "parentId"
+			"OrgUnitId" => "org_unit_id",
+			"UserId" => "user_id",
+			"Position" => "position"
 		];
 		$columns = array_map(function ($column) use (&$columns_map) {
 			if (isset($columns_map[$column])) {
@@ -78,6 +79,10 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 
 		// Get data
 		foreach ($rows as $rowId => $row) {
+			if ($row === [ 0 => "" ]) {
+				continue; // Skip empty rows
+			}
+
 			$data = new stdClass();
 
 			foreach ($row as $cellI => $cell) {
@@ -119,11 +124,11 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 		$org_units = [];
 
 		foreach ($this->data as $data) {
-			$org_unit = $this->factory()->orgUnitMembership($data->extId);
+			$org_unit = $this->factory()->orgUnitMembership(intval($data->org_unit_id), intval($data->user_id));
 
-			$org_unit->setTitle($data->title);
+			$org_unit->setOrgUnitIdType(IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_EXTERNAL_EXT_ID);
 
-			$org_unit->setParentId($data->parentId);
+			$org_unit->setPosition(intval($data->position));
 
 			$org_units[] = $org_unit;
 		}

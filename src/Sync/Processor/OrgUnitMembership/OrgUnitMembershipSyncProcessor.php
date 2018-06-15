@@ -2,16 +2,24 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 
-use ilObject;
+use ilObjectFactory;
+use ilObjOrgUnit;
+use ilOrgUnitUserAssignment;
+use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\ObjectFactory;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
 use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Origin\OriginFactory;
 use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
@@ -60,25 +68,128 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
 
 	/**
-	 * @inheritdoc
+	 * @param IOrgUnitMembershipDTO $dto
+	 *
+	 * @return FakeIliasObject
+	 * @throws HubException
 	 */
-	protected function handleCreate(IDataTransferObject $dto): ilObject {
-
+	protected function handleCreate(IDataTransferObject $dto): FakeIliasObject {
+		return $this->getFakeIliasObject($this->assignToOrgUnit($dto));
 	}
 
 
 	/**
-	 * @inheritdoc
+	 * @param IOrgUnitMembershipDTO $dto
+	 * @param int                   $ilias_id
+	 *
+	 * @return FakeIliasObject
+	 * @throws HubException
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id): ilObject {
-
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id): FakeIliasObject {
+		// TODO Delete bevore assign
+		return $this->getFakeIliasObject($this->assignToOrgUnit($dto));
 	}
 
 
 	/**
-	 * @inheritdoc
+	 * @param int $ilias_id
+	 *
+	 * @return FakeIliasObject
+	 * @throws HubException
 	 */
-	protected function handleDelete($ilias_id): ilObject {
+	protected function handleDelete($ilias_id): FakeIliasObject {
+		$assignment = ilOrgUnitUserAssignment::findOrCreateAssignment($ilias_id); // TODO
 
+		$assignment->delete();
+
+		return $this->getFakeIliasObject($assignment);
+	}
+
+
+	/**
+	 * @param IOrgUnitMembershipDTO $dto
+	 *
+	 * @return ilOrgUnitUserAssignment
+	 * @throws HubException
+	 */
+	protected function assignToOrgUnit(IOrgUnitMembershipDTO $dto): ilOrgUnitUserAssignment {
+		return ilOrgUnitUserAssignment::findOrCreateAssignment($dto->getUserId(), $dto->getPosition(), $this->getOrgUnitId($dto));
+	}
+
+
+	/**
+	 * @param ilOrgUnitUserAssignment $assignment
+	 *
+	 * @return FakeIliasObject
+	 * @throws HubException
+	 */
+	protected function getFakeIliasObject(ilOrgUnitUserAssignment $assignment): FakeIliasObject {
+		return new FakeIliasMembershipObject($assignment->getOrguId(), $assignment->getUserId());
+	}
+
+
+	/**
+	 * @param IOrgUnitMembershipDTO $dto
+	 *
+	 * @return int
+	 * @throws HubException
+	 */
+	protected function getOrgUnitId(IOrgUnitMembershipDTO $dto): int {
+		switch ($dto->getOrgUnitIdType()) {
+			case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_EXTERNAL_EXT_ID:
+				$ext_id = $dto->getOrgUnitId();
+
+				$linkedOriginId = $this->config->getLinkedOriginId();
+				if (!$linkedOriginId) {
+					throw new HubException("Unable to lookup external ref-ID because there is no origin linked");
+				}
+
+				$origin_factory = new OriginFactory($this->db());
+				$origin = $origin_factory->getById($linkedOriginId);
+
+				$object_factory = new ObjectFactory($origin);
+
+				$org_unit = $object_factory->orgUnit($ext_id);
+
+				$org_unit_id = $org_unit->getILIASId();
+
+				if ($org_unit_id === NULL) {
+					throw new HubException("External ID {$ext_id} not found!");
+				}
+				break;
+
+			case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_REF_ID:
+			default:
+				$org_unit_id = $dto->getOrgUnitId();
+				break;
+		}
+
+		$org_unit = $this->getOrgUnitObject($org_unit_id);
+		if ($org_unit === NULL) {
+			throw new HubException("Org Unit {$org_unit_id} not found!");
+		}
+
+		return $org_unit->getRefId();
+	}
+
+
+	/**
+	 * @param int $obj_id
+	 *
+	 * @return ilObjOrgUnit|null
+	 */
+	protected function getOrgUnitObject(int $obj_id) {
+		$ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
+		if (!$ref_id) {
+			return NULL;
+		}
+
+		$orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
+
+		if ($orgUnit !== false && $orgUnit instanceof ilObjOrgUnit) {
+			return $orgUnit;
+		} else {
+			return NULL;
+		}
 	}
 }

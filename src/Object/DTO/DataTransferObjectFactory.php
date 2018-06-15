@@ -98,7 +98,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 	/**
 	 * @inheritDoc
 	 */
-	public function orgUnitMembership(string $ext_id): IOrgUnitMembershipDTO {
-		return new OrgUnitMembershipDTO($ext_id);
+	public function orgUnitMembership(int $org_unit_id, int $user_id): IOrgUnitMembershipDTO {
+		return new OrgUnitMembershipDTO($org_unit_id, $user_id);
 	}
 }

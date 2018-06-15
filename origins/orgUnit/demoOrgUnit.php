@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use ilCSVReader;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
@@ -62,9 +63,9 @@ class demoOrgUnit extends AbstractOriginImplementation {
 		// Map columns
 		$columns_map = [
 			"Titel Organisationseinheit" => "title",
-			"Externe ID" => "extId",
-			"Parent ID" => "parentId",
-			"Org Type" => "orguType"
+			"Externe ID" => "ext_id",
+			"Parent ID" => "parent_id",
+			"Org Type" => "org_unit_type"
 		];
 		$columns = array_map(function ($column) use (&$columns_map) {
 			if (isset($columns_map[$column])) {
@@ -128,14 +129,14 @@ class demoOrgUnit extends AbstractOriginImplementation {
 		$org_units = [];
 
 		foreach ($this->data as $data) {
-			$org_unit = $this->factory()->orgUnit($data->extId);
+			$org_unit = $this->factory()->orgUnit($data->ext_id);
 
 			$org_unit->setTitle($data->title);
 
-			$org_unit->setParentId(intval($data->parentId));
+			$org_unit->setParentId(intval($data->parent_id));
 			$org_unit->setParentIdType(IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID);
 
-			$org_unit->setOrguType($data->orguType);
+			$org_unit->setOrgUnitType($data->org_unit_type);
 
 			$org_units[] = $org_unit;
 		}
@@ -160,9 +161,9 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**

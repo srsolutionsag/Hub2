@@ -19,7 +19,6 @@ use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -82,6 +81,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		$org_unit->setDescription($dto->getDescription());
 		$org_unit->setOwner($dto->getOwner());
 		$org_unit->setOrgUnitTypeId($this->getOrgUnitTypeId($dto));
+		$org_unit->setImportId($dto->getExtId());
 
 		$org_unit->create();
 		$org_unit->createReference();
@@ -110,7 +110,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		$org_unit->setDescription($dto->getDescription());
 		$org_unit->setOwner($dto->getOwner());
 		$org_unit->setOrgUnitTypeId($this->getOrgUnitTypeId($dto));
-		$org_unit->setImportId($dto->getExtId());
 
 		$org_unit->update();
 
@@ -170,7 +169,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 			/**
 			 * @var ilOrgUnitType $org_type
 			 */
-			if (ilOrgUnitTypeTranslation::getInstance($org_type->getId(), $org_type->getDefaultLang())->getMember("title") === $dto->getOrguType()) {
+			if (ilOrgUnitTypeTranslation::getInstance($org_type->getId(), $org_type->getDefaultLang())->getMember("title")
+				=== $dto->getOrgUnitType()) {
 				$orgu_type_id = (int)$org_type->getId();
 				break;
 			}

@@ -86,9 +86,10 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param string $ext_id
+	 * @param int $org_unit_id
+	 * @param int $user_id
 	 *
 	 * @return IOrgUnitMembershipDTO
 	 */
-	public function orgUnitMembership(string $ext_id): IOrgUnitMembershipDTO;
+	public function orgUnitMembership(int $org_unit_id, int $user_id): IOrgUnitMembershipDTO;
 }

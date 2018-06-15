@@ -5,9 +5,10 @@ namespace SRAG\Plugins\Hub2\Sync\Processor;
 /**
  * Class FakeIliasObject
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class FakeIliasObject {
+abstract class FakeIliasObject {
 
 	/**
 	 * @var string
@@ -20,7 +21,7 @@ class FakeIliasObject {
 	 *
 	 * @param string $id
 	 */
-	public function __construct($id) {
+	public function __construct($id = "") {
 		$this->id = $id;
 	}
 
@@ -39,4 +40,10 @@ class FakeIliasObject {
 	public function setId(string $id) {
 		$this->id = $id;
 	}
+
+
+	/**
+	 * @return mixed
+	 */
+	public abstract function initId();
 }

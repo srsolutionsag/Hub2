@@ -35,7 +35,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 	/**
 	 * @var string
 	 */
-	protected $orgu_type = "";
+	protected $org_unit_type = "";
 	/**
 	 * @var string
 	 */
@@ -52,7 +52,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @return string
+	 * @inheritdoc
 	 */
 	public function getTitle(): string {
 		return $this->title;
@@ -60,9 +60,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @param string $title
-	 *
-	 * @return IOrgUnitDTO
+	 * @inheritdoc
 	 */
 	public function setTitle(string $title): IOrgUnitDTO {
 		$this->title = $title;
@@ -72,7 +70,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @return string
+	 * @inheritdoc
 	 */
 	public function getDescription(): string {
 		return $this->description;
@@ -80,9 +78,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @param string $description
-	 *
-	 * @return IOrgUnitDTO
+	 * @inheritdoc
 	 */
 	public function setDescription(string $description): IOrgUnitDTO {
 		$this->description = $description;
@@ -92,7 +88,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @return int
+	 * @inheritdoc
 	 */
 	public function getOwner(): int {
 		return $this->owner;
@@ -100,9 +96,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @param int $owner
-	 *
-	 * @return IOrgUnitDTO
+	 * @inheritdoc
 	 */
 	public function setOwner(int $owner): IOrgUnitDTO {
 		$this->owner = $owner;
@@ -112,7 +106,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @return int
+	 * @inheritdoc
 	 */
 	public function getParentId(): int {
 		return $this->parent_id;
@@ -120,9 +114,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @param int $parent_id
-	 *
-	 * @return IOrgUnitDTO
+	 * @inheritdoc
 	 */
 	public function setParentId(int $parent_id): IOrgUnitDTO {
 		$this->parent_id = $parent_id;
@@ -132,7 +124,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @return int
+	 * @inheritdoc
 	 */
 	public function getParentIdType(): int {
 		return $this->parent_id_type;
@@ -140,9 +132,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @param int $parent__Id__type
-	 *
-	 * @return IOrgUnitDTO
+	 * @inheritdoc
 	 */
 	public function setParentIdType(int $parent__Id__type): IOrgUnitDTO {
 		$this->parent_id_type = $parent__Id__type;
@@ -152,27 +142,25 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @return string
+	 * @inheritdoc
 	 */
-	public function getOrguType(): string {
-		return $this->orgu_type;
+	public function getOrgUnitType(): string {
+		return $this->org_unit_type;
 	}
 
 
 	/**
-	 * @param string $orgu_type
-	 *
-	 * @return IOrgUnitDTO
+	 * @inheritdoc
 	 */
-	public function setOrguType(string $orgu_type): IOrgUnitDTO {
-		$this->orgu_type = $orgu_type;
+	public function setOrgUnitType(string $org_unit_type): IOrgUnitDTO {
+		$this->org_unit_type = $org_unit_type;
 
 		return $this;
 	}
 
 
 	/**
-	 * @return string
+	 * @inheritdoc
 	 */
 	public function getExtId(): string {
 		return $this->ext_id;
@@ -180,9 +168,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @param string $ext_id
-	 *
-	 * @return IOrgUnitDTO
+	 * @inheritdoc
 	 */
 	public function setExtId(string $ext_id): IOrgUnitDTO {
 		$this->ext_id = $ext_id;

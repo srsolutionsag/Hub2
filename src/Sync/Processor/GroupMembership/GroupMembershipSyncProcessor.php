@@ -26,7 +26,6 @@ use SRAG\Plugins\Hub2\Origin\OriginRepository;
  */
 class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroupMembershipSyncProcessor {
 
-	const SPLIT = "|||";
 	/**
 	 * @var GroupOriginProperties
 	 */
@@ -62,7 +61,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
 		$group = $this->findILIASGroup($ilias_group_ref_id);
 		if (!$group) {
-			return null;
+			return NULL;
 		}
 		$user_id = $dto->getUserId();
 		$group->getMembersObject()->add($user_id, $this->mapRole($dto));
@@ -88,11 +87,10 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
 		$group = $this->findILIASGroup($ilias_group_ref_id);
 		if (!$group) {
-			return null;
+			return NULL;
 		}
 
-		$group->getMembersObject()
-		      ->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $group) ]);
+		$group->getMembersObject()->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $group) ]);
 
 		$obj->setUserIdIlias($dto->getUserId());
 		$obj->setContainerIdIlias($group->getRefId());
@@ -122,11 +120,12 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 	 */
 	protected function findILIASGroup($iliasId) {
 		if (!\ilObject2::_exists($iliasId, true)) {
-			return null;
+			return NULL;
 		}
 
 		return new \ilObjGroup($iliasId);
 	}
+
 
 	/**
 	 * @param GroupMembershipDTO $dto
@@ -156,7 +155,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 				/** @var $origin IOrigin */
 				return (int)$origin->getId() == $linkedOriginId;
 			}));
-			if ($origin === null) {
+			if ($origin === NULL) {
 				$msg = "The linked origin syncing group was not found, please check that the correct origin is linked";
 				throw new HubException($msg);
 			}
@@ -174,6 +173,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
 		return 0;
 	}
+
 
 	/**
 	 * @param $object GroupMembershipDTO
