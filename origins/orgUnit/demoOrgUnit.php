@@ -8,6 +8,7 @@ use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use stdClass;
 
@@ -62,7 +63,8 @@ class demoOrgUnit extends AbstractOriginImplementation {
 		$columns_map = [
 			"Titel Organisationseinheit" => "title",
 			"Externe ID" => "extId",
-			"Parent ID" => "parentId"
+			"Parent ID" => "parentId",
+			"Org Type" => "orguType"
 		];
 		$columns = array_map(function ($column) use (&$columns_map) {
 			if (isset($columns_map[$column])) {
@@ -81,6 +83,10 @@ class demoOrgUnit extends AbstractOriginImplementation {
 
 		// Get data
 		foreach ($rows as $rowId => $row) {
+			if ($row === [ 0 => "" ]) {
+				continue; // Skip empty rows
+			}
+
 			$data = new stdClass();
 
 			foreach ($row as $cellI => $cell) {
@@ -126,7 +132,10 @@ class demoOrgUnit extends AbstractOriginImplementation {
 
 			$org_unit->setTitle($data->title);
 
-			$org_unit->setParentId($data->parentId);
+			$org_unit->setParentId(intval($data->parentId));
+			$org_unit->setParentIdType(IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID);
+
+			$org_unit->setOrguType($data->orguType);
 
 			$org_units[] = $org_unit;
 		}

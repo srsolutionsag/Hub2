@@ -1590,6 +1590,12 @@
                     "de": "Organisationseinheit-Mitgliedschaften"
                 },
                 "last_used": "11.06.2018"
+            },
+            "table_button_force": {
+                "translations": {
+                    "de": "Zwingen",
+                    "en": "Force"
+                }
             }
         },
         "object": {
@@ -1715,8 +1721,8 @@
             },
             "config_login_field_2": {
                 "translations": {
-                    "de": "E-Mail",
-                    "en": "MISSING"
+                    "de": "MISSING usr_config_login_field_2",
+                    "en": "E-Mail"
                 },
                 "last_used": "29.11.2017"
             },

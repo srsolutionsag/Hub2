@@ -48,7 +48,7 @@ class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSync
 		}
 		foreach ($originSync->getExceptions() as $exception) {
 			$msg .= $this->pl->txt("summary_exceptions") . "\n**********\n";
-			$msg .= $exception->getMessage() . "\n";
+			$msg .= $exception->getMessage() . "\n\n";
 		}
 		$msg = rtrim($msg, "\n");
 

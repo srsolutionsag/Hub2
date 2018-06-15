@@ -241,6 +241,7 @@ origin_form_field_namespace#:#MISSING origin_form_field_namespace
 origin_form_field_namespace_info#:#Überschreiben des Standard-namespaces für Origin
 origin_object_type_orgUnit#:#Organisationseinheiten
 origin_object_type_orgUnitMembership#:#Organisationseinheit-Mitgliedschaften
+origin_table_button_force#:#Zwingen
 object_type_user#:#MISSING
 object_type_courseMembership#:#MISSING
 object_type_course#:#MISSING
@@ -258,7 +259,7 @@ usr_prop_header_object#:#Objekt-Einstellungen
 usr_config_login_field#:#ILIAS Loginfeld
 usr_config_login_field_info#:#MISSING usr_config_login_field_info
 usr_config_login_field_1#:#MISSING usr_config_login_field_1
-usr_config_login_field_2#:#E-Mail
+usr_config_login_field_2#:#MISSING usr_config_login_field_2
 usr_config_login_field_3#:#MISSING usr_config_login_field_3
 usr_config_login_field_4#:#MISSING usr_config_login_field_4
 usr_config_login_field_5#:#MISSING usr_config_login_field_5

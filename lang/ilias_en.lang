@@ -241,6 +241,7 @@ origin_form_field_namespace#:#Namespace
 origin_form_field_namespace_info#:#Overload Standard-Namespace of Origins
 origin_object_type_orgUnit#:#Organisational units
 origin_object_type_orgUnitMembership#:#Organisational unit memberships
+origin_table_button_force#:#Force
 object_type_user#:#User
 object_type_courseMembership#:#Course Memberships
 object_type_course#:#Course
@@ -258,7 +259,7 @@ usr_prop_header_object#:#MISSING
 usr_config_login_field#:#MISSING
 usr_config_login_field_info#:#Available fields and modes defining the login name of a user in ILIAS. Example user: John Doe
 usr_config_login_field_1#:#Shortened firstname and lastname (j.doe)
-usr_config_login_field_2#:#MISSING
+usr_config_login_field_2#:#E-Mail
 usr_config_login_field_3#:#External Account
 usr_config_login_field_4#:#External ID
 usr_config_login_field_5#:#firstname.lastname (john.doe)

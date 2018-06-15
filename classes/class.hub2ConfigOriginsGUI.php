@@ -94,7 +94,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 		$this->toolbar()->addSeparator();
 
-		$this->toolbar()->addInputItem(new ilCheckboxInputGUI('Force', self::Q_FORCE_UPDATE));
+		$this->toolbar()->addInputItem(new ilCheckboxInputGUI($this->pl->txt('origin_table_button_force'), self::Q_FORCE_UPDATE));
 
 		$button = ilSubmitButton::getInstance();
 		$button->setCaption($this->pl->txt('origin_table_button_run'), false);

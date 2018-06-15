@@ -23,11 +23,18 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
+	 *
+	 */
+	public function __construct() {
+		$this->pl = \ilHub2Plugin::getInstance();
+	}
+
+
+	/**
 	 * @inheritDoc
 	 */
 	public function addOriginSync(IOriginSync $originSync) {
 		$this->syncs[] = $originSync;
-		$this->pl = \ilHub2Plugin::getInstance();
 	}
 
 
@@ -67,7 +74,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 		}
 		foreach ($originSync->getExceptions() as $exception) {
 			$msg .= $this->pl->txt("summary_exceptions") . "\n**********\n";
-			$msg .= $exception->getMessage() . "\n";
+			$msg .= $exception->getMessage() . "\n\n";
 		}
 		$msg = rtrim($msg, "\n");
 

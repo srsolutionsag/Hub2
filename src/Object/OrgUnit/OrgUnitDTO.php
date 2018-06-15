@@ -27,11 +27,11 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 	/**
 	 * @var int
 	 */
-	private $parent_id = 0;
+	protected $parent_id = 0;
 	/**
 	 * @var int
 	 */
-	private $parent_id_type = self::PARENT_ID_TYPE_REF_ID;
+	protected $parent_id_type = self::PARENT_ID_TYPE_REF_ID;
 	/**
 	 * @var string
 	 */
