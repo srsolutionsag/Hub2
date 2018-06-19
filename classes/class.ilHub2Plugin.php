@@ -94,11 +94,12 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	//
 	//		return sragPluginTranslator::getInstance($this)->active()->write()->txt($a_var);
 	//	}
-	/**
+
+	/*/ **
 	 * @param string $a_var
 	 *
 	 * @return string
-	 */
+	 * /
 	public function txt($a_var) {
 		require_once "Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php";
 
@@ -122,5 +123,5 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		}
 
 		return $txt;
-	}
+	}*/
 }

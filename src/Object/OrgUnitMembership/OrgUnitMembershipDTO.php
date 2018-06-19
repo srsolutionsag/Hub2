@@ -3,7 +3,7 @@
 namespace SRAG\Plugins\Hub2\Object\OrgUnitMembership;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObject;
 
 /**
  * Class OrgUnitMembershipDTO
@@ -34,11 +34,13 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
 	/**
 	 * @param int $org_unit_id
 	 * @param int $user_id
+	 * @param int $position
 	 */
-	public function __construct(int $org_unit_id, int $user_id) {
-		parent::__construct($org_unit_id . FakeIliasMembershipObject::GLUE . $user_id);
+	public function __construct(int $org_unit_id, int $user_id, int $position) {
+		parent::__construct(implode(FakeOrgUnitMembershipObject::GLUE, [ $org_unit_id, $user_id, $position ]));
 		$this->org_unit_id = $org_unit_id;
 		$this->user_id = $user_id;
+		$this->position = $position;
 	}
 
 

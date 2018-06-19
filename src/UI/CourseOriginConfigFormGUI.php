@@ -52,7 +52,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		$send_mail->addSubItem($notification_subject);
 		$notification_body = new \ilTextAreaInputGUI($this->pl->txt('crs_prop_notification_body'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_BODY));
 		//		$notification_body->setInfo(\hubCourseFields::getPlaceHolderStrings());
-		$notification_body->setInfo('TODO');
+		$notification_body->setInfo('crs_prop_notification_body_info');
 		$notification_body->setRows(6);
 		$notification_body->setCols(100);
 		$notification_body->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY));

@@ -1,5 +1,8 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use Exception;
 use ilCSVReader;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
@@ -124,11 +127,9 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 		$org_units = [];
 
 		foreach ($this->data as $data) {
-			$org_unit = $this->factory()->orgUnitMembership(intval($data->org_unit_id), intval($data->user_id));
+			$org_unit = $this->factory()->orgUnitMembership(intval($data->org_unit_id), intval($data->user_id), intval($data->position));
 
 			$org_unit->setOrgUnitIdType(IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_EXTERNAL_EXT_ID);
-
-			$org_unit->setPosition(intval($data->position));
 
 			$org_units[] = $org_unit;
 		}
@@ -153,9 +154,9 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**

@@ -91,6 +91,6 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 	 *
 	 */
 	public function initId() {
-		$this->setId($this->container_id_ilias . self::GLUE . $this->user_id_ilias);
+		$this->setId(implode(self::GLUE, [ $this->container_id_ilias, $this->user_id_ilias ]));
 	}
 }

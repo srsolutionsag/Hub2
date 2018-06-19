@@ -91,6 +91,7 @@ crs_prop_check_online#:#MISSING
 crs_prop_msg_not_online#:#MISSING
 crs_prop_notification_subject#:#MISSING
 crs_prop_notification_body#:#MISSING
+crs_prop_notification_body_info#:#MISSING
 crs_prop_notification_from#:#MISSING
 crs_prop_send_notification#:#MISSING
 crs_prop_send_notification_info#:#MISSING

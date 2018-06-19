@@ -604,6 +604,12 @@
                 },
                 "last_used": "29.11.2017"
             },
+            "prop_notification_body_info": {
+                "translations": {
+                    "en": "MISSING",
+                    "de": "MISSING"
+                }
+            },
             "prop_notification_from": {
                 "translations": {
                     "en": "From",

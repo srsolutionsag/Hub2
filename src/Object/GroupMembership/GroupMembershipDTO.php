@@ -30,13 +30,17 @@ class GroupMembershipDTO extends DataTransferObject {
 	 * @var string
 	 */
 	protected $groupId;
+	/**
+	 * @var int
+	 */
+	protected $groupIdType;
 
 
 	/**
 	 * @inheritDoc
 	 */
 	public function __construct($group_id, $user_id) {
-		parent::__construct($group_id . FakeIliasMembershipObject::GLUE . $user_id);
+		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $group_id, $user_id ]));
 		$this->groupId = $group_id;
 		$this->userId = $user_id;
 	}
