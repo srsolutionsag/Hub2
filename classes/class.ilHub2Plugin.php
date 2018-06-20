@@ -33,7 +33,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return ilHub2Plugin
 	 */
 	public static function getInstance() {
-		if (self::$instance === NULL) {
+		if (self::$instance === null) {
 			self::$instance = new self();
 		}
 
@@ -45,7 +45,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return \ilCronJob[]
 	 */
 	public function getCronJobInstances() {
-		return [ new \SRAG\Plugins\Hub2\Jobs\RunSync() ];
+		return [new \SRAG\Plugins\Hub2\Jobs\RunSync()];
 	}
 
 
@@ -63,29 +63,42 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return bool
 	 */
 	protected function beforeUninstall() {
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Origin\User\ARUserOrigin::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\User\ARUser::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\Course\ARCourse::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\Category\ARCategory::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\Session\ARSession::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\Group\ARGroup::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, false);
-		$this->db()->dropTable(SRAG\Plugins\Hub2\Config\ArConfig::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Origin\User\ARUserOrigin::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\User\ARUser::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\Course\ARCourse::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\Category\ARCategory::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\Session\ARSession::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\Group\ARGroup::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, false);
+		$this->db()
+			->dropTable(SRAG\Plugins\Hub2\Config\ArConfig::TABLE_NAME, false);
 
 		return true;
 	}
 
 
-	//	/**
-	//	 * @param $a_var
-	//	 *
-	//	 * @return string
-	//	 */
-	//	public function txt($a_var) {
-	//		require_once('./Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php');
-	//
-	//		return sragPluginTranslator::getInstance($this)->active()->write()->txt($a_var);
-	//	}
+	/**
+	 * @param $a_var
+	 *
+	 * @return string
+	 */
+	public function txt($a_var) {
+		require_once('./Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php');
+
+		return sragPluginTranslator::getInstance($this)
+			->active()
+			->write()
+			->txt($a_var);
+	}
 }
