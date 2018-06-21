@@ -57,8 +57,8 @@ class demoCategory extends AbstractOriginImplementation {
 			$this->data[] = $this->factory()->category($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
 				->setParentId(1)->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->addMetadata($this->metadata()->getDTOWithIliasId(1)
 					->setValue("Meine Metadaten"))->addTaxonomy($this->taxonomy()->create("Taxonomy 1")->attach($this->taxonomy()
-						->node("Node Title 1.1"))->attach($this->taxonomy()->node("Node Title 1.2")))->addTaxonomy($this->taxonomy()
-					->create("Taxonomy 2")->attach($this->taxonomy()->node("Node Title 2.1"))->attach($this->taxonomy()->node("Node Title 2.2")));
+					->node("Node Title 1.1"))->attach($this->taxonomy()->node("Node Title 1.2")))->addTaxonomy($this->taxonomy()->create("Taxonomy 2")
+					->attach($this->taxonomy()->node("Node Title 2.1"))->attach($this->taxonomy()->node("Node Title 2.2")));
 		}
 
 		return count($this->data);
@@ -106,10 +106,7 @@ class demoCategory extends AbstractOriginImplementation {
 	 *
 	 * @param Exception $e
 	 */
-	public function handleException(Exception $e) {
-
-
-	}
+	public function handleException(Exception $e) { }
 
 
 	/**

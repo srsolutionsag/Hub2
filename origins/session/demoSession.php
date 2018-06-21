@@ -49,8 +49,8 @@ class demoSession extends AbstractOriginImplementation {
 				->setTitle("Title $x")->setDescription("Description {$rand}")->setLocation("Location {$rand}")->setDetails("Details {$rand}")
 				->setName("Name {$rand}")->setEmail("Email {$rand}")->setPhone("Phone {$rand}")->setFullDay(false)->setStart(time() + ($x * 600))
 				->setEnd(time() + ($x * 600) + 3600)->addTaxonomy($this->taxonomy()->select("Taxonomy 1")->attach($this->taxonomy()
-						->node("Node Title 1.1"))->attach($this->taxonomy()->node("Node Title 1.2")))->addTaxonomy($this->taxonomy()
-					->select("Taxonomy 2")->attach($this->taxonomy()->node("Node Title 2.1")))->addMetadata($this->metadata()->getDTOWithIliasId(1)
+					->node("Node Title 1.1"))->attach($this->taxonomy()->node("Node Title 1.2")))->addTaxonomy($this->taxonomy()->select("Taxonomy 2")
+					->attach($this->taxonomy()->node("Node Title 2.1")))->addMetadata($this->metadata()->getDTOWithIliasId(1)
 					->setValue("Meine Metadaten"))->addMetadata($this->metadata()->getDTOWithIliasId(2)->setValue(time()));
 			$this->data[] = $sessionDTO;
 		}
