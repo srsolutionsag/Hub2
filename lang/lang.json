@@ -2367,6 +2367,82 @@
                     "en": "Move to new container"
                 }
             }
+        },
+        "summary": {
+            "for": {
+                "translations": {
+                    "de": "Zusammenfassung für %s: ",
+                    "en": "Summary for %s: "
+                },
+                "last_used": "21.06.2018"
+            },
+            "delivered_data_sets": {
+                "translations": {
+                    "de": "Gelieferte Datensätze: %s",
+                    "en": "Delivered data sets: %s"
+                },
+                "last_used": "21.06.2018"
+            },
+            "created": {
+                "translations": {
+                    "de": "Erstellt: %s",
+                    "en": "Created: %s"
+                },
+                "last_used": "21.06.2018"
+            },
+            "updated": {
+                "translations": {
+                    "de": "Aktualisiert: %s",
+                    "en": "Updated: %s"
+                },
+                "last_used": "21.06.2018"
+            },
+            "deleted": {
+                "translations": {
+                    "de": "Gelöscht: %s",
+                    "en": "Deleted: %s"
+                },
+                "last_used": "21.06.2018"
+            },
+            "ignored": {
+                "translations": {
+                    "de": "Ignoriert: %s",
+                    "en": "Ignored: %s"
+                },
+                "last_used": "21.06.2018"
+            },
+            "no_changes": {
+                "translations": {
+                    "de": "Keine Änderungen: %s",
+                    "en": "No changes: %s"
+                },
+                "last_used": "21.06.2018"
+            },
+            "exceptions": {
+                "translations": {
+                    "de": "Ausnahmen: ",
+                    "en": "Exceptions: "
+                }
+            },
+            "notification": {
+                "translations": {
+                    "de": "HUB2: Zusammenfassung für %s",
+                    "en": "HUB2: Summary for %s"
+                },
+                "last_used": "21.06.2018"
+            },
+            "exceptions_in": {
+                "translations": {
+                    "de": "HUB2: Ausnahmen in %s",
+                    "en": "HUB2: Exceptions in %s"
+                }
+            },
+            "in": {
+                "translations": {
+                    "de": "in: ",
+                    "en": "in: "
+                }
+            }
         }
     }
 }

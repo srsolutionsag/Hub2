@@ -356,3 +356,14 @@ sess_prop_delete_mode_none#:#No action
 sess_prop_delete_mode_trash#:#Move to trash
 sess_prop_move#:#Move session
 sess_prop_move_info#:#Move to new container
+summary_for#:#Summary for %s: 
+summary_delivered_data_sets#:#Delivered data sets: %s
+summary_created#:#Created: %s
+summary_updated#:#Updated: %s
+summary_deleted#:#Deleted: %s
+summary_ignored#:#Ignored: %s
+summary_no_changes#:#No changes: %s
+summary_exceptions#:#Exceptions: 
+summary_notification#:#HUB2: Summary for %s
+summary_exceptions_in#:#HUB2: Exceptions in %s
+summary_in#:#in: 
