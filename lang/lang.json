@@ -774,8 +774,8 @@
             },
             "on_status": {
                 "translations": {
-                    "de": "Objekt-Status:",
-                    "en": "Object status:"
+                    "de": "Objekt-Status: %s",
+                    "en": "Object status: %s"
                 },
                 "last_used": "21.06.2018"
             },
@@ -801,22 +801,22 @@
             },
             "on_status_new": {
                 "translations": {
-                    "de": "Neu",
-                    "en": "New"
+                    "de": "NEU",
+                    "en": "NEW"
                 },
                 "last_used": "21.06.2018"
             },
             "on_status_update": {
                 "translations": {
-                    "de": "Aktualisiert",
-                    "en": "Updated"
+                    "de": "AKTUALISIEREN",
+                    "en": "UPDATE"
                 },
                 "last_used": "21.06.2018"
             },
             "on_status_delete": {
                 "translations": {
-                    "de": "Gelöscht",
-                    "en": "Deleted"
+                    "de": "LÖSCHEN",
+                    "en": "DELETE"
                 },
                 "last_used": "21.06.2018"
             }

@@ -116,13 +116,13 @@ common_delete#:#Löschen
 common_edit#:#Bearbeiten
 common_export#:#Einstellungen exportieren
 common_none#:#Keine
-common_on_status#:#Objekt-Status:
+common_on_status#:#Objekt-Status: %s
 common_back#:#Zurück
 common_permissions#:#Rechte
 common_roles#:#Rollen-IDs
-common_on_status_new#:#Neu
-common_on_status_update#:#Aktualisiert
-common_on_status_delete#:#Gelöscht
+common_on_status_new#:#NEU
+common_on_status_update#:#AKTUALISIEREN
+common_on_status_delete#:#LÖSCHEN
 hub_categories#:#Kategorien
 hub_conf#:#Einstellungen
 hub_courses#:#Kurse
