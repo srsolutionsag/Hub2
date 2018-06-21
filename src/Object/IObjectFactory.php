@@ -2,6 +2,11 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
+use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembership;
+
 /**
  * Interface IObjectFactory
  *
@@ -12,7 +17,7 @@ interface IObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return \ActiveRecord|\SRAG\Plugins\Hub2\Object\Category\ARCategory|\SRAG\Plugins\Hub2\Object\Category\ICategory|\SRAG\Plugins\Hub2\Object\Course\ARCourse|\SRAG\Plugins\Hub2\Object\Course\ICourse|\SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership|\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership|\SRAG\Plugins\Hub2\Object\Group\ARGroup|\SRAG\Plugins\Hub2\Object\Group\IGroup|\SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership|\SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership|\SRAG\Plugins\Hub2\Object\Session\ARSession|\SRAG\Plugins\Hub2\Object\Session\ISession|\SRAG\Plugins\Hub2\Object\User\ARUser|\SRAG\Plugins\Hub2\Object\User\IUser
+	 * @return \ActiveRecord|\SRAG\Plugins\Hub2\Object\Category\ARCategory|\SRAG\Plugins\Hub2\Object\Category\ICategory|\SRAG\Plugins\Hub2\Object\Course\ARCourse|\SRAG\Plugins\Hub2\Object\Course\ICourse|\SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership|\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership|\SRAG\Plugins\Hub2\Object\Group\ARGroup|\SRAG\Plugins\Hub2\Object\Group\IGroup|\SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership|\SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership|\SRAG\Plugins\Hub2\Object\Session\ARSession|\SRAG\Plugins\Hub2\Object\Session\ISession|\SRAG\Plugins\Hub2\Object\User\ARUser|\SRAG\Plugins\Hub2\Object\User\IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership
 	 */
 	public function undefined($ext_id);
 
@@ -79,4 +84,20 @@ interface IObjectFactory {
 	 * @return \SRAG\Plugins\Hub2\Object\SessionMembership\ISessionMembership
 	 */
 	public function sessionMembership($ext_id);
+
+
+	/**
+	 * @param string $ext_id
+	 *
+	 * @return IOrgUnit
+	 */
+	public function orgUnit(string $ext_id): IOrgUnit;
+
+
+	/**
+	 * @param string $ext_id
+	 *
+	 * @return IOrgUnitMembership
+	 */
+	public function orgUnitMembership(string $ext_id): IOrgUnitMembership;
 }

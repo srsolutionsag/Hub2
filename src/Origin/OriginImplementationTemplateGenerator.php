@@ -64,6 +64,7 @@ class OriginImplementationTemplateGenerator {
 
 	public function classFileExists(IOrigin $origin) {
 		$classFile = $this->getClassFilePath($origin);
+
 		return is_file($classFile);
 	}
 

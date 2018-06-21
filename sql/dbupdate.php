@@ -1,5 +1,6 @@
 <#1>
 <?php
+
 require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/autoload.php');
 SRAG\Plugins\Hub2\Origin\User\ARUserOrigin::updateDB(); // Installs for all
 SRAG\Plugins\Hub2\Object\User\ARUser::updateDB();
@@ -19,15 +20,25 @@ $config->save();
 require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/autoload.php');
 global $ilDB;
 $ilDB->modifyTableColumn(SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership::TABLE_NAME, 'ilias_id', array(
-	"type"   => "text",
+	"type" => "text",
 	"length" => 256,
 ));
 $ilDB->modifyTableColumn(SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, 'ilias_id', array(
-	"type"   => "text",
+	"type" => "text",
 	"length" => 256,
 ));
 $ilDB->modifyTableColumn(SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, 'ilias_id', array(
-	"type"   => "text",
+	"type" => "text",
 	"length" => 256,
 ));
+?>
+<#3>
+<?php
+require_once "Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/autoload.php";
+
+use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
+
+AROrgUnit::updateDB();
+AROrgUnitMembership::updateDB();
 ?>

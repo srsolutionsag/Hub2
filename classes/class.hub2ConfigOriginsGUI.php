@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../vendor/autoload.php";
 
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Origin\AROrigin;
@@ -73,11 +74,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	protected function initTabs() {
-		$this->tabs()
-		     ->addSubTab(self::SUBTAB_ORIGINS, $this->pl->txt(self::SUBTAB_ORIGINS), $this->ctrl()
-		                                                                                  ->getLinkTarget($this, self::CMD_INDEX));
+		$this->tabs()->addSubTab(self::SUBTAB_ORIGINS, $this->pl->txt(self::SUBTAB_ORIGINS), $this->ctrl()->getLinkTarget($this, self::CMD_INDEX));
 		$this->tabs()->addSubTab(self::SUBTAB_DATA, $this->pl->txt(self::SUBTAB_DATA), $this->ctrl()
-		                                                                                    ->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
+			->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
 
 		$this->tabs()->activateTab(self::TAB_ORIGINS);
 		$this->tabs()->activateSubTab(self::SUBTAB_ORIGINS);
@@ -95,13 +94,12 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 		$this->toolbar()->addSeparator();
 
-		$this->toolbar()->addInputItem(new ilCheckboxInputGUI('Force', self::Q_FORCE_UPDATE));
+		$this->toolbar()->addInputItem(new ilCheckboxInputGUI($this->pl->txt('origin_table_button_force'), self::Q_FORCE_UPDATE));
 
 		$button = ilSubmitButton::getInstance();
 		$button->setCaption($this->pl->txt('origin_table_button_run'), false);
 		$button->setCommand(self::CMD_RUN);
 		$this->toolbar()->addButtonInstance($button);
-
 
 		$table = new OriginsTableGUI($this, self::CMD_INDEX, new OriginRepository());
 		$this->tpl()->setContent($table->getHTML());
@@ -167,13 +165,10 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			try {
 				$result = $generator->create($origin);
 				if ($result) {
-					ilUtil::sendInfo("Created class implementation file: "
-					                 . $generator->getClassFilePath($origin), true);
+					ilUtil::sendInfo(sprintf($this->pl->txt("msg_created_class_implementation_file"), $generator->getClassFilePath($origin)), true);
 				}
 			} catch (HubException $e) {
-				$msg = 'Unable to create class implementation file, you must create it manually at: '
-				       . $generator->getClassFilePath($origin);
-				ilUtil::sendInfo($msg, true);
+				ilUtil::sendInfo(sprintf($this->pl->txt("msg_created_class_implementation_file_failed"), $generator->getClassFilePath($origin)), true);
 			}
 			$this->ctrl()->saveParameter($this, self::ORIGIN_ID);
 			$this->ctrl()->redirect($this, 'editOrigin');
@@ -300,8 +295,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 */
 	protected function checkAccess() {
 		$roles = array_unique(array_merge($this->hubConfig->getAdministrationRoleIds(), [ 2 ]));
-		if (!$this->rbac()->review()->isAssignedToAtLeastOneGivenRole($this->user()
-		                                                                   ->getId(), $roles)) {
+		if (!$this->rbac()->review()->isAssignedToAtLeastOneGivenRole($this->user()->getId(), $roles)) {
 			ilUtil::sendFailure($this->language()->txt('permission_denied'), true);
 			$this->ctrl()->redirectByClass('ilpersonaldesktopgui');
 		}
@@ -331,7 +325,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function getOrigin($id) {
 		/** @var AROrigin $origin */
 		$origin = $this->originFactory->getById((int)$id);
-		if ($origin === null) {
+		if ($origin === NULL) {
 			throw new \ilException(sprintf("Origin with ID '%s' not found.", $id));
 		}
 

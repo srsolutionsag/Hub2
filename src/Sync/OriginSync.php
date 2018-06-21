@@ -66,6 +66,7 @@ class OriginSync implements IOriginSync {
 		IObject::STATUS_UPDATED => 0,
 		IObject::STATUS_DELETED => 0,
 		IObject::STATUS_IGNORED => 0,
+		IObject::STATUS_NOTHING_TO_UPDATE => 0
 	];
 	/**
 	 * @var OriginNotifications

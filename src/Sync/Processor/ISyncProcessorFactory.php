@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor;
 
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
+
 /**
  * Interface ISyncProcessorFactory
  *
@@ -55,4 +58,16 @@ interface ISyncProcessorFactory {
 	 * @return \SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\ISessionMembershipSyncProcessor
 	 */
 	public function sessionMembership();
+
+
+	/**
+	 * @return IOrgUnitSyncProcessor
+	 */
+	public function orgUnit(): IOrgUnitSyncProcessor;
+
+
+	/**
+	 * @return IOrgUnitMembershipSyncProcessor
+	 */
+	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor;
 }

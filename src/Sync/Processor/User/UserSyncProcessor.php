@@ -35,31 +35,30 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	/**
 	 * @var array
 	 */
-	protected static $properties = array(
-		'authMode',
-		'externalAccount',
-		'firstname',
-		'lastname',
-		'email',
-		'institution',
-		'street',
-		'city',
-		'zipcode',
-		'country',
-		'selectedCountry',
-		'phoneOffice',
-		'phoneHome',
-		'phoneMobile',
-		'department',
-		'fax',
-		'timeLimitOwner',
-		'timeLimitUnlimited',
-		'timeLimitFrom',
-		'timeLimitUntil',
-		'matriculation',
-		'gender',
-		'birthday',
-	);
+	protected static $properties
+		= array('authMode',
+		        'externalAccount',
+		        'firstname',
+		        'lastname',
+		        'email',
+		        'institution',
+		        'street',
+		        'city',
+		        'zipcode',
+		        'country',
+		        'selectedCountry',
+		        'phoneOffice',
+		        'phoneHome',
+		        'phoneMobile',
+		        'department',
+		        'fax',
+		        'timeLimitOwner',
+		        'timeLimitUnlimited',
+		        'timeLimitFrom',
+		        'timeLimitUntil',
+		        'matriculation',
+		        'gender',
+		        'birthday',);
 
 
 	/**
@@ -113,13 +112,20 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 				$ilObjUser->$setter($dto->$getter());
 			}
 		}
+
+		if ($this->props->get(UserOriginProperties::CREATE_PASSWORD)) {
+			$password = $this->generatePassword();
+			$dto->setPasswd($password);
+			$ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
+			$this->sendPasswordMail($dto);
+		} else {
+			$ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
+		}
+
 		$ilObjUser->saveAsNew();
 		$ilObjUser->writePrefs();
 		$this->assignILIASRoles($dto, $ilObjUser);
 
-		//		if ($this->props->get(UserOriginProperties::SEND_PASSWORD)) {
-		//			$this->sendPasswordMail($object, $ilObjUser);
-		//		}
 		return $ilObjUser;
 	}
 
@@ -163,9 +169,40 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		if ($this->props->updateDTOProperty('iliasRoles')) {
 			$this->assignILIASRoles($dto, $ilObjUser);
 		}
+
+		if ($this->props->get(UserOriginProperties::RE_SEND_PASSWORD)) {
+			$password = $this->generatePassword();
+			$dto->setPasswd($password);
+			$ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
+			$this->sendPasswordMail($dto);
+		}
+
 		$ilObjUser->update();
 
 		return $ilObjUser;
+	}
+
+
+	private function sendPasswordMail(IDataTransferObject $dto) {
+		/** @var UserDTO $dto */
+
+		global $DIC;
+		$mail_field = $dto->getEmail();
+		if ($mail_field) {
+			$f = $DIC["mail.mime.sender.factory"];
+			$mail = new \ilMimeMail();
+			$mail->From($f->system());
+			$mail->To($dto->getEmail());
+			$body = $this->props->get(UserOriginProperties::PASSWORD_MAIL_BODY);
+
+			$body = strtr(
+				$body, array('[PASSWORD]' => $dto->getPasswd(),
+				             '[LOGIN]'    => $dto->getLogin())
+			);
+			$mail->Subject($this->props->get(UserOriginProperties::PASSWORD_MAIL_SUBJECT));
+			$mail->Body($body);
+			$mail->Send();
+		}
 	}
 
 
@@ -177,8 +214,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		if ($ilObjUser === null) {
 			return null;
 		}
-		if ($this->props->get(UserOriginProperties::DELETE)
-		    == UserOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(UserOriginProperties::DELETE) == UserOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjUser;
 		}
 		switch ($this->props->get(UserOriginProperties::DELETE)) {
@@ -202,7 +238,9 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	protected function assignILIASRoles(UserDTO $user, \ilObjUser $ilObjUser) {
 		global $DIC;
 		foreach ($user->getIliasRoles() as $role_id) {
-			$DIC->rbac()->admin()->assignUser($role_id, $ilObjUser->getId());
+			$DIC->rbac()
+				->admin()
+				->assignUser($role_id, $ilObjUser->getId());
 		}
 	}
 
@@ -227,19 +265,16 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 				$login = $user->getExtId();
 				break;
 			case IUserOriginConfig::LOGIN_FIELD_FIRSTNAME_LASTNAME:
-				$login = $this->clearString($user->getFirstname()) . '.'
-				         . $this->clearString($user->getLastname());
+				$login = $this->clearString($user->getFirstname()) . '.' . $this->clearString($user->getLastname());
 				break;
 			case IUserOriginConfig::LOGIN_FIELD_HUB_LOGIN:
 				$login = $user->getLogin();
 				break;
 			case IUserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME:
-				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.'
-				         . $this->clearString($user->getLastname());
+				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
 				break;
 			default:
-				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.'
-				         . $this->clearString($user->getLastname());
+				$login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
 		}
 		$login = mb_strtolower($login);
 
@@ -248,7 +283,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$_login = $login;
 		while (\ilObjUser::_loginExists($login, $ilObjUser->getId())) {
 			$login = $_login . $appendix;
-			$appendix ++;
+			$appendix++;
 		}
 
 		return $login;

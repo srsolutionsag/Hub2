@@ -11,6 +11,7 @@ class UserOriginProperties extends OriginProperties {
 	const ACTIVATE_ACCOUNT = 'activate_account';
 	const CREATE_PASSWORD = 'create_password';
 	const SEND_PASSWORD = 'send_password';
+	const RE_SEND_PASSWORD = 'resend_password';
 	const SEND_PASSWORD_FIELD = 'send_password_field';
 	const PASSWORD_MAIL_SUBJECT = 'password_mail_subject';
 	const PASSWORD_MAIL_BODY = 'password_mail_body';

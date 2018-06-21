@@ -13,7 +13,7 @@ class ConfigFormGUI extends \ilPropertyFormGUI {
 
 	use DIC;
 	/**
-	 * @var \ilHubConfigGUI
+	 * @var \ilHub2ConfigGUI
 	 */
 	protected $parent_gui;
 	/**
@@ -24,7 +24,6 @@ class ConfigFormGUI extends \ilPropertyFormGUI {
 	 * @var \ilHub2Plugin
 	 */
 	protected $pl;
-
 
 
 	/**
@@ -80,7 +79,7 @@ class ConfigFormGUI extends \ilPropertyFormGUI {
 
 		$item = new \ilTextInputGUI($this->pl->txt('admin_msg_shortlink_not_active'), IHubConfig::SHORTLINK_NOT_ACTIVE);
 		$item->setValue($this->config->get(IHubConfig::SHORTLINK_NOT_ACTIVE));
-		$item->setInfo($this->pl->txt('admin_msg_shortlink_not_active'));
+		$item->setInfo($this->pl->txt('admin_msg_shortlink_not_active_info'));
 		$this->addItem($item);
 
 		//		$h = new \ilFormSectionHeaderGUI();

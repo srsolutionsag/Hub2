@@ -1,15 +1,21 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use stdClass;
 
 /**
-* Class [[CLASSNAME]]
-* @package SRAG\Plugins\Hub2\Origin
-*/
+ * Class [[CLASSNAME]]
+ *
+ * @package SRAG\Plugins\Hub2\Origin
+ */
 class [[CLASSNAME]] extends AbstractOriginImplementation {
 
 	/**
@@ -19,7 +25,7 @@ class [[CLASSNAME]] extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() {   }
+	public function connect(): bool { }
 
 
 	/**
@@ -32,7 +38,7 @@ class [[CLASSNAME]] extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {   }
+	public function parseData(): int { }
 
 
 	/**
@@ -52,7 +58,7 @@ class [[CLASSNAME]] extends AbstractOriginImplementation {
 * @throws BuildObjectsFailedException
 * @return IDataTransferObject[]
 */
-public function buildObjects() {   }
+public function buildObjects(): array { }
 
 
 // HOOKS
@@ -71,55 +77,55 @@ public function buildObjects() {   }
 *
 * Note that if you do not throw any of the exceptions above, the sync will continue.
 *
-* @param \Exception $e
+* @param Exception $e
 */
-public function handleException(\Exception $e) {   }
+public function handleException(Exception $e) { }
 
 
 /**
 * @param HookObject $object
 */
-public function beforeCreateILIASObject(HookObject $object) {   }
+public function beforeCreateILIASObject(HookObject $object) { }
 
 
 /**
 * @param HookObject $object
 */
-public function afterCreateILIASObject(HookObject $object) {   }
+public function afterCreateILIASObject(HookObject $object) { }
 
 
 /**
 * @param HookObject $object
 */
-public function beforeUpdateILIASObject(HookObject $object) {   }
+public function beforeUpdateILIASObject(HookObject $object) { }
 
 
 /**
 * @param HookObject $object
 */
-public function afterUpdateILIASObject(HookObject $object) {   }
+public function afterUpdateILIASObject(HookObject $object) { }
 
 
 /**
 * @param HookObject $object
 */
-public function beforeDeleteILIASObject(HookObject $object) {   }
+public function beforeDeleteILIASObject(HookObject $object) { }
 
 
 /**
 * @param HookObject $object
 */
-public function afterDeleteILIASObject(HookObject $object) {   }
+public function afterDeleteILIASObject(HookObject $object) { }
 
 
 /**
 * Executed before the synchronization of the origin is executed.
 */
-public function beforeSync() {   }
+public function beforeSync() { }
 
 
 /**
 * Executed after the synchronization of the origin has been executed.
 */
-public function afterSync() {   }
+public function afterSync() { }
 }

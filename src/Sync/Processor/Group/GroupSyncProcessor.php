@@ -112,12 +112,11 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		// Find the refId under which this group should be created
 		$parentRefId = $this->determineParentRefId($dto);
 		// Pass properties from DTO to ilObjUser
-		require_once('./Services/Calendar/classes/class.ilDate.php');
 
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
+			if ($dto->$getter() !== NULL) {
 				$var = $dto->$getter();
 				if (in_array($property, self::$ildate_fields)) {
 					$var = new \ilDate($var, IL_CAL_UNIX);
@@ -127,19 +126,19 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			}
 		}
 
-		if ($dto->getRegUnlimited() !== null) {
+		if ($dto->getRegUnlimited() !== NULL) {
 			$ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
 		}
 
-		if ($dto->getRegMembershipLimitation() !== null) {
+		if ($dto->getRegMembershipLimitation() !== NULL) {
 			$ilObjGroup->enableMembershipLimitation($dto->getRegMembershipLimitation());
 		}
 
-		if ($dto->getWaitingList() !== null) {
+		if ($dto->getWaitingList() !== NULL) {
 			$ilObjGroup->enableWaitingList($dto->getWaitingList());
 		}
 
-		if ($dto->getRegAccessCodeEnabled() !== null) {
+		if ($dto->getRegAccessCodeEnabled() !== NULL) {
 			$ilObjGroup->enableRegistrationAccessCode($dto->getRegAccessCodeEnabled());
 		}
 
@@ -158,8 +157,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/** @var GroupDTO $dto */
 		$ilObjGroup = $this->findILIASGroup($ilias_id);
-		if ($ilObjGroup === null) {
-			return null;
+		if ($ilObjGroup === NULL) {
+			return NULL;
 		}
 		// Update some properties if they should be updated depending on the origin config
 		foreach (self::getProperties() as $property) {
@@ -168,7 +167,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
+			if ($dto->$getter() !== NULL) {
 				$var = $dto->$getter();
 				if (in_array($property, self::$ildate_fields)) {
 					$var = new \ilDate($var, IL_CAL_UNIX);
@@ -178,31 +177,31 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			}
 		}
 		if ($this->props->updateDTOProperty("registrationMode")
-		    && $dto->getRegisterMode() !== null) {
+			&& $dto->getRegisterMode() !== NULL) {
 			$ilObjGroup->setRegisterMode($dto->getRegisterMode());
 		}
 
 		if ($this->props->updateDTOProperty("regUnlimited")
-		    && $dto->getRegUnlimited() !== null) {
+			&& $dto->getRegUnlimited() !== NULL) {
 			$ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
 		}
 
 		if ($this->props->updateDTOProperty("regMembershipLimitation")
-		    && $dto->getRegMembershipLimitation() !== null) {
+			&& $dto->getRegMembershipLimitation() !== NULL) {
 			$ilObjGroup->enableMembershipLimitation($dto->getRegMembershipLimitation());
 		}
 
-		if ($this->props->updateDTOProperty("waitingList") && $dto->getWaitingList() !== null) {
+		if ($this->props->updateDTOProperty("waitingList") && $dto->getWaitingList() !== NULL) {
 			$ilObjGroup->enableWaitingList($dto->getWaitingList());
 		}
 
 		if ($this->props->updateDTOProperty("regAccessCodeEnabled")
-		    && $dto->getRegAccessCodeEnabled() !== null) {
+			&& $dto->getRegAccessCodeEnabled() !== NULL) {
 			$ilObjGroup->enableRegistrationAccessCode($dto->getRegAccessCodeEnabled());
 		}
 
 		if ($this->props->updateDTOProperty("regUnlimited")
-		    && $dto->getRegUnlimited() !== null) {
+			&& $dto->getRegUnlimited() !== NULL) {
 			$ilObjGroup->enableUnlimitedRegistration($dto->getRegisterMode());
 		}
 
@@ -220,11 +219,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 */
 	protected function handleDelete($ilias_id) {
 		$ilObjGroup = $this->findILIASGroup($ilias_id);
-		if ($ilObjGroup === null) {
-			return null;
+		if ($ilObjGroup === NULL) {
+			return NULL;
 		}
-		if ($this->props->get(GroupOriginProperties::DELETE_MODE)
-		    == GroupOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(GroupOriginProperties::DELETE_MODE) == GroupOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjGroup;
 		}
 		global $DIC;
@@ -289,7 +287,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 				/** @var $origin IOrigin */
 				return $origin->getId() == $linkedOriginId;
 			}));
-			if ($origin === null) {
+			if ($origin === NULL) {
 				$msg = "The linked origin syncing categories or courses was not found,
 				please check that the correct origin is linked";
 				throw new HubException($msg);
@@ -324,7 +322,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 */
 	protected function findILIASGroup($iliasId) {
 		if (!\ilObjGroup::_exists($iliasId, true)) {
-			return null;
+			return NULL;
 		}
 
 		return new \ilObjGroup($iliasId);
@@ -350,8 +348,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			return;
 		}
 		$DIC->repositoryTree()->moveTree($ilObjGroup->getRefId(), $parentRefId);
-		$DIC->rbac()
-		    ->admin()
-		    ->adjustMovedObjectPermissions($ilObjGroup->getRefId(), $oldParentRefId);
+		$DIC->rbac()->admin()->adjustMovedObjectPermissions($ilObjGroup->getRefId(), $oldParentRefId);
 	}
 }

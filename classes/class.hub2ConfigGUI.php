@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../vendor/autoload.php";
 
 use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Config\HubConfig;

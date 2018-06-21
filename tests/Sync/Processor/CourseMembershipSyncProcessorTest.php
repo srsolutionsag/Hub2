@@ -11,6 +11,7 @@ use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class CourseMembershipSyncProcessorTest
@@ -70,15 +71,12 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	protected function initILIASObject() {
 		$this->ilObject = \Mockery::mock(\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject::class);
-		$this->ilObject->shouldReceive('getId')->andReturn(
-			self::COURSE_REF_ID . "|||" . self::USER_ID
-		);
+		$this->ilObject->shouldReceive('getId')->andReturn(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
-		\Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs(
-			[
-				self::COURSE_REF_ID, true,
-			]
-		)->andReturn(true);
+		\Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
+				self::COURSE_REF_ID,
+				true,
+			])->andReturn(true);
 
 		$this->ilObjCourse = Mockery::mock("overload:\ilObjCourse", "ilObject");
 
@@ -93,7 +91,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->initOrigin(new CourseMembershipOriginProperties(['update_dto_role' => true]), new CourseMembershipOriginConfig([]));
+		$this->initOrigin(new CourseMembershipOriginProperties([ 'update_dto_role' => true ]), new CourseMembershipOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
 		$this->initILIASObject();
@@ -114,15 +112,12 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
 
-		$this->ilCourseParticipants->shouldReceive('add')->once()->withArgs(
-			array(
-				$this->dto->getUserId(), $this->dto->getRole(),
-			)
-		);
+		$this->ilCourseParticipants->shouldReceive('add')->once()->withArgs(array(
+				$this->dto->getUserId(),
+				$this->dto->getRole(),
+			));
 
-		$this->iobject->shouldReceive('setILIASId')->once()->with(
-			self::COURSE_REF_ID . "|||" . self::USER_ID
-		);
+		$this->iobject->shouldReceive('setILIASId')->once()->with(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
 		$processor->process($this->iobject, $this->dto);
 	}
@@ -135,12 +130,8 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn("newHash");
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn("oldHash");
-		$this->iobject->shouldReceive('setILIASId')->once()->with(
-			self::COURSE_REF_ID . "|||" . self::USER_ID
-		);
-		$this->iobject->shouldReceive('getILIASId')->once()->andReturn(
-			self::COURSE_REF_ID . "|||" . self::USER_ID
-		);
+		$this->iobject->shouldReceive('setILIASId')->once()->with(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
+		$this->iobject->shouldReceive('getILIASId')->once()->andReturn(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
 		$this->originImplementation->shouldReceive('beforeUpdateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
@@ -149,11 +140,10 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->ilObjCourse->shouldReceive("getRefId")->once()->andReturn(self::COURSE_REF_ID);
 
-		$this->ilCourseParticipants->shouldReceive('updateRoleAssignments')->once()->withArgs(
-			array(
-				$this->dto->getUserId(), [self::IL_CRS_TUTOR_123],
-			)
-		);
+		$this->ilCourseParticipants->shouldReceive('updateRoleAssignments')->once()->withArgs(array(
+				$this->dto->getUserId(),
+				[ self::IL_CRS_TUTOR_123 ],
+			));
 
 		$processor->process($this->iobject, $this->dto);
 	}

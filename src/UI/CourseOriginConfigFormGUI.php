@@ -31,7 +31,10 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		parent::addSyncConfig();
 		$te = new \ilTextInputGUI($this->pl->txt('crs_prop_node_noparent'), $this->conf(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
 		$te->setInfo($this->pl->txt('crs_prop_node_noparent_info'));
-		$te->setValue($this->origin->properties()->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
+		$te->setValue(
+			$this->origin->properties()
+				->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND)
+		);
 		$this->addItem($te);
 	}
 
@@ -39,7 +42,10 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 	protected function addPropertiesNew() {
 		parent::addPropertiesNew();
 		$cb = new \ilCheckboxInputGUI($this->pl->txt('crs_prop_activate'), $this->prop(CourseOriginProperties::SET_ONLINE));
-		$cb->setChecked($this->origin->properties()->get(CourseOriginProperties::SET_ONLINE));
+		$cb->setChecked(
+			$this->origin->properties()
+				->get(CourseOriginProperties::SET_ONLINE)
+		);
 		$this->addItem($cb);
 
 		//		$cb = new \ilCheckboxInputGUI($this->pl->txt('crs_prop_create_icon'), $this->prop(CourseOriginProperties::CREATE_ICON));
@@ -47,20 +53,31 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		$send_mail = new \ilCheckboxInputGUI($this->pl->txt('crs_prop_send_notification'), $this->prop(CourseOriginProperties::SEND_CREATE_NOTIFICATION));
 		$send_mail->setInfo($this->pl->txt('crs_prop_send_notification_info'));
-		$send_mail->setChecked($this->origin->properties()->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION));
+		$send_mail->setChecked(
+			$this->origin->properties()
+				->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)
+		);
 		$notification_subject = new \ilTextInputGUI($this->pl->txt('crs_prop_notification_subject'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
-		$notification_subject->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
+		$notification_subject->setValue(
+			$this->origin->properties()
+				->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT)
+		);
 
 		$send_mail->addSubItem($notification_subject);
 		$notification_body = new \ilTextAreaInputGUI($this->pl->txt('crs_prop_notification_body'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_BODY));
-		//		$notification_body->setInfo(\hubCourseFields::getPlaceHolderStrings());
 		$notification_body->setInfo(CourseOriginProperties::getPlaceHolderStrings());
 		$notification_body->setRows(6);
 		$notification_body->setCols(100);
-		$notification_body->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY));
+		$notification_body->setValue(
+			$this->origin->properties()
+				->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY)
+		);
 		$send_mail->addSubItem($notification_body);
 		$notification_from = new \ilTextInputGUI($this->pl->txt('crs_prop_notification_from'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
-		$notification_from->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
+		$notification_from->setValue(
+			$this->origin->properties()
+				->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM)
+		);
 		$send_mail->addSubItem($notification_from);
 		$this->addItem($send_mail);
 	}
@@ -72,7 +89,10 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		$this->addItem($cb);
 
 		$cb = new \ilCheckboxInputGUI($this->pl->txt('crs_prop_reactivate'), $this->prop(CourseOriginProperties::SET_ONLINE_AGAIN));
-		$cb->setChecked($this->origin->properties()->get(CourseOriginProperties::SET_ONLINE_AGAIN));
+		$cb->setChecked(
+			$this->origin->properties()
+				->get(CourseOriginProperties::SET_ONLINE_AGAIN)
+		);
 		$this->addItem($cb);
 
 		parent::addPropertiesUpdate();
@@ -81,7 +101,10 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 
 	protected function addPropertiesDelete() {
 		$delete = new \ilRadioGroupInputGUI($this->pl->txt('crs_prop_delete_mode'), $this->prop(CourseOriginProperties::DELETE_MODE));
-		$delete->setValue($this->origin->properties()->get(CourseOriginProperties::DELETE_MODE));
+		$delete->setValue(
+			$this->origin->properties()
+				->get(CourseOriginProperties::DELETE_MODE)
+		);
 
 		$opt = new \ilRadioOption($this->pl->txt('crs_prop_delete_mode_none'), CourseOriginProperties::DELETE_MODE_NONE);
 		$delete->addOption($opt);
