@@ -137,12 +137,15 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 * @var int
 	 */
 	protected $activationType = self::ACTIVATION_OFFLINE;
-
-
 	/**
 	 * @var string
 	 */
 	protected $languageCode = 'en';
+	/**
+	 * @var int
+	 */
+	protected $didacticTemplate;
+
 
 	/**
 	 * @return string
@@ -532,25 +535,45 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 		return $this;
 	}
 
+
 	/**
 	 * @return string
 	 */
-	public function getLanguageCode()
-	{
+	public function getLanguageCode() {
 		return $this->languageCode;
 	}
 
+
 	/**
 	 * @param $languageCode
+	 *
 	 * @throws LanguageCodeException
 	 */
-	public function setLanguageCode($languageCode)
-	{
-		if(!in_array($languageCode,\ilMDLanguageItem::_getPossibleLanguageCodes()))
-		{
+	public function setLanguageCode($languageCode) {
+		if (!in_array($languageCode, \ilMDLanguageItem::_getPossibleLanguageCodes())) {
 			throw new LanguageCodeException($languageCode);
 		}
 
 		$this->languageCode = $languageCode;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getDidacticTemplate(): int {
+		return $this->didacticTemplate;
+	}
+
+
+	/**
+	 * @param int $didacticTemplate
+	 *
+	 * @return CourseDTO
+	 */
+	public function setDidacticTemplate(int $didacticTemplate): CourseDTO {
+		$this->didacticTemplate = $didacticTemplate;
+
+		return $this;
 	}
 }
