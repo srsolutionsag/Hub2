@@ -82,18 +82,18 @@ crs_prop_move#:#Kurs verschieben
 crs_prop_move_info#:#Wenn die Daten eine neue übergeordnete ID enthalten, versucht Hub, den Kurs unter dem neuen übergeordneten Element zu verschieben
 crs_prop_node_noparent#:#Fallback Eltern Ref-ID
 crs_prop_node_noparent_info#:#Kurse werden unter der hier definierten Eltern-ID erstellt oder verschoben, wenn die Eltern-ID nicht gefunden werden kann. Der Standardwert ist 1, der den Repository-Stammknoten darstellt.
-crs_prop_reactivate#:#Set again online
+crs_prop_reactivate#:#Wieder online setzen
 crs_prop_update_description#:#Beschreibung aktualisieren
 crs_prop_update_icon#:#Icon aktualisieren
 crs_prop_update_responsible#:#Verantwortlicher aktualisieren
 crs_prop_update_title#:#Titel aktualisieren
-crs_prop_check_online#:#Check online status of course
-crs_prop_msg_not_online#:#Message if course offline
+crs_prop_check_online#:#Online-Status des Kurs überprüfen
+crs_prop_msg_not_online#:#Nachricht wenn Kurss offline
 crs_prop_notification_subject#:#Betreff
 crs_prop_notification_body#:#Inhalt
 crs_prop_notification_from#:#Von
 crs_prop_send_notification#:#Benachrichtigung aktivieren
-crs_prop_send_notification_info#:#After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails
+crs_prop_send_notification_info#:#Nach dem Erstellen des Kurses sendet Hub eine E-Mail an die in CourseDTO::notificationEmails definierten Adressen
 com_prop_check_amount#:#Mengenvergleich
 com_prop_check_amount_info#:#Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden.
 com_prop_check_amount_percentage#:#Prozentwert

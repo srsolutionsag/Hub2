@@ -550,8 +550,8 @@
             },
             "prop_reactivate": {
                 "translations": {
-                    "de": "Set again online",
-                    "en": "Wieder online setzen"
+                    "de": "Wieder online setzen",
+                    "en": "Set again online"
                 },
                 "last_used": "21.06.2018"
             },
@@ -581,14 +581,14 @@
             },
             "prop_check_online": {
                 "translations": {
-                    "de": "Check online status of course",
-                    "en": "Online-Status des Kurs überprüfen"
+                    "de": "Online-Status des Kurs überprüfen",
+                    "en": "Check online status of course"
                 }
             },
             "prop_msg_not_online": {
                 "translations": {
-                    "de": "Message if course offline",
-                    "en": "Nachricht wenn Kurss offline"
+                    "de": "Nachricht wenn Kurss offline",
+                    "en": "Message if course offline"
                 }
             },
             "prop_notification_subject": {
@@ -621,8 +621,8 @@
             },
             "prop_send_notification_info": {
                 "translations": {
-                    "de": "After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails",
-                    "en": "Nach dem Erstellen des Kurses sendet Hub eine E-Mail an die in CourseDTO::notificationEmails definierten Adressen"
+                    "de": "Nach dem Erstellen des Kurses sendet Hub eine E-Mail an die in CourseDTO::notificationEmails definierten Adressen",
+                    "en": "After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails"
                 },
                 "last_used": "21.06.2018"
             }
