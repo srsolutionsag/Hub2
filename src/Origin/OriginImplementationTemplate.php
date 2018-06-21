@@ -1,5 +1,8 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use Exception;
 use SRAG\Plugins\Hub2\Object\HookObject;
 
 /**
@@ -33,7 +36,7 @@ class Template extends AbstractOriginImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	public function handleException(\Exception $e) {
+	public function handleException(Exception $e) {
 		// TODO: Implement handleException() method.
 	}
 

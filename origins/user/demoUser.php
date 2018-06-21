@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\User\UserDTO;
 
 /**
@@ -45,16 +48,9 @@ class demoUser extends AbstractOriginImplementation {
 				continue; // Simulate deletion of random users
 			}
 
-			$this->data[] = $this->factory()
-			                     ->user($x)
-			                     ->setTitle("Title {$x} {$t}")
-			                     ->setFirstname("Firstname {$x}")
-			                     ->setLastname("Lastname {$x}")
-			                     ->setEmail("email{$x}@domain.com")
-			                     ->setGender(UserDTO::GENDER_MALE)
-			                     ->addMetadata($this->metadata()
-			                                        ->getDTOWithIliasId(1)
-			                                        ->setValue('Von der Hubberei'));
+			$this->data[] = $this->factory()->user($x)->setTitle("Title {$x} {$t}")->setFirstname("Firstname {$x}")->setLastname("Lastname {$x}")
+				->setEmail("email{$x}@domain.com")->setGender(UserDTO::GENDER_MALE)->addMetadata($this->metadata()->getDTOWithIliasId(1)
+					->setValue('Von der Hubberei'));
 		}
 
 		return count($this->data);
@@ -79,6 +75,7 @@ class demoUser extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects() {
+		// TODO Build objects here
 		return $this->data;
 	}
 
@@ -99,9 +96,9 @@ class demoUser extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**

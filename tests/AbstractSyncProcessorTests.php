@@ -39,7 +39,7 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	 */
 	protected $originLog;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Object\IDataTransferObject
+	 * @var \SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject
 	 */
 	protected $dto;
 	/**

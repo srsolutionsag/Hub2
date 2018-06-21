@@ -1,12 +1,14 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
-use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
 
 /**
  * Class demoSessionMembership
@@ -40,11 +42,8 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	public function parseData() {
 		$this->log()->write("This is a test-log entry");
 
-		$this->data[] = $this->factory()
-		                     ->sessionMembership(1, 6)
-		                     ->setSessionIdType(SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
-		                     ->setSessionId(rand(1, 10))
-		                     ->setRole(SessionMembershipDTO::ROLE_MEMBER);
+		$this->data[] = $this->factory()->sessionMembership(1, 6)->setSessionIdType(SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
+			->setSessionId(rand(1, 10))->setRole(SessionMembershipDTO::ROLE_MEMBER);
 	}
 
 
@@ -66,6 +65,7 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects() {
+		// TODO Build objects here
 		return $this->data;
 	}
 
@@ -86,9 +86,9 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**

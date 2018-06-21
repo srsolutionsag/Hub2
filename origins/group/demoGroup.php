@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
@@ -44,38 +45,15 @@ class demoGroup extends AbstractOriginImplementation {
 				continue; // Simulate some random deletions
 			}
 			$xrand = rand();
-			$this->data[] = $this->factory()
-			                     ->group($x)
-			                     ->setParentIdType(GroupDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
-			                     ->setParentId(1)
-			                     ->setDescription("Description {$xrand}")
-			                     ->setTitle("Title {$xrand}")
-			                     ->setInformation("Information {$xrand}")
-			                     ->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)
-			                     ->setGroupType(GroupDTO::GRP_TYPE_CLOSED)
-			                     ->setRegUnlimited(false)
-			                     ->setRegistrationStart(1507202887)
-			                     ->setRegistrationEnd(1507202887 + 30)
-			                     ->setPassword("Password {$xrand}")
-			                     ->setRegMembershipLimitation(true)
-			                     ->setMinMembers(1)
-			                     ->setMaxMembers(10)
-			                     ->setWaitingList(true)
-			                     ->setWaitingListAutoFill(true)
-			                     ->setStart(1507202887)
-			                     ->setEnd(1507202887 + 3600)
-			                     ->setLatitude(7.1234)
-			                     ->setLongitude(45.1234)
-			                     ->setLocationzoom(5)
-			                     ->setEnableGroupMap(true)
-			                     ->setRegAccessCodeEnabled(true)
-			                     ->setRegistrationAccessCode("AccessCode {$xrand}")
-			                     ->setOwner(6)
-			                     ->setViewMode(GroupDTO::VIEW_BY_TYPE)
-			                     ->setCancellationEnd(1507202887)
-			                     ->addMetadata($this->metadata()
-			                                        ->getDTOWithIliasId(1)
-			                                        ->setValue("Meine Metadaten"));
+			$this->data[] = $this->factory()->group($x)->setParentIdType(GroupDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setParentId(1)
+				->setDescription("Description {$xrand}")->setTitle("Title {$xrand}")->setInformation("Information {$xrand}")
+				->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)->setGroupType(GroupDTO::GRP_TYPE_CLOSED)->setRegUnlimited(false)
+				->setRegistrationStart(1507202887)->setRegistrationEnd(1507202887 + 30)->setPassword("Password {$xrand}")
+				->setRegMembershipLimitation(true)->setMinMembers(1)->setMaxMembers(10)->setWaitingList(true)->setWaitingListAutoFill(true)
+				->setStart(1507202887)->setEnd(1507202887 + 3600)->setLatitude(7.1234)->setLongitude(45.1234)->setLocationzoom(5)
+				->setEnableGroupMap(true)->setRegAccessCodeEnabled(true)->setRegistrationAccessCode("AccessCode {$xrand}")->setOwner(6)
+				->setViewMode(GroupDTO::VIEW_BY_TYPE)->setCancellationEnd(1507202887)->addMetadata($this->metadata()->getDTOWithIliasId(1)
+					->setValue("Meine Metadaten"));
 		}
 
 		return count($this->data);
@@ -100,6 +78,7 @@ class demoGroup extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects() {
+		// TODO Build objects here
 		return $this->data;
 	}
 
@@ -120,9 +99,9 @@ class demoGroup extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**

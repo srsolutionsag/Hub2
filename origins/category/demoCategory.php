@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
@@ -53,28 +54,11 @@ class demoCategory extends AbstractOriginImplementation {
 				continue; // Simulate some random deletions
 			}
 
-			$this->data[] = $this->factory()
-			                     ->category($x)
-			                     ->setTitle("Title {$x} {$time}")
-			                     ->setDescription("Description {$x}")
-			                     ->setOwner(6)
-			                     ->setParentId(1)
-			                     ->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)
-			                     ->addMetadata($this->metadata()
-			                                        ->getDTOWithIliasId(1)
-			                                        ->setValue("Meine Metadaten"))
-			                     ->addTaxonomy($this->taxonomy()
-			                                        ->create("Taxonomy 1")
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 1.1"))
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 1.2")))
-			                     ->addTaxonomy($this->taxonomy()
-			                                        ->create("Taxonomy 2")
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 2.1"))
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 2.2")));
+			$this->data[] = $this->factory()->category($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
+				->setParentId(1)->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->addMetadata($this->metadata()->getDTOWithIliasId(1)
+					->setValue("Meine Metadaten"))->addTaxonomy($this->taxonomy()->create("Taxonomy 1")->attach($this->taxonomy()
+						->node("Node Title 1.1"))->attach($this->taxonomy()->node("Node Title 1.2")))->addTaxonomy($this->taxonomy()
+					->create("Taxonomy 2")->attach($this->taxonomy()->node("Node Title 2.1"))->attach($this->taxonomy()->node("Node Title 2.2")));
 		}
 
 		return count($this->data);
@@ -99,6 +83,7 @@ class demoCategory extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects() {
+		// TODO Build objects here
 		return $this->data;
 	}
 
@@ -119,9 +104,9 @@ class demoCategory extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) {
+	public function handleException(Exception $e) {
 
 
 	}

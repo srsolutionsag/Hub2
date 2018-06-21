@@ -1,8 +1,8 @@
 <?php
 
-//namespace SRAG\Plugins\Hub2\Origin;
-namespace SRAG\Plugins\Hub2\Demo\Origin;
+namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
@@ -55,24 +55,15 @@ class demoCourse extends AbstractOriginImplementation {
 				// continue; // Simulate some random deletions
 			}
 
-			$this->data[] = $this->factory()
-			                     ->course($x)
-			                     ->setTitle("Title {$x} {$time}")
-			                     ->setDescription("Description {$x}")
-			                     ->setActivationType(CourseDTO::ACTIVATION_OFFLINE)
-			                     ->setOwner(6)//  root
-			                     ->setContactEmail("Email {$x}")
-			                     ->setContactName("Name {$x}")
-			                     ->setParentId(1)// from demoCategory, please configure in GUI accordingly
-			                     ->setParentIdType(CourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
-			                     ->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)
-			                     ->setSyllabus("Syllabus {$x}")
-			                     ->addMetadata($this->metadata()// This has to be configured in ILIAS
-			                                        ->getDTOWithIliasId(1)// you find the id of the field in ILIAS GUI when editing the fields in query-parameter field_id=X
-			                                        ->setValue("Meine Metadaten {$time}"))// This works for a Text-Field
-			                     ->addTaxonomy($this->taxonomy()// This is created in demoCategory
-			                                        ->select("Taxonomy 1")->attach($this->taxonomy()
-			                                                                            ->node("Node Title 1.1")));
+			$this->data[] = $this->factory()->course($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")
+				->setActivationType(CourseDTO::ACTIVATION_OFFLINE)->setOwner(6)//  root
+				->setContactEmail("Email {$x}")->setContactName("Name {$x}")->setParentId(1)// from demoCategory, please configure in GUI accordingly
+				->setParentIdType(CourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setSyllabus("Syllabus {$x}")
+				->addMetadata($this->metadata()// This has to be configured in ILIAS
+				->getDTOWithIliasId(1)// you find the id of the field in ILIAS GUI when editing the fields in query-parameter field_id=X
+				->setValue("Meine Metadaten {$time}"))// This works for a Text-Field
+				->addTaxonomy($this->taxonomy()// This is created in demoCategory
+				->select("Taxonomy 1")->attach($this->taxonomy()->node("Node Title 1.1")));
 		}
 
 		return count($this->data);
@@ -97,6 +88,7 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects() {
+		// TODO Build objects here
 		return $this->data;
 	}
 
@@ -117,9 +109,9 @@ class demoCourse extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**

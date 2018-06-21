@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
@@ -39,12 +40,8 @@ class demoCourseMember extends AbstractOriginImplementation {
 	public function parseData() {
 		$this->log()->write("This is a test-log entry");
 
-		$this->data[] = $this->factory()
-		                     ->courseMembership(1, 6)
-		                     ->setCourseId(1)
-		                     ->setRole(CourseMembershipDTO::ROLE_TUTOR)
-		                     ->setUserId(6)
-		                     ->setCourseIdType(CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID);
+		$this->data[] = $this->factory()->courseMembership(1, 6)->setCourseId(1)->setRole(CourseMembershipDTO::ROLE_TUTOR)->setUserId(6)
+			->setCourseIdType(CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID);
 
 		return count($this->data);
 	}
@@ -68,6 +65,7 @@ class demoCourseMember extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects() {
+		// TODO Build objects here
 		return $this->data;
 	}
 
@@ -88,9 +86,9 @@ class demoCourseMember extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**
