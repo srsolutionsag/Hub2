@@ -106,14 +106,25 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 			return NULL;
 		}
 
-		$org_unit->setTitle($dto->getTitle());
-		$org_unit->setDescription($dto->getDescription());
-		$org_unit->setOwner($dto->getOwner());
-		$org_unit->setOrgUnitTypeId($this->getOrgUnitTypeId($dto));
+		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_TITLE)) {
+			$org_unit->setTitle($dto->getTitle());
+		}
+		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_DESCRIPTION)) {
+			$org_unit->setDescription($dto->getDescription());
+		}
+		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_OWNER)) {
+			$org_unit->setOwner($dto->getOwner());
+		}
+		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_ORG_UNIT_TYPE)) {
+			$org_unit->setOrgUnitTypeId($this->getOrgUnitTypeId($dto));
+		}
 
 		$org_unit->update();
 
-		$this->moveOrgUnit($org_unit, $dto);
+		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_PARENT_ID)
+			|| $this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_PARENT_ID_TYPE)) {
+			$this->moveOrgUnit($org_unit, $dto);
+		}
 
 		return $org_unit;
 	}

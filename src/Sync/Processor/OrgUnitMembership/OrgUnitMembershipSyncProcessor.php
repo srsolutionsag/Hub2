@@ -85,9 +85,16 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	 * @throws HubException
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id): FakeIliasObject {
-		$this->handleDelete($ilias_id);
+		if ($this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_ORG_UNIT_ID)
+			|| $this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_ORG_UNIT_ID_TYPE)
+			|| $this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_USER_ID)
+			|| $this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_POSITION)) {
+			$this->handleDelete($ilias_id);
 
-		return $this->handleCreate($dto);
+			return $this->handleCreate($dto);
+		} else {
+			throw new HubException("{$ilias_id} should not be updated!");
+		}
 	}
 
 
