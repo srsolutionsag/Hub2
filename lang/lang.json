@@ -1363,7 +1363,7 @@
             },
             "form_field_update_dto": {
                 "translations": {
-                    "de": "Aktualisiert %s",
+                    "de": "%s aktualisieren",
                     "en": "Update %s"
                 },
                 "last_used": "21.06.2018"

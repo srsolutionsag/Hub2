@@ -207,7 +207,7 @@ origin_form_field_usage_type_1#:#Benutzerkonten
 origin_form_field_usage_type_2#:#Kurs-Mitgliedschaften
 origin_form_field_usage_type_3#:#Kurse
 origin_form_field_usage_type_4#:#Kategorien
-origin_form_field_update_dto#:#Aktualisiert %s
+origin_form_field_update_dto#:#%s aktualisieren
 origin_form_comma_separated#:#Mehrere Werte durch ein Komma trennen
 origin_form_header_connection#:#Verbindung zu Daten
 origin_form_header_notification#:#Benachrichtigungen
