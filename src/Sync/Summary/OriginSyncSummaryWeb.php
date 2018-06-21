@@ -12,7 +12,6 @@ use SRAG\Plugins\Hub2\Sync\IOriginSync;
  */
 class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncSummary {
 
-
 	/**
 	 * @inheritDoc
 	 */
@@ -33,29 +32,23 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 	 */
 	private function renderOneSync(IOriginSync $originSync) {
 		// Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
-		$msg = "Summary for {$originSync->getOrigin()->getTitle()}:\n**********\n";
-		$msg .= "Delivered data sets: " . $originSync->getCountDelivered() . "\n";
-		$msg .= "Created: " . $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)
-		        . "\n";
-		$msg .= "Updated: " . $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)
-		        . "\n";
-		$msg .= "Deleted: " . $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED)
-		        . "\n";
-		$msg .= "Ignored: " . $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)
-		        . "\n";
-		$msg .= "No Changes: "
-		        . $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE)
-		        . "\n\n";
+		$msg = sprintf($this->pl->txt("summary_for"), $originSync->getOrigin()->getTitle()) . "\n**********\n";
+		$msg .= sprintf($this->pl->txt("summary_delivered_data_sets"), $originSync->getCountDelivered()) . "\n";
+		$msg .= sprintf($this->pl->txt("summary_created"), $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)) . "\n";
+		$msg .= sprintf($this->pl->txt("summary_updated"), $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)) . "\n";
+		$msg .= sprintf($this->pl->txt("summary_deleted"), $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED)) . "\n";
+		$msg .= sprintf($this->pl->txt("summary_ignored"), $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)) . "\n";
+		$msg .= sprintf($this->pl->txt("summary_no_changes"), $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE)) . "\n\n";
 		foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
-			$msg .= "$context:\n**********\n";
+			$msg .= "$context: \n**********\n";
 			foreach ($messages as $message) {
 				$msg .= "$message\n";
 			}
 			$msg .= "\n";
 		}
 		foreach ($originSync->getExceptions() as $exception) {
-			$msg .= "Exceptions:\n**********\n";
-			$msg .= $exception->getMessage() . "\n";
+			$msg .= $this->pl->txt("summary_exceptions") . "\n**********\n";
+			$msg .= $exception->getMessage() . "\n\n";
 		}
 		$msg = rtrim($msg, "\n");
 
@@ -70,4 +63,3 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 		return $this->renderOneSync($originSync);
 	}
 }
-

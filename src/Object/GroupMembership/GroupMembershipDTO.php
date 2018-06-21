@@ -1,6 +1,7 @@
 <?php namespace SRAG\Plugins\Hub2\Object\GroupMembership;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class GroupMembershipDTO
@@ -11,7 +12,6 @@ class GroupMembershipDTO extends DataTransferObject {
 
 	const PARENT_ID_TYPE_REF_ID = 1;
 	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
-
 	const ROLE_MEMBER = 2;
 	const ROLE_ADMIN = 1;
 	/**
@@ -26,15 +26,25 @@ class GroupMembershipDTO extends DataTransferObject {
 	 * @var
 	 */
 	protected $role = self::ROLE_MEMBER;
+	/**
+	 * @var string
+	 */
+	protected $groupId;
+	/**
+	 * @var int
+	 */
+	protected $groupIdType;
+
 
 	/**
 	 * @inheritDoc
 	 */
 	public function __construct($group_id, $user_id) {
-		parent::__construct("{$group_id}|||{$user_id}");
+		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $group_id, $user_id ]));
 		$this->groupId = $group_id;
 		$this->userId = $user_id;
 	}
+
 
 	/**
 	 * @return string
@@ -46,6 +56,7 @@ class GroupMembershipDTO extends DataTransferObject {
 
 	/**
 	 * @param string $groupId
+	 *
 	 * @return GroupMembershipDTO
 	 */
 	public function setGroupId(string $groupId): GroupMembershipDTO {

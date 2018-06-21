@@ -17,7 +17,8 @@
       "../../../../../../../Modules/Course",
       "../../../../../../../Modules/Category",
       "../../../../../../../Services/User",
-      "../../../../../../../Modules/Group"
+      "../../../../../../../Modules/Group",
+      "../../../../../../../Services/Calendar"
     ]
   }
 }

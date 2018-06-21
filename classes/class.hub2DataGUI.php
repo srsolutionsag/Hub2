@@ -5,7 +5,7 @@ use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
 use SRAG\Plugins\Hub2\UI\DataTableGUI;
 
-require_once(__DIR__ . '/class.ilHub2Plugin.php');
+require_once __DIR__ . "/../vendor/autoload.php";
 
 /**
  * Class hub2DataGUI
@@ -64,11 +64,11 @@ class hub2DataGUI extends hub2MainGUI {
 		$factory = $this->ui()->factory();
 
 		$properties = array_merge([
-			"period"         => $object->getPeriod(),
-			"delivery_date"  => $object->getDeliveryDate()->format(DATE_ATOM),
+			"period" => $object->getPeriod(),
+			"delivery_date" => $object->getDeliveryDate()->format(DATE_ATOM),
 			"processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
-			"ilias_id"       => $object->getILIASId(),
-			"status"         => $object->getStatus(),
+			"ilias_id" => $object->getILIASId(),
+			"status" => $object->getStatus(),
 		], $object->getData());
 
 		if ($object instanceof \SRAG\Plugins\Hub2\Object\IMetadataAwareObject) {
@@ -79,8 +79,7 @@ class hub2DataGUI extends hub2MainGUI {
 
 		if ($object instanceof \SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject) {
 			foreach ($object->getTaxonomies() as $taxonomy) {
-				$properties['TAX: '
-				            . $taxonomy->getTitle()] = implode(", ", $taxonomy->getNodeTitlesAsArray());
+				$properties['TAX: ' . $taxonomy->getTitle()] = implode(", ", $taxonomy->getNodeTitlesAsArray());
 			}
 		}
 
@@ -97,9 +96,7 @@ class hub2DataGUI extends hub2MainGUI {
 		ksort($filtered);
 
 		// Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-		$data_table = $factory->item()
-		                      ->standard("Ext-ID: " . $object->getExtId())
-		                      ->withProperties($filtered);
+		$data_table = $factory->item()->standard("Ext-ID: " . $object->getExtId())->withProperties($filtered);
 
 		$data_table = $factory->listing()->descriptive($filtered);
 

@@ -1,6 +1,7 @@
 <?php namespace SRAG\Plugins\Hub2\Object\DTO;
 
-use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
 
 /**
  * Interface IDataTransferObjectFactory
@@ -53,7 +54,7 @@ interface IDataTransferObjectFactory {
 	 * @param $course_id
 	 * @param $user_id
 	 *
-	 * @return CourseMembershipDTO
+	 * @return \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
 	 */
 	public function courseMembership($course_id, $user_id);
 
@@ -74,4 +75,22 @@ interface IDataTransferObjectFactory {
 	 * @return \SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO
 	 */
 	public function sessionMembership($session_id, $user_id);
+
+
+	/**
+	 * @param string $ext_id
+	 *
+	 * @return IOrgUnitDTO
+	 */
+	public function orgUnit(string $ext_id): IOrgUnitDTO;
+
+
+	/**
+	 * @param int $org_unit_id
+	 * @param int $user_id
+	 * @param int $position
+	 *
+	 * @return IOrgUnitMembershipDTO
+	 */
+	public function orgUnitMembership(int $org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO;
 }

@@ -104,4 +104,12 @@ trait DIC {
 	protected function rbac() {
 		return $this->dic()->rbac();
 	}
+
+
+	/**
+	 * @return \ilTree
+	 */
+	protected function tree() {
+		return $this->dic()->repositoryTree();
+	}
 }

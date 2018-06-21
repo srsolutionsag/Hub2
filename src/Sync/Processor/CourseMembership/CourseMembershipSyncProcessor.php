@@ -13,7 +13,6 @@ use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
@@ -26,7 +25,6 @@ use SRAG\Plugins\Hub2\Object\ObjectFactory;
  */
 class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICourseMembershipSyncProcessor {
 
-	const SPLIT = "|||";
 	/**
 	 * @var CourseOriginProperties
 	 */
@@ -62,7 +60,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		$dto->getCourseId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
-			return null;
+			return NULL;
 		}
 		$user_id = $dto->getUserId();
 		$course->getMembersObject()->add($user_id, $this->mapRole($dto));
@@ -87,11 +85,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
-			return null;
+			return NULL;
 		}
 
-		$course->getMembersObject()
-		       ->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
+		$course->getMembersObject()->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
 
 		$obj->setUserIdIlias($dto->getUserId());
 		$obj->setContainerIdIlias($course->getRefId());
@@ -121,7 +118,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 */
 	protected function findILIASCourse($iliasId) {
 		if (!\ilObject2::_exists($iliasId, true)) {
-			return null;
+			return NULL;
 		}
 
 		return new \ilObjCourse($iliasId);
@@ -178,8 +175,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_REF_ID) {
 			return $course_membership->getCourseId();
 		}
-		if ($course_membership->getCourseIdType()
-		    == CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID) {
+		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID) {
 			// The stored course-ID is an external-ID from a course.
 			// We must search the course ref-ID from a category object synced by
 			// a linked origin. --> Get an instance of the linked origin and lookup the
@@ -193,7 +189,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 				/** @var $origin IOrigin */
 				return $origin->getId() == $linkedOriginId;
 			}));
-			if ($origin === null) {
+			if ($origin === NULL) {
 				$msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
 				throw new HubException($msg);
 			}

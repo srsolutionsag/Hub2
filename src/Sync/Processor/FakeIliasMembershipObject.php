@@ -3,9 +3,10 @@
 namespace SRAG\Plugins\Hub2\Sync\Processor;
 
 /**
- * Class FakeIliasObject
+ * Class FakeIliasMembershipObject
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class FakeIliasMembershipObject extends FakeIliasObject {
 
@@ -21,9 +22,13 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 
 
 	/**
-	 * @inheritDoc
+	 * FakeIliasMembershipObject constructor.
+	 *
+	 * @param int $container_id_ilias
+	 * @param int $user_id_ilias
 	 */
 	public function __construct($container_id_ilias, $user_id_ilias) {
+		parent::__construct();
 		$this->container_id_ilias = (int)$container_id_ilias;
 		$this->user_id_ilias = (int)$user_id_ilias;
 		$this->initId();
@@ -33,7 +38,7 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 	/**
 	 * @param string $id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject
+	 * @return FakeIliasMembershipObject
 	 */
 	public static function loadInstanceWithConcatenatedId(string $id) {
 		list($container_id_ilias, $user_id_ilias) = explode(self::GLUE, $id);
@@ -82,8 +87,10 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 	}
 
 
+	/**
+	 *
+	 */
 	public function initId() {
-		$id = $this->container_id_ilias . self::GLUE . $this->user_id_ilias;
-		$this->setId($id);
+		$this->setId(implode(self::GLUE, [ $this->container_id_ilias, $this->user_id_ilias ]));
 	}
 }
