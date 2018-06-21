@@ -189,7 +189,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		global $DIC;
 		$mail_field = $dto->getEmail();
 		if ($mail_field) {
-			$f = new \ilMailMimeSenderFactory($DIC->settings());
+			$f = $DIC["mail.mime.sender.factory"];
 			$mail = new \ilMimeMail();
 			$mail->From($f->system());
 			$mail->To($dto->getEmail());
