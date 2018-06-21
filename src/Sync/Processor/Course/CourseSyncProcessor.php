@@ -112,6 +112,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($dto->getDidacticTemplate()) {
 			$ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
 		}
+		if ($dto->getIcon()) {
+			$ilObjCourse->saveIcons($dto->getIcon());
+		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE)) {
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
@@ -222,6 +225,13 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		if ($this->props->updateDTOProperty("didacticTemplate") && $dto->getDidacticTemplate()) {
 			$ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
+		}
+		if ($this->props->updateDTOProperty("icon")) {
+			if ($dto->getIcon()) {
+				$ilObjCourse->saveIcons($dto->getIcon());
+			} else {
+				$ilObjCourse->removeCustomIcon();
+			}
 		}
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
 			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());

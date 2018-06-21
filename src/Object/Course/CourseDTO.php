@@ -145,6 +145,10 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 * @var int
 	 */
 	protected $didacticTemplate;
+	/**
+	 * @var string
+	 */
+	protected $icon;
 
 
 	/**
@@ -573,6 +577,26 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	public function setDidacticTemplate(int $didacticTemplate): CourseDTO {
 		$this->didacticTemplate = $didacticTemplate;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getIcon(): string {
+		return $this->icon;
+	}
+
+
+	/**
+	 * @param string $icon
+	 *
+	 * @return CourseDTO
+	 */
+	public function setIcon(string $icon): CourseDTO {
+		$this->icon = $icon;
 
 		return $this;
 	}

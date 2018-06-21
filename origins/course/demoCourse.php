@@ -59,7 +59,7 @@ class demoCourse extends AbstractOriginImplementation {
 				->setActivationType(CourseDTO::ACTIVATION_OFFLINE)->setOwner(6)//  root
 				->setContactEmail("Email {$x}")->setContactName("Name {$x}")->setParentId(1)// from demoCategory, please configure in GUI accordingly
 				->setParentIdType(CourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setSyllabus("Syllabus {$x}")
-				->setDidacticTemplate(123)->addMetadata($this->metadata()// This has to be configured in ILIAS
+				->setDidacticTemplate(123)->setIcon('/path/to/icon/custom.svg')->addMetadata($this->metadata()// This has to be configured in ILIAS
 				->getDTOWithIliasId(1)// you find the id of the field in ILIAS GUI when editing the fields in query-parameter field_id=X
 				->setValue("Meine Metadaten {$time}"))// This works for a Text-Field
 				->addTaxonomy($this->taxonomy()// This is created in demoCategory
