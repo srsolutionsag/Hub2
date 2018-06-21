@@ -94,34 +94,47 @@ class ilHub2Plugin extends ilCronHookPlugin {
 
 		return true;
 	}
-	/*/ **
-	 * @param string $a_var
-	 *
-	 * @return string
-	 * /
+
+
 	public function txt($a_var) {
-		require_once "Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php";
+		require_once "./Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php";
+		$mode = 'core'; // fs, fw, core
 
-		$a = sragPluginTranslator::getInstance($this)->active()->write();
+		switch ($mode) {
+			case 'fw':
+				$a = sragPluginTranslator::getInstance($this)
+					->active()
+					->write();
 
-		$txt = parent::txt($a_var);
+				$txt = parent::txt($a_var);
 
-		if ($txt === sragPluginTranslatorJson::MISSING) {
-			$txt .= " " . $a_var;
+				if ($txt === sragPluginTranslatorJson::MISSING) {
+					$txt .= " " . $a_var;
 
-			if (preg_match(sragPluginTranslator::REGEX, $a_var, $index)) {
-				$key = $index[2];
-				$category = $index[1];
-			} else {
-				$key = $a_var;
-				$category = 'common';
-			}
+					if (preg_match(sragPluginTranslator::REGEX, $a_var, $index)) {
+						$key = $index[2];
+						$category = $index[1];
+					} else {
+						$key = $a_var;
+						$category = 'common';
+					}
 
-			$a->sragPluginTranslaterJson->addEntry($category, $key, $txt, $this->lng()->getLangKey());
-			$a->sragPluginTranslaterJson->save();
+					$a->sragPluginTranslaterJson->addEntry(
+						$category, $key, $txt, $this->lng()
+						->getLangKey()
+					);
+					$a->sragPluginTranslaterJson->save();
+				}
+
+				return $txt;
+			case 'fs':
+				return sragPluginTranslator::getInstance($this)
+					->active(true)
+					->write()
+					->txt($a_var);
+			case 'core':
+			default:
+				return parent::txt($a_var);
 		}
-
-		return $txt;
-	}*/
-
+	}
 }

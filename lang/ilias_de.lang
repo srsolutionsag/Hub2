@@ -109,7 +109,7 @@ common_status_4#:#Deleted in ILIAS
 common_status_5#:#Newly delivered
 common_status_6#:#Already deleted
 common_status_7#:#in Trash
-common_actions#:#MISSING
+common_actions#:#Aktionen
 common_activate#:#Aktivieren
 common_deactivate#:#Deaktivieren
 common_delete#:#Löschen
@@ -120,11 +120,14 @@ common_on_status#:#Objekt-Status:
 common_back#:#Back
 common_permissions#:#Rechte
 common_roles#:#Rollen-IDs
+common_on_status_new#:#Nwu
+common_on_status_update#:#Updated
+common_on_status_delete#:#Gelöscht
 hub_categories#:#Kategorien
 hub_conf#:#Einstellungen
 hub_courses#:#Kurse
 hub_memberships#:#Mitgliedschaften
-hub_origins#:#MISSING
+hub_origins#:#Anbindungen
 hub_users#:#Benutzerkonten
 hub_categories_table_title#:#Kategorien
 hub_courses_table_title#:#Kurse
@@ -159,7 +162,7 @@ msg_confirm_delete_origin#:#Möchten Sie die Anbindung definitv löschen?
 msg_origin_activated#:#Anbindung aktiviert.
 msg_origin_deactivated#:#Anbindung deaktiviert.
 msg_saved#:#Gespeichert.
-msg_success_create_origin#:#MISSING
+msg_success_create_origin#:#Origin erfolgreich angelegt
 msg_origin_saved#:#Gespeichert
 msg_successfully_saved#:#Gespeichert
 origin_subtab_icons#:#Icons
@@ -208,19 +211,19 @@ origin_form_header_connection#:#Verbindung zu Daten
 origin_form_header_notification#:#Benachrichtigungen
 origin_form_header_sync#:#Synchronisation
 origin_table_button_dryrun#:#Dry-Run
-origin_table_button_activate_all#:#MISSING
-origin_table_button_add#:#MISSING
-origin_table_button_deactivate_all#:#MISSING
+origin_table_button_activate_all#:#Alle aktivieren
+origin_table_button_add#:#Hinzufügen
+origin_table_button_deactivate_all#:#Alle deaktivieren
 origin_table_button_import#:#Anbindung importieren
-origin_table_button_run#:#MISSING
-origin_table_header_active#:#MISSING
-origin_table_header_count#:#MISSING
+origin_table_button_run#:#Sychronisieren
+origin_table_header_active#:#Aktiv
+origin_table_header_count#:#Anzahl
 origin_table_header_duration_objects#:#Building Objects
-origin_table_header_description#:#MISSING
+origin_table_header_description#:#Beschreibung
 origin_table_header_duration#:#Read Data
-origin_table_header_last_update#:#MISSING
-origin_table_header_title#:#MISSING
-origin_table_header_usage_type#:#MISSING
+origin_table_header_last_update#:#Letztes Update
+origin_table_header_title#:#Titel
+origin_table_header_usage_type#:#Typ
 origin_table_title#:#Anbindungen
 origin_title#:#Title
 origin_description#:#Description
@@ -234,6 +237,9 @@ origin_object_type_session#:#Session
 origin_object_type_sessionMembership#:#Session Membership
 origin_form_field_namespace#:#PHP-Namespace
 origin_form_field_namespace_info#:#PHP-Namespace
+origin_table_button_force#:#Force-Run
+origin_object_type_orgUnit#:#Organisationseinheiten
+origin_object_type_orgUnitMembership#:#Zugehörigkeit Organisationseinheit
 object_type_user#:#User
 object_type_courseMembership#:#Course Memberships
 object_type_course#:#Course
@@ -322,10 +328,29 @@ data_table_header_period#:#Periode
 data_table_header_actions#:#Aktionen
 data_table_header_view#:#Anzeigen
 data_table_header_data#:#Data
-data_table_header_origin#:#MISSING
+data_table_header_origin#:#Origin
 status_4#:#Erstellt
 status_16#:#Aktualisiert
 status_2#:#Zu Erstellen
 status_32#:#Zu Löschen
 subtab_origins#:#Übersicht
 subtab_data#:#Historie
+grp_prop_activate#:#Aktivieren
+grp_prop_delete_mode#:#Löschverhalten
+grp_prop_delete_mode_close#:#Gruppe zu "geschlossene Gruppe" umwandeln
+grp_prop_delete_mode_delete#:#Gruppe löschen
+grp_prop_delete_mode_delete_or_close#:#Löschen oder Schliessen
+grp_prop_delete_mode_delete_or_close_info#:#Gruppe löschen, wenn keine Aktivität entdeckt
+grp_prop_delete_mode_none#:#Keine Aktion
+grp_prop_delete_mode_trash#:#In Papierkorb verschieben
+grp_prop_move#:#Gruppe verschieben
+grp_prop_move_info#:#Gruppe verschieben, wenn Parent-Id geändert
+grp_prop_node_noparent#:#Fallback ID, wenn keine gültige Parent-Id
+grp_prop_node_noparent_info#:#Gruppen werden dort abgelegt, wenn keine gültige Parent-Id gefunden werden kann. Defualt ist 1 (Magazin)
+grp_prop_reactivate#:#Reaktivieren
+sess_prop_delete_mode#:#Löschverhalten
+sess_prop_delete_mode_delete#:#Löschen
+sess_prop_delete_mode_none#:#Keine Aktion
+sess_prop_delete_mode_trash#:#In Papierkorb verschieben
+sess_prop_move#:#Sitzung verschieben
+sess_prop_move_info#:#In neuen Container verschieben

@@ -109,7 +109,7 @@ common_status_4#:#Deleted in ILIAS
 common_status_5#:#Newly delivered
 common_status_6#:#Already deleted
 common_status_7#:#in Trash
-common_actions#:#Aktionen
+common_actions#:#Actoions
 common_activate#:#Aktivieren
 common_deactivate#:#Deaktivieren
 common_delete#:#Löschen
@@ -120,11 +120,14 @@ common_on_status#:#Objekt-Status:
 common_back#:#Back
 common_permissions#:#Permissions
 common_roles#:#Role-IDs
+common_on_status_new#:#New
+common_on_status_update#:#Updated
+common_on_status_delete#:#Deleted
 hub_categories#:#Kategorien
 hub_conf#:#Einstellungen
 hub_courses#:#Kurse
 hub_memberships#:#Mitgliedschaften
-hub_origins#:#Anbindungen
+hub_origins#:#Origins
 hub_users#:#Benutzerkonten
 hub_categories_table_title#:#Kategorien
 hub_courses_table_title#:#Kurse
@@ -159,7 +162,7 @@ msg_confirm_delete_origin#:#Möchten Sie die Anbindung definitv löschen?
 msg_origin_activated#:#Anbindung aktiviert.
 msg_origin_deactivated#:#Anbindung deaktiviert.
 msg_saved#:#Gespeichert.
-msg_success_create_origin#:#MISSING
+msg_success_create_origin#:#Origin successfully created
 msg_origin_saved#:#Saved
 msg_successfully_saved#:#Saved
 origin_subtab_icons#:#Icons
@@ -208,19 +211,19 @@ origin_form_header_connection#:#Verbindung zu Daten
 origin_form_header_notification#:#Benachrichtigungen
 origin_form_header_sync#:#Synchronisation
 origin_table_button_dryrun#:#Dry-Run
-origin_table_button_activate_all#:#Alle aktivieren
-origin_table_button_add#:#Anbindung hinzufügen
-origin_table_button_deactivate_all#:#Alle deaktivieren
+origin_table_button_activate_all#:#Activate all
+origin_table_button_add#:#Add origin
+origin_table_button_deactivate_all#:#Deactivate all
 origin_table_button_import#:#Anbindung importieren
-origin_table_button_run#:#Synchronisierung starten
-origin_table_header_active#:#Aktiv
-origin_table_header_count#:#Anzahl
+origin_table_button_run#:#Sync
+origin_table_header_active#:#Active
+origin_table_header_count#:#Count
 origin_table_header_duration_objects#:#Building Objects
-origin_table_header_description#:#Beschreibung
+origin_table_header_description#:#Description
 origin_table_header_duration#:#Read Data
-origin_table_header_last_update#:#Letzte Synchronisierung
-origin_table_header_title#:#Titel
-origin_table_header_usage_type#:#Verwendung
+origin_table_header_last_update#:#Last Update
+origin_table_header_title#:#Title
+origin_table_header_usage_type#:#Type
 origin_table_title#:#Anbindungen
 origin_title#:#Title
 origin_description#:#Description
@@ -232,6 +235,11 @@ origin_object_type_group#:#Group
 origin_object_type_groupMembership#:#Group Member
 origin_object_type_session#:#Session
 origin_object_type_sessionMembership#:#Session Membership
+origin_form_field_namespace#:#PHP-Namespace
+origin_form_field_namespace_info#:#PHP-Namespace
+origin_table_button_force#:#Force-Run
+origin_object_type_orgUnit#:#Organisational Units
+origin_object_type_orgUnitMembership#:#OrgUnit Memberships
 object_type_user#:#User
 object_type_courseMembership#:#Course Memberships
 object_type_course#:#Course
@@ -318,10 +326,29 @@ data_table_header_period#:#Period
 data_table_header_actions#:#Actions
 data_table_header_view#:#View
 data_table_header_data#:#Data
-data_table_header_origin#:#MISSING
+data_table_header_origin#:#Origin
 status_4#:#Created
 status_16#:#Updated
 status_2#:#To Create
 status_32#:#To Delete
 subtab_origins#:#Overview
 subtab_data#:#History
+grp_prop_activate#:#Activate
+grp_prop_delete_mode#:#Deletion Mode
+grp_prop_delete_mode_close#:#Make Group a Closed Group
+grp_prop_delete_mode_delete#:#Delete Group
+grp_prop_delete_mode_delete_or_close#:#Delete or Close Group
+grp_prop_delete_mode_delete_or_close_info#:#Deletes the Group if there wasn't any activity
+grp_prop_delete_mode_none#:#No Action
+grp_prop_delete_mode_trash#:#Move to Trash
+grp_prop_move#:#Move Group
+grp_prop_move_info#:#Groups is moved to Parent-Id if this has changed
+grp_prop_node_noparent#:#Fallback Parent Ref-ID
+grp_prop_node_noparent_info#:#Groups are created or moved under the parent ID defined here if the parent ID cannot be found. Default is to 1 which represents the repository root node.
+grp_prop_reactivate#:#Reactivate
+sess_prop_delete_mode#:#Deletion Mode
+sess_prop_delete_mode_delete#:#Delete
+sess_prop_delete_mode_none#:#No Action
+sess_prop_delete_mode_trash#:#Move to trash
+sess_prop_move#:#Move Session
+sess_prop_move_info#:#Move to Parent if changed
