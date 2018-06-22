@@ -65,7 +65,7 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 			"UserId" => "user_id",
 			"Position" => "position"
 		];
-		$columns = array_map(function (string $column) use (&$columns_map) {
+		$columns = array_map(function (string $column) use (&$columns_map): string {
 			if (isset($columns_map[$column])) {
 				return $columns_map[$column];
 			} else {
@@ -124,17 +124,13 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects(): array {
-		$org_units = [];
-
-		foreach ($this->data as $data) {
+		return array_map(function (stdClass $data): IOrgUnitMembershipDTO {
 			$org_unit = $this->factory()->orgUnitMembership(intval($data->org_unit_id), intval($data->user_id), intval($data->position));
 
 			$org_unit->setOrgUnitIdType(IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_EXTERNAL_EXT_ID);
 
-			$org_units[] = $org_unit;
-		}
-
-		return $org_units;
+			return $org_unit;
+		}, $this->data);
 	}
 
 

@@ -67,7 +67,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 			"Parent ID" => "parent_id",
 			"Org Type" => "org_unit_type"
 		];
-		$columns = array_map(function (string $column) use (&$columns_map) {
+		$columns = array_map(function (string $column) use (&$columns_map): string {
 			if (isset($columns_map[$column])) {
 				return $columns_map[$column];
 			} else {
@@ -126,9 +126,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects(): array {
-		$org_units = [];
-
-		foreach ($this->data as $data) {
+		return array_map(function (stdClass $data): IOrgUnitDTO {
 			$org_unit = $this->factory()->orgUnit($data->ext_id);
 
 			$org_unit->setTitle($data->title);
@@ -138,10 +136,8 @@ class demoOrgUnit extends AbstractOriginImplementation {
 
 			$org_unit->setOrgUnitType($data->org_unit_type);
 
-			$org_units[] = $org_unit;
-		}
-
-		return $org_units;
+			return $org_unit;
+		}, $this->data);
 	}
 
 
