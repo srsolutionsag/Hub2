@@ -70,7 +70,7 @@ class OriginsTableGUI extends \ilTable2GUI {
 			$row['active'] = $origin->isActive();
 			$row['title'] = $origin->getTitle();
 			$row['description'] = $origin->getDescription();
-			$row['object_type'] = $origin->getObjectType();
+			$row['object_type'] = $origin->getObjectType(); // TODO Translate object type
 			$row['last_sync'] = $origin->getLastRun();
 			$row['n_objects'] = $objectRepository->count();
 			$data[] = $row;
