@@ -65,7 +65,7 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 			"UserId" => "user_id",
 			"Position" => "position"
 		];
-		$columns = array_map(function ($column) use (&$columns_map) {
+		$columns = array_map(function (string $column) use (&$columns_map) {
 			if (isset($columns_map[$column])) {
 				return $columns_map[$column];
 			} else {
