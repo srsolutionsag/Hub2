@@ -61,13 +61,12 @@ class OriginsTableGUI extends \ilTable2GUI {
 	protected function initTableData() {
 		$data = [];
 		foreach ($this->originRepository->all() as $origin) {
-			$class = "SRAG\\Plugins\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\"
-			         . ucfirst($origin->getObjectType()) . "Repository";
+			$class = "SRAG\\Plugins\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\" . ucfirst($origin->getObjectType()) . "Repository";
 			/** @var IObjectRepository $objectRepository */
 			$objectRepository = new $class($origin);
 			$row = [];
 			$row['id'] = $origin->getId();
-			$row['active'] = $origin->isActive(); // TODO Translate 0 and 1
+			$row['active'] = $this->pl->txt("common_" . ($origin->isActive() ? "yes" : "no"));
 			$row['title'] = $origin->getTitle();
 			$row['description'] = $origin->getDescription();
 			$row['object_type'] = $origin->getObjectType(); // TODO Translate object type
@@ -90,12 +89,10 @@ class OriginsTableGUI extends \ilTable2GUI {
 		$actions->setId('actions_' . $a_set['id']);
 		$actions->setListTitle($this->pl->txt('common_actions'));
 		$DIC->ctrl()->setParameter($this->parent_obj, 'origin_id', $a_set['id']);
-		$actions->addItem($this->pl->txt('common_edit'), 'edit', $DIC->ctrl()
-		                                                             ->getLinkTarget($this->parent_obj, 'editOrigin'));
-		$actions->addItem($this->pl->txt('common_delete'), 'delete', $DIC->ctrl()
-		                                                                 ->getLinkTarget($this->parent_obj, 'confirmDelete'));
+		$actions->addItem($this->pl->txt('common_edit'), 'edit', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'editOrigin'));
+		$actions->addItem($this->pl->txt('common_delete'), 'delete', $DIC->ctrl()->getLinkTarget($this->parent_obj, 'confirmDelete'));
 		$actions->addItem($this->pl->txt('origin_table_button_run'), 'runOriginSync', $DIC->ctrl()
-		                                                                                  ->getLinkTarget($this->parent_obj, 'runOriginSync'));
+			->getLinkTarget($this->parent_obj, 'runOriginSync'));
 		$DIC->ctrl()->clearParameters($this->parent_obj);
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $actions->getHTML());

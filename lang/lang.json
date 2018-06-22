@@ -819,7 +819,21 @@
                     "en": "DELETE"
                 },
                 "last_used": "21.06.2018"
-            }
+            },
+            "yes": {
+                "translations": {
+                    "de": "Ja",
+                    "en": "Yes"
+                },
+                "last_used": "22.06.2018"
+            },
+            "no": {
+                "translations": {
+                    "de": "No",
+                    "en": "Nein"
+                },
+                "last_used": "22.06.2018"
+            },
         },
         "hub": {
             "categories": {

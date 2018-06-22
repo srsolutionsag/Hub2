@@ -123,6 +123,8 @@ common_roles#:#Role IDs
 common_on_status_new#:#NEW
 common_on_status_update#:#UPDATE
 common_on_status_delete#:#DELETE
+common_yes#:#Yes
+common_no#:#No
 hub_categories#:#Categories
 hub_conf#:#Settings
 hub_courses#:#Courses
