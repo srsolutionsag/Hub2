@@ -1768,8 +1768,8 @@
             },
             "prop_password_mail_date_format": {
                 "translations": {
-                    "de": "Date format for placeholders",
-                    "en": "Datumsformat für Platzhalter"
+                    "de": "Datumsformat für Platzhalter",
+                    "en": "Date format for placeholders"
                 },
                 "last_used": "21.06.2018"
             },
