@@ -2209,6 +2209,18 @@
                     "de": "Anbindung",
                     "en": "Origin"
                 }
+            },
+            "table_hash": {
+                "translations": {
+                    "de": "Hash: %s",
+                    "en": "Hash: %s"
+                }
+            },
+            "table_all": {
+                "translations": {
+                    "de": "ALLE",
+                    "en": "ALL"
+                }
             }
         },
         "status": {

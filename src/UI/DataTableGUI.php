@@ -10,6 +10,8 @@ use SRAG\Plugins\Hub2\Object\Group\ARGroup;
 use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Object\IObjectRepository;
+use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
 use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use SRAG\Plugins\Hub2\Object\User\ARUser;
@@ -117,6 +119,8 @@ class DataTableGUI extends \ilTable2GUI {
 			ARCourseMembership::class,
 			ARGroupMembership::class,
 			ARSessionMembership::class,
+			AROrgUnit::class,
+			AROrgUnitMembership::class
 		];
 		$data = [];
 		/**
@@ -139,7 +143,7 @@ class DataTableGUI extends \ilTable2GUI {
 						break;
 				}
 			}
-			$data = array_merge($data, $collection->getArray(null, $fields));
+			$data = array_merge($data, $collection->getArray(NULL, $fields));
 		}
 
 		$this->setData($data);
@@ -151,8 +155,7 @@ class DataTableGUI extends \ilTable2GUI {
 	 */
 	protected function fillRow($a_set) {
 		$this->ctrl()->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
-		$this->ctrl()
-		     ->setParameter($this->parent_obj, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
+		$this->ctrl()->setParameter($this->parent_obj, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
 
 		foreach ($a_set as $key => $value) {
 			$this->tpl->setCurrentBlock('cell');
@@ -175,12 +178,10 @@ class DataTableGUI extends \ilTable2GUI {
 		// Adds view Glyph
 		$factory = $this->ui()->factory();
 		$renderer = $this->ui()->renderer();
-		$modal = $factory->modal()
-		                 ->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))
-		                 ->withAsyncRenderUrl($this->ctrl()
-		                                           ->getLinkTarget($this->parent_obj, 'renderData', '', true));
+		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl($this->ctrl()
+			->getLinkTarget($this->parent_obj, 'renderData', '', true));
 
-		$button = $factory->button()->shy("View", "#")->withOnClick($modal->getShowSignal());
+		$button = $factory->button()->shy($this->pl->txt("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
 
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $renderer->render([ $button, $modal ]));
@@ -217,10 +218,10 @@ class DataTableGUI extends \ilTable2GUI {
 			return $status;
 		}
 		$r = new \ReflectionClass(IObject::class);
-		$status = [ 0 => "ALL" ];
+		$status = [ 0 => $this->pl->txt("data_table_all") ];
 		foreach ($r->getConstants() as $name => $value) {
 			if (strpos($name, "STATUS_") === 0) {
-				$status[$value] = $name;
+				$status[$value] = $name; // TODO Translate status
 			}
 		}
 
@@ -237,7 +238,7 @@ class DataTableGUI extends \ilTable2GUI {
 			return $origins;
 		}
 
-		$origins = [ 0 => "ALL" ];
+		$origins = [ 0 => $this->pl->txt("data_table_all") ];
 		foreach ($this->originFactory->getAllActive() as $origin) {
 			$origins[$origin->getId()] = $origin->getTitle();
 		}

@@ -102,7 +102,7 @@ class hub2DataGUI extends hub2MainGUI {
 
 		$renderer = $this->ui()->renderer();
 
-		$modal = $factory->modal()->roundtrip("Hash: " . $object->getHashCode(), $data_table);
+		$modal = $factory->modal()->roundtrip(sprintf($this->pl->txt("data_table_hash"), $object->getHashCode()), $data_table);
 
 		echo $renderer->renderAsync($modal);
 		exit;

@@ -332,6 +332,8 @@ data_table_header_actions#:#Actions
 data_table_header_view#:#View
 data_table_header_data#:#Data
 data_table_header_origin#:#Origin
+data_table_hash#:#Hash: %s
+data_table_all#:#ALL
 status_4#:#Created
 status_16#:#Updated
 status_2#:#To create
