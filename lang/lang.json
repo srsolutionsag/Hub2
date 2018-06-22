@@ -1847,6 +1847,13 @@
                     "en": "Send password new and send"
                 },
                 "last_used": "21.06.2018"
+            },
+            "usr_prop_password_mail_date_format_info": {
+                "translations": {
+                    "de": "Info",
+                    "en": "Info"
+                },
+                "last_used": "22.06.2018"
             }
         },
         "view": {

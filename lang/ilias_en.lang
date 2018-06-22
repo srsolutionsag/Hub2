@@ -277,6 +277,7 @@ usr_prop_syncfield_none#:#No field
 usr_prop_ilias_roles_info#:#Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations
 usr_prop_resend_password#:#Send password new and send
 usr_prop_resend_password_info#:#Send password new and send
+usr_prop_password_mail_date_format_info#:#Info
 view_hubcategory_index#:#Categories
 view_hubcourse_index#:#Course
 view_hubmembership_index#:#Memberships
