@@ -14,7 +14,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObje
 class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembershipDTO {
 
 	/**
-	 * @var mixed
+	 * @var int|string
 	 */
 	protected $org_unit_id;
 	/**
@@ -32,9 +32,9 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
 
 
 	/**
-	 * @param mixed $org_unit_id
-	 * @param int $user_id
-	 * @param int $position
+	 * @param int|string $org_unit_id
+	 * @param int        $user_id
+	 * @param int        $position
 	 */
 	public function __construct($org_unit_id, int $user_id, int $position) {
 		parent::__construct(implode(FakeOrgUnitMembershipObject::GLUE, [ $org_unit_id, $user_id, $position ]));
@@ -45,7 +45,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
 
 
 	/**
-	 * return mixed
+	 * @inheritdoc
 	 */
 	public function getOrgUnitId() {
 		return $this->org_unit_id;

@@ -86,9 +86,9 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param mixed $org_unit_id
-	 * @param int $user_id
-	 * @param int $position
+	 * @param int|string $org_unit_id
+	 * @param int        $user_id
+	 * @param int        $position
 	 *
 	 * @return IOrgUnitMembershipDTO
 	 */

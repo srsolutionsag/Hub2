@@ -19,13 +19,13 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject {
 
 
 	/**
-	 * @return mixed
+	 * @return int|string
 	 */
 	public function getOrgUnitId();
 
 
 	/**
-	 * @param mixed $org_unit_id
+	 * @param int|string $org_unit_id
 	 *
 	 * @return IOrgUnitMembershipDTO
 	 */
