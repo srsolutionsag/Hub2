@@ -73,13 +73,13 @@ class hub2DataGUI extends hub2MainGUI {
 
 		if ($object instanceof \SRAG\Plugins\Hub2\Object\IMetadataAwareObject) {
 			foreach ($object->getMetaData() as $metadata) {
-				$properties['MD: ' . $metadata->getIdentifier()] = $metadata->getValue();
+				$properties[sprintf($this->pl->txt("table_md"), $metadata->getIdentifier())] = $metadata->getValue();
 			}
 		}
 
 		if ($object instanceof \SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject) {
 			foreach ($object->getTaxonomies() as $taxonomy) {
-				$properties['TAX: ' . $taxonomy->getTitle()] = implode(", ", $taxonomy->getNodeTitlesAsArray());
+				$properties[sprintf($this->pl->txt("table_tax"), $taxonomy->getTitle())] = implode(", ", $taxonomy->getNodeTitlesAsArray());
 			}
 		}
 
@@ -96,13 +96,13 @@ class hub2DataGUI extends hub2MainGUI {
 		ksort($filtered);
 
 		// Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-		$data_table = $factory->item()->standard("Ext-ID: " . $object->getExtId())->withProperties($filtered);
+		$data_table = $factory->item()->standard(sprintf($this->pl->txt("table_ext_id"), $object->getExtId()))->withProperties($filtered);
 
 		$data_table = $factory->listing()->descriptive($filtered);
 
 		$renderer = $this->ui()->renderer();
 
-		$modal = $factory->modal()->roundtrip(sprintf($this->pl->txt("data_table_hash"), $object->getHashCode()), $data_table);
+		$modal = $factory->modal()->roundtrip(sprintf($this->pl->txt("table_hash"), $object->getHashCode()), $data_table);
 
 		echo $renderer->renderAsync($modal);
 		exit;

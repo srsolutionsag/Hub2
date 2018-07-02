@@ -2235,6 +2235,24 @@
                     "de": "ALLE",
                     "en": "ALL"
                 }
+            },
+            "table_ext_id": {
+                "translations": {
+                    "de": "Ext-ID: %s",
+                    "en": "Ext ID: %s"
+                }
+            },
+            "table_ext_md": {
+                "translations": {
+                    "de": "MD: %s",
+                    "en": "MD: %s"
+                }
+            },
+            "table_ext_tax": {
+                "translations": {
+                    "de": "TAX: %s",
+                    "en": "TAX: %s"
+                }
             }
         },
         "status": {
