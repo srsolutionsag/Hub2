@@ -241,7 +241,7 @@ origin_object_type_session#:#Session
 origin_object_type_sessionMembership#:#Session Membership
 origin_form_field_namespace#:#PHP namespace
 origin_form_field_namespace_info#:#PHP namespace
-origin_table_button_force#:#Force
+origin_table_button_force#:#Force update
 origin_object_type_orgUnit#:#Organisational units
 origin_object_type_orgUnitMembership#:#Organisational unit memberships
 object_type_user#:#User

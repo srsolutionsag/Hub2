@@ -1597,8 +1597,8 @@
             },
             "table_button_force": {
                 "translations": {
-                    "de": "Zwingen",
-                    "en": "Force"
+                    "de": "Aktualisieren erzwingen",
+                    "en": "Force update"
                 },
                 "last_used": "21.06.2018"
             },

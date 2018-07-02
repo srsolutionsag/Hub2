@@ -241,7 +241,7 @@ origin_object_type_session#:#Sitzung
 origin_object_type_sessionMembership#:#Sitzung-Mitglied
 origin_form_field_namespace#:#PHP-Namespace
 origin_form_field_namespace_info#:#PHP-Namespace
-origin_table_button_force#:#Zwingen
+origin_table_button_force#:#Aktualisieren erzwingen
 origin_object_type_orgUnit#:#Organisationseinheiten
 origin_object_type_orgUnitMembership#:#Organisationseinheit-Mitgliedschaften
 object_type_user#:#Benutzer
