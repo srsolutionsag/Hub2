@@ -3,7 +3,8 @@
 /**
  * Interface IDidacticTemplateAware
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IDidacticTemplateAware {
 

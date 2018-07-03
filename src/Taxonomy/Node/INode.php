@@ -5,7 +5,8 @@ namespace SRAG\Plugins\Hub2\Taxonomy\Node;
 /**
  * Interface INode
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Taxonomy\Node
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface INode {
 
@@ -20,6 +21,7 @@ interface INode {
 	 */
 	public function getTitle(): string;
 
+
 	/**
 	 * @return INode[]
 	 */
@@ -33,9 +35,9 @@ interface INode {
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $node
+	 * @param INode $node
 	 *
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
+	 * @return INode
 	 */
 	public function attach(INode $node): INode;
 }

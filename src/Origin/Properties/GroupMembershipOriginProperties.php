@@ -5,7 +5,8 @@ namespace SRAG\Plugins\Hub2\Origin\Properties;
 /**
  * Class GroupMembershipOriginProperties
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupMembershipOriginProperties extends OriginProperties {
 

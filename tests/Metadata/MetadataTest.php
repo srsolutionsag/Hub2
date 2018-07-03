@@ -1,6 +1,8 @@
 <?php
 
-require_once(dirname(__DIR__) . '/AbstractHub2Tests.php');
+use Mockery;
+
+require_once __DIR__ . "/../AbstractHub2Tests.php";
 
 /**
  * Class MetadataTest
@@ -20,7 +22,7 @@ class MetadataTest extends AbstractHub2Tests {
 
 
 	public function tearDown() {
-		\Mockery::close();
+		Mockery::close();
 	}
 
 

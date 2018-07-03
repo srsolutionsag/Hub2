@@ -1,14 +1,19 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
 
+namespace SRAG\Plugins\Hub2\Sync;
+
+use Exception;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use SRAG\Plugins\Hub2\Exception\AbortSyncException;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
+use Throwable;
 
 /**
  * Class Sync
  *
+ * @package SRAG\Plugins\Hub2\Sync
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Sync
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Sync implements ISync {
 
@@ -17,7 +22,7 @@ class Sync implements ISync {
 	 */
 	protected $origins = [];
 	/**
-	 * @var \Exception[] array
+	 * @var Exception[] array
 	 */
 	protected $exceptions = [];
 	/**
@@ -59,10 +64,10 @@ class Sync implements ISync {
 			} catch (AbortOriginSyncOfCurrentTypeException $e) {
 				// This must abort all following origin syncs of the same object type
 				$skip_object_type = $origin->getObjectType();
-			} catch (\Exception $e) {
+			} catch (Exception $e) {
 				// Any other exception means that we abort the current origin sync and continue with the next origin
 				$this->exceptions[] = $e;
-			} catch (\Throwable $e) {
+			} catch (Throwable $e) {
 				// Any other exception means that we abort the current origin sync and continue with the next origin
 				$this->exceptions[] = $e;
 			}

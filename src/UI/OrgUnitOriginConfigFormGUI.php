@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\UI;
 
+use ilTextInputGUI;
+use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
 use SRAG\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
 
 /**
@@ -23,6 +25,11 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI {
 	 */
 	protected function addSyncConfig() {
 		parent::addSyncConfig();
+
+		$ref_id_if_no_parent_id = new ilTextInputGUI($this->pl->txt("orgunit_ref_id_if_no_parent_id"), $this->conf(IOrgUnitOriginConfig::REF_ID_IF_NO_PARENT_ID));
+		$ref_id_if_no_parent_id->setInfo($this->pl->txt("orgunit_ref_id_if_no_parent_id_info"));
+		$ref_id_if_no_parent_id->setValue($this->origin->config()->getRefIdIfNoParentId());
+		$this->addItem($ref_id_if_no_parent_id);
 	}
 
 

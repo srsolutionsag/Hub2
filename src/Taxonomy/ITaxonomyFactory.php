@@ -7,14 +7,15 @@ use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 /**
  * Class ITaxonomyFactory
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Taxonomy
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ITaxonomyFactory {
 
 	/**
 	 * @param string $title
 	 *
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
+	 * @return ITaxonomy
 	 */
 	public function select(string $title): ITaxonomy;
 
@@ -22,7 +23,7 @@ interface ITaxonomyFactory {
 	/**
 	 * @param string $title
 	 *
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
+	 * @return ITaxonomy
 	 */
 	public function create(string $title): ITaxonomy;
 
@@ -30,7 +31,7 @@ interface ITaxonomyFactory {
 	/**
 	 * @param string $node_title
 	 *
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\Node\INode
+	 * @return INode
 	 */
 	public function node(string $node_title): INode;
 }

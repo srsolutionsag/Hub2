@@ -35,11 +35,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	/**
 	 * @var IOrgUnitOriginProperties
 	 */
-	private $props;
+	protected $props;
 	/**
 	 * @var IOrgUnitOriginConfig
 	 */
-	private $config;
+	protected $config;
 	/**
 	 * @var array
 	 */
@@ -224,6 +224,9 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 				break;
 		}
 
+		if ($parent_id === 0 || $parent_id === NULL) {
+			$parent_id = $this->config->getRefIdIfNoParentId();
+		}
 		if ($parent_id === 0 || $parent_id === NULL) {
 			$parent_id = intval(ilObjOrgUnit::getRootOrgRefId());
 		}

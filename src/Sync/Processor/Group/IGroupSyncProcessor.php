@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
 /**
  * Interface IGroupSyncProcessor
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Processor\Group
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IGroupSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor {
 

@@ -1,12 +1,16 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
+require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
+use Mockery;
+use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\User\IUser;
 use SRAG\Plugins\Hub2\Object\User\UserDTO;
 use SRAG\Plugins\Hub2\Origin\Config\IUserOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Config\UserOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
+use SRAG\Plugins\Hub2\Sync\Processor\IUserSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
@@ -25,11 +29,11 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	const ILIAS_ID = 123;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\IUserSyncProcessor
+	 * @var MockInterface|IUserSyncProcessor
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\User\IUser
+	 * @var MockInterface|IUser
 	 */
 	protected $iobject;
 	/**
@@ -37,7 +41,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface|ilObjUser
+	 * @var MockInterface|ilObjUser
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
@@ -47,7 +51,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\IUserActivities');
+		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\IUserActivities');
 		$this->initOrigin(new UserOriginProperties(), new UserOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -57,7 +61,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function tearDown() {
-		\Mockery::close();
+		Mockery::close();
 	}
 
 
@@ -75,15 +79,15 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->dto->setGender(UserDTO::GENDER_MALE);
 		$this->dto->setCity('NYC');
 		$this->dto->setInstitution('FBI');
-		$this->dto->setDepartment(null);
+		$this->dto->setDepartment(NULL);
 		$this->dto->setPhoneHome(123);
-		$this->dto->setPhoneMobile(null);
+		$this->dto->setPhoneMobile(NULL);
 		$this->dto->setPhoneOffice(789);
 	}
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\User\IUser');
+		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\User\IUser');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -92,7 +96,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = \Mockery::mock('overload:\ilObjUser', '\ilObject');
+		$this->ilObject = Mockery::mock('overload:\ilObjUser', '\ilObject');
 		$this->ilObject->shouldReceive('getId')->andReturn(self::ILIAS_ID);
 	}
 
@@ -273,7 +277,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			// null values are NOT forwarded to the ilObjUser since they could overwrite existing values
-			if ($this->dto->$getter() === null) {
+			if ($this->dto->$getter() === NULL) {
 				$this->ilObject->shouldNotReceive($setter);
 			} else {
 				$this->ilObject->shouldReceive($setter)->once()->with($this->dto->$getter());

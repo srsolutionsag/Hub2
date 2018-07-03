@@ -2,6 +2,15 @@
 
 namespace SRAG\Plugins\Hub2\UI;
 
+use ActiveRecordList;
+use hub2DataGUI;
+use ilCheckboxInputGUI;
+use ilFormPropertyGUI;
+use ilHub2Plugin;
+use ilSelectInputGUI;
+use ilTable2GUI;
+use ilTextInputGUI;
+use ReflectionClass;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
@@ -9,20 +18,21 @@ use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use SRAG\Plugins\Hub2\Object\Group\ARGroup;
 use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
 use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Object\IObjectRepository;
 use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
 use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
 use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use SRAG\Plugins\Hub2\Object\User\ARUser;
+use SRAG\Plugins\Hub2\Origin\IOriginRepository;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
 
 /**
- * class OriginsTableGUI
+ * Class OriginsTableGUI
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\UI
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class DataTableGUI extends \ilTable2GUI {
+class DataTableGUI extends ilTable2GUI {
 
 	use DIC;
 	const F_ORIGIN_ID = 'origin_id';
@@ -32,25 +42,31 @@ class DataTableGUI extends \ilTable2GUI {
 	 */
 	protected $filtered = [];
 	/**
-	 * @var \SRAG\Plugins\Hub2\Origin\OriginFactory
+	 * @var OriginFactory
 	 */
 	protected $originFactory;
 	/**
 	 * @var int
 	 */
 	protected $a_parent_obj;
+	/**
+	 * @var ilHub2Plugin
+	 */
 	protected $pl;
+	/**
+	 * @var IOriginRepository
+	 */
 	protected $originRepository;
 
 
 	/**
 	 * DataTableGUI constructor.
 	 *
-	 * @param \hub2DataGUI $a_parent_obj
-	 * @param string       $a_parent_cmd
+	 * @param hub2DataGUI $a_parent_obj
+	 * @param string      $a_parent_cmd
 	 */
-	public function __construct(\hub2DataGUI $a_parent_obj, $a_parent_cmd) {
-		$this->pl = \ilHub2Plugin::getInstance();
+	public function __construct(hub2DataGUI $a_parent_obj, $a_parent_cmd) {
+		$this->pl = ilHub2Plugin::getInstance();
 		$this->a_parent_obj = $a_parent_obj;
 		$this->originFactory = new OriginFactory($this->db());
 		$this->setPrefix('hub2_');
@@ -69,19 +85,19 @@ class DataTableGUI extends \ilTable2GUI {
 	 * @inheritDoc
 	 */
 	public function initFilter() {
-		$origin = new \ilSelectInputGUI($this->pl->txt('data_table_header_origin_id'), 'origin_id');
+		$origin = new ilSelectInputGUI($this->pl->txt('data_table_header_origin_id'), 'origin_id');
 		$origin->setOptions($this->getAvailableOrigins());
 		$this->addAndReadFilterItem($origin);
 
 		// Status
-		$status = new \ilSelectInputGUI($this->pl->txt('data_table_header_status'), 'status');
+		$status = new ilSelectInputGUI($this->pl->txt('data_table_header_status'), 'status');
 		$status->setOptions($this->getAvailableStatus());
 		$this->addAndReadFilterItem($status);
 
-		$ext_id = new \ilTextInputGUI($this->pl->txt('data_table_header_ext_id'), 'ext_id');
+		$ext_id = new ilTextInputGUI($this->pl->txt('data_table_header_ext_id'), 'ext_id');
 		$this->addAndReadFilterItem($ext_id);
 
-		$data = new \ilTextInputGUI($this->pl->txt('data_table_header_data'), 'data');
+		$data = new ilTextInputGUI($this->pl->txt('data_table_header_data'), 'data');
 		$this->addAndReadFilterItem($data);
 	}
 
@@ -89,10 +105,10 @@ class DataTableGUI extends \ilTable2GUI {
 	/**
 	 * @param $item
 	 */
-	protected function addAndReadFilterItem(\ilFormPropertyGUI $item) {
+	protected function addAndReadFilterItem(ilFormPropertyGUI $item) {
 		$this->addFilterItem($item);
 		$item->readFromSession();
-		if ($item instanceof \ilCheckboxInputGUI) {
+		if ($item instanceof ilCheckboxInputGUI) {
 			$this->filtered[$item->getPostVar()] = $item->getChecked();
 		} else {
 			$this->filtered[$item->getPostVar()] = $item->getValue();
@@ -100,6 +116,9 @@ class DataTableGUI extends \ilTable2GUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function initColumns() {
 		foreach ($this->getFields() as $field) {
 			$this->addColumn($this->pl->txt('data_table_header_' . $field), $field);
@@ -108,6 +127,9 @@ class DataTableGUI extends \ilTable2GUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function initTableData() {
 		$fields = $this->getFields();
 		$classes = [
@@ -124,7 +146,7 @@ class DataTableGUI extends \ilTable2GUI {
 		];
 		$data = [];
 		/**
-		 * @var $collection \ActiveRecordList
+		 * @var ActiveRecordList $collection
 		 */
 
 		foreach ($classes as $class) {
@@ -217,7 +239,7 @@ class DataTableGUI extends \ilTable2GUI {
 		if (is_array($status)) {
 			return $status;
 		}
-		$r = new \ReflectionClass(IObject::class);
+		$r = new ReflectionClass(IObject::class);
 		$status = [ 0 => $this->pl->txt("data_table_all") ];
 		foreach ($r->getConstants() as $name => $value) {
 			if (strpos($name, "STATUS_") === 0) {

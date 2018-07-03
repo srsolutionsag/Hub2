@@ -2,11 +2,14 @@
 
 namespace SRAG\Plugins\Hub2\Origin\Group;
 
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+
 /**
  * Interface IGroupOrigin
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\Group
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IGroupOrigin {
+interface IGroupOrigin extends IOrigin {
 
 }

@@ -2,15 +2,19 @@
 
 namespace SRAG\Plugins\Hub2\Log;
 
+use SRAG\Plugins\Hub2\Helper\DIC;
+
 /**
  * Class Logger
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Log
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  *
  * @internal
  */
 class Logger {
 
+	use DIC;
 	/**
 	 * @var string
 	 */
@@ -31,12 +35,11 @@ class Logger {
 	 * @param $string
 	 */
 	public function write($string) {
-		global $DIC;
 		if (!$this->path) {
 			return;
 		}
-		if ($DIC->filesystem()->storage()->has($this->path)) {
-			$DIC->filesystem()->storage()->put($this->path, $string);
+		if ($this->filesystem()->storage()->has($this->path)) {
+			$this->filesystem()->storage()->put($this->path, $string);
 		}
 	}
 }

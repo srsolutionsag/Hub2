@@ -7,7 +7,7 @@ use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 /**
  * Class FakeOrgUnitMembershipObject
  *
- * @package SRAG\Plugins\Hub2\Origin\OrgUnitMembership
+ * @package SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject {

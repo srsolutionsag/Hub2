@@ -1,16 +1,21 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
 
+namespace SRAG\Plugins\Hub2\Sync;
+
+use Exception;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
 use SRAG\Plugins\Hub2\Exception\AbortSyncException;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Interface ISync
  *
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginSync {
 
@@ -29,7 +34,7 @@ interface IOriginSync {
 	/**
 	 * Get a collection of all exceptions occurred during executing the sync.
 	 *
-	 * @return \Exception[]
+	 * @return Exception[]
 	 */
 	public function getExceptions();
 
@@ -76,7 +81,7 @@ interface IOriginSync {
 	/**
 	 * Return the current origin
 	 *
-	 * @return \SRAG\Plugins\Hub2\Origin\IOrigin
+	 * @return IOrigin
 	 */
 	public function getOrigin();
 }

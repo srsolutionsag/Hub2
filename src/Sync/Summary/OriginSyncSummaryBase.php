@@ -2,22 +2,27 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Summary;
 
+use ilHub2Plugin;
+use ilMimeMail;
+use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Sync\IOriginSync;
 
 /**
  * Class OriginSyncSummaryCron
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Summary
  */
 abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
+	use DIC;
 	/**
 	 * @var IOriginSync[]
 	 */
 	protected $syncs = array();
 	/**
-	 * @var \ilHub2Plugin
+	 * @var ilHub2Plugin
 	 */
 	protected $pl;
 
@@ -26,7 +31,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 	 *
 	 */
 	public function __construct() {
-		$this->pl = \ilHub2Plugin::getInstance();
+		$this->pl = ilHub2Plugin::getInstance();
 	}
 
 
@@ -52,7 +57,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Sync\IOriginSync $originSync
+	 * @param IOriginSync $originSync
 	 *
 	 * @return string
 	 */
@@ -94,11 +99,8 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 	 * @inheritDoc
 	 */
 	public function sendNotifications() {
-		global $DIC;
-		$mail = new \ilMimeMail();
-		/** @var \ilMailMimeSenderFactory $senderFactory */
-		$senderFactory = $DIC["mail.mime.sender.factory"];
-		$mail->From($senderFactory->system());
+		$mail = new ilMimeMail();
+		$mail->From($this->mailMimeSenderFactory()->system());
 
 		foreach ($this->syncs as $originSync) {
 			$summary_email = $originSync->getOrigin()->config()->getNotificationsSummary();

@@ -6,13 +6,14 @@ use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\HookObject;
 
 /**
  * Class SampleOriginImplementation
  *
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SampleOriginImplementation extends AbstractOriginImplementation {
 
@@ -23,7 +24,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() {
+	public function connect(): bool {
 		//		$file = $this->config()->getFilePath();
 		//		if (!is_file($file)) {
 		//			throw new ConnectionFailedException("Data file does not exist");
@@ -42,7 +43,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {
+	public function parseData(): int {
 		//		foreach (['userData1', 'userData2', 'userData3'] as $fakeUserData) {
 		//			$this->data[] = $fakeUserData;
 		//		}
@@ -68,7 +69,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * @throws BuildObjectsFailedException
 	 * @return IDataTransferObject[]
 	 */
-	public function buildObjects() {
+	public function buildObjects(): array {
 		//		$userDTOs = [];
 		//		foreach ($this->data as $userData) {
 		//			$userDTO = $this->factory()->user('myExternalI')

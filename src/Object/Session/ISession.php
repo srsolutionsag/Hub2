@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
 /**
  * Interface ISession
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\Session
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ISession extends IObject, IMetadataAwareObject, ITaxonomyAwareObject {
 

@@ -1,12 +1,16 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
+require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
+use Mockery;
+use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
+use SRAG\Plugins\Hub2\Object\Category\ICategory;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 use SRAG\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
 
 /**
  * Class CategorySyncProcessorTest
@@ -25,11 +29,11 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 	const REF_ID = 57;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor
+	 * @var MockInterface|ICategorySyncProcessor
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Category\ICategory
+	 * @var MockInterface|ICategory
 	 */
 	protected $iobject;
 	/**
@@ -37,7 +41,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface
+	 * @var MockInterface
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
@@ -47,7 +51,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\ICategoryActivities');
+		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\ICategoryActivities');
 		$this->initOrigin(new CategoryOriginProperties(), new CategoryOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -57,7 +61,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function tearDown() {
-		\Mockery::close();
+		Mockery::close();
 	}
 
 
@@ -123,9 +127,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 	protected function initDataExpectations() {
 		$this->ilObject->shouldReceive('setTitle')->once()->with($this->dto->getTitle());
-		$this->ilObject->shouldReceive('setDescription')
-		               ->once()
-		               ->with($this->dto->getDescription());
+		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getDescription());
 		$this->ilObject->shouldReceive('setOwner')->once()->with($this->dto->getOwner());
 		$this->ilObject->shouldReceive('setOrderType')->once()->with($this->dto->getOrderType());
 		$this->ilObject->shouldReceive('removeTranslations')->once();
@@ -133,7 +135,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Category\ICategory');
+		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Category\ICategory');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -144,7 +146,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = \Mockery::mock('overload:\ilObjCategory', '\ilObject');
+		$this->ilObject = Mockery::mock('overload:\ilObjCategory', '\ilObject');
 		$this->ilObject->shouldReceive('getId')->andReturn(self::REF_ID);
 		$this->ilObject->shouldReceive('addTranslation');
 	}

@@ -375,3 +375,5 @@ summary_exceptions#:#Ausnahmen:
 summary_notification#:#HUB2: Zusammenfassung für %s
 summary_exceptions_in#:#HUB2: Ausnahmen in %s
 summary_in#:#in: 
+orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
+orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.

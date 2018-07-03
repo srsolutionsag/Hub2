@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Object\User;
 
+use DateTime;
+use InvalidArgumentException;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
@@ -9,8 +11,9 @@ use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 /**
  * Class UserDTO
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object\User
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferObject {
 
@@ -267,7 +270,7 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	 */
 	public function setGender($gender) {
 		if (!in_array($gender, self::$genders)) {
-			throw new \InvalidArgumentException("'$gender' is not a valid gender");
+			throw new InvalidArgumentException("'$gender' is not a valid gender");
 		}
 		$this->gender = $gender;
 
@@ -584,11 +587,11 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 
 
 	/**
-	 * @param \DateTime $timeLimitFrom
+	 * @param DateTime $timeLimitFrom
 	 *
 	 * @return UserDTO
 	 */
-	public function setTimeLimitFrom(\DateTime $timeLimitFrom) {
+	public function setTimeLimitFrom(DateTime $timeLimitFrom) {
 		$this->timeLimitFrom = $timeLimitFrom->format('Y-m-d H:i:s');
 
 		return $this;
@@ -604,11 +607,11 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 
 
 	/**
-	 * @param \DateTime $timeLimitUntil
+	 * @param DateTime $timeLimitUntil
 	 *
 	 * @return UserDTO
 	 */
-	public function setTimeLimitUntil(\DateTime $timeLimitUntil) {
+	public function setTimeLimitUntil(DateTime $timeLimitUntil) {
 		$this->timeLimitUntil = $timeLimitUntil->format('Y-m-d H:i:s');
 
 		return $this;
@@ -644,11 +647,11 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 
 
 	/**
-	 * @param \DateTime $birthday
+	 * @param DateTime $birthday
 	 *
 	 * @return UserDTO
 	 */
-	public function setBirthday(\DateTime $birthday) {
+	public function setBirthday(DateTime $birthday) {
 		$this->birthday = $birthday->format('Y-m-d H:i:s');
 
 		return $this;
@@ -688,7 +691,7 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	 */
 	public function setAuthMode($authMode) {
 		if (!in_array($authMode, self::$auth_modes)) {
-			throw new \InvalidArgumentException("'$authMode' is not a valid account type");
+			throw new InvalidArgumentException("'$authMode' is not a valid account type");
 		}
 		$this->authMode = $authMode;
 	}

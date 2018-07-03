@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
+use SRAG\Plugins\Hub2\Config\HubConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\OriginLog;
 use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Config\HubConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginRepository;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
 use SRAG\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
@@ -20,22 +20,29 @@ use SRAG\Plugins\Hub2\UI\OriginsTableGUI;
 /**
  * Class hub2ConfigOriginsGUI
  *
- * @author            Stefan Wanzenried <sw@studer-raimann.ch>
- * @author            Fabian Schmid <fs@studer-raimann.ch>
+ * @package
+ * @author       Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author       Fabian Schmid <fs@studer-raimann.ch>
  *
- * @ilCtrl_calls      hub2ConfigOriginsGUI: hub2DataGUI
+ * @ilCtrl_calls hub2ConfigOriginsGUI: hub2DataGUI
  */
 class hub2ConfigOriginsGUI extends hub2MainGUI {
 
-	use DIC;
 	const CMD_DELETE = 'delete';
-	const CMD_INDEX = 'index';
 	const ORIGIN_ID = 'origin_id';
 	const SUBTAB_DATA = 'subtab_data';
 	const SUBTAB_ORIGINS = 'subtab_origins';
 	const CMD_RUN = 'run';
 	const CMD_ADD_ORIGIN = 'addOrigin';
 	const Q_FORCE_UPDATE = 'force_update';
+	const CMD_EDIT_ORGIN = 'editOrigin';
+	const CMD_RUN_ORIGIN_SYNC = 'runOriginSync';
+	const CMD_CONFIRM_DELETE = 'confirmDelete';
+	const CMD_CREATE_ORIGIN = 'createOrigin';
+	const CMD_SAVE_ORIGIN = 'saveOrigin';
+	const CMD_CANCEL = 'cancel';
+	const CMD_DEACTIVATE_ALL = 'deactivateAll';
+	const CMD_ACTIVATE_ALL = 'activateAll';
 	/**
 	 * @var OriginSyncSummaryFactory
 	 */
@@ -53,7 +60,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 */
 	protected $hubConfig;
 	/**
-	 * @var OriginRepository
+	 * @var IOriginRepository
 	 */
 	protected $originRepository;
 
@@ -76,7 +83,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	public function executeCommand() {
 		$this->checkAccess();
 		parent::executeCommand();
-		// require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/sql/dbupdate.php');
+		// require_once "./Customizing/global/plugins/Services/Cron/CronHook/Hub2/sql/dbupdate.php";
 		switch ($this->ctrl()->getNextClass()) {
 			case strtolower(hub2DataGUI::class):
 				$this->ctrl()->forwardCommand(new hub2DataGUI());
@@ -153,7 +160,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$origin->save();
 			ilUtil::sendSuccess($this->pl->txt('msg_success_create_origin'), true);
 			$this->ctrl()->setParameter($this, self::ORIGIN_ID, $origin->getId());
-			$this->ctrl()->redirect($this, 'editOrigin');
+			$this->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
 		}
 		$form->setValuesByPost();
 		$this->tpl()->setContent($form->getHTML());
@@ -201,7 +208,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 				ilUtil::sendInfo(sprintf($this->pl->txt("msg_created_class_implementation_file_failed"), $generator->getClassFilePath($origin)), true);
 			}
 			$this->ctrl()->saveParameter($this, self::ORIGIN_ID);
-			$this->ctrl()->redirect($this, 'editOrigin');
+			$this->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
 		}
 		$form->setValuesByPost();
 		$this->tpl()->setContent($form->getHTML());
@@ -249,12 +256,11 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function run() {
-		global $DIC;
-		$force = (bool)$DIC->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE];
+		$force = (bool)$this->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE];
 		$summary = $this->summaryFactory->web();
 		foreach ($this->originFactory->getAllActive() as $origin) {
 			/**
-			 * @var $origin IOrigin
+			 * @var IOrigin $origin
 			 */
 			if ($force) {
 				$origin->forceUpdate();
@@ -282,11 +288,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function runOriginSync() {
-		global $DIC;
-
-		$force = (bool)$DIC->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE];
+		$force = (bool)$this->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE];
 		/**
-		 * @var $origin IOrigin
+		 * @var IOrigin $origin
 		 */
 
 		$origin = $this->getOrigin((int)$_GET[self::ORIGIN_ID]);

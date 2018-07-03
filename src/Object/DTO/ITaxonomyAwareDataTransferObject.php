@@ -7,20 +7,21 @@ use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 /**
  * Interface ITaxonomyAwareDataTransferObject
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\DTO
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ITaxonomyAwareDataTransferObject extends IDataTransferObject {
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy $ITaxonomy
+	 * @param ITaxonomy $ITaxonomy
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject
+	 * @return ITaxonomyAwareDataTransferObject
 	 */
 	public function addTaxonomy(ITaxonomy $ITaxonomy): ITaxonomyAwareDataTransferObject;
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy[]
+	 * @return ITaxonomy[]
 	 */
 	public function getTaxonomies(): array;
 }

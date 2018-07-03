@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Object\DTO;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object\DTO;
 
 /**
  * Class ObjectDTO
  *
+ * @package SRAG\Plugins\Hub2\Object\DTO
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class DataTransferObject implements IDataTransferObject {
 

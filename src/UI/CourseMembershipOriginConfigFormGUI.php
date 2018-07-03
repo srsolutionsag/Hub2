@@ -1,15 +1,19 @@
 <?php
+
 namespace SRAG\Plugins\Hub2\UI;
+
+use SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
 
 /**
  * Class CourseMembershipOriginConfigFormGUI
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\UI
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI {
 
 	/**
-	 * @var \SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin
+	 * @var ARCourseMembershipOrigin
 	 */
 	protected $origin;
 

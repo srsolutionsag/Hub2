@@ -9,8 +9,9 @@ use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
 /**
  * Class ARUserOrigin
  *
+ * @package SRAG\Plugins\Hub2\Origin\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARUserOrigin extends AROrigin implements IUserOrigin {
 

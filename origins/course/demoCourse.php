@@ -7,9 +7,8 @@ use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Origin\AbstractOriginImplementation;
+use SRAG\Plugins\Hub2\Object\HookObject;
 
 /**
  * Class demoCourse
@@ -31,7 +30,7 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() {
+	public function connect(): bool {
 		return true;
 	}
 
@@ -46,7 +45,7 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {
+	public function parseData(): int {
 		$this->log()->write("This is a test-log entry");
 
 		$time = time();
@@ -87,7 +86,7 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @throws BuildObjectsFailedException
 	 * @return IDataTransferObject[]
 	 */
-	public function buildObjects() {
+	public function buildObjects(): array {
 		// TODO Build objects here
 		return $this->data;
 	}

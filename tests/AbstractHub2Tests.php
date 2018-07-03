@@ -1,7 +1,9 @@
 <?php
 
-// Autoload Hub2
-require_once(dirname(__DIR__) . '/vendor/autoload.php');
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
+
+require_once __DIR__ . "/../vendor/autoload.php";
 
 /**
  * Base class for all unit tests of Hub2
@@ -13,7 +15,7 @@ require_once(dirname(__DIR__) . '/vendor/autoload.php');
  * @backupGlobals          disabled
  * @backupStaticAttributes disabled
  */
-abstract class AbstractHub2Tests extends \PHPUnit\Framework\TestCase {
+abstract class AbstractHub2Tests extends TestCase {
 
-	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration;
 }

@@ -2,12 +2,18 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor\Session;
 
+use ilDateTime;
+use ilObject2;
+use ilObjSession;
+use ilSessionAppointment;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
+use SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig;
+use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
@@ -16,23 +22,23 @@ use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
-use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 
 /**
  * Class SessionSyncProcessor
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Processor\Session
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncProcessor {
 
 	use MetadataSyncProcessor;
 	use TaxonomySyncProcessor;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties
+	 * @var SessionOriginProperties
 	 */
 	private $props;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig
+	 * @var SessionOriginConfig
 	 */
 	private $config;
 	/**
@@ -77,15 +83,15 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 
 	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $dto */
-		$ilObjSession = new \ilObjSession();
+		/** @var SessionDTO $dto */
+		$ilObjSession = new ilObjSession();
 		$ilObjSession->setImportId($this->getImportId($dto));
 
 		// Properties
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
+			if ($dto->$getter() !== NULL) {
 				$ilObjSession->$setter($dto->$getter());
 			}
 		}
@@ -117,10 +123,10 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	 * @inheritdoc
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO $dto */
+		/** @var SessionDTO $dto */
 		$ilObjSession = $this->findILIASObject($ilias_id);
-		if ($ilObjSession === null) {
-			return null;
+		if ($ilObjSession === NULL) {
+			return NULL;
 		}
 
 		foreach (self::getProperties() as $property) {
@@ -129,7 +135,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
+			if ($dto->$getter() !== NULL) {
 				$ilObjSession->$setter($dto->$getter());
 			}
 		}
@@ -147,22 +153,19 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	 */
 	protected function handleDelete($ilias_id) {
 		$ilObjSession = $this->findILIASObject($ilias_id);
-		if ($ilObjSession === null) {
-			return null;
+		if ($ilObjSession === NULL) {
+			return NULL;
 		}
 
-		if ($this->props->get(SessionOriginProperties::DELETE_MODE)
-		    == SessionOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(SessionOriginProperties::DELETE_MODE) == SessionOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjSession;
 		}
-		global $DIC;
-		$tree = $DIC->repositoryTree();
 		switch ($this->props->get(SessionOriginProperties::DELETE_MODE)) {
 			case SessionOriginProperties::DELETE_MODE_DELETE:
 				$ilObjSession->delete();
 				break;
 			case SessionOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
-				$tree->moveToTrash($ilObjSession->getRefId(), true);
+				$this->tree()->moveToTrash($ilObjSession->getRefId(), true);
 				break;
 		}
 
@@ -173,28 +176,26 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	/**
 	 * @param int $ilias_id
 	 *
-	 * @return \ilObjSession|null
+	 * @return ilObjSession|null
 	 */
 	protected function findILIASObject($ilias_id) {
-		if (!\ilObject2::_exists($ilias_id, true)) {
-			return null;
+		if (!ilObject2::_exists($ilias_id, true)) {
+			return NULL;
 		}
 
-		return new \ilObjSession($ilias_id);
+		return new ilObjSession($ilias_id);
 	}
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Object\Session\SessionDTO $session
+	 * @param SessionDTO $session
 	 *
 	 * @return int
-	 * @throws \SRAG\Plugins\Hub2\Exception\HubException
+	 * @throws HubException
 	 */
 	protected function buildParentRefId(SessionDTO $session) {
-		global $DIC;
-		$tree = $DIC->repositoryTree();
 		if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($tree->isInTree($session->getParentId())) {
+			if ($this->tree()->isInTree($session->getParentId())) {
 				return (int)$session->getParentId();
 			}
 		}
@@ -209,15 +210,14 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			$originRepository = new OriginRepository();
 			$possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
 			$origin = array_pop(array_filter($possible_parents, function ($origin) use ($linkedOriginId) {
-				/** @var $origin IOrigin */
+				/** @var IOrigin $origin */
 				return (int)$origin->getId() == $linkedOriginId;
 			}));
-			if ($origin === null) {
+			if ($origin === NULL) {
 				$msg = "The linked origin syncing courses or groups was not found, please check that the correct origin is linked";
 				throw new HubException($msg);
 			}
 			$objectFactory = new ObjectFactory($origin);
-
 
 			if ($origin instanceof ARCourseOrigin) {
 				$parent = $objectFactory->course($session->getParentId());
@@ -228,7 +228,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			if (!$parent->getILIASId()) {
 				throw new HubException("The linked course or group does not (yet) exist in ILIAS");
 			}
-			if (!$tree->isInTree($parent->getILIASId())) {
+			if (!$this->tree()->isInTree($parent->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent course or group in the tree: '{$parent->getILIASId()}'");
 			}
 
@@ -240,25 +240,25 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Object\Session\SessionDTO $object
-	 * @param \ilObjSession                                $ilObjSession
-	 * @param bool                                         $force
+	 * @param SessionDTO   $object
+	 * @param ilObjSession $ilObjSession
+	 * @param bool         $force
 	 *
-	 * @return \ilObjSession
+	 * @return ilObjSession
 	 */
-	protected function setDataForFirstAppointment(SessionDTO $object, \ilObjSession $ilObjSession, $force = false) {
+	protected function setDataForFirstAppointment(SessionDTO $object, ilObjSession $ilObjSession, $force = false) {
 		/**
-		 * @var $first \ilSessionAppointment
+		 * @var ilSessionAppointment $first
 		 */
 		$appointments = $ilObjSession->getAppointments();
 		$first = $ilObjSession->getFirstAppointment();
 		if ($this->props->updateDTOProperty('start') || $force) {
-			$start = new \ilDateTime((int)$object->getStart(), IL_CAL_UNIX);
+			$start = new ilDateTime((int)$object->getStart(), IL_CAL_UNIX);
 			$first->setStart($start->get(IL_CAL_DATETIME));
 			$first->setStartingTime($start->get(IL_CAL_UNIX));
 		}
 		if ($this->props->updateDTOProperty('end') || $force) {
-			$end = new \ilDateTime((int)$object->getEnd(), IL_CAL_UNIX);
+			$end = new ilDateTime((int)$object->getEnd(), IL_CAL_UNIX);
 			$first->setEnd($end->get(IL_CAL_DATETIME));
 			$first->setEndingTime($end->get(IL_CAL_UNIX));
 		}

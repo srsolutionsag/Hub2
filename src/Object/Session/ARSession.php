@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 /**
  * Class ARSession
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\Session
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARSession extends ARObject implements ISession {
 

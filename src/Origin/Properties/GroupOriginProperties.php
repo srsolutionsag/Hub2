@@ -5,7 +5,8 @@ namespace SRAG\Plugins\Hub2\Origin\Properties;
 /**
  * Class GroupOriginProperties
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupOriginProperties extends OriginProperties {
 
@@ -23,11 +24,11 @@ class GroupOriginProperties extends OriginProperties {
 	 * @var array
 	 */
 	protected $data = [
-		self::SET_ONLINE       => false,
+		self::SET_ONLINE => false,
 		self::SET_ONLINE_AGAIN => false,
-		self::CREATE_ICON      => false,
-		self::MOVE_GROUP       => false,
-		self::DELETE_MODE      => self::DELETE_MODE_NONE,
+		self::CREATE_ICON => false,
+		self::MOVE_GROUP => false,
+		self::DELETE_MODE => self::DELETE_MODE_NONE,
 	];
 
 

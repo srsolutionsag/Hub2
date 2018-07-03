@@ -1,24 +1,30 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
 
+namespace SRAG\Plugins\Hub2\Sync;
+
+use Error;
+use Exception;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use SRAG\Plugins\Hub2\Exception\AbortSyncException;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\NullDTO;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Object\IObjectFactory;
 use SRAG\Plugins\Hub2\Object\IObjectRepository;
-use SRAG\Plugins\Hub2\Object\DTO\NullDTO;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
+use Throwable;
 
 /**
  * Class Sync
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginSync implements IOriginSync {
 
@@ -39,7 +45,7 @@ class OriginSync implements IOriginSync {
 	 */
 	protected $dtoObjects = [];
 	/**
-	 * @var \Exception[] array
+	 * @var Exception[] array
 	 */
 	protected $exceptions = [];
 	/**
@@ -97,7 +103,7 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @throws AbortOriginSyncException
 	 * @throws HubException
-	 * @throws \Throwable
+	 * @throws Throwable
 	 */
 	public function execute() {
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
@@ -123,7 +129,7 @@ class OriginSync implements IOriginSync {
 		} catch (HubException $e) {
 			$this->exceptions[] = $e;
 			throw $e;
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 			// Note: Should not happen in the stages above, as only exceptions of type HubException should be raised.
 			// Throwable collects any exceptions AND Errors from PHP 7
 			$this->exceptions[] = $e;
@@ -160,7 +166,7 @@ class OriginSync implements IOriginSync {
 
 		try {
 			$this->implementation->afterSync();
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 			$this->exceptions[] = $e;
 			throw $e;
 		}
@@ -234,13 +240,13 @@ class OriginSync implements IOriginSync {
 			$this->exceptions[] = $e;
 			$object->save();
 			throw $e;
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
 			// which decides how to proceed, e.g. continue or abort
 			$this->exceptions[] = $e;
 			$object->save();
 			$this->implementation->handleException($e);
-		} catch (\Error $e) {
+		} catch (Error $e) {
 			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
 			$this->exceptions[] = $e;
 			$object->save();

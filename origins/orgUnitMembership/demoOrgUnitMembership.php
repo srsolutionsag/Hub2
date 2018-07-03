@@ -7,8 +7,8 @@ use ilCSVReader;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use stdClass;
@@ -194,7 +194,9 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 	/**
 	 * Executed before the synchronization of the origin is executed.
 	 */
-	public function beforeSync() { }
+	public function beforeSync() {
+		//AROrgUnitMembership::truncateDB();
+	}
 
 
 	/**

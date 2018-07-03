@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
 
+use ilObject2;
+use ilObjTaxonomy;
+use ilTaxonomyNode;
 use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
@@ -19,13 +22,13 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 			$this->createTaxonomy();
 		}
 
-		\ilObjTaxonomy::saveUsage($this->ilObjTaxonomy->getId(), \ilObject2::_lookupObjId($this->getILIASParentId()));
+		ilObjTaxonomy::saveUsage($this->ilObjTaxonomy->getId(), ilObject2::_lookupObjId($this->getILIASParentId()));
 		$this->handleNodes();
 	}
 
 
 	private function createTaxonomy() {
-		$tax = new \ilObjTaxonomy();
+		$tax = new ilObjTaxonomy();
 		$tax->setTitle($this->getTaxonomy()->getTitle());
 		$tax->setDescription($this->getTaxonomy()->getDescription());
 		$tax->create();
@@ -48,24 +51,24 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $nodeDTO
+	 * @param INode $nodeDTO
 	 */
 	private function createNode(INode $nodeDTO, $parent_id = 0) {
-		$node = new \ilTaxonomyNode();
+		$node = new ilTaxonomyNode();
 		$node->setTitle($nodeDTO->getTitle());
 		$node->setOrderNr(1);
 		$node->setTaxonomyId($this->ilObjTaxonomy->getId());
 		$node->create();
 
-		if($parent_id == 0){
-			\ilTaxonomyNode::putInTree($this->ilObjTaxonomy->getId(), $node, $this->tree_root_id);
-			\ilTaxonomyNode::fixOrderNumbers($this->ilObjTaxonomy->getId(), $this->tree_root_id);
-		}else{
-			\ilTaxonomyNode::putInTree($this->ilObjTaxonomy->getId(), $node, $parent_id);
-			\ilTaxonomyNode::fixOrderNumbers($this->ilObjTaxonomy->getId(), $parent_id);
+		if ($parent_id == 0) {
+			ilTaxonomyNode::putInTree($this->ilObjTaxonomy->getId(), $node, $this->tree_root_id);
+			ilTaxonomyNode::fixOrderNumbers($this->ilObjTaxonomy->getId(), $this->tree_root_id);
+		} else {
+			ilTaxonomyNode::putInTree($this->ilObjTaxonomy->getId(), $node, $parent_id);
+			ilTaxonomyNode::fixOrderNumbers($this->ilObjTaxonomy->getId(), $parent_id);
 		}
 
-		foreach($nodeDTO->getNodes() as $node_dto){
+		foreach ($nodeDTO->getNodes() as $node_dto) {
 			$this->createNode($node_dto, $node->getId());
 		}
 	}

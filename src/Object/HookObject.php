@@ -1,11 +1,16 @@
 <?php
+
 namespace SRAG\Plugins\Hub2\Object;
+
+use ilObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 
 /**
  * Class HookObject
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class HookObject {
 
@@ -14,7 +19,7 @@ class HookObject {
 	 */
 	private $object;
 	/**
-	 * @var \ilObject
+	 * @var ilObject
 	 */
 	private $ilias_object;
 
@@ -48,7 +53,7 @@ class HookObject {
 
 
 	/**
-	 * @param \ilObject|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject $object
+	 * @param ilObject|FakeIliasObject $object
 	 *
 	 * @return HookObject
 	 */
@@ -66,7 +71,7 @@ class HookObject {
 	 * IOriginImplementation::after(Create|Update|Delete)Object callbacks, it is NOT set for any
 	 * before callbacks
 	 *
-	 * @return \ilObject|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject|null
+	 * @return ilObject|FakeIliasObject|null
 	 */
 	public function getILIASObject() {
 		return $this->ilias_object;

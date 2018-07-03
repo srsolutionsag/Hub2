@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class DTOProperty
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class DTOProperty {
 

@@ -1,9 +1,14 @@
-<?php namespace SRAG\Plugins\Hub2\Object;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object;
+
+use DateTime;
 
 /**
  * Describes common properties among the different hub object types
  *
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IObject {
 
@@ -82,7 +87,7 @@ interface IObject {
 	 * Get the date where the data of this object was delivered from the external system, e.g. via
 	 * CSV.
 	 *
-	 * @return \DateTime
+	 * @return DateTime
 	 */
 	public function getDeliveryDate();
 
@@ -99,7 +104,7 @@ interface IObject {
 	 * Get the date where the sync processed this object, e.g. to create/update the corresponding
 	 * ILIAS object depending on the status.
 	 *
-	 * @return \DateTime
+	 * @return DateTime
 	 */
 	public function getProcessedDate();
 

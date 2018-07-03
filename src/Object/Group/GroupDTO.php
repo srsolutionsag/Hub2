@@ -11,7 +11,8 @@ use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 /**
  * Class GroupDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\Group
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject {
 

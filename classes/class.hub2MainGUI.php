@@ -6,6 +6,7 @@ use SRAG\Plugins\Hub2\Helper\DIC;
 /**
  * Class hub2MainGUI
  *
+ * @package
  * @author            Fabian Schmid <fs@studer-raimann.ch>
  *
  * @ilCtrl_IsCalledBy hub2MainGUI: ilHub2ConfigGUI
@@ -14,14 +15,14 @@ use SRAG\Plugins\Hub2\Helper\DIC;
  */
 class hub2MainGUI {
 
+	use DIC;
 	const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
 	const TAB_ORIGINS = 'tab_origins';
 	const CMD_INDEX = 'index';
 	/**
-	 * @var \ilHub2Plugin
+	 * @var ilHub2Plugin
 	 */
 	protected $pl;
-	use DIC;
 
 
 	/**
@@ -32,6 +33,9 @@ class hub2MainGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	public function executeCommand() {
 		$this->initTabs();
 		$nextClass = $this->ctrl()->getNextClass();
@@ -51,11 +55,17 @@ class hub2MainGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function index() {
 		$this->ctrl()->redirectByClass(hub2ConfigGUI::class);
 	}
 
 
+	/**
+	 *
+	 */
 	protected function initTabs() {
 		$this->tabs()->addTab(self::TAB_PLUGIN_CONFIG, $this->pl->txt(self::TAB_PLUGIN_CONFIG), $this->ctrl()
 			->getLinkTargetByClass(hub2ConfigGUI::class));

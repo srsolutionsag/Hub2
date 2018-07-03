@@ -2,22 +2,39 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
+use ActiveRecord;
+use SRAG\Plugins\Hub2\Object\Category\ARCategory;
+use SRAG\Plugins\Hub2\Object\Category\ICategory;
+use SRAG\Plugins\Hub2\Object\Course\ARCourse;
+use SRAG\Plugins\Hub2\Object\Course\ICourse;
+use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership;
+use SRAG\Plugins\Hub2\Object\Group\ARGroup;
+use SRAG\Plugins\Hub2\Object\Group\IGroup;
+use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership;
 use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
 use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
 use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
 use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembership;
+use SRAG\Plugins\Hub2\Object\Session\ARSession;
+use SRAG\Plugins\Hub2\Object\Session\ISession;
+use SRAG\Plugins\Hub2\Object\SessionMembership\ISessionMembership;
+use SRAG\Plugins\Hub2\Object\User\ARUser;
+use SRAG\Plugins\Hub2\Object\User\IUser;
 
 /**
  * Interface IObjectFactory
  *
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IObjectFactory {
 
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return \ActiveRecord|\SRAG\Plugins\Hub2\Object\Category\ARCategory|\SRAG\Plugins\Hub2\Object\Category\ICategory|\SRAG\Plugins\Hub2\Object\Course\ARCourse|\SRAG\Plugins\Hub2\Object\Course\ICourse|\SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership|\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership|\SRAG\Plugins\Hub2\Object\Group\ARGroup|\SRAG\Plugins\Hub2\Object\Group\IGroup|\SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership|\SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership|\SRAG\Plugins\Hub2\Object\Session\ARSession|\SRAG\Plugins\Hub2\Object\Session\ISession|\SRAG\Plugins\Hub2\Object\User\ARUser|\SRAG\Plugins\Hub2\Object\User\IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership
+	 * @return ActiveRecord|ARCategory|ICategory|ARCourse|ICourse|ARCourseMembership|ICourseMembership|ARGroup|IGroup|ARGroupMembership|IGroupMembership|ARSession|ISession|ARUser|IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership
 	 */
 	public function undefined($ext_id);
 
@@ -25,7 +42,7 @@ interface IObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\User\IUser
+	 * @return IUser
 	 */
 	public function user($ext_id);
 
@@ -33,7 +50,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\Course\ICourse
+	 * @return ICourse
 	 */
 	public function course($ext_id);
 
@@ -41,7 +58,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\Category\ICategory
+	 * @return ICategory
 	 */
 	public function category($ext_id);
 
@@ -49,7 +66,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\Group\IGroup
+	 * @return IGroup
 	 */
 	public function group($ext_id);
 
@@ -57,7 +74,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\Session\ISession
+	 * @return ISession
 	 */
 	public function session($ext_id);
 
@@ -65,7 +82,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership
+	 * @return ICourseMembership
 	 */
 	public function courseMembership($ext_id);
 
@@ -73,7 +90,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership
+	 * @return IGroupMembership
 	 */
 	public function groupMembership($ext_id);
 
@@ -81,7 +98,7 @@ interface IObjectFactory {
 	/**
 	 * @param $ext_id
 	 *
-	 * @return \SRAG\Plugins\Hub2\Object\SessionMembership\ISessionMembership
+	 * @return ISessionMembership
 	 */
 	public function sessionMembership($ext_id);
 

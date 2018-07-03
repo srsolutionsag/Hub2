@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Metadata\IMetadataFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
@@ -14,17 +15,19 @@ use SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
  *
  * Any implementation of a origin MUST extend this class.
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 
+	use DIC;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory
+	 * @var ITaxonomyFactory
 	 */
 	private $taxonomyFactory;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Metadata\IMetadataFactory
+	 * @var IMetadataFactory
 	 */
 	private $metadataFactory;
 	/**
@@ -52,12 +55,12 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	/**
 	 * AbstractOriginImplementation constructor.
 	 *
-	 * @param \SRAG\Plugins\Hub2\Origin\Config\IOriginConfig           $config
-	 * @param \SRAG\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory $factory
-	 * @param \SRAG\Plugins\Hub2\Log\ILog                              $originLog
-	 * @param \SRAG\Plugins\Hub2\Notification\OriginNotifications      $originNotifications
-	 * @param \SRAG\Plugins\Hub2\Metadata\IMetadataFactory             $metadataFactory
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory             $taxonomyFactory
+	 * @param IOriginConfig              $config
+	 * @param IDataTransferObjectFactory $factory
+	 * @param ILog                       $originLog
+	 * @param OriginNotifications        $originNotifications
+	 * @param IMetadataFactory           $metadataFactory
+	 * @param ITaxonomyFactory           $taxonomyFactory
 	 */
 	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory) {
 		$this->originConfig = $config;
@@ -86,7 +89,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadataFactory
+	 * @return IMetadataFactory
 	 */
 	final protected function metadata() {
 		return $this->metadataFactory;
@@ -94,7 +97,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory
+	 * @return ITaxonomyFactory
 	 */
 	final protected function taxonomy() {
 		return $this->taxonomyFactory;

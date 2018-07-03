@@ -18,7 +18,8 @@
       "../../../../../../../Modules/Category",
       "../../../../../../../Services/User",
       "../../../../../../../Modules/Group",
-      "../../../../../../../Services/Calendar"
+      "../../../../../../../Services/Calendar",
+      "../../../../../../../Services/Exceptions"
     ]
   }
 }

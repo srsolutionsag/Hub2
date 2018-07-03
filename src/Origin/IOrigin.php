@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -6,7 +8,8 @@ use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 /**
  * Interface Origin
  *
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOrigin {
 

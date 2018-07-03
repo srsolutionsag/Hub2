@@ -1,5 +1,8 @@
-<?php namespace SRAG\Plugins\Hub2\Object\Category;
+<?php
 
+namespace SRAG\Plugins\Hub2\Object\Category;
+
+use InvalidArgumentException;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
@@ -7,6 +10,7 @@ use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 /**
  * Class CategoryDTO
  *
+ * @package SRAG\Plugins\Hub2\Object\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -126,7 +130,7 @@ class CategoryDTO extends DataTransferObject implements ITaxonomyAndMetadataAwar
 	 */
 	public function setOrderType($orderType) {
 		if (!in_array($orderType, self::$orderTypes)) {
-			throw new \InvalidArgumentException("Given '$orderType' is not a valid order type'");
+			throw new InvalidArgumentException("Given '$orderType' is not a valid order type'");
 		}
 		$this->orderType = $orderType;
 
@@ -189,7 +193,7 @@ class CategoryDTO extends DataTransferObject implements ITaxonomyAndMetadataAwar
 	 */
 	public function setParentIdType($parentIdType) {
 		if (!in_array($parentIdType, self::$parentIdTypes)) {
-			throw new \InvalidArgumentException("Invalid parentIdType given '$parentIdType'");
+			throw new InvalidArgumentException("Invalid parentIdType given '$parentIdType'");
 		}
 		$this->parentIdType = $parentIdType;
 

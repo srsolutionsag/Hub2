@@ -2,6 +2,12 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
 
+use ilContainer;
+use ilObject2;
+use ilObjectServiceSettingsGUI;
+use ilObjTaxonomy;
+use ilTaxNodeAssignment;
+use ilTaxonomyException;
 use SRAG\Plugins\Hub2\Exception\TaxonomyNodeNotFoundException;
 use SRAG\Plugins\Hub2\Exception\TaxonomyNotFoundException;
 use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
@@ -18,7 +24,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 	 */
 	protected $container_obj_id;
 	/**
-	 * @var \ilTaxNodeAssignment
+	 * @var ilTaxNodeAssignment
 	 */
 	protected $ilTaxNodeAssignment;
 	/**
@@ -41,6 +47,9 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 	}
 
 
+	/**
+	 *
+	 */
 	protected function handleNodes() {
 		$this->initTaxTree();
 		foreach ($this->getTaxonomy()->getNodes() as $node) {
@@ -52,18 +61,27 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 	}
 
 
+	/**
+	 *
+	 */
 	private function selectTaxonomy() {
 		$tax_id = array_search($this->getTaxonomy()->getTitle(), $this->selectable_taxonomies);
 		if (!$tax_id) {
 			throw new TaxonomyNotFoundException($this->getTaxonomy());
 		}
-		$this->ilObjTaxonomy = new \ilObjTaxonomy($tax_id);
-		$this->container_obj_id = \ilObject2::_lookupObjId($this->getILIASParentId());
-		$a_component_id = \ilObject2::_lookupType($this->container_obj_id);
-		$this->ilTaxNodeAssignment = new \ilTaxNodeAssignment($a_component_id, $this->container_obj_id, "obj", $tax_id);
+		$this->ilObjTaxonomy = new ilObjTaxonomy($tax_id);
+		$this->container_obj_id = ilObject2::_lookupObjId($this->getILIASParentId());
+		$a_component_id = ilObject2::_lookupType($this->container_obj_id);
+		$this->ilTaxNodeAssignment = new ilTaxNodeAssignment($a_component_id, $this->container_obj_id, "obj", $tax_id);
 	}
 
 
+	/**
+	 * @param INode $node
+	 *
+	 * @throws TaxonomyNodeNotFoundException
+	 * @throws ilTaxonomyException
+	 */
 	private function selectNode(INode $node) {
 		$node_id = array_search($node->getTitle(), $this->childs);
 		if (!$node_id) {
@@ -82,16 +100,16 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 	}
 
 
+	/**
+	 *
+	 */
 	private function initSelectableTaxonomies() {
-		global $DIC;
-		$tree = $DIC->repositoryTree();
-
 		$res = array();
-		foreach ($tree->getPathFull((int)$this->getILIASParentId()) as $node) {
+		foreach ($this->tree()->getPathFull((int)$this->getILIASParentId()) as $node) {
 			if ($node["ref_id"] != (int)$this->getILIASParentId()) {
 				if ($node["type"] == "cat") {
-					if (\ilContainer::_lookupContainerSetting($node["obj_id"], \ilObjectServiceSettingsGUI::TAXONOMIES, false)) {
-						$tax_ids = \ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
+					if (ilContainer::_lookupContainerSetting($node["obj_id"], ilObjectServiceSettingsGUI::TAXONOMIES, false)) {
+						$tax_ids = ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
 						if (sizeof($tax_ids)) {
 							$res = array_merge($res, $tax_ids);
 						}
@@ -100,7 +118,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 			}
 		}
 		foreach ($res as $re) {
-			$this->selectable_taxonomies[$re] = \ilObject2::_lookupTitle($re);
+			$this->selectable_taxonomies[$re] = ilObject2::_lookupTitle($re);
 		}
 	}
 }

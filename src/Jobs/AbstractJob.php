@@ -2,21 +2,24 @@
 
 namespace SRAG\Plugins\Hub2\Jobs;
 
+use ilCronJob;
+use SRAG\Plugins\Hub2\Helper\DIC;
+
 /**
  * Class AbstractJob
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Jobs
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class AbstractJob extends \ilCronJob {
+abstract class AbstractJob extends ilCronJob {
+
+	use DIC;
+
 
 	/**
 	 * @param $message
 	 */
 	protected function log($message) {
-		/**
-		 * @var $ilLog \ilLog
-		 */
-		global $ilLog;
-		$ilLog->write($message);
+		$this->ilLog()->write($message);
 	}
 }

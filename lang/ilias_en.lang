@@ -375,3 +375,5 @@ summary_exceptions#:#Exceptions:
 summary_notification#:#HUB2: Summary for %s
 summary_exceptions_in#:#HUB2: Exceptions in %s
 summary_in#:#in: 
+orgunit_ref_id_if_no_parent_id#:#Base ref ID
+orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.

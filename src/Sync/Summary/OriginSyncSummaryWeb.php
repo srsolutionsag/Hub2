@@ -8,7 +8,8 @@ use SRAG\Plugins\Hub2\Sync\IOriginSync;
 /**
  * Class OriginSyncSummary
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncSummary {
 
@@ -26,7 +27,7 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Sync\IOriginSync $originSync
+	 * @param IOriginSync $originSync
 	 *
 	 * @return string
 	 */

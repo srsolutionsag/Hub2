@@ -8,7 +8,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 /**
  * Class SessionMembershipDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\SessionMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionMembershipDTO extends DataTransferObject {
 

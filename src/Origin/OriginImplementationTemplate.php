@@ -9,29 +9,33 @@ use SRAG\Plugins\Hub2\Object\HookObject;
  * Class Template
  *
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Template extends AbstractOriginImplementation {
 
 	/**
 	 * @inheritdoc
 	 */
-	public function connect() {
+	public function connect(): bool {
 		// TODO: Implement connect() method.
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function parseData() {
-		// TODO: Implement parseData() method.
-	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function buildObjects() {
+	public function parseData(): int {
+		// TODO: Implement parseData() method.
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function buildObjects(): array {
 		// TODO: Implement buildObjects() method.
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -40,12 +44,14 @@ class Template extends AbstractOriginImplementation {
 		// TODO: Implement handleException() method.
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function beforeCreateILIASObject(HookObject $object) {
 		// TODO: Implement beforeCreateILIASObject() method.
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -54,12 +60,14 @@ class Template extends AbstractOriginImplementation {
 		// TODO: Implement afterCreateILIASObject() method.
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function beforeUpdateILIASObject(HookObject $object) {
 		// TODO: Implement beforeUpdateILIASObject() method.
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -68,12 +76,14 @@ class Template extends AbstractOriginImplementation {
 		// TODO: Implement afterUpdateILIASObject() method.
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function beforeDeleteILIASObject(HookObject $object) {
 		// TODO: Implement beforeDeleteILIASObject() method.
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -82,12 +92,14 @@ class Template extends AbstractOriginImplementation {
 		// TODO: Implement afterDeleteILIASObject() method.
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function beforeSync() {
 		// TODO: Implement beforeSync() method.
 	}
+
 
 	/**
 	 * @inheritdoc

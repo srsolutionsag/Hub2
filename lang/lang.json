@@ -833,7 +833,7 @@
                     "en": "Nein"
                 },
                 "last_used": "22.06.2018"
-            },
+            }
         },
         "hub": {
             "categories": {
@@ -2492,6 +2492,20 @@
                 "translations": {
                     "de": "in: ",
                     "en": "in: "
+                }
+            }
+        },
+        "orgunit":{
+            "ref_id_if_no_parent_id": {
+                "translations": {
+                    "de": "Basic-Ref-ID",
+                    "en": "Base ref ID"
+                }
+            },
+            "ref_id_if_no_parent_id_info": {
+                "translations": {
+                    "de": "Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.",
+                    "en": "Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used."
                 }
             }
         }

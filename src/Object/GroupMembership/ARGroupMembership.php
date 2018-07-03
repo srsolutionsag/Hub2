@@ -1,11 +1,14 @@
-<?php namespace SRAG\Plugins\Hub2\Object\GroupMembership;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object\GroupMembership;
 
 use SRAG\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class ARGroup
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\GroupMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARGroupMembership extends ARObject implements IGroupMembership {
 

@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Shortlink;
 
+use ilLink;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Object\ARObject;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
@@ -14,12 +15,13 @@ use SRAG\Plugins\Hub2\Origin\OriginFactory;
 /**
  * Class Shortlink
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Shortlink
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Shortlink {
 
-	const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 	use DIC;
+	const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 	/**
 	 * @var string
 	 */
@@ -35,6 +37,9 @@ class Shortlink {
 	}
 
 
+	/**
+	 *
+	 */
 	public function doRedirect() {
 		$of = new OriginFactory($this->db());
 		$object = false;
@@ -52,7 +57,7 @@ class Shortlink {
 			}
 		}
 		if ($object instanceof ARObject && $object->getILIASId()) {
-			$link = \ilLink::_getLink($object->getILIASId());
+			$link = ilLink::_getLink($object->getILIASId());
 			$link = str_replace(self::PLUGIN_BASE, "", $link);
 			$this->ctrl()->redirectToURL($link);
 		}
@@ -75,7 +80,10 @@ class Shortlink {
 	}
 
 
+	/**
+	 *
+	 */
 	private function initILIAS() {
-		require_once('./include/inc.header.php');
+		require_once "include/inc.header.php";
 	}
 }

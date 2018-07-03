@@ -1,13 +1,17 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use ilUtil;
 use SRAG\Plugins\Hub2\Config\IHubConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
 
 /**
  * Class OriginImplementationTemplateGenerator
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginImplementationTemplateGenerator {
 
@@ -43,7 +47,7 @@ class OriginImplementationTemplateGenerator {
 		}
 		$path = $this->getPath($origin);
 		if (!is_dir($path)) {
-			if (!\ilUtil::makeDirParents($path)) {
+			if (!ilUtil::makeDirParents($path)) {
 				throw new HubException("Could not create directory: $path");
 			};
 		}

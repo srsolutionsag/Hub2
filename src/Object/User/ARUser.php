@@ -8,8 +8,9 @@ use SRAG\Plugins\Hub2\Object\ARObject;
 /**
  * Class ARUser
  *
+ * @package SRAG\Plugins\Hub2\Object\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARUser extends ARObject implements IUser {
 

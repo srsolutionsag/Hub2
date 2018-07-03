@@ -1,23 +1,30 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin;
+
+use ActiveRecord;
+use ilDB;
+use ilDBInterface;
 
 /**
  * Class OriginFactory
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginFactory implements IOriginFactory {
 
 	/**
-	 * @var \ilDB
+	 * @var ilDB
 	 */
 	private $db;
 
 
 	/**
-	 * @param \ilDBInterface $db
+	 * @param ilDBInterface $db
 	 */
-	public function __construct(\ilDBInterface $db) {
+	public function __construct(ilDBInterface $db) {
 		$this->db = $db;
 	}
 
@@ -26,6 +33,10 @@ class OriginFactory implements IOriginFactory {
 	 * @inheritdoc
 	 */
 	public function getById($id): IOrigin {
+		/**
+		 * @var ActiveRecord $class
+		 */
+
 		$sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
 		$set = $this->db->queryF($sql, [ 'integer' ], [ $id ]);
 		$type = $this->db->fetchObject($set)->object_type;

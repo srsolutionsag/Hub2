@@ -1,15 +1,14 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
+require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
+use Mockery;
+use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Object\Session\ISession;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
-use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 
 /**
@@ -30,23 +29,23 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	const REF_ID = 57;
 	const USER_ID_OF_MEMBER_TO_DELETE = 22;
 	/**
-	 * @var Mockery\MockInterface|\ilSessionParticipants
+	 * @var MockInterface|ilSessionParticipants
 	 */
 	protected $participants;
 	/**
-	 * @var Mockery\MockInterface|\ilSessionAppointment
+	 * @var MockInterface|ilSessionAppointment
 	 */
 	protected $appointments;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Session\ISession
+	 * @var MockInterface|ISession
 	 */
 	protected $iobject;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Object\Session\SessionDTO
+	 * @var SessionDTO
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface
+	 * @var MockInterface
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
@@ -57,9 +56,9 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected function setUp() {
 		$arr = [
-			'update_dto_title'       => true,
+			'update_dto_title' => true,
 			'update_dto_description' => true,
-			'update_dto_location'    => true,
+			'update_dto_location' => true,
 		];
 		$this->initOrigin(new SessionOriginProperties($arr), new SessionOriginConfig([]));
 		$this->setupGeneralDependencies();
@@ -70,13 +69,12 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function tearDown() {
-		\Mockery::close();
+		Mockery::close();
 	}
 
 
 	protected function initDataExpectations() {
-		require_once('./Services/Calendar/classes/class.ilDateTime.php');
-		$session_appointment_mock = \Mockery::mock('overload:\ilSessionAppointment', '\ilDatePeriod');
+		$session_appointment_mock = Mockery::mock('overload:\ilSessionAppointment', '\ilDatePeriod');
 		$session_appointment_mock->shouldReceive("setStart");
 		$session_appointment_mock->shouldReceive("setStartingTime");
 		$session_appointment_mock->shouldReceive("setEnd");
@@ -88,22 +86,20 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->appointments = [ $session_appointment_mock ];
 
 		$this->ilObject->shouldReceive('setTitle')->once()->with($this->dto->getTitle());
-		$this->ilObject->shouldReceive('setDescription')
-		               ->once()
-		               ->with($this->dto->getDescription());
+		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getDescription());
 		$this->ilObject->shouldReceive("setLocation")->once()->with($this->dto->getLocation());
 		$this->ilObject->shouldReceive("getAppointments")->andReturn($this->appointments);
 		$this->ilObject->shouldReceive("getFirstAppointment")->andReturn($this->appointments[0]);
 		$this->ilObject->shouldReceive("setAppointments")->with($this->appointments);
 
-		$this->participants = \Mockery::mock('overload:\ilSessionParticipants', '\ilParticipants');
+		$this->participants = Mockery::mock('overload:\ilSessionParticipants', '\ilParticipants');
 
 		$this->ilObject->shouldReceive("getMembersObject")->andReturn($this->participants);
 	}
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Session\ISession');
+		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Session\ISession');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -114,12 +110,12 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		\Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
+		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
 			self::REF_ID,
 			true,
 		])->andReturn(true);
 
-		$this->ilObject = \Mockery::mock('overload:\ilObjSession', '\ilObject');
+		$this->ilObject = Mockery::mock('overload:\ilObjSession', '\ilObject');
 		$this->ilObject->shouldReceive('getId')->andReturn(self::REF_ID);
 		$this->ilObject->shouldReceive('addTranslation');
 	}
@@ -127,11 +123,8 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	protected function initDTO() {
 		$this->dto = new SessionDTO('extIdOfSession');
-		$this->dto->setParentId(1)
-		          ->setParentIdType(SessionDTO::PARENT_ID_TYPE_REF_ID)
-		          ->setTitle('Title')
-		          ->setDescription('Description')
-		          ->setLocation('Location');
+		$this->dto->setParentId(1)->setParentIdType(SessionDTO::PARENT_ID_TYPE_REF_ID)->setTitle('Title')->setDescription('Description')
+			->setLocation('Location');
 	}
 
 

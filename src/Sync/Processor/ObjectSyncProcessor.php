@@ -1,15 +1,19 @@
-<?php namespace SRAG\Plugins\Hub2\Sync\Processor;
+<?php
 
+namespace SRAG\Plugins\Hub2\Sync\Processor;
+
+use ilObject;
 use ilObjOrgUnit;
+use ilObjUser;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
+use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\IMetadataAwareObject;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
@@ -20,11 +24,13 @@ use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 /**
  * Class ObjectProcessor
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
+	use DIC;
 	use Helper;
 	/**
 	 * @var IOrigin
@@ -142,12 +148,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 
 	/**
-	 * @param \ilObject|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject $object
+	 * @param ilObject|FakeIliasObject $object
 	 *
 	 * @return int
 	 */
 	protected function getILIASId($object) {
-		if ($object instanceof \ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
+		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
 			|| $object instanceof FakeIliasMembershipObject) {
 			return $object->getId();
 		}
@@ -173,7 +179,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 *
 	 * @param IDataTransferObject $dto
 	 *
-	 * @return \ilObject
+	 * @return ilObject
 	 */
 	abstract protected function handleCreate(IDataTransferObject $dto);
 
@@ -186,7 +192,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @param IDataTransferObject $dto
 	 * @param int                 $iliasId
 	 *
-	 * @return \ilObject
+	 * @return ilObject
 	 */
 	abstract protected function handleUpdate(IDataTransferObject $dto, $iliasId);
 
@@ -197,7 +203,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 *
 	 * @param int $iliasId
 	 *
-	 * @return \ilObject
+	 * @return ilObject
 	 */
 	abstract protected function handleDelete($iliasId);
 }

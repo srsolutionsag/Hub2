@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Object\CourseMembership;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object\CourseMembership;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
@@ -6,7 +8,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 /**
  * Class CourseMembershipDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\CourseMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseMembershipDTO extends DataTransferObject {
 

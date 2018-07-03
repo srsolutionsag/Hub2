@@ -22,7 +22,7 @@ interface ITaxonomyImplementation {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
+	 * @return ITaxonomy
 	 */
 	public function getTaxonomy(): ITaxonomy;
 
@@ -30,5 +30,5 @@ interface ITaxonomyImplementation {
 	/**
 	 * @return int
 	 */
-	public function getILIASParentId():int;
+	public function getILIASParentId(): int;
 }

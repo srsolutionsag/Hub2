@@ -11,7 +11,8 @@ use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 /**
  * Class SessionDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\Session
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject {
 

@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
@@ -13,8 +15,9 @@ use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
 /**
  * Class OriginRepository
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginRepository implements IOriginRepository {
 
@@ -31,7 +34,7 @@ class OriginRepository implements IOriginRepository {
 	 */
 	public function allActive() {
 		return array_filter($this->all(), function ($origin) {
-			/** @var $origin IOrigin */
+			/** @var IOrigin $origin */
 			return $origin->isActive();
 		});
 	}

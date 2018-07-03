@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
+
+namespace SRAG\Plugins\Hub2\Sync;
 
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Object\IObject;
@@ -7,8 +9,9 @@ use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 /**
  * Class ObjectStatusTransition
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ObjectStatusTransition implements IObjectStatusTransition {
 

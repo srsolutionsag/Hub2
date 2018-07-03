@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class UserOriginProperties
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class UserOriginProperties extends OriginProperties {
 
@@ -29,15 +32,15 @@ class UserOriginProperties extends OriginProperties {
 	 * @var array
 	 */
 	protected $data = [
-		self::ACTIVATE_ACCOUNT          => true,
-		self::CREATE_PASSWORD           => false,
-		self::SEND_PASSWORD             => false,
-		self::SEND_PASSWORD_FIELD       => '',
-		self::PASSWORD_MAIL_SUBJECT     => '',
-		self::PASSWORD_MAIL_BODY        => '',
+		self::ACTIVATE_ACCOUNT => true,
+		self::CREATE_PASSWORD => false,
+		self::SEND_PASSWORD => false,
+		self::SEND_PASSWORD_FIELD => '',
+		self::PASSWORD_MAIL_SUBJECT => '',
+		self::PASSWORD_MAIL_BODY => '',
 		self::PASSWORD_MAIL_DATE_FORMAT => 'd.m.Y',
-		self::REACTIVATE_ACCOUNT        => false,
-		self::DELETE                    => self::DELETE_MODE_NONE,
+		self::REACTIVATE_ACCOUNT => false,
+		self::DELETE => self::DELETE_MODE_NONE,
 	];
 
 

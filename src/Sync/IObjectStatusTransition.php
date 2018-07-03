@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
+
+namespace SRAG\Plugins\Hub2\Sync;
 
 use SRAG\Plugins\Hub2\Object\IObject;
 
@@ -6,6 +8,7 @@ use SRAG\Plugins\Hub2\Object\IObject;
  * Interface IObjectStatus
  *
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IObjectStatusTransition {
 

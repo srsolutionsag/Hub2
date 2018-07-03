@@ -2,18 +2,17 @@
 
 namespace SRAG\Plugins\Hub2\Object\Course;
 
+use ilMDLanguageItem;
+use InvalidArgumentException;
 use SRAG\Plugins\Hub2\Exception\LanguageCodeException;
-use SRAG\Plugins\Hub2\Metadata\IMetadata;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**
  * Class CourseDTO
  *
+ * @package SRAG\Plugins\Hub2\Object\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -366,7 +365,7 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	public function setSubscriptionLimitationType($subscriptionLimitationType) {
 		if (!in_array($subscriptionLimitationType, self::$subscriptionTypes)) {
-			throw new \InvalidArgumentException("Given $subscriptionLimitationType does not exist");
+			throw new InvalidArgumentException("Given $subscriptionLimitationType does not exist");
 		}
 		$this->subscriptionLimitationType = $subscriptionLimitationType;
 
@@ -389,7 +388,7 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	public function setViewMode($viewMode) {
 		if (!in_array($viewMode, self::$viewModes)) {
-			throw new \InvalidArgumentException("Given $viewMode does not exist");
+			throw new InvalidArgumentException("Given $viewMode does not exist");
 		}
 		$this->viewMode = $viewMode;
 
@@ -432,7 +431,7 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	public function setParentIdType($parentIdType) {
 		if (!in_array($parentIdType, self::$parentIdTypes)) {
-			throw new \InvalidArgumentException("Invalid parentIdType given '$parentIdType'");
+			throw new InvalidArgumentException("Invalid parentIdType given '$parentIdType'");
 		}
 		$this->parentIdType = $parentIdType;
 
@@ -554,7 +553,7 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 * @throws LanguageCodeException
 	 */
 	public function setLanguageCode($languageCode) {
-		if (!in_array($languageCode, \ilMDLanguageItem::_getPossibleLanguageCodes())) {
+		if (!in_array($languageCode, ilMDLanguageItem::_getPossibleLanguageCodes())) {
 			throw new LanguageCodeException($languageCode);
 		}
 

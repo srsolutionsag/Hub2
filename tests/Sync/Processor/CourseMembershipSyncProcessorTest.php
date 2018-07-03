@@ -1,17 +1,17 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
+require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use Mockery;
+use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Origin\Config\CourseMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 
 /**
  * Class CourseMembershipSyncProcessorTest
@@ -32,23 +32,23 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 	const USER_ID = 6;
 	const IL_CRS_TUTOR_123 = 'il_crs_tutor_123';
 	/**
-	 * @var Mockery\MockInterface|\ilCourseParticipants
+	 * @var MockInterface|ilCourseParticipants
 	 */
 	protected $ilCourseParticipants;
 	/**
-	 * @var Mockery\MockInterface|\ilObjCourse
+	 * @var MockInterface|ilObjCourse
 	 */
 	protected $ilObjCourse;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership
+	 * @var MockInterface|ICourseMembership
 	 */
 	protected $iobject;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
+	 * @var CourseMembershipDTO
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject
+	 * @var MockInterface|FakeIliasObject
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
@@ -61,7 +61,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership');
+		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -70,13 +70,13 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = \Mockery::mock(\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject::class);
+		$this->ilObject = Mockery::mock(FakeIliasObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
-		\Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
-				self::COURSE_REF_ID,
-				true,
-			])->andReturn(true);
+		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
+			self::COURSE_REF_ID,
+			true,
+		])->andReturn(true);
 
 		$this->ilObjCourse = Mockery::mock("overload:\ilObjCourse", "ilObject");
 
@@ -100,7 +100,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function tearDown() {
-		\Mockery::close();
+		Mockery::close();
 	}
 
 
@@ -113,9 +113,9 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
 
 		$this->ilCourseParticipants->shouldReceive('add')->once()->withArgs(array(
-				$this->dto->getUserId(),
-				$this->dto->getRole(),
-			));
+			$this->dto->getUserId(),
+			$this->dto->getRole(),
+		));
 
 		$this->iobject->shouldReceive('setILIASId')->once()->with(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
@@ -141,9 +141,9 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObjCourse->shouldReceive("getRefId")->once()->andReturn(self::COURSE_REF_ID);
 
 		$this->ilCourseParticipants->shouldReceive('updateRoleAssignments')->once()->withArgs(array(
-				$this->dto->getUserId(),
-				[ self::IL_CRS_TUTOR_123 ],
-			));
+			$this->dto->getUserId(),
+			[ self::IL_CRS_TUTOR_123 ],
+		));
 
 		$processor->process($this->iobject, $this->dto);
 	}

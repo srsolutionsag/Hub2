@@ -68,13 +68,6 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
         ),
-        'M' => 
-        array (
-            'Mockery' => 
-            array (
-                0 => __DIR__ . '/..' . '/mockery/mockery/library',
-            ),
-        ),
     );
 
     public static $classMap = array (
@@ -899,10 +892,12 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilDatePresentation' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilDatePresentation.php',
         'ilDateTime' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilDateTime.php',
         'ilDateTimeException' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilDateTimeException.php',
+        'ilDelegatingHandler' => __DIR__ . '/../..' . '/../../../../../../../Services/Exceptions/classes/class.ilDelegatingHandler.php',
         'ilDownloadFilesBackgroundTask' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/BackgroundTasks/class.ilDownloadFilesBackgroundTask.php',
         'ilECSCategorySettings' => __DIR__ . '/../..' . '/../../../../../../../Modules/Category/classes/class.ilECSCategorySettings.php',
         'ilECSCourseSettings' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilECSCourseSettings.php',
         'ilECSGroupSettings' => __DIR__ . '/../..' . '/../../../../../../../Modules/Group/classes/class.ilECSGroupSettings.php',
+        'ilException' => __DIR__ . '/../..' . '/../../../../../../../Services/Exceptions/classes/class.ilException.php',
         'ilFSStorageCourse' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilFSStorageCourse.php',
         'ilFSStorageGroup' => __DIR__ . '/../..' . '/../../../../../../../Modules/Group/classes/class.ilFSStorageGroup.php',
         'ilFSStorageUserFolder' => __DIR__ . '/../..' . '/../../../../../../../Services/User/classes/class.ilFSStorageUserFolder.php',
@@ -1002,10 +997,12 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilPDCalendarBlockGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilPDCalendarBlockGUI.php',
         'ilPersonalProfileGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/User/classes/class.ilPersonalProfileGUI.php',
         'ilPersonalSettingsGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/User/classes/class.ilPersonalSettingsGUI.php',
+        'ilPlainTextHandler' => __DIR__ . '/../..' . '/../../../../../../../Services/Exceptions/classes/class.ilPlainTextHandler.php',
         'ilPublicUserProfileGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/User/classes/class.ilPublicUserProfileGUI.php',
         'ilRecurrenceInputGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/Form/class.ilRecurrenceInputGUI.php',
         'ilRoleAssignmentTableGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/User/classes/class.ilRoleAssignmentTableGUI.php',
         'ilServicesUserSuite' => __DIR__ . '/../..' . '/../../../../../../../Services/User/test/ilServicesUserSuite.php',
+        'ilTestingHandler' => __DIR__ . '/../..' . '/../../../../../../../Services/Exceptions/classes/class.ilTestingHandler.php',
         'ilTimeZone' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilTimeZone.php',
         'ilTimeZoneException' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilTimeZoneException.php',
         'ilTimingAccepted' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/Timings/class.ilTimingAccepted.php',

@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Jobs;
 
+use Exception;
+use ilCronJob;
+use SRAG\Plugins\Hub2\Jobs\Result\AbstractResult;
 use SRAG\Plugins\Hub2\Jobs\Result\ResultFactory;
 use SRAG\Plugins\Hub2\Log\OriginLog;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
@@ -11,7 +14,8 @@ use SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 /**
  * Class RunSync
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Jobs
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class RunSync extends AbstractJob {
 
@@ -43,7 +47,7 @@ class RunSync extends AbstractJob {
 	 * @return int
 	 */
 	public function getDefaultScheduleType() {
-		return \ilCronJob::SCHEDULE_TYPE_DAILY;
+		return ilCronJob::SCHEDULE_TYPE_DAILY;
 	}
 
 
@@ -56,14 +60,13 @@ class RunSync extends AbstractJob {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Jobs\Result\AbstractResult
+	 * @return AbstractResult
 	 */
 	public function run() {
-		global $DIC;
 		try {
 			$OriginSyncSummaryFactory = new OriginSyncSummaryFactory();
 
-			$OriginFactory = new OriginFactory($DIC->database());
+			$OriginFactory = new OriginFactory($this->db());
 
 			$summary = $OriginSyncSummaryFactory->cron();
 			foreach ($OriginFactory->getAllActive() as $origin) {
@@ -71,7 +74,7 @@ class RunSync extends AbstractJob {
 				$originSync = $originSyncFactory->instance();
 				try {
 					$originSync->execute();
-				} catch (\Exception $e) {
+				} catch (Exception $e) {
 
 				}
 				$OriginLog = new OriginLog($originSync->getOrigin());
@@ -81,7 +84,7 @@ class RunSync extends AbstractJob {
 			}
 
 			return ResultFactory::ok("everything's fine.");
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			return ResultFactory::error("there was an error");
 		}
 	}

@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Sync\IOriginSync;
 /**
  * Interface IOriginSyncSummary
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginSyncSummary {
 
@@ -18,13 +19,13 @@ interface IOriginSyncSummary {
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Sync\IOriginSync $originSync add another already ran IOriginSync
+	 * @param IOriginSync $originSync add another already ran IOriginSync
 	 */
 	public function addOriginSync(IOriginSync $originSync);
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Sync\IOriginSync $originSync
+	 * @param IOriginSync $originSync
 	 *
 	 * @return string
 	 */

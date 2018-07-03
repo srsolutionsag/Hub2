@@ -1,15 +1,20 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use ActiveRecord;
+use InvalidArgumentException;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class AROrigin extends \ActiveRecord implements IOrigin {
+abstract class AROrigin extends ActiveRecord implements IOrigin {
 
 	const TABLE_NAME = 'sr_hub2_origin';
 	/**
@@ -159,6 +164,9 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	protected $force_update = false;
 
 
+	/**
+	 *
+	 */
 	public function create() {
 		$this->created_at = date('Y-m-d H:i:s');
 		$this->setObjectType($this->parseObjectType());
@@ -166,6 +174,9 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	}
 
 
+	/**
+	 *
+	 */
 	public function update() {
 		$this->updated_at = date('Y-m-d H:i:s');
 		parent::update();
@@ -213,6 +224,9 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	}
 
 
+	/**
+	 *
+	 */
 	public function afterObjectLoad() {
 		$this->_config = $this->getOriginConfig($this->getConfigData());
 		$this->_properties = $this->getOriginProperties($this->getPropertiesData());
@@ -358,7 +372,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 */
 	public function setObjectType($type) {
 		if (!in_array($type, self::$object_types)) {
-			throw new \InvalidArgumentException("'$type' is not a valid hub object type");
+			throw new InvalidArgumentException("'$type' is not a valid hub object type");
 		}
 		$this->object_type = $type;
 

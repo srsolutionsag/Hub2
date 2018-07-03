@@ -10,4 +10,11 @@ namespace SRAG\Plugins\Hub2\Origin\Config;
  */
 interface IOrgUnitOriginConfig extends IOriginConfig {
 
+	const REF_ID_IF_NO_PARENT_ID = "ref_id_if_no_parent_id";
+
+
+	/**
+	 * @return int
+	 */
+	public function getRefIdIfNoParentId(): int;
 }

@@ -7,8 +7,8 @@ use ilCSVReader;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use stdClass;
@@ -201,7 +201,21 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	/**
 	 * Executed before the synchronization of the origin is executed.
 	 */
-	public function beforeSync() { }
+	public function beforeSync() {
+		/*AROrgUnit::truncateDB();
+
+		$result = $this->db()->queryF("SELECT obj_id FROM object_data WHERE type=%s AND title!=%s", [ "string", "string" ], [
+			"orgu",
+			"__OrgUnitAdministration"
+		]);
+		while ($r = $result->fetchAssoc()) {
+			/**
+			 * @var ilObjOrgUnit $orgUnit
+			 * /
+			$orgUnit = ilObjectFactory::getInstanceByObjId($r["obj_id"]);
+			$orgUnit->delete();
+		}*/
+	}
 
 
 	/**

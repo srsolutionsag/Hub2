@@ -1,12 +1,16 @@
-<?php namespace SRAG\Plugins\Hub2\Object;
+<?php
 
+namespace SRAG\Plugins\Hub2\Object;
+
+use ActiveRecord;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class ObjectRepository
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class ObjectRepository implements IObjectRepository {
 
@@ -23,7 +27,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * ObjectRepository constructor.
 	 *
-	 * @param \SRAG\Plugins\Hub2\Origin\IOrigin $origin
+	 * @param IOrigin $origin
 	 */
 	public function __construct(IOrigin $origin) {
 		$this->origin = $origin;
@@ -35,7 +39,8 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function all() {
 		$class = $this->getClass();
-		/** @var $class \ActiveRecord */
+
+		/** @var ActiveRecord $class */
 		return $class::where([ 'origin_id' => $this->origin->getId() ])->get();
 	}
 
@@ -45,10 +50,11 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function getByStatus($status) {
 		$class = $this->getClass();
-		/** @var $class \ActiveRecord */
+
+		/** @var ActiveRecord $class */
 		return $class::where([
 			'origin_id' => $this->origin->getId(),
-			'status'    => (int)$status,
+			'status' => (int)$status,
 		])->get();
 	}
 
@@ -60,21 +66,21 @@ abstract class ObjectRepository implements IObjectRepository {
 		$class = $this->getClass();
 
 		if (count($ext_ids) > 0) {
-			/** @var $class \ActiveRecord */
+			/** @var ActiveRecord $class */
 			return $class::where([
 				'origin_id' => $this->origin->getId(),
 				// We only can transmit from final states CREATED and UPDATED to TO_DELETE
 				// E.g. not from DELETED or IGNORED
-				'status'    => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ],
-				'ext_id'    => $ext_ids,
+				'status' => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ],
+				'ext_id' => $ext_ids,
 			], [ 'origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN' ])->get();
 		} else {
-			/** @var $class \ActiveRecord */
+			/** @var ActiveRecord $class */
 			return $class::where([
 				'origin_id' => $this->origin->getId(),
 				// We only can transmit from final states CREATED and UPDATED to TO_DELETE
 				// E.g. not from DELETED or IGNORED
-				'status'    => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ],
+				'status' => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED ],
 			], [ 'origin_id' => '=', 'status' => 'IN' ])->get();
 		}
 	}
@@ -85,7 +91,8 @@ abstract class ObjectRepository implements IObjectRepository {
 	 */
 	public function count() {
 		$class = $this->getClass();
-		/** @var $class \ActiveRecord */
+
+		/** @var ActiveRecord $class */
 		return $class::where([ 'origin_id' => $this->origin->getId() ])->count();
 	}
 
@@ -103,8 +110,7 @@ abstract class ObjectRepository implements IObjectRepository {
 		}
 
 		$ucfirst = ucfirst($object_type);
-		self::$classmap[$object_type] = "SRAG\\Plugins\\Hub2\\Object\\" . $ucfirst . "\\AR"
-		                                . $ucfirst;
+		self::$classmap[$object_type] = "SRAG\\Plugins\\Hub2\\Object\\" . $ucfirst . "\\AR" . $ucfirst;
 
 		return self::$classmap[$object_type];
 	}

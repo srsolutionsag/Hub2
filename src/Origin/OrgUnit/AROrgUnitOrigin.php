@@ -30,4 +30,20 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin {
 	protected function getOriginProperties(array $data): IOrgUnitOriginProperties {
 		return new OrgUnitOriginProperties($data);
 	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function config(): IOrgUnitOriginConfig {
+		return parent::config();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function properties(): IOrgUnitOriginProperties {
+		return parent::properties();
+	}
 }

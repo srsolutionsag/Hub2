@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Object\ObjectRepository;
 /**
  * Class GroupRepository
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\Group
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupRepository extends ObjectRepository {
 

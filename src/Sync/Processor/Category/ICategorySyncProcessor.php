@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
 /**
  * Interface ICategorySyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @package SRAG\Plugins\Hub2\Sync\Processor\Category
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ICategorySyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor {
 

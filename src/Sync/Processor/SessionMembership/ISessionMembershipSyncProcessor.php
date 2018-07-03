@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 /**
  * Interface ISessionMembershipSyncProcessor
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Processor\SessionMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ISessionMembershipSyncProcessor extends IObjectSyncProcessor {
 

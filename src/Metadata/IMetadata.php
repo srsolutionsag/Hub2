@@ -5,14 +5,15 @@ namespace SRAG\Plugins\Hub2\Metadata;
 /**
  * Interface IMetadata
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Metadata
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IMetadata {
 
 	/**
 	 * @param $value
 	 *
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata
+	 * @return IMetadata
 	 */
 	public function setValue($value): IMetadata;
 
@@ -20,7 +21,7 @@ interface IMetadata {
 	/**
 	 * @param int $identifier
 	 *
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata
+	 * @return IMetadata
 	 */
 	public function setIdentifier(int $identifier): IMetadata;
 

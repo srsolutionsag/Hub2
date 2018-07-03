@@ -2,21 +2,24 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
+use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+
 /**
  * Interface ITaxonomyAwareObject
  *
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ITaxonomyAwareObject extends IObject {
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy[]
+	 * @return ITaxonomy[]
 	 */
 	public function getTaxonomies(): array;
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy[] $taxonomies
+	 * @param ITaxonomy[] $taxonomies
 	 *
 	 * @return void
 	 */

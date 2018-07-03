@@ -5,24 +5,25 @@ namespace SRAG\Plugins\Hub2\Sync\Summary;
 /**
  * Interface IOriginSyncSummaryFactory
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginSyncSummaryFactory {
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Summary\IOriginSyncSummary
+	 * @return IOriginSyncSummary
 	 */
 	public function common();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Summary\IOriginSyncSummary
+	 * @return IOriginSyncSummary
 	 */
 	public function web();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Summary\IOriginSyncSummary
+	 * @return IOriginSyncSummary
 	 */
 	public function cron();
 }

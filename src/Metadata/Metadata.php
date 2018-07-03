@@ -6,6 +6,7 @@ namespace SRAG\Plugins\Hub2\Metadata;
  * Class Metadata
  *
  * @package SRAG\Plugins\Hub2\Metadata
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Metadata implements IMetadata {
 

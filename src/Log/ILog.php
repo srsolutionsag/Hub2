@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Log;
+<?php
+
+namespace SRAG\Plugins\Hub2\Log;
 
 /**
  * Interface ILog
  *
+ * @package SRAG\Plugins\Hub2\Log
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Log
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ILog {
 

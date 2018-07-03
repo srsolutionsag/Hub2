@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
 /**
  * Interface IGroup
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\Group
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IGroup extends IObject, IMetadataAwareObject, ITaxonomyAwareObject {
 

@@ -1,12 +1,16 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
+require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
+use Mockery;
+use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
+use SRAG\Plugins\Hub2\Object\Group\IGroup;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Origin\Config\GroupOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
 use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities;
 
 /**
  * Class GroupSyncProcessorTest
@@ -26,11 +30,11 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	const ILIAS_USER_ID = 123;
 	const GROUP_REF_ID = 57;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities
+	 * @var MockInterface|IGroupActivities
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Group\IGroup
+	 * @var MockInterface|IGroup
 	 */
 	protected $iobject;
 	/**
@@ -38,7 +42,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface|ilObjGroup
+	 * @var MockInterface|ilObjGroup
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
@@ -46,38 +50,18 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	protected function initDTO() {
 		$this->dto = new GroupDTO('extIdOfGroup');
-		$this->dto->setParentIdType(GroupDTO::PARENT_ID_TYPE_REF_ID)
-		          ->setParentId(1)
-		          ->setDescription("Description")
-		          ->setTitle("Title")
-		          ->setInformation("Information")
-		          ->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)
-		          ->setGroupType(GroupDTO::GRP_TYPE_CLOSED)
-		          ->setRegUnlimited(false)
-		          ->setRegistrationStart(1507202887)
-		          ->setRegistrationEnd(1507202887 + 30)
-		          ->setPassword("Password")
-		          ->setRegMembershipLimitation(true)
-		          ->setMinMembers(1)
-		          ->setMaxMembers(10)
-		          ->setWaitingList(true)
-		          ->setWaitingListAutoFill(true)
-		          ->setStart(1507202887)
-		          ->setEnd(1507202887 + 30)
-		          ->setLatitude(7.1234)
-		          ->setLongitude(45.1234)
-		          ->setLocationzoom(5)
-		          ->setEnableGroupMap(true)
-		          ->setRegAccessCodeEnabled(true)
-		          ->setRegistrationAccessCode("AccessCode")
-		          ->setOwner(6)
-		          ->setViewMode(GroupDTO::VIEW_BY_TYPE)
-		          ->setCancellationEnd(1507202887);
+		$this->dto->setParentIdType(GroupDTO::PARENT_ID_TYPE_REF_ID)->setParentId(1)->setDescription("Description")->setTitle("Title")
+			->setInformation("Information")->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)->setGroupType(GroupDTO::GRP_TYPE_CLOSED)
+			->setRegUnlimited(false)->setRegistrationStart(1507202887)->setRegistrationEnd(1507202887 + 30)->setPassword("Password")
+			->setRegMembershipLimitation(true)->setMinMembers(1)->setMaxMembers(10)->setWaitingList(true)->setWaitingListAutoFill(true)
+			->setStart(1507202887)->setEnd(1507202887 + 30)->setLatitude(7.1234)->setLongitude(45.1234)->setLocationzoom(5)->setEnableGroupMap(true)
+			->setRegAccessCodeEnabled(true)->setRegistrationAccessCode("AccessCode")->setOwner(6)->setViewMode(GroupDTO::VIEW_BY_TYPE)
+			->setCancellationEnd(1507202887);
 	}
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Group\IGroup');
+		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Group\IGroup');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -86,7 +70,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = \Mockery::mock('overload:\ilObjGroup', 'ilObject');
+		$this->ilObject = Mockery::mock('overload:\ilObjGroup', 'ilObject');
 		$this->ilObject->shouldReceive('getId')->andReturn(self::ILIAS_USER_ID);
 	}
 
@@ -95,7 +79,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities');
+		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities');
 
 		$this->initOrigin(new GroupOriginProperties(), new GroupOriginConfig([]));
 		$this->setupGeneralDependencies();
@@ -106,7 +90,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function tearDown() {
-		\Mockery::close();
+		Mockery::close();
 	}
 
 
@@ -139,18 +123,12 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	public function test_update_group_with_default_properties() {
 		$processor = new GroupSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications, $this->activities);
 
-		$this->iobject->shouldReceive('updateStatus')
-		              ->once()
-		              ->with(IObject::STATUS_NOTHING_TO_UPDATE);
+		$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
-		$this->iobject->shouldReceive('computeHashCode')
-		              ->once()
-		              ->andReturn(serialize($this->dto->getData()));
-		$this->iobject->shouldReceive('getHashCode')
-		              ->once()
-		              ->andReturn(serialize($this->dto->getData()));
+		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn(serialize($this->dto->getData()));
+		$this->iobject->shouldReceive('getHashCode')->once()->andReturn(serialize($this->dto->getData()));
 
 		$this->originImplementation->shouldNotReceive('beforeUpdateILIASObject'); // Since Data did no change
 		$this->originImplementation->shouldNotReceive('afterUpdateILIASObject');
@@ -174,62 +152,30 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	protected function initDataExpectations() {
 		$this->ilObject->shouldReceive('setTitle')->once()->with($this->dto->getTitle());
-		$this->ilObject->shouldReceive('setDescription')
-		               ->once()
-		               ->with($this->dto->getDescription());
-		$this->ilObject->shouldReceive('setInformation')
-		               ->once()
-		               ->with($this->dto->getInformation());
+		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getDescription());
+		$this->ilObject->shouldReceive('setInformation')->once()->with($this->dto->getInformation());
 		$this->ilObject->shouldReceive('setGroupType')->once()->with($this->dto->getGroupType());
-		$this->ilObject->shouldReceive('setRegisterMode')
-		               ->once()
-		               ->with($this->dto->getRegisterMode());
+		$this->ilObject->shouldReceive('setRegisterMode')->once()->with($this->dto->getRegisterMode());
 		$this->ilObject->shouldReceive('setOwner')->once()->with($this->dto->getOwner());
-		$this->ilObject->shouldReceive('enableUnlimitedRegistration')
-		               ->once()
-		               ->with($this->dto->getRegUnlimited());
+		$this->ilObject->shouldReceive('enableUnlimitedRegistration')->once()->with($this->dto->getRegUnlimited());
 		$this->ilObject->shouldReceive('setViewMode')->once()->with($this->dto->getViewMode());
-		$this->ilObject->shouldReceive('setRegistrationStart')
-		               ->once()
-		               ->withAnyArgs(); // Currently not possible to have ilDate here
-		$this->ilObject->shouldReceive('setRegistrationEnd')
-		               ->once()
-		               ->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setRegistrationStart')->once()->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setRegistrationEnd')->once()->withAnyArgs(); // Currently not possible to have ilDate here
 		$this->ilObject->shouldReceive('setPassword')->once()->with($this->dto->getPassword());
-		$this->ilObject->shouldReceive('enableMembershipLimitation')
-		               ->once()
-		               ->with($this->dto->getRegMembershipLimitation());
+		$this->ilObject->shouldReceive('enableMembershipLimitation')->once()->with($this->dto->getRegMembershipLimitation());
 		$this->ilObject->shouldReceive('setMinMembers')->once()->with($this->dto->getMinMembers());
 		$this->ilObject->shouldReceive('setMaxMembers')->once()->with($this->dto->getMaxMembers());
-		$this->ilObject->shouldReceive('enableWaitingList')
-		               ->once()
-		               ->with($this->dto->getWaitingList());
-		$this->ilObject->shouldReceive('setWaitingListAutoFill')
-		               ->once()
-		               ->with($this->dto->getWaitingListAutoFill());
+		$this->ilObject->shouldReceive('enableWaitingList')->once()->with($this->dto->getWaitingList());
+		$this->ilObject->shouldReceive('setWaitingListAutoFill')->once()->with($this->dto->getWaitingListAutoFill());
 
-		$this->ilObject->shouldReceive('setCancellationEnd')
-		               ->once()
-		               ->withAnyArgs(); // Currently not possible to have ilDate here
-		$this->ilObject->shouldReceive('setStart')
-		               ->once()
-		               ->withAnyArgs(); // Currently not possible to have ilDate here
-		$this->ilObject->shouldReceive('setEnd')
-		               ->once()
-		               ->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setCancellationEnd')->once()->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setStart')->once()->withAnyArgs(); // Currently not possible to have ilDate here
+		$this->ilObject->shouldReceive('setEnd')->once()->withAnyArgs(); // Currently not possible to have ilDate here
 		$this->ilObject->shouldReceive('setLatitude')->once()->with($this->dto->getLatitude());
 		$this->ilObject->shouldReceive('setLongitude')->once()->with($this->dto->getLongitude());
-		$this->ilObject->shouldReceive('setLocationzoom')
-		               ->once()
-		               ->with($this->dto->getLocationzoom());
-		$this->ilObject->shouldReceive('setEnableGroupMap')
-		               ->once()
-		               ->with($this->dto->getEnableGroupMap());
-		$this->ilObject->shouldReceive('enableRegistrationAccessCode')
-		               ->once()
-		               ->with($this->dto->getRegAccessCodeEnabled());
-		$this->ilObject->shouldReceive('setRegistrationAccessCode')
-		               ->once()
-		               ->with($this->dto->getRegistrationAccessCode());
+		$this->ilObject->shouldReceive('setLocationzoom')->once()->with($this->dto->getLocationzoom());
+		$this->ilObject->shouldReceive('setEnableGroupMap')->once()->with($this->dto->getEnableGroupMap());
+		$this->ilObject->shouldReceive('enableRegistrationAccessCode')->once()->with($this->dto->getRegAccessCodeEnabled());
+		$this->ilObject->shouldReceive('setRegistrationAccessCode')->once()->with($this->dto->getRegistrationAccessCode());
 	}
 }

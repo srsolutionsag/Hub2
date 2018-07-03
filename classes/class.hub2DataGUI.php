@@ -1,6 +1,7 @@
 <?php
 
-use SRAG\Plugins\Hub2\Helper\DIC;
+use SRAG\Plugins\Hub2\Object\IMetadataAwareObject;
+use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
 use SRAG\Plugins\Hub2\UI\DataTableGUI;
@@ -10,14 +11,14 @@ require_once __DIR__ . "/../vendor/autoload.php";
 /**
  * Class hub2DataGUI
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class hub2DataGUI extends hub2MainGUI {
 
-	use DIC;
-	const CMD_INDEX = 'index';
-
-
+	/**
+	 *
+	 */
 	public function executeCommand() {
 		$this->initTabs();
 		$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);
@@ -25,12 +26,18 @@ class hub2DataGUI extends hub2MainGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function index() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 		$this->tpl()->setContent($table->getHTML());
 	}
 
 
+	/**
+	 *
+	 */
 	protected function applyFilter() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 		$table->writeFilterToSession();
@@ -39,6 +46,9 @@ class hub2DataGUI extends hub2MainGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function resetFilter() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 		$table->resetFilter();
@@ -47,11 +57,17 @@ class hub2DataGUI extends hub2MainGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function initTabs() {
 		$this->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
 	}
 
 
+	/**
+	 *
+	 */
 	protected function renderData() {
 		$ext_id = $this->http()->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
 		$origin_id = $this->http()->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
@@ -71,13 +87,13 @@ class hub2DataGUI extends hub2MainGUI {
 			"status" => $object->getStatus(),
 		], $object->getData());
 
-		if ($object instanceof \SRAG\Plugins\Hub2\Object\IMetadataAwareObject) {
+		if ($object instanceof IMetadataAwareObject) {
 			foreach ($object->getMetaData() as $metadata) {
 				$properties[sprintf($this->pl->txt("table_md"), $metadata->getIdentifier())] = $metadata->getValue();
 			}
 		}
 
-		if ($object instanceof \SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject) {
+		if ($object instanceof ITaxonomyAwareObject) {
 			foreach ($object->getTaxonomies() as $taxonomy) {
 				$properties[sprintf($this->pl->txt("table_tax"), $taxonomy->getTitle())] = implode(", ", $taxonomy->getNodeTitlesAsArray());
 			}

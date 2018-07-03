@@ -7,12 +7,13 @@ use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 /**
  * Class TaxonomyNodeNotFoundException
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Exception
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class TaxonomyNodeNotFoundException extends HubException {
 
 	/**
-	 * @var \SRAG\Plugins\Hub2\Taxonomy\Node\INode
+	 * @var INode
 	 */
 	protected $node;
 
@@ -20,7 +21,7 @@ class TaxonomyNodeNotFoundException extends HubException {
 	/**
 	 * TaxonomyNodeNotFoundException constructor.
 	 *
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $node
+	 * @param INode $node
 	 */
 	public function __construct(INode $node) {
 		parent::__construct("ILIAS Taxonomy Node not found for: {$node->getTitle()}");
@@ -29,7 +30,7 @@ class TaxonomyNodeNotFoundException extends HubException {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\Node\INode
+	 * @return INode
 	 */
 	public function getNode(): INode {
 		return $this->node;

@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 /**
  * Class TaxonomyAwareDataTransferObject
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\DTO
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait TaxonomyAwareDataTransferObject {
 

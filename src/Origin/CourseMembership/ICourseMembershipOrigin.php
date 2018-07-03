@@ -2,11 +2,14 @@
 
 namespace SRAG\Plugins\Hub2\Origin\CourseMembership;
 
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+
 /**
  * Interface ICourseMembershipOrigin
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\CourseMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICourseMembershipOrigin {
+interface ICourseMembershipOrigin extends IOrigin {
 
 }

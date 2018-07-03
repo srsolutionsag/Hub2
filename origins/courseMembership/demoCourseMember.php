@@ -7,8 +7,8 @@ use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\HookObject;
 
 /**
  * Class demoCourseMember
@@ -24,7 +24,9 @@ class demoCourseMember extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() { return true; }
+	public function connect(): bool {
+		return true;
+	}
 
 
 	/**
@@ -37,7 +39,7 @@ class demoCourseMember extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {
+	public function parseData(): int {
 		$this->log()->write("This is a test-log entry");
 
 		$this->data[] = $this->factory()->courseMembership(1, 6)->setCourseId(1)->setRole(CourseMembershipDTO::ROLE_TUTOR)->setUserId(6)
@@ -64,7 +66,7 @@ class demoCourseMember extends AbstractOriginImplementation {
 	 * @throws BuildObjectsFailedException
 	 * @return IDataTransferObject[]
 	 */
-	public function buildObjects() {
+	public function buildObjects(): array {
 		// TODO Build objects here
 		return $this->data;
 	}

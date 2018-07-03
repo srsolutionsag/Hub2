@@ -2,15 +2,33 @@
 
 namespace SRAG\Plugins\Hub2\Helper;
 
+use ilCtrl;
+use ilDBInterface;
+use ILIAS\DI\Container;
+use ILIAS\DI\HTTPServices;
+use ILIAS\DI\RBACServices;
+use ILIAS\DI\UIServices;
+use ILIAS\Filesystem\Filesystems;
+use ilLanguage;
+use ilLog;
+use ilMailMimeSenderFactory;
+use ilObjUser;
+use ilSetting;
+use ilTabsGUI;
+use ilTemplate;
+use ilToolbarGUI;
+use ilTree;
+
 /**
  * Trait DIC
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Helper
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait DIC {
 
 	/**
-	 * @return \ILIAS\DI\Container
+	 * @return Container
 	 */
 	public function dic() {
 		return $GLOBALS['DIC'];
@@ -18,7 +36,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ilCtrl
+	 * @return ilCtrl
 	 */
 	protected function ctrl() {
 		return $this->dic()->ctrl();
@@ -31,11 +49,11 @@ trait DIC {
 	 * @return string
 	 * /
 	public function txt($variable) {
-		return \ilHub2Plugin::getInstance()->txt($variable);
+		return ilHub2Plugin::getInstance()->txt($variable);
 	}*/
 
 	/**
-	 * @return \ilTemplate
+	 * @return ilTemplate
 	 */
 	protected function tpl() {
 		return $this->dic()->ui()->mainTemplate();
@@ -43,7 +61,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ilLanguage
+	 * @return ilLanguage
 	 */
 	protected function lng() {
 		return $this->dic()->language();
@@ -51,7 +69,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ilTabsGUI
+	 * @return ilTabsGUI
 	 */
 	protected function tabs() {
 		return $this->dic()->tabs();
@@ -59,7 +77,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ILIAS\DI\UIServices
+	 * @return UIServices
 	 */
 	protected function ui() {
 		return $this->dic()->ui();
@@ -67,7 +85,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ilObjUser
+	 * @return ilObjUser
 	 */
 	protected function user() {
 		return $this->dic()->user();
@@ -75,7 +93,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ILIAS\DI\HTTPServices
+	 * @return HTTPServices
 	 */
 	protected function http() {
 		return $this->dic()->http();
@@ -83,7 +101,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ilDBInterface
+	 * @return ilDBInterface
 	 */
 	protected function db() {
 		return $this->dic()->database();
@@ -91,7 +109,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ilToolbarGUI
+	 * @return ilToolbarGUI
 	 */
 	protected function toolbar() {
 		return $this->dic()->toolbar();
@@ -99,7 +117,7 @@ trait DIC {
 
 
 	/**
-	 * @return \ILIAS\DI\RBACServices
+	 * @return RBACServices
 	 */
 	protected function rbac() {
 		return $this->dic()->rbac();
@@ -107,9 +125,41 @@ trait DIC {
 
 
 	/**
-	 * @return \ilTree
+	 * @return ilTree
 	 */
 	protected function tree() {
 		return $this->dic()->repositoryTree();
+	}
+
+
+	/**
+	 * @return Filesystems
+	 */
+	protected function filesystem() {
+		return $this->dic()->filesystem();
+	}
+
+
+	/**
+	 * @return ilMailMimeSenderFactory
+	 */
+	protected function mailMimeSenderFactory() {
+		return $this->dic()["mail.mime.sender.factory"];
+	}
+
+
+	/**
+	 * @return ilLog
+	 */
+	protected function ilLog() {
+		return $this->dic()["ilLog"];
+	}
+
+
+	/**
+	 * @return ilSetting
+	 */
+	protected function settings() {
+		return $this->dic()->settings();
 	}
 }

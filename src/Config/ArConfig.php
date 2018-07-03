@@ -2,13 +2,16 @@
 
 namespace SRAG\Plugins\Hub2\Config;
 
+use ActiveRecord;
+
 /**
  * Class ArConfig
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Config
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ArConfig extends \ActiveRecord {
+class ArConfig extends ActiveRecord {
 
 	const TABLE_NAME = 'sr_hub2_config';
 

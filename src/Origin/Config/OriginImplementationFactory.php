@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Config;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Config;
 
 use SRAG\Plugins\Hub2\Config\IHubConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
@@ -14,6 +16,7 @@ use SRAG\Plugins\Hub2\Taxonomy\TaxonomyFactory;
  * Class OriginImplementationFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Config
  */
 class OriginImplementationFactory {
@@ -63,7 +66,7 @@ class OriginImplementationFactory {
 		if (!is_file($classFile)) {
 			throw new HubException("Origin implementation class file does not exist, should be at: $classFile");
 		}
-		require_once($classFile);
+		require_once $classFile;
 		$class = rtrim($namespace, "\\") . "\\" . $className;
 		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory());
 
