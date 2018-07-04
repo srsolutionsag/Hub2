@@ -30,4 +30,20 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
 	protected function getOriginProperties(array $data): IOrgUnitMembershipOriginProperties {
 		return new OrgUnitMembershipOriginProperties($data);
 	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function config(): IOrgUnitMembershipOriginConfig {
+		return parent::config();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function properties(): IOrgUnitMembershipOriginProperties {
+		return parent::properties();
+	}
 }

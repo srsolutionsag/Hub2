@@ -385,7 +385,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	protected function buildDependenceCategory($title, $parentRefId, $level) {
 		static $cache = [];
 		// We use a cache for created dependence categories to save some SQL queries
-		$cacheKey = md5($title . $parentRefId . $level);
+		$cacheKey = hash("sha256", $title . $parentRefId . $level);
 		if (isset($cache[$cacheKey])) {
 			return $cache[$cacheKey];
 		}
@@ -400,13 +400,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			return $category['ref_id'];
 		}
 		// No category with the given title found, create it!
-		$importId = implode('_', [
-			'srhub',
-			$this->origin->getId(),
-			$parentRefId,
-			'depth',
-			$level,
-		]);
+		$importId = self::IMPORT_PREFIX . implode('_', [
+				$this->origin->getId(),
+				$parentRefId,
+				'depth',
+				$level,
+			]);
 		$ilObjCategory = new ilObjCategory();
 		$ilObjCategory->setTitle($title);
 		$ilObjCategory->setImportId($importId);

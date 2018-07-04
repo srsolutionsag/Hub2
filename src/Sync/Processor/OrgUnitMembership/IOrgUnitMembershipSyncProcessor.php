@@ -12,6 +12,12 @@ use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  */
 interface IOrgUnitMembershipSyncProcessor extends IObjectSyncProcessor {
 
+	/**
+	 * @var int
+	 */
 	const IL_POSITION_EMPLOYEE = 1;
+	/**
+	 * @var int
+	 */
 	const IL_POSITION_SUPERIOR = 2;
 }

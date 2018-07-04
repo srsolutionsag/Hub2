@@ -25,9 +25,9 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 	 */
 	protected $owner = 6;
 	/**
-	 * @var int
+	 * @var int|string|null
 	 */
-	protected $parent_id = 0;
+	protected $parent_id = NULL;
 	/**
 	 * @var int
 	 */
@@ -108,7 +108,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 	/**
 	 * @inheritdoc
 	 */
-	public function getParentId(): int {
+	public function getParentId() {
 		return $this->parent_id;
 	}
 
@@ -116,7 +116,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 	/**
 	 * @inheritdoc
 	 */
-	public function setParentId(int $parent_id): IOrgUnitDTO {
+	public function setParentId($parent_id): IOrgUnitDTO {
 		$this->parent_id = $parent_id;
 
 		return $this;

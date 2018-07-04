@@ -136,6 +136,9 @@ class OriginSync implements IOriginSync {
 			throw $e;
 		}
 
+		// Sort dto objects
+		$this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
+
 		// Start SYNC of delivered objects --> CREATE & UPDATE
 		// ======================================================================================================
 		// 1. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
@@ -173,6 +176,34 @@ class OriginSync implements IOriginSync {
 		$this->getOrigin()->setLastRun(date(DATE_ATOM));
 
 		$this->getOrigin()->update();
+	}
+
+
+	/**
+	 * @param IDataTransferObject[] $dtos
+	 *
+	 * @return IDataTransferObject[]
+	 */
+	protected function sortDtoObjects(array $dtos): array {
+		// Create IDataTransferObjectSort objects
+		$sort_dtos = array_map(function (IDataTransferObject $dto): IDataTransferObjectSort {
+			return new DataTransferObjectSort($dto);
+		}, $dtos);
+
+		// Request processor to sort levels
+		if ($this->processor->handleSort($sort_dtos)) {
+			// Sort by level
+			usort($sort_dtos, function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int {
+				return ($sort_dto2->getLevel() - $sort_dto1->getLevel());
+			});
+
+			// Back to IDataTransferObject objects
+			$dtos = array_map(function (IDataTransferObjectSort $sort_dto): IDataTransferObject {
+				return $sort_dto->getDtoObject();
+			}, $sort_dtos);
+		}
+
+		return $dtos;
 	}
 
 

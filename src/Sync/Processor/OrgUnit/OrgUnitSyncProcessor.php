@@ -20,6 +20,7 @@ use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
 use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use SRAG\Plugins\Hub2\Sync\IDataTransferObjectSort;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
@@ -69,6 +70,80 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 
 	/**
+	 * @var array
+	 */
+	private $handledSort = [];
+
+
+	/**
+	 * @param IDataTransferObjectSort[] $sort_dtos
+	 *
+	 * @return bool
+	 * @throws HubException
+	 */
+	public function handleSort(array $sort_dtos): bool {
+		/**
+		 * @var IOrgUnitDTO $dto
+		 * @var IOrgUnitDTO $parent_dto
+		 */
+
+		$dtos = [];
+		foreach ($sort_dtos as $sort_dto) {
+			$dto = $sort_dto->getDtoObject();
+
+			$dtos[$dto->getParentId()] = $dto;
+		}
+
+		// Calculate Level of each manager
+		foreach ($sort_dtos as $sort_dto) {
+			$dto = $sort_dto->getDtoObject();
+
+			$level = 1;
+
+			// OrgUnit Node -> Level 1
+			if ($this->isRootId($dto)) {
+				$sort_dto->setLevel($level);
+
+				continue;
+			}
+
+			// If not Level 1 - calculate it for this manager!
+			$parent_dto = $dtos[$dto->getParentId()];
+
+			// Level 100 max level, prophit unlimited while!
+			while ($level === IDataTransferObjectSort::MAX_LEVEL) {
+				$level += 1;
+
+				// Do it until OrgUnit Node
+				if ($this->isRootId($parent_dto) || $level === IDataTransferObjectSort::MAX_LEVEL) {
+					$sort_dto->setLevel($level);
+					break;
+				} else {
+					$parent_dto = $dtos[$parent_dto->getParentId()];
+				}
+			}
+		}
+
+		return true;
+	}
+
+
+	/**
+	 * @param IOrgUnitDTO $dto
+	 *
+	 * @return bool
+	 * @throws HubException
+	 */
+	private function isRootId(IOrgUnitDTO $dto): bool {
+		$parent_id = $this->getParentId($dto);
+
+		return (empty($dto->getParentId())
+			|| ($parent_id === $this->config->getRefIdIfNoParentId()
+				|| $parent_id === ilObjOrgUnit::getRootOrgRefId()));
+	}
+
+
+	/**
 	 * @param IOrgUnitDTO $dto
 	 *
 	 * @return ilObject
@@ -81,7 +156,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		$org_unit->setDescription($dto->getDescription());
 		$org_unit->setOwner($dto->getOwner());
 		$org_unit->setOrgUnitTypeId($this->getOrgUnitTypeId($dto));
-		$org_unit->setImportId($dto->getExtId());
+		$org_unit->setImportId($this->getImportId($dto));
 
 		$org_unit->create();
 		$org_unit->createReference();
@@ -203,7 +278,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		switch ($dto->getParentIdType()) {
 			case IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID:
 				$ext_id = $dto->getParentId();
-				if ($ext_id !== 0) {
+				if (!empty($ext_id)) {
 					$object_factory = new ObjectFactory($this->origin);
 
 					$parent_org_unit = $object_factory->orgUnit($ext_id);
@@ -214,20 +289,20 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 						throw new HubException("External ID {$ext_id} not found!");
 					}
 
-					$parent_id = current(ilObjOrgUnit::_getAllReferences($parent_id));
+					$parent_id = intval(current(ilObjOrgUnit::_getAllReferences($parent_id)));
 				}
 				break;
 
 			case IOrgUnitDTO::PARENT_ID_TYPE_REF_ID:
 			default:
-				$parent_id = $dto->getParentId();
+				$parent_id = intval($dto->getParentId());
 				break;
 		}
 
-		if ($parent_id === 0 || $parent_id === NULL) {
+		if (empty($parent_id)) {
 			$parent_id = $this->config->getRefIdIfNoParentId();
 		}
-		if ($parent_id === 0 || $parent_id === NULL) {
+		if (empty($parent_id)) {
 			$parent_id = intval(ilObjOrgUnit::getRootOrgRefId());
 		}
 

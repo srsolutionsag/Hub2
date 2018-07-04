@@ -175,6 +175,14 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 
 	/**
+	 * @inheritdoc
+	 */
+	public function handleSort(array $sort_dtos): bool {
+		return false;
+	}
+
+
+	/**
 	 * Create a new ILIAS object from the given data transfer object.
 	 *
 	 * @param IDataTransferObject $dto

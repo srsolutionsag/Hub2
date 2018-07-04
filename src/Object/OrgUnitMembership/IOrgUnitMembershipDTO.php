@@ -12,9 +12,21 @@ use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 interface IOrgUnitMembershipDTO extends IDataTransferObject {
 
+	/**
+	 * @var int
+	 */
 	const ORG_UNIT_ID_TYPE_REF_ID = 1;
+	/**
+	 * @var int
+	 */
 	const ORG_UNIT_ID_TYPE_EXTERNAL_EXT_ID = 2;
+	/**
+	 * @var int
+	 */
 	const POSITION_EMPLOYEE = 1;
+	/**
+	 * @var int
+	 */
 	const POSITION_SUPERIOR = 2;
 
 
