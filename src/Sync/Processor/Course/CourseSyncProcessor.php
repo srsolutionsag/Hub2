@@ -116,7 +116,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
-		if ($dto->getDidacticTemplate()) {
+		if ($dto->getDidacticTemplate() > 0) {
 			$ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
 		}
 		if ($dto->getIcon()) {
@@ -228,7 +228,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
-		if ($this->props->updateDTOProperty("didacticTemplate") && $dto->getDidacticTemplate()) {
+		if ($this->props->updateDTOProperty("didacticTemplate") && $dto->getDidacticTemplate() > 0) {
 			$ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
 		}
 		if ($this->props->updateDTOProperty("icon")) {
