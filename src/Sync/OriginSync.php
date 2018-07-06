@@ -190,11 +190,11 @@ class OriginSync implements IOriginSync {
 			return new DataTransferObjectSort($dto);
 		}, $dtos);
 
-		// Request processor to sort levels
+		// Request processor to set sort levels
 		if ($this->processor->handleSort($sort_dtos)) {
 			// Sort by level
 			usort($sort_dtos, function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int {
-				return ($sort_dto2->getLevel() - $sort_dto1->getLevel());
+				return ($sort_dto1->getLevel() - $sort_dto2->getLevel());
 			});
 
 			// Back to IDataTransferObject objects

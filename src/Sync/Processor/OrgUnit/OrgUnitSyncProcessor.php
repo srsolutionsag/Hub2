@@ -91,7 +91,9 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		foreach ($sort_dtos as $sort_dto) {
 			$dto = $sort_dto->getDtoObject();
 
-			$dtos[$dto->getParentId()] = $dto;
+			if ($dto->getParentIdType() === IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
+				$dtos[$dto->getExtId()] = $dto;
+			}
 		}
 
 		// Calculate Level of each manager
@@ -101,7 +103,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 			$level = 1;
 
 			// OrgUnit Node -> Level 1
-			if ($this->isRootId($dto)) {
+			if ($this->isRootId($dto) || $dto->getParentIdType() !== IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
 				$sort_dto->setLevel($level);
 
 				continue;
@@ -111,7 +113,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 			$parent_dto = $dtos[$dto->getParentId()];
 
 			// Level 100 max level, prophit unlimited while!
-			while ($level === IDataTransferObjectSort::MAX_LEVEL) {
+			while ($level <= IDataTransferObjectSort::MAX_LEVEL) {
 				$level += 1;
 
 				// Do it until OrgUnit Node
@@ -135,11 +137,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 * @throws HubException
 	 */
 	private function isRootId(IOrgUnitDTO $dto): bool {
-		$parent_id = $this->getParentId($dto);
+		//$parent_id = $this->getParentId($dto);
 
-		return (empty($dto->getParentId())
-			|| ($parent_id === $this->config->getRefIdIfNoParentId()
-				|| $parent_id === ilObjOrgUnit::getRootOrgRefId()));
+		return (empty($dto->getParentId()));
+		//	|| ($parent_id === $this->config->getRefIdIfNoParentId()
+		//	|| $parent_id === ilObjOrgUnit::getRootOrgRefId()));
 	}
 
 
