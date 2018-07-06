@@ -565,7 +565,7 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 * @return int
 	 */
 	public function getDidacticTemplate(): int {
-		return $this->didacticTemplate;
+		return (int)$this->didacticTemplate;
 	}
 
 
@@ -585,7 +585,7 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 * @return string
 	 */
 	public function getIcon(): string {
-		return $this->icon;
+		return is_string($this->icon) ? $this->icon : '';
 	}
 
 
