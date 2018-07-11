@@ -187,7 +187,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 				}
 				break;
 
-			case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_REF_ID:
+			case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_OBJ_ID:
 			default:
 				$org_unit_id = $dto->getOrgUnitId();
 				break;

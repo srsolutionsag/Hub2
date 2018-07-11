@@ -15,7 +15,7 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject {
 	/**
 	 * @var int
 	 */
-	const ORG_UNIT_ID_TYPE_REF_ID = 1;
+	const ORG_UNIT_ID_TYPE_OBJ_ID = 1;
 	/**
 	 * @var int
 	 */

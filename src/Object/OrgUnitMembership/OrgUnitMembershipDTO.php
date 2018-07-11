@@ -20,7 +20,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
 	/**
 	 * @var int
 	 */
-	protected $org_unit_id_type = self::ORG_UNIT_ID_TYPE_REF_ID;
+	protected $org_unit_id_type = self::ORG_UNIT_ID_TYPE_OBJ_ID;
 	/**
 	 * @var int
 	 */
