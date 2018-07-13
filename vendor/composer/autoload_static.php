@@ -971,7 +971,7 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilObjCourseAdministration' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministration.php',
         'ilObjCourseAdministrationAccess' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministrationAccess.php',
         'ilObjCourseAdministrationGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministrationGUI.php',
-        'ilObjCourseGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGUI.php',
+        ilObjCourseGUI::class => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGUI.php',
         'ilObjCourseGrouping' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGrouping.php',
         'ilObjCourseGroupingGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGroupingGUI.php',
         'ilObjCourseListGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseListGUI.php',

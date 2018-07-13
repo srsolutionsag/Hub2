@@ -83,7 +83,7 @@ class demoCategory extends AbstractOriginImplementation {
 	 * @return IDataTransferObject[]
 	 */
 	public function buildObjects(): array {
-		// TODO Build objects here
+		// TODO: Build objects here
 		return $this->data;
 	}
 

@@ -578,7 +578,7 @@ class Util_TestTest extends PHPUnit_Framework_TestCase
     /** @depends Bar */
     public function methodForTestParseAnnotationThatIsOnlyOneLine()
     {
-        // TODO Remove fixture from test class
+        // TODO: Remove fixture from test class
     }
 
     /**

@@ -349,7 +349,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$roles = array_unique(array_merge($this->hubConfig->getAdministrationRoleIds(), [ 2 ]));
 		if (!$this->rbac()->review()->isAssignedToAtLeastOneGivenRole($this->user()->getId(), $roles)) {
 			ilUtil::sendFailure($this->language()->txt('permission_denied'), true);
-			$this->ctrl()->redirectByClass('ilpersonaldesktopgui');
+			$this->ctrl()->redirectByClass(ilPersonalDesktopGUI::class);
 		}
 	}
 

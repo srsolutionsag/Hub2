@@ -202,7 +202,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 				'[PASSWORD]' => $dto->getPasswd(),
 				'[LOGIN]' => $dto->getLogin()
 			));
-			$mail->Subject($this->props->get(UserOriginProperties::PASSWORD_MAIL_SUBJECT)); // TODO Also replace placeholders
+			$mail->Subject($this->props->get(UserOriginProperties::PASSWORD_MAIL_SUBJECT)); // TODO: Also replace placeholders
 			$mail->Body($body);
 			$mail->Send();
 		}

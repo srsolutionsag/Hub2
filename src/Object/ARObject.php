@@ -420,7 +420,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 			}
 		}
 
-		return md5($hash); // TODO Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
+		return md5($hash); // TODO: Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
 	}
 
 
