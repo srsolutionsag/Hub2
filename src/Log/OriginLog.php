@@ -1,16 +1,12 @@
-<?php
+<?php namespace SRAG\Plugins\Hub2\Log;
 
-namespace SRAG\Plugins\Hub2\Log;
-
-use ilHub2Plugin;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class OriginLog
  *
- * @package SRAG\Plugins\Hub2\Log
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\ILIAS\Plugins\Log
  */
 class OriginLog implements ILog {
 
@@ -49,14 +45,14 @@ class OriginLog implements ILog {
 	/**
 	 * @param IOrigin $origin
 	 *
-	 * @return Logger
+	 * @return \SRAG\Plugins\Hub2\Log\Logger
 	 */
 	private function getLogInstance(IOrigin $origin) {
-		//if (isset(self::$ilLogInstances[$origin->getId()])) {
-		// return self::$ilLogInstances[$origin->getId()];
-		//}
+		if (isset(self::$ilLogInstances[$origin->getId()])) {
+			return self::$ilLogInstances[$origin->getId()];
+		}
 		$filename = implode('-', [
-			ilHub2Plugin::PLUGIN_ID,
+			\ilHub2Plugin::PLUGIN_ID,
 			'origin',
 			$origin->getObjectType(),
 			$origin->getId(),
