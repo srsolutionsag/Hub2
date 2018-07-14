@@ -241,8 +241,17 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
 			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 		}
-		if ($this->props->updateDTOProperty("languageCode")) {
-			$this->setLanguage($dto, $ilObjCourse);
+		//There is some weird connection between subscription limitation type ond subscription type, see e.g. ilObjCourseGUI
+        if ($this->props->updateDTOProperty("subscriptionLimitationType")) {
+            $ilObjCourse->setSubscriptionType($dto->getSubscriptionLimitationType());
+            if($dto->getSubscriptionLimitationType() == CourseDTO::SUBSCRIPTION_TYPE_DEACTIVATED){
+                $ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_DEACTIVATED);
+            }else{
+                $ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_UNLIMITED);
+            }
+        }
+		if ($this->props->updateDTOProperty("languageCode")){
+			$this->setLanguage($dto,$ilObjCourse);
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
