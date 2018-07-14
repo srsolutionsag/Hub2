@@ -32,14 +32,14 @@ class OriginFactory implements IOriginFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function getById($id): IOrigin {
-		/**
-		 * @var ActiveRecord $class
-		 */
-
+	public function getById($id) {
 		$sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
 		$set = $this->db->queryF($sql, [ 'integer' ], [ $id ]);
 		$type = $this->db->fetchObject($set)->object_type;
+        if(!$type){
+            //throw new HubException("Can not get type of origin id (probably deleted): ".$id);
+            return null;
+        }
 		$class = $this->getClass($type);
 
 		return $class::find((int)$id);
