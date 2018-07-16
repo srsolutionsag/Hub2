@@ -90,7 +90,15 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
 	protected function handleCreate(IDataTransferObject $dto) {
 		/** @var UserDTO $dto */
-		$ilObjUser = new ilObjUser();
+		$ilObjUser = new \ilObjUser();
+
+		$user_login =  \ilObjUser::_checkExternalAuthAccount($dto->getAuthMode(),$dto->getExternalAccount(),false);
+		$user_id = \ilObjUser::_loginExists($user_login);
+
+		if($user_id){
+			return $this->handleUpdate($dto,$user_id);
+		}
+
 		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
 		$ilObjUser->setDescription($dto->getEmail());
 		$ilObjUser->setImportId($this->getImportId($dto));
