@@ -97,13 +97,21 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var CourseDTO $dto */
-		$ilObjCourse = new ilObjCourse();
-		$ilObjCourse->setImportId($this->getImportId($dto));
+
+
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
 		// Check if we should create some dependence categories
 		$parentRefId = $this->buildDependenceCategories($dto, $parentRefId);
+
+		$existing_id = $this->checkNewCourseAlreadyExistsInParent($dto->getTitle(),$parentRefId);
+
+		if($existing_id){
+			return $this->handleUpdate($dto,$existing_id);
+		}
+
+		$ilObjCourse = new \ilObjCourse();
+		$ilObjCourse->setImportId($this->getImportId($dto));
 		$ilObjCourse->create();
 		$ilObjCourse->createReference();
 		$ilObjCourse->putInTree($parentRefId);
@@ -143,6 +151,23 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		return $ilObjCourse;
 	}
 
+	/**
+	 * @param $title
+	 * @param $parent_id
+	 * @return int|bool
+	 */
+	protected function checkNewCourseAlreadyExistsInParent($title,$parent_id){
+		global $DIC;
+
+		$children = $DIC->repositoryTree()->getChildsByType($parent_id,"crs");
+
+		foreach($children as $child){
+			if($child['title']==$title){
+				return $child['ref_id'];
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * @param CourseDTO   $dto
