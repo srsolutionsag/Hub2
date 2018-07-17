@@ -77,11 +77,20 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var CategoryDTO $dto */
-		$ilObjCategory = new ilObjCategory();
-		$ilObjCategory->setImportId($this->getImportId($dto));
+		global $DIC;
+
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
+
+		$existing_id = $this->checkNewCategoryAlreadyExistsInParent($dto->getTitle(),$parentRefId);
+
+		if($existing_id){
+			return $this->handleUpdate($dto,$existing_id);
+		}
+
+		/** @var CategoryDTO $dto */
+		$ilObjCategory = new \ilObjCategory();
+		$ilObjCategory->setImportId($this->getImportId($dto));
 
 		$ilObjCategory->create();
 		$ilObjCategory->createReference();
@@ -106,6 +115,24 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $this->lng()->getDefaultLanguage(), true);
 
 		return $ilObjCategory;
+	}
+
+	/**
+	 * @param $title
+	 * @param $parent_id
+	 * @return int|bool
+	 */
+	protected function checkNewCategoryAlreadyExistsInParent($title,$parent_id){
+		global $DIC;
+
+		$children = $DIC->repositoryTree()->getChildsByType($parent_id,"cat");
+
+		foreach($children as $child){
+			if($child['title']==$title){
+				return $child['ref_id'];
+			}
+		}
+		return false;
 	}
 
 
