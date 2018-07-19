@@ -102,33 +102,35 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$this->implementation->afterCreateILIASObject($hook->withILIASObject($ilias_object));
 				break;
 			case IObject::STATUS_TO_UPDATE:
-			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
-				// Updating the ILIAS object is only needed if some properties were changed
-				if (($object->computeHashCode() != $object->getHashCode()) || $force) {
-					$this->implementation->beforeUpdateILIASObject($hook);
-					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
-					if ($ilias_object === NULL) {
+            case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
+                // Updating the ILIAS object is only needed if some properties were changed or if newly delivered
+                if (($object->computeHashCode() != $object->getHashCode()) || $force || $object->getStatus() == IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED) {
+                    $this->implementation->beforeUpdateILIASObject($hook);
+                    $ilias_object = $this->handleUpdate($dto, $object->getILIASId());
+                    if ($ilias_object === null) {
+                        throw new ILIASObjectNotFoundException($object);
+                    }
+                    if ($this instanceof IMetadataSyncProcessor) {
+                        $this->handleMetadata($dto, $ilias_object);
+                    }
+                    if ($this instanceof ITaxonomySyncProcessor) {
+                        $this->handleTaxonomies($dto, $ilias_object);
+                    }
+                    $object->setILIASId($this->getILIASId($ilias_object));
+                    $this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
+                } else {
+                    $object->updateStatus(IObject::STATUS_NOTHING_TO_UPDATE);
+                }
+                break;
+			case IObject::STATUS_TO_DELETE:
+				if(!$this->implementation->ignoreDelete($hook)){
+					$this->implementation->beforeDeleteILIASObject($hook);
+					$ilias_object = $this->handleDelete($object->getILIASId());
+					if ($ilias_object === null) {
 						throw new ILIASObjectNotFoundException($object);
 					}
-					if ($this instanceof IMetadataSyncProcessor) {
-						$this->handleMetadata($dto, $ilias_object);
-					}
-					if ($this instanceof ITaxonomySyncProcessor) {
-						$this->handleTaxonomies($dto, $ilias_object);
-					}
-					$object->setILIASId($this->getILIASId($ilias_object));
-					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
-				} else {
-					$object->updateStatus(IObject::STATUS_NOTHING_TO_UPDATE);
+					$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
 				}
-				break;
-			case IObject::STATUS_TO_DELETE:
-				$this->implementation->beforeDeleteILIASObject($hook);
-				$ilias_object = $this->handleDelete($object->getILIASId());
-				if ($ilias_object === NULL) {
-					throw new ILIASObjectNotFoundException($object);
-				}
-				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
 				break;
 			case IObject::STATUS_IGNORED:
 				// Nothing to do here, object is ignored
