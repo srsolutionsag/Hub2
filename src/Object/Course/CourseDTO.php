@@ -37,29 +37,48 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	/**
 	 * @var array
 	 */
-	private static $subscriptionTypes = [
-		self::SUBSCRIPTION_TYPE_DEACTIVATED,
-		self::SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP,
-		self::SUBSCRIPTION_TYPE_DIRECTLY,
-		self::SUBSCRIPTION_TYPE_PASSWORD,
-	];
+	private static $subscriptionTypes
+		= [
+			self::SUBSCRIPTION_TYPE_DEACTIVATED,
+			self::SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP,
+			self::SUBSCRIPTION_TYPE_DIRECTLY,
+			self::SUBSCRIPTION_TYPE_PASSWORD,
+		];
 	/**
 	 * @var array
 	 */
-	private static $viewModes = [
-		self::VIEW_MODE_SESSIONS,
-		self::VIEW_MODE_OBJECTIVES,
-		self::VIEW_MODE_TIMING,
-		self::VIEW_MODE_SIMPLE,
-		self::VIEW_MODE_BY_TYPE,
-	];
+	private static $viewModes
+		= [
+			self::VIEW_MODE_SESSIONS,
+			self::VIEW_MODE_OBJECTIVES,
+			self::VIEW_MODE_TIMING,
+			self::VIEW_MODE_SIMPLE,
+			self::VIEW_MODE_BY_TYPE,
+		];
+	/**
+	 * Copied from ilMDLanguageItem::_getPossibleLanguageCodes
+	 *
+	 * @var string[]
+	 */
+	private static $available_languages
+		= ["aa", "ab", "af", "am", "ar", "as", "ay", "az", "ba", "be", "bg", "bh", "bi", "bn", "bo",
+		   "br", "ca", "co", "cs", "cy", "da", "de", "dz", "el", "en", "eo", "es", "et", "eu", "fa",
+		   "fi", "fj", "fo", "fr", "fy", "ga", "gd", "gl", "gn", "gu", "ha", "he", "hi", "hr", "hu",
+		   "hy", "ia", "ie", "ik", "id", "is", "it", "iu", "ja", "jv", "ka", "kk", "kl", "km", "kn",
+		   "ko", "ks", "ku", "ky", "la", "ln", "lo", "lt", "lv", "mg", "mi", "mk", "ml", "mn", "mo",
+		   "mr", "ms", "mt", "my", "na", "ne", "nl", "no", "oc", "om", "or", "pa", "pl", "ps", "pt",
+		   "qu", "rm", "rn", "ro", "ru", "rw", "sa", "sd", "sg", "sh", "si", "sk", "sl", "sm", "sn",
+		   "so", "sq", "sr", "ss", "st", "su", "sv", "sw", "ta", "te", "tg", "th", "ti", "tk", "tl",
+		   "tn", "to", "tr", "ts", "tt", "tw", "ug", "uk", "ur", "uz", "vi", "vo", "wo", "xh", "yi",
+		   "yo", "za", "zh", "zu"];
 	/**
 	 * @var array
 	 */
-	private static $parentIdTypes = [
-		self::PARENT_ID_TYPE_REF_ID,
-		self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
-	];
+	private static $parentIdTypes
+		= [
+			self::PARENT_ID_TYPE_REF_ID,
+			self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
+		];
 	/**
 	 * @var string
 	 */
@@ -550,10 +569,11 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	/**
 	 * @param $languageCode
 	 *
+	 * @return CourseDTO
 	 * @throws LanguageCodeException
 	 */
-	public function setLanguageCode($languageCode) {
-		if (!in_array($languageCode, ilMDLanguageItem::_getPossibleLanguageCodes())) {
+	public function setLanguageCode($languageCode): CourseDTO {
+		if (!self::isLanguageCode($languageCode)) {
 			throw new LanguageCodeException($languageCode);
 		}
 
@@ -598,5 +618,15 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 		$this->icon = $icon;
 
 		return $this;
+	}
+
+
+	/**
+	 * @param $languageCode
+	 *
+	 * @return bool
+	 */
+	public static function isLanguageCode($languageCode): bool {
+		return in_array($languageCode, self::$available_languages);
 	}
 }
