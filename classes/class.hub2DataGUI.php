@@ -79,13 +79,13 @@ class hub2DataGUI extends hub2MainGUI {
 
 		$factory = $this->ui()->factory();
 
-		$properties = array_merge([
-			"period" => $object->getPeriod(),
-			"delivery_date" => $object->getDeliveryDate()->format(DATE_ATOM),
-			"processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
-			"ilias_id" => $object->getILIASId(),
-			"status" => $object->getStatus(),
-		], $object->getData());
+		$properties = array_merge(
+			["period"         => $object->getPeriod(),
+			 "delivery_date"  => $object->getDeliveryDate()->format(DATE_ATOM),
+			 "processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
+			 "ilias_id"       => $object->getILIASId(),
+			 "status"         => $object->getStatus(),], $object->getData()
+		);
 
 		if ($object instanceof IMetadataAwareObject) {
 			foreach ($object->getMetaData() as $metadata) {
@@ -102,7 +102,11 @@ class hub2DataGUI extends hub2MainGUI {
 		$filtered = [];
 		foreach ($properties as $key => $property) {
 			if (!is_null($property)) {
-				$filtered[$key] = (string)$property;
+				if (is_array($property)) {
+					$filtered[$key] = implode(',', $property);
+				} else {
+					$filtered[$key] = (string)$property;
+				}
 			}
 			if ($property === '') {
 				$filtered[$key] = "&nbsp;";
@@ -112,13 +116,13 @@ class hub2DataGUI extends hub2MainGUI {
 		ksort($filtered);
 
 		// Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-		$data_table = $factory->item()->standard(sprintf($this->pl->txt("table_ext_id"), $object->getExtId()))->withProperties($filtered);
+		$data_table = $factory->item()->standard(sprintf($this->pl->txt("data_table_ext_id"), $object->getExtId()))->withProperties($filtered);
 
 		$data_table = $factory->listing()->descriptive($filtered);
 
 		$renderer = $this->ui()->renderer();
 
-		$modal = $factory->modal()->roundtrip(sprintf($this->pl->txt("table_hash"), $object->getHashCode()), $data_table);
+		$modal = $factory->modal()->roundtrip(sprintf($this->pl->txt("data_table_hash"), $object->getHashCode()), $data_table);
 
 		echo $renderer->renderAsync($modal);
 		exit;

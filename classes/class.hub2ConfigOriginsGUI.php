@@ -271,7 +271,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 				$originSync->execute();
 			} catch (Throwable $e) {
 				// Any exception being forwarded to here means that we failed to execute the sync at some point
-				ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
+				ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 			}
 			$OriginLog = new OriginLog($originSync->getOrigin());
 			$OriginLog->write($summary->getSummaryOfOrigin($originSync));
