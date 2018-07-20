@@ -127,4 +127,14 @@ interface IOriginImplementation {
 	 * Executed after the synchronization of the origin has been executed.
 	 */
 	public function afterSync();
+
+	/**
+	 * Last chance to ommit the processing of the delete status. Note that they still will
+	 * be marked as deleted.
+	 *
+	 * @param HookObject $object
+	 * @return bool, if true, the delete action will be omited.
+	 */
+	public function ignoreDelete(HookObject $object);
+
 }

@@ -163,8 +163,13 @@ class OriginSync implements IOriginSync {
 		// ======================================================================================================
 		$nullDTO = new NullDTO(); // There is no DTO available / needed for the deletion process (data has not been delivered)
 		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
-			$object->setStatus(IObject::STATUS_TO_DELETE);
-			$this->processObject($object, $nullDTO);
+			$active_period = $this->getOrigin()->config()->getActivePeriod();
+			$ignore = $active_period && ($object->getPeriod() != $active_period);
+			if (!$ignore) {
+				$object->setStatus(IObject::STATUS_TO_DELETE);
+				$this->processObject($object, $nullDTO);
+			}
+
 		}
 
 		try {

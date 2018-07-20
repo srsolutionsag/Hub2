@@ -123,12 +123,15 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				}
 				break;
 			case IObject::STATUS_TO_DELETE:
-				$this->implementation->beforeDeleteILIASObject($hook);
-				$ilias_object = $this->handleDelete($object->getILIASId());
-				if ($ilias_object === NULL) {
-					throw new ILIASObjectNotFoundException($object);
+				if(!$this->implementation->ignoreDelete($hook)){
+					$this->implementation->beforeDeleteILIASObject($hook);
+					$ilias_object = $this->handleDelete($object->getILIASId());
+					if ($ilias_object === null) {
+						throw new ILIASObjectNotFoundException($object);
+					}
+					$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
 				}
-				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
+
 				break;
 			case IObject::STATUS_IGNORED:
 				// Nothing to do here, object is ignored
