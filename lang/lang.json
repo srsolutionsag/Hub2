@@ -865,7 +865,7 @@
                     "de": "Anbindungen",
                     "en": "Origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "users": {
                 "translations": {
@@ -2130,7 +2130,7 @@
                     "de": "Anbindungen",
                     "en": "Origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "data": {
                 "translations": {
@@ -2144,7 +2144,7 @@
                     "de": "Konfiguration",
                     "en": "Configuration"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             }
         },
         "data": {
@@ -2153,49 +2153,49 @@
                     "de": "Anbindung",
                     "en": "Origin"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_ext_id": {
                 "translations": {
                     "de": "Ext-ID",
                     "en": "Ext ID"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_delivery_date": {
                 "translations": {
                     "de": "Lieferdatum",
                     "en": "Delivery date"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_processed_date": {
                 "translations": {
                     "de": "Prozessdatum",
                     "en": "Process date"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_ilias_id": {
                 "translations": {
                     "de": "ILIAS-ID",
                     "en": "ILIAS ID"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_status": {
                 "translations": {
                     "de": "Status",
                     "en": "Status"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_period": {
                 "translations": {
                     "de": "Periode",
                     "en": "Period"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_actions": {
                 "translations": {
@@ -2209,14 +2209,14 @@
                     "de": "Anzeigen",
                     "en": "View"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_data": {
                 "translations": {
                     "de": "Daten",
                     "en": "Data"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_origin": {
                 "translations": {
@@ -2234,7 +2234,8 @@
                 "translations": {
                     "de": "ALLE",
                     "en": "ALL"
-                }
+                },
+                "last_used": "20.07.2018"
             },
             "table_ext_id": {
                 "translations": {
@@ -2291,14 +2292,14 @@
                     "de": "Übersicht",
                     "en": "Overview"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "data": {
                 "translations": {
                     "de": "Verlauf",
                     "en": "Verlauf"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             }
         },
         "grp": {
@@ -2495,7 +2496,7 @@
                 }
             }
         },
-        "orgunit":{
+        "orgunit": {
             "ref_id_if_no_parent_id": {
                 "translations": {
                     "de": "Basic-Ref-ID",
