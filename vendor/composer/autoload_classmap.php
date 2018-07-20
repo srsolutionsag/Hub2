@@ -906,7 +906,7 @@ return array(
     'ilObjCourseAdministration' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministration.php',
     'ilObjCourseAdministrationAccess' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministrationAccess.php',
     'ilObjCourseAdministrationGUI' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministrationGUI.php',
-    ilObjCourseGUI::class => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGUI.php',
+    'ilObjCourseGUI' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGUI.php',
     'ilObjCourseGrouping' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGrouping.php',
     'ilObjCourseGroupingGUI' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGroupingGUI.php',
     'ilObjCourseListGUI' => $baseDir . '/../../../../../../../Modules/Course/classes/class.ilObjCourseListGUI.php',

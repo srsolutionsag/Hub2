@@ -130,11 +130,11 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	protected function assignToOrgUnit(IOrgUnitMembershipDTO $dto): ilOrgUnitUserAssignment {
 		switch ($dto->getPosition()) {
 			case IOrgUnitMembershipDTO::POSITION_EMPLOYEE:
-				$position_id = self::IL_POSITION_EMPLOYEE;
+				$position_id = ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_EMPLOYEE);
 				break;
 
 			case IOrgUnitMembershipDTO::POSITION_SUPERIOR:
-				$position_id = self::IL_POSITION_SUPERIOR;
+				$position_id =  ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_SUPERIOR);
 				break;
 
 			default:
