@@ -79,13 +79,13 @@ class hub2DataGUI extends hub2MainGUI {
 
 		$factory = $this->ui()->factory();
 
-		$properties = array_merge([
-			"period" => $object->getPeriod(),
-			"delivery_date" => $object->getDeliveryDate()->format(DATE_ATOM),
-			"processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
-			"ilias_id" => $object->getILIASId(),
-			"status" => $object->getStatus(),
-		], $object->getData());
+		$properties = array_merge(
+			["period"         => $object->getPeriod(),
+			 "delivery_date"  => $object->getDeliveryDate()->format(DATE_ATOM),
+			 "processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
+			 "ilias_id"       => $object->getILIASId(),
+			 "status"         => $object->getStatus(),], $object->getData()
+		);
 
 		if ($object instanceof IMetadataAwareObject) {
 			foreach ($object->getMetaData() as $metadata) {
@@ -102,7 +102,11 @@ class hub2DataGUI extends hub2MainGUI {
 		$filtered = [];
 		foreach ($properties as $key => $property) {
 			if (!is_null($property)) {
-				$filtered[$key] = (string)$property;
+				if (is_array($property)) {
+					$filtered[$key] = implode(',', $property);
+				} else {
+					$filtered[$key] = (string)$property;
+				}
 			}
 			if ($property === '') {
 				$filtered[$key] = "&nbsp;";
