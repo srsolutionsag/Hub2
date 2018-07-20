@@ -46,17 +46,20 @@ class OriginLog implements ILog {
 	 * @param IOrigin $origin
 	 *
 	 * @return \SRAG\Plugins\Hub2\Log\Logger
+	 * @throws \ILIAS\Filesystem\Exception\IOException
 	 */
 	private function getLogInstance(IOrigin $origin) {
 		if (isset(self::$ilLogInstances[$origin->getId()])) {
 			return self::$ilLogInstances[$origin->getId()];
 		}
-		$filename = implode('-', [
+		$filename = implode(
+			'-', [
 			\ilHub2Plugin::PLUGIN_ID,
 			'origin',
 			$origin->getObjectType(),
 			$origin->getId(),
-		]);
+		]
+		);
 
 		$logger = new Logger('hub/' . $filename . '.log');
 		self::$ilLogInstances[$origin->getId()] = $logger;

@@ -13,6 +13,11 @@ use ILIAS\Filesystem\Stream\Stream;
  * @internal
  */
 class Logger {
+
+	/**
+	 * @var string
+	 */
+	protected $path;
 	/**
 	 * @var Stream
 	 */
@@ -23,6 +28,8 @@ class Logger {
 	 * Logger constructor.
 	 *
 	 * @param string $path
+	 *
+	 * @throws \ILIAS\Filesystem\Exception\IOException
 	 */
 	public function __construct(string $path) {
 		global $DIC;
@@ -32,9 +39,8 @@ class Logger {
 			$DIC->filesystem()->storage()->put($this->path, "");
 		}
 
-		$resource = fopen(CLIENT_DATA_DIR.'/'.$this->path, 'w');
+		$resource = fopen(CLIENT_DATA_DIR . '/' . $this->path, 'w');
 		$this->stream = Streams::ofResource($resource);
-
 	}
 
 
