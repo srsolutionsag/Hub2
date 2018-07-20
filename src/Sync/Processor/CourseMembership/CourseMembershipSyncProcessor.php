@@ -80,7 +80,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		 * @var CourseMembershipDTO $dto
 		 */
 		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
-		$ilias_course_ref_id = $dto->getCourseId();
+		$ilias_course_ref_id = $obj->getContainerIdIlias();
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
 			return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);

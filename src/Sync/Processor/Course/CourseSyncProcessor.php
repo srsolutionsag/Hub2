@@ -332,7 +332,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$objectFactory = new ObjectFactory($origin);
 			$category = $objectFactory->category($course->getParentId());
 			if (!$category->getILIASId()) {
-				throw new HubException("The linked category does not (yet) exist in ILIAS");
+				throw new HubException("The linked category (".$category->getExtId().") does not (yet) exist in ILIAS for course: ".$course->getExtId());
 			}
 			if (!$this->tree()->isInTree($category->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
