@@ -117,7 +117,7 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
      */
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
-        $this->writeNotOk($test, '', 'TODO: Incomplete Test');
+        $this->writeNotOk($test, '', 'TODO Incomplete Test');
     }
 
     /**
