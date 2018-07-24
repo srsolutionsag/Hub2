@@ -34,12 +34,12 @@ class OriginFactory implements IOriginFactory {
 	 */
 	public function getById($id) {
 		$sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
-		$set = $this->db->queryF($sql, [ 'integer' ], [ $id ]);
+		$set = $this->db->queryF($sql, ['integer'], [$id]);
 		$type = $this->db->fetchObject($set)->object_type;
-        if(!$type){
-            //throw new HubException("Can not get type of origin id (probably deleted): ".$id);
-            return null;
-        }
+		if (!$type) {
+			//throw new HubException("Can not get type of origin id (probably deleted): ".$id);
+			return null;
+		}
 		$class = $this->getClass($type);
 
 		return $class::find((int)$id);
@@ -49,7 +49,7 @@ class OriginFactory implements IOriginFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function createByType(string $type) {
+	public function createByType(string $type): IOrigin {
 		$class = $this->getClass($type);
 
 		return new $class();
@@ -63,7 +63,23 @@ class OriginFactory implements IOriginFactory {
 		$origins = [];
 
 		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s';
-		$set = $this->db->queryF($sql, [ 'integer' ], [ 1 ]);
+		$set = $this->db->queryF($sql, ['integer'], [1]);
+		while ($data = $this->db->fetchObject($set)) {
+			$origins[] = $this->getById($data->id);
+		}
+
+		return $origins;
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getAll(): array {
+		$origins = [];
+
+		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME;
+		$set = $this->db->query($sql);
 		while ($data = $this->db->fetchObject($set)) {
 			$origins[] = $this->getById($data->id);
 		}

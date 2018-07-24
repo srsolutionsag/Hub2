@@ -26,11 +26,17 @@ interface IOriginFactory {
 	 *
 	 * @return IOrigin
 	 */
-	public function createByType(string $type);
+	public function createByType(string $type): IOrigin;
 
 
 	/**
 	 * @return IOrigin[]
 	 */
 	public function getAllActive(): array;
+
+
+	/**
+	 * @return IOrigin[]
+	 */
+	public function getAll(): array;
 }
