@@ -124,7 +124,7 @@ common_on_status_new#:#NEU
 common_on_status_update#:#AKTUALISIEREN
 common_on_status_delete#:#LÖSCHEN
 common_yes#:#Ja
-common_no#:#Nein
+common_no#:#No
 hub_categories#:#Kategorien
 hub_conf#:#Einstellungen
 hub_courses#:#Kurse
