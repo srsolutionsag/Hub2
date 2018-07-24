@@ -74,7 +74,14 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @inheritdoc
 	 */
 	final public function process(IObject $object, IDataTransferObject $dto, bool $force = false) {
-		$hook = new HookObject($object);
+		// The HookObject is filled with the object (known Data in HUB) and the DTO delivered with
+		// your origin. Additionally, if available, the HookObject is filled with the given
+		// ILIAS-Object, too.
+		$hook = new HookObject($object, $dto);
+
+		// We pass the HookObject to the OriginImplementaion which could override the status
+		$this->implementation->overrideStatus($hook);
+
 		// We keep the old data if the object is getting deleted, as there is no "real" DTO available, because
 		// the data has not been delivered...
 		if ($object->getStatus() != IObject::STATUS_TO_DELETE) {

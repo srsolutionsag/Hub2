@@ -3,6 +3,7 @@
 namespace SRAG\Plugins\Hub2\Object;
 
 use ilObject;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 
 /**
@@ -14,6 +15,10 @@ use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
  */
 class HookObject {
 
+	/**
+	 * @var IDataTransferObject
+	 */
+	protected $dto;
 	/**
 	 * @var IObject
 	 */
@@ -27,8 +32,9 @@ class HookObject {
 	/**
 	 * @param IObject $object
 	 */
-	public function __construct(IObject $object) {
+	public function __construct(IObject $object, IDataTransferObject $dto) {
 		$this->object = $object;
+		$this->dto = $dto;
 	}
 
 
@@ -49,6 +55,14 @@ class HookObject {
 	 */
 	public function getStatus() {
 		return $this->object->getStatus();
+	}
+
+
+	/**
+	 * @param int $status
+	 */
+	public function overrideStatus(int $status) {
+		$this->object->setStatus($status);
 	}
 
 
@@ -88,5 +102,13 @@ class HookObject {
 	 */
 	public function getILIASId() {
 		return $this->object->getILIASId();
+	}
+
+
+	/**
+	 * @return IDataTransferObject
+	 */
+	public function getDTO(): IDataTransferObject {
+		$this->dto;
 	}
 }
