@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Object\DTO;
 
+use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategy;
+
 /**
  * Data Transfer Objects holding all data of objects in the hub context, e.g.
  * Users, Courses, CourseMemberships...
@@ -55,4 +57,13 @@ interface IDataTransferObject {
 	 * @return $this
 	 */
 	public function setData(array $data);
+
+
+	/**
+	 * @return IMappingStrategy
+	 */
+	public function getMappingStrategy(): IMappingStrategy;
+
+
+	public function overrideMappingStrategy(IMappingStrategy $strategy):IDataTransferObject;
 }
