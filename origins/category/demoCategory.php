@@ -50,16 +50,24 @@ class demoCategory extends AbstractOriginImplementation {
 		$this->log()->write("This is a test-log entry");
 
 		$time = time();
-		for ($x = 1; $x <= 10; $x ++) {
+		for ($x = 1; $x <= 10; $x++) {
 			if (rand(1, 10) === $x) {
-				continue; // Simulate some random deletions
+				// continue; // Simulate some random deletions
 			}
 
-			$this->data[] = $this->factory()->category($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
-				->setParentId(1)->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->addMetadata($this->metadata()->getDTOWithIliasId(1)
-					->setValue("Meine Metadaten"))->addTaxonomy($this->taxonomy()->create("Taxonomy 1")->attach($this->taxonomy()
-					->node("Node Title 1.1"))->attach($this->taxonomy()->node("Node Title 1.2")))->addTaxonomy($this->taxonomy()->create("Taxonomy 2")
-					->attach($this->taxonomy()->node("Node Title 2.1"))->attach($this->taxonomy()->node("Node Title 2.2")));
+			$this->data[] = $this->factory()->category('l_'.$x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
+				->setParentId(1)->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->addMetadata(
+					$this->metadata()->getDTOWithIliasId(1)
+						->setValue("Meine Metadaten")
+				)->addTaxonomy(
+					$this->taxonomy()->create("Taxonomy 1")->attach(
+						$this->taxonomy()
+							->node("Node Title 1.1")
+					)->attach($this->taxonomy()->node("Node Title 1.2"))
+				)->addTaxonomy(
+					$this->taxonomy()->create("Taxonomy 2")
+						->attach($this->taxonomy()->node("Node Title 2.1"))->attach($this->taxonomy()->node("Node Title 2.2"))
+				);
 		}
 
 		return count($this->data);
