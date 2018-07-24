@@ -48,7 +48,7 @@ class Template extends AbstractOriginImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	public function beforeCreateILIASObject(HookObject $object) {
+	public function beforeCreateILIASObject(HookObject $hook) {
 		// TODO: Implement beforeCreateILIASObject() method.
 	}
 
@@ -56,7 +56,7 @@ class Template extends AbstractOriginImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	public function afterCreateILIASObject(HookObject $object) {
+	public function afterCreateILIASObject(HookObject $hook) {
 		// TODO: Implement afterCreateILIASObject() method.
 	}
 
@@ -64,7 +64,7 @@ class Template extends AbstractOriginImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) {
+	public function beforeUpdateILIASObject(HookObject $hook) {
 		// TODO: Implement beforeUpdateILIASObject() method.
 	}
 
@@ -72,7 +72,7 @@ class Template extends AbstractOriginImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	public function afterUpdateILIASObject(HookObject $object) {
+	public function afterUpdateILIASObject(HookObject $hook) {
 		// TODO: Implement afterUpdateILIASObject() method.
 	}
 
@@ -80,7 +80,7 @@ class Template extends AbstractOriginImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	public function beforeDeleteILIASObject(HookObject $object) {
+	public function beforeDeleteILIASObject(HookObject $hook) {
 		// TODO: Implement beforeDeleteILIASObject() method.
 	}
 
@@ -88,7 +88,7 @@ class Template extends AbstractOriginImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	public function afterDeleteILIASObject(HookObject $object) {
+	public function afterDeleteILIASObject(HookObject $hook) {
 		// TODO: Implement afterDeleteILIASObject() method.
 	}
 
