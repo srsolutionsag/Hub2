@@ -5,6 +5,7 @@ namespace SRAG\Plugins\Hub2\Origin;
 use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
+use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\HookObject;
@@ -140,6 +141,9 @@ interface IOriginImplementation {
 	 * - IObject::STATUS_IGNORED
 	 *
 	 * E.G. $object->overrideStatus(IObject::STATUS_TO_UPDATE);
+	 *
+	 * @throws HubException if overriding Status for NullDTOs (deleted objects)
+	 * @throws \InvalidArgumentException if passing not supported Status
 	 *
 	 * @param HookObject $hook
 	 *
