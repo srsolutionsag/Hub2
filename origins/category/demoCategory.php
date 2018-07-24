@@ -9,6 +9,7 @@ use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\HookObject;
+use SRAG\Plugins\Hub2\Object\IObject;
 
 /**
  * Class demoCategory
@@ -110,39 +111,39 @@ class demoCategory extends AbstractOriginImplementation {
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeCreateILIASObject(HookObject $object) { }
+	public function beforeCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterCreateILIASObject(HookObject $object) { }
+	public function afterCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) { }
+	public function beforeUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterUpdateILIASObject(HookObject $object) { }
+	public function afterUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeDeleteILIASObject(HookObject $object) { }
+	public function beforeDeleteILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterDeleteILIASObject(HookObject $object) { }
+	public function afterDeleteILIASObject(HookObject $hook) { }
 
 
 	/**
