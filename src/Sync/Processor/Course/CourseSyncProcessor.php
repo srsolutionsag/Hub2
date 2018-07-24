@@ -135,8 +135,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)) {
 			$this->sendMailNotifications($dto, $ilObjCourse);
 		}
+		$this->setSubscriptionType($dto, $ilObjCourse);
 
 		$this->setLanguage($dto, $ilObjCourse);
+
 
 		$ilObjCourse->update();
 
@@ -159,6 +161,20 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$language->update();
 	}
 
+
+	/**
+	 * @param CourseDTO $dto
+	 * @param \ilObjCourse $ilObjCourse
+	 */
+	protected function setSubscriptionType(CourseDTO $dto, \ilObjCourse $ilObjCourse){
+		//There is some weird connection between subscription limitation type ond subscription type, see e.g. ilObjCourseGUI
+		$ilObjCourse->setSubscriptionType($dto->getSubscriptionLimitationType());
+		if($dto->getSubscriptionLimitationType() == CourseDTO::SUBSCRIPTION_TYPE_DEACTIVATED){
+			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_DEACTIVATED);
+		}else{
+			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_UNLIMITED);
+		}
+	}
 
 	/**
 	 * @param CourseDTO $dto
@@ -241,8 +257,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
 			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 		}
-		if ($this->props->updateDTOProperty("languageCode")) {
-			$this->setLanguage($dto, $ilObjCourse);
+        if ($this->props->updateDTOProperty("subscriptionLimitationType")) {
+			$this->setSubscriptionType($dto, $ilObjCourse);
+        }
+		if ($this->props->updateDTOProperty("languageCode")){
+			$this->setLanguage($dto,$ilObjCourse);
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
