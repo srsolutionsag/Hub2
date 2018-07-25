@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
+class ComposerStaticInit3167a2dc3530ffdbe7ebc0eaefc69c08
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -66,6 +66,13 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
             'Prophecy\\' => 
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
+            ),
+        ),
+        'M' => 
+        array (
+            'Mockery' => 
+            array (
+                0 => __DIR__ . '/..' . '/mockery/mockery/library',
             ),
         ),
     );
@@ -696,10 +703,8 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilAppointmentSessionFileHandler' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/FileHandler/class.ilAppointmentSessionFileHandler.php',
         'ilAuthCalendar' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilAuthCalendar.php',
         'ilAuthCalendarToken' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilAuthCalendarToken.php',
-        'ilAuthContainerCalendarToken' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilAuthContainerCalendarToken.php',
         'ilCalCategoriesInitializedMultipleException' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/exceptions/class.ilCalCategoriesInitializedMultipleException.php',
         'ilCalCategoriesNotInitializedException' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/exceptions/class.ilCalCategoriesNotInitializedException.php',
-        'ilCalFileZipJob' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/FileHandler/class.ilCalFileZipJob.php',
         'ilCalendarActions' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilCalendarActions.php',
         'ilCalendarAgendaListGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/Agenda/class.ilCalendarAgendaListGUI.php',
         'ilCalendarAppEventListener' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilCalendarAppEventListener.php',
@@ -881,6 +886,7 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilCronJobResult' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/classes/class.ilCronJobResult.php',
         'ilCronManager' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/classes/class.ilCronManager.php',
         'ilCronManagerGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/classes/class.ilCronManagerGUI.php',
+        'ilCronManagerInterface' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/interfaces/interface.ilCronManagerInterface.php',
         'ilCronManagerTableGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/classes/class.ilCronManagerTableGUI.php',
         'ilCronService' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/classes/class.ilCronService.php',
         'ilCronStartUp' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/classes/class.ilCronStartUp.php',
@@ -971,7 +977,7 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilObjCourseAdministration' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministration.php',
         'ilObjCourseAdministrationAccess' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministrationAccess.php',
         'ilObjCourseAdministrationGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseAdministrationGUI.php',
-        ilObjCourseGUI::class => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGUI.php',
+        'ilObjCourseGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGUI.php',
         'ilObjCourseGrouping' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGrouping.php',
         'ilObjCourseGroupingGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseGroupingGUI.php',
         'ilObjCourseListGUI' => __DIR__ . '/../..' . '/../../../../../../../Modules/Course/classes/class.ilObjCourseListGUI.php',
@@ -1002,6 +1008,7 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
         'ilRecurrenceInputGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/Form/class.ilRecurrenceInputGUI.php',
         'ilRoleAssignmentTableGUI' => __DIR__ . '/../..' . '/../../../../../../../Services/User/classes/class.ilRoleAssignmentTableGUI.php',
         'ilServicesUserSuite' => __DIR__ . '/../..' . '/../../../../../../../Services/User/test/ilServicesUserSuite.php',
+        'ilStrictCliCronManager' => __DIR__ . '/../..' . '/../../../../../../../Services/Cron/classes/class.ilStrictCliCronManager.php',
         'ilTestingHandler' => __DIR__ . '/../..' . '/../../../../../../../Services/Exceptions/classes/class.ilTestingHandler.php',
         'ilTimeZone' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilTimeZone.php',
         'ilTimeZoneException' => __DIR__ . '/../..' . '/../../../../../../../Services/Calendar/classes/class.ilTimeZoneException.php',
@@ -1082,10 +1089,10 @@ class ComposerStaticInit54dce2a5795a6995137dd1e846bcc497
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit54dce2a5795a6995137dd1e846bcc497::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit54dce2a5795a6995137dd1e846bcc497::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit54dce2a5795a6995137dd1e846bcc497::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit54dce2a5795a6995137dd1e846bcc497::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3167a2dc3530ffdbe7ebc0eaefc69c08::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3167a2dc3530ffdbe7ebc0eaefc69c08::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit3167a2dc3530ffdbe7ebc0eaefc69c08::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit3167a2dc3530ffdbe7ebc0eaefc69c08::$classMap;
 
         }, null, ClassLoader::class);
     }

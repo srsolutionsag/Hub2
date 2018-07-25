@@ -108,10 +108,11 @@ class Taxonomy implements ITaxonomy {
 		return $this;
 	}
 
-	//	/**
-	//	 * @inheritDoc
-	//	 */
-	//	public function __toString(): string {
-	//		return "// TODO: Implement __toString() method.";
-	//	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __toString(): string {
+		return ""; // Is this needed?
+	}
 }

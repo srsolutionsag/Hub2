@@ -5,6 +5,7 @@ namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 use ilObjectFactory;
 use ilObjOrgUnit;
 use ilOrgUnitUserAssignment;
+use ilOrgUnitPosition;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
@@ -20,6 +21,7 @@ use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+
 
 /**
  * Class OrgUnitMembershipSyncProcessor
@@ -130,11 +132,11 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	protected function assignToOrgUnit(IOrgUnitMembershipDTO $dto): ilOrgUnitUserAssignment {
 		switch ($dto->getPosition()) {
 			case IOrgUnitMembershipDTO::POSITION_EMPLOYEE:
-				$position_id = self::IL_POSITION_EMPLOYEE;
+				$position_id = ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_EMPLOYEE);
 				break;
 
 			case IOrgUnitMembershipDTO::POSITION_SUPERIOR:
-				$position_id = self::IL_POSITION_SUPERIOR;
+				$position_id =  ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_SUPERIOR);
 				break;
 
 			default:

@@ -9,6 +9,8 @@ use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use SRAG\Plugins\Hub2\MappingStrategy\None;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
@@ -74,17 +76,38 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @inheritdoc
 	 */
 	final public function process(IObject $object, IDataTransferObject $dto, bool $force = false) {
-		$hook = new HookObject($object);
+		// The HookObject is filled with the object (known Data in HUB) and the DTO delivered with
+		// your origin. Additionally, if available, the HookObject is filled with the given
+		// ILIAS-Object, too.
+		$hook = new HookObject($object, $dto);
+
+		// We pass the HookObject to the OriginImplementaion which could override the status
+		$this->implementation->overrideStatus($hook);
+
 		// We keep the old data if the object is getting deleted, as there is no "real" DTO available, because
 		// the data has not been delivered...
+
+		// We check if there is another mapping strategy than "None" and check for existing objects in ILIAS
+		if ($object->getStatus() === IObject::STATUS_TO_CREATE && $dto instanceof IMappingStrategyAwareDataTransferObject) {
+			$m = $dto->getMappingStrategy();
+			$ilias_id = $m->map($dto);
+			if ($ilias_id > 0) {
+				$object->setStatus(IObject::STATUS_TO_UPDATE);
+				$object->setILIASId($ilias_id);
+				$object->save();
+			}
+		}
+
 		if ($object->getStatus() != IObject::STATUS_TO_DELETE) {
 			$object->setData($dto->getData());
 			if ($dto instanceof IMetadataAwareDataTransferObject
-				&& $object instanceof IMetadataAwareObject) {
+				&& $object instanceof IMetadataAwareObject
+			) {
 				$object->setMetaData($dto->getMetaData());
 			}
 			if ($dto instanceof ITaxonomyAwareDataTransferObject
-				&& $object instanceof ITaxonomyAwareObject) {
+				&& $object instanceof ITaxonomyAwareObject
+			) {
 				$object->setTaxonomies($dto->getTaxonomies());
 			}
 		}
@@ -102,12 +125,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$this->implementation->afterCreateILIASObject($hook->withILIASObject($ilias_object));
 				break;
 			case IObject::STATUS_TO_UPDATE:
-			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
 				// Updating the ILIAS object is only needed if some properties were changed
 				if (($object->computeHashCode() != $object->getHashCode()) || $force) {
 					$this->implementation->beforeUpdateILIASObject($hook);
 					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
-					if ($ilias_object === NULL) {
+					if ($ilias_object === null) {
 						throw new ILIASObjectNotFoundException($object);
 					}
 					if ($this instanceof IMetadataSyncProcessor) {
@@ -122,15 +144,37 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 					$object->updateStatus(IObject::STATUS_NOTHING_TO_UPDATE);
 				}
 				break;
-			case IObject::STATUS_TO_DELETE:
-				if(!$this->implementation->ignoreDelete($hook)){
-					$this->implementation->beforeDeleteILIASObject($hook);
-					$ilias_object = $this->handleDelete($object->getILIASId());
-					if ($ilias_object === null) {
-						throw new ILIASObjectNotFoundException($object);
-					}
-					$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
+			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
+				// Updating the ILIAS object if newly delivered. Currently newly delivered will lead
+				// to an Update-Handler which could lead to problems for some configuration such as
+				// deleted (in ILIAS) objects. Some refactoring will be needed to handle this issue,
+				// e.g. to ask the relevant SyncProcessor wheather the related ILIAS object is
+				// avaiable or not. Another approach is the possibility to give MappingStrategies
+				// with your DTO (ans some default as well) which then before the Handler is called
+				// will try to map you DTO with an existing ILIAS Object (which will also be needed
+				// for handling existing objects while Creation as well.
+
+				$this->implementation->beforeUpdateILIASObject($hook);
+				$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
+				if ($ilias_object === null) {
+					throw new ILIASObjectNotFoundException($object);
 				}
+				if ($this instanceof IMetadataSyncProcessor) {
+					$this->handleMetadata($dto, $ilias_object);
+				}
+				if ($this instanceof ITaxonomySyncProcessor) {
+					$this->handleTaxonomies($dto, $ilias_object);
+				}
+				$object->setILIASId($this->getILIASId($ilias_object));
+				$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
+				break;
+			case IObject::STATUS_TO_DELETE:
+				$this->implementation->beforeDeleteILIASObject($hook);
+				$ilias_object = $this->handleDelete($object->getILIASId());
+				if ($ilias_object === null) {
+					throw new ILIASObjectNotFoundException($object);
+				}
+				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
 
 				break;
 			case IObject::STATUS_IGNORED:
@@ -141,7 +185,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 		}
 		$object->setStatus($this->transition->intermediateToFinal($object));
 		if ($object->getStatus() != IObject::STATUS_IGNORED
-			&& $object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
+			&& $object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE
+		) {
 			$object->setProcessedDate(time());
 		}
 		if ($object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
@@ -157,7 +202,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 */
 	protected function getILIASId($object) {
 		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
-			|| $object instanceof FakeIliasMembershipObject) {
+			|| $object instanceof FakeIliasMembershipObject
+		) {
 			return $object->getId();
 		}
 

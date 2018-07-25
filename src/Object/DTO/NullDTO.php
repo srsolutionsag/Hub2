@@ -11,7 +11,5 @@ namespace SRAG\Plugins\Hub2\Object\DTO;
  */
 class NullDTO extends DataTransferObject {
 
-	public function __construct() {
-		parent::__construct(0);
-	}
+
 }
