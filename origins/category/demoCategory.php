@@ -52,10 +52,10 @@ class demoCategory extends AbstractOriginImplementation {
 		$time = time();
 		for ($x = 1; $x <= 10; $x++) {
 			if (rand(1, 10) === $x) {
-				continue; // Simulate some random deletions
+				// continue; // Simulate some random deletions
 			}
 
-			$this->data[] = $this->factory()->category($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
+			$this->data[] = $this->factory()->category('l_' . $x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
 				->setParentId(1)->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->addMetadata(
 					$this->metadata()->getDTOWithIliasId(1)
 						->setValue("Meine Metadaten")
@@ -166,12 +166,4 @@ class demoCategory extends AbstractOriginImplementation {
 	 * Executed after the synchronization of the origin has been executed.
 	 */
 	public function afterSync() { }
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function overrideStatus(HookObject $hook) {
-		// TODO: Implement overrideStatus() method.
-	}
 }

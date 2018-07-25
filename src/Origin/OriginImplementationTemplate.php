@@ -107,4 +107,12 @@ class Template extends AbstractOriginImplementation {
 	public function afterSync() {
 		// TODO: Implement afterSync() method.
 	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function overrideStatus(HookObject $hook) {
+		// TODO: Implement overrideStatus() method.
+	}
 }

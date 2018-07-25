@@ -145,4 +145,10 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * Executed after the synchronization of the origin has been executed.
 	 */
 	public function afterSync() { }
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function overrideStatus(HookObject $hook) { }
 }

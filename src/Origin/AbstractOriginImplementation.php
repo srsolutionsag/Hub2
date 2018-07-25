@@ -8,6 +8,7 @@ use SRAG\Plugins\Hub2\MappingStrategy\Factory;
 use SRAG\Plugins\Hub2\Metadata\IMetadataFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
+use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
 
@@ -131,5 +132,15 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function notifications() {
 		return $this->originNotifications;
+	}
+
+	// HOOKS
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function overrideStatus(HookObject $hook) {
+		// TODO: Implement overrideStatus() method.
 	}
 }
