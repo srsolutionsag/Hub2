@@ -6,6 +6,7 @@ use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
+use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\HookObject;
@@ -55,20 +56,27 @@ class demoCategory extends AbstractOriginImplementation {
 				// continue; // Simulate some random deletions
 			}
 
-			$this->data[] = $this->factory()->category('l_'.$x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
-				->setParentId(1)->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->addMetadata(
-					$this->metadata()->getDTOWithIliasId(1)
-						->setValue("Meine Metadaten")
-				)->addTaxonomy(
-					$this->taxonomy()->create("Taxonomy 1")->attach(
-						$this->taxonomy()
-							->node("Node Title 1.1")
-					)->attach($this->taxonomy()->node("Node Title 1.2"))
-				)->addTaxonomy(
-					$this->taxonomy()->create("Taxonomy 2")
-						->attach($this->taxonomy()->node("Node Title 2.1"))->attach($this->taxonomy()->node("Node Title 2.2"))
-				);
+			// $this->data[] = $this->factory()->category('l_' . $x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")->setOwner(6)
+			// 	->setParentId(1)->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->addMetadata(
+			// 		$this->metadata()->getDTOWithIliasId(1)
+			// 			->setValue("Meine Metadaten")
+			// 	)->addTaxonomy(
+			// 		$this->taxonomy()->create("Taxonomy 1")->attach(
+			// 			$this->taxonomy()
+			// 				->node("Node Title 1.1")
+			// 		)->attach($this->taxonomy()->node("Node Title 1.2"))
+			// 	)->addTaxonomy(
+			// 		$this->taxonomy()->create("Taxonomy 2")
+			// 			->attach($this->taxonomy()->node("Node Title 2.1"))->attach($this->taxonomy()->node("Node Title 2.2"))
+			// 	);
 		}
+
+		$this->data[] = $this->factory()->category('ext_001')
+			->setTitle("Manuell")
+			->setDescription("Mapped by Strategy")
+			->setParentId(1)
+			->setParentIdType(CategoryDTO::PARENT_ID_TYPE_REF_ID)
+			->overrideMappingStrategy($this->mapping()->byTitle());
 
 		return count($this->data);
 	}
