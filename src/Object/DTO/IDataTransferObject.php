@@ -57,13 +57,4 @@ interface IDataTransferObject {
 	 * @return $this
 	 */
 	public function setData(array $data);
-
-
-	/**
-	 * @return IMappingStrategy
-	 */
-	public function getMappingStrategy(): IMappingStrategy;
-
-
-	public function overrideMappingStrategy(IMappingStrategy $strategy):IDataTransferObject;
 }

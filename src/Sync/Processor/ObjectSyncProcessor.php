@@ -9,6 +9,8 @@ use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use SRAG\Plugins\Hub2\MappingStrategy\None;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
@@ -77,6 +79,18 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 		$hook = new HookObject($object);
 		// We keep the old data if the object is getting deleted, as there is no "real" DTO available, because
 		// the data has not been delivered...
+
+		// We check if there is another mapping strategy than "None" and check for existing objects in ILIAS
+		if ($object->getStatus() === IObject::STATUS_TO_CREATE && $dto instanceof IMappingStrategyAwareDataTransferObject) {
+			$m = $dto->getMappingStrategy();
+			$ilias_id = $m->map($dto);
+			if ($ilias_id > 0) {
+				$object->setStatus(IObject::STATUS_TO_UPDATE);
+				$object->setILIASId($ilias_id);
+				$object->save();
+			}
+		}
+
 		if ($object->getStatus() != IObject::STATUS_TO_DELETE) {
 			$object->setData($dto->getData());
 			if ($dto instanceof IMetadataAwareDataTransferObject

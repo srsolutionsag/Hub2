@@ -5,6 +5,8 @@ namespace SRAG\Plugins\Hub2\Object\Course;
 use ilMDLanguageItem;
 use InvalidArgumentException;
 use SRAG\Plugins\Hub2\Exception\LanguageCodeException;
+use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
@@ -16,9 +18,10 @@ use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareDataTransferObject {
+class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject {
 
 	use TaxonomyAndMetadataAwareDataTransferObject;
+	use MappingStrategyAwareDataTransferObject;
 	// @see ilCourseConstants
 	const SUBSCRIPTION_TYPE_DEACTIVATED = 1;
 	const SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP = 2;

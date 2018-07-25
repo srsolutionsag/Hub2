@@ -4,6 +4,7 @@ namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\MappingStrategy\Factory;
 use SRAG\Plugins\Hub2\Metadata\IMetadataFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
@@ -22,6 +23,10 @@ use SRAG\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 	use DIC;
+	/**
+	 * @var Factory
+	 */
+	private $mapping_strategy_factory;
 	/**
 	 * @var ITaxonomyFactory
 	 */
@@ -62,13 +67,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 * @param IMetadataFactory           $metadataFactory
 	 * @param ITaxonomyFactory           $taxonomyFactory
 	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, Factory $mapping_strategy) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
 		$this->metadataFactory = $metadataFactory;
 		$this->taxonomyFactory = $taxonomyFactory;
+		$this->mapping_strategy_factory = $mapping_strategy;
 	}
 
 
@@ -85,6 +91,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function factory() {
 		return $this->factory;
+	}
+
+
+	/**
+	 * @return Factory
+	 */
+	final protected function mapping(): Factory {
+		return $this->mapping_strategy_factory;
 	}
 
 
