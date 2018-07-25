@@ -25,12 +25,16 @@ class ByEmail implements IMappingStrategy {
 		if (!$dto instanceof UserDTO) {
 			throw new HubException("Mapping using Email not supported for this type of DTO");
 		}
-
+		$login = false;
 		$user_ids_by_email = \ilObjUser::_getUserIdsByEmail($dto->getLogin());
 		if (is_array($user_ids_by_email)) {
-			return (int)$user_ids_by_email[0];
+			$login = $user_ids_by_email[0];
 		}
 
-		return 0;
+		if (!$login) {
+			return 0;
+		}
+
+		return (int)\ilObjUser::_lookupId($login);
 	}
 }

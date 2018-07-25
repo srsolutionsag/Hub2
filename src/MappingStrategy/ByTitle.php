@@ -33,9 +33,16 @@ class ByTitle implements IMappingStrategy {
 			case ($dto instanceof CourseDTO):
 			case ($dto instanceof OrgUnitDTO):
 			case ($dto instanceof CategoryDTO):
+				if ($dto->getParentIdType() != CourseDTO::PARENT_ID_TYPE_REF_ID) {
+					return 0;
+				}
 				global $DIC;
 
-				$children = $DIC->repositoryTree()->getChildsByType($dto->getParentId(), "crs");
+				$parent_id = $dto->getParentId();
+				if (!\ilObject2::_exists($parent_id)) {
+					return 0;
+				}
+				$children = $DIC->repositoryTree()->getChildsByType($parent_id, $this->getTypeByDTO($dto));
 
 				foreach ($children as $child) {
 					if ($child['title'] == $dto->getTitle()) {
@@ -46,5 +53,19 @@ class ByTitle implements IMappingStrategy {
 		}
 
 		return 0;
+	}
+
+
+	private function getTypeByDTO(IDataTransferObject $dto): string {
+		switch (true) {
+			case ($dto instanceof GroupDTO):
+				return "grp";
+			case ($dto instanceof CourseDTO):
+				return "crs";
+			case ($dto instanceof OrgUnitDTO):
+				return "orgu";
+			case ($dto instanceof CategoryDTO):
+				return "cat";
+		}
 	}
 }
