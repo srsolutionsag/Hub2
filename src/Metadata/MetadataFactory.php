@@ -20,15 +20,4 @@ class MetadataFactory implements IMetadataFactory {
 	public function getDTOWithIliasId(int $id): IMetadata {
 		return new Metadata($id);
 	}
-
-
-	/**
-	 * @param string $title
-	 *
-	 * @return IMetadata
-	 * @throws NotImplementedException
-	 */
-	public function getDTOWithFirstIliasIdForTitle(string $title): IMetadata {
-		throw new NotImplementedException('not yet implemented');
-	}
 }
