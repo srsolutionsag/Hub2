@@ -13,6 +13,9 @@ use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class CourseMembershipDTO extends DataTransferObject {
 
+	const GLUE = "|||";
+
+
 	/**
 	 * @inheritDoc
 	 */
