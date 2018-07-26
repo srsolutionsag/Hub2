@@ -88,10 +88,12 @@ abstract class DataTransferObject implements IDataTransferObject {
 	}
 
 
-	function __toString() {
-		return implode(', ', [
-			"ext_id: " . $this->getExtId(),
-			"period: " . $this->getPeriod(),
-		]);
+	public function __toString() {
+		return implode(
+			', ', [
+				    "ext_id: " . $this->getExtId(),
+				    "period: " . $this->getPeriod(),
+			    ]
+		);
 	}
 }

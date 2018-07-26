@@ -16,12 +16,4 @@ interface IMetadataFactory {
 	 * @return IMetadata
 	 */
 	public function getDTOWithIliasId(int $id): IMetadata;
-
-
-	/**
-	 * @param string $title
-	 *
-	 * @return IMetadata
-	 */
-	public function getDTOWithFirstIliasIdForTitle(string $title): IMetadata;
 }
