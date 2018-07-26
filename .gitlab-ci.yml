@@ -1,0 +1,9 @@
+test:
+  stage: test
+  tags:
+    - php7
+  before_script:
+    - php --version
+  script:
+    - echo "Running unit tests..."
+    - vendor/bin/phpunit tests
