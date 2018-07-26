@@ -1,6 +1,5 @@
 <?php
 
-use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Log\ILog;

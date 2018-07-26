@@ -1,7 +1,5 @@
 <?php
 
-use Mockery;
-
 require_once __DIR__ . "/../AbstractHub2Tests.php";
 
 /**

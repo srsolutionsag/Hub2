@@ -2,7 +2,6 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
 use SRAG\Plugins\Hub2\Object\Group\IGroup;
@@ -106,7 +105,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfGroup');
 		$this->ilObject->shouldReceive('create')->once();
 		$this->ilObject->shouldReceive('createReference')->once();

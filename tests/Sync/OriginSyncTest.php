@@ -2,7 +2,6 @@
 
 require_once __DIR__ . "/../AbstractHub2Tests.php";
 
-use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
@@ -75,7 +74,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 
 	public function test_fail_connect() {
 		$this->originImplementation->shouldReceive('connect')->andThrow(ConnectionFailedException::class, 'Unable to connect');
-		$originSync = new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
+		$originSync
+			= new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$this->expectException(ConnectionFailedException::class);
 		$originSync->execute();
 		$this->assertInstanceOf(ConnectionFailedException::class, array_pop($originSync->getExceptions()));
@@ -85,7 +85,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 	public function test_fail_parse_data() {
 		$this->originImplementation->shouldReceive('connect')->once();
 		$this->originImplementation->shouldReceive('parseData')->andThrow(ParseDataFailedException::class);
-		$originSync = new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
+		$originSync
+			= new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$this->expectException(ParseDataFailedException::class);
 		$originSync->execute();
 		$this->assertInstanceOf(ParseDataFailedException::class, array_pop($originSync->getExceptions()));
@@ -102,7 +103,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originConfig->shouldReceive('getCheckAmountDataPercentage')->andReturn(50);
 		// 1000 data sets exists -> 10% is delivered
 		$this->repository->shouldReceive('count')->andReturn(1000);
-		$originSync = new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
+		$originSync
+			= new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$this->expectException(AbortOriginSyncException::class);
 		$originSync->execute();
 		$this->assertInstanceOf(AbortOriginSyncException::class, array_pop($originSync->getExceptions()));
@@ -125,7 +127,10 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('afterSync')->once();
 		$this->origin->shouldReceive('setLastRun')->once();
 		$this->origin->shouldReceive('update')->once();
-		$originSync = new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
+		$this->processor->shouldReceive('handleSort')->once();
+
+		$originSync
+			= new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$originSync->execute();
 		$this->assertEquals(100, $originSync->getCountDelivered());
 		$this->assertEquals(0, $originSync->getCountProcessedTotal());
@@ -134,6 +139,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 
 
 	public function test_processing() {
+		$this->processor->shouldReceive('handleSort')->once();
 		$this->originImplementation->shouldReceive('connect');
 		$this->originImplementation->shouldReceive('parseData')->andReturn(4);
 		$this->originImplementation->shouldReceive('handleException')->once()->withAnyArgs();
@@ -143,17 +149,17 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->origin->shouldReceive('getObjectType')->andReturn('dummy');
 		// Build 4 dummyDTOs returned by the origin implementation
 		$dummyDTOs = [];
-		for ($i = 0; $i < 4; $i ++) {
+		for ($i = 0; $i < 4; $i++) {
 			$dummyDTO = Mockery::mock('\SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject');
 			$dummyDTO->shouldReceive('getExtId', 'setData');
 			$dummyDTO->shouldReceive('getData')->andReturn([]);
 			$dummyDTOs[] = $dummyDTO;
 		}
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn($dummyDTOs);
-		$status = [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_DELETED, IObject::STATUS_IGNORED ];
+		$status = [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_DELETED, IObject::STATUS_IGNORED];
 		// Build 4 dummy objects that correspond to a dummyDTO, each having a different final status
 		$objects = [];
-		for ($i = 0; $i < 4; $i ++) {
+		for ($i = 0; $i < 4; $i++) {
 			$object = Mockery::mock('\SRAG\Plugins\Hub2\Object\IObject');
 			$object->shouldReceive('setDeliveryDate', 'setStatus', 'save');
 			$object->shouldReceive('getData')->andReturn([]);
@@ -167,7 +173,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('afterSync')->once();
 		$this->origin->shouldReceive('setLastRun')->once();
 		$this->origin->shouldReceive('update')->once();
-		$originSync = new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
+		$originSync
+			= new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$originSync->execute();
 		$this->assertEquals(4, $originSync->getCountDelivered());
 		$this->assertEquals(4, $originSync->getCountProcessedTotal());
@@ -180,6 +187,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 
 
 	public function test_that_any_exception_during_processing_is_forwarded_to_the_origin_implementation() {
+		$this->processor->shouldReceive('handleSort')->once();
 		$this->originImplementation->shouldReceive('connect');
 		$this->originImplementation->shouldReceive('parseData')->andReturn(1);
 		$this->originImplementation->shouldReceive('handleException')->once()->withAnyArgs();
@@ -187,7 +195,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originConfig->shouldReceive('getCheckAmountData')->andReturn(false);
 		$this->repository->shouldReceive('count');
 		$this->origin->shouldReceive('getObjectType')->andReturn('user');
-		$this->originImplementation->shouldReceive('buildObjects')->andReturn([ new UserDTO(1) ]);
+		$this->originImplementation->shouldReceive('buildObjects')->andReturn([new UserDTO(1)]);
 		$this->statusTransition->shouldReceive('finalToIntermediate');
 		$userMock = Mockery::mock('\SRAG\Plugins\Hub2\Object\User\IUser');
 		$userMock->shouldReceive('setDeliveryDate', 'setStatus');
@@ -201,7 +209,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originImplementation->shouldReceive('afterSync')->once();
 		$this->origin->shouldReceive('setLastRun')->once();
 		$this->origin->shouldReceive('update')->once();
-		$originSync = new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
+		$originSync
+			= new \SRAG\Plugins\Hub2\Sync\OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$originSync->execute();
 		$this->assertEquals($exception, array_pop($originSync->getExceptions()));
 		$this->assertEquals(0, $originSync->getCountProcessedTotal());
