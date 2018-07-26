@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/../vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php";
 
 use PHPUnit\Framework\TestCase;
 
