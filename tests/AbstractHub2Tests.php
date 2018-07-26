@@ -1,9 +1,8 @@
 <?php
 
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use PHPUnit\Framework\TestCase;
-
 require_once __DIR__ . "/../vendor/autoload.php";
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Base class for all unit tests of Hub2
@@ -17,5 +16,5 @@ require_once __DIR__ . "/../vendor/autoload.php";
  */
 abstract class AbstractHub2Tests extends TestCase {
 
-	use MockeryPHPUnitIntegration;
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 }
