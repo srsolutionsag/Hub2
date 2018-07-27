@@ -9,7 +9,6 @@ require_once('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/au
 
 use SRAG\Plugins\Hub2\Shortlink\Handler;
 
-$shortlink = new Handler($_GET['q']);
-$shortlink->storeQuery();
-$shortlink->tryILIASInit();
+$shortlink = new Handler($_COOKIE['xhub_query']);
+$shortlink->tryILIASInitPublic();
 $shortlink->process();

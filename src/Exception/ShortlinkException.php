@@ -11,17 +11,4 @@ namespace SRAG\Plugins\Hub2\Exception;
  */
 class ShortlinkException extends HubException {
 
-	/**
-	 * @var string
-	 */
-	protected $redirect_url = '';
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function __construct(string $message, string $redirect_url) {
-		$this->redirect_url = $redirect_url;
-		parent::__construct($message);
-	}
 }

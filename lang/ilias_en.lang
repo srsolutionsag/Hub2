@@ -18,12 +18,8 @@ admin_membership_mail_subject#:#Subject of notification mail
 admin_membership_mail_subject_info#:#The placeholders of the message (below) can also be used here.
 admin_membership_mail_msg#:#Body of notification mail
 admin_membership_mail_msg_info#:#The following placeholders can be used: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]
-admin_msg_shortlink_not_active#:#Object-not-active message
-admin_msg_shortlink_not_active_info#:#Notification if shortlinks have not been activated for the corresponding origin.
-admin_msg_shortlink_no_ilias_id#:#ILIAS-ID-not-found-Message
-admin_msg_shortlink_no_ilias_id_info#:#ILIAS-ID-not-found-message
 admin_msg_shortlink_not_found#:#Not-found-message
-admin_msg_shortlink_not_found_info#:#Is shown if a shortlink is used which does not exist
+admin_msg_shortlink_not_found_info#:#Is shown if a shortlink to an object is used which does not exist.
 admin_origins_path#:#Path to Origins
 admin_origins_path_info#:#Location of the 'origins' directory
 admin_password_email_body#:#E-Mail body by sending of passwords
@@ -38,6 +34,10 @@ admin_form_button_cancel#:#Cancel
 admin_form_button_save#:#Save
 admin_form_title#:#General
 admin_header_sync#:#Sync
+admin_msg_shortlink_no_access#:#"No Access" Message
+admin_msg_shortlink_no_access_info#:#Message is display to users which use a Shortlink to an object without read-access.
+admin_msg_shortlink_success#:#Message for successful redirects
+admin_msg_shortlink_success_info#:#Message is shwon whenever a sucessful redirect via Shortlink happened.
 cat_prop_base_node_external#:#External base node
 cat_prop_base_node_external_info#:#Fallback external ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID.
 cat_prop_base_node_ilias#:#ILIAS base node
@@ -94,7 +94,6 @@ crs_prop_notification_body#:#Body
 crs_prop_notification_from#:#From
 crs_prop_send_notification#:#Activate notification
 crs_prop_send_notification_info#:#After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails
-crs_membership_prop_delete_mode_delete#:#Delete Membership
 com_prop_check_amount#:#Amount comparison
 com_prop_check_amount_info#:#Errors when less than X% of existing records are delivered.
 com_prop_check_amount_percentage#:#Percentage
@@ -125,7 +124,7 @@ common_on_status_new#:#NEW
 common_on_status_update#:#UPDATE
 common_on_status_delete#:#DELETE
 common_yes#:#Yes
-common_no#:#Nein
+common_no#:#No
 hub_categories#:#Categories
 hub_conf#:#Settings
 hub_courses#:#Courses

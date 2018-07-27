@@ -51,6 +51,6 @@ class NullLink implements IObjectLink {
 	 * @inheritDoc
 	 */
 	public function getAccessGrantedInternalLink(): string {
-		return "";
+		return "index.php";
 	}
 }

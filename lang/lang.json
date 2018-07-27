@@ -83,7 +83,7 @@
                     "de": "Aktive Anbindungen sperren",
                     "en": "Lock active origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "membership": {
                 "translations": {
@@ -127,61 +127,33 @@
                     "en": "The following placeholders can be used: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]"
                 }
             },
-            "msg_shortlink_not_active": {
-                "translations": {
-                    "de": "Objekt-nicht-aktiv Nachricht",
-                    "en": "Object-not-active message"
-                },
-                "last_used": "21.06.2018"
-            },
-            "msg_shortlink_not_active_info": {
-                "translations": {
-                    "de": "Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden.",
-                    "en": "Notification if shortlinks have not been activated for the corresponding origin."
-                },
-                "last_used": "21.06.2018"
-            },
-            "msg_shortlink_no_ilias_id": {
-                "translations": {
-                    "de": "ILIAS-ID-nicht-gefunden-Nachricht",
-                    "en": "ILIAS-ID-not-found-Message"
-                },
-                "last_used": "21.06.2018"
-            },
-            "msg_shortlink_no_ilias_id_info": {
-                "translations": {
-                    "de": "ILIAS-ID-nicht-gefunden-Nachricht",
-                    "en": "ILIAS-ID-not-found-message"
-                },
-                "last_used": "21.06.2018"
-            },
             "msg_shortlink_not_found": {
                 "translations": {
-                    "de": "Nicht gefunden Nachricht",
+                    "de": "Nachricht bei \"Nicht gefunden\"",
                     "en": "Not-found-message"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "msg_shortlink_not_found_info": {
                 "translations": {
-                    "de": "Wird angezeigt wenn ein nciht existierender Shortlink genutzt wird",
-                    "en": "Is shown if a shortlink is used which does not exist"
+                    "de": "Wird angezeigt, wenn ein Shortlink zu einem nicht existierenden Objekt genutzt wird.",
+                    "en": "Is shown if a shortlink to an object is used which does not exist."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "origins_path": {
                 "translations": {
                     "de": "Pfad zu den Anbindungen",
                     "en": "Path to Origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "origins_path_info": {
                 "translations": {
                     "de": "Ort des 'origin'-Verzeichnisses",
                     "en": "Location of the 'origins' directory"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "password_email_body": {
                 "translations": {
@@ -200,14 +172,14 @@
                     "de": "Rollen-IDs die HUB2 verwenden können (kommasepariert)",
                     "en": "Role-IDs which can use HUB2 (commaseparated)"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "shortlink": {
                 "translations": {
                     "de": "Shortlink",
                     "en": "Shortlink"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "use_async": {
                 "translations": {
@@ -250,13 +222,41 @@
                     "de": "Allgemein",
                     "en": "General"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "header_sync": {
                 "translations": {
                     "de": "Synchronisation",
                     "en": "Sync"
                 }
+            },
+            "msg_shortlink_no_access": {
+                "translations": {
+                    "de": "Nachricht bei \"Kein Zugriff\"",
+                    "en": "\"No Access\" Message"
+                },
+                "last_used": "27.07.2018"
+            },
+            "msg_shortlink_no_access_info": {
+                "translations": {
+                    "de": "Nachricht wird angezeigt, wenn ein/e Benutzer/in einen Shortlink nutzt, auf den er/sie keinen Zugriff hat",
+                    "en": "Message is display to users which use a Shortlink to an object without read-access."
+                },
+                "last_used": "27.07.2018"
+            },
+            "msg_shortlink_success": {
+                "translations": {
+                    "de": "Nachricht bei erfolgreicher Weiterleitung",
+                    "en": "Message for successful redirects"
+                },
+                "last_used": "27.07.2018"
+            },
+            "msg_shortlink_success_info": {
+                "translations": {
+                    "de": "Die Meldung wird angezeigt, wenn nach dem zugriff via Shortlink eine erfolgreiche Weiterleitung zum ILIAS Objekt stattfindet.",
+                    "en": "Message is shwon whenever a sucessful redirect via Shortlink happened."
+                },
+                "last_used": "27.07.2018"
             }
         },
         "cat": {
@@ -792,14 +792,14 @@
                     "de": "Rechte",
                     "en": "Permissions"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "roles": {
                 "translations": {
                     "de": "Rollen-IDs",
                     "en": "Role IDs"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "on_status_new": {
                 "translations": {
@@ -1097,7 +1097,7 @@
                     "de": "Gespeichert",
                     "en": "Saved"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "27.07.2018"
             },
             "created_class_implementation_file": {
                 "translations": {
@@ -2116,14 +2116,14 @@
                     "de": "Speichern",
                     "en": "Save"
                 },
-                "last_used": "20.07.2018"
+                "last_used": "27.07.2018"
             },
             "cancel": {
                 "translations": {
                     "de": "Abbrechen",
                     "en": "Cancel"
                 },
-                "last_used": "20.07.2018"
+                "last_used": "27.07.2018"
             }
         },
         "tab": {
@@ -2132,7 +2132,7 @@
                     "de": "Anbindungen",
                     "en": "Origins"
                 },
-                "last_used": "20.07.2018"
+                "last_used": "27.07.2018"
             },
             "data": {
                 "translations": {
@@ -2146,7 +2146,7 @@
                     "de": "Konfiguration",
                     "en": "Configuration"
                 },
-                "last_used": "20.07.2018"
+                "last_used": "27.07.2018"
             }
         },
         "data": {

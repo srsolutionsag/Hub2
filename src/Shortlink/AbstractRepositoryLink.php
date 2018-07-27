@@ -28,7 +28,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	public function isAccessGranted(): bool {
 		global $DIC;
 
-		return $DIC->access()->checkAccess('read', '', $this->object->getILIASId());
+		return (bool)$DIC->access()->checkAccess("read", '', $this->object->getILIASId());
 	}
 
 
@@ -48,8 +48,8 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	 * @inheritDoc
 	 */
 	public function getAccessGrantedExternalLink(): string {
-		$link = \ilLink::_getLink($this->object->getILIASId());
-		$link = str_replace(ILIAS_HTTP_PATH, "", $link);
+		$ref_id = $this->object->getILIASId();
+		$link = $this->generateLink($ref_id);
 
 		return $link;
 	}
@@ -59,6 +59,45 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	 * @inheritDoc
 	 */
 	public function getAccessDeniedLink(): string {
-		return "";
+		$ref_id = $this->findReadableParent();
+		if ($ref_id === 0) {
+			return "index.php";
+		}
+
+		$link = $this->generateLink($ref_id);
+
+		return $link;
+	}
+
+
+	private function findReadableParent(): int {
+		global $DIC;
+
+		$ref_id = $this->object->getILIASId();
+
+		while (!$DIC->access()->checkAccess('read', '', $ref_id) AND $ref_id != 1) {
+			$ref_id = (int)$DIC->repositoryTree()->getParentId($ref_id);
+		}
+
+		if ($ref_id === 1) {
+			if (!$DIC->access()->checkAccess('read', '', $ref_id)) {
+				return 0;
+			}
+		}
+
+		return (int)$ref_id;
+	}
+
+
+	/**
+	 * @param $ref_id
+	 *
+	 * @return mixed|string
+	 */
+	private function generateLink($ref_id) {
+		$link = \ilLink::_getLink($ref_id);
+		$link = str_replace(ILIAS_HTTP_PATH, "", $link);
+
+		return $link;
 	}
 }
