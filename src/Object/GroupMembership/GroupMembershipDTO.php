@@ -1,22 +1,20 @@
-<?php namespace SRAG\Plugins\Hub2\Object\GroupMembership;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object\GroupMembership;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class GroupMembershipDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\GroupMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupMembershipDTO extends DataTransferObject {
 
-	/**
-	 * @inheritDoc
-	 */
-	public function __construct($group_ext_id, $user_id) {
-		parent::__construct("{$group_ext_id}|||{$user_id}");
-	}
-
-
+	const PARENT_ID_TYPE_REF_ID = 1;
+	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	const ROLE_MEMBER = 2;
 	const ROLE_ADMIN = 1;
 	/**
@@ -31,23 +29,61 @@ class GroupMembershipDTO extends DataTransferObject {
 	 * @var
 	 */
 	protected $role = self::ROLE_MEMBER;
+	/**
+	 * @var string
+	 */
+	protected $groupId;
+	/**
+	 * @var int
+	 */
+	protected $groupIdType;
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct($group_id, $user_id) {
+		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$group_id, $user_id]));
+		$this->groupId = $group_id;
+		$this->userId = $user_id;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getGroupId(): string {
+		return $this->groupId;
+	}
+
+
+	/**
+	 * @param string $groupId
+	 *
+	 * @return GroupMembershipDTO
+	 */
+	public function setGroupId(string $groupId): GroupMembershipDTO {
+		$this->groupId = $groupId;
+
+		return $this;
+	}
 
 
 	/**
 	 * @return int
 	 */
-	public function getIliasGroupRefId() {
-		return $this->ilias_group_ref_id;
+	public function getGroupIdType(): int {
+		return $this->groupIdType;
 	}
 
 
 	/**
-	 * @param int $ilias_group_ref_id
+	 * @param int $groupIdType
 	 *
 	 * @return GroupMembershipDTO
 	 */
-	public function setIliasGroupRefId(int $ilias_group_ref_id): GroupMembershipDTO {
-		$this->ilias_group_ref_id = $ilias_group_ref_id;
+	public function setGroupIdType(int $groupIdType): GroupMembershipDTO {
+		$this->groupIdType = $groupIdType;
 
 		return $this;
 	}

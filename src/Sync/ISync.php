@@ -1,9 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
+
+namespace SRAG\Plugins\Hub2\Sync;
 
 /**
  * Interface ISync
  *
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ISync {
 

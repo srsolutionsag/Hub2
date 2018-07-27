@@ -2,30 +2,33 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor\CourseMembership;
 
+use ilObjCourse;
+use ilObject2;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
+use SRAG\Plugins\Hub2\Origin\OriginRepository;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 
 /**
  * Class CourseMembershipSyncProcessor
  *
+ * @package SRAG\Plugins\Hub2\Sync\Processor\CourseMembership
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICourseMembershipSyncProcessor {
 
-	const SPLIT = "|||";
 	/**
 	 * @var CourseOriginProperties
 	 */
@@ -55,18 +58,18 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
 		/**
-		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
+		 * @var CourseMembershipDTO $dto
 		 */
 		$ilias_course_ref_id = $this->determineCourseRefId($dto);
 		$dto->getCourseId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
-			return null;
+			return NULL;
 		}
 		$user_id = $dto->getUserId();
 		$course->getMembersObject()->add($user_id, $this->mapRole($dto));
 
-		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+		return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 	}
 
 
@@ -75,23 +78,27 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/**
-		 * @var $dto \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO
+		 * @var CourseMembershipDTO $dto
 		 */
-		$ilias_course_ref_id = $dto->getCourseId();
+		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+		$ilias_course_ref_id = $obj->getContainerIdIlias();
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
-			return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+			return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 		}
 
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
-			return null;
+			return NULL;
 		}
 
-		$course->getMembersObject()
-		       ->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
+		$course->getMembersObject()->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
 
-		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+		$obj->setUserIdIlias($dto->getUserId());
+		$obj->setContainerIdIlias($course->getRefId());
+		$obj->initId();
+
+		return $obj;
 	}
 
 
@@ -99,25 +106,31 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id) {
-		list ($user_id, $ilias_course_ref_id) = explode(self::SPLIT, $ilias_id);
-		$course = $this->findILIASCourse($ilias_course_ref_id);
-		$course->getMembersObject()->delete($user_id);
+		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-		return new FakeIliasObject("{$user_id}" . self::SPLIT . "{$ilias_course_ref_id}");
+		if ($this->props->get(CourseMembershipOriginProperties::DELETE_MODE)
+				== CourseMembershipOriginProperties::DELETE_MODE_NONE) {
+			return $obj;
+		}
+
+		$course = $this->findILIASCourse($obj->getContainerIdIlias());
+		$course->getMembersObject()->delete($obj->getUserIdIlias());
+
+		return $obj;
 	}
 
 
 	/**
 	 * @param int $iliasId
 	 *
-	 * @return \ilObjCourse|null
+	 * @return ilObjCourse|null
 	 */
 	protected function findILIASCourse($iliasId) {
-		if (!\ilObject2::_exists($iliasId, true)) {
-			return null;
+		if (!ilObject2::_exists($iliasId, true)) {
+			return NULL;
 		}
 
-		return new \ilObjCourse($iliasId);
+		return new ilObjCourse($iliasId);
 	}
 
 
@@ -141,12 +154,12 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO $object
-	 * @param \ilObjCourse                                           $course
+	 * @param CourseMembershipDTO $object
+	 * @param ilObjCourse         $course
 	 *
 	 * @return int
 	 */
-	protected function getILIASRole(CourseMembershipDTO $object, \ilObjCourse $course) {
+	protected function getILIASRole(CourseMembershipDTO $object, ilObjCourse $course) {
 		switch ($object->getRole()) {
 			case CourseMembershipDTO::ROLE_ADMIN:
 				return $course->getDefaultAdminRole();
@@ -159,8 +172,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		}
 	}
 
+
 	/**
 	 * @param CourseMembershipDTO $course_membership
+	 *
 	 * @return int
 	 * @throws HubException
 	 */
@@ -180,10 +195,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 			}
 			$originRepository = new OriginRepository();
 			$origin = array_pop(array_filter($originRepository->courses(), function ($origin) use ($linkedOriginId) {
-				/** @var $origin IOrigin */
+				/** @var IOrigin $origin */
 				return $origin->getId() == $linkedOriginId;
 			}));
-			if ($origin === null) {
+			if ($origin === NULL) {
 				$msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
 				throw new HubException($msg);
 			}

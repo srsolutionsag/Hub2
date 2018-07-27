@@ -9,19 +9,13 @@ use SRAG\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 /**
  * Class ARCategory
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object\Category
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARCategory extends ARObject implements ICategory {
 
 	use ARMetadataAwareObject;
 	use ARTaxonomyAwareObject;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_category';
-	}
+	const TABLE_NAME = 'sr_hub2_category';
 }

@@ -5,7 +5,8 @@ namespace SRAG\Plugins\Hub2\Sync\Summary;
 /**
  * Class OriginSyncSummaryFactory
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginSyncSummaryFactory implements IOriginSyncSummaryFactory {
 
@@ -31,6 +32,8 @@ class OriginSyncSummaryFactory implements IOriginSyncSummaryFactory {
 	public function cron() {
 		return new OriginSyncSummaryCron();
 	}
+
+
 	/**
 	 * @inheritDoc
 	 */

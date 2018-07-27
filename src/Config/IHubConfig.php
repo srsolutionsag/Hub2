@@ -5,15 +5,16 @@ namespace SRAG\Plugins\Hub2\Config;
 /**
  * Interface IHubConfig
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Config
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IHubConfig {
 
 	const ORIGIN_IMPLEMENTATION_PATH = 'origin_implementation_path';
-	const SHORTLINK_NOT_FOUND = 'shortlink_not_found';
-	const SHORTLINK_NO_ILIAS_ID = 'shortlink_no_ilias_id';
-	const SHORTLINK_NOT_ACTIVE = 'shortlink_not_active';
+	const SHORTLINK_OBJECT_NOT_FOUND = 'shortlink_not_found';
+	const SHORTLINK_OBJECT_NOT_ACCESSIBLE = 'shortlink_no_access';
+	const SHORTLINK_SUCCESS = 'shortlink_success';
 	const ADMINISTRATE_HUB_ROLE_IDS = 'administrate_hub_role_ids';
 	const LOCK_ORIGINS_CONFIG = 'lock_origins_config';
 
@@ -31,7 +32,7 @@ interface IHubConfig {
 	 *
 	 * @return string
 	 */
-	public function getShortLinkNoObject();
+	public function getShortLinkObjectNotFound();
 
 
 	/**
@@ -39,16 +40,13 @@ interface IHubConfig {
 	 *
 	 * @return string
 	 */
-	public function getShortLinkNoILIASId();
+	public function getShortLinkObjectNotAccessible();
 
 
 	/**
-	 * Get the message presented to the user if the shortlink feature is not activated for the
-	 * given shortlink.
-	 *
 	 * @return string
 	 */
-	public function getShortLinkNotActive();
+	public function getShortlinkSuccess();
 
 
 	/**

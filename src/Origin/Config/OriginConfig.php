@@ -1,9 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Config;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Class OriginConfig
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Config
  */
 class OriginConfig implements IOriginConfig {
@@ -12,22 +15,22 @@ class OriginConfig implements IOriginConfig {
 	 * @var array
 	 */
 	protected $data = [
-		self::CHECK_AMOUNT            => false,
+		self::CHECK_AMOUNT => false,
 		self::CHECK_AMOUNT_PERCENTAGE => 10,
-		self::SHORT_LINK              => false,
-		self::SHORT_LINK_FORCE_LOGIN  => false,
-		self::NOTIFICATION_ERRORS     => '',
-		self::NOTIFICATION_SUMMARY    => '',
-		self::CONNECTION_TYPE         => IOriginConfig::CONNECTION_TYPE_FILE,
-		self::FILE_PATH               => '',
-		self::SERVER_HOST             => '',
-		self::SERVER_PORT             => '',
-		self::SERVER_USERNAME         => '',
-		self::SERVER_PASSWORD         => '',
-		self::SERVER_DATABASE         => '',
-		self::SERVER_SEARCH_BASE      => '',
-		self::ACTIVE_PERIOD           => '',
-		self::LINKED_ORIGIN_ID        => 0,
+		self::SHORT_LINK => false,
+		self::SHORT_LINK_FORCE_LOGIN => false,
+		self::NOTIFICATION_ERRORS => '',
+		self::NOTIFICATION_SUMMARY => '',
+		self::CONNECTION_TYPE => IOriginConfig::CONNECTION_TYPE_FILE,
+		self::FILE_PATH => '',
+		self::SERVER_HOST => '',
+		self::SERVER_PORT => '',
+		self::SERVER_USERNAME => '',
+		self::SERVER_PASSWORD => '',
+		self::SERVER_DATABASE => '',
+		self::SERVER_SEARCH_BASE => '',
+		self::ACTIVE_PERIOD => '',
+		self::LINKED_ORIGIN_ID => 0,
 	];
 
 
@@ -173,7 +176,7 @@ class OriginConfig implements IOriginConfig {
 	public function getCustom($key) {
 		$key = self::CUSTOM_PREFIX . $key;
 
-		return (isset($this->data[$key])) ? $this->data[$key] : null;
+		return (isset($this->data[$key])) ? $this->data[$key] : NULL;
 	}
 
 

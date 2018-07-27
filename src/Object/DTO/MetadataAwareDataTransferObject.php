@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Metadata\IMetadata;
 /**
  * Class MetadataAwareDataTransferObject
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\DTO
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait MetadataAwareDataTransferObject {
 

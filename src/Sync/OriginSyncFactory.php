@@ -1,4 +1,5 @@
 <?php
+
 namespace SRAG\Plugins\Hub2\Sync;
 
 use SRAG\Plugins\Hub2\Config\HubConfig;
@@ -16,8 +17,9 @@ use SRAG\Plugins\Hub2\Sync\Processor\SyncProcessorFactory;
 /**
  * Class OriginSyncFactory
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginSyncFactory {
 

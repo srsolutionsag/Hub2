@@ -9,19 +9,13 @@ use SRAG\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 /**
  * Class ARCourse
  *
+ * @package SRAG\Plugins\Hub2\Object\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARCourse extends ARObject implements ICourse {
 
 	use ARMetadataAwareObject;
 	use ARTaxonomyAwareObject;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_course';
-	}
+	const TABLE_NAME = 'sr_hub2_course';
 }

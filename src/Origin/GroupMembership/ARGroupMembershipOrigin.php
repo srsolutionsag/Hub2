@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Origin\Properties\GroupMembershipOriginProperties;
 /**
  * Class ARGroupMembershipOrigin
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\GroupMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARGroupMembershipOrigin extends AROrigin implements IGroupMembershipOrigin {
 

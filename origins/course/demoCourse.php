@@ -2,12 +2,13 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\HookObject;
 
 /**
  * Class demoCourse
@@ -29,7 +30,7 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() {
+	public function connect(): bool {
 		return true;
 	}
 
@@ -44,29 +45,24 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {
-		$this->log()->write("This is a demo");
+	public function parseData(): int {
+		$this->log()->write("This is a test-log entry");
+
 		$time = time();
 		for ($x = 1; $x <= 10; $x ++) {
-			$this->data[] = $this->factory()
-			                     ->course($x)
-			                     ->setTitle("Title {$x} {$time}")
-			                     ->setDescription("Description {$x}")
-			                     ->setActivationType(CourseDTO::ACTIVATION_OFFLINE)
-			                     ->setOwner(6)
-			                     ->setContactEmail("Email {$x}")
-			                     ->setContactName("Name {$x}")
-			                     ->setParentId(1)
-			                     ->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)
-			                     ->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)
-			                     ->setSyllabus("Syllabus {$x}")
-			                     ->addMetadata($this->metadata()
-			                                        ->getDTOWithIliasId(1)
-			                                        ->setValue("Meine Metadaten {$time}"))
-			                     ->addTaxonomy($this->taxonomy()
-			                                        ->select("Taxonomy 1")
-			                                        ->attach($this->taxonomy()
-			                                                      ->node("Node Title 1.1")));
+			if (rand(1, 10) === $x) {
+				// continue; // Simulate some random deletions
+			}
+
+			$this->data[] = $this->factory()->course($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")
+				->setActivationType(CourseDTO::ACTIVATION_OFFLINE)->setOwner(6)//  root
+				->setContactEmail("Email {$x}")->setContactName("Name {$x}")->setParentId(1)// from demoCategory, please configure in GUI accordingly
+				->setParentIdType(CourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setSyllabus("Syllabus {$x}")
+				->setDidacticTemplate(123)->setIcon('/path/to/icon/custom.svg')->addMetadata($this->metadata()// This has to be configured in ILIAS
+				->getDTOWithIliasId(1)// you find the id of the field in ILIAS GUI when editing the fields in query-parameter field_id=X
+				->setValue("Meine Metadaten {$time}"))// This works for a Text-Field
+				->addTaxonomy($this->taxonomy()// This is created in demoCategory
+				->select("Taxonomy 1")->attach($this->taxonomy()->node("Node Title 1.1")));
 		}
 
 		return count($this->data);
@@ -90,7 +86,8 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @throws BuildObjectsFailedException
 	 * @return IDataTransferObject[]
 	 */
-	public function buildObjects() {
+	public function buildObjects(): array {
+		// TODO: Build objects here
 		return $this->data;
 	}
 
@@ -111,45 +108,45 @@ class demoCourse extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeCreateILIASObject(HookObject $object) { }
+	public function beforeCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterCreateILIASObject(HookObject $object) { }
+	public function afterCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) { }
+	public function beforeUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterUpdateILIASObject(HookObject $object) { }
+	public function afterUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeDeleteILIASObject(HookObject $object) { }
+	public function beforeDeleteILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterDeleteILIASObject(HookObject $object) { }
+	public function afterDeleteILIASObject(HookObject $hook) { }
 
 
 	/**

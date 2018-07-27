@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 /**
  * Interface ITaxonomy
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Taxonomy
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ITaxonomy {
 
@@ -28,6 +29,20 @@ interface ITaxonomy {
 
 
 	/**
+	 * @return string
+	 */
+	public function getDescription();
+
+
+	/**
+	 * @param string $description
+	 *
+	 * @return INode
+	 */
+	public function setDescription($description);
+
+
+	/**
 	 * @return INode[]
 	 */
 	public function getNodes(): array;
@@ -40,9 +55,9 @@ interface ITaxonomy {
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\Node\INode $node
+	 * @param INode $node
 	 *
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy
+	 * @return ITaxonomy
 	 */
 	public function attach(INode $node): ITaxonomy;
 

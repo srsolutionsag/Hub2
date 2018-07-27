@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Object\ObjectRepository;
 /**
  * Class SessionRepository
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\Session
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionRepository extends ObjectRepository {
 

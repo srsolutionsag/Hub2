@@ -1,5 +1,11 @@
-<?php namespace SRAG\Plugins\Hub2\Object;
+<?php
 
+namespace SRAG\Plugins\Hub2\Object;
+
+use ActiveRecord;
+use DateTime;
+use Exception;
+use InvalidArgumentException;
 use SRAG\Plugins\Hub2\Metadata\Metadata;
 use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
@@ -8,10 +14,34 @@ use SRAG\Plugins\Hub2\Taxonomy\Taxonomy;
 /**
  * Class ARObject
  *
+ * @package SRAG\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class ARObject extends \ActiveRecord implements IObject {
+abstract class ARObject extends ActiveRecord implements IObject {
+
+	/**
+	 * @abstract
+	 */
+	const TABLE_NAME = '';
+
+
+	/**
+	 * @return string
+	 */
+	public function getConnectorContainerName() {
+		return static::TABLE_NAME;
+	}
+
+
+	/**
+	 * @return string
+	 * @deprecated
+	 */
+	public static function returnDbTableName() {
+		return static::TABLE_NAME;
+	}
+
 
 	/**
 	 * @var array
@@ -79,11 +109,11 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 */
 	protected $processed_date;
 	/**
-	 * @var int
+	 * @var string
 	 *
 	 * @db_has_field    true
-	 * @db_fieldtype    integer
-	 * @db_length       8
+	 * @db_fieldtype    text
+	 * @db_length       256
 	 */
 	protected $ilias_id;
 	/**
@@ -129,7 +159,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 				return json_encode($this->getData());
 			case "meta_data":
 				/**
-				 * @var $this \SRAG\Plugins\Hub2\Object\IMetadataAwareObject
+				 * @var IMetadataAwareObject $this
 				 */
 				$metadataObjects = [];
 				$metadata = $this->getMetaData();
@@ -142,7 +172,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 				return $json_encode;
 			case "taxonomies":
 				/**
-				 * @var $this \SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject
+				 * @var ITaxonomyAwareObject $this
 				 */
 				$taxonomyObjects = [];
 				$taxonomies = $this->getTaxonomies();
@@ -218,10 +248,10 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 */
 	public function create() {
 		if (!$this->origin_id) {
-			throw new \Exception("Origin-ID is missing, cannot construct the primary key");
+			throw new Exception("Origin-ID is missing, cannot construct the primary key");
 		}
 		if (!$this->ext_id) {
-			throw new \Exception("External-ID is missing");
+			throw new Exception("External-ID is missing");
 		}
 		$this->id = $this->origin_id . $this->ext_id;
 		$this->hash_code = $this->computeHashCode();
@@ -259,7 +289,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function getDeliveryDate() {
-		return new \DateTime($this->delivery_date);
+		return new DateTime($this->delivery_date);
 	}
 
 
@@ -267,7 +297,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function getProcessedDate() {
-		return new \DateTime($this->processed_date);
+		return new DateTime($this->processed_date);
 	}
 
 
@@ -299,7 +329,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function setILIASId($id) {
-		$this->ilias_id = (int)$id;
+		$this->ilias_id = $id;
 
 		return $this;
 	}
@@ -318,7 +348,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 */
 	public function setStatus($status) {
 		if (!in_array($status, self::$available_status)) {
-			throw new \InvalidArgumentException("'{$status}' is not a valid status");
+			throw new InvalidArgumentException("'{$status}' is not a valid status");
 		}
 		$this->status = $status;
 
@@ -331,7 +361,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 	 */
 	public function updateStatus($status) {
 		if (!in_array($status, self::$status_allowed_to_update_to)) {
-			throw new \InvalidArgumentException("'{$status}' is not valid to switch to");
+			throw new InvalidArgumentException("'{$status}' is not valid to switch to");
 		}
 		$this->status = $status;
 
@@ -390,7 +420,7 @@ abstract class ARObject extends \ActiveRecord implements IObject {
 			}
 		}
 
-		return md5($hash);
+		return md5($hash); // TODO: Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
 	}
 
 

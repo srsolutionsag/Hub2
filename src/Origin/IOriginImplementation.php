@@ -1,15 +1,21 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
+use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\IObject;
 
 /**
  * Interface IOriginImplementation
  *
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginImplementation {
 
@@ -72,45 +78,45 @@ interface IOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e);
+	public function handleException(Exception $e);
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeCreateILIASObject(HookObject $object);
+	public function beforeCreateILIASObject(HookObject $hook);
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterCreateILIASObject(HookObject $object);
+	public function afterCreateILIASObject(HookObject $hook);
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeUpdateILIASObject(HookObject $object);
+	public function beforeUpdateILIASObject(HookObject $hook);
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterUpdateILIASObject(HookObject $object);
+	public function afterUpdateILIASObject(HookObject $hook);
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeDeleteILIASObject(HookObject $object);
+	public function beforeDeleteILIASObject(HookObject $hook);
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterDeleteILIASObject(HookObject $object);
+	public function afterDeleteILIASObject(HookObject $hook);
 
 
 	/**
@@ -123,4 +129,25 @@ interface IOriginImplementation {
 	 * Executed after the synchronization of the origin has been executed.
 	 */
 	public function afterSync();
+
+
+	/**
+	 * This Hook can be used to override the given status of an object before ObjectSyncProcessor does it's work.
+	 * Valid Status are:
+	 * - IObject::STATUS_TO_CREATE
+	 * - IObject::STATUS_TO_UPDATE
+	 * - IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED
+	 * - IObject::STATUS_TO_DELETE
+	 * - IObject::STATUS_IGNORED
+	 *
+	 * E.G. $object->overrideStatus(IObject::STATUS_TO_UPDATE);
+	 *
+	 * @throws HubException if overriding Status for NullDTOs (deleted objects)
+	 * @throws \InvalidArgumentException if passing not supported Status
+	 *
+	 * @param HookObject $hook
+	 *
+	 * @return void
+	 */
+	public function overrideStatus(HookObject $hook);
 }

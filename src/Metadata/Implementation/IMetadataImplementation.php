@@ -8,7 +8,6 @@ use SRAG\Plugins\Hub2\Metadata\IMetadata;
  * Interface IMetadataImplementation
  *
  * @package SRAG\Plugins\Hub2\Metadata\Implementation
- *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IMetadataImplementation {
@@ -30,7 +29,7 @@ interface IMetadataImplementation {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata
+	 * @return IMetadata
 	 */
 	public function getMetadata(): IMetadata;
 

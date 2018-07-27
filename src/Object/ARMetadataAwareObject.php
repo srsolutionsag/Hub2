@@ -2,12 +2,13 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
-use SRAG\Plugins\Hub2\Metadata\Metadata;
+use SRAG\Plugins\Hub2\Metadata\IMetadata;
 
 /**
  * Class ARMetadataAwareObject
  *
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait ARMetadataAwareObject {
 
@@ -21,7 +22,7 @@ trait ARMetadataAwareObject {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata[]
+	 * @return IMetadata[]
 	 */
 	public function getMetaData(): array {
 		return is_array($this->meta_data) ? $this->meta_data : array();

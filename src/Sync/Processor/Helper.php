@@ -6,6 +6,7 @@ namespace SRAG\Plugins\Hub2\Sync\Processor;
  * Trait Helper
  *
  * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait Helper {
 
@@ -16,22 +17,22 @@ trait Helper {
 	 */
 	protected function clearString($string) {
 		$replaces = [
-			'ä'  => 'ae',
-			'å'  => 'ae',
-			'ü'  => 'ue',
-			'ö'  => 'oe',
-			'Ä'  => 'Ae',
-			'Ü'  => 'Ue',
-			'Ö'  => 'Oe',
-			'é'  => 'e',
-			'è'  => 'e',
-			'ê'  => 'e',
-			'Á'  => 'A',
-			'ß'  => 'ss',
+			'ä' => 'ae',
+			'å' => 'ae',
+			'ü' => 'ue',
+			'ö' => 'oe',
+			'Ä' => 'Ae',
+			'Ü' => 'Ue',
+			'Ö' => 'Oe',
+			'é' => 'e',
+			'è' => 'e',
+			'ê' => 'e',
+			'Á' => 'A',
+			'ß' => 'ss',
 			'\'' => '',
-			' '  => '',
-			'-'  => '',
-			'.'  => '',
+			' ' => '',
+			'-' => '',
+			'.' => '',
 		];
 		$string = strtr($string, $replaces);
 

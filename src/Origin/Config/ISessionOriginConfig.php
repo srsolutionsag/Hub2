@@ -5,7 +5,8 @@ namespace SRAG\Plugins\Hub2\Origin\Config;
 /**
  * Interface ISessionOriginConfig
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\Config
  */
 interface ISessionOriginConfig extends IOriginConfig {
 

@@ -8,6 +8,7 @@ use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
  * Class Taxonomy
  *
  * @package SRAG\Plugins\Hub2\Taxonomy
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Taxonomy implements ITaxonomy {
 
@@ -23,6 +24,10 @@ class Taxonomy implements ITaxonomy {
 	 * @var int
 	 */
 	protected $mode;
+	/**
+	 * @var string
+	 */
+	protected $description = "";
 
 
 	/**
@@ -85,9 +90,29 @@ class Taxonomy implements ITaxonomy {
 
 
 	/**
+	 * @return string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+
+
+	/**
+	 * @param string $description
+	 *
+	 * @return Taxonomy
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+
+		return $this;
+	}
+
+
+	/**
 	 * @inheritDoc
 	 */
 	public function __toString(): string {
-		return "// TODO: Implement __toString() method.";
+		return ""; // Is this needed?
 	}
 }

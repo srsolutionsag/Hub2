@@ -1,12 +1,16 @@
-<?php namespace SRAG\Plugins\Hub2\Sync\Processor;
+<?php
+
+namespace SRAG\Plugins\Hub2\Sync\Processor;
 
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\IObject;
+use SRAG\Plugins\Hub2\Sync\IDataTransferObjectSort;
 
 /**
  * Interface ObjectProcessor
  *
  * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IObjectSyncProcessor {
 
@@ -23,6 +27,17 @@ interface IObjectSyncProcessor {
 	 *
 	 * @param IObject             $object
 	 * @param IDataTransferObject $dto
+	 * @param bool                $force Update all Objects without Hash comparison
 	 */
-	public function process(IObject $object, IDataTransferObject $dto);
+	public function process(IObject $object, IDataTransferObject $dto, bool $force = false);
+
+
+	/**
+	 * Set sort levels
+	 *
+	 * @param IDataTransferObjectSort[] $sort_dtos
+	 *
+	 * @return bool Should sort?
+	 */
+	public function handleSort(array $sort_dtos): bool;
 }

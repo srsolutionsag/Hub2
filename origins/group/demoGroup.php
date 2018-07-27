@@ -2,12 +2,13 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
 use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class demoGroup
@@ -23,7 +24,9 @@ class demoGroup extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() { return true; }
+	public function connect(): bool {
+		return true;
+	}
 
 
 	/**
@@ -36,41 +39,23 @@ class demoGroup extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {
+	public function parseData(): int {
+		$this->log()->write("This is a test-log entry");
+
 		for ($x = 1; $x < 14; $x ++) {
-			$xrand = $x;
-			$this->data[] = $this->factory()
-			                     ->group($x)
-			                     ->setParentIdType(GroupDTO::PARENT_ID_TYPE_REF_ID)
-			                     ->setParentId(1)
-			                     ->setDescription("Description {$xrand}")
-			                     ->setTitle("Title {$xrand}")
-			                     ->setInformation("Information {$xrand}")
-			                     ->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)
-			                     ->setGroupType(GroupDTO::GRP_TYPE_CLOSED)
-			                     ->setRegUnlimited(false)
-			                     ->setRegistrationStart(1507202887)
-			                     ->setRegistrationEnd(1507202887 + 30)
-			                     ->setPassword("Password {$xrand}")
-			                     ->setRegMembershipLimitation(true)
-			                     ->setMinMembers(1)
-			                     ->setMaxMembers(10)
-			                     ->setWaitingList(true)
-			                     ->setWaitingListAutoFill(true)
-			                     ->setStart(1507202887)
-			                     ->setEnd(1507202887 + 30)
-			                     ->setLatitude(7.1234)
-			                     ->setLongitude(45.1234)
-			                     ->setLocationzoom(5)
-			                     ->setEnableGroupMap(true)
-			                     ->setRegAccessCodeEnabled(true)
-			                     ->setRegistrationAccessCode("AccessCode {$xrand}")
-			                     ->setOwner(6)
-			                     ->setViewMode(GroupDTO::VIEW_BY_TYPE)
-			                     ->setCancellationEnd(1507202887)
-			                     ->addMetadata($this->metadata()
-			                                        ->getDTOWithIliasId(1)
-			                                        ->setValue("Meine Metadaten"));
+			if (rand(1, 10) === $x) {
+				continue; // Simulate some random deletions
+			}
+			$xrand = rand();
+			$this->data[] = $this->factory()->group($x)->setParentIdType(GroupDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setParentId(1)
+				->setDescription("Description {$xrand}")->setTitle("Title {$xrand}")->setInformation("Information {$xrand}")
+				->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)->setGroupType(GroupDTO::GRP_TYPE_CLOSED)->setRegUnlimited(false)
+				->setRegistrationStart(1507202887)->setRegistrationEnd(1507202887 + 30)->setPassword("Password {$xrand}")
+				->setRegMembershipLimitation(true)->setMinMembers(1)->setMaxMembers(10)->setWaitingList(true)->setWaitingListAutoFill(true)
+				->setStart(1507202887)->setEnd(1507202887 + 3600)->setLatitude(7.1234)->setLongitude(45.1234)->setLocationzoom(5)
+				->setEnableGroupMap(true)->setRegAccessCodeEnabled(true)->setRegistrationAccessCode("AccessCode {$xrand}")->setOwner(6)
+				->setViewMode(GroupDTO::VIEW_BY_TYPE)->setCancellationEnd(1507202887)->addMetadata($this->metadata()->getDTOWithIliasId(1)
+					->setValue("Meine Metadaten"));
 		}
 
 		return count($this->data);
@@ -94,7 +79,8 @@ class demoGroup extends AbstractOriginImplementation {
 	 * @throws BuildObjectsFailedException
 	 * @return IDataTransferObject[]
 	 */
-	public function buildObjects() {
+	public function buildObjects(): array {
+		// TODO: Build objects here
 		return $this->data;
 	}
 
@@ -115,45 +101,45 @@ class demoGroup extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeCreateILIASObject(HookObject $object) { }
+	public function beforeCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterCreateILIASObject(HookObject $object) { }
+	public function afterCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) { }
+	public function beforeUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterUpdateILIASObject(HookObject $object) { }
+	public function afterUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeDeleteILIASObject(HookObject $object) { }
+	public function beforeDeleteILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterDeleteILIASObject(HookObject $object) { }
+	public function afterDeleteILIASObject(HookObject $hook) { }
 
 
 	/**

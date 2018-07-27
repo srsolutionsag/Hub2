@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties;
 /**
  * Class ARSessionMembershipOrigin
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\SessionMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOrigin {
 

@@ -2,10 +2,22 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use SRAG\Plugins\Hub2\Origin\Category\ICategoryOrigin;
+use SRAG\Plugins\Hub2\Origin\Course\ICourseOrigin;
+use SRAG\Plugins\Hub2\Origin\CourseMembership\ICourseMembershipOrigin;
+use SRAG\Plugins\Hub2\Origin\Group\IGroupOrigin;
+use SRAG\Plugins\Hub2\Origin\GroupMembership\IGroupMembershipOrigin;
+use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
+use SRAG\Plugins\Hub2\Origin\OrgUnitMembership\IOrgUnitMembershipOrigin;
+use SRAG\Plugins\Hub2\Origin\Session\ISessionOrigin;
+use SRAG\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin;
+use SRAG\Plugins\Hub2\Origin\User\IUserOrigin;
+
 /**
  * Interface IOriginFactory
  *
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginRepository {
 
@@ -30,49 +42,61 @@ interface IOriginRepository {
 	/**
 	 * Returns the origins of object type user
 	 *
-	 * @return \SRAG\Plugins\Hub2\Origin\User\IUserOrigin[]
+	 * @return IUserOrigin[]
 	 */
 	public function users();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Origin\Course\ICourseOrigin[]
+	 * @return ICourseOrigin[]
 	 */
 	public function courses();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Origin\Category\ICategoryOrigin[]
+	 * @return ICategoryOrigin[]
 	 */
 	public function categories();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Origin\CourseMembership\ICourseMembershipOrigin[]
+	 * @return ICourseMembershipOrigin[]
 	 */
 	public function courseMemberships();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Origin\Group\IGroupOrigin[]
+	 * @return IGroupOrigin[]
 	 */
 	public function groups();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Origin\GroupMembership\IGroupMembershipOrigin[]
+	 * @return IGroupMembershipOrigin[]
 	 */
 	public function groupMemberships();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Origin\Session\ISessionOrigin[]
+	 * @return ISessionOrigin[]
 	 */
 	public function sessions();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin[]
+	 * @return ISessionMembershipOrigin[]
 	 */
-	public function sessionsMemeberships();
+	public function sessionsMemberships();
+
+
+	/**
+	 * @return IOrgUnitOrigin[]
+	 */
+	public function orgUnits(): array;
+
+
+	/**
+	 * @return IOrgUnitMembershipOrigin[]
+	 */
+	public function orgUnitMemberships(): array;
 }

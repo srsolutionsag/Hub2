@@ -1,9 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Object;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object;
 
 /**
  * Interface IObjectRepository
  *
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IObjectRepository {
 

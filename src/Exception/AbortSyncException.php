@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Exception;
+<?php
+
+namespace SRAG\Plugins\Hub2\Exception;
 
 /**
  * Class AbortSyncException
@@ -6,8 +8,9 @@
  * Throw this exception to abort the global sync over all origins. This means that any following
  * origin-syncs are NOT getting executed.
  *
+ * @package SRAG\Plugins\Hub2\Exception
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Exception
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class AbortSyncException extends HubException {
 

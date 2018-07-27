@@ -1,5 +1,8 @@
-<?php namespace SRAG\Plugins\Hub2\Sync\Processor;
+<?php
 
+namespace SRAG\Plugins\Hub2\Sync\Processor;
+
+use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
@@ -12,18 +15,24 @@ use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProces
 use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupActivities;
 use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\GroupMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\OrgUnitSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\OrgUnitMembershipSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor;
 use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
  * Class SyncProcessorFactory
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SyncProcessorFactory implements ISyncProcessorFactory {
 
+	use DIC;
 	/**
 	 * @var IOrigin
 	 */
@@ -74,9 +83,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function course() {
-		global $DIC;
-
-		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new CourseActivities($DIC->database()));
+		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new CourseActivities($this->db()));
 	}
 
 
@@ -108,9 +115,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritDoc
 	 */
 	public function group() {
-		global $DIC;
-
-		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new GroupActivities($DIC->database()));
+		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new GroupActivities($this->db()));
 	}
 
 
@@ -127,5 +132,21 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	public function sessionMembership() {
 		return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function orgUnit(): IOrgUnitSyncProcessor {
+		return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+	}
+
+
+	/**
+	 * @inheritDoc
+	 */
+	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor {
+		return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 	}
 }

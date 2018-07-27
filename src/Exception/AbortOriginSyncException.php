@@ -1,4 +1,5 @@
 <?php
+
 namespace SRAG\Plugins\Hub2\Exception;
 
 /**
@@ -6,8 +7,9 @@ namespace SRAG\Plugins\Hub2\Exception;
  *
  * Throw this exception to abort the current sync of an origin.
  *
+ * @package SRAG\Plugins\Hub2\Exception
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Exception
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class AbortOriginSyncException extends HubException {
 

@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Metadata\IMetadata;
 /**
  * Class CustomMetadata
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractImplementation implements IMetadataImplementation {
 

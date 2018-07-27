@@ -5,8 +5,12 @@ namespace SRAG\Plugins\Hub2\Origin\Properties;
 /**
  * Class CourseMembershipOriginProperties
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseMembershipOriginProperties extends OriginProperties {
+    const DELETE_MODE = 'delete_mode';
 
+    const DELETE_MODE_NONE = 0;
+    const DELETE_MODE_DELETE = 1;
 }

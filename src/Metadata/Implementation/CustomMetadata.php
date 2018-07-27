@@ -2,10 +2,18 @@
 
 namespace SRAG\Plugins\Hub2\Metadata\Implementation;
 
+use ilADTDate;
+use ilADTExternalLink;
+use ilADTInternalLink;
+use ilADTText;
+use ilAdvancedMDValues;
+use ilDateTime;
+
 /**
  * Class CustomMetadata
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CustomMetadata extends AbstractImplementation implements IMetadataImplementation {
 
@@ -14,26 +22,29 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 	 */
 	public function write() {
 		$id = $this->getMetadata()->getIdentifier();
-		$ilAdvancedMDValues = new \ilAdvancedMDValues(1, $this->getIliasId(), null, "-");
+		$ilAdvancedMDValues = new ilAdvancedMDValues(1, $this->getIliasId(), NULL, "-");
 
+		$ilAdvancedMDValues->read();
 		$ilADTGroup = $ilAdvancedMDValues->getADTGroup();
 		$value = $this->getMetadata()->getValue();
 		$ilADT = $ilADTGroup->getElement($id);
+
 		switch (true) {
-			case ($ilADT instanceof \ilADTText):
+			case ($ilADT instanceof ilADTText):
 				$ilADT->setText($value);
 				break;
-			case ($ilADT instanceof \ilADTDate):
-				$ilADT->setDate(new \ilDateTime(time(), 3));
+			case ($ilADT instanceof ilADTDate):
+				$ilADT->setDate(new ilDateTime(time(), IL_CAL_UNIX));
 				break;
-			case ($ilADT instanceof \ilADTExternalLink):
+			case ($ilADT instanceof ilADTExternalLink):
 				$ilADT->setUrl($value['url']);
 				$ilADT->setTitle($value['title']);
 				break;
-			case ($ilADT instanceof \ilADTInternalLink):
+			case ($ilADT instanceof ilADTInternalLink):
 				$ilADT->setTargetRefId($value);
 				break;
 		}
+
 		$ilAdvancedMDValues->write();
 	}
 
@@ -42,6 +53,6 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 	 * @inheritDoc
 	 */
 	public function read() {
-		// TODO: Implement read() method.
+		// no need for a read-Method since wo have to update them anyways due to performance-issues when reading all metadata everytime
 	}
 }

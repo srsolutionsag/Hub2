@@ -1,20 +1,32 @@
 <?php
+
 namespace SRAG\Plugins\Hub2\Object;
+
+use ilObject;
+use SRAG\Plugins\Hub2\Exception\HubException;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\NullDTO;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 
 /**
  * Class HookObject
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class HookObject {
 
+	/**
+	 * @var IDataTransferObject
+	 */
+	protected $dto;
 	/**
 	 * @var IObject
 	 */
 	private $object;
 	/**
-	 * @var \ilObject
+	 * @var ilObject
 	 */
 	private $ilias_object;
 
@@ -22,8 +34,9 @@ class HookObject {
 	/**
 	 * @param IObject $object
 	 */
-	public function __construct(IObject $object) {
+	public function __construct(IObject $object, IDataTransferObject $dto) {
 		$this->object = $object;
+		$this->dto = $dto;
 	}
 
 
@@ -48,7 +61,20 @@ class HookObject {
 
 
 	/**
-	 * @param \ilObject|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject $object
+	 * @param int $status
+	 *
+	 * @throws HubException
+	 */
+	public function overrideStatus(int $status) {
+		if ($this->getDTO() instanceof NullDTO) {
+			throw new HubException("Overriding status for NullDTOs is not supported!");
+		}
+		$this->object->setStatus($status);
+	}
+
+
+	/**
+	 * @param ilObject|FakeIliasObject $object
 	 *
 	 * @return HookObject
 	 */
@@ -66,7 +92,7 @@ class HookObject {
 	 * IOriginImplementation::after(Create|Update|Delete)Object callbacks, it is NOT set for any
 	 * before callbacks
 	 *
-	 * @return \ilObject|\SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject|null
+	 * @return ilObject|FakeIliasObject|null
 	 */
 	public function getILIASObject() {
 		return $this->ilias_object;
@@ -83,5 +109,13 @@ class HookObject {
 	 */
 	public function getILIASId() {
 		return $this->object->getILIASId();
+	}
+
+
+	/**
+	 * @return IDataTransferObject
+	 */
+	public function getDTO(): IDataTransferObject {
+		$this->dto;
 	}
 }

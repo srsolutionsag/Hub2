@@ -2,57 +2,81 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor;
 
+use SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\IGroupMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Session\ISessionSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\ISessionMembershipSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor;
+
 /**
  * Interface ISyncProcessorFactory
  *
  * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ISyncProcessorFactory {
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor
+	 * @return IUserSyncProcessor
 	 */
 	public function user();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseSyncProcessor
+	 * @return ICourseSyncProcessor
 	 */
 	public function course();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor
+	 * @return ICategorySyncProcessor
 	 */
 	public function category();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Session\ISessionSyncProcessor
+	 * @return ISessionSyncProcessor
 	 */
 	public function session();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor
+	 * @return ICourseMembershipSyncProcessor
 	 */
 	public function courseMembership();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupSyncProcessor
+	 * @return IGroupSyncProcessor
 	 */
 	public function group();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\IGroupMembershipSyncProcessor
+	 * @return IGroupMembershipSyncProcessor
 	 */
 	public function groupMembership();
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\ISessionMembershipSyncProcessor
+	 * @return ISessionMembershipSyncProcessor
 	 */
 	public function sessionMembership();
+
+
+	/**
+	 * @return IOrgUnitSyncProcessor
+	 */
+	public function orgUnit(): IOrgUnitSyncProcessor;
+
+
+	/**
+	 * @return IOrgUnitMembershipSyncProcessor
+	 */
+	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor;
 }

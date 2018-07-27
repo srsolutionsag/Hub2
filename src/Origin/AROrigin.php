@@ -1,16 +1,22 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
 
+namespace SRAG\Plugins\Hub2\Origin;
+
+use ActiveRecord;
+use InvalidArgumentException;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class AROrigin extends \ActiveRecord implements IOrigin {
+abstract class AROrigin extends ActiveRecord implements IOrigin {
 
+	const TABLE_NAME = 'sr_hub2_origin';
 	/**
 	 * @var array
 	 */
@@ -23,7 +29,28 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 		IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
 		IOrigin::OBJECT_TYPE_SESSION,
 		IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
+		IOrigin::OBJECT_TYPE_ORGNUNIT,
+		IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP
 	];
+
+
+	/**
+	 * @return string
+	 */
+	public function getConnectorContainerName() {
+		return self::TABLE_NAME;
+	}
+
+
+	/**
+	 * @return string
+	 * @deprecated
+	 */
+	public static function returnDbTableName() {
+		return self::TABLE_NAME;
+	}
+
+
 	/**
 	 * @var int
 	 *
@@ -82,6 +109,14 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @var string
 	 *
 	 * @db_has_field           true
+	 * @db_fieldtype           text
+	 * @db_length              256
+	 */
+	protected $implementation_namespace = IOrigin::ORIGIN_MAIN_NAMESPACE;
+	/**
+	 * @var string
+	 *
+	 * @db_has_field           true
 	 * @db_fieldtype           timestamp
 	 */
 	protected $updated_at;
@@ -123,8 +158,15 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 * @db_fieldtype           timestamp
 	 */
 	protected $last_run;
+	/**
+	 * @var bool
+	 */
+	protected $force_update = false;
 
 
+	/**
+	 *
+	 */
 	public function create() {
 		$this->created_at = date('Y-m-d H:i:s');
 		$this->setObjectType($this->parseObjectType());
@@ -132,6 +174,9 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	}
 
 
+	/**
+	 *
+	 */
 	public function update() {
 		$this->updated_at = date('Y-m-d H:i:s');
 		parent::update();
@@ -144,7 +189,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	public function sleep($field_name) {
 		switch ($field_name) {
 			case 'config':
-				if ($this->_config === null) {
+				if ($this->_config === NULL) {
 					$config = $this->getOriginConfig([]);
 
 					return json_encode($config->getData());
@@ -152,7 +197,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 					return json_encode($this->config()->getData());
 				}
 			case 'properties':
-				if ($this->_properties === null) {
+				if ($this->_properties === NULL) {
 					$properties = $this->getOriginProperties([]);
 
 					return json_encode($properties->getData());
@@ -179,6 +224,9 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	}
 
 
+	/**
+	 *
+	 */
 	public function afterObjectLoad() {
 		$this->_config = $this->getOriginConfig($this->getConfigData());
 		$this->_properties = $this->getOriginProperties($this->getPropertiesData());
@@ -264,6 +312,22 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 
 
 	/**
+	 * @return string
+	 */
+	public function getImplementationNamespace() {
+		return $this->implementation_namespace ? $this->implementation_namespace : IOrigin::ORIGIN_MAIN_NAMESPACE;
+	}
+
+
+	/**
+	 * @param string $implementation_namespace
+	 */
+	public function setImplementationNamespace($implementation_namespace) {
+		$this->implementation_namespace = $implementation_namespace;
+	}
+
+
+	/**
 	 * @inheritdoc
 	 */
 	public function getCreatedAt() {
@@ -308,7 +372,7 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 */
 	public function setObjectType($type) {
 		if (!in_array($type, self::$object_types)) {
-			throw new \InvalidArgumentException("'$type' is not a valid hub object type");
+			throw new InvalidArgumentException("'$type' is not a valid hub object type");
 		}
 		$this->object_type = $type;
 
@@ -338,11 +402,6 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	//		$factory = new OriginImplementationFactory(new HubConfig(), $this);
 	//		return $factory->instance();
 	//	}
-
-	public static function returnDbTableName() {
-		return 'sr_hub2_origin';
-	}
-
 
 	/**
 	 * Return the concrete implementation of the IOriginConfig.
@@ -388,5 +447,21 @@ abstract class AROrigin extends \ActiveRecord implements IOrigin {
 	 */
 	protected function getPropertiesData() {
 		return $this->properties;
+	}
+
+
+	/**
+	 * Run Sync without Hash comparison
+	 */
+	public function forceUpdate() {
+		$this->force_update = true;
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isUpdateForced(): bool {
+		return $this->force_update;
 	}
 }

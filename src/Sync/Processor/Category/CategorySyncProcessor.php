@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor\Category;
 
+use ilObjCategory;
+use ilObjectServiceSettingsGUI;
+use ilRepUtil;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
@@ -21,8 +24,9 @@ use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 /**
  * Class CategorySyncProcessor
  *
+ * @package SRAG\Plugins\Hub2\Sync\Processor\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySyncProcessor {
 
@@ -73,15 +77,12 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
-		global $DIC;
 		/** @var CategoryDTO $dto */
-		$ilObjCategory = new \ilObjCategory();
+		$ilObjCategory = new ilObjCategory();
 		$ilObjCategory->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
-		$ilObjCategory->removeTranslations();
-		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $DIC->language()
-		                                                                             ->getDefaultLanguage(), true);
+
 		$ilObjCategory->create();
 		$ilObjCategory->createReference();
 		$ilObjCategory->putInTree($parentRefId);
@@ -89,17 +90,20 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
+			if ($dto->$getter() !== NULL) {
 				$ilObjCategory->$setter($dto->$getter());
 			}
 		}
 		if ($this->props->get(CategoryOriginProperties::SHOW_NEWS)) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
+			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
 		}
 		if ($this->props->get(CategoryOriginProperties::SHOW_INFO_TAB)) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
+			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
 		}
 		$ilObjCategory->update();
+
+		$ilObjCategory->removeTranslations();
+		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $this->lng()->getDefaultLanguage(), true);
 
 		return $ilObjCategory;
 	}
@@ -109,11 +113,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @inheritdoc
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		global $DIC;
 		/** @var CategoryDTO $dto */
 		$ilObjCategory = $this->findILIASCategory($ilias_id);
-		if ($ilObjCategory === null) {
-			return null;
+		if ($ilObjCategory === NULL) {
+			return NULL;
 		}
 		// Update some properties if they should be updated depending on the origin config
 		foreach (self::getProperties() as $property) {
@@ -122,20 +125,19 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
-				$ilObjCategory->$setter($this->$getter());
+			if ($dto->$getter() !== NULL) {
+				$ilObjCategory->$setter($dto->$getter());
 			}
 		}
 		if ($this->props->updateDTOProperty('title')) {
 			$ilObjCategory->removeTranslations();
-			$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $DIC->language()
-			                                                                             ->getDefaultLanguage(), true);
+			$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $this->lng()->getDefaultLanguage(), true);
 		}
 		if ($this->props->updateDTOProperty('showNews')) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
+			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
 		}
 		if ($this->props->updateDTOProperty('showInfoPage')) {
-			\ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), \ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
+			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
 		}
 		if ($this->props->get(CategoryOriginProperties::MOVE_CATEGORY)) {
 			$this->moveCategory($ilObjCategory, $dto);
@@ -150,17 +152,15 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 */
 	protected function handleDelete($ilias_id) {
 		$ilObjCategory = $this->findILIASCategory($ilias_id);
-		if ($ilObjCategory === null) {
-			return null;
+		if ($ilObjCategory === NULL) {
+			return NULL;
 		}
-		if ($this->props->get(CategoryOriginProperties::DELETE_MODE)
-		    == CategoryOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CategoryOriginProperties::DELETE_MODE) == CategoryOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjCategory;
 		}
 		switch ($this->props->get(CategoryOriginProperties::DELETE_MODE)) {
 			case CategoryOriginProperties::DELETE_MODE_MARK:
-				$ilObjCategory->setTitle($ilObjCategory->getTitle() . ' '
-				                         . $this->props->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
+				$ilObjCategory->setTitle($ilObjCategory->getTitle() . ' ' . $this->props->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
 				$ilObjCategory->update();
 				break;
 			case CourseOriginProperties::DELETE_MODE_DELETE:
@@ -179,15 +179,13 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @throws HubException
 	 */
 	protected function determineParentRefId(CategoryDTO $category) {
-		global $DIC;
-		$tree = $DIC->repositoryTree();
 		if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($tree->isInTree($category->getParentId())) {
+			if ($this->tree()->isInTree($category->getParentId())) {
 				return $category->getParentId();
 			}
 			// The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
 			$parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-			if (!$tree->isInTree($parentRefId)) {
+			if (!$this->tree()->isInTree($parentRefId)) {
 				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
 			}
 
@@ -217,14 +215,14 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	/**
 	 * @param int $iliasId
 	 *
-	 * @return \ilObjCategory|null
+	 * @return ilObjCategory|null
 	 */
 	protected function findILIASCategory($iliasId) {
-		if (!\ilObjCategory::_exists($iliasId, true)) {
-			return null;
+		if (!ilObjCategory::_exists($iliasId, true)) {
+			return NULL;
 		}
 
-		return new \ilObjCategory($iliasId);
+		return new ilObjCategory($iliasId);
 	}
 
 
@@ -234,20 +232,17 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @param             $ilObjCategory
 	 * @param CategoryDTO $category
 	 */
-	protected function moveCategory(\ilObjCategory $ilObjCategory, CategoryDTO $category) {
-		global $DIC;
+	protected function moveCategory(ilObjCategory $ilObjCategory, CategoryDTO $category) {
 		$parentRefId = $this->determineParentRefId($category);
-		if ($DIC->repositoryTree()->isDeleted($ilObjCategory->getRefId())) {
-			$ilRepUtil = new \ilRepUtil();
+		if ($this->tree()->isDeleted($ilObjCategory->getRefId())) {
+			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjCategory->getRefId() ]);
 		}
-		$oldParentRefId = $DIC->repositoryTree()->getParentId($ilObjCategory->getRefId());
+		$oldParentRefId = $this->tree()->getParentId($ilObjCategory->getRefId());
 		if ($oldParentRefId == $parentRefId) {
 			return;
 		}
-		$DIC->repositoryTree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
-		$DIC->rbac()
-		    ->admin()
-		    ->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
+		$this->tree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
+		$this->rbac()->admin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
 	}
 }

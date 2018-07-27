@@ -8,7 +8,8 @@ use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
 /**
  * Class TaxonomyFactory
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Taxonomy
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class TaxonomyFactory implements ITaxonomyFactory {
 

@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin;
 
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -6,7 +8,8 @@ use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 /**
  * Interface Origin
  *
- * @package SRAG\ILIAS\Plugins\Hub2\Origin
+ * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOrigin {
 
@@ -18,6 +21,9 @@ interface IOrigin {
 	const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
 	const OBJECT_TYPE_SESSION = 'session';
 	const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
+	const OBJECT_TYPE_ORGNUNIT = "orgUnit";
+	const OBJECT_TYPE_ORGNUNIT_MEMBERSHIP = "orgUnitMembership";
+	const ORIGIN_MAIN_NAMESPACE = "SRAG\\Plugins\\Hub2\\Origin";
 
 
 	/**
@@ -83,6 +89,18 @@ interface IOrigin {
 
 
 	/**
+	 * @return string
+	 */
+	public function getImplementationNamespace();
+
+
+	/**
+	 * @param string $implementation_namespace
+	 */
+	public function setImplementationNamespace($implementation_namespace);
+
+
+	/**
 	 * Get the object type that will be synced with this origin, e.g.
 	 * user|course|category|courseMembership
 	 *
@@ -139,8 +157,26 @@ interface IOrigin {
 	public function setLastRun($last_run);
 
 
+	/**
+	 *
+	 */
 	public function update();
 
 
+	/**
+	 *
+	 */
 	public function create();
+
+
+	/**
+	 * Run Sync without Hash comparison
+	 */
+	public function forceUpdate();
+
+
+	/**
+	 * @return bool
+	 */
+	public function isUpdateForced(): bool;
 }

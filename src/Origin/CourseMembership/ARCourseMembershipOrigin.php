@@ -9,7 +9,8 @@ use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 /**
  * Class ARCourseMembershipOrigin
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\CourseMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARCourseMembershipOrigin extends AROrigin implements ICourseMembershipOrigin {
 

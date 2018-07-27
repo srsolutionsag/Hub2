@@ -1,9 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Interface Properties
  *
  * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginProperties {
 
@@ -23,8 +26,6 @@ interface IOriginProperties {
 	/**
 	 * Checks if the given property of a DTO object should be updated on the ILIAS object,
 	 * e.g. the first- or lastname of a user.
-	 *
-	 * TODO Better documentation
 	 *
 	 * @param string $property
 	 *

@@ -5,7 +5,8 @@ namespace SRAG\Plugins\Hub2\Origin\Config;
 /**
  * Class GroupOriginConfig
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\Config
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupOriginConfig extends OriginConfig implements IGroupOriginConfig {
 

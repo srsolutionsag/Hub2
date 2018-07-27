@@ -2,11 +2,15 @@
 
 namespace SRAG\Plugins\Hub2\Origin\Properties;
 
+use ReflectionClass;
+use ReflectionProperty;
+
 /**
  * Class DTOPropertyParser
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class DTOPropertyParser {
 
@@ -28,8 +32,8 @@ class DTOPropertyParser {
 	 * @return DTOProperty[]
 	 */
 	public function getProperties() {
-		$reflection = new \ReflectionClass($this->dtoClass);
-		$reflectionProperties = $reflection->getProperties(\ReflectionProperty::IS_PROTECTED);
+		$reflection = new ReflectionClass($this->dtoClass);
+		$reflectionProperties = $reflection->getProperties(ReflectionProperty::IS_PROTECTED);
 		$properties = [];
 		foreach ($reflectionProperties as $reflectionProperty) {
 			// Look for a @description php doc block

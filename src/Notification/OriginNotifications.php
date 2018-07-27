@@ -1,9 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Notification;
+<?php
+
+namespace SRAG\Plugins\Hub2\Notification;
 
 /**
  * Class OriginNotifications
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Notification
  */
 class OriginNotifications {
@@ -46,6 +49,6 @@ class OriginNotifications {
 	 */
 	public function getMessages($context = '') {
 		return ($context
-		        && isset($this->messages[$context])) ? $this->messages[$context] : $this->messages;
+			&& isset($this->messages[$context])) ? $this->messages[$context] : $this->messages;
 	}
 }

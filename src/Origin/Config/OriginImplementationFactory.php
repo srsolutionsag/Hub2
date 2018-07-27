@@ -1,8 +1,11 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Config;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Config;
 
 use SRAG\Plugins\Hub2\Config\IHubConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\MappingStrategy\Factory;
 use SRAG\Plugins\Hub2\Metadata\MetadataFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
@@ -14,6 +17,7 @@ use SRAG\Plugins\Hub2\Taxonomy\TaxonomyFactory;
  * Class OriginImplementationFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Config
  */
 class OriginImplementationFactory {
@@ -58,13 +62,14 @@ class OriginImplementationFactory {
 		$basePath = rtrim($this->hubConfig->getOriginImplementationsPath(), '/') . '/';
 		$path = $basePath . $this->origin->getObjectType() . '/';
 		$className = $this->origin->getImplementationClassName();
+		$namespace = $this->origin->getImplementationNamespace();
 		$classFile = $path . $className . '.php';
 		if (!is_file($classFile)) {
 			throw new HubException("Origin implementation class file does not exist, should be at: $classFile");
 		}
-		require_once($classFile);
-		$class = "SRAG\\Plugins\\Hub2\\Origin\\" . $className;
-		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory());
+		require_once $classFile;
+		$class = rtrim($namespace, "\\") . "\\" . $className;
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new Factory());
 
 		return $instance;
 	}

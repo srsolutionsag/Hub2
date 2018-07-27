@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class CategoryOriginProperties
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CategoryOriginProperties extends OriginProperties {
 
@@ -20,10 +23,10 @@ class CategoryOriginProperties extends OriginProperties {
 	 * @var array
 	 */
 	protected $data = [
-		self::SHOW_INFO_TAB         => false,
-		self::SHOW_NEWS             => false,
-		self::MOVE_CATEGORY         => false,
-		self::DELETE_MODE           => self::DELETE_MODE_NONE,
+		self::SHOW_INFO_TAB => false,
+		self::SHOW_NEWS => false,
+		self::MOVE_CATEGORY => false,
+		self::DELETE_MODE => self::DELETE_MODE_NONE,
 		self::DELETE_MODE_MARK_TEXT => '',
 	];
 

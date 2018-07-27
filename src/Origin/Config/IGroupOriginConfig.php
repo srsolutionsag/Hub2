@@ -1,9 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Config;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Interface IGroupOriginConfig
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Origin\Config
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IGroupOriginConfig extends IOriginConfig {
 

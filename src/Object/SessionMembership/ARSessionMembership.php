@@ -7,14 +7,10 @@ use SRAG\Plugins\Hub2\Object\ARObject;
 /**
  * Class ARSessionMembership
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\SessionMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARSessionMembership extends ARObject implements ISessionMembership {
 
-	/**
-	 * @inheritdoc
-	 */
-	public static function returnDbTableName() {
-		return 'sr_hub2_session_mem';
-	}
+	const TABLE_NAME = 'sr_hub2_session_mem';
 }

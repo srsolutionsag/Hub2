@@ -2,11 +2,12 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use Exception;
 use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
 use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\HookObject;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 
 /**
@@ -23,7 +24,9 @@ class demoSession extends AbstractOriginImplementation {
 	 * @throws ConnectionFailedException
 	 * @return bool
 	 */
-	public function connect() { return true; }
+	public function connect(): bool {
+		return true;
+	}
 
 
 	/**
@@ -36,31 +39,22 @@ class demoSession extends AbstractOriginImplementation {
 	 * @throws ParseDataFailedException
 	 * @return int
 	 */
-	public function parseData() {
+	public function parseData(): int {
+		$this->log()->write("This is a test-log entry");
+
 		for ($x = 1; $x <= 14; $x ++) {
+			if (rand(1, 14) === $x) {
+				continue; // Simulate some random deletions
+			}
 			$rand = rand();
-			$sessionDTO = $this->factory()
-			                   ->session($x)
-			                   ->setParentId(1)
-			                   ->setParentIdType(SessionDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
-			                   ->setTitle("Title {$rand}")
-			                   ->setDescription("Description {$rand}")
-			                   ->setLocation("Location {$rand}")
-			                   ->setDetails("Details {$rand}")
-			                   ->setName("Name {$rand}")
-			                   ->setEmail("Email {$rand}")
-			                   ->setPhone("Phone {$rand}")
-			                   ->setFullDay(false)
-			                   ->setStart(time() + ($x * 600))
-			                   ->setEnd(time() + ($x * 600) + 3600)
-			                   ->addMetadata($this->metadata()
-			                                      ->getDTOWithIliasId(1)
-			                                      ->setValue("Meine Metadaten"))
-			                   ->addMetadata($this->metadata()
-			                                      ->getDTOWithIliasId(2)
-			                                      ->setValue(time()));
+			$sessionDTO = $this->factory()->session($x)->setParentId(1)->setParentIdType(SessionDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
+				->setTitle("Title $x")->setDescription("Description {$rand}")->setLocation("Location {$rand}")->setDetails("Details {$rand}")
+				->setName("Name {$rand}")->setEmail("Email {$rand}")->setPhone("Phone {$rand}")->setFullDay(false)->setStart(time() + ($x * 600))
+				->setEnd(time() + ($x * 600) + 3600)->addTaxonomy($this->taxonomy()->select("Taxonomy 1")->attach($this->taxonomy()
+					->node("Node Title 1.1"))->attach($this->taxonomy()->node("Node Title 1.2")))->addTaxonomy($this->taxonomy()->select("Taxonomy 2")
+					->attach($this->taxonomy()->node("Node Title 2.1")))->addMetadata($this->metadata()->getDTOWithIliasId(1)
+					->setValue("Meine Metadaten"))->addMetadata($this->metadata()->getDTOWithIliasId(2)->setValue(time()));
 			$this->data[] = $sessionDTO;
-			$this->log()->write("Start:" . date(DATE_ATOM, $sessionDTO->getStart()));
 		}
 
 		return count($this->data);
@@ -84,7 +78,8 @@ class demoSession extends AbstractOriginImplementation {
 	 * @throws BuildObjectsFailedException
 	 * @return IDataTransferObject[]
 	 */
-	public function buildObjects() {
+	public function buildObjects(): array {
+		// TODO: Build objects here
 		return $this->data;
 	}
 
@@ -105,45 +100,45 @@ class demoSession extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param \Exception $e
+	 * @param Exception $e
 	 */
-	public function handleException(\Exception $e) { }
+	public function handleException(Exception $e) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeCreateILIASObject(HookObject $object) { }
+	public function beforeCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterCreateILIASObject(HookObject $object) { }
+	public function afterCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) { }
+	public function beforeUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterUpdateILIASObject(HookObject $object) { }
+	public function afterUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeDeleteILIASObject(HookObject $object) { }
+	public function beforeDeleteILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterDeleteILIASObject(HookObject $object) { }
+	public function afterDeleteILIASObject(HookObject $hook) { }
 
 
 	/**

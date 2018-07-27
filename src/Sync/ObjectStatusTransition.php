@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
+
+namespace SRAG\Plugins\Hub2\Sync;
 
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Object\IObject;
@@ -7,8 +9,9 @@ use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 /**
  * Class ObjectStatusTransition
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ObjectStatusTransition implements IObjectStatusTransition {
 
@@ -21,7 +24,6 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		IObject::STATUS_UPDATED,
 		IObject::STATUS_DELETED,
 		IObject::STATUS_IGNORED,
-		IObject::STATUS_NOTHING_TO_UPDATE,
 	];
 	/**
 	 * @var IOriginConfig
@@ -83,6 +85,8 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 				return IObject::STATUS_UPDATED;
 			case IObject::STATUS_TO_DELETE:
 				return IObject::STATUS_DELETED;
+			case IObject::STATUS_NOTHING_TO_UPDATE:
+				return IObject::STATUS_IGNORED;
 		}
 		throw new HubException(sprintf("Could not transition to final state from state %s", $object->getStatus()));
 	}

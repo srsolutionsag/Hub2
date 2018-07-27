@@ -2,13 +2,36 @@
 
 namespace SRAG\Plugins\Hub2\Config;
 
+use ActiveRecord;
+
 /**
  * Class ArConfig
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Config
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ArConfig extends \ActiveRecord {
+class ArConfig extends ActiveRecord {
+
+	const TABLE_NAME = 'sr_hub2_config';
+
+
+	/**
+	 * @return string
+	 */
+	public function getConnectorContainerName() {
+		return self::TABLE_NAME;
+	}
+
+
+	/**
+	 * @return string
+	 * @deprecated
+	 */
+	public static function returnDbTableName() {
+		return self::TABLE_NAME;
+	}
+
 
 	/**
 	 * @db_has_field    true
@@ -39,7 +62,7 @@ class ArConfig extends \ActiveRecord {
 		/** @var ARConfig $config */
 		$config = self::find($key);
 
-		return ($config) ? $config->getValue() : null;
+		return ($config) ? $config->getValue() : NULL;
 	}
 
 
@@ -50,7 +73,7 @@ class ArConfig extends \ActiveRecord {
 	 */
 	public static function getInstanceByKey($key) {
 		$instance = self::find($key);
-		if ($instance === null) {
+		if ($instance === NULL) {
 			$instance = new self();
 			$instance->setKey($key);
 		}
@@ -105,10 +128,5 @@ class ArConfig extends \ActiveRecord {
 	 */
 	public function setValue($value) {
 		$this->value = $value;
-	}
-
-
-	public static function returnDbTableName() {
-		return 'sr_hub2_config';
 	}
 }

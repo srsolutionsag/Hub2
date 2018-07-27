@@ -1,13 +1,18 @@
 <?php
 
-// Autoload Hub2
+use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\MockInterface;
+use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
+use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 use SRAG\Plugins\Hub2\Sync\ObjectStatusTransition;
 
-require_once('AbstractHub2Tests.php');
-require_once(dirname(__DIR__) . '/vendor/autoload.php');
+require_once __DIR__ . "/AbstractHub2Tests.php";
 
 /**
  * Base class for all unit tests of Hub2
@@ -21,34 +26,34 @@ require_once(dirname(__DIR__) . '/vendor/autoload.php');
  */
 abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
-	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+	use MockeryPHPUnitIntegration;
 	/**
-	 * @var SRAG\Plugins\Hub2\Origin\IOrigin
+	 * @var IOrigin
 	 */
 	protected $origin;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Notification\OriginNotifications
+	 * @var OriginNotifications
 	 */
 	protected $originNotifications;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Sync\ObjectStatusTransition
+	 * @var ObjectStatusTransition
 	 */
 	protected $statusTransition;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Log\ILog
+	 * @var MockInterface|ILog
 	 */
 	protected $originLog;
 	/**
-	 * @var \SRAG\Plugins\Hub2\Object\IDataTransferObject
+	 * @var IDataTransferObject
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface
+	 * @var MockInterface
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
 	/**
-	 * @var Mockery\MockInterface|\ilTree
+	 * @var MockInterface|ilTree
 	 */
 	protected $tree;
 	/**
@@ -60,13 +65,13 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	 */
 	protected $originProperties;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Origin\IOriginImplementation
+	 * @var MockInterface|IOriginImplementation
 	 */
 	protected $originImplementation;
 
 
 	protected function initLog() {
-		$this->originLog = \Mockery::mock("SRAG\Plugins\Hub2\Log\OriginLog");
+		$this->originLog = Mockery::mock("SRAG\Plugins\Hub2\Log\OriginLog");
 	}
 
 
@@ -76,7 +81,7 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
 
 	protected function initStatusTransitions() {
-		$this->statusTransition = new ObjectStatusTransition(\Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig"));
+		$this->statusTransition = new ObjectStatusTransition(Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig"));
 	}
 
 
@@ -89,30 +94,30 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties $properties
-	 * @param \SRAG\Plugins\Hub2\Origin\Config\IOriginConfig         $config
+	 * @param IOriginProperties $properties
+	 * @param IOriginConfig     $config
 	 */
 	protected function initOrigin(IOriginProperties $properties, IOriginConfig $config) {
 		$this->originProperties = $properties;
 		$this->originConfig = $config;
-		$this->origin = \Mockery::mock("SRAG\Plugins\Hub2\Origin\IOrigin");
+		$this->origin = Mockery::mock("SRAG\Plugins\Hub2\Origin\IOrigin");
 		$this->origin->shouldReceive('properties')->andReturn($properties);
 		$this->origin->shouldReceive('getId');
 		$this->origin->shouldReceive('config')->andReturn($config);
-		$this->originImplementation = \Mockery::mock('\SRAG\Plugins\Hub2\Origin\IOriginImplementation');
+		$this->originImplementation = Mockery::mock('\SRAG\Plugins\Hub2\Origin\IOriginImplementation');
 	}
 
 
 	protected function initDIC() {
 		global $DIC;
 
-		$DIC = \Mockery::mock('overload:\ILIAS\DI\Container', "Pimple\Container");
-		$tree_mock = \Mockery::mock('overload:\ilTree');
+		$DIC = Mockery::mock('overload:\ILIAS\DI\Container', "Pimple\Container");
+		$tree_mock = Mockery::mock('overload:\ilTree');
 		$tree_mock->shouldReceive('isInTree')->with(1)->once()->andReturn(true);
 		$this->tree = $tree_mock;
 		$DIC->shouldReceive('repositoryTree')->once()->andReturn($tree_mock);
 
-		$language_mock = \Mockery::mock('overload:\ilLanguage', "ilObject");
+		$language_mock = Mockery::mock('overload:\ilLanguage', "ilObject");
 		$language_mock->shouldReceive('getDefaultLanguage')->andReturn('en');
 		$DIC->shouldReceive('language')->once()->andReturn($language_mock);
 	}

@@ -1,9 +1,12 @@
-<?php namespace SRAG\Plugins\Hub2\Origin;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin;
 
 /**
  * Interface IOriginFactory
  *
  * @package SRAG\Plugins\Hub2\Origin
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginFactory {
 
@@ -13,9 +16,9 @@ interface IOriginFactory {
 	 *
 	 * @param int $id
 	 *
-	 * @return IOrigin
+	 * @return IOrigin|null
 	 */
-	public function getById($id);
+	public function getById($id); //Correct return type would by : ?IOrigin, but this is PHP7.1+
 
 
 	/**
@@ -23,11 +26,17 @@ interface IOriginFactory {
 	 *
 	 * @return IOrigin
 	 */
-	public function createByType($type);
+	public function createByType(string $type): IOrigin;
 
 
 	/**
 	 * @return IOrigin[]
 	 */
-	public function getAllActive();
+	public function getAllActive(): array;
+
+
+	/**
+	 * @return IOrigin[]
+	 */
+	public function getAll(): array;
 }

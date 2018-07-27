@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class OriginProperties
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class OriginProperties implements IOriginProperties {
 
@@ -26,7 +29,7 @@ abstract class OriginProperties implements IOriginProperties {
 	 * @inheritdoc
 	 */
 	public function get($key) {
-		return (isset($this->data[$key])) ? $this->data[$key] : null;
+		return (isset($this->data[$key])) ? $this->data[$key] : NULL;
 	}
 
 

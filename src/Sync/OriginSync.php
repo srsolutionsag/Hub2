@@ -1,24 +1,30 @@
-<?php namespace SRAG\Plugins\Hub2\Sync;
+<?php
 
+namespace SRAG\Plugins\Hub2\Sync;
+
+use Error;
+use Exception;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use SRAG\Plugins\Hub2\Exception\AbortSyncException;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use SRAG\Plugins\Hub2\Object\DTO\NullDTO;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Object\IObjectFactory;
 use SRAG\Plugins\Hub2\Object\IObjectRepository;
-use SRAG\Plugins\Hub2\Object\DTO\NullDTO;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
+use Throwable;
 
 /**
  * Class Sync
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Sync
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginSync implements IOriginSync {
 
@@ -39,7 +45,7 @@ class OriginSync implements IOriginSync {
 	 */
 	protected $dtoObjects = [];
 	/**
-	 * @var \Exception[] array
+	 * @var Exception[] array
 	 */
 	protected $exceptions = [];
 	/**
@@ -66,6 +72,7 @@ class OriginSync implements IOriginSync {
 		IObject::STATUS_UPDATED => 0,
 		IObject::STATUS_DELETED => 0,
 		IObject::STATUS_IGNORED => 0,
+		IObject::STATUS_NOTHING_TO_UPDATE => 0
 	];
 	/**
 	 * @var OriginNotifications
@@ -93,6 +100,11 @@ class OriginSync implements IOriginSync {
 	}
 
 
+	/**
+	 * @throws AbortOriginSyncException
+	 * @throws HubException
+	 * @throws Throwable
+	 */
 	public function execute() {
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
 		// as the sync of this origin cannot continue.
@@ -117,12 +129,15 @@ class OriginSync implements IOriginSync {
 		} catch (HubException $e) {
 			$this->exceptions[] = $e;
 			throw $e;
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 			// Note: Should not happen in the stages above, as only exceptions of type HubException should be raised.
 			// Throwable collects any exceptions AND Errors from PHP 7
 			$this->exceptions[] = $e;
 			throw $e;
 		}
+
+		// Sort dto objects
+		$this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
 
 		// Start SYNC of delivered objects --> CREATE & UPDATE
 		// ======================================================================================================
@@ -146,21 +161,50 @@ class OriginSync implements IOriginSync {
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
-		$nullDTO = new NullDTO(); // There is no DTO available / needed for the deletion process (data has not been delivered)
+
 		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
+			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
 			$object->setStatus(IObject::STATUS_TO_DELETE);
 			$this->processObject($object, $nullDTO);
 		}
 
 		try {
 			$this->implementation->afterSync();
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 			$this->exceptions[] = $e;
 			throw $e;
 		}
 		$this->getOrigin()->setLastRun(date(DATE_ATOM));
 
 		$this->getOrigin()->update();
+	}
+
+
+	/**
+	 * @param IDataTransferObject[] $dtos
+	 *
+	 * @return IDataTransferObject[]
+	 */
+	protected function sortDtoObjects(array $dtos): array {
+		// Create IDataTransferObjectSort objects
+		$sort_dtos = array_map(function (IDataTransferObject $dto): IDataTransferObjectSort {
+			return new DataTransferObjectSort($dto);
+		}, $dtos);
+
+		// Request processor to set sort levels
+		if ($this->processor->handleSort($sort_dtos)) {
+			// Sort by level
+			usort($sort_dtos, function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int {
+				return ($sort_dto1->getLevel() - $sort_dto2->getLevel());
+			});
+
+			// Back to IDataTransferObject objects
+			$dtos = array_map(function (IDataTransferObjectSort $sort_dto): IDataTransferObject {
+				return $sort_dto->getDtoObject();
+			}, $sort_dtos);
+		}
+
+		return $dtos;
 	}
 
 
@@ -213,7 +257,7 @@ class OriginSync implements IOriginSync {
 	 */
 	protected function processObject(IObject $object, IDataTransferObject $dto) {
 		try {
-			$this->processor->process($object, $dto);
+			$this->processor->process($object, $dto, $this->origin->isUpdateForced());
 			$this->incrementProcessed($object->getStatus());
 		} catch (AbortSyncException $e) {
 			// Any exceptions aborting the global or current sync are forwarded to global sync
@@ -228,13 +272,13 @@ class OriginSync implements IOriginSync {
 			$this->exceptions[] = $e;
 			$object->save();
 			throw $e;
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
 			// which decides how to proceed, e.g. continue or abort
 			$this->exceptions[] = $e;
 			$object->save();
 			$this->implementation->handleException($e);
-		} catch (\Error $e) {
+		} catch (Error $e) {
 			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
 			$this->exceptions[] = $e;
 			$object->save();

@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Config;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Config;
 
 /**
  * Interface IUserOriginConfig

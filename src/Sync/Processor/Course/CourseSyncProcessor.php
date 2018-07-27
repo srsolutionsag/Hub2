@@ -2,6 +2,14 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor\Course;
 
+use ilLink;
+use ilMailMimeSenderFactory;
+use ilMD;
+use ilMDLanguageItem;
+use ilMimeMail;
+use ilObjCategory;
+use ilObjCourse;
+use ilRepUtil;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
@@ -21,8 +29,9 @@ use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 /**
  * Class CourseSyncProcessor
  *
+ * @package SRAG\Plugins\Hub2\Sync\Processor\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProcessor {
 
@@ -89,7 +98,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
 		/** @var CourseDTO $dto */
-		$ilObjCourse = new \ilObjCourse();
+		$ilObjCourse = new ilObjCourse();
 		$ilObjCourse->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
@@ -103,25 +112,115 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
+			if ($dto->$getter() !== NULL) {
 				$ilObjCourse->$setter($dto->$getter());
 			}
+		}
+		if ($dto->getDidacticTemplate() > 0) {
+			$ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
+		}
+		if ($dto->getIcon() !== '') {
+			$ilObjCourse->saveIcons($dto->getIcon());
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE)) {
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
+
 		if ($this->props->get(CourseOriginProperties::CREATE_ICON)) {
 			// TODO
 			//			$this->updateIcon($this->ilias_object);
 			//			$this->ilias_object->update();
 		}
 		if ($this->props->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)) {
-			// TODO
+			$this->sendMailNotifications($dto, $ilObjCourse);
 		}
+		$this->setSubscriptionType($dto, $ilObjCourse);
+
+		$this->setLanguage($dto, $ilObjCourse);
+
+
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
+	}
+
+
+	/**
+	 * @param CourseDTO   $dto
+	 * @param ilObjCourse $ilObjCourse
+	 */
+	protected function setLanguage(CourseDTO $dto, ilObjCourse $ilObjCourse) {
+		$md_general = (new ilMD($ilObjCourse->getId()))->getGeneral();
+		//Note: this is terribly stupid, but the best (only) way if found to get to the
+		//lang id of the primary language of some object. There seems to be multy lng
+		//support however, not through the GUI. Maybe there is some bug in the generation
+		//of the respective metadata form. See: initQuickEditForm() in ilMDEditorGUI
+		$language = $md_general->getLanguage(array_pop($md_general->getLanguageIds()));
+		$language->setLanguage(new ilMDLanguageItem($dto->getLanguageCode()));
+		$language->update();
+	}
+
+
+	/**
+	 * @param CourseDTO $dto
+	 * @param \ilObjCourse $ilObjCourse
+	 */
+	protected function setSubscriptionType(CourseDTO $dto, \ilObjCourse $ilObjCourse){
+		//There is some weird connection between subscription limitation type ond subscription type, see e.g. ilObjCourseGUI
+		$ilObjCourse->setSubscriptionType($dto->getSubscriptionLimitationType());
+		if($dto->getSubscriptionLimitationType() == CourseDTO::SUBSCRIPTION_TYPE_DEACTIVATED){
+			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_DEACTIVATED);
+		}else{
+			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_UNLIMITED);
+		}
+	}
+
+	/**
+	 * @param CourseDTO $dto
+	 */
+	protected function sendMailNotifications(CourseDTO $dto, ilObjCourse $ilObjCourse) {
+		$mail = new ilMimeMail();
+		$sender_factory = new ilMailMimeSenderFactory($this->settings());
+		$sender = NULL;
+		if ($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM)) {
+			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
+		} else {
+			$sender = $sender_factory->system();
+		}
+		$mail->From($sender);
+		$mail->To($dto->getNotificationEmails());
+		$mail->Subject($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
+		$mail->Body($this->replaceBodyTextForMail($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY), $ilObjCourse));
+		$mail->Send();
+	}
+
+
+	protected function replaceBodyTextForMail($body, ilObjCourse $ilObjCourse) {
+		foreach (CourseOriginProperties::$mail_notification_placeholder as $ph) {
+			$replacement = '[' . $ph . ']';
+
+			switch ($ph) {
+				case 'title':
+					$replacement = $ilObjCourse->getTitle();
+					break;
+				case 'description':
+					$replacement = $ilObjCourse->getDescription();
+					break;
+				case 'responsible':
+					$replacement = $ilObjCourse->getContactResponsibility();
+					break;
+				case 'notification_email':
+					$replacement = $ilObjCourse->getContactEmail();
+					break;
+				case 'shortlink':
+					$replacement = ilLink::_getStaticLink($ilObjCourse->getRefId(), 'crs');
+					break;
+			}
+			$body = str_ireplace('[' . strtoupper($ph) . ']', $replacement, $body);
+		}
+
+		return $body;
 	}
 
 
@@ -131,8 +230,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/** @var CourseDTO $dto */
 		$ilObjCourse = $this->findILIASCourse($ilias_id);
-		if ($ilObjCourse === null) {
-			return null;
+		if ($ilObjCourse === NULL) {
+			return NULL;
 		}
 		// Update some properties if they should be updated depending on the origin config
 		foreach (self::getProperties() as $property) {
@@ -141,9 +240,28 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== null) {
+			if ($dto->$getter() !== NULL) {
 				$ilObjCourse->$setter($dto->$getter());
 			}
+		}
+		if ($this->props->updateDTOProperty("didacticTemplate") && $dto->getDidacticTemplate() > 0) {
+			$ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
+		}
+		if ($this->props->updateDTOProperty("icon")) {
+			if ($dto->getIcon() !== '') {
+				$ilObjCourse->saveIcons($dto->getIcon());
+			} else {
+				$ilObjCourse->removeCustomIcon();
+			}
+		}
+		if ($this->props->updateDTOProperty("enableSessionLimit")) {
+			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
+		}
+        if ($this->props->updateDTOProperty("subscriptionLimitationType")) {
+			$this->setSubscriptionType($dto, $ilObjCourse);
+        }
+		if ($this->props->updateDTOProperty("languageCode")){
+			$this->setLanguage($dto,$ilObjCourse);
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
@@ -163,15 +281,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function handleDelete($ilias_id) {
 		$ilObjCourse = $this->findILIASCourse($ilias_id);
-		if ($ilObjCourse === null) {
-			return null;
+		if ($ilObjCourse === NULL) {
+			return NULL;
 		}
-		if ($this->props->get(CourseOriginProperties::DELETE_MODE)
-		    == CourseOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CourseOriginProperties::DELETE_MODE) == CourseOriginProperties::DELETE_MODE_NONE) {
 			return $ilObjCourse;
 		}
-		global $DIC;
-		$tree = $DIC->repositoryTree();
 		switch ($this->props->get(CourseOriginProperties::DELETE_MODE)) {
 			case CourseOriginProperties::DELETE_MODE_OFFLINE:
 				$ilObjCourse->setOfflineStatus(true);
@@ -188,7 +303,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 					$ilObjCourse->setOfflineStatus(true);
 					$ilObjCourse->update();
 				} else {
-					$tree->moveToTrash($ilObjCourse->getRefId(), true);
+					$this->tree()->moveToTrash($ilObjCourse->getRefId(), true);
 				}
 				break;
 		}
@@ -204,8 +319,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @throws HubException
 	 */
 	protected function determineParentRefId(CourseDTO $course) {
-		global $DIC;
-		$tree = $DIC->repositoryTree();
 		if ($course->getParentIdType() == CourseDTO::PARENT_ID_TYPE_REF_ID) {
 			if ($tree->isInTree($course->getParentId())) {
 				return $course->getParentId();
@@ -228,19 +341,19 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			}
 			$originRepository = new OriginRepository();
 			$origin = array_pop(array_filter($originRepository->categories(), function ($origin) use ($linkedOriginId) {
-				/** @var $origin IOrigin */
+				/** @var IOrigin $origin */
 				return $origin->getId() == $linkedOriginId;
 			}));
-			if ($origin === null) {
+			if ($origin === NULL) {
 				$msg = "The linked origin syncing categories was not found, please check that the correct origin is linked";
 				throw new HubException($msg);
 			}
 			$objectFactory = new ObjectFactory($origin);
 			$category = $objectFactory->category($course->getParentId());
 			if (!$category->getILIASId()) {
-				throw new HubException("The linked category does not (yet) exist in ILIAS");
+				throw new HubException("The linked category (".$category->getExtId().") does not (yet) exist in ILIAS for course: ".$course->getExtId());
 			}
-			if (!$tree->isInTree($category->getILIASId())) {
+			if (!$this->tree()->isInTree($category->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
 			}
 
@@ -258,16 +371,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @return int
 	 */
 	protected function buildDependenceCategories(CourseDTO $object, $parentRefId) {
-		if ($object->getFirstDependenceCategory() !== null) {
+		if ($object->getFirstDependenceCategory() !== NULL) {
 			$parentRefId = $this->buildDependenceCategory($object->getFirstDependenceCategory(), $parentRefId, 1);
 		}
-		if ($object->getFirstDependenceCategory() !== null
-		    && $object->getSecondDependenceCategory() !== null) {
+		if ($object->getFirstDependenceCategory() !== NULL
+			&& $object->getSecondDependenceCategory() !== NULL) {
 			$parentRefId = $this->buildDependenceCategory($object->getSecondDependenceCategory(), $parentRefId, 2);
 		}
-		if ($object->getFirstDependenceCategory() !== null
-		    && $object->getSecondDependenceCategory() !== null
-		    && $object->getThirdDependenceCategory() !== null) {
+		if ($object->getFirstDependenceCategory() !== NULL
+			&& $object->getSecondDependenceCategory() !== NULL
+			&& $object->getThirdDependenceCategory() !== NULL) {
 			$parentRefId = $this->buildDependenceCategory($object->getThirdDependenceCategory(), $parentRefId, 3);
 		}
 
@@ -289,14 +402,13 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @return int
 	 */
 	protected function buildDependenceCategory($title, $parentRefId, $level) {
-		global $DIC;
 		static $cache = [];
 		// We use a cache for created dependence categories to save some SQL queries
-		$cacheKey = md5($title . $parentRefId . $level);
+		$cacheKey = hash("sha256", $title . $parentRefId . $level);
 		if (isset($cache[$cacheKey])) {
 			return $cache[$cacheKey];
 		}
-		$categories = $DIC->repositoryTree()->getChildsByType($parentRefId, 'cat');
+		$categories = $this->tree()->getChildsByType($parentRefId, 'cat');
 		$matches = array_filter($categories, function ($category) use ($title) {
 			return $category['title'] == $title;
 		});
@@ -307,14 +419,13 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			return $category['ref_id'];
 		}
 		// No category with the given title found, create it!
-		$importId = implode('_', [
-			'srhub',
-			$this->origin->getId(),
-			$parentRefId,
-			'depth',
-			$level,
-		]);
-		$ilObjCategory = new \ilObjCategory();
+		$importId = self::IMPORT_PREFIX . implode('_', [
+				$this->origin->getId(),
+				$parentRefId,
+				'depth',
+				$level,
+			]);
+		$ilObjCategory = new ilObjCategory();
 		$ilObjCategory->setTitle($title);
 		$ilObjCategory->setImportId($importId);
 		$ilObjCategory->create();
@@ -330,14 +441,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	/**
 	 * @param int $iliasId
 	 *
-	 * @return \ilObjCourse|null
+	 * @return ilObjCourse|null
 	 */
 	protected function findILIASCourse($iliasId) {
-		if (!\ilObjCourse::_exists($iliasId, true)) {
-			return null;
+		if (!ilObjCourse::_exists($iliasId, true)) {
+			return NULL;
 		}
 
-		return new \ilObjCourse($iliasId);
+		return new ilObjCourse($iliasId);
 	}
 
 
@@ -348,22 +459,19 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @param           $ilObjCourse
 	 * @param CourseDTO $course
 	 */
-	protected function moveCourse(\ilObjCourse $ilObjCourse, CourseDTO $course) {
-		global $DIC;
+	protected function moveCourse(ilObjCourse $ilObjCourse, CourseDTO $course) {
 		$parentRefId = $this->determineParentRefId($course);
 		$parentRefId = $this->buildDependenceCategories($course, $parentRefId);
-		if ($DIC->repositoryTree()->isDeleted($ilObjCourse->getRefId())) {
-			$ilRepUtil = new \ilRepUtil();
+		if ($this->tree()->isDeleted($ilObjCourse->getRefId())) {
+			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjCourse->getRefId() ]);
 		}
-		$oldParentRefId = $DIC->repositoryTree()->getParentId($ilObjCourse->getRefId());
+		$oldParentRefId = $this->tree()->getParentId($ilObjCourse->getRefId());
 		if ($oldParentRefId == $parentRefId) {
 			return;
 		}
-		$DIC->repositoryTree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
-		$DIC->rbac()
-		    ->admin()
-		    ->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
+		$this->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
+		$this->rbac()->admin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
 		//			hubLog::getInstance()->write($str);
 		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}

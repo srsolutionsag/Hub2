@@ -1,10 +1,13 @@
-<?php namespace SRAG\Plugins\Hub2\Origin\Properties;
+<?php
+
+namespace SRAG\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class CourseOriginProperties
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @author  Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseOriginProperties extends OriginProperties {
 
@@ -25,16 +28,40 @@ class CourseOriginProperties extends OriginProperties {
 	/**
 	 * @var array
 	 */
+	public static $mail_notification_placeholder = array(
+		'title',
+		'description',
+		'responsible',
+		'notification_email',
+		'shortlink',
+	);
+
+
+	/**
+	 * @return string
+	 */
+	public static function getPlaceHolderStrings() {
+		$return = '[';
+		$return .= implode('], [', self::$mail_notification_placeholder);
+		$return .= ']';
+
+		return strtoupper($return);
+	}
+
+
+	/**
+	 * @var array
+	 */
 	protected $data = [
-		self::SET_ONLINE                  => false,
-		self::SET_ONLINE_AGAIN            => false,
-		self::CREATE_ICON                 => false,
-		self::SEND_CREATE_NOTIFICATION    => false,
+		self::SET_ONLINE => false,
+		self::SET_ONLINE_AGAIN => false,
+		self::CREATE_ICON => false,
+		self::SEND_CREATE_NOTIFICATION => false,
 		self::CREATE_NOTIFICATION_SUBJECT => '',
-		self::CREATE_NOTIFICATION_BODY    => '',
-		self::CREATE_NOTIFICATION_FROM    => '',
-		self::MOVE_COURSE                 => false,
-		self::DELETE_MODE                 => self::DELETE_MODE_NONE,
+		self::CREATE_NOTIFICATION_BODY => '',
+		self::CREATE_NOTIFICATION_FROM => '',
+		self::MOVE_COURSE => false,
+		self::DELETE_MODE => self::DELETE_MODE_NONE,
 	];
 
 

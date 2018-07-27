@@ -2,15 +2,18 @@
 
 namespace SRAG\Plugins\Hub2\UI;
 
+use SRAG\Plugins\Hub2\Origin\SessionMembership\ARSessionMembershipOrigin;
+
 /**
  * Class SessionMembershipOriginConfigFormGUI
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\UI
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionMembershipOriginConfigFormGUI extends OriginConfigFormGUI {
 
 	/**
-	 * @var \SRAG\Plugins\Hub2\Origin\SessionMembership\ARSessionMembershipOrigin
+	 * @var ARSessionMembershipOrigin
 	 */
 	protected $origin;
 

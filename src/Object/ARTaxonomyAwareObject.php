@@ -2,10 +2,13 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
+use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+
 /**
  * Class ARTaxonomyAwareObject
  *
  * @package SRAG\Plugins\Hub2\Object
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait ARTaxonomyAwareObject {
 
@@ -19,7 +22,7 @@ trait ARTaxonomyAwareObject {
 
 
 	/**
-	 * @return \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy[]
+	 * @return ITaxonomy[]
 	 */
 	public function getTaxonomies(): array {
 		return $this->taxonomies;
@@ -27,7 +30,7 @@ trait ARTaxonomyAwareObject {
 
 
 	/**
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy[] $taxonomies
+	 * @param ITaxonomy[] $taxonomies
 	 */
 	public function setTaxonomies(array $taxonomies) {
 		$this->taxonomies = $taxonomies;

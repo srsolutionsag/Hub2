@@ -7,7 +7,8 @@ use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 /**
  * Class TaxonomyNotFoundException
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Exception
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class TaxonomyNotFoundException extends HubException {
 
@@ -20,7 +21,7 @@ class TaxonomyNotFoundException extends HubException {
 	/**
 	 * TaxonomyNotFoundException constructor.
 	 *
-	 * @param \SRAG\Plugins\Hub2\Taxonomy\ITaxonomy $ta
+	 * @param ITaxonomy $ta
 	 */
 	public function __construct(ITaxonomy $ta) {
 		parent::__construct("ILIAS Taxonomy object not found for: {$ta->getTitle()}");

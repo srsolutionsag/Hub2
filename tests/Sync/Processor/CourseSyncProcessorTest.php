@@ -1,12 +1,16 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . '/AbstractSyncProcessorTests.php');
+require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
+use Mockery;
+use Mockery\MockInterface;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
+use SRAG\Plugins\Hub2\Object\Course\ICourse;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities;
 
 /**
  * Class CourseSyncProcessorTest
@@ -25,13 +29,12 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	const ILIAS_USER_ID = 123;
 	const COURSE_REF_ID = 57;
-
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities
+	 * @var MockInterface|ICourseActivities
 	 */
 	protected $activities;
 	/**
-	 * @var Mockery\MockInterface|\SRAG\Plugins\Hub2\Object\Course\ICourse
+	 * @var MockInterface|ICourse
 	 */
 	protected $iobject;
 	/**
@@ -39,33 +42,24 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected $dto;
 	/**
-	 * @var Mockery\MockInterface|ilObjCourse
+	 * @var MockInterface|ilObjCourse
 	 * @see http://docs.mockery.io/en/latest/cookbook/mocking_hard_dependencies.html
 	 */
 	protected $ilObject;
 
+
 	protected function initDTO() {
 		$this->dto = new CourseDTO('extIdOfCourse');
-		$this->dto->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)
-		          ->setParentId(1)
-		          ->setDescription("Description")
-		          ->setTitle("Title")
-		          ->setContactEmail("contact@email.com")
-		          ->setContactResponsibility("Responsibility")
-		          ->setImportantInformation("Important Information")
-		          ->setNotificationEmails([ "notification@email.com" ])
-		          ->setOwner(6)
-		          ->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
-		          ->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)
-		          ->setContactName("Contact Name")
-		          ->setSyllabus('Syllabus')
-		          ->setContactConsultation('1 2 3 4 5 6')
-		          ->setContactPhone('+41 123 456 789');
+		$this->dto->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->setParentId(1)->setDescription("Description")->setTitle("Title")
+			->setContactEmail("contact@email.com")->setContactResponsibility("Responsibility")->setImportantInformation("Important Information")
+			->setNotificationEmails([ "notification@email.com" ])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
+			->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setContactName("Contact Name")->setSyllabus('Syllabus')
+			->setContactConsultation('1 2 3 4 5 6')->setContactPhone('+41 123 456 789');
 	}
 
 
 	protected function initHubObject() {
-		$this->iobject = \Mockery::mock('\SRAG\Plugins\Hub2\Object\Course\ICourse');
+		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Course\ICourse');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -74,7 +68,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = \Mockery::mock('overload:\ilObjCourse', 'ilObject');
+		$this->ilObject = Mockery::mock('overload:\ilObjCourse', 'ilObject');
 		$this->ilObject->shouldReceive('getId')->andReturn(self::ILIAS_USER_ID);
 	}
 
@@ -83,7 +77,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = \Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
+		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
 
 		$this->initOrigin(new CourseOriginProperties(), new CourseOriginConfig([]));
 		$this->setupGeneralDependencies();
@@ -94,7 +88,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function tearDown() {
-		\Mockery::close();
+		Mockery::close();
 	}
 
 
@@ -133,12 +127,8 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
-		$this->iobject->shouldReceive('computeHashCode')
-		              ->once()
-		              ->andReturn(serialize($this->dto->getData()));
-		$this->iobject->shouldReceive('getHashCode')
-		              ->once()
-		              ->andReturn(serialize($this->dto->getData()));
+		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn(serialize($this->dto->getData()));
+		$this->iobject->shouldReceive('getHashCode')->once()->andReturn(serialize($this->dto->getData()));
 
 		$this->originImplementation->shouldNotReceive('beforeUpdateILIASObject'); // Since Data did no change
 		$this->originImplementation->shouldNotReceive('afterUpdateILIASObject');
@@ -162,35 +152,17 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	protected function initDataExpectations() {
 		$this->ilObject->shouldReceive('setTitle')->once()->with($this->dto->getTitle());
-		$this->ilObject->shouldReceive('setDescription')
-		               ->once()
-		               ->with($this->dto->getDescription());
-		$this->ilObject->shouldReceive('setImportantInformation')
-		               ->once()
-		               ->with($this->dto->getImportantInformation());
-		$this->ilObject->shouldReceive('setContactResponsibility')
-		               ->once()
-		               ->with($this->dto->getContactResponsibility());
-		$this->ilObject->shouldReceive('setContactEmail')
-		               ->once()
-		               ->with($this->dto->getContactEmail());
+		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getDescription());
+		$this->ilObject->shouldReceive('setImportantInformation')->once()->with($this->dto->getImportantInformation());
+		$this->ilObject->shouldReceive('setContactResponsibility')->once()->with($this->dto->getContactResponsibility());
+		$this->ilObject->shouldReceive('setContactEmail')->once()->with($this->dto->getContactEmail());
 		$this->ilObject->shouldReceive('setOwner')->once()->with($this->dto->getOwner());
-		$this->ilObject->shouldReceive('setSubscriptionLimitationType')
-		               ->once()
-		               ->with($this->dto->getSubscriptionLimitationType());
+		$this->ilObject->shouldReceive('setSubscriptionLimitationType')->once()->with($this->dto->getSubscriptionLimitationType());
 		$this->ilObject->shouldReceive('setViewMode')->once()->with($this->dto->getViewMode());
-		$this->ilObject->shouldReceive('setContactName')
-		               ->once()
-		               ->with($this->dto->getContactName());
+		$this->ilObject->shouldReceive('setContactName')->once()->with($this->dto->getContactName());
 		$this->ilObject->shouldReceive('setSyllabus')->once()->with($this->dto->getSyllabus());
-		$this->ilObject->shouldReceive('setContactConsultation')
-		               ->once()
-		               ->with($this->dto->getContactConsultation());
-		$this->ilObject->shouldReceive('setContactPhone')
-		               ->once()
-		               ->with($this->dto->getContactPhone());
-		$this->ilObject->shouldReceive('setActivationType')
-		               ->once()
-		               ->with($this->dto->getActivationType());
+		$this->ilObject->shouldReceive('setContactConsultation')->once()->with($this->dto->getContactConsultation());
+		$this->ilObject->shouldReceive('setContactPhone')->once()->with($this->dto->getContactPhone());
+		$this->ilObject->shouldReceive('setActivationType')->once()->with($this->dto->getActivationType());
 	}
 }

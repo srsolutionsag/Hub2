@@ -6,7 +6,6 @@ use SRAG\Plugins\Hub2\Metadata\IMetadata;
 use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
 use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
 use SRAG\Plugins\Hub2\Object\User\UserDTO;
@@ -14,7 +13,8 @@ use SRAG\Plugins\Hub2\Object\User\UserDTO;
 /**
  * Class IMetadataImplementationFactory
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class MetadataImplementationFactory implements IMetadataImplementationFactory {
 
@@ -49,4 +49,3 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory {
 		}
 	}
 }
-

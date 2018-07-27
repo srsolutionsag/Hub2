@@ -1,7 +1,9 @@
 {
   "require-dev": {
     "phpunit/phpunit": "^5.7",
-    "mockery/mockery": "dev-master"
+    "mockery/mockery": "dev-master",
+    "doctrine/instantiator": "1.0.5",
+    "symfony/yaml": "v3.4.4"
   },
   "autoload": {
     "psr-4": {
@@ -15,7 +17,9 @@
       "../../../../../../../Modules/Course",
       "../../../../../../../Modules/Category",
       "../../../../../../../Services/User",
-      "../../../../../../../Modules/Group"
+      "../../../../../../../Modules/Group",
+      "../../../../../../../Services/Calendar",
+      "../../../../../../../Services/Exceptions"
     ]
   }
 }

@@ -1,19 +1,26 @@
-<?php namespace SRAG\Plugins\Hub2\Object\CourseMembership;
+<?php
+
+namespace SRAG\Plugins\Hub2\Object\CourseMembership;
 
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
+use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class CourseMembershipDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package SRAG\Plugins\Hub2\Object\CourseMembership
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseMembershipDTO extends DataTransferObject {
+
+	const GLUE = "|||";
+
 
 	/**
 	 * @inheritDoc
 	 */
 	public function __construct($course_ext_id, $user_id) {
-		parent::__construct("{$course_ext_id}|||{$user_id}");
+		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$course_ext_id, $user_id]));
 		$this->courseId = $course_ext_id;
 		$this->userId = $user_id;
 	}
@@ -22,7 +29,6 @@ class CourseMembershipDTO extends DataTransferObject {
 	const ROLE_MEMBER = 2;
 	const ROLE_TUTOR = 3;
 	const ROLE_ADMIN = 1;
-
 	const COURSE_ID_TYPE_REF_ID = 1;
 	const COURSE_ID_TYPE_EXTERNAL_EXT_ID = 2;
 	/**
@@ -56,7 +62,7 @@ class CourseMembershipDTO extends DataTransferObject {
 	 *
 	 * @return CourseMembershipDTO
 	 */
-	public function setCourseId( $courseId): CourseMembershipDTO {
+	public function setCourseId($courseId): CourseMembershipDTO {
 		$this->courseId = $courseId;
 
 		return $this;

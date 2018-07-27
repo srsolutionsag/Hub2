@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../vendor/autoload.php";
 
 use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Config\HubConfig;
@@ -7,21 +8,32 @@ use SRAG\Plugins\Hub2\UI\ConfigFormGUI;
 /**
  * Class hub2ConfigGUI
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class hub2ConfigGUI extends hub2MainGUI {
 
+	const CMD_SAVE_CONFIG = 'saveConfig';
+	const CMD_CANCEL = 'cancel';
+
+
+	/**
+	 *
+	 */
 	protected function index() {
 		$form = new ConfigFormGUI($this, new HubConfig());
 		$this->tpl()->setContent($form->getHTML());
 	}
 
 
+	/**
+	 *
+	 */
 	protected function saveConfig() {
 		$form = new ConfigFormGUI($this, new HubConfig());
 		if ($form->checkInput()) {
 			foreach ($form->getInputItemsRecursive() as $item) {
-				/** @var $item \ilFormPropertyGUI */
+				/** @var ilFormPropertyGUI $item */
 				$config = ARConfig::getInstanceByKey($item->getPostVar());
 				$config->setValue($form->getInput($item->getPostVar()));
 				$config->save();
@@ -34,6 +46,9 @@ class hub2ConfigGUI extends hub2MainGUI {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function initTabs() {
 		$this->tabs()->activateTab(self::TAB_PLUGIN_CONFIG);
 	}
