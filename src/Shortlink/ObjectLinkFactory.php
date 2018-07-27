@@ -1,6 +1,8 @@
 <?php namespace SRAG\Plugins\Hub2\Shortlink;
 
 use SRAG\Plugins\Hub2\Object\ARObject;
+use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
@@ -64,6 +66,36 @@ class ObjectLinkFactory {
 					}
 			}
 		}
+		if ($object instanceof ARObject) {
+			return $this->findByObject($object);
+		}
+
+		return new NullLink();
+	}
+
+
+	/**
+	 * @param string  $ext_id
+	 * @param IOrigin $origin
+	 *
+	 * @return IObjectLink
+	 */
+	public function findByExtIdAndOrigin(string $ext_id, IOrigin $origin): IObjectLink {
+		$f = new ObjectFactory($origin);
+		$object = $f->undefined($ext_id);
+		switch (true) {
+			case ($object instanceof ARSession):
+			case ($object instanceof ARCategory):
+			case ($object instanceof ARCourse):
+			case ($object instanceof ARGroup):
+			case ($object instanceof ARUser):
+				if ($object->getILIASId()) {
+					break;
+				} else {
+					$object = null;
+				}
+		}
+
 		if ($object instanceof ARObject) {
 			return $this->findByObject($object);
 		}
