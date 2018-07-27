@@ -47,7 +47,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return ilHub2Plugin
 	 */
 	public static function getInstance() {
-		if (self::$instance === NULL) {
+		if (self::$instance === null) {
 			self::$instance = new self();
 		}
 
@@ -59,7 +59,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return ilCronJob[]
 	 */
 	public function getCronJobInstances() {
-		return [ new RunSync() ];
+		return [new RunSync()];
 	}
 
 

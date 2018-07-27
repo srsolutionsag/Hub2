@@ -66,7 +66,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$delete = new ilRadioGroupInputGUI($this->pl->txt('cat_prop_delete_mode'), $this->prop(CategoryOriginProperties::DELETE_MODE));
 		$delete->setValue($this->origin->properties()->get(CategoryOriginProperties::DELETE_MODE));
 
-		$opt = new ilRadioOption($this->pl->txt('crs_prop_delete_mode_none'), CategoryOriginProperties::DELETE_MODE_NONE);
+		$opt = new ilRadioOption($this->pl->txt('cat_prop_delete_mode_none'), CategoryOriginProperties::DELETE_MODE_NONE);
 		$delete->addOption($opt);
 
 		$opt = new ilRadioOption(sprintf($this->pl->txt('cat_prop_delete_mode_inactive'), $this->pl->txt('com_prop_mark_deleted_text')), CategoryOriginProperties::DELETE_MODE_MARK);
@@ -76,7 +76,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$te->setValue($this->origin->properties()->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
 		$opt->addSubItem($te);
 
-		$opt = new ilRadioOption($this->pl->txt('crs_prop_delete_mode_delete'), CategoryOriginProperties::DELETE_MODE_DELETE);
+		$opt = new ilRadioOption($this->pl->txt('cat_prop_delete_mode_delete'), CategoryOriginProperties::DELETE_MODE_DELETE);
 		$delete->addOption($opt);
 
 		$this->addItem($delete);
