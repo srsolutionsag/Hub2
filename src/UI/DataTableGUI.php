@@ -302,7 +302,7 @@ class DataTableGUI extends ilTable2GUI {
 		}
 
 		$origins = [ 0 => $this->pl->txt("data_table_all") ];
-		foreach ($this->originFactory->getAllActive() as $origin) {
+		foreach ($this->originFactory->getAll() as $origin) {
 			$origins[$origin->getId()] = $origin->getTitle();
 		}
 

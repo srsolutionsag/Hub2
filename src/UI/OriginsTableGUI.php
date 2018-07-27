@@ -112,7 +112,7 @@ class OriginsTableGUI extends ilTable2GUI {
 		$actions->addItem($this->pl->txt('common_edit'), 'edit', $this->ctrl()
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_EDIT_ORGIN));
 		$actions->addItem($this->pl->txt('common_delete'), 'delete', $this->ctrl()
-			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
+			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE));
 		$actions->addItem($this->pl->txt('origin_table_button_run'), 'runOriginSync', $this->ctrl()
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
 		$this->ctrl()->clearParameters($this->parent_obj);

@@ -13,11 +13,14 @@ use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class CourseMembershipDTO extends DataTransferObject {
 
+	const GLUE = "|||";
+
+
 	/**
 	 * @inheritDoc
 	 */
 	public function __construct($course_ext_id, $user_id) {
-		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $course_ext_id, $user_id ]));
+		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$course_ext_id, $user_id]));
 		$this->courseId = $course_ext_id;
 		$this->userId = $user_id;
 	}

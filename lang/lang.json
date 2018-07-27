@@ -83,7 +83,7 @@
                     "de": "Aktive Anbindungen sperren",
                     "en": "Lock active origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "membership": {
                 "translations": {
@@ -127,61 +127,33 @@
                     "en": "The following placeholders can be used: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]"
                 }
             },
-            "msg_shortlink_not_active": {
-                "translations": {
-                    "de": "Objekt-nicht-aktiv Nachricht",
-                    "en": "Object-not-active message"
-                },
-                "last_used": "21.06.2018"
-            },
-            "msg_shortlink_not_active_info": {
-                "translations": {
-                    "de": "Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden.",
-                    "en": "Notification if shortlinks have not been activated for the corresponding origin."
-                },
-                "last_used": "21.06.2018"
-            },
-            "msg_shortlink_no_ilias_id": {
-                "translations": {
-                    "de": "ILIAS-ID-nicht-gefunden-Nachricht",
-                    "en": "ILIAS-ID-not-found-Message"
-                },
-                "last_used": "21.06.2018"
-            },
-            "msg_shortlink_no_ilias_id_info": {
-                "translations": {
-                    "de": "ILIAS-ID-nicht-gefunden-Nachricht",
-                    "en": "ILIAS-ID-not-found-message"
-                },
-                "last_used": "21.06.2018"
-            },
             "msg_shortlink_not_found": {
                 "translations": {
-                    "de": "Nicht gefunden Nachricht",
+                    "de": "Nachricht bei \"Nicht gefunden\"",
                     "en": "Not-found-message"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "msg_shortlink_not_found_info": {
                 "translations": {
-                    "de": "Wird angezeigt wenn ein nciht existierender Shortlink genutzt wird",
-                    "en": "Is shown if a shortlink is used which does not exist"
+                    "de": "Wird angezeigt, wenn ein Shortlink zu einem nicht existierenden Objekt genutzt wird.",
+                    "en": "Is shown if a shortlink to an object is used which does not exist."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "origins_path": {
                 "translations": {
                     "de": "Pfad zu den Anbindungen",
                     "en": "Path to Origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "origins_path_info": {
                 "translations": {
                     "de": "Ort des 'origin'-Verzeichnisses",
                     "en": "Location of the 'origins' directory"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "password_email_body": {
                 "translations": {
@@ -200,14 +172,14 @@
                     "de": "Rollen-IDs die HUB2 verwenden können (kommasepariert)",
                     "en": "Role-IDs which can use HUB2 (commaseparated)"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "shortlink": {
                 "translations": {
                     "de": "Shortlink",
                     "en": "Shortlink"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "use_async": {
                 "translations": {
@@ -250,13 +222,41 @@
                     "de": "Allgemein",
                     "en": "General"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "header_sync": {
                 "translations": {
                     "de": "Synchronisation",
                     "en": "Sync"
                 }
+            },
+            "msg_shortlink_no_access": {
+                "translations": {
+                    "de": "Nachricht bei \"Kein Zugriff\"",
+                    "en": "\"No Access\" Message"
+                },
+                "last_used": "27.07.2018"
+            },
+            "msg_shortlink_no_access_info": {
+                "translations": {
+                    "de": "Nachricht wird angezeigt, wenn ein/e Benutzer/in einen Shortlink nutzt, auf den er/sie keinen Zugriff hat",
+                    "en": "Message is display to users which use a Shortlink to an object without read-access."
+                },
+                "last_used": "27.07.2018"
+            },
+            "msg_shortlink_success": {
+                "translations": {
+                    "de": "Nachricht bei erfolgreicher Weiterleitung",
+                    "en": "Message for successful redirects"
+                },
+                "last_used": "27.07.2018"
+            },
+            "msg_shortlink_success_info": {
+                "translations": {
+                    "de": "Die Meldung wird angezeigt, wenn nach dem zugriff via Shortlink eine erfolgreiche Weiterleitung zum ILIAS Objekt stattfindet.",
+                    "en": "Message is shwon whenever a sucessful redirect via Shortlink happened."
+                },
+                "last_used": "27.07.2018"
             }
         },
         "cat": {
@@ -265,28 +265,28 @@
                     "de": "Basis-Node extern",
                     "en": "External base node"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_base_node_external_info": {
                 "translations": {
                     "de": "Fallback Externe-ID einer Kategorie (dieser Anbindung), die als übergeordnetes Element verwendet wird, nur wenn das angegebene übergeordnete Element nicht über die externe ID gefunden werden konnte",
                     "en": "Fallback external ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_base_node_ilias": {
                 "translations": {
                     "de": "Basis-Node ILIAS",
                     "en": "ILIAS base node"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_base_node_ilias_info": {
                 "translations": {
                     "de": "Fallback Ref-ID wird als Elternteil für die Kategorie verwendet, nur wenn das angegebene Elternteil nicht über die Ref-ID gefunden werden konnte.",
                     "en": "Fallback ref ID used as parent for the category, only if the given parent could not be found via Ref-ID."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_change_icon": {
                 "translations": {
@@ -305,7 +305,7 @@
                     "de": "Löschverhalten",
                     "en": "Delete behavior"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_delete_mode_archive": {
                 "translations": {
@@ -323,27 +323,29 @@
                 "translations": {
                     "de": "Kategorie löschen",
                     "en": "Delete category"
-                }
+                },
+                "last_used": "20.07.2018"
             },
             "prop_delete_mode_inactive": {
                 "translations": {
                     "de": "Hängen Sie einen Text an den Titel der Kategorie an, z. \"(gelöscht)\"",
                     "en": "Append a text to the title of the category, e.g. \"(deleted)\""
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_delete_mode_inactive_text": {
                 "translations": {
                     "de": "Angehängter Text",
                     "en": "Appended text"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_delete_mode_none": {
                 "translations": {
                     "de": "Keine Aktion",
                     "en": "No action"
-                }
+                },
+                "last_used": "20.07.2018"
             },
             "prop_header_base": {
                 "translations": {
@@ -368,7 +370,7 @@
                     "de": "Kategorie verschieben",
                     "en": "Move category"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_syncfield": {
                 "translations": {
@@ -405,7 +407,7 @@
                     "de": "Nachrichten setzen",
                     "en": "Set message"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_update_news": {
                 "translations": {
@@ -418,7 +420,7 @@
                     "de": "Info-Reiter setzen",
                     "en": "Set info tab"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_update_infopage": {
                 "translations": {
@@ -485,7 +487,7 @@
                     "de": "Kurs löschen",
                     "en": "Delete course"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_delete_mode_inactive": {
                 "translations": {
@@ -506,7 +508,7 @@
                     "de": "Keine Aktion",
                     "en": "No action"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_header_icon": {
                 "translations": {
@@ -633,49 +635,49 @@
                     "de": "Mengenvergleich",
                     "en": "Amount comparison"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_check_amount_info": {
                 "translations": {
                     "de": "Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden.",
                     "en": "Errors when less than X% of existing records are delivered."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_check_amount_percentage": {
                 "translations": {
                     "de": "Prozentwert",
                     "en": "Percentage"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_force_login": {
                 "translations": {
                     "de": "Login erfordern",
                     "en": "Force login"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_link_to_origin": {
                 "translations": {
                     "de": "Verknüpfung mit anderer Anbindung",
                     "en": "Link to other origin"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_mark_deleted_text": {
                 "translations": {
                     "de": "(gelöscht)",
                     "en": "(deleted)"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_shortlink": {
                 "translations": {
                     "de": "Shortlink aktivieren",
                     "en": "Enable shortlink"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "prop_use_ext_status": {
                 "translations": {
@@ -732,7 +734,7 @@
                     "de": "Aktionen",
                     "en": "Actions"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "activate": {
                 "translations": {
@@ -751,14 +753,14 @@
                     "de": "Löschen",
                     "en": "Delete"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "edit": {
                 "translations": {
                     "de": "Bearbeiten",
                     "en": "Edit"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "export": {
                 "translations": {
@@ -777,7 +779,7 @@
                     "de": "Objekt-Status: %s",
                     "en": "Object status: %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "back": {
                 "translations": {
@@ -790,47 +792,47 @@
                     "de": "Rechte",
                     "en": "Permissions"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "roles": {
                 "translations": {
                     "de": "Rollen-IDs",
                     "en": "Role IDs"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "on_status_new": {
                 "translations": {
                     "de": "NEU",
                     "en": "NEW"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "on_status_update": {
                 "translations": {
                     "de": "AKTUALISIEREN",
                     "en": "UPDATE"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "on_status_delete": {
                 "translations": {
                     "de": "LÖSCHEN",
                     "en": "DELETE"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "yes": {
                 "translations": {
                     "de": "Ja",
                     "en": "Yes"
                 },
-                "last_used": "22.06.2018"
+                "last_used": "20.07.2018"
             },
             "no": {
                 "translations": {
-                    "de": "No",
-                    "en": "Nein"
+                    "de": "Nein",
+                    "en": "No"
                 },
                 "last_used": "22.06.2018"
             }
@@ -865,7 +867,7 @@
                     "de": "Anbindungen",
                     "en": "Origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "users": {
                 "translations": {
@@ -1088,14 +1090,14 @@
                     "de": "Gespeichert",
                     "en": "Saved"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "successfully_saved": {
                 "translations": {
                     "de": "Gespeichert",
                     "en": "Saved"
                 },
-                "last_used": "15.11.2017"
+                "last_used": "27.07.2018"
             },
             "created_class_implementation_file": {
                 "translations": {
@@ -1165,126 +1167,126 @@
                     "de": "Anbindung bearbeiten",
                     "en": "Edit origin"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_active": {
                 "translations": {
                     "de": "Synchronisation aktiv",
                     "en": "Sync active"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_class_name": {
                 "translations": {
                     "de": "PHP-Klassenname",
                     "en": "PHP class name"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_class_name_info": {
                 "translations": {
                     "de": "Die Klassendatei muss in '%s' vorhanden sein.<br>Nach dem Speichern versucht Hub, automatisch eine Vorlage für Sie an diesem Ort zu erstellen.",
                     "en": "Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type": {
                 "translations": {
                     "de": "Anbindungstyp",
                     "en": "Origin type"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db": {
                 "translations": {
                     "de": "Server",
                     "en": "Server"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db_database": {
                 "translations": {
                     "de": "Datenbank",
                     "en": "Database"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db_host": {
                 "translations": {
                     "de": "Host",
                     "en": "Host"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db_info": {
                 "translations": {
                     "de": "Die Daten stammen aus einer Serververbindung.",
                     "en": "The data comes from a server connection."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db_password": {
                 "translations": {
                     "de": "Kennwort",
                     "en": "Password"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db_port": {
                 "translations": {
                     "de": "Port",
                     "en": "Port"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db_search_base": {
                 "translations": {
                     "de": "Such-Base",
                     "en": "Search base"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_db_username": {
                 "translations": {
                     "de": "Login-Name",
                     "en": "Login name"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_external": {
                 "translations": {
                     "de": "Extern",
                     "en": "External"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_external_info": {
                 "translations": {
                     "de": "Füllen der Hub-Tabelle durch Fremdsystem.",
                     "en": "Fill the hub table with foreign systems."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_file": {
                 "translations": {
                     "de": "Datei oder Verzeichnis",
                     "en": "File or directory"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_file_info": {
                 "translations": {
                     "de": "Daten werden aus einer Datei gelesen.",
                     "en": "Data is read from a file."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_conf_type_file_path": {
                 "translations": {
                     "de": "Pfad zur Datei",
                     "en": "Paht to file"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_description": {
                 "translations": {
@@ -1315,28 +1317,28 @@
                     "de": "Benachrichtigung bei Fehler",
                     "en": "Notification on error"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_summary_email": {
                 "translations": {
                     "de": "E-Mailadressen für Zusammenfassung",
                     "en": "E-mail addresses for summary"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "from_field_active_period": {
                 "translations": {
                     "de": "Aktive Periode",
                     "en": "Active period"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "from_field_active_period_info": {
                 "translations": {
                     "de": "Die Synchronisation verarbeitet nur Objekte, die zu der hier definierten aktuellen Periode gehören. Objekte, die nicht zu diesem Zeitraum gehören, werden auf IGNORIERT gesetzt.",
                     "en": "The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED."
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_title": {
                 "translations": {
@@ -1349,7 +1351,7 @@
                     "de": "Sync-Verwendung",
                     "en": "Sync use"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_usage_type_1": {
                 "translations": {
@@ -1380,35 +1382,35 @@
                     "de": "%s aktualisieren",
                     "en": "Update %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_comma_separated": {
                 "translations": {
                     "de": "Mehrere Werte durch ein Komma trennen",
                     "en": "Separate multiple values by a comma"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_header_connection": {
                 "translations": {
                     "de": "Verbindung zu Daten",
                     "en": "Connection to data"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_header_notification": {
                 "translations": {
                     "de": "Benachrichtigungen",
                     "en": "Notifications"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_header_sync": {
                 "translations": {
                     "de": "Synchronisation",
                     "en": "Sync"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_button_dryrun": {
                 "translations": {
@@ -1422,21 +1424,21 @@
                     "de": "Alle aktivieren",
                     "en": "Activate all"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_button_add": {
                 "translations": {
                     "de": "Anbindung hinzufügen",
                     "en": "Add origin"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_button_deactivate_all": {
                 "translations": {
                     "de": "Alle deaktivieren",
                     "en": "Deactivate all"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_button_import": {
                 "translations": {
@@ -1449,21 +1451,21 @@
                     "de": "Sychronisieren",
                     "en": "Sync"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_active": {
                 "translations": {
                     "de": "Aktiv",
                     "en": "Active"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_count": {
                 "translations": {
                     "de": "Anzahl",
                     "en": "Count"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_duration_objects": {
                 "translations": {
@@ -1476,7 +1478,7 @@
                     "de": "Beschreibung",
                     "en": "Description"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_duration": {
                 "translations": {
@@ -1489,21 +1491,21 @@
                     "de": "Letztes Update",
                     "en": "Last update"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_title": {
                 "translations": {
                     "de": "Titel",
                     "en": "Title"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_usage_type": {
                 "translations": {
                     "de": "Typ",
                     "en": "Type"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_title": {
                 "translations": {
@@ -1516,14 +1518,14 @@
                     "de": "Titel",
                     "en": "Title"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "description": {
                 "translations": {
                     "de": "Beschreibung",
                     "en": "Description"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "object_type_user": {
                 "translations": {
@@ -1586,21 +1588,21 @@
                     "de": "PHP-Namespace",
                     "en": "PHP namespace"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "form_field_namespace_info": {
                 "translations": {
                     "de": "PHP-Namespace",
                     "en": "PHP namespace"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_button_force": {
                 "translations": {
                     "de": "Aktualisieren erzwingen",
                     "en": "Force update"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "object_type_orgUnit": {
                 "translations": {
@@ -2114,14 +2116,14 @@
                     "de": "Speichern",
                     "en": "Save"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "cancel": {
                 "translations": {
                     "de": "Abbrechen",
                     "en": "Cancel"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             }
         },
         "tab": {
@@ -2130,7 +2132,7 @@
                     "de": "Anbindungen",
                     "en": "Origins"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             },
             "data": {
                 "translations": {
@@ -2144,7 +2146,7 @@
                     "de": "Konfiguration",
                     "en": "Configuration"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "27.07.2018"
             }
         },
         "data": {
@@ -2153,49 +2155,49 @@
                     "de": "Anbindung",
                     "en": "Origin"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_ext_id": {
                 "translations": {
                     "de": "Ext-ID",
                     "en": "Ext ID"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_delivery_date": {
                 "translations": {
                     "de": "Lieferdatum",
                     "en": "Delivery date"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_processed_date": {
                 "translations": {
                     "de": "Prozessdatum",
                     "en": "Process date"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_ilias_id": {
                 "translations": {
                     "de": "ILIAS-ID",
                     "en": "ILIAS ID"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_status": {
                 "translations": {
                     "de": "Status",
                     "en": "Status"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_period": {
                 "translations": {
                     "de": "Periode",
                     "en": "Period"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_actions": {
                 "translations": {
@@ -2209,14 +2211,14 @@
                     "de": "Anzeigen",
                     "en": "View"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_data": {
                 "translations": {
                     "de": "Daten",
                     "en": "Data"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "table_header_origin": {
                 "translations": {
@@ -2234,7 +2236,8 @@
                 "translations": {
                     "de": "ALLE",
                     "en": "ALL"
-                }
+                },
+                "last_used": "20.07.2018"
             },
             "table_ext_id": {
                 "translations": {
@@ -2291,14 +2294,14 @@
                     "de": "Übersicht",
                     "en": "Overview"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "data": {
                 "translations": {
                     "de": "Verlauf",
                     "en": "Verlauf"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             }
         },
         "grp": {
@@ -2425,49 +2428,49 @@
                     "de": "Zusammenfassung für %s: ",
                     "en": "Summary for %s: "
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "delivered_data_sets": {
                 "translations": {
                     "de": "Gelieferte Datensätze: %s",
                     "en": "Delivered data sets: %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "created": {
                 "translations": {
                     "de": "Erstellt: %s",
                     "en": "Created: %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "updated": {
                 "translations": {
                     "de": "Aktualisiert: %s",
                     "en": "Updated: %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "deleted": {
                 "translations": {
                     "de": "Gelöscht: %s",
                     "en": "Deleted: %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "ignored": {
                 "translations": {
                     "de": "Ignoriert: %s",
                     "en": "Ignored: %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "no_changes": {
                 "translations": {
                     "de": "Keine Änderungen: %s",
                     "en": "No changes: %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "exceptions": {
                 "translations": {
@@ -2480,7 +2483,7 @@
                     "de": "HUB2: Zusammenfassung für %s",
                     "en": "HUB2: Summary for %s"
                 },
-                "last_used": "21.06.2018"
+                "last_used": "20.07.2018"
             },
             "exceptions_in": {
                 "translations": {
@@ -2495,7 +2498,7 @@
                 }
             }
         },
-        "orgunit":{
+        "orgunit": {
             "ref_id_if_no_parent_id": {
                 "translations": {
                     "de": "Basic-Ref-ID",

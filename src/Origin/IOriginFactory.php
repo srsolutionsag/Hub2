@@ -16,9 +16,9 @@ interface IOriginFactory {
 	 *
 	 * @param int $id
 	 *
-	 * @return IOrigin
+	 * @return IOrigin|null
 	 */
-	public function getById($id): IOrigin;
+	public function getById($id); //Correct return type would by : ?IOrigin, but this is PHP7.1+
 
 
 	/**
@@ -26,11 +26,17 @@ interface IOriginFactory {
 	 *
 	 * @return IOrigin
 	 */
-	public function createByType(string $type);
+	public function createByType(string $type): IOrigin;
 
 
 	/**
 	 * @return IOrigin[]
 	 */
 	public function getAllActive(): array;
+
+
+	/**
+	 * @return IOrigin[]
+	 */
+	public function getAll(): array;
 }

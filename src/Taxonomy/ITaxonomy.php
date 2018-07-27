@@ -60,4 +60,10 @@ interface ITaxonomy {
 	 * @return ITaxonomy
 	 */
 	public function attach(INode $node): ITaxonomy;
+
+
+	/**
+	 * @return string
+	 */
+	public function __toString(): string;
 }

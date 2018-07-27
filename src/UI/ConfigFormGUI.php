@@ -80,19 +80,22 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 		$h->setTitle($this->pl->txt('admin_shortlink'));
 		$this->addItem($h);
 
-		$item = new ilTextInputGUI($this->pl->txt('admin_msg_shortlink_not_found'), IHubConfig::SHORTLINK_NOT_FOUND);
-		$item->setValue($this->config->get(IHubConfig::SHORTLINK_NOT_FOUND));
-		$item->setInfo($this->pl->txt('admin_msg_shortlink_not_found_info'));
+		$item = new \ilTextAreaInputGUI($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_FOUND), IHubConfig::SHORTLINK_OBJECT_NOT_FOUND);
+		$item->setUseRte(false);
+		$item->setValue($this->config->get(IHubConfig::SHORTLINK_OBJECT_NOT_FOUND));
+		$item->setInfo($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_FOUND . '_info'));
 		$this->addItem($item);
 
-		$item = new ilTextInputGUI($this->pl->txt('admin_msg_shortlink_no_ilias_id'), IHubConfig::SHORTLINK_NO_ILIAS_ID);
-		$item->setValue($this->config->get(IHubConfig::SHORTLINK_NO_ILIAS_ID));
-		$item->setInfo($this->pl->txt('admin_msg_shortlink_no_ilias_id_info'));
+		$item = new \ilTextAreaInputGUI($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE), IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE);
+		$item->setUseRte(false);
+		$item->setValue($this->config->get(IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE));
+		$item->setInfo($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE . '_info'));
 		$this->addItem($item);
 
-		$item = new ilTextInputGUI($this->pl->txt('admin_msg_shortlink_not_active'), IHubConfig::SHORTLINK_NOT_ACTIVE);
-		$item->setValue($this->config->get(IHubConfig::SHORTLINK_NOT_ACTIVE));
-		$item->setInfo($this->pl->txt('admin_msg_shortlink_not_active_info'));
+		$item = new \ilTextAreaInputGUI($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_SUCCESS), IHubConfig::SHORTLINK_SUCCESS);
+		$item->setUseRte(false);
+		$item->setValue($this->config->get(IHubConfig::SHORTLINK_SUCCESS));
+		$item->setInfo($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_SUCCESS . '_info'));
 		$this->addItem($item);
 
 		//		$h = new ilFormSectionHeaderGUI();
