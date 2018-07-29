@@ -581,6 +581,8 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 		}
 
 		$this->languageCode = $languageCode;
+
+		return $this;
 	}
 
 
