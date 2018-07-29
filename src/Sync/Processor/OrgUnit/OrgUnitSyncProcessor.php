@@ -311,7 +311,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		return $parent_id;
 	}
 
-
 	/**
 	 * @param ilObjOrgUnit $org_unit
 	 * @param IOrgUnitDTO  $dto
@@ -319,19 +318,16 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 * @throws HubException
 	 */
 	protected function moveOrgUnit(ilObjOrgUnit $org_unit, IOrgUnitDTO $dto) {
-		$parent_id = $this->getParentId($dto);
-		$old_parent_id = intval($this->tree()->getParentId($org_unit->getRefId()));
-
-		unset($this->tree()->is_saved_cache[$org_unit->getRefId()]); // Fix multiple tries to restore
+		$parent_ref_id = $this->getParentId($dto);
 		if ($this->tree()->isDeleted($org_unit->getRefId())) {
-			$rep_util = new ilRepUtil();
-			$rep_util->restoreObjects($parent_id, [ $org_unit->getRefId() ]);
+			$ilRepUtil = new ilRepUtil();
+			$ilRepUtil->restoreObjects($parent_ref_id, [ $org_unit->getRefId() ]);
 		}
-
-		if ($parent_id !== $old_parent_id) {
-			$this->tree()->moveTree($org_unit->getRefId(), $parent_id);
-
-			$this->rbac()->admin()->adjustMovedObjectPermissions($org_unit->getRefId(), $old_parent_id);
+		$old_parent_id = intval($this->tree()->getParentId($org_unit->getRefId()));
+		if ($old_parent_id == $parent_ref_id) {
+			return;
 		}
+		$this->tree()->moveTree($org_unit->getRefId(), $parent_ref_id);
+		$this->rbac()->admin()->adjustMovedObjectPermissions($org_unit->getRefId(), $old_parent_id);
 	}
 }
