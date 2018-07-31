@@ -22,7 +22,7 @@ abstract class DataTransferObject implements IDataTransferObject {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 */
 	public function __construct($ext_id) {
 		$this->ext_id = $ext_id;
@@ -89,11 +89,9 @@ abstract class DataTransferObject implements IDataTransferObject {
 
 
 	public function __toString() {
-		return implode(
-			', ', [
-				    "ext_id: " . $this->getExtId(),
-				    "period: " . $this->getPeriod(),
-			    ]
-		);
+		return implode(', ', [
+				"ext_id: " . $this->getExtId(),
+				"period: " . $this->getPeriod(),
+			]);
 	}
 }

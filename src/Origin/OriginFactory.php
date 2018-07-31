@@ -2,7 +2,6 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
-use ActiveRecord;
 use ilDB;
 use ilDBInterface;
 
@@ -34,11 +33,11 @@ class OriginFactory implements IOriginFactory {
 	 */
 	public function getById($id) {
 		$sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
-		$set = $this->db->queryF($sql, ['integer'], [$id]);
+		$set = $this->db->queryF($sql, [ 'integer' ], [ $id ]);
 		$type = $this->db->fetchObject($set)->object_type;
 		if (!$type) {
 			//throw new HubException("Can not get type of origin id (probably deleted): ".$id);
-			return null;
+			return NULL;
 		}
 		$class = $this->getClass($type);
 
@@ -63,7 +62,7 @@ class OriginFactory implements IOriginFactory {
 		$origins = [];
 
 		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s';
-		$set = $this->db->queryF($sql, ['integer'], [1]);
+		$set = $this->db->queryF($sql, [ 'integer' ], [ 1 ]);
 		while ($data = $this->db->fetchObject($set)) {
 			$origins[] = $this->getById($data->id);
 		}
@@ -89,7 +88,7 @@ class OriginFactory implements IOriginFactory {
 
 
 	/**
-	 * @param $type
+	 * @param string $type
 	 *
 	 * @return string
 	 */

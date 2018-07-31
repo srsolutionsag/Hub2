@@ -333,8 +333,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * Move the group to a new parent.
 	 * Note: May also create the dependence categories
 	 *
-	 * @param           $ilObjGroup
-	 * @param GroupDTO  $group
+	 * @param ilObjGroup $ilObjGroup
+	 * @param GroupDTO   $group
 	 */
 	protected function moveGroup(ilObjGroup $ilObjGroup, GroupDTO $group) {
 		$parentRefId = $this->determineParentRefId($group);

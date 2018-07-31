@@ -14,11 +14,11 @@ use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 
 /**
  * Class CourseMembershipSyncProcessor
@@ -108,8 +108,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	protected function handleDelete($ilias_id) {
 		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-		if ($this->props->get(CourseMembershipOriginProperties::DELETE_MODE)
-				== CourseMembershipOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CourseMembershipOriginProperties::DELETE_MODE) == CourseMembershipOriginProperties::DELETE_MODE_NONE) {
 			return $obj;
 		}
 
@@ -135,7 +134,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 
 	/**
-	 * @param $object CourseMembershipDTO
+	 * @param CourseMembershipDTO $object
 	 *
 	 * @return int
 	 */

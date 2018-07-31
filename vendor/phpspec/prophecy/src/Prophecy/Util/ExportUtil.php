@@ -33,8 +33,8 @@ class ExportUtil
      *  - Carriage returns and newlines are normalized to \n
      *  - Recursion and repeated rendering is treated properly
      *
-     * @param  mixed  $value
-     * @param  int    $indentation The indentation level of the 2nd+ line
+     * @param mixed  $value
+     * @param int    $indentation The indentation level of the 2nd+ line
      * @return string
      */
     public static function export($value, $indentation = 0)
@@ -46,7 +46,7 @@ class ExportUtil
      * Converts an object to an array containing all of its private, protected
      * and public properties.
      *
-     * @param  mixed $value
+     * @param mixed $value
      * @return array
      */
     public static function toArray($value)
@@ -104,9 +104,9 @@ class ExportUtil
     /**
      * Recursive implementation of export
      *
-     * @param  mixed                                       $value       The value to export
-     * @param  int                                         $indentation The indentation level of the 2nd+ line
-     * @param  \SebastianBergmann\RecursionContext\Context $processed   Previously processed objects
+     * @param mixed                                       $value       The value to export
+     * @param int                                         $indentation The indentation level of the 2nd+ line
+     * @param \SebastianBergmann\RecursionContext\Context $processed   Previously processed objects
      * @return string
      * @see    SebastianBergmann\Exporter\Exporter::export
      */

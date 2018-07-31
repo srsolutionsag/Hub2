@@ -139,7 +139,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 		$this->setLanguage($dto, $ilObjCourse);
 
-
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
@@ -163,18 +162,19 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 
 	/**
-	 * @param CourseDTO $dto
-	 * @param \ilObjCourse $ilObjCourse
+	 * @param CourseDTO   $dto
+	 * @param ilObjCourse $ilObjCourse
 	 */
-	protected function setSubscriptionType(CourseDTO $dto, \ilObjCourse $ilObjCourse){
+	protected function setSubscriptionType(CourseDTO $dto, ilObjCourse $ilObjCourse) {
 		//There is some weird connection between subscription limitation type ond subscription type, see e.g. ilObjCourseGUI
 		$ilObjCourse->setSubscriptionType($dto->getSubscriptionLimitationType());
-		if($dto->getSubscriptionLimitationType() == CourseDTO::SUBSCRIPTION_TYPE_DEACTIVATED){
+		if ($dto->getSubscriptionLimitationType() == CourseDTO::SUBSCRIPTION_TYPE_DEACTIVATED) {
 			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_DEACTIVATED);
-		}else{
+		} else {
 			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_UNLIMITED);
 		}
 	}
+
 
 	/**
 	 * @param CourseDTO $dto
@@ -257,11 +257,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
 			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 		}
-        if ($this->props->updateDTOProperty("subscriptionLimitationType")) {
+		if ($this->props->updateDTOProperty("subscriptionLimitationType")) {
 			$this->setSubscriptionType($dto, $ilObjCourse);
-        }
-		if ($this->props->updateDTOProperty("languageCode")){
-			$this->setLanguage($dto,$ilObjCourse);
+		}
+		if ($this->props->updateDTOProperty("languageCode")) {
+			$this->setLanguage($dto, $ilObjCourse);
 		}
 		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
@@ -351,7 +351,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$objectFactory = new ObjectFactory($origin);
 			$category = $objectFactory->category($course->getParentId());
 			if (!$category->getILIASId()) {
-				throw new HubException("The linked category (".$category->getExtId().") does not (yet) exist in ILIAS for course: ".$course->getExtId());
+				throw new HubException("The linked category (" . $category->getExtId() . ") does not (yet) exist in ILIAS for course: "
+					. $course->getExtId());
 			}
 			if (!$this->tree()->isInTree($category->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
@@ -366,7 +367,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 	/**
 	 * @param CourseDTO $object
-	 * @param           $parentRefId
+	 * @param int       $parentRefId
 	 *
 	 * @return int
 	 */
@@ -456,8 +457,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * Move the course to a new parent.
 	 * Note: May also create the dependence categories
 	 *
-	 * @param           $ilObjCourse
-	 * @param CourseDTO $course
+	 * @param ilObjCourse $ilObjCourse
+	 * @param CourseDTO   $course
 	 */
 	protected function moveCourse(ilObjCourse $ilObjCourse, CourseDTO $course) {
 		$parentRefId = $this->determineParentRefId($course);

@@ -17,7 +17,7 @@ abstract class AbstractJob extends ilCronJob {
 
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 */
 	protected function log($message) {
 		$this->ilLog()->write($message);

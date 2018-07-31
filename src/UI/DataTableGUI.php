@@ -23,10 +23,9 @@ use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
 use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use SRAG\Plugins\Hub2\Object\User\ARUser;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginRepository;
 use SRAG\Plugins\Hub2\Origin\OriginFactory;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use  SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use SRAG\Plugins\Hub2\Shortlink\ObjectLinkFactory;
 
 /**
@@ -111,7 +110,7 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param $item
+	 * @param ilFormPropertyGUI $item
 	 */
 	protected function addAndReadFilterItem(ilFormPropertyGUI $item) {
 		$this->addFilterItem($item);
@@ -166,14 +165,14 @@ class DataTableGUI extends ilTable2GUI {
 					case 'data':
 					case 'ext_id':
 						$str = "%{$value}%";
-						$collection = $collection->where([$postvar => $str], 'LIKE');
+						$collection = $collection->where([ $postvar => $str ], 'LIKE');
 						break;
 					default:
-						$collection = $collection->where([$postvar => $value]);
+						$collection = $collection->where([ $postvar => $value ]);
 						break;
 				}
 			}
-			$data = array_merge($data, $collection->getArray(null, $fields));
+			$data = array_merge($data, $collection->getArray(NULL, $fields));
 		}
 
 		$this->setData($data);
@@ -216,15 +215,13 @@ class DataTableGUI extends ilTable2GUI {
 		// Adds view Glyph
 		$factory = $this->ui()->factory();
 		$renderer = $this->ui()->renderer();
-		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl(
-			$this->ctrl()
-				->getLinkTarget($this->parent_obj, 'renderData', '', true)
-		);
+		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl($this->ctrl()
+			->getLinkTarget($this->parent_obj, 'renderData', '', true));
 
 		$button = $factory->button()->shy($this->pl->txt("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
 
 		$this->tpl->setCurrentBlock('cell');
-		$this->tpl->setVariable('VALUE', $renderer->render([$button, $modal]));
+		$this->tpl->setVariable('VALUE', $renderer->render([ $button, $modal ]));
 		$this->tpl->parseCurrentBlock();
 
 		$this->ctrl()->clearParameters($this->parent_obj);
@@ -232,7 +229,7 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param         $ext_id
+	 * @param string  $ext_id
 	 * @param IOrigin $origin
 	 *
 	 * @return string
@@ -277,7 +274,7 @@ class DataTableGUI extends ilTable2GUI {
 			return $status;
 		}
 		$r = new ReflectionClass(IObject::class);
-		$status = [0 => $this->pl->txt("data_table_all")];
+		$status = [ 0 => $this->pl->txt("data_table_all") ];
 		foreach ($r->getConstants() as $name => $value) {
 			if (strpos($name, "STATUS_") === 0) {
 				$status[$value] = $name; // TODO: Translate status
@@ -297,7 +294,7 @@ class DataTableGUI extends ilTable2GUI {
 			return $origins;
 		}
 
-		$origins = [0 => $this->pl->txt("data_table_all")];
+		$origins = [ 0 => $this->pl->txt("data_table_all") ];
 		foreach ($this->originFactory->getAll() as $origin) {
 			$origins[$origin->getId()] = $origin->getTitle();
 		}

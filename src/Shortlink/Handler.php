@@ -1,21 +1,12 @@
 <?php namespace SRAG\Plugins\Hub2\Shortlink;
 
-use ilLink;
+use ilAuthSession;
+use ilContext;
 use RESTController\libs\ilInitialisation;
-use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Config\HubConfig;
-use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
-use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
 use SRAG\Plugins\Hub2\Exception\ShortlinkException;
 use SRAG\Plugins\Hub2\Exception\ShortLinkNotFoundException;
 use SRAG\Plugins\Hub2\Helper\DIC;
-use SRAG\Plugins\Hub2\Object\ARObject;
-use SRAG\Plugins\Hub2\Object\Category\ARCategory;
-use SRAG\Plugins\Hub2\Object\Course\ARCourse;
-use SRAG\Plugins\Hub2\Object\Group\ARGroup;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\Session\ARSession;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
 
 /**
  * Class Handler
@@ -123,11 +114,11 @@ class Handler {
 
 		global $DIC;
 		include_once './Services/Context/classes/class.ilContext.php';
-		\ilContext::init(\ilContext::CONTEXT_WAC);
+		ilContext::init(ilContext::CONTEXT_WAC);
 		require_once("Services/Init/classes/class.ilInitialisation.php");
-		\ilInitialisation::initILIAS();
+		ilInitialisation::initILIAS();
 		/**
-		 * @var $ilAuthSession \ilAuthSession
+		 * @var ilAuthSession $ilAuthSession
 		 */
 		$ilAuthSession = $DIC['ilAuthSession'];
 		$ilAuthSession->init();

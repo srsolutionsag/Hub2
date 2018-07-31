@@ -54,7 +54,7 @@ class ArConfig extends ActiveRecord {
 	/**
 	 * Get a config value by key.
 	 *
-	 * @param $key
+	 * @param string $key
 	 *
 	 * @return mixed
 	 */

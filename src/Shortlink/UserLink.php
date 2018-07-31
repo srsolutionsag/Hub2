@@ -1,5 +1,8 @@
 <?php namespace SRAG\Plugins\Hub2\Shortlink;
 
+use ilAdministrationGUI;
+use ilObjUserGUI;
+
 /**
  * Class UserLink
  *
@@ -54,9 +57,9 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 	 */
 	public function getAccessGrantedInternalLink(): string {
 		global $DIC;
-		$DIC->ctrl()->setParameterByClass(\ilObjUserGUI::class, "ref_id", 7);
-		$DIC->ctrl()->setParameterByClass(\ilObjUserGUI::class, "obj_id", $this->object->getILIASId());
+		$DIC->ctrl()->setParameterByClass(ilObjUserGUI::class, "ref_id", 7);
+		$DIC->ctrl()->setParameterByClass(ilObjUserGUI::class, "obj_id", $this->object->getILIASId());
 
-		return $DIC->ctrl()->getLinkTargetByClass([\ilAdministrationGUI::class, \ilObjUserGUI::class], "view");
+		return $DIC->ctrl()->getLinkTargetByClass([ ilAdministrationGUI::class, ilObjUserGUI::class ], "view");
 	}
 }

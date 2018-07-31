@@ -23,7 +23,7 @@ class Metadata implements IMetadata {
 	/**
 	 * Metadata constructor.
 	 *
-	 * @param $identifier
+	 * @param int $identifier
 	 */
 	public function __construct($identifier) {
 		$this->identifier = $identifier;

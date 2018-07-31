@@ -1,8 +1,5 @@
 <?php namespace SRAG\Plugins\Hub2\Shortlink;
 
-use SRAG\Plugins\Hub2\Object\ARObject;
-use SRAG\Plugins\Hub2\Object\User\ARUser;
-
 /**
  * Class NullLink
  *
@@ -90,7 +87,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
 
 	/**
-	 * @param $ref_id
+	 * @param int $ref_id
 	 *
 	 * @return mixed|string
 	 */

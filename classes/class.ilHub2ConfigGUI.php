@@ -33,7 +33,7 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI {
 
 
 	/**
-	 * @param $cmd
+	 * @param string $cmd
 	 */
 	public function performCommand($cmd) {
 		// noting to to here

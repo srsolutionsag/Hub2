@@ -35,9 +35,9 @@ class OriginsTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param                   $a_parent_obj
-	 * @param string            $a_parent_cmd
-	 * @param IOriginRepository $originRepository
+	 * @param hub2ConfigOriginsGUI $a_parent_obj
+	 * @param string               $a_parent_cmd
+	 * @param IOriginRepository    $originRepository
 	 *
 	 * @internal param
 	 */

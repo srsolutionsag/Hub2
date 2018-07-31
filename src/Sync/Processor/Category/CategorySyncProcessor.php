@@ -229,8 +229,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	/**
 	 * Move the category to a new parent.
 	 *
-	 * @param             $ilObjCategory
-	 * @param CategoryDTO $category
+	 * @param ilObjCategory $ilObjCategory
+	 * @param CategoryDTO   $category
 	 */
 	protected function moveCategory(ilObjCategory $ilObjCategory, CategoryDTO $category) {
 		$parentRefId = $this->determineParentRefId($category);

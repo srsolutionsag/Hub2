@@ -776,7 +776,7 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
     /**
      * Sets the name of the suite.
      *
-     * @param  string
+     * @param string
      */
     public function setName($name)
     {
@@ -786,7 +786,7 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
     /**
      * Returns the test at the given index.
      *
-     * @param  int|false
+     * @param int|false
      *
      * @return PHPUnit_Framework_Test
      */

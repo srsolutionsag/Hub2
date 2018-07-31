@@ -1,5 +1,6 @@
 <?php namespace SRAG\Plugins\Hub2\Shortlink;
 
+use ilDBInterface;
 use SRAG\Plugins\Hub2\Object\ARObject;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
@@ -35,7 +36,7 @@ class ObjectLink {
 	 *
 	 * @param string $ext_id
 	 */
-	public function __construct(string $ext_id, \ilDBInterface $db) {
+	public function __construct(string $ext_id, ilDBInterface $db) {
 		$this->ext_id = $ext_id;
 		$this->origin_factory = new OriginFactory($db);
 		$this->determineObject();
@@ -43,7 +44,7 @@ class ObjectLink {
 
 
 	private function determineObject() {
-		$object = null;
+		$object = NULL;
 		foreach ($this->origin_factory->getAllActive() as $origin) {
 			$f = new ObjectFactory($origin);
 			$object = $f->undefined($this->ext_id);
@@ -56,7 +57,7 @@ class ObjectLink {
 					if ($object->getILIASId()) {
 						break 2;
 					} else {
-						$object = null;
+						$object = NULL;
 					}
 			}
 		}
@@ -69,6 +70,6 @@ class ObjectLink {
 	 * @return bool
 	 */
 	public function exists(): bool {
-		return ($this->object !== null && $this->object instanceof ARObject && (int)$this->object->getILIASId() > 0);
+		return ($this->object !== NULL && $this->object instanceof ARObject && (int)$this->object->getILIASId() > 0);
 	}
 }

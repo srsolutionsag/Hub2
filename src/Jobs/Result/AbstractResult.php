@@ -19,7 +19,7 @@ abstract class AbstractResult extends ilCronJobResult {
 	/**
 	 * AbstractResult constructor.
 	 *
-	 * @param $message
+	 * @param string $message
 	 */
 	public function __construct($message) {
 		$this->setMessage($message);

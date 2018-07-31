@@ -375,7 +375,7 @@ class PHPUnit_Util_Log_TeamCity extends PHPUnit_TextUI_ResultPrinter
     }
 
     /**
-     * @param  $text
+     * @param $text
      *
      * @return string
      */

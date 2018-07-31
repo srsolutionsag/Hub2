@@ -37,8 +37,8 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 
 
 	/**
-	 * @param            $parent_gui
-	 * @param IHubConfig $config
+	 * @param hub2ConfigGUI $parent_gui
+	 * @param IHubConfig    $config
 	 */
 	public function __construct($parent_gui, IHubConfig $config) {
 		$this->parent_gui = $parent_gui;
@@ -80,13 +80,15 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 		$h->setTitle($this->pl->txt('admin_shortlink'));
 		$this->addItem($h);
 
-		$item = new \ilTextAreaInputGUI($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_FOUND), IHubConfig::SHORTLINK_OBJECT_NOT_FOUND);
+		$item = new \ilTextAreaInputGUI($this->pl->txt('admin_msg_'
+			. IHubConfig::SHORTLINK_OBJECT_NOT_FOUND), IHubConfig::SHORTLINK_OBJECT_NOT_FOUND);
 		$item->setUseRte(false);
 		$item->setValue($this->config->get(IHubConfig::SHORTLINK_OBJECT_NOT_FOUND));
 		$item->setInfo($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_FOUND . '_info'));
 		$this->addItem($item);
 
-		$item = new \ilTextAreaInputGUI($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE), IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE);
+		$item = new \ilTextAreaInputGUI($this->pl->txt('admin_msg_'
+			. IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE), IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE);
 		$item->setUseRte(false);
 		$item->setValue($this->config->get(IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE));
 		$item->setInfo($this->pl->txt('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE . '_info'));

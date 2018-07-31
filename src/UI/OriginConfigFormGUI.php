@@ -53,10 +53,10 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 
 
 	/**
-	 * @param                   $parent_gui
-	 * @param IHubConfig        $hubConfig
-	 * @param IOriginRepository $originRepository
-	 * @param IOrigin           $origin
+	 * @param hub2ConfigOriginsGUI $parent_gui
+	 * @param IHubConfig           $hubConfig
+	 * @param IOriginRepository    $originRepository
+	 * @param IOrigin              $origin
 	 */
 	public function __construct($parent_gui, IHubConfig $hubConfig, IOriginRepository $originRepository, IOrigin $origin) {
 		$this->parent_gui = $parent_gui;

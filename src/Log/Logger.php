@@ -2,8 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Log;
 
-use ILIAS\Filesystem\Stream\Streams;
 use ILIAS\Filesystem\Stream\Stream;
+use ILIAS\Filesystem\Stream\Streams;
 
 /**
  * Class Logger
@@ -45,7 +45,7 @@ class Logger {
 
 
 	/**
-	 * @param $string
+	 * @param string $string
 	 */
 	public function write($string) {
 		$this->stream->seek($this->stream->getSize());

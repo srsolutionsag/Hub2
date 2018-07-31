@@ -117,7 +117,7 @@ class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferO
 	 */
 	protected $latitude;
 	/**
-	 * @var  float
+	 * @var float
 	 */
 	protected $longitude;
 	/**

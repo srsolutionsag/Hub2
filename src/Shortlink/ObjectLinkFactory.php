@@ -1,15 +1,15 @@
 <?php namespace SRAG\Plugins\Hub2\Shortlink;
 
+use ilDBInterface;
 use SRAG\Plugins\Hub2\Object\ARObject;
-use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
 use SRAG\Plugins\Hub2\Object\Group\ARGroup;
 use SRAG\Plugins\Hub2\Object\ObjectFactory;
 use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\User\ARUser;
+use SRAG\Plugins\Hub2\Origin\IOrigin;
+use SRAG\Plugins\Hub2\Origin\OriginFactory;
 
 /**
  * Interface ObjectLinkFactory
@@ -35,10 +35,10 @@ class ObjectLinkFactory {
 	/**
 	 * ObjectLinkFactory constructor.
 	 *
-	 * @param string         $ext_id
-	 * @param \ilDBInterface $db
+	 * @param string        $ext_id
+	 * @param ilDBInterface $db
 	 */
-	public function __construct(\ilDBInterface $db) {
+	public function __construct(ilDBInterface $db) {
 		$this->origin_factory = new OriginFactory($db);
 	}
 
@@ -49,7 +49,7 @@ class ObjectLinkFactory {
 	 * @return IObjectLink
 	 */
 	public function findByExtId(string $ext_id): IObjectLink {
-		$object = null;
+		$object = NULL;
 		foreach ($this->origin_factory->getAllActive() as $origin) {
 			$f = new ObjectFactory($origin);
 			$object = $f->undefined($ext_id);
@@ -62,7 +62,7 @@ class ObjectLinkFactory {
 					if ($object->getILIASId()) {
 						break 2;
 					} else {
-						$object = null;
+						$object = NULL;
 					}
 			}
 		}
@@ -92,7 +92,7 @@ class ObjectLinkFactory {
 				if ($object->getILIASId()) {
 					break;
 				} else {
-					$object = null;
+					$object = NULL;
 				}
 		}
 

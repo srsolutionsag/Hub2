@@ -176,7 +176,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
 
 	/**
-	 * @param $object GroupMembershipDTO
+	 * @param GroupMembershipDTO $object
 	 *
 	 * @return int
 	 */

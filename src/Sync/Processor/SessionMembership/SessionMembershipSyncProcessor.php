@@ -110,7 +110,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 
 
 	/**
-	 * @param $ilias_id
+	 * @param int $ilias_id
 	 *
 	 * @return ilObjSession
 	 * @throws HubException
@@ -193,7 +193,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 
 	/**
 	 * @param ilObjSession $ilObjSession
-	 * @param    int       $user_id
+	 * @param int       $user_id
 	 *
 	 * @throws HubException
 	 */
