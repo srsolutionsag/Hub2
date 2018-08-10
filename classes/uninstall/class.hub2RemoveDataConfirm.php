@@ -6,11 +6,11 @@ use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Helper\DIC;
 
 /**
- * Class hub2Uninstall
+ * Class hub2RemoveDataConfirm
  *
- * @ilCtrl_isCalledBy hub2Uninstall: ilUIPluginRouterGUI
+ * @ilCtrl_isCalledBy hub2RemoveDataConfirm: ilUIPluginRouterGUI
  */
-class hub2Uninstall {
+class hub2RemoveDataConfirm {
 
 	use DIC;
 	const CMD_CANCEL = "cancel";

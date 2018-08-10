@@ -602,7 +602,7 @@ return array(
     'hub2ConfigOriginsGUI' => $baseDir . '/classes/class.hub2ConfigOriginsGUI.php',
     'hub2DataGUI' => $baseDir . '/classes/class.hub2DataGUI.php',
     'hub2MainGUI' => $baseDir . '/classes/class.hub2MainGUI.php',
-    'hub2Uninstall' => $baseDir . '/classes/uninstall/class.hub2Uninstall.php',
+    'hub2RemoveDataConfirm' => $baseDir . '/classes/uninstall/class.hub2RemoveDataConfirm.php',
     'ilAbstractUsersGalleryCollectionProvider' => $baseDir . '/../../../../../../../Services/User/Gallery/classes/class.ilAbstractUsersGalleryCollectionProvider.php',
     'ilAbstractUsersGalleryUserCollectionSorter' => $baseDir . '/../../../../../../../Services/User/Gallery/classes/class.ilAbstractUsersGalleryUserCollectionSorter.php',
     'ilAccountCode' => $baseDir . '/../../../../../../../Services/User/classes/class.ilAccountCode.php',

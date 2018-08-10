@@ -674,7 +674,7 @@ class ComposerStaticInit3167a2dc3530ffdbe7ebc0eaefc69c08
         'hub2ConfigOriginsGUI' => __DIR__ . '/../..' . '/classes/class.hub2ConfigOriginsGUI.php',
         'hub2DataGUI' => __DIR__ . '/../..' . '/classes/class.hub2DataGUI.php',
         'hub2MainGUI' => __DIR__ . '/../..' . '/classes/class.hub2MainGUI.php',
-        'hub2Uninstall' => __DIR__ . '/../..' . '/classes/uninstall/class.hub2Uninstall.php',
+        'hub2RemoveDataConfirm' => __DIR__ . '/../..' . '/classes/uninstall/class.hub2RemoveDataConfirm.php',
         'ilAbstractUsersGalleryCollectionProvider' => __DIR__ . '/../..' . '/../../../../../../../Services/User/Gallery/classes/class.ilAbstractUsersGalleryCollectionProvider.php',
         'ilAbstractUsersGalleryUserCollectionSorter' => __DIR__ . '/../..' . '/../../../../../../../Services/User/Gallery/classes/class.ilAbstractUsersGalleryUserCollectionSorter.php',
         'ilAccountCode' => __DIR__ . '/../..' . '/../../../../../../../Services/User/classes/class.ilAccountCode.php',

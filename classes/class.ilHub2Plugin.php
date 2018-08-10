@@ -81,12 +81,12 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		$uninstall_remove_hub2_data = ArConfig::getValueByKey(self::UNINSTALL_REMOVE_HUB2_DATA);
 
 		if ($uninstall_remove_hub2_data === NULL) {
-			hub2Uninstall::saveParameterByClass();
+			hub2RemoveDataConfirm::saveParameterByClass();
 
 			$this->ctrl()->redirectByClass([
 				ilUIPluginRouterGUI::class,
-				hub2Uninstall::class
-			], hub2Uninstall::CMD_CONFIRM_REMOVE_HUB2_DATA);
+				hub2RemoveDataConfirm::class
+			], hub2RemoveDataConfirm::CMD_CONFIRM_REMOVE_HUB2_DATA);
 
 			return false;
 		}
