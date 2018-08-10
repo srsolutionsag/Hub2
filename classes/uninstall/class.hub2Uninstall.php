@@ -23,7 +23,7 @@ class hub2Uninstall {
 	/**
 	 * @param bool $plugin
 	 */
-	public static function saveParameterByClass($plugin = true) {
+	public static function saveParameterByClass(bool $plugin = true) {
 		global $DIC;
 		$ilCtrl = $DIC->ctrl();
 
@@ -100,7 +100,7 @@ class hub2Uninstall {
 	 *
 	 * @param string $html
 	 */
-	protected function show($html) {
+	protected function show(string $html) {
 		if ($this->ctrl()->isAsynch()) {
 			echo $html;
 
@@ -116,7 +116,7 @@ class hub2Uninstall {
 	/**
 	 * @param string $cmd
 	 */
-	protected function redirectToPlugins($cmd) {
+	protected function redirectToPlugins(string $cmd) {
 		self::saveParameterByClass($cmd !== "listPlugins");
 
 		$this->ctrl()->redirectByClass([

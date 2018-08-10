@@ -39,7 +39,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return string
 	 */
-	public function getPluginName() {
+	public function getPluginName(): string {
 		return self::PLUGIN_NAME;
 	}
 
@@ -47,7 +47,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return ilHub2Plugin
 	 */
-	public static function getInstance() {
+	public static function getInstance(): ilHub2Plugin {
 		if (self::$instance === NULL) {
 			self::$instance = new self();
 		}
@@ -59,7 +59,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return ilCronJob[]
 	 */
-	public function getCronJobInstances() {
+	public function getCronJobInstances(): array {
 		return [ new RunSync() ];
 	}
 
@@ -69,7 +69,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 *
 	 * @return ilCronJob
 	 */
-	public function getCronJobInstance($a_job_id) {
+	public function getCronJobInstance($a_job_id): ilCronJob {
 		return new $a_job_id();
 	}
 
@@ -77,7 +77,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return bool
 	 */
-	protected function beforeUninstall() {
+	protected function beforeUninstall(): bool {
 		$uninstall_remove_hub2_data = ArConfig::getValueByKey(self::UNINSTALL_REMOVE_HUB2_DATA);
 
 		if ($uninstall_remove_hub2_data === NULL) {
@@ -94,20 +94,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		$uninstall_remove_hub2_data = boolval($uninstall_remove_hub2_data);
 
 		if ($uninstall_remove_hub2_data) {
-			$this->db()->dropTable(ARUserOrigin::TABLE_NAME, false);
-			$this->db()->dropTable(ARUser::TABLE_NAME, false);
-			$this->db()->dropTable(ARCourse::TABLE_NAME, false);
-			$this->db()->dropTable(ARCourseMembership::TABLE_NAME, false);
-			$this->db()->dropTable(ARCategory::TABLE_NAME, false);
-			$this->db()->dropTable(ARSession::TABLE_NAME, false);
-			$this->db()->dropTable(ARGroup::TABLE_NAME, false);
-			$this->db()->dropTable(ARGroupMembership::TABLE_NAME, false);
-			$this->db()->dropTable(ARSessionMembership::TABLE_NAME, false);
-			$this->db()->dropTable(ArConfig::TABLE_NAME, false);
-			$this->db()->dropTable(AROrgUnit::TABLE_NAME, false);
-			$this->db()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
-
-			ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
+			$this->removeHub2Data();
 		} else {
 			// Ask again if reinstalled
 			ArConfig::getInstanceByKey(self::UNINSTALL_REMOVE_HUB2_DATA)->delete();
@@ -118,11 +105,32 @@ class ilHub2Plugin extends ilCronHookPlugin {
 
 
 	/**
+	 *
+	 */
+	protected function removeHub2Data() {
+		$this->db()->dropTable(ARUserOrigin::TABLE_NAME, false);
+		$this->db()->dropTable(ARUser::TABLE_NAME, false);
+		$this->db()->dropTable(ARCourse::TABLE_NAME, false);
+		$this->db()->dropTable(ARCourseMembership::TABLE_NAME, false);
+		$this->db()->dropTable(ARCategory::TABLE_NAME, false);
+		$this->db()->dropTable(ARSession::TABLE_NAME, false);
+		$this->db()->dropTable(ARGroup::TABLE_NAME, false);
+		$this->db()->dropTable(ARGroupMembership::TABLE_NAME, false);
+		$this->db()->dropTable(ARSessionMembership::TABLE_NAME, false);
+		$this->db()->dropTable(ArConfig::TABLE_NAME, false);
+		$this->db()->dropTable(AROrgUnit::TABLE_NAME, false);
+		$this->db()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+
+		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
+	}
+
+
+	/**
 	 * @param string $a_var
 	 *
 	 * @return string
 	 */
-	public function txt($a_var) {
+	public function txt($a_var): string {
 		if (!file_exists("Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php")) {
 			return parent::txt($a_var);
 		}
