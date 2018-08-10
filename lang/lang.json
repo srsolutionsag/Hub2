@@ -169,8 +169,8 @@
       },
       "roles_info": {
         "translations": {
-          "de": "Rollen-IDs die HUb2 verwenden können (kommasepariert)",
-          "en": "Role-IDs which can use HUb2 (commaseparated)"
+          "de": "Rollen-IDs die Hub2 verwenden können (kommasepariert)",
+          "en": "Role-IDs which can use Hub2 (commaseparated)"
         },
         "last_used": "27.07.2018"
       },
@@ -1113,14 +1113,14 @@
       },
       "removed_hub2_data": {
         "translations": {
-          "de": "Die HUb2-Daten wurden auch entfernt!",
-          "en": "The HUb2 data was also removed!"
+          "de": "Die Hub2-Daten wurden auch entfernt!",
+          "en": "The Hub2 data was also removed!"
         }
       },
       "kept_hub2_data": {
         "translations": {
-          "de": "Die HUb2-Daten wurden behalten!",
-          "en": "The HUb2 data was kept!"
+          "de": "Die Hub2-Daten wurden behalten!",
+          "en": "The Hub2 data was kept!"
         }
       }
     },
@@ -2114,8 +2114,8 @@
       },
       "remove_hub2_data": {
         "translations": {
-          "de": "Möchten Sie die HUb2-Daten auch entfernen? Allenfalls möchten Sie das HUb2-Plugin nur deaktivieren?",
-          "en": "Do you want to remove the HUb2 data as well? At most, you just want to disable the HUb2 plugin?"
+          "de": "Möchten Sie die Hub2-Daten auch entfernen? Allenfalls möchten Sie das Hub2-Plugin nur deaktivieren?",
+          "en": "Do you want to remove the Hub2 data as well? At most, you just want to disable the Hub2 plugin?"
         }
       }
     },
@@ -2498,15 +2498,15 @@
       },
       "notification": {
         "translations": {
-          "de": "HUb2: Zusammenfassung für %s",
-          "en": "HUb2: Summary for %s"
+          "de": "Hub2: Zusammenfassung für %s",
+          "en": "Hub2: Summary for %s"
         },
         "last_used": "20.07.2018"
       },
       "exceptions_in": {
         "translations": {
-          "de": "HUb2: Ausnahmen in %s",
-          "en": "HUb2: Exceptions in %s"
+          "de": "Hub2: Ausnahmen in %s",
+          "en": "Hub2: Exceptions in %s"
         }
       },
       "in": {
@@ -2533,32 +2533,32 @@
     "remove": {
       "hub2_data": {
         "translations": {
-          "de": "HUb2-Daten behalten",
-          "en": "Remove HUb2 data"
+          "de": "Hub2-Daten behalten",
+          "en": "Remove Hub2 data"
         }
       }
     },
     "keep": {
       "hub2_data": {
         "translations": {
-          "de": "Entferne HUb2-Daten",
-          "en": "Keep HUb2 data"
+          "de": "Entferne Hub2-Daten",
+          "en": "Keep Hub2 data"
         }
       }
     },
     "deactivate": {
       "hub2": {
         "translations": {
-          "de": "HUb2-Plugin nur deaktivieren",
-          "en": "Just deactivate HUb2 plugin"
+          "de": "Hub2-Plugin nur deaktivieren",
+          "en": "Just deactivate Hub2 plugin"
         }
       }
     },
     "hub2": {
       "data": {
         "translations": {
-          "de": "HUb2-Daten",
-          "en": "HUb2 data"
+          "de": "Hub2-Daten",
+          "en": "Hub2 data"
         }
       }
     }
