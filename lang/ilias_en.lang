@@ -24,7 +24,7 @@ admin_origins_path#:#Path to Origins
 admin_origins_path_info#:#Location of the 'origins' directory
 admin_password_email_body#:#E-Mail body by sending of passwords
 admin_roles#:#Roles
-admin_roles_info#:#Role-IDs which can use HUB2 (commaseparated)
+admin_roles_info#:#Role-IDs which can use HUb2 (commaseparated)
 admin_shortlink#:#Shortlink
 admin_use_async#:#Async sync
 admin_use_async_info#:#Allow async sync over the GUI. Need an ILIAS user.
@@ -372,8 +372,15 @@ summary_deleted#:#Deleted: %s
 summary_ignored#:#Ignored: %s
 summary_no_changes#:#No changes: %s
 summary_exceptions#:#Exceptions: 
-summary_notification#:#HUB2: Summary for %s
-summary_exceptions_in#:#HUB2: Exceptions in %s
+summary_notification#:#HUb2: Summary for %s
+summary_exceptions_in#:#HUb2: Exceptions in %s
 summary_in#:#in: 
 orgunit_ref_id_if_no_parent_id#:#Base ref ID
 orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.
+confirm_remove_hub2_data#:#Do you want to remove the HUb2 data as well? At most, you just want to disable the HUb2 plugin?
+remove_hub2_data#:#Remove HUb2 data
+keep_hub2_data#:#Keep HUb2 data
+deactivate_hub2#:#Just deactivate HUb2 plugin
+hub2_data#:#HUb2 data
+msg_removed_hub2_data#:#The HUb2 data was also removed!
+msg_kept_hub2_data#:#The HUb2 data was kept!

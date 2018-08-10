@@ -29,6 +29,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	use DIC;
 	const PLUGIN_ID = 'hub2';
 	const PLUGIN_NAME = 'Hub2';
+	const UNINSTALL_REMOVE_HUB2_DATA = "uninstall_remove_hub2_data";
 	/**
 	 * @var ilHub2Plugin
 	 */
@@ -77,20 +78,40 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return bool
 	 */
 	protected function beforeUninstall() {
-		$this->db()->dropTable(ARUserOrigin::TABLE_NAME, false);
-		$this->db()->dropTable(ARUser::TABLE_NAME, false);
-		$this->db()->dropTable(ARCourse::TABLE_NAME, false);
-		$this->db()->dropTable(ARCourseMembership::TABLE_NAME, false);
-		$this->db()->dropTable(ARCategory::TABLE_NAME, false);
-		$this->db()->dropTable(ARSession::TABLE_NAME, false);
-		$this->db()->dropTable(ARGroup::TABLE_NAME, false);
-		$this->db()->dropTable(ARGroupMembership::TABLE_NAME, false);
-		$this->db()->dropTable(ARSessionMembership::TABLE_NAME, false);
-		$this->db()->dropTable(ArConfig::TABLE_NAME, false);
-		$this->db()->dropTable(AROrgUnit::TABLE_NAME, false);
-		$this->db()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+		$uninstall_remove_hub2_data = ArConfig::getValueByKey(self::UNINSTALL_REMOVE_HUB2_DATA);
 
-		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
+		if ($uninstall_remove_hub2_data === NULL) {
+			hub2Uninstall::saveParameterByClass();
+
+			$this->ctrl()->redirectByClass([
+				ilUIPluginRouterGUI::class,
+				hub2Uninstall::class
+			], hub2Uninstall::CMD_CONFIRM_REMOVE_HUB2_DATA);
+
+			return false;
+		}
+
+		$uninstall_remove_hub2_data = boolval($uninstall_remove_hub2_data);
+
+		if ($uninstall_remove_hub2_data) {
+			$this->db()->dropTable(ARUserOrigin::TABLE_NAME, false);
+			$this->db()->dropTable(ARUser::TABLE_NAME, false);
+			$this->db()->dropTable(ARCourse::TABLE_NAME, false);
+			$this->db()->dropTable(ARCourseMembership::TABLE_NAME, false);
+			$this->db()->dropTable(ARCategory::TABLE_NAME, false);
+			$this->db()->dropTable(ARSession::TABLE_NAME, false);
+			$this->db()->dropTable(ARGroup::TABLE_NAME, false);
+			$this->db()->dropTable(ARGroupMembership::TABLE_NAME, false);
+			$this->db()->dropTable(ARSessionMembership::TABLE_NAME, false);
+			$this->db()->dropTable(ArConfig::TABLE_NAME, false);
+			$this->db()->dropTable(AROrgUnit::TABLE_NAME, false);
+			$this->db()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+
+			ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
+		} else {
+			// Ask again if reinstalled
+			ArConfig::getInstanceByKey(self::UNINSTALL_REMOVE_HUB2_DATA)->delete();
+		}
 
 		return true;
 	}
