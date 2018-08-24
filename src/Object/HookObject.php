@@ -116,6 +116,6 @@ class HookObject {
 	 * @return IDataTransferObject
 	 */
 	public function getDTO(): IDataTransferObject {
-		$this->dto;
+		return $this->dto;
 	}
 }
