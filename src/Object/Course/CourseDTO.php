@@ -297,6 +297,11 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	protected $icon;
 
+	/**
+	 * @var \Serializable
+	 */
+	protected $additionalData;
+
 
 	/**
 	 * @return string
@@ -751,6 +756,21 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 		return $this;
 	}
 
+	/**
+	 * @return \Serializable
+	 */
+	public function getAdditionalData(): \Serializable
+	{
+		return unserialize($this->additionalData);
+	}
+
+	/**
+	 * @param \Serializable $additionalData
+	 */
+	public function setAdditionalData(\Serializable $additionalData)
+	{
+		$this->additionalData = serialize($additionalData);
+	}
 
 	/**
 	 * @param string $languageCode
