@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Sync;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Object\IObject;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -15,6 +17,8 @@ use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 class ObjectStatusTransition implements IObjectStatusTransition {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var array
 	 */

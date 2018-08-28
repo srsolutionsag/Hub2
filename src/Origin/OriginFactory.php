@@ -2,9 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
-use ActiveRecord;
-use ilDB;
-use ilDBInterface;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 
 /**
  * Class OriginFactory
@@ -15,31 +14,29 @@ use ilDBInterface;
  */
 class OriginFactory implements IOriginFactory {
 
-	/**
-	 * @var ilDB
-	 */
-	private $db;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
 	/**
-	 * @param ilDBInterface $db
+	 *
 	 */
-	public function __construct(ilDBInterface $db) {
-		$this->db = $db;
+	public function __construct() {
+
 	}
 
 
 	/**
 	 * @inheritdoc
 	 */
-	public function getById($id): IOrigin {
-		/**
-		 * @var ActiveRecord $class
-		 */
-
+	public function getById($id) {
 		$sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
-		$set = $this->db->queryF($sql, [ 'integer' ], [ $id ]);
-		$type = $this->db->fetchObject($set)->object_type;
+		$set = self::dic()->database()->queryF($sql, [ 'integer' ], [ $id ]);
+		$type = self::dic()->database()->fetchObject($set)->object_type;
+		if (!$type) {
+			//throw new HubException("Can not get type of origin id (probably deleted): ".$id);
+			return NULL;
+		}
 		$class = $this->getClass($type);
 
 		return $class::find((int)$id);
@@ -49,7 +46,7 @@ class OriginFactory implements IOriginFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function createByType(string $type) {
+	public function createByType(string $type): IOrigin {
 		$class = $this->getClass($type);
 
 		return new $class();
@@ -63,8 +60,8 @@ class OriginFactory implements IOriginFactory {
 		$origins = [];
 
 		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s';
-		$set = $this->db->queryF($sql, [ 'integer' ], [ 1 ]);
-		while ($data = $this->db->fetchObject($set)) {
+		$set = self::dic()->database()->queryF($sql, [ 'integer' ], [ 1 ]);
+		while ($data = self::dic()->database()->fetchObject($set)) {
 			$origins[] = $this->getById($data->id);
 		}
 
@@ -73,7 +70,23 @@ class OriginFactory implements IOriginFactory {
 
 
 	/**
-	 * @param $type
+	 * @inheritDoc
+	 */
+	public function getAll(): array {
+		$origins = [];
+
+		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME;
+		$set = self::dic()->database()->query($sql);
+		while ($data = self::dic()->database()->fetchObject($set)) {
+			$origins[] = $this->getById($data->id);
+		}
+
+		return $origins;
+	}
+
+
+	/**
+	 * @param string $type
 	 *
 	 * @return string
 	 */

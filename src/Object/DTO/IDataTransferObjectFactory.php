@@ -62,8 +62,8 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param $course_id
-	 * @param $user_id
+	 * @param int $course_id
+	 * @param int $user_id
 	 *
 	 * @return CourseMembershipDTO
 	 */
@@ -71,8 +71,8 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param $group_id
-	 * @param $user_id
+	 * @param int $group_id
+	 * @param int $user_id
 	 *
 	 * @return GroupMembershipDTO
 	 */
@@ -80,8 +80,8 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param $session_id
-	 * @param $user_id
+	 * @param int $session_id
+	 * @param int $user_id
 	 *
 	 * @return SessionMembershipDTO
 	 */

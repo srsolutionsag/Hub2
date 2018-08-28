@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Metadata;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+
 /**
  * Class Metadata
  *
@@ -10,6 +13,8 @@ namespace SRAG\Plugins\Hub2\Metadata;
  */
 class Metadata implements IMetadata {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
 	 */
@@ -23,7 +28,7 @@ class Metadata implements IMetadata {
 	/**
 	 * Metadata constructor.
 	 *
-	 * @param $identifier
+	 * @param int $identifier
 	 */
 	public function __construct($identifier) {
 		$this->identifier = $identifier;

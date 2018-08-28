@@ -11,7 +11,7 @@ namespace SRAG\Plugins\Hub2\Jobs\Result;
 class ResultFactory {
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 *
 	 * @return OK
 	 */
@@ -21,7 +21,7 @@ class ResultFactory {
 
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 *
 	 * @return Error
 	 */

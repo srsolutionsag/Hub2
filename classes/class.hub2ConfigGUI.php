@@ -13,6 +13,7 @@ use SRAG\Plugins\Hub2\UI\ConfigFormGUI;
  */
 class hub2ConfigGUI extends hub2MainGUI {
 
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const CMD_SAVE_CONFIG = 'saveConfig';
 	const CMD_CANCEL = 'cancel';
 
@@ -22,7 +23,7 @@ class hub2ConfigGUI extends hub2MainGUI {
 	 */
 	protected function index() {
 		$form = new ConfigFormGUI($this, new HubConfig());
-		$this->tpl()->setContent($form->getHTML());
+		self::dic()->template()->setContent($form->getHTML());
 	}
 
 
@@ -34,15 +35,13 @@ class hub2ConfigGUI extends hub2MainGUI {
 		if ($form->checkInput()) {
 			foreach ($form->getInputItemsRecursive() as $item) {
 				/** @var ilFormPropertyGUI $item */
-				$config = ARConfig::getInstanceByKey($item->getPostVar());
-				$config->setValue($form->getInput($item->getPostVar()));
-				$config->save();
+				ArConfig::setValueByKey($item->getPostVar(), $form->getInput($item->getPostVar()));
 			}
-			ilUtil::sendSuccess($this->pl->txt('msg_successfully_saved'), true);
-			$this->ctrl()->redirect($this);
+			ilUtil::sendSuccess(self::translate('msg_successfully_saved'), true);
+			self::dic()->ctrl()->redirect($this);
 		}
 		$form->setValuesByPost();
-		$this->tpl()->setContent($form->getHTML());
+		self::dic()->template()->setContent($form->getHTML());
 	}
 
 
@@ -50,6 +49,6 @@ class hub2ConfigGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function initTabs() {
-		$this->tabs()->activateTab(self::TAB_PLUGIN_CONFIG);
+		self::dic()->tabs()->activateTab(self::TAB_PLUGIN_CONFIG);
 	}
 }

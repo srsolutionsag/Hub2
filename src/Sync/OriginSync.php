@@ -4,6 +4,8 @@ namespace SRAG\Plugins\Hub2\Sync;
 
 use Error;
 use Exception;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use SRAG\Plugins\Hub2\Exception\AbortSyncException;
@@ -28,6 +30,8 @@ use Throwable;
  */
 class OriginSync implements IOriginSync {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */
@@ -161,8 +165,9 @@ class OriginSync implements IOriginSync {
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
-		$nullDTO = new NullDTO(); // There is no DTO available / needed for the deletion process (data has not been delivered)
+
 		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
+			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
 			$object->setStatus(IObject::STATUS_TO_DELETE);
 			$this->processObject($object, $nullDTO);
 		}

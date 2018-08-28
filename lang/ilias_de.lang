@@ -18,17 +18,13 @@ admin_membership_mail_subject#:#Betreff Benachrichtigungs-Mail
 admin_membership_mail_subject_info#:#Die Platzhalter der Nachricht (unten) können auch hier verwendet werden.
 admin_membership_mail_msg#:#Inhalt Benachrichtigungs-Mail
 admin_membership_mail_msg_info#:#Es können folgende Platzhalter verwendet werden: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]
-admin_msg_shortlink_not_active#:#Objekt-nicht-aktiv Nachricht
-admin_msg_shortlink_not_active_info#:#Meldung falls Shortlinks für die entsprechende Anbindung nicht aktiviert wurden.
-admin_msg_shortlink_no_ilias_id#:#ILIAS-ID-nicht-gefunden-Nachricht
-admin_msg_shortlink_no_ilias_id_info#:#ILIAS-ID-nicht-gefunden-Nachricht
-admin_msg_shortlink_not_found#:#Nicht gefunden Nachricht
-admin_msg_shortlink_not_found_info#:#Wird angezeigt wenn ein nciht existierender Shortlink genutzt wird
+admin_msg_shortlink_not_found#:#Nachricht bei "Nicht gefunden"
+admin_msg_shortlink_not_found_info#:#Wird angezeigt, wenn ein Shortlink zu einem nicht existierenden Objekt genutzt wird.
 admin_origins_path#:#Pfad zu den Anbindungen
 admin_origins_path_info#:#Ort des 'origin'-Verzeichnisses
 admin_password_email_body#:#E-Mail-Body beim versenden von Passwörtern
 admin_roles#:#Rollen
-admin_roles_info#:#Rollen-IDs die HUB2 verwenden können (kommasepariert)
+admin_roles_info#:#Rollen-IDs die Hub2 verwenden können (kommasepariert)
 admin_shortlink#:#Shortlink
 admin_use_async#:#Asynchrone Synchronisation
 admin_use_async_info#:#Asynchrone Synchronisation über das GUI ermöglichen. Benötigt einen ILIAS Benutzer.
@@ -38,6 +34,10 @@ admin_form_button_cancel#:#Abbrechen
 admin_form_button_save#:#Speichern
 admin_form_title#:#Allgemein
 admin_header_sync#:#Synchronisation
+admin_msg_shortlink_no_access#:#Nachricht bei "Kein Zugriff"
+admin_msg_shortlink_no_access_info#:#Nachricht wird angezeigt, wenn ein/e Benutzer/in einen Shortlink nutzt, auf den er/sie keinen Zugriff hat
+admin_msg_shortlink_success#:#Nachricht bei erfolgreicher Weiterleitung
+admin_msg_shortlink_success_info#:#Die Meldung wird angezeigt, wenn nach dem zugriff via Shortlink eine erfolgreiche Weiterleitung zum ILIAS Objekt stattfindet.
 cat_prop_base_node_external#:#Basis-Node extern
 cat_prop_base_node_external_info#:#Fallback Externe-ID einer Kategorie (dieser Anbindung), die als übergeordnetes Element verwendet wird, nur wenn das angegebene übergeordnete Element nicht über die externe ID gefunden werden konnte
 cat_prop_base_node_ilias#:#Basis-Node ILIAS
@@ -279,7 +279,7 @@ usr_prop_syncfield_none#:#Kein Feld
 usr_prop_ilias_roles_info#:#Weist den Benutzer den angegebenen ILIAS-Rollen zu. Beachten Sie, dass diese Einstellung den Benutzer NICHT aus Rollen entfernt, die mit früheren Synchronisationen zugewiesen wurden
 usr_prop_resend_password#:#Kennwort neu setzen und senden
 usr_prop_resend_password_info#:#Kennwort neu setzen und senden
-usr_prop_password_mail_date_format_info#:#Info
+usr_usr_prop_password_mail_date_format_info#:#Info
 view_hubcategory_index#:#Kategorien
 view_hubcourse_index#:#Kurse
 view_hubmembership_index#:#Mitgliedschaften
@@ -372,8 +372,15 @@ summary_deleted#:#Gelöscht: %s
 summary_ignored#:#Ignoriert: %s
 summary_no_changes#:#Keine Änderungen: %s
 summary_exceptions#:#Ausnahmen: 
-summary_notification#:#HUB2: Zusammenfassung für %s
-summary_exceptions_in#:#HUB2: Ausnahmen in %s
+summary_notification#:#Hub2: Zusammenfassung für %s
+summary_exceptions_in#:#Hub2: Ausnahmen in %s
 summary_in#:#in: 
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.
+confirm_remove_hub2_data#:#Möchten Sie die Hub2-Daten auch entfernen? Allenfalls möchten Sie das Hub2-Plugin nur deaktivieren?
+remove_hub2_data#:#Entferne Hub2-Daten
+keep_hub2_data#:#Hub2-Daten behalten
+deactivate_hub2#:#Hub2-Plugin nur deaktivieren
+hub2_data#:#Hub2-Daten
+msg_removed_hub2_data#:#Die Hub2-Daten wurden auch entfernt!
+msg_kept_hub2_data#:#Die Hub2-Daten wurden behalten!

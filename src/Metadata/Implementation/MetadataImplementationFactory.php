@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Metadata\Implementation;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Metadata\IMetadata;
 use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
@@ -17,6 +19,10 @@ use SRAG\Plugins\Hub2\Object\User\UserDTO;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class MetadataImplementationFactory implements IMetadataImplementationFactory {
+
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @inheritdoc

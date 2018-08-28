@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Object\DTO;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
 use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
@@ -23,6 +25,10 @@ use SRAG\Plugins\Hub2\Object\User\UserDTO;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class DataTransferObjectFactory implements IDataTransferObjectFactory {
+
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @inheritdoc
