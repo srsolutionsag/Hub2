@@ -30,21 +30,19 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	/**
 	 * @var array
 	 */
-	private static $genders
-		= [
-			self::GENDER_MALE,
-			self::GENDER_FEMALE,
-		];
+	private static $genders = [
+		self::GENDER_MALE,
+		self::GENDER_FEMALE,
+	];
 	/**
 	 * @var array
 	 */
-	private static $auth_modes
-		= [
-			self::AUTH_MODE_ILIAS,
-			self::AUTH_MODE_SHIB,
-			self::AUTH_MODE_LDAP,
-			self::AUTH_MODE_RADIUS,
-		];
+	private static $auth_modes = [
+		self::AUTH_MODE_ILIAS,
+		self::AUTH_MODE_SHIB,
+		self::AUTH_MODE_LDAP,
+		self::AUTH_MODE_RADIUS,
+	];
 	/**
 	 * @var string
 	 */
@@ -725,14 +723,12 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 
 
 	function __toString() {
-		return implode(
-			', ', [
-			"ext_id: " . $this->getExtId(),
-			"period: " . $this->getPeriod(),
-			"firstname: " . $this->getFirstname(),
-			"lastname: " . $this->getLastname(),
-			"email: " . $this->getEmail(),
-		]
-		);
+		return implode(', ', [
+				"ext_id: " . $this->getExtId(),
+				"period: " . $this->getPeriod(),
+				"firstname: " . $this->getFirstname(),
+				"lastname: " . $this->getLastname(),
+				"email: " . $this->getEmail(),
+			]);
 	}
 }

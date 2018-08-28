@@ -2,15 +2,15 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor;
 
+use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
-use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\MappingStrategy\None;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
@@ -32,7 +32,8 @@ use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	use Helper;
 	/**
 	 * @var IOrigin
@@ -101,13 +102,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 		if ($object->getStatus() != IObject::STATUS_TO_DELETE) {
 			$object->setData($dto->getData());
 			if ($dto instanceof IMetadataAwareDataTransferObject
-				&& $object instanceof IMetadataAwareObject
-			) {
+				&& $object instanceof IMetadataAwareObject) {
 				$object->setMetaData($dto->getMetaData());
 			}
 			if ($dto instanceof ITaxonomyAwareDataTransferObject
-				&& $object instanceof ITaxonomyAwareObject
-			) {
+				&& $object instanceof ITaxonomyAwareObject) {
 				$object->setTaxonomies($dto->getTaxonomies());
 			}
 		}
@@ -129,7 +128,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				if (($object->computeHashCode() != $object->getHashCode()) || $force) {
 					$this->implementation->beforeUpdateILIASObject($hook);
 					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
-					if ($ilias_object === null) {
+					if ($ilias_object === NULL) {
 						throw new ILIASObjectNotFoundException($object);
 					}
 					if ($this instanceof IMetadataSyncProcessor) {
@@ -156,7 +155,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 				$this->implementation->beforeUpdateILIASObject($hook);
 				$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
-				if ($ilias_object === null) {
+				if ($ilias_object === NULL) {
 					throw new ILIASObjectNotFoundException($object);
 				}
 				if ($this instanceof IMetadataSyncProcessor) {
@@ -171,7 +170,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			case IObject::STATUS_TO_DELETE:
 				$this->implementation->beforeDeleteILIASObject($hook);
 				$ilias_object = $this->handleDelete($object->getILIASId());
-				if ($ilias_object === null) {
+				if ($ilias_object === NULL) {
 					throw new ILIASObjectNotFoundException($object);
 				}
 				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
@@ -185,8 +184,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 		}
 		$object->setStatus($this->transition->intermediateToFinal($object));
 		if ($object->getStatus() != IObject::STATUS_IGNORED
-			&& $object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE
-		) {
+			&& $object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
 			$object->setProcessedDate(time());
 		}
 		if ($object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
@@ -202,8 +200,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 */
 	protected function getILIASId($object) {
 		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
-			|| $object instanceof FakeIliasMembershipObject
-		) {
+			|| $object instanceof FakeIliasMembershipObject) {
 			return $object->getId();
 		}
 

@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+
 /**
  * Class FakeIliasObject
  *
@@ -10,6 +13,8 @@ namespace SRAG\Plugins\Hub2\Sync\Processor;
  */
 abstract class FakeIliasObject {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var string
 	 */

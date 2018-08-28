@@ -2,7 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use ilHub2Plugin;
 use ilUtil;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\IHubConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
 
@@ -15,6 +17,8 @@ use SRAG\Plugins\Hub2\Exception\HubException;
  */
 class OriginImplementationTemplateGenerator {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IHubConfig
 	 */

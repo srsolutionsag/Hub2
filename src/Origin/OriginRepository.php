@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Origin;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
@@ -20,6 +22,10 @@ use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginRepository implements IOriginRepository {
+
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @inheritdoc

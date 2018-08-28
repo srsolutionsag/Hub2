@@ -48,7 +48,7 @@ interface IObjectFactory {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 *
 	 * @return ICourse
 	 */
@@ -56,7 +56,7 @@ interface IObjectFactory {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 *
 	 * @return ICategory
 	 */
@@ -64,7 +64,7 @@ interface IObjectFactory {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 *
 	 * @return IGroup
 	 */
@@ -72,7 +72,7 @@ interface IObjectFactory {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 *
 	 * @return ISession
 	 */
@@ -80,7 +80,7 @@ interface IObjectFactory {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 *
 	 * @return ICourseMembership
 	 */
@@ -88,7 +88,7 @@ interface IObjectFactory {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 *
 	 * @return IGroupMembership
 	 */
@@ -96,7 +96,7 @@ interface IObjectFactory {
 
 
 	/**
-	 * @param $ext_id
+	 * @param string $ext_id
 	 *
 	 * @return ISessionMembership
 	 */

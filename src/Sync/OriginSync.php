@@ -4,6 +4,8 @@ namespace SRAG\Plugins\Hub2\Sync;
 
 use Error;
 use Exception;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncException;
 use SRAG\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use SRAG\Plugins\Hub2\Exception\AbortSyncException;
@@ -28,6 +30,8 @@ use Throwable;
  */
 class OriginSync implements IOriginSync {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */

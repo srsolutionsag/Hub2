@@ -105,7 +105,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 	 */
 	private function initSelectableTaxonomies() {
 		$res = array();
-		foreach ($this->tree()->getPathFull((int)$this->getILIASParentId()) as $node) {
+		foreach (self::dic()->tree()->getPathFull((int)$this->getILIASParentId()) as $node) {
 			if ($node["ref_id"] != (int)$this->getILIASParentId()) {
 				if ($node["type"] == "cat") {
 					if (ilContainer::_lookupContainerSetting($node["obj_id"], ilObjectServiceSettingsGUI::TAXONOMIES, false)) {

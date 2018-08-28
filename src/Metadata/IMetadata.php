@@ -11,7 +11,7 @@ namespace SRAG\Plugins\Hub2\Metadata;
 interface IMetadata {
 
 	/**
-	 * @param $value
+	 * @param string $value
 	 *
 	 * @return IMetadata
 	 */

@@ -30,22 +30,20 @@ class CategoryDTO extends DataTransferObject implements ITaxonomyAndMetadataAwar
 	/**
 	 * @var array
 	 */
-	private static $orderTypes
-		= [
-			self::ORDER_TYPE_TITLE,
-			self::ORDER_TYPE_MANUAL,
-			self::ORDER_TYPE_ACTIVATION,
-			self::ORDER_TYPE_INHERIT,
-			self::ORDER_TYPE_CREATION,
-		];
+	private static $orderTypes = [
+		self::ORDER_TYPE_TITLE,
+		self::ORDER_TYPE_MANUAL,
+		self::ORDER_TYPE_ACTIVATION,
+		self::ORDER_TYPE_INHERIT,
+		self::ORDER_TYPE_CREATION,
+	];
 	/**
 	 * @var array
 	 */
-	private static $parentIdTypes
-		= [
-			self::PARENT_ID_TYPE_REF_ID,
-			self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
-		];
+	private static $parentIdTypes = [
+		self::PARENT_ID_TYPE_REF_ID,
+		self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
+	];
 	/**
 	 * @var string
 	 */

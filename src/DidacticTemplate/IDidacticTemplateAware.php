@@ -9,7 +9,7 @@
 interface IDidacticTemplateAware {
 
 	/**
-	 * @param $id
+	 * @param int $id
 	 */
 	public function setTemplateId($id);
 }
