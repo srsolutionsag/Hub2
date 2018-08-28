@@ -1,12 +1,15 @@
-<?php namespace SRAG\Plugins\Hub2\Shortlink;
+<?php
+
+namespace SRAG\Plugins\Hub2\Shortlink;
 
 use ilAuthSession;
 use ilContext;
+use ilHub2Plugin;
 use RESTController\libs\ilInitialisation;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\HubConfig;
 use SRAG\Plugins\Hub2\Exception\ShortlinkException;
 use SRAG\Plugins\Hub2\Exception\ShortLinkNotFoundException;
-use SRAG\Plugins\Hub2\Helper\DIC;
 
 /**
  * Class Handler
@@ -16,7 +19,8 @@ use SRAG\Plugins\Hub2\Helper\DIC;
  */
 class Handler {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 	/**
 	 * @var bool
@@ -62,7 +66,7 @@ class Handler {
 			throw new ShortlinkException("ILIAS not initialized, aborting...");
 		}
 
-		$object_link_factory = new ObjectLinkFactory($DIC->database());
+		$object_link_factory = new ObjectLinkFactory();
 
 		$link = $object_link_factory->findByExtId($this->ext_id);
 
@@ -85,7 +89,7 @@ class Handler {
 	 */
 	protected function doRedirect(string $link) {
 		$link = $this->sanitizeLink($link);
-		$this->ctrl()->redirectToURL($link);
+		self::dic()->ctrl()->redirectToURL($link);
 	}
 
 

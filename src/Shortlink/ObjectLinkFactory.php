@@ -1,6 +1,7 @@
-<?php namespace SRAG\Plugins\Hub2\Shortlink;
+<?php
 
-use ilDBInterface;
+namespace SRAG\Plugins\Hub2\Shortlink;
+
 use SRAG\Plugins\Hub2\Object\ARObject;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
@@ -34,12 +35,9 @@ class ObjectLinkFactory {
 
 	/**
 	 * ObjectLinkFactory constructor.
-	 *
-	 * @param string        $ext_id
-	 * @param ilDBInterface $db
 	 */
-	public function __construct(ilDBInterface $db) {
-		$this->origin_factory = new OriginFactory($db);
+	public function __construct() {
+		$this->origin_factory = new OriginFactory();
 	}
 
 

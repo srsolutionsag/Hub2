@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Object\DTO;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+
 /**
  * Class ObjectDTO
  *
@@ -11,6 +14,8 @@ namespace SRAG\Plugins\Hub2\Object\DTO;
  */
 abstract class DataTransferObject implements IDataTransferObject {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var string
 	 */
@@ -90,8 +95,8 @@ abstract class DataTransferObject implements IDataTransferObject {
 
 	public function __toString() {
 		return implode(', ', [
-				"ext_id: " . $this->getExtId(),
-				"period: " . $this->getPeriod(),
-			]);
+			"ext_id: " . $this->getExtId(),
+			"period: " . $this->getPeriod(),
+		]);
 	}
 }

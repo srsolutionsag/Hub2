@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Log;
 
+use ilHub2Plugin;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
@@ -55,7 +56,7 @@ class OriginLog implements ILog {
 			return self::$ilLogInstances[$origin->getId()];
 		}
 		$filename = implode('-', [
-			\ilHub2Plugin::PLUGIN_ID,
+			ilHub2Plugin::PLUGIN_ID,
 			'origin',
 			$origin->getObjectType(),
 			$origin->getId(),

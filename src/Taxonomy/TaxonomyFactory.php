@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
 
@@ -12,6 +14,10 @@ use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class TaxonomyFactory implements ITaxonomyFactory {
+
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @inheritDoc

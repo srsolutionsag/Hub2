@@ -2,7 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Sync\Processor;
 
-use SRAG\Plugins\Hub2\Helper\DIC;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
@@ -32,7 +33,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
  */
 class SyncProcessorFactory implements ISyncProcessorFactory {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */
@@ -83,7 +85,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function course() {
-		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new CourseActivities($this->db()));
+		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new CourseActivities(self::dic()
+			->database()));
 	}
 
 
@@ -115,7 +118,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritDoc
 	 */
 	public function group() {
-		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new GroupActivities($this->db()));
+		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new GroupActivities(self::dic()
+			->database()));
 	}
 
 

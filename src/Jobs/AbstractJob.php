@@ -3,7 +3,8 @@
 namespace SRAG\Plugins\Hub2\Jobs;
 
 use ilCronJob;
-use SRAG\Plugins\Hub2\Helper\DIC;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 
 /**
  * Class AbstractJob
@@ -13,13 +14,14 @@ use SRAG\Plugins\Hub2\Helper\DIC;
  */
 abstract class AbstractJob extends ilCronJob {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
 	/**
 	 * @param string $message
 	 */
 	protected function log($message) {
-		$this->ilLog()->write($message);
+		self::dic()->log()->write($message);
 	}
 }

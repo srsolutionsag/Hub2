@@ -132,7 +132,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 */
 	protected function buildParentRefId(SessionMembershipDTO $dto) {
 		if ($dto->getSessionIdType() == SessionMembershipDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($dto->getSessionId())) {
+			if (self::dic()->tree()->isInTree($dto->getSessionId())) {
 				return (int)$dto->getSessionId();
 			}
 			throw new HubException("Could not find the ref-ID of the parent session in the tree: '{$dto->getGroupId()}'");
@@ -159,7 +159,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 			if (!$session->getILIASId()) {
 				throw new HubException("The linked session does not (yet) exist in ILIAS");
 			}
-			if (!$this->tree()->isInTree($session->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($session->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent session in the tree: '{$session->getILIASId()}'");
 			}
 
@@ -193,7 +193,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 
 	/**
 	 * @param ilObjSession $ilObjSession
-	 * @param int       $user_id
+	 * @param int          $user_id
 	 *
 	 * @throws HubException
 	 */

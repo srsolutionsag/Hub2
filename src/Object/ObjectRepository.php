@@ -3,6 +3,8 @@
 namespace SRAG\Plugins\Hub2\Object;
 
 use ActiveRecord;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 
 /**
@@ -14,6 +16,8 @@ use SRAG\Plugins\Hub2\Origin\IOrigin;
  */
 abstract class ObjectRepository implements IObjectRepository {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */

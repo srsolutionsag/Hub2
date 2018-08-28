@@ -2,9 +2,10 @@
 
 namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
 
+use ilHub2Plugin;
 use ilObjTaxonomy;
 use ilTaxonomyTree;
-use SRAG\Plugins\Hub2\Helper\DIC;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
 
@@ -16,7 +17,8 @@ use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
  */
 abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
 	 */
@@ -58,7 +60,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 	 * @return bool
 	 */
 	protected function taxonomyExists(): bool {
-		$childsByType = $this->tree()->getChildsByType($this->getILIASParentId(), 'tax');
+		$childsByType = self::dic()->tree()->getChildsByType($this->getILIASParentId(), 'tax');
 		if (!count($childsByType)) {
 			return false;
 		}

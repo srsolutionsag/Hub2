@@ -2,8 +2,8 @@
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Helper\DIC;
 
 /**
  * Class hub2RemoveDataConfirm
@@ -12,7 +12,8 @@ use SRAG\Plugins\Hub2\Helper\DIC;
  */
 class hub2RemoveDataConfirm {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const CMD_CANCEL = "cancel";
 	const CMD_CONFIRM_REMOVE_HUB2_DATA = "confirmRemoveHub2Data";
 	const CMD_DEACTIVATE_HUB2 = "deactivateHub2";
@@ -24,48 +25,39 @@ class hub2RemoveDataConfirm {
 	 * @param bool $plugin
 	 */
 	public static function saveParameterByClass(bool $plugin = true) {
-		global $DIC;
-		$ilCtrl = $DIC->ctrl();
-
 		$ref_id = filter_input(INPUT_GET, "ref_id");
-		$ilCtrl->setParameterByClass(ilObjComponentSettingsGUI::class, "ref_id", $ref_id);
-		$ilCtrl->setParameterByClass(self::class, "ref_id", $ref_id);
+		self::dic()->ctrl()->setParameterByClass(ilObjComponentSettingsGUI::class, "ref_id", $ref_id);
+		self::dic()->ctrl()->setParameterByClass(self::class, "ref_id", $ref_id);
 
 		if ($plugin) {
 			$ctype = filter_input(INPUT_GET, "ctype");
-			$ilCtrl->setParameterByClass(ilObjComponentSettingsGUI::class, "ctype", $ctype);
-			$ilCtrl->setParameterByClass(self::class, "ctype", $ctype);
+			self::dic()->ctrl()->setParameterByClass(ilObjComponentSettingsGUI::class, "ctype", $ctype);
+			self::dic()->ctrl()->setParameterByClass(self::class, "ctype", $ctype);
 
 			$cname = filter_input(INPUT_GET, "cname");
-			$ilCtrl->setParameterByClass(ilObjComponentSettingsGUI::class, "cname", $cname);
-			$ilCtrl->setParameterByClass(self::class, "cname", $cname);
+			self::dic()->ctrl()->setParameterByClass(ilObjComponentSettingsGUI::class, "cname", $cname);
+			self::dic()->ctrl()->setParameterByClass(self::class, "cname", $cname);
 
 			$slot_id = filter_input(INPUT_GET, "slot_id");
-			$ilCtrl->setParameterByClass(ilObjComponentSettingsGUI::class, "slot_id", $slot_id);
-			$ilCtrl->setParameterByClass(self::class, "slot_id", $slot_id);
+			self::dic()->ctrl()->setParameterByClass(ilObjComponentSettingsGUI::class, "slot_id", $slot_id);
+			self::dic()->ctrl()->setParameterByClass(self::class, "slot_id", $slot_id);
 
 			$plugin_id = filter_input(INPUT_GET, "plugin_id");
-			$ilCtrl->setParameterByClass(ilObjComponentSettingsGUI::class, "plugin_id", $plugin_id);
-			$ilCtrl->setParameterByClass(self::class, "plugin_id", $plugin_id);
+			self::dic()->ctrl()->setParameterByClass(ilObjComponentSettingsGUI::class, "plugin_id", $plugin_id);
+			self::dic()->ctrl()->setParameterByClass(self::class, "plugin_id", $plugin_id);
 
 			$pname = filter_input(INPUT_GET, "pname");
-			$ilCtrl->setParameterByClass(ilObjComponentSettingsGUI::class, "pname", $pname);
-			$ilCtrl->setParameterByClass(self::class, "pname", $pname);
+			self::dic()->ctrl()->setParameterByClass(ilObjComponentSettingsGUI::class, "pname", $pname);
+			self::dic()->ctrl()->setParameterByClass(self::class, "pname", $pname);
 		}
 	}
-
-
-	/**
-	 * @var ilHub2Plugin
-	 */
-	protected $pl;
 
 
 	/**
 	 *
 	 */
 	public function __construct() {
-		$this->pl = ilHub2Plugin::getInstance();
+
 	}
 
 
@@ -73,11 +65,11 @@ class hub2RemoveDataConfirm {
 	 *
 	 */
 	public function executeCommand() {
-		$next_class = $this->ctrl()->getNextClass($this);
+		$next_class = self::dic()->ctrl()->getNextClass($this);
 
 		switch ($next_class) {
 			default:
-				$cmd = $this->ctrl()->getCmd();
+				$cmd = self::dic()->ctrl()->getCmd();
 
 				switch ($cmd) {
 					case self::CMD_CANCEL:
@@ -97,29 +89,12 @@ class hub2RemoveDataConfirm {
 
 
 	/**
-	 *
-	 * @param string $html
-	 */
-	protected function show(string $html) {
-		if ($this->ctrl()->isAsynch()) {
-			echo $html;
-
-			exit();
-		} else {
-			$this->tpl()->setContent($html);
-			$this->tpl()->getStandardTemplate();
-			$this->tpl()->show();
-		}
-	}
-
-
-	/**
 	 * @param string $cmd
 	 */
 	protected function redirectToPlugins(string $cmd) {
 		self::saveParameterByClass($cmd !== "listPlugins");
 
-		$this->ctrl()->redirectByClass([
+		self::dic()->ctrl()->redirectByClass([
 			ilAdministrationGUI::class,
 			ilObjComponentSettingsGUI::class
 		], $cmd);
@@ -142,18 +117,18 @@ class hub2RemoveDataConfirm {
 
 		$confirmation = new ilConfirmationGUI();
 
-		$confirmation->setFormAction($this->ctrl()->getFormAction($this));
+		$confirmation->setFormAction(self::dic()->ctrl()->getFormAction($this));
 
-		$confirmation->setHeaderText($this->pl->txt("confirm_remove_hub2_data"));
+		$confirmation->setHeaderText(self::translate("confirm_remove_hub2_data"));
 
-		$confirmation->addItem("_", "_", $this->pl->txt("hub2_data"));
+		$confirmation->addItem("_", "_", self::translate("hub2_data"));
 
-		$confirmation->addButton($this->pl->txt("remove_hub2_data"), self::CMD_SET_REMOVE_HUB2_DATA);
-		$confirmation->addButton($this->pl->txt("keep_hub2_data"), self::CMD_SET_KEEP_HUB2_DATA);
-		$confirmation->addButton($this->pl->txt("deactivate_hub2"), self::CMD_DEACTIVATE_HUB2);
-		$confirmation->setCancel($this->pl->txt("button_cancel"), self::CMD_CANCEL);
+		$confirmation->addButton(self::translate("remove_hub2_data"), self::CMD_SET_REMOVE_HUB2_DATA);
+		$confirmation->addButton(self::translate("keep_hub2_data"), self::CMD_SET_KEEP_HUB2_DATA);
+		$confirmation->addButton(self::translate("deactivate_hub2"), self::CMD_DEACTIVATE_HUB2);
+		$confirmation->setCancel(self::translate("button_cancel"), self::CMD_CANCEL);
 
-		$this->show($confirmation->getHTML());
+		self::output($confirmation->getHTML());
 	}
 
 
@@ -169,11 +144,9 @@ class hub2RemoveDataConfirm {
 	 *
 	 */
 	protected function setKeepHub2Data() {
-		$uninstall_remove_hub2_data = ArConfig::getInstanceByKey(ilHub2Plugin::UNINSTALL_REMOVE_HUB2_DATA);
-		$uninstall_remove_hub2_data->setValue(false);
-		$uninstall_remove_hub2_data->store();
+		ArConfig::setUninstallRemoveHub2Data(false);
 
-		ilUtil::sendInfo($this->pl->txt("msg_kept_hub2_data"), true);
+		ilUtil::sendInfo(self::translate("msg_kept_hub2_data"), true);
 
 		$this->redirectToPlugins("uninstallPlugin");
 	}
@@ -183,11 +156,9 @@ class hub2RemoveDataConfirm {
 	 *
 	 */
 	protected function setRemoveHub2Data() {
-		$uninstall_remove_hub2_data = ArConfig::getInstanceByKey(ilHub2Plugin::UNINSTALL_REMOVE_HUB2_DATA);
-		$uninstall_remove_hub2_data->setValue(true);
-		$uninstall_remove_hub2_data->store();
+		ArConfig::setUninstallRemoveHub2Data(true);
 
-		ilUtil::sendInfo($this->pl->txt("msg_removed_hub2_data"), true);
+		ilUtil::sendInfo(self::translate("msg_removed_hub2_data"), true);
 
 		$this->redirectToPlugins("uninstallPlugin");
 	}

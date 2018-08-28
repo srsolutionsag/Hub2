@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Helper\DIC;
 
 /**
@@ -15,21 +16,18 @@ use SRAG\Plugins\Hub2\Helper\DIC;
  */
 class hub2MainGUI {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
 	const TAB_ORIGINS = 'tab_origins';
 	const CMD_INDEX = 'index';
-	/**
-	 * @var ilHub2Plugin
-	 */
-	protected $pl;
 
 
 	/**
 	 * hub2MainGUI constructor.
 	 */
 	public function __construct() {
-		$this->pl = ilHub2Plugin::getInstance();
+
 	}
 
 
@@ -38,18 +36,18 @@ class hub2MainGUI {
 	 */
 	public function executeCommand() {
 		$this->initTabs();
-		$nextClass = $this->ctrl()->getNextClass();
+		$nextClass = self::dic()->ctrl()->getNextClass();
 		switch ($nextClass) {
 			case strtolower(hub2ConfigGUI::class):
-				$this->ctrl()->forwardCommand(new hub2ConfigGUI());
+				self::dic()->ctrl()->forwardCommand(new hub2ConfigGUI());
 				break;
 			case strtolower(hub2ConfigOriginsGUI::class):
-				$this->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
+				self::dic()->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
 				break;
 			case strtolower(hub2DataGUI::class):
 				break;
 			default:
-				$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);
+				$cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
 				$this->{$cmd}();
 		}
 	}
@@ -59,7 +57,7 @@ class hub2MainGUI {
 	 *
 	 */
 	protected function index() {
-		$this->ctrl()->redirectByClass(hub2ConfigGUI::class);
+		self::dic()->ctrl()->redirectByClass(hub2ConfigGUI::class);
 	}
 
 
@@ -67,10 +65,11 @@ class hub2MainGUI {
 	 *
 	 */
 	protected function initTabs() {
-		$this->tabs()->addTab(self::TAB_PLUGIN_CONFIG, $this->pl->txt(self::TAB_PLUGIN_CONFIG), $this->ctrl()
+		self::dic()->tabs()->addTab(self::TAB_PLUGIN_CONFIG, self::translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigGUI::class));
 
-		$this->tabs()->addTab(self::TAB_ORIGINS, $this->pl->txt(self::TAB_ORIGINS), $this->ctrl()->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
+		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::translate(self::TAB_ORIGINS), self::dic()->ctrl()
+			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
 	}
 
 

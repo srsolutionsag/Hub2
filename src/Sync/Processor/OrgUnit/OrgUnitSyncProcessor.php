@@ -9,7 +9,6 @@ use ilOrgUnitType;
 use ilOrgUnitTypeTranslation;
 use ilRepUtil;
 use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -32,7 +31,6 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncProcessor {
 
-	use DIC;
 	/**
 	 * @var IOrgUnitOriginProperties
 	 */
@@ -218,7 +216,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 			return NULL;
 		}
 
-		$this->tree()->moveToTrash($org_unit->getRefId(), true);
+		self::dic()->tree()->moveToTrash($org_unit->getRefId(), true);
 
 		return $org_unit;
 	}
@@ -311,6 +309,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		return $parent_id;
 	}
 
+
 	/**
 	 * @param ilObjOrgUnit $org_unit
 	 * @param IOrgUnitDTO  $dto
@@ -319,15 +318,15 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function moveOrgUnit(ilObjOrgUnit $org_unit, IOrgUnitDTO $dto) {
 		$parent_ref_id = $this->getParentId($dto);
-		if ($this->tree()->isDeleted($org_unit->getRefId())) {
+		if (self::dic()->tree()->isDeleted($org_unit->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parent_ref_id, [ $org_unit->getRefId() ]);
 		}
-		$old_parent_id = intval($this->tree()->getParentId($org_unit->getRefId()));
+		$old_parent_id = intval(self::dic()->tree()->getParentId($org_unit->getRefId()));
 		if ($old_parent_id == $parent_ref_id) {
 			return;
 		}
-		$this->tree()->moveTree($org_unit->getRefId(), $parent_ref_id);
-		$this->rbac()->admin()->adjustMovedObjectPermissions($org_unit->getRefId(), $old_parent_id);
+		self::dic()->tree()->moveTree($org_unit->getRefId(), $parent_ref_id);
+		self::dic()->rbacadmin()->adjustMovedObjectPermissions($org_unit->getRefId(), $old_parent_id);
 	}
 }

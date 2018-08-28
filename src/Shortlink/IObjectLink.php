@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Shortlink;
+<?php
+
+namespace SRAG\Plugins\Hub2\Shortlink;
 
 /**
  * Interface IObjectLink
