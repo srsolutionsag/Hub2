@@ -48,7 +48,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 	protected function addPropertiesNew() {
 		parent::addPropertiesNew();
 		$cb = new ilCheckboxInputGUI(self::translate('crs_prop_activate'), $this->prop(CourseOriginProperties::SET_ONLINE));
-		$cb = new \ilCheckboxInputGUI(self::translate('crs_prop_activate'), $this->prop(CourseOriginProperties::SET_ONLINE));
+		$cb = new ilCheckboxInputGUI(self::translate('crs_prop_activate'), $this->prop(CourseOriginProperties::SET_ONLINE));
 		$cb->setChecked($this->origin->properties()->get(CourseOriginProperties::SET_ONLINE));
 		$this->addItem($cb);
 

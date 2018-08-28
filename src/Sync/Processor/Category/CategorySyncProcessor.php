@@ -77,8 +77,6 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
-		global $DIC;
-
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
 
@@ -89,7 +87,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		}
 
 		/** @var CategoryDTO $dto */
-		$ilObjCategory = new \ilObjCategory();
+		$ilObjCategory = new ilObjCategory();
 		$ilObjCategory->setImportId($this->getImportId($dto));
 
 		$ilObjCategory->create();
@@ -123,9 +121,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @return int|bool
 	 */
 	protected function checkNewCategoryAlreadyExistsInParent($title,$parent_id){
-		global $DIC;
-
-		$children = $DIC->repositoryTree()->getChildsByType($parent_id,"cat");
+		$children = self::dic()->tree()->getChildsByType($parent_id,"cat");
 
 		foreach($children as $child){
 			if($child['title']==$title){
