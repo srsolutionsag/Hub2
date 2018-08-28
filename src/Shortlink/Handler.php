@@ -2,10 +2,10 @@
 
 namespace SRAG\Plugins\Hub2\Shortlink;
 
-use ilAuthSession;
 use ilContext;
+use ilDBInterface;
 use ilHub2Plugin;
-use RESTController\libs\ilInitialisation;
+use ilInitialisation;
 use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\HubConfig;
 use SRAG\Plugins\Hub2\Exception\ShortlinkException;
@@ -61,8 +61,7 @@ class Handler {
 	 * @throws ShortlinkException
 	 */
 	public function process() {
-		global $DIC;
-		if (!$this->init || !$DIC->database() instanceof \ilDBInterface) {
+		if (!$this->init || !self::dic()->database() instanceof ilDBInterface) {
 			throw new ShortlinkException("ILIAS not initialized, aborting...");
 		}
 
@@ -116,21 +115,17 @@ class Handler {
 	public function tryILIASInitPublic() {
 		$this->prepareILIASInit();
 
-		global $DIC;
 		include_once './Services/Context/classes/class.ilContext.php';
 		ilContext::init(ilContext::CONTEXT_WAC);
 		require_once("Services/Init/classes/class.ilInitialisation.php");
 		ilInitialisation::initILIAS();
-		/**
-		 * @var ilAuthSession $ilAuthSession
-		 */
-		$ilAuthSession = $DIC['ilAuthSession'];
+		$ilAuthSession = self::dic()->authSession();
 		$ilAuthSession->init();
 		$ilAuthSession->regenerateId();
 		$a_id = (int)ANONYMOUS_USER_ID;
 		$ilAuthSession->setUserId($a_id);
 		$ilAuthSession->setAuthenticated(false, $a_id);
-		$DIC->user()->setId($a_id);
+		self::dic()->user()->setId($a_id);
 
 		$this->init = true;
 	}

@@ -8,6 +8,7 @@ use ilFormSectionHeaderGUI;
 use ilHub2ConfigGUI;
 use ilHub2Plugin;
 use ilPropertyFormGUI;
+use ilTextAreaInputGUI;
 use ilTextInputGUI;
 use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\IHubConfig;
@@ -76,21 +77,21 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 		$h->setTitle(self::translate('admin_shortlink'));
 		$this->addItem($h);
 
-		$item = new \ilTextAreaInputGUI(self::translate('admin_msg_'
+		$item = new ilTextAreaInputGUI(self::translate('admin_msg_'
 			. IHubConfig::SHORTLINK_OBJECT_NOT_FOUND), IHubConfig::SHORTLINK_OBJECT_NOT_FOUND);
 		$item->setUseRte(false);
 		$item->setValue($this->config->get(IHubConfig::SHORTLINK_OBJECT_NOT_FOUND));
 		$item->setInfo(self::translate('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_FOUND . '_info'));
 		$this->addItem($item);
 
-		$item = new \ilTextAreaInputGUI(self::translate('admin_msg_'
+		$item = new ilTextAreaInputGUI(self::translate('admin_msg_'
 			. IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE), IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE);
 		$item->setUseRte(false);
 		$item->setValue($this->config->get(IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE));
 		$item->setInfo(self::translate('admin_msg_' . IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE . '_info'));
 		$this->addItem($item);
 
-		$item = new \ilTextAreaInputGUI(self::translate('admin_msg_' . IHubConfig::SHORTLINK_SUCCESS), IHubConfig::SHORTLINK_SUCCESS);
+		$item = new ilTextAreaInputGUI(self::translate('admin_msg_' . IHubConfig::SHORTLINK_SUCCESS), IHubConfig::SHORTLINK_SUCCESS);
 		$item->setUseRte(false);
 		$item->setValue($this->config->get(IHubConfig::SHORTLINK_SUCCESS));
 		$item->setInfo(self::translate('admin_msg_' . IHubConfig::SHORTLINK_SUCCESS . '_info'));

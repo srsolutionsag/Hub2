@@ -3,6 +3,7 @@
 namespace SRAG\Plugins\Hub2\Log;
 
 use ilHub2Plugin;
+use ILIAS\Filesystem\Exception\IOException;
 use ILIAS\Filesystem\Stream\Stream;
 use ILIAS\Filesystem\Stream\Streams;
 use srag\DIC\DICTrait;
@@ -33,7 +34,7 @@ class Logger {
 	 *
 	 * @param string $path
 	 *
-	 * @throws \ILIAS\Filesystem\Exception\IOException
+	 * @throws IOException
 	 */
 	public function __construct(string $path) {
 		$this->path = $path;
