@@ -151,7 +151,7 @@ interface IObject {
 
 
 	/**
-	 * @param $status
+	 * @param int $status
 	 *
 	 * @return $this
 	 */

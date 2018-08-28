@@ -66,7 +66,7 @@ class RunSync extends AbstractJob {
 		try {
 			$OriginSyncSummaryFactory = new OriginSyncSummaryFactory();
 
-			$OriginFactory = new OriginFactory($this->db());
+			$OriginFactory = new OriginFactory();
 
 			$summary = $OriginSyncSummaryFactory->cron();
 			foreach ($OriginFactory->getAllActive() as $origin) {

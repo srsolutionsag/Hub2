@@ -3,6 +3,8 @@
 namespace SRAG\Plugins\Hub2\Jobs\Result;
 
 use ilCronJobResult;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 
 /**
  * Class AbstractResult
@@ -12,6 +14,8 @@ use ilCronJobResult;
  */
 abstract class AbstractResult extends ilCronJobResult {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const STATUS_OK = 3;
 	const STATUS_CRASHED = 4;
 
@@ -19,7 +23,7 @@ abstract class AbstractResult extends ilCronJobResult {
 	/**
 	 * AbstractResult constructor.
 	 *
-	 * @param $message
+	 * @param string $message
 	 */
 	public function __construct($message) {
 		$this->setMessage($message);

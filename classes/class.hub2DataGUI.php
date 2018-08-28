@@ -21,7 +21,7 @@ class hub2DataGUI extends hub2MainGUI {
 	 */
 	public function executeCommand() {
 		$this->initTabs();
-		$cmd = $this->ctrl()->getCmd(self::CMD_INDEX);
+		$cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
 		$this->{$cmd}();
 	}
 
@@ -31,7 +31,7 @@ class hub2DataGUI extends hub2MainGUI {
 	 */
 	protected function index() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
-		$this->tpl()->setContent($table->getHTML());
+		self::dic()->template()->setContent($table->getHTML());
 	}
 
 
@@ -42,7 +42,7 @@ class hub2DataGUI extends hub2MainGUI {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 		$table->writeFilterToSession();
 		$table->resetOffset();
-		$this->ctrl()->redirect($this, self::CMD_INDEX);
+		self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
 	}
 
 
@@ -53,7 +53,7 @@ class hub2DataGUI extends hub2MainGUI {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 		$table->resetFilter();
 		$table->resetOffset();
-		$this->ctrl()->redirect($this, self::CMD_INDEX);
+		self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
 	}
 
 
@@ -61,7 +61,7 @@ class hub2DataGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function initTabs() {
-		$this->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
+		self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
 	}
 
 
@@ -69,15 +69,15 @@ class hub2DataGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function renderData() {
-		$ext_id = $this->http()->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
-		$origin_id = $this->http()->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
+		$ext_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
+		$origin_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
 
-		$origin_factory = new OriginFactory($this->db());
+		$origin_factory = new OriginFactory();
 		$object_factory = new ObjectFactory($origin_factory->getById($origin_id));
 
 		$object = $object_factory->undefined($ext_id);
 
-		$factory = $this->ui()->factory();
+		$factory = self::dic()->ui()->factory();
 
 		$properties = array_merge([
 			"period" => $object->getPeriod(),
@@ -89,20 +89,24 @@ class hub2DataGUI extends hub2MainGUI {
 
 		if ($object instanceof IMetadataAwareObject) {
 			foreach ($object->getMetaData() as $metadata) {
-				$properties[sprintf($this->pl->txt("table_md"), $metadata->getIdentifier())] = $metadata->getValue();
+				$properties[sprintf(self::translate("table_md"), $metadata->getIdentifier())] = $metadata->getValue();
 			}
 		}
 
 		if ($object instanceof ITaxonomyAwareObject) {
 			foreach ($object->getTaxonomies() as $taxonomy) {
-				$properties[sprintf($this->pl->txt("table_tax"), $taxonomy->getTitle())] = implode(", ", $taxonomy->getNodeTitlesAsArray());
+				$properties[sprintf(self::translate("table_tax"), $taxonomy->getTitle())] = implode(", ", $taxonomy->getNodeTitlesAsArray());
 			}
 		}
 
 		$filtered = [];
 		foreach ($properties as $key => $property) {
 			if (!is_null($property)) {
-				$filtered[$key] = (string)$property;
+				if (is_array($property)) {
+					$filtered[$key] = implode(',', $property);
+				} else {
+					$filtered[$key] = (string)$property;
+				}
 			}
 			if ($property === '') {
 				$filtered[$key] = "&nbsp;";
@@ -112,13 +116,13 @@ class hub2DataGUI extends hub2MainGUI {
 		ksort($filtered);
 
 		// Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-		$data_table = $factory->item()->standard(sprintf($this->pl->txt("table_ext_id"), $object->getExtId()))->withProperties($filtered);
+		$data_table = $factory->item()->standard(sprintf(self::translate("data_table_ext_id"), $object->getExtId()))->withProperties($filtered);
 
 		$data_table = $factory->listing()->descriptive($filtered);
 
-		$renderer = $this->ui()->renderer();
+		$renderer = self::dic()->ui()->renderer();
 
-		$modal = $factory->modal()->roundtrip(sprintf($this->pl->txt("table_hash"), $object->getHashCode()), $data_table);
+		$modal = $factory->modal()->roundtrip(sprintf(self::translate("data_table_hash"), $object->getHashCode()), $data_table);
 
 		echo $renderer->renderAsync($modal);
 		exit;

@@ -165,7 +165,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				$ilObjSession->delete();
 				break;
 			case SessionOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
-				$this->tree()->moveToTrash($ilObjSession->getRefId(), true);
+				self::dic()->tree()->moveToTrash($ilObjSession->getRefId(), true);
 				break;
 		}
 
@@ -195,7 +195,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	 */
 	protected function buildParentRefId(SessionDTO $session) {
 		if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($session->getParentId())) {
+			if (self::dic()->tree()->isInTree($session->getParentId())) {
 				return (int)$session->getParentId();
 			}
 		}
@@ -228,7 +228,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			if (!$parent->getILIASId()) {
 				throw new HubException("The linked course or group does not (yet) exist in ILIAS");
 			}
-			if (!$this->tree()->isInTree($parent->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($parent->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent course or group in the tree: '{$parent->getILIASId()}'");
 			}
 

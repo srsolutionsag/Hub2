@@ -2,6 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Sync;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\HubConfig;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Log\OriginLog;
@@ -23,6 +25,8 @@ use SRAG\Plugins\Hub2\Sync\Processor\SyncProcessorFactory;
  */
 class OriginSyncFactory {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */
