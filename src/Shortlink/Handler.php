@@ -2,11 +2,11 @@
 
 namespace SRAG\Plugins\Hub2\Shortlink;
 
-use ilAuthSession;
 use ilContext;
+use ilDBInterface;
 use ilHub2Plugin;
 use ilUtil;
-use RESTController\libs\ilInitialisation;
+use ilInitialisation;
 use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\HubConfig;
 use SRAG\Plugins\Hub2\Exception\ShortlinkException;
@@ -62,7 +62,7 @@ class Handler {
 	 * @throws ShortlinkException
 	 */
 	public function process() {
-		if (!$this->init || !self::dic()->database() instanceof \ilDBInterface) {
+		if (!$this->init || !self::dic()->database() instanceof ilDBInterface) {
 			throw new ShortlinkException("ILIAS not initialized, aborting...");
 		}
 
