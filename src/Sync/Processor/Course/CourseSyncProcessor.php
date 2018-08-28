@@ -110,7 +110,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			return $this->handleUpdate($dto,$existing_id);
 		}
 
-		$ilObjCourse = new \ilObjCourse();
+		$ilObjCourse = new ilObjCourse();
 		$ilObjCourse->setImportId($this->getImportId($dto));
 		$ilObjCourse->create();
 		$ilObjCourse->createReference();
@@ -158,9 +158,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @return int|bool
 	 */
 	protected function checkNewCourseAlreadyExistsInParent($title,$parent_id){
-		global $DIC;
-
-		$children = $DIC->repositoryTree()->getChildsByType($parent_id,"crs");
+		$children = self::dic()->tree()->getChildsByType($parent_id,"crs");
 
 		foreach($children as $child){
 			if($child['title']==$title){
