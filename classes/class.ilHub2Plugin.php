@@ -2,8 +2,9 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Helper\DIC;
+use SRAG\Plugins\Hub2\Config\ArConfigOld;
 use SRAG\Plugins\Hub2\Jobs\RunSync;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
@@ -26,9 +27,10 @@ use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
  */
 class ilHub2Plugin extends ilCronHookPlugin {
 
-	use DIC;
+	use DICTrait;
 	const PLUGIN_ID = 'hub2';
 	const PLUGIN_NAME = 'Hub2';
+	const PLUGIN_CLASS_NAME = self::class;
 	/**
 	 * @var ilHub2Plugin
 	 */
@@ -38,7 +40,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return string
 	 */
-	public function getPluginName() {
+	public function getPluginName(): string {
 		return self::PLUGIN_NAME;
 	}
 
@@ -46,7 +48,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return ilHub2Plugin
 	 */
-	public static function getInstance() {
+	public static function getInstance(): ilHub2Plugin {
 		if (self::$instance === NULL) {
 			self::$instance = new self();
 		}
@@ -58,17 +60,17 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return ilCronJob[]
 	 */
-	public function getCronJobInstances() {
+	public function getCronJobInstances(): array {
 		return [ new RunSync() ];
 	}
 
 
 	/**
-	 * @param $a_job_id
+	 * @param string $a_job_id
 	 *
 	 * @return ilCronJob
 	 */
-	public function getCronJobInstance($a_job_id) {
+	public function getCronJobInstance($a_job_id): ilCronJob {
 		return new $a_job_id();
 	}
 
@@ -76,23 +78,52 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @return bool
 	 */
-	protected function beforeUninstall() {
-		$this->db()->dropTable(ARUserOrigin::TABLE_NAME, false);
-		$this->db()->dropTable(ARUser::TABLE_NAME, false);
-		$this->db()->dropTable(ARCourse::TABLE_NAME, false);
-		$this->db()->dropTable(ARCourseMembership::TABLE_NAME, false);
-		$this->db()->dropTable(ARCategory::TABLE_NAME, false);
-		$this->db()->dropTable(ARSession::TABLE_NAME, false);
-		$this->db()->dropTable(ARGroup::TABLE_NAME, false);
-		$this->db()->dropTable(ARGroupMembership::TABLE_NAME, false);
-		$this->db()->dropTable(ARSessionMembership::TABLE_NAME, false);
-		$this->db()->dropTable(ArConfig::TABLE_NAME, false);
-		$this->db()->dropTable(AROrgUnit::TABLE_NAME, false);
-		$this->db()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+	protected function beforeUninstall(): bool {
+		$uninstall_remove_hub2_data = ArConfig::getUninstallRemoveHub2Data();
 
-		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
+		if ($uninstall_remove_hub2_data === NULL) {
+			hub2RemoveDataConfirm::saveParameterByClass();
+
+			self::dic()->ctrl()->redirectByClass([
+				ilUIPluginRouterGUI::class,
+				hub2RemoveDataConfirm::class
+			], hub2RemoveDataConfirm::CMD_CONFIRM_REMOVE_HUB2_DATA);
+
+			return false;
+		}
+
+		$uninstall_remove_hub2_data = boolval($uninstall_remove_hub2_data);
+
+		if ($uninstall_remove_hub2_data) {
+			$this->removeHub2Data();
+		} else {
+			// Ask again if reinstalled
+			ArConfig::deleteUninstallRemoveHub2Data();
+		}
 
 		return true;
+	}
+
+
+	/**
+	 *
+	 */
+	protected function removeHub2Data() {
+		self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARCourseMembership::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARCategory::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARSession::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARGroup::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARGroupMembership::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ARSessionMembership::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ArConfig::TABLE_NAME, false);
+		self::dic()->database()->dropTable(ArConfigOld::TABLE_NAME, false);
+		self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
+		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+
+		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 	}
 
 
@@ -101,7 +132,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 *
 	 * @return string
 	 */
-	public function txt($a_var) {
+	public function txt($a_var): string {
 		if (!file_exists("Customizing/global/plugins/Libraries/PluginTranslator/class.sragPluginTranslator.php")) {
 			return parent::txt($a_var);
 		}
@@ -128,7 +159,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 						$category = 'common';
 					}
 
-					$a->sragPluginTranslaterJson->addEntry($category, $key, $txt, $this->lng()->getLangKey());
+					$a->sragPluginTranslaterJson->addEntry($category, $key, $txt, self::dic()->language()->getLangKey());
 					$a->sragPluginTranslaterJson->save();
 				}
 

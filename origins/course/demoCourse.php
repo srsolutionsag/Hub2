@@ -57,6 +57,7 @@ class demoCourse extends AbstractOriginImplementation {
 			$this->data[] = $this->factory()->course($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")
 				->setActivationType(CourseDTO::ACTIVATION_OFFLINE)->setOwner(6)//  root
 				->setContactEmail("Email {$x}")->setContactName("Name {$x}")->setParentId(1)// from demoCategory, please configure in GUI accordingly
+				->setAdditionalData(new \ArrayObject(["Some_Plugin_Data"=>"Data that might trigger an update on change"])) // Additional hook to trigger change on non-core attributes
 				->setParentIdType(CourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setSyllabus("Syllabus {$x}")
 				->setDidacticTemplate(123)->setIcon('/path/to/icon/custom.svg')->addMetadata($this->metadata()// This has to be configured in ILIAS
 				->getDTOWithIliasId(1)// you find the id of the field in ILIAS GUI when editing the fields in query-parameter field_id=X
@@ -114,39 +115,39 @@ class demoCourse extends AbstractOriginImplementation {
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeCreateILIASObject(HookObject $object) { }
+	public function beforeCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterCreateILIASObject(HookObject $object) { }
+	public function afterCreateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeUpdateILIASObject(HookObject $object) { }
+	public function beforeUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterUpdateILIASObject(HookObject $object) { }
+	public function afterUpdateILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function beforeDeleteILIASObject(HookObject $object) { }
+	public function beforeDeleteILIASObject(HookObject $hook) { }
 
 
 	/**
-	 * @param HookObject $object
+	 * @param HookObject $hook
 	 */
-	public function afterDeleteILIASObject(HookObject $object) { }
+	public function afterDeleteILIASObject(HookObject $hook) { }
 
 
 	/**

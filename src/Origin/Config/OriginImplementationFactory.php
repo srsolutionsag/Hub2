@@ -5,6 +5,7 @@ namespace SRAG\Plugins\Hub2\Origin\Config;
 use SRAG\Plugins\Hub2\Config\IHubConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
+use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
 use SRAG\Plugins\Hub2\Metadata\MetadataFactory;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
@@ -68,7 +69,7 @@ class OriginImplementationFactory {
 		}
 		require_once $classFile;
 		$class = rtrim($namespace, "\\") . "\\" . $className;
-		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory());
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory());
 
 		return $instance;
 	}

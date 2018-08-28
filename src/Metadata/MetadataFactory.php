@@ -2,7 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Metadata;
 
-use ILIAS\UI\NotImplementedException;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 
 /**
  * Class IMetadataFactory
@@ -12,6 +13,10 @@ use ILIAS\UI\NotImplementedException;
  */
 class MetadataFactory implements IMetadataFactory {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
+
 	/**
 	 * @param int $id
 	 *
@@ -19,16 +24,5 @@ class MetadataFactory implements IMetadataFactory {
 	 */
 	public function getDTOWithIliasId(int $id): IMetadata {
 		return new Metadata($id);
-	}
-
-
-	/**
-	 * @param string $title
-	 *
-	 * @return IMetadata
-	 * @throws NotImplementedException
-	 */
-	public function getDTOWithFirstIliasIdForTitle(string $title): IMetadata {
-		throw new NotImplementedException('not yet implemented');
 	}
 }

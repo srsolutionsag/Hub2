@@ -143,6 +143,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)) {
 			$this->sendMailNotifications($dto, $ilObjCourse);
 		}
+		$this->setSubscriptionType($dto, $ilObjCourse);
 
 		$this->setLanguage($dto, $ilObjCourse);
 
@@ -182,6 +183,21 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$language = $md_general->getLanguage(array_pop($md_general->getLanguageIds()));
 		$language->setLanguage(new ilMDLanguageItem($dto->getLanguageCode()));
 		$language->update();
+	}
+
+
+	/**
+	 * @param CourseDTO   $dto
+	 * @param ilObjCourse $ilObjCourse
+	 */
+	protected function setSubscriptionType(CourseDTO $dto, ilObjCourse $ilObjCourse) {
+		//There is some weird connection between subscription limitation type ond subscription type, see e.g. ilObjCourseGUI
+		$ilObjCourse->setSubscriptionType($dto->getSubscriptionLimitationType());
+		if ($dto->getSubscriptionLimitationType() == CourseDTO::SUBSCRIPTION_TYPE_DEACTIVATED) {
+			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_DEACTIVATED);
+		} else {
+			$ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_UNLIMITED);
+		}
 	}
 
 
@@ -266,6 +282,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
 			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 		}
+		if ($this->props->updateDTOProperty("subscriptionLimitationType")) {
+			$this->setSubscriptionType($dto, $ilObjCourse);
+		}
 		if ($this->props->updateDTOProperty("languageCode")) {
 			$this->setLanguage($dto, $ilObjCourse);
 		}
@@ -302,14 +321,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 				$ilObjCourse->delete();
 				break;
 			case CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
-				$tree->moveToTrash($ilObjCourse->getRefId(), true);
+				self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
 				break;
 			case CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE:
 				if ($this->courseActivities->hasActivities($ilObjCourse)) {
 					$ilObjCourse->setOfflineStatus(true);
 					$ilObjCourse->update();
 				} else {
-					$this->tree()->moveToTrash($ilObjCourse->getRefId(), true);
+					self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
 				}
 				break;
 		}
@@ -326,12 +345,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function determineParentRefId(CourseDTO $course) {
 		if ($course->getParentIdType() == CourseDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($tree->isInTree($course->getParentId())) {
+			if (self::dic()->tree()->isInTree($course->getParentId())) {
 				return $course->getParentId();
 			}
 			// The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
 			$parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-			if (!$tree->isInTree($parentRefId)) {
+			if (!self::dic()->tree()->isInTree($parentRefId)) {
 				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
 			}
 
@@ -357,9 +376,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$objectFactory = new ObjectFactory($origin);
 			$category = $objectFactory->category($course->getParentId());
 			if (!$category->getILIASId()) {
-				throw new HubException("The linked category does not (yet) exist in ILIAS");
+				throw new HubException("The linked category (" . $category->getExtId() . ") does not (yet) exist in ILIAS for course: "
+					. $course->getExtId());
 			}
-			if (!$this->tree()->isInTree($category->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($category->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
 			}
 
@@ -372,7 +392,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 	/**
 	 * @param CourseDTO $object
-	 * @param           $parentRefId
+	 * @param int       $parentRefId
 	 *
 	 * @return int
 	 */
@@ -414,7 +434,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if (isset($cache[$cacheKey])) {
 			return $cache[$cacheKey];
 		}
-		$categories = $this->tree()->getChildsByType($parentRefId, 'cat');
+		$categories = self::dic()->tree()->getChildsByType($parentRefId, 'cat');
 		$matches = array_filter($categories, function ($category) use ($title) {
 			return $category['title'] == $title;
 		});
@@ -462,22 +482,22 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * Move the course to a new parent.
 	 * Note: May also create the dependence categories
 	 *
-	 * @param           $ilObjCourse
-	 * @param CourseDTO $course
+	 * @param ilObjCourse $ilObjCourse
+	 * @param CourseDTO   $course
 	 */
 	protected function moveCourse(ilObjCourse $ilObjCourse, CourseDTO $course) {
 		$parentRefId = $this->determineParentRefId($course);
 		$parentRefId = $this->buildDependenceCategories($course, $parentRefId);
-		if ($this->tree()->isDeleted($ilObjCourse->getRefId())) {
+		if (self::dic()->tree()->isDeleted($ilObjCourse->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjCourse->getRefId() ]);
 		}
-		$oldParentRefId = $this->tree()->getParentId($ilObjCourse->getRefId());
+		$oldParentRefId = self::dic()->tree()->getParentId($ilObjCourse->getRefId());
 		if ($oldParentRefId == $parentRefId) {
 			return;
 		}
-		$this->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
-		$this->rbac()->admin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
+		self::dic()->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
+		self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
 		//			hubLog::getInstance()->write($str);
 		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}

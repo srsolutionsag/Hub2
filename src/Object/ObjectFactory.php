@@ -2,7 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Object;
 
+use ilHub2Plugin;
 use LogicException;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
 use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -26,6 +28,8 @@ use SRAG\Plugins\Hub2\Origin\IOrigin;
  */
 class ObjectFactory implements IObjectFactory {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */

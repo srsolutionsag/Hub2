@@ -5,7 +5,9 @@ namespace SRAG\Plugins\Hub2\Object;
 use ActiveRecord;
 use DateTime;
 use Exception;
+use ilHub2Plugin;
 use InvalidArgumentException;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Metadata\Metadata;
 use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
 use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
@@ -20,10 +22,12 @@ use SRAG\Plugins\Hub2\Taxonomy\Taxonomy;
  */
 abstract class ARObject extends ActiveRecord implements IObject {
 
+	use DICTrait;
 	/**
 	 * @abstract
 	 */
 	const TABLE_NAME = '';
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
 	/**
@@ -36,6 +40,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 
 	/**
 	 * @return string
+	 *
 	 * @deprecated
 	 */
 	public static function returnDbTableName() {

@@ -14,6 +14,7 @@ use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
 use SRAG\Plugins\Hub2\Origin\IOrigin;
 use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
 use SRAG\Plugins\Hub2\Origin\OriginRepository;
+use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
@@ -80,7 +81,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		 * @var CourseMembershipDTO $dto
 		 */
 		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
-		$ilias_course_ref_id = $dto->getCourseId();
+		$ilias_course_ref_id = $obj->getContainerIdIlias();
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
 			return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
@@ -107,6 +108,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	protected function handleDelete($ilias_id) {
 		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
+		if ($this->props->get(CourseMembershipOriginProperties::DELETE_MODE) == CourseMembershipOriginProperties::DELETE_MODE_NONE) {
+			return $obj;
+		}
+
 		$course = $this->findILIASCourse($obj->getContainerIdIlias());
 		$course->getMembersObject()->delete($obj->getUserIdIlias());
 
@@ -129,7 +134,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 
 	/**
-	 * @param $object CourseMembershipDTO
+	 * @param CourseMembershipDTO $object
 	 *
 	 * @return int
 	 */

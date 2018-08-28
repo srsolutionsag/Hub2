@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Notification;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+
 /**
  * Class OriginNotifications
  *
@@ -11,6 +14,8 @@ namespace SRAG\Plugins\Hub2\Notification;
  */
 class OriginNotifications {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const CONTEXT_COMMON = 'common';
 	/**
 	 * Holds all messages of all contexts
