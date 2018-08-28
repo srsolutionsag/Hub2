@@ -240,7 +240,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 */
 	protected function assignILIASRoles(UserDTO $user, ilObjUser $ilObjUser) {
 		foreach ($user->getIliasRoles() as $role_id) {
-			$this->rbac()->admin()->assignUser($role_id, $ilObjUser->getId());
+			self::dic()->rbacadmin()->assignUser($role_id, $ilObjUser->getId());
 		}
 	}
 

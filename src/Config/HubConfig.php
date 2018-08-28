@@ -2,6 +2,9 @@
 
 namespace SRAG\Plugins\Hub2\Config;
 
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+
 /**
  * Class HubConfig
  *
@@ -11,11 +14,15 @@ namespace SRAG\Plugins\Hub2\Config;
  */
 class HubConfig implements IHubConfig {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getOriginImplementationsPath() {
-		$path = ArConfig::getValueByKey(IHubConfig::ORIGIN_IMPLEMENTATION_PATH);
+		$path = $this->get(IHubConfig::ORIGIN_IMPLEMENTATION_PATH);
 
 		return ($path) ? $path : dirname(dirname(__DIR__)) . '/origins/';
 	}
@@ -25,7 +32,7 @@ class HubConfig implements IHubConfig {
 	 * @inheritdoc
 	 */
 	public function getShortLinkObjectNotFound() {
-		return ArConfig::getValueByKey(IHubConfig::SHORTLINK_OBJECT_NOT_FOUND);
+		return $this->get(IHubConfig::SHORTLINK_OBJECT_NOT_FOUND);
 	}
 
 
@@ -33,7 +40,7 @@ class HubConfig implements IHubConfig {
 	 * @inheritdoc
 	 */
 	public function getShortLinkObjectNotAccessible() {
-		return ArConfig::getValueByKey(IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE);
+		return $this->get(IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE);
 	}
 
 
@@ -41,7 +48,7 @@ class HubConfig implements IHubConfig {
 	 * @inheritDoc
 	 */
 	public function getShortlinkSuccess() {
-		return ArConfig::getValueByKey(IHubConfig::SHORTLINK_SUCCESS);
+		return $this->get(IHubConfig::SHORTLINK_SUCCESS);
 	}
 
 
@@ -49,7 +56,7 @@ class HubConfig implements IHubConfig {
 	 * @inheritdoc
 	 */
 	public function isOriginsConfigLocked() {
-		return (bool)ArConfig::getValueByKey(IHubConfig::LOCK_ORIGINS_CONFIG);
+		return (bool)$this->get(IHubConfig::LOCK_ORIGINS_CONFIG);
 	}
 
 
@@ -57,14 +64,12 @@ class HubConfig implements IHubConfig {
 	 * @inheritdoc
 	 */
 	public function getAdministrationRoleIds() {
-		$roles = ArConfig::getValueByKey(IHubConfig::ADMINISTRATE_HUB_ROLE_IDS);
+		$roles = $this->get(IHubConfig::ADMINISTRATE_HUB_ROLE_IDS);
 		$roles = explode(',', $roles);
 
-		return array_map(
-			function ($id) {
-				return (int)$id;
-			}, $roles
-		);
+		return array_map(function ($id) {
+			return (int)$id;
+		}, $roles);
 	}
 
 

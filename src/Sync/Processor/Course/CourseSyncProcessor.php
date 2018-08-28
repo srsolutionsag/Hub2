@@ -296,14 +296,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 				$ilObjCourse->delete();
 				break;
 			case CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
-				$tree->moveToTrash($ilObjCourse->getRefId(), true);
+				self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
 				break;
 			case CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE:
 				if ($this->courseActivities->hasActivities($ilObjCourse)) {
 					$ilObjCourse->setOfflineStatus(true);
 					$ilObjCourse->update();
 				} else {
-					$this->tree()->moveToTrash($ilObjCourse->getRefId(), true);
+					self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
 				}
 				break;
 		}
@@ -320,12 +320,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function determineParentRefId(CourseDTO $course) {
 		if ($course->getParentIdType() == CourseDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($tree->isInTree($course->getParentId())) {
+			if (self::dic()->tree()->isInTree($course->getParentId())) {
 				return $course->getParentId();
 			}
 			// The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
 			$parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-			if (!$tree->isInTree($parentRefId)) {
+			if (!self::dic()->tree()->isInTree($parentRefId)) {
 				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
 			}
 
@@ -354,7 +354,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 				throw new HubException("The linked category (" . $category->getExtId() . ") does not (yet) exist in ILIAS for course: "
 					. $course->getExtId());
 			}
-			if (!$this->tree()->isInTree($category->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($category->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
 			}
 
@@ -409,7 +409,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if (isset($cache[$cacheKey])) {
 			return $cache[$cacheKey];
 		}
-		$categories = $this->tree()->getChildsByType($parentRefId, 'cat');
+		$categories = self::dic()->tree()->getChildsByType($parentRefId, 'cat');
 		$matches = array_filter($categories, function ($category) use ($title) {
 			return $category['title'] == $title;
 		});
@@ -463,16 +463,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	protected function moveCourse(ilObjCourse $ilObjCourse, CourseDTO $course) {
 		$parentRefId = $this->determineParentRefId($course);
 		$parentRefId = $this->buildDependenceCategories($course, $parentRefId);
-		if ($this->tree()->isDeleted($ilObjCourse->getRefId())) {
+		if (self::dic()->tree()->isDeleted($ilObjCourse->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjCourse->getRefId() ]);
 		}
-		$oldParentRefId = $this->tree()->getParentId($ilObjCourse->getRefId());
+		$oldParentRefId = self::dic()->tree()->getParentId($ilObjCourse->getRefId());
 		if ($oldParentRefId == $parentRefId) {
 			return;
 		}
-		$this->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
-		$this->rbac()->admin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
+		self::dic()->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
+		self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
 		//			hubLog::getInstance()->write($str);
 		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}

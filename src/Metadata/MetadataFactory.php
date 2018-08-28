@@ -2,7 +2,8 @@
 
 namespace SRAG\Plugins\Hub2\Metadata;
 
-use ILIAS\UI\NotImplementedException;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 
 /**
  * Class IMetadataFactory
@@ -11,6 +12,10 @@ use ILIAS\UI\NotImplementedException;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class MetadataFactory implements IMetadataFactory {
+
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @param int $id

@@ -24,7 +24,7 @@ class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferO
 	// View
 	const VIEW_BY_TYPE = 5;
 	// Registration
-	const GRP_REGISTRATION_DEACTIVATED = -1;
+	const GRP_REGISTRATION_DEACTIVATED = - 1;
 	const GRP_REGISTRATION_DIRECT = 0;
 	const GRP_REGISTRATION_REQUEST = 1;
 	const GRP_REGISTRATION_PASSWORD = 2;

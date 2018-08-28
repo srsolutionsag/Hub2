@@ -27,7 +27,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 	/**
 	 * @var int|string|null
 	 */
-	protected $parent_id = null;
+	protected $parent_id = NULL;
 	/**
 	 * @var int
 	 */

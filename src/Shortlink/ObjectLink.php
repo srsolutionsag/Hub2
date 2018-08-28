@@ -1,4 +1,6 @@
-<?php namespace SRAG\Plugins\Hub2\Shortlink;
+<?php
+
+namespace SRAG\Plugins\Hub2\Shortlink;
 
 use ilDBInterface;
 use SRAG\Plugins\Hub2\Object\ARObject;
@@ -38,7 +40,7 @@ class ObjectLink {
 	 */
 	public function __construct(string $ext_id, ilDBInterface $db) {
 		$this->ext_id = $ext_id;
-		$this->origin_factory = new OriginFactory($db);
+		$this->origin_factory = new OriginFactory();
 		$this->determineObject();
 	}
 

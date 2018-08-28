@@ -3,6 +3,8 @@
 namespace SRAG\Plugins\Hub2\Exception;
 
 use ilException;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
 
 /**
  * Class HubException
@@ -12,6 +14,10 @@ use ilException;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class HubException extends ilException {
+
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @param string $message

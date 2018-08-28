@@ -204,7 +204,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	public function beforeSync() {
 		/*AROrgUnit::truncateDB();
 
-		$result = $this->db()->queryF("SELECT obj_id FROM object_data WHERE type=%s AND title!=%s", [ "string", "string" ], [
+		$result = self::dic()->database()->queryF("SELECT obj_id FROM object_data WHERE type=%s AND title!=%s", [ "string", "string" ], [
 			"orgu",
 			"__OrgUnitAdministration"
 		]);

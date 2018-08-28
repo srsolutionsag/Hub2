@@ -11,7 +11,7 @@ use ilSelectInputGUI;
 use ilTable2GUI;
 use ilTextInputGUI;
 use ReflectionClass;
-use SRAG\Plugins\Hub2\Helper\DIC;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Object\Category\ARCategory;
 use SRAG\Plugins\Hub2\Object\Course\ARCourse;
 use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -36,7 +36,8 @@ use SRAG\Plugins\Hub2\Shortlink\ObjectLinkFactory;
  */
 class DataTableGUI extends ilTable2GUI {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const F_ORIGIN_ID = 'origin_id';
 	const F_EXT_ID = 'ext_id';
 	/**
@@ -56,10 +57,6 @@ class DataTableGUI extends ilTable2GUI {
 	 */
 	protected $a_parent_obj;
 	/**
-	 * @var ilHub2Plugin
-	 */
-	protected $pl;
-	/**
 	 * @var IOriginRepository
 	 */
 	protected $originRepository;
@@ -72,15 +69,14 @@ class DataTableGUI extends ilTable2GUI {
 	 * @param string      $a_parent_cmd
 	 */
 	public function __construct(hub2DataGUI $a_parent_obj, $a_parent_cmd) {
-		$this->pl = ilHub2Plugin::getInstance();
 		$this->a_parent_obj = $a_parent_obj;
-		$this->originFactory = new OriginFactory($this->db());
-		$this->originLinkfactory = new ObjectLinkFactory($this->db());
+		$this->originFactory = new OriginFactory();
+		$this->originLinkfactory = new ObjectLinkFactory();
 		$this->setPrefix('hub2_');
 		$this->setId('origins');
-		$this->setTitle($this->pl->txt('hub_origins'));
+		$this->setTitle(self::translate('hub_origins'));
 		parent::__construct($a_parent_obj, $a_parent_cmd);
-		$this->setFormAction($this->ctrl()->getFormAction($a_parent_obj));
+		$this->setFormAction(self::dic()->ctrl()->getFormAction($a_parent_obj));
 		$this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
 		$this->initFilter();
 		$this->initColumns();
@@ -92,19 +88,19 @@ class DataTableGUI extends ilTable2GUI {
 	 * @inheritDoc
 	 */
 	public function initFilter() {
-		$origin = new ilSelectInputGUI($this->pl->txt('data_table_header_origin_id'), 'origin_id');
+		$origin = new ilSelectInputGUI(self::translate('data_table_header_origin_id'), 'origin_id');
 		$origin->setOptions($this->getAvailableOrigins());
 		$this->addAndReadFilterItem($origin);
 
 		// Status
-		$status = new ilSelectInputGUI($this->pl->txt('data_table_header_status'), 'status');
+		$status = new ilSelectInputGUI(self::translate('data_table_header_status'), 'status');
 		$status->setOptions($this->getAvailableStatus());
 		$this->addAndReadFilterItem($status);
 
-		$ext_id = new ilTextInputGUI($this->pl->txt('data_table_header_ext_id'), 'ext_id');
+		$ext_id = new ilTextInputGUI(self::translate('data_table_header_ext_id'), 'ext_id');
 		$this->addAndReadFilterItem($ext_id);
 
-		$data = new ilTextInputGUI($this->pl->txt('data_table_header_data'), 'data');
+		$data = new ilTextInputGUI(self::translate('data_table_header_data'), 'data');
 		$this->addAndReadFilterItem($data);
 	}
 
@@ -128,9 +124,9 @@ class DataTableGUI extends ilTable2GUI {
 	 */
 	protected function initColumns() {
 		foreach ($this->getFields() as $field) {
-			$this->addColumn($this->pl->txt('data_table_header_' . $field), $field);
+			$this->addColumn(self::translate('data_table_header_' . $field), $field);
 		}
-		$this->addColumn($this->pl->txt('data_table_header_view'));
+		$this->addColumn(self::translate('data_table_header_view'));
 	}
 
 
@@ -183,8 +179,8 @@ class DataTableGUI extends ilTable2GUI {
 	 * @param array $a_set
 	 */
 	protected function fillRow($a_set) {
-		$this->ctrl()->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
-		$this->ctrl()->setParameter($this->parent_obj, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
+		self::dic()->ctrl()->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
+		self::dic()->ctrl()->setParameter($this->parent_obj, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
 
 		$origin = $this->originFactory->getById($a_set[self::F_ORIGIN_ID]);
 
@@ -213,18 +209,18 @@ class DataTableGUI extends ilTable2GUI {
 		}
 
 		// Adds view Glyph
-		$factory = $this->ui()->factory();
-		$renderer = $this->ui()->renderer();
-		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl($this->ctrl()
+		$factory = self::dic()->ui()->factory();
+		$renderer = self::dic()->ui()->renderer();
+		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl(self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, 'renderData', '', true));
 
-		$button = $factory->button()->shy($this->pl->txt("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
+		$button = $factory->button()->shy(self::translate("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
 
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $renderer->render([ $button, $modal ]));
 		$this->tpl->parseCurrentBlock();
 
-		$this->ctrl()->clearParameters($this->parent_obj);
+		self::dic()->ctrl()->clearParameters($this->parent_obj);
 	}
 
 
@@ -240,8 +236,8 @@ class DataTableGUI extends ilTable2GUI {
 		}
 
 		$link = $this->originLinkfactory->findByExtIdAndOrigin($ext_id, $origin);
-		$button_factory = $this->ui()->factory()->button();
-		$renderer = $this->ui()->renderer();
+		$button_factory = self::dic()->ui()->factory()->button();
+		$renderer = self::dic()->ui()->renderer();
 
 		return $renderer->render($button_factory->shy($ext_id, $link->getAccessGrantedInternalLink()));
 	}
@@ -274,7 +270,7 @@ class DataTableGUI extends ilTable2GUI {
 			return $status;
 		}
 		$r = new ReflectionClass(IObject::class);
-		$status = [ 0 => $this->pl->txt("data_table_all") ];
+		$status = [ 0 => self::translate("data_table_all") ];
 		foreach ($r->getConstants() as $name => $value) {
 			if (strpos($name, "STATUS_") === 0) {
 				$status[$value] = $name; // TODO: Translate status
@@ -294,7 +290,7 @@ class DataTableGUI extends ilTable2GUI {
 			return $origins;
 		}
 
-		$origins = [ 0 => $this->pl->txt("data_table_all") ];
+		$origins = [ 0 => self::translate("data_table_all") ];
 		foreach ($this->originFactory->getAll() as $origin) {
 			$origins[$origin->getId()] = $origin->getTitle();
 		}

@@ -1,6 +1,8 @@
 {
   "require": {
-    "php": "^7.0"
+    "php": "^7.0",
+    "srag/activerecordconfig": "^0.5.4",
+    "srag/dic": "^0.4.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",

@@ -3,7 +3,9 @@
 namespace SRAG\Plugins\Hub2\Origin;
 
 use ActiveRecord;
+use ilHub2Plugin;
 use InvalidArgumentException;
+use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
 use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
@@ -16,7 +18,9 @@ use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
  */
 abstract class AROrigin extends ActiveRecord implements IOrigin {
 
+	use DICTrait;
 	const TABLE_NAME = 'sr_hub2_origin';
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var array
 	 */
@@ -44,6 +48,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 
 	/**
 	 * @return string
+	 *
 	 * @deprecated
 	 */
 	public static function returnDbTableName() {

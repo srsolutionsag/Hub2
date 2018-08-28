@@ -3,6 +3,7 @@
 namespace SRAG\Plugins\Hub2\Object\Course;
 
 use InvalidArgumentException;
+use Serializable;
 use SRAG\Plugins\Hub2\Exception\LanguageCodeException;
 use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
@@ -296,9 +297,8 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 * @var string
 	 */
 	protected $icon;
-
 	/**
-	 * @var \Serializable
+	 * @var Serializable
 	 */
 	protected $additionalData;
 
@@ -756,21 +756,22 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 		return $this;
 	}
 
+
 	/**
-	 * @return \Serializable
+	 * @return Serializable
 	 */
-	public function getAdditionalData(): \Serializable
-	{
+	public function getAdditionalData(): Serializable {
 		return unserialize($this->additionalData);
 	}
 
+
 	/**
-	 * @param \Serializable $additionalData
+	 * @param Serializable $additionalData
 	 */
-	public function setAdditionalData(\Serializable $additionalData)
-	{
+	public function setAdditionalData(Serializable $additionalData) {
 		$this->additionalData = serialize($additionalData);
 	}
+
 
 	/**
 	 * @param string $languageCode

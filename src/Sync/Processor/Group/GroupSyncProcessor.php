@@ -238,14 +238,14 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 				$ilObjGroup->delete();
 				break;
 			case GroupOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
-				$this->tree()->moveToTrash($ilObjGroup->getRefId(), true);
+				self::dic()->tree()->moveToTrash($ilObjGroup->getRefId(), true);
 				break;
 			case GroupOriginProperties::DELETE_MODE_DELETE_OR_CLOSE:
 				if ($this->groupActivities->hasActivities($ilObjGroup)) {
 					$ilObjGroup->setGroupStatus(2);
 					$ilObjGroup->update();
 				} else {
-					$this->tree()->moveToTrash($ilObjGroup->getRefId(), true);
+					self::dic()->tree()->moveToTrash($ilObjGroup->getRefId(), true);
 				}
 				break;
 		}
@@ -262,12 +262,12 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 */
 	protected function determineParentRefId(GroupDTO $group) {
 		if ($group->getParentIdType() == GroupDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($group->getParentId())) {
+			if (self::dic()->tree()->isInTree($group->getParentId())) {
 				return $group->getParentId();
 			}
 			// The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
 			$parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-			if (!$this->tree()->isInTree($parentRefId)) {
+			if (!self::dic()->tree()->isInTree($parentRefId)) {
 				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
 			}
 
@@ -304,7 +304,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			if (!$parent->getILIASId()) {
 				throw new HubException("The linked category or course does not (yet) exist in ILIAS");
 			}
-			if (!$this->tree()->isInTree($parent->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($parent->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent category or course in the tree: '{$parent->getILIASId()}'");
 			}
 
@@ -338,15 +338,15 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 */
 	protected function moveGroup(ilObjGroup $ilObjGroup, GroupDTO $group) {
 		$parentRefId = $this->determineParentRefId($group);
-		if ($this->tree()->isDeleted($ilObjGroup->getRefId())) {
+		if (self::dic()->tree()->isDeleted($ilObjGroup->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjGroup->getRefId() ]);
 		}
-		$oldParentRefId = $this->tree()->getParentId($ilObjGroup->getRefId());
+		$oldParentRefId = self::dic()->tree()->getParentId($ilObjGroup->getRefId());
 		if ($oldParentRefId == $parentRefId) {
 			return;
 		}
-		$this->tree()->moveTree($ilObjGroup->getRefId(), $parentRefId);
-		$this->rbac()->admin()->adjustMovedObjectPermissions($ilObjGroup->getRefId(), $oldParentRefId);
+		self::dic()->tree()->moveTree($ilObjGroup->getRefId(), $parentRefId);
+		self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjGroup->getRefId(), $oldParentRefId);
 	}
 }

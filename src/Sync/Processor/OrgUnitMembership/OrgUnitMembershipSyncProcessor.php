@@ -4,10 +4,9 @@ namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 
 use ilObjectFactory;
 use ilObjOrgUnit;
-use ilOrgUnitUserAssignment;
 use ilOrgUnitPosition;
+use ilOrgUnitUserAssignment;
 use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Helper\DIC;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
 use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -22,7 +21,6 @@ use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
 use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
-
 /**
  * Class OrgUnitMembershipSyncProcessor
  *
@@ -31,7 +29,6 @@ use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrgUnitMembershipSyncProcessor {
 
-	use DIC;
 	/**
 	 * @var IOrgUnitMembershipOriginProperties
 	 */
@@ -136,7 +133,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 				break;
 
 			case IOrgUnitMembershipDTO::POSITION_SUPERIOR:
-				$position_id =  ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_SUPERIOR);
+				$position_id = ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_SUPERIOR);
 				break;
 
 			default:
@@ -175,7 +172,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 					throw new HubException("Unable to lookup external ref-ID because there is no origin linked");
 				}
 
-				$origin_factory = new OriginFactory($this->db());
+				$origin_factory = new OriginFactory();
 				$origin = $origin_factory->getById($linkedOriginId);
 
 				$object_factory = new ObjectFactory($origin);

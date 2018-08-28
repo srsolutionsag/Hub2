@@ -103,7 +103,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		$ilObjCategory->update();
 
 		$ilObjCategory->removeTranslations();
-		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $this->lng()->getDefaultLanguage(), true);
+		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), self::dic()->language()->getDefaultLanguage(), true);
 
 		return $ilObjCategory;
 	}
@@ -131,7 +131,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		}
 		if ($this->props->updateDTOProperty('title')) {
 			$ilObjCategory->removeTranslations();
-			$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $this->lng()->getDefaultLanguage(), true);
+			$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), self::dic()->language()->getDefaultLanguage(), true);
 		}
 		if ($this->props->updateDTOProperty('showNews')) {
 			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
@@ -180,12 +180,12 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 */
 	protected function determineParentRefId(CategoryDTO $category) {
 		if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($category->getParentId())) {
+			if (self::dic()->tree()->isInTree($category->getParentId())) {
 				return $category->getParentId();
 			}
 			// The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
 			$parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-			if (!$this->tree()->isInTree($parentRefId)) {
+			if (!self::dic()->tree()->isInTree($parentRefId)) {
 				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
 			}
 
@@ -234,15 +234,15 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 */
 	protected function moveCategory(ilObjCategory $ilObjCategory, CategoryDTO $category) {
 		$parentRefId = $this->determineParentRefId($category);
-		if ($this->tree()->isDeleted($ilObjCategory->getRefId())) {
+		if (self::dic()->tree()->isDeleted($ilObjCategory->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjCategory->getRefId() ]);
 		}
-		$oldParentRefId = $this->tree()->getParentId($ilObjCategory->getRefId());
+		$oldParentRefId = self::dic()->tree()->getParentId($ilObjCategory->getRefId());
 		if ($oldParentRefId == $parentRefId) {
 			return;
 		}
-		$this->tree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
-		$this->rbac()->admin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
+		self::dic()->tree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
+		self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
 	}
 }
