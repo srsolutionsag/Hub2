@@ -34,6 +34,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 		if ($userObj->hasPublicProfile()) {
 			return true;
 		}
+
 		return self::dic()->access()->checkAccess('read', '', 7); // Read access to user administration
 	}
 

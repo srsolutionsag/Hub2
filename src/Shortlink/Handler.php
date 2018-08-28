@@ -2,7 +2,6 @@
 
 namespace SRAG\Plugins\Hub2\Shortlink;
 
-use ilAuthSession;
 use ilContext;
 use ilDBInterface;
 use ilHub2Plugin;
