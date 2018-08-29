@@ -79,26 +79,26 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return bool
 	 */
 	protected function beforeUninstall(): bool {
-		$uninstall_remove_hub2_data = ArConfig::getUninstallRemoveHub2Data();
+		$uninstall_remove_data = ArConfig::getUninstallRemoveData();
 
-		if ($uninstall_remove_hub2_data === NULL) {
+		if ($uninstall_remove_data === NULL) {
 			hub2RemoveDataConfirm::saveParameterByClass();
 
 			self::dic()->ctrl()->redirectByClass([
 				ilUIPluginRouterGUI::class,
 				hub2RemoveDataConfirm::class
-			], hub2RemoveDataConfirm::CMD_CONFIRM_REMOVE_HUB2_DATA);
+			], hub2RemoveDataConfirm::CMD_CONFIRM_REMOVE_DATA);
 
 			return false;
 		}
 
-		$uninstall_remove_hub2_data = boolval($uninstall_remove_hub2_data);
+		$uninstall_remove_data = boolval($uninstall_remove_data);
 
-		if ($uninstall_remove_hub2_data) {
-			$this->removeHub2Data();
+		if ($uninstall_remove_data) {
+			$this->removeData();
 		} else {
 			// Ask again if reinstalled
-			ArConfig::deleteUninstallRemoveHub2Data();
+			ArConfig::deleteUninstallRemoveData();
 		}
 
 		return true;
@@ -108,7 +108,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 *
 	 */
-	protected function removeHub2Data() {
+	protected function removeData() {
 		self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);

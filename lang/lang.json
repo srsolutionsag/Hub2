@@ -2099,12 +2099,6 @@
           "en": "Delete"
         },
         "last_used": "22.11.2017"
-      },
-      "remove_hub2_data": {
-        "translations": {
-          "de": "Möchten Sie die Hub2-Daten auch entfernen? Allenfalls möchten Sie das Hub2-Plugin nur deaktivieren?",
-          "en": "Do you want to remove the Hub2 data as well? At most, you just want to disable the Hub2 plugin?"
-        }
       }
     },
     "cancel": {
@@ -2519,37 +2513,43 @@
       }
     },
     "uninstall": {
-      "remove_hub2_data": {
+      "confirm_remove_data": {
+        "translations": {
+          "de": "Möchten Sie die Hub2-Daten auch entfernen? Allenfalls möchten Sie das Hub2-Plugin nur deaktivieren?",
+          "en": "Do you want to remove the Hub2 data as well? At most, you just want to disable the Hub2 plugin?"
+        }
+      },
+      "remove_data": {
         "translations": {
           "de": "Hub2-Daten behalten",
           "en": "Remove Hub2 data"
         }
       },
-      "keep_hub2_data": {
+      "keep_data": {
         "translations": {
           "de": "Entferne Hub2-Daten",
           "en": "Keep Hub2 data"
         }
       },
-      "deactivate_hub2": {
+      "deactivate": {
         "translations": {
           "de": "Hub2-Plugin nur deaktivieren",
           "en": "Just deactivate Hub2 plugin"
         }
       },
-      "hub2_data": {
+      "data": {
         "translations": {
           "de": "Hub2-Daten",
           "en": "Hub2 data"
         }
       },
-      "msg_removed_hub2_data": {
+      "msg_removed_data": {
         "translations": {
           "de": "Die Hub2-Daten wurden auch entfernt!",
           "en": "The Hub2 data was also removed!"
         }
       },
-      "msg_kept_hub2_data": {
+      "msg_kept_data": {
         "translations": {
           "de": "Die Hub2-Daten wurden behalten!",
           "en": "The Hub2 data was kept!"
