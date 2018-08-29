@@ -1110,18 +1110,6 @@
           "de": "Die Klassenimplementierungsdatei kann nicht erstellt werden, Sie müssen sie manuell erstellen unter: %s",
           "en": "Unable to create class implementation file, you must create it manually at: %s"
         }
-      },
-      "removed_hub2_data": {
-        "translations": {
-          "de": "Die Hub2-Daten wurden auch entfernt!",
-          "en": "The Hub2 data was also removed!"
-        }
-      },
-      "kept_hub2_data": {
-        "translations": {
-          "de": "Die Hub2-Daten wurden behalten!",
-          "en": "The Hub2 data was kept!"
-        }
       }
     },
     "origin": {
@@ -2530,35 +2518,41 @@
         }
       }
     },
-    "remove": {
-      "hub2_data": {
+    "uninstall": {
+      "remove_hub2_data": {
         "translations": {
           "de": "Hub2-Daten behalten",
           "en": "Remove Hub2 data"
         }
-      }
-    },
-    "keep": {
-      "hub2_data": {
+      },
+      "keep_hub2_data": {
         "translations": {
           "de": "Entferne Hub2-Daten",
           "en": "Keep Hub2 data"
         }
-      }
-    },
-    "deactivate": {
-      "hub2": {
+      },
+      "deactivate_hub2": {
         "translations": {
           "de": "Hub2-Plugin nur deaktivieren",
           "en": "Just deactivate Hub2 plugin"
         }
-      }
-    },
-    "hub2": {
-      "data": {
+      },
+      "hub2_data": {
         "translations": {
           "de": "Hub2-Daten",
           "en": "Hub2 data"
+        }
+      },
+      "msg_removed_hub2_data": {
+        "translations": {
+          "de": "Die Hub2-Daten wurden auch entfernt!",
+          "en": "The Hub2 data was also removed!"
+        }
+      },
+      "msg_kept_hub2_data": {
+        "translations": {
+          "de": "Die Hub2-Daten wurden behalten!",
+          "en": "The Hub2 data was kept!"
         }
       }
     }

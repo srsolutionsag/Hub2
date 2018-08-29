@@ -377,10 +377,10 @@ summary_exceptions_in#:#Hub2: Exceptions in %s
 summary_in#:#in: 
 orgunit_ref_id_if_no_parent_id#:#Base ref ID
 orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.
-confirm_remove_hub2_data#:#Do you want to remove the Hub2 data as well? At most, you just want to disable the Hub2 plugin?
-remove_hub2_data#:#Remove Hub2 data
-keep_hub2_data#:#Keep Hub2 data
-deactivate_hub2#:#Just deactivate Hub2 plugin
-hub2_data#:#Hub2 data
-msg_removed_hub2_data#:#The Hub2 data was also removed!
-msg_kept_hub2_data#:#The Hub2 data was kept!
+uninstall_confirm_remove_hub2_data#:#Do you want to remove the Hub2 data as well? At most, you just want to disable the Hub2 plugin?
+uninstall_remove_hub2_data#:#Remove Hub2 data
+uninstall_keep_hub2_data#:#Keep Hub2 data
+uninstall_deactivate_hub2#:#Just deactivate Hub2 plugin
+uninstall_hub2_data#:#Hub2 data
+uninstall_msg_removed_hub2_data#:#The Hub2 data was also removed!
+uninstall_msg_kept_hub2_data#:#The Hub2 data was kept!
