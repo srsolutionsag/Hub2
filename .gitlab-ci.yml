@@ -1,9 +1,45 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  REVIEW_APP_IMAGE: sturai/ilias:latest
+  REVIEW_APP_DEST: /var/www/html/Customizing/global/plugins/Services/Cron/CronHook/Hub2
+
+.review_deployment: &review_deployment
+  stage: review
+  tags:
+  - review
+  except:
+  - /^release_.*/
+  when: manual
+
+stages:
+- test
+- review
+
 test:
   stage: test
   tags:
-    - php7
+  - php5
   before_script:
-    - php --version
+  # TODO: Install phpunit, etc.
+  - php --version
   script:
-    - echo "Running unit tests..."
-    - vendor/bin/phpunit tests
+  # TODO: Run unit tests, etc.
+  - echo "Running unit tests..."
+  - vendor/bin/phpunit tests
+
+review:
+  <<: *review_deployment
+  environment:
+    name: review/${CI_BUILD_REF_SLUG}
+    url: http://${CI_BUILD_REF_SLUG}.${CI_PROJECT_PATH_SLUG}.review.studer-raimann.ch
+    on_stop: stop_review
+  script:
+  - srag-review deploy
+
+stop_review:
+  <<: *review_deployment
+  environment:
+    name: review/${CI_BUILD_REF_SLUG}
+    action: stop
+  script:
+  - srag-review stop
