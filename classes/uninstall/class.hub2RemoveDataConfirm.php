@@ -15,10 +15,10 @@ class hub2RemoveDataConfirm {
 	use DICTrait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const CMD_CANCEL = "cancel";
-	const CMD_CONFIRM_REMOVE_HUB2_DATA = "confirmRemoveHub2Data";
-	const CMD_DEACTIVATE_HUB2 = "deactivateHub2";
-	const CMD_SET_KEEP_HUB2_DATA = "setKeepHub2Data";
-	const CMD_SET_REMOVE_HUB2_DATA = "setRemoveHub2Data";
+	const CMD_CONFIRM_REMOVE_DATA = "confirmRemoveData";
+	const CMD_DEACTIVATE = "deactivate";
+	const CMD_SET_KEEP_DATA = "setKeepData";
+	const CMD_SET_REMOVE_DATA = "setRemoveData";
 
 
 	/**
@@ -73,10 +73,10 @@ class hub2RemoveDataConfirm {
 
 				switch ($cmd) {
 					case self::CMD_CANCEL:
-					case self::CMD_CONFIRM_REMOVE_HUB2_DATA:
-					case self::CMD_DEACTIVATE_HUB2:
-					case self::CMD_SET_KEEP_HUB2_DATA:
-					case self::CMD_SET_REMOVE_HUB2_DATA:
+					case self::CMD_CONFIRM_REMOVE_DATA:
+					case self::CMD_DEACTIVATE:
+					case self::CMD_SET_KEEP_DATA:
+					case self::CMD_SET_REMOVE_DATA:
 						$this->{$cmd}();
 						break;
 
@@ -112,30 +112,30 @@ class hub2RemoveDataConfirm {
 	/**
 	 *
 	 */
-	protected function confirmRemoveHub2Data() {
+	protected function confirmRemoveData() {
 		self::saveParameterByClass();
 
 		$confirmation = new ilConfirmationGUI();
 
 		$confirmation->setFormAction(self::dic()->ctrl()->getFormAction($this));
 
-		$confirmation->setHeaderText(self::translate("confirm_remove_hub2_data"));
+		$confirmation->setHeaderText(self::translate("uninstall_confirm_remove_data"));
 
-		$confirmation->addItem("_", "_", self::translate("hub2_data"));
+		$confirmation->addItem("_", "_", self::translate("uninstall_data"));
 
-		$confirmation->addButton(self::translate("remove_hub2_data"), self::CMD_SET_REMOVE_HUB2_DATA);
-		$confirmation->addButton(self::translate("keep_hub2_data"), self::CMD_SET_KEEP_HUB2_DATA);
-		$confirmation->addButton(self::translate("deactivate_hub2"), self::CMD_DEACTIVATE_HUB2);
+		$confirmation->addButton(self::translate("uninstall_remove_data"), self::CMD_SET_REMOVE_DATA);
+		$confirmation->addButton(self::translate("uninstall_keep_data"), self::CMD_SET_KEEP_DATA);
+		$confirmation->addButton(self::translate("uninstall_deactivate"), self::CMD_DEACTIVATE);
 		$confirmation->setCancel(self::translate("button_cancel"), self::CMD_CANCEL);
 
-		self::output($confirmation->getHTML());
+		self::output($confirmation);
 	}
 
 
 	/**
 	 *
 	 */
-	protected function deactivateHub2() {
+	protected function deactivate() {
 		$this->redirectToPlugins("deactivatePlugin");
 	}
 
@@ -143,10 +143,10 @@ class hub2RemoveDataConfirm {
 	/**
 	 *
 	 */
-	protected function setKeepHub2Data() {
-		ArConfig::setUninstallRemoveHub2Data(false);
+	protected function setKeepData() {
+		ArConfig::setUninstallRemoveData(false);
 
-		ilUtil::sendInfo(self::translate("msg_kept_hub2_data"), true);
+		ilUtil::sendInfo(self::translate("uninstall_msg_kept_data"), true);
 
 		$this->redirectToPlugins("uninstallPlugin");
 	}
@@ -155,10 +155,10 @@ class hub2RemoveDataConfirm {
 	/**
 	 *
 	 */
-	protected function setRemoveHub2Data() {
-		ArConfig::setUninstallRemoveHub2Data(true);
+	protected function setRemoveData() {
+		ArConfig::setUninstallRemoveData(true);
 
-		ilUtil::sendInfo(self::translate("msg_removed_hub2_data"), true);
+		ilUtil::sendInfo(self::translate("uninstall_msg_removed_data"), true);
 
 		$this->redirectToPlugins("uninstallPlugin");
 	}
