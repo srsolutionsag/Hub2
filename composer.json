@@ -16,16 +16,7 @@
       "SRAG\\Plugins\\Hub2\\": "src/"
     },
     "classmap": [
-      "classes",
-      "../../../../../../../Services/Container",
-      "../../../../../../../Services/ActiveRecord",
-      "../../../../../../../Services/Cron",
-      "../../../../../../../Modules/Course",
-      "../../../../../../../Modules/Category",
-      "../../../../../../../Services/User",
-      "../../../../../../../Modules/Group",
-      "../../../../../../../Services/Calendar",
-      "../../../../../../../Services/Exceptions"
+      "classes"
     ]
   }
 }
