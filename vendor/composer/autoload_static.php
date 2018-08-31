@@ -9,6 +9,7 @@ class ComposerStaticInitf386b343b0dde4940e1f686502a78c41
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
+            'srag\\RemovePluginDataConfirm\\' => 29,
             'srag\\DIC\\' => 9,
             'srag\\ActiveRecordConfig\\' => 24,
         ),
@@ -19,6 +20,10 @@ class ComposerStaticInitf386b343b0dde4940e1f686502a78c41
     );
 
     public static $prefixDirsPsr4 = array (
+        'srag\\RemovePluginDataConfirm\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/srag/removeplugindataconfirm/src',
+        ),
         'srag\\DIC\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',

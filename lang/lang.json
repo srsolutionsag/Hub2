@@ -2512,47 +2512,53 @@
         }
       }
     },
-    "uninstall": {
+    "removeplugindataconfirm": {
+      "cancel": {
+        "translations": {
+          "de": "Abbrechen",
+          "en": "Cancel"
+        }
+      },
       "confirm_remove_data": {
         "translations": {
-          "de": "Möchten Sie die Hub2-Daten auch entfernen? Allenfalls möchten Sie das Hub2-Plugin nur deaktivieren?",
-          "en": "Do you want to remove the Hub2 data as well? At most, you just want to disable the Hub2 plugin?"
+          "de": "Möchten Sie die %s-Daten auch entfernen? Allenfalls möchten Sie das %s-Plugin nur deaktivieren?",
+          "en": "Do you want to remove the %s data as well? At most, you just want to disable the %s plugin?"
         }
       },
       "remove_data": {
         "translations": {
-          "de": "Hub2-Daten behalten",
-          "en": "Remove Hub2 data"
+          "de": "%s-Daten behalten",
+          "en": "Remove %s data"
         }
       },
       "keep_data": {
         "translations": {
-          "de": "Entferne Hub2-Daten",
-          "en": "Keep Hub2 data"
+          "de": "Entferne %s-Daten",
+          "en": "Keep %s data"
         }
       },
       "deactivate": {
         "translations": {
-          "de": "Hub2-Plugin nur deaktivieren",
-          "en": "Just deactivate Hub2 plugin"
+          "de": "%s-Plugin nur deaktivieren",
+          "en": "Just deactivate %s plugin"
         }
       },
       "data": {
         "translations": {
-          "de": "Hub2-Daten",
-          "en": "Hub2 data"
+          "de": "%s-Daten",
+          "en": "%s data"
         }
       },
       "msg_removed_data": {
         "translations": {
-          "de": "Die Hub2-Daten wurden auch entfernt!",
-          "en": "The Hub2 data was also removed!"
+          "de": "Die %s-Daten wurden auch entfernt!",
+          "en": "The %s data was also removed!"
         }
       },
       "msg_kept_data": {
         "translations": {
-          "de": "Die Hub2-Daten wurden behalten!",
-          "en": "The Hub2 data was kept!"
+          "de": "Die %s-Daten wurden behalten!",
+          "en": "The %s data was kept!"
         }
       }
     }

@@ -2,7 +2,6 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Config\ArConfigOld;
 use SRAG\Plugins\Hub2\Jobs\RunSync;
@@ -17,6 +16,7 @@ use SRAG\Plugins\Hub2\Object\Session\ARSession;
 use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use SRAG\Plugins\Hub2\Object\User\ARUser;
 use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
+use srag\RemovePluginDataConfirm\PluginUninstallTrait;
 
 /**
  * Class ilHub2Plugin
@@ -27,10 +27,11 @@ use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
  */
 class ilHub2Plugin extends ilCronHookPlugin {
 
-	use DICTrait;
+	use PluginUninstallTrait;
 	const PLUGIN_ID = 'hub2';
 	const PLUGIN_NAME = 'Hub2';
 	const PLUGIN_CLASS_NAME = self::class;
+	const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = hub2RemoveDataConfirm::class;
 	/**
 	 * @var ilHub2Plugin
 	 */
@@ -76,39 +77,9 @@ class ilHub2Plugin extends ilCronHookPlugin {
 
 
 	/**
-	 * @return bool
-	 */
-	protected function beforeUninstall(): bool {
-		$uninstall_remove_data = ArConfig::getUninstallRemoveData();
-
-		if ($uninstall_remove_data === NULL) {
-			hub2RemoveDataConfirm::saveParameterByClass();
-
-			self::dic()->ctrl()->redirectByClass([
-				ilUIPluginRouterGUI::class,
-				hub2RemoveDataConfirm::class
-			], hub2RemoveDataConfirm::CMD_CONFIRM_REMOVE_DATA);
-
-			return false;
-		}
-
-		$uninstall_remove_data = boolval($uninstall_remove_data);
-
-		if ($uninstall_remove_data) {
-			$this->removeData();
-		} else {
-			// Ask again if reinstalled
-			ArConfig::deleteUninstallRemoveData();
-		}
-
-		return true;
-	}
-
-
-	/**
 	 *
 	 */
-	protected function removeData() {
+	protected function deleteData() {
 		self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);
