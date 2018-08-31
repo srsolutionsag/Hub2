@@ -50,7 +50,7 @@ class ArConfig extends ActiveRecordConfig {
 	/**
 	 * @param bool $uninstall_removes_data
 	 */
-	public static function setUninstallRemovesData($uninstall_removes_data) {
+	public static function setUninstallRemovesData(bool $uninstall_removes_data) {
 		self::setBooleanValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, $uninstall_removes_data);
 	}
 
