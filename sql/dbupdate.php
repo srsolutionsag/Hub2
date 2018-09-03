@@ -42,9 +42,6 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(\SRAG\Plugins\Hub2\Confi
 		 * @var \SRAG\Plugins\Hub2\Config\ArConfigOld $config
 		 */
 		switch ($config->getKey()) {
-			case \SRAG\Plugins\Hub2\Config\ArConfig::KEY_UNINSTALL_REMOVE_HUB2_DATA:
-				\SRAG\Plugins\Hub2\Config\ArConfig::setUninstallRemoveHub2Data($config->getValue());
-				break;
 			default:
 				\SRAG\Plugins\Hub2\Config\ArConfig::setValueByKey($config->getValue(), $config->getValue());
 				break;

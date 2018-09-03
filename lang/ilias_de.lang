@@ -364,23 +364,24 @@ sess_prop_delete_mode_none#:#Keine Aktion
 sess_prop_delete_mode_trash#:#In Papierkorb verschieben
 sess_prop_move#:#Sitzung verschieben
 sess_prop_move_info#:#In neuen Container verschieben
-summary_for#:#Zusammenfassung für %s: 
+summary_for#:#Zusammenfassung für %s:
 summary_delivered_data_sets#:#Gelieferte Datensätze: %s
 summary_created#:#Erstellt: %s
 summary_updated#:#Aktualisiert: %s
 summary_deleted#:#Gelöscht: %s
 summary_ignored#:#Ignoriert: %s
 summary_no_changes#:#Keine Änderungen: %s
-summary_exceptions#:#Ausnahmen: 
+summary_exceptions#:#Ausnahmen:
 summary_notification#:#Hub2: Zusammenfassung für %s
 summary_exceptions_in#:#Hub2: Ausnahmen in %s
-summary_in#:#in: 
+summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.
-confirm_remove_hub2_data#:#Möchten Sie die Hub2-Daten auch entfernen? Allenfalls möchten Sie das Hub2-Plugin nur deaktivieren?
-remove_hub2_data#:#Entferne Hub2-Daten
-keep_hub2_data#:#Hub2-Daten behalten
-deactivate_hub2#:#Hub2-Plugin nur deaktivieren
-hub2_data#:#Hub2-Daten
-msg_removed_hub2_data#:#Die Hub2-Daten wurden auch entfernt!
-msg_kept_hub2_data#:#Die Hub2-Daten wurden behalten!
+removeplugindataconfirm_cancel#:#Abbrechen
+removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
+removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren
+removeplugindataconfirm_data#:#%1$s-Daten
+removeplugindataconfirm_keep_data#:#%1$s-Daten behalten
+removeplugindataconfirm_msg_kept_data#:#Die %1$s-Daten wurden behalten!
+removeplugindataconfirm_msg_removed_data#:#Die %1$s-Daten wurden auch entfernt!
+removeplugindataconfirm_remove_data#:#Entferne %1$s-Daten

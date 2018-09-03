@@ -13,7 +13,6 @@ use SRAG\Plugins\Hub2\UI\ConfigFormGUI;
  */
 class hub2ConfigGUI extends hub2MainGUI {
 
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const CMD_SAVE_CONFIG = 'saveConfig';
 	const CMD_CANCEL = 'cancel';
 

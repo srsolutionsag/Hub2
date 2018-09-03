@@ -86,17 +86,17 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 
 			// Properties for object status: NEW, UPDATE, DELETE
 			$header = new ilFormSectionHeaderGUI();
-			$header->setTitle(sprintf(self::translate('common_on_status'), self::translate('common_on_status_new')));
+			$header->setTitle(self::translate('common_on_status', "", [ self::translate('common_on_status_new') ]));
 			$this->addItem($header);
 			$this->addPropertiesNew();
 
 			$header = new ilFormSectionHeaderGUI();
-			$header->setTitle(sprintf(self::translate('common_on_status'), self::translate('common_on_status_update')));
+			$header->setTitle(self::translate('common_on_status', "", [ self::translate('common_on_status_update') ]));
 			$this->addItem($header);
 			$this->addPropertiesUpdate();
 
 			$header = new ilFormSectionHeaderGUI();
-			$header->setTitle(sprintf(self::translate('common_on_status'), self::translate('common_on_status_delete')));
+			$header->setTitle(self::translate('common_on_status', "", [ self::translate('common_on_status_delete') ]));
 			$this->addItem($header);
 			$this->addPropertiesDelete();
 		}
@@ -122,7 +122,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		$parser = new DTOPropertyParser("SRAG\\Plugins\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}DTO");
 		foreach ($parser->getProperties() as $property) {
 			$postVar = IOriginProperties::PREFIX_UPDATE_DTO . $property->name;
-			$title = sprintf(self::translate('origin_form_field_update_dto'), ucfirst($property->name));
+			$title = self::translate('origin_form_field_update_dto', "", [ ucfirst($property->name) ]);
 			$cb = new ilCheckboxInputGUI($title, $this->prop($postVar));
 			if ($property->descriptionKey) {
 				$cb->setInfo(self::translate($property->descriptionKey));
@@ -213,7 +213,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		$this->addItem($h);
 
 		$te = new ilTextInputGUI(self::translate('origin_form_field_class_name'), 'implementation_class_name');
-		$te->setInfo(sprintf(self::translate('origin_form_field_class_name_info'), $this->hubConfig->getOriginImplementationsPath()));
+		$te->setInfo(self::translate('origin_form_field_class_name_info', "", [ $this->hubConfig->getOriginImplementationsPath() ]));
 		$te->setValue($this->origin->getImplementationClassName());
 		$te->setRequired(true);
 		$this->addItem($te);
