@@ -33,13 +33,13 @@ class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSync
 	 */
 	private function renderOneSync(IOriginSync $originSync) {
 		// Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
-		$msg = self::translate("summary_for", "", [ $originSync->getOrigin()->getTitle() ]) . "\n**********\n";
-		$msg .= self::translate("summary_delivered_data_sets", "", [ $originSync->getCountDelivered() ]) . "\n";
-		$msg .= self::translate("summary_created", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED) ]) . "\n";
-		$msg .= self::translate("summary_updated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED) ]) . "\n";
-		$msg .= self::translate("summary_deleted", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED) ]) . "\n";
-		$msg .= self::translate("summary_ignored", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) ]) . "\n";
-		$msg .= self::translate("summary_no_changes", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE) ]) . "\n\n";
+		$msg = self::plugin()->translate("summary_for", "", [ $originSync->getOrigin()->getTitle() ]) . "\n**********\n";
+		$msg .= self::plugin()->translate("summary_delivered_data_sets", "", [ $originSync->getCountDelivered() ]) . "\n";
+		$msg .= self::plugin()->translate("summary_created", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_updated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_deleted", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_ignored", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_no_changes", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE) ]) . "\n\n";
 		foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
 			$msg .= "$context: \n**********\n";
 			foreach ($messages as $message) {
@@ -48,7 +48,7 @@ class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSync
 			$msg .= "\n";
 		}
 		foreach ($originSync->getExceptions() as $exception) {
-			$msg .= self::translate("summary_exceptions") . "\n**********\n";
+			$msg .= self::plugin()->translate("summary_exceptions") . "\n**********\n";
 			$msg .= $exception->getMessage() . "\n\n";
 		}
 		$msg = rtrim($msg, "\n");

@@ -92,9 +92,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function initTabs() {
-		self::dic()->tabs()->addSubTab(self::SUBTAB_ORIGINS, self::translate(self::SUBTAB_ORIGINS), self::dic()->ctrl()
+		self::dic()->tabs()->addSubTab(self::SUBTAB_ORIGINS, self::plugin()->translate(self::SUBTAB_ORIGINS), self::dic()->ctrl()
 			->getLinkTarget($this, self::CMD_INDEX));
-		self::dic()->tabs()->addSubTab(self::SUBTAB_DATA, self::translate(self::SUBTAB_DATA), self::dic()->ctrl()
+		self::dic()->tabs()->addSubTab(self::SUBTAB_DATA, self::plugin()->translate(self::SUBTAB_DATA), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
 
 		self::dic()->tabs()->activateTab(self::TAB_ORIGINS);
@@ -109,17 +109,17 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		self::dic()->toolbar()->setFormAction(self::dic()->ctrl()->getFormAction($this));
 
 		$button = ilSubmitButton::getInstance();
-		$button->setCaption(self::translate('origin_table_button_add'), false);
+		$button->setCaption(self::plugin()->translate('origin_table_button_add'), false);
 		$button->setPrimary(true);
 		$button->setCommand(self::CMD_ADD_ORIGIN);
 		self::dic()->toolbar()->addButtonInstance($button);
 
 		self::dic()->toolbar()->addSeparator();
 
-		self::dic()->toolbar()->addInputItem(new ilCheckboxInputGUI(self::translate('origin_table_button_force'), self::Q_FORCE_UPDATE));
+		self::dic()->toolbar()->addInputItem(new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_force'), self::Q_FORCE_UPDATE));
 
 		$button = ilSubmitButton::getInstance();
-		$button->setCaption(self::translate('origin_table_button_run'), false);
+		$button->setCaption(self::plugin()->translate('origin_table_button_run'), false);
 		$button->setCommand(self::CMD_RUN);
 		self::dic()->toolbar()->addButtonInstance($button);
 
@@ -155,7 +155,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$origin->setTitle($form->getInput('title'));
 			$origin->setDescription($form->getInput('description'));
 			$origin->save();
-			ilUtil::sendSuccess(self::translate('msg_success_create_origin'), true);
+			ilUtil::sendSuccess(self::plugin()->translate('msg_success_create_origin'), true);
 			self::dic()->ctrl()->setParameter($this, self::ORIGIN_ID, $origin->getId());
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
 		}
@@ -193,16 +193,16 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$origin->config()->setData($configData);
 			$origin->properties()->setData($propertyData);
 			$origin->save();
-			ilUtil::sendSuccess(self::translate('msg_origin_saved'), true);
+			ilUtil::sendSuccess(self::plugin()->translate('msg_origin_saved'), true);
 			// Try to create the implementation class file automatically
 			$generator = new OriginImplementationTemplateGenerator($this->hubConfig);
 			try {
 				$result = $generator->create($origin);
 				if ($result) {
-					ilUtil::sendInfo(self::translate("msg_created_class_implementation_file", "", [ $generator->getClassFilePath($origin) ]), true);
+					ilUtil::sendInfo(self::plugin()->translate("msg_created_class_implementation_file", "", [ $generator->getClassFilePath($origin) ]), true);
 				}
 			} catch (HubException $e) {
-				ilUtil::sendInfo(self::translate("msg_created_class_implementation_file_failed", "", [ $generator->getClassFilePath($origin) ]), true);
+				ilUtil::sendInfo(self::plugin()->translate("msg_created_class_implementation_file_failed", "", [ $generator->getClassFilePath($origin) ]), true);
 			}
 			self::dic()->ctrl()->saveParameter($this, self::ORIGIN_ID);
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
@@ -231,7 +231,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$repository->setActive(true);
 			$repository->save();
 		}
-		ilUtil::sendSuccess(self::translate('msg_origin_activated'), true);
+		ilUtil::sendSuccess(self::plugin()->translate('msg_origin_activated'), true);
 		self::dic()->ctrl()->redirect($this);
 	}
 
@@ -244,7 +244,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$repository->setActive(false);
 			$repository->save();
 		}
-		ilUtil::sendSuccess(self::translate('msg_origin_deactivated'), true);
+		ilUtil::sendSuccess(self::plugin()->translate('msg_origin_deactivated'), true);
 		self::dic()->ctrl()->redirect($this);
 	}
 
@@ -320,8 +320,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$c = new ilConfirmationGUI();
 		$c->setFormAction(self::dic()->ctrl()->getFormAction($this));
 		$c->addItem(self::ORIGIN_ID, $o->getId(), $o->getTitle());
-		$c->setConfirm(self::translate('confirm_delete_button'), self::CMD_DELETE);
-		$c->setCancel(self::translate('cancel_delete_button'), self::CMD_INDEX);
+		$c->setConfirm(self::plugin()->translate('confirm_delete_button'), self::CMD_DELETE);
+		$c->setCancel(self::plugin()->translate('cancel_delete_button'), self::CMD_INDEX);
 
 		self::dic()->template()->setContent($c->getHTML());
 	}
@@ -345,7 +345,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function checkAccess() {
 		$roles = array_unique(array_merge($this->hubConfig->getAdministrationRoleIds(), [ 2 ]));
 		if (!self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(self::dic()->user()->getId(), $roles)) {
-			ilUtil::sendFailure(self::translate('permission_denied', "", [], false), true);
+			ilUtil::sendFailure(self::plugin()->translate('permission_denied', "", [], false), true);
 			self::dic()->ctrl()->redirectByClass(ilPersonalDesktopGUI::class);
 		}
 	}
