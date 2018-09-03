@@ -199,10 +199,10 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			try {
 				$result = $generator->create($origin);
 				if ($result) {
-					ilUtil::sendInfo(sprintf(self::translate("msg_created_class_implementation_file"), $generator->getClassFilePath($origin)), true);
+					ilUtil::sendInfo(self::translate("msg_created_class_implementation_file", "", [ $generator->getClassFilePath($origin) ]), true);
 				}
 			} catch (HubException $e) {
-				ilUtil::sendInfo(sprintf(self::translate("msg_created_class_implementation_file_failed"), $generator->getClassFilePath($origin)), true);
+				ilUtil::sendInfo(self::translate("msg_created_class_implementation_file_failed", "", [ $generator->getClassFilePath($origin) ]), true);
 			}
 			self::dic()->ctrl()->saveParameter($this, self::ORIGIN_ID);
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);

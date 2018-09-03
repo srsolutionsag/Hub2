@@ -2,6 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\MappingStrategy;
 
+use ilObject2;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
 use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
@@ -40,7 +41,7 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy {
 					return 0;
 				}
 				$parent_id = $dto->getParentId();
-				if (!\ilObject2::_exists($parent_id)) {
+				if (!ilObject2::_exists($parent_id)) {
 					return 0;
 				}
 				$children = self::dic()->tree()->getChildsByType($parent_id, $this->getTypeByDTO($dto));

@@ -2,7 +2,10 @@
 
 namespace srag\DIC;
 
+use ilConfirmationGUI;
 use ilPlugin;
+use ilPropertyFormGUI;
+use ilTable2GUI;
 use ilTemplate;
 
 /**
@@ -25,12 +28,9 @@ trait DICTrait {
 	 * Get DIC interface
 	 *
 	 * @return DICInterface DIC interface
-	 * @ throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
 	 */
-	protected static function dic() {
-		self::checkPluginClassNameConst();
-
-		return DICCache::dic();
+	protected static final function dic() {
+		return DICStatic::dic();
 	}
 
 
@@ -38,12 +38,15 @@ trait DICTrait {
 	 * Get ilPlugin instance
 	 *
 	 * @return ilPlugin ilPlugin instance of your plugin
-	 * @ throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
+	 *
+	 * @throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
+	 * @throws DICException Class $plugin_class_name not exists!
+	 * @logs   DEBUG Please implement $plugin_class_name::getInstance()!
 	 */
-	protected static function pl() {
+	protected static final function pl() {
 		self::checkPluginClassNameConst();
 
-		return DICCache::pl(static::PLUGIN_CLASS_NAME);
+		return DICStatic::pl(static::PLUGIN_CLASS_NAME);
 	}
 
 
@@ -51,35 +54,26 @@ trait DICTrait {
 	 * Get plugin directory
 	 *
 	 * @return string Plugin directory
-	 * @ throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
+	 *
+	 * @throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
+	 * @throws DICException Class $plugin_class_name not exists!
+	 * @logs   DEBUG Please implement $plugin_class_name::getInstance()!
 	 */
-	protected static function directory() {
-		return self::pl()->getDirectory();
+	protected static final function directory() {
+		self::checkPluginClassNameConst();
+
+		return DICStatic::directory(static::PLUGIN_CLASS_NAME);
 	}
 
 
 	/**
 	 * Output html
 	 *
-	 * @param string|ilTemplate $html HTML code or ilTemplate instance
-	 * @param bool              $main Display main skin?
+	 * @param string|ilTemplate|ilConfirmationGUI|ilPropertyFormGUI|ilTable2GUI $html HTML code or some gui instance
+	 * @param bool                                                              $main Display main skin?
 	 */
-	protected static function output($html, $main = true) {
-		if ($html instanceof ilTemplate) {
-			$html = $html->get();
-		}
-
-		if (self::dic()->ctrl()->isAsynch()) {
-			echo $html;
-		} else {
-			if ($main) {
-				self::dic()->template()->getStandardTemplate();
-			}
-			self::dic()->template()->setContent($html);
-			self::dic()->template()->show();
-		}
-
-		exit;
+	protected static final function output($html, $main = true) {
+		DICStatic::output($html, $main);
 	}
 
 
@@ -92,14 +86,15 @@ trait DICTrait {
 	 * @param bool   $plugin                   Plugin template or ILIAS core template?
 	 *
 	 * @return ilTemplate ilTemplate instance
-	 * @ throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
+	 *
+	 * @throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant
+	 * @throws DICException Class $plugin_class_name not exists!
+	 * @logs   DEBUG Please implement $plugin_class_name::getInstance()!
 	 */
-	protected static function template($template, $remove_unknown_variables = true, $remove_empty_blocks = true, $plugin = true) {
-		if ($plugin) {
-			return self::pl()->getTemplate($template, $remove_unknown_variables, $remove_empty_blocks);
-		} else {
-			return new ilTemplate($template, $remove_unknown_variables, $remove_empty_blocks);
-		}
+	protected static final function template($template, $remove_unknown_variables = true, $remove_empty_blocks = true, $plugin = true) {
+		self::checkPluginClassNameConst();
+
+		return DICStatic::template(static::PLUGIN_CLASS_NAME, $template, $remove_unknown_variables, $remove_empty_blocks, $plugin);
 	}
 
 
@@ -114,53 +109,24 @@ trait DICTrait {
 	 * @param string $default      Default text, if language key not exists
 	 *
 	 * @return string Translated text
-	 * @ throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
+	 *
+	 * @throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
+	 * @throws DICException Class $plugin_class_name not exists!
+	 * @throws DICException Please use the placeholders feature and not direct `sprintf` or `vsprintf` in your code!
+	 * @throws DICException Please use only one placeholder in the default text for the key!
+	 * @logs   DEBUG Please implement $plugin_class_name::getInstance()!
 	 */
-	protected static function translate($key, $module = "", array $placeholders = [], $plugin = true, $lang = "", $default = "MISSING %s") {
-		if (!empty($module)) {
-			$key = $module . "_" . $key;
-		}
+	protected static final function translate($key, $module = "", array $placeholders = [], $plugin = true, $lang = "", $default = "MISSING %s") {
+		self::checkPluginClassNameConst();
 
-		if ($plugin) {
-			if (empty($lang)) {
-				$txt = self::pl()->txt($key);
-			} else {
-				$lng = DICCache::language($lang);
-
-				$lng->loadLanguageModule(self::pl()->getPrefix());
-
-				$txt = $lng->txt(self::pl()->getPrefix() . "_" . $key, self::pl()->getPrefix());
-			}
-		} else {
-			if (empty($lang)) {
-				$txt = self::dic()->language()->txt($key);
-			} else {
-				$lng = DICCache::language($lang);
-
-				if (!empty($module)) {
-					$lng->loadLanguageModule($module);
-				}
-
-				$txt = $lng->txt($key);
-			}
-		}
-
-		if (!(empty($txt) || ($txt[0] === "-" && $txt[strlen($txt) - 1] === "-") || $txt === "MISSING" || strpos($txt, "MISSING ") === 0)) {
-			$txt = vsprintf($txt, $placeholders);
-		} else {
-			if ($default !== NULL) {
-				$txt = sprintf($default, $key);
-			}
-		}
-
-		return $txt;
+		return DICStatic::translate(static::PLUGIN_CLASS_NAME, $key, $module, $placeholders, $plugin, $lang = "", $default);
 	}
 
 
 	/**
 	 * @throws DICException Your class needs to implement the PLUGIN_CLASS_NAME constant!
 	 */
-	private static function checkPluginClassNameConst() {
+	private static final function checkPluginClassNameConst() {
 		if (!defined("static::PLUGIN_CLASS_NAME") || empty(static::PLUGIN_CLASS_NAME)) {
 			throw new DICException("Your class needs to implement the PLUGIN_CLASS_NAME constant!");
 		}
