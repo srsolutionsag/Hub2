@@ -43,14 +43,14 @@ class OriginsTableGUI extends ilTable2GUI {
 		$this->a_parent_obj = $a_parent_obj;
 		$this->setPrefix('hub2_');
 		$this->setId('origins');
-		$this->setTitle(self::translate('hub_origins'));
+		$this->setTitle(self::plugin()->translate('hub_origins'));
 		parent::__construct($a_parent_obj, $a_parent_cmd);
 		$this->setFormAction(self::dic()->ctrl()->getFormAction($a_parent_obj));
 		$this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
 		$this->initColumns();
 		$this->initTableData();
-		$this->addCommandButton(hub2ConfigOriginsGUI::CMD_DEACTIVATE_ALL, self::translate('origin_table_button_deactivate_all'));
-		$this->addCommandButton(hub2ConfigOriginsGUI::CMD_ACTIVATE_ALL, self::translate('origin_table_button_activate_all'));
+		$this->addCommandButton(hub2ConfigOriginsGUI::CMD_DEACTIVATE_ALL, self::plugin()->translate('origin_table_button_deactivate_all'));
+		$this->addCommandButton(hub2ConfigOriginsGUI::CMD_ACTIVATE_ALL, self::plugin()->translate('origin_table_button_activate_all'));
 	}
 
 
@@ -59,13 +59,13 @@ class OriginsTableGUI extends ilTable2GUI {
 	 */
 	protected function initColumns() {
 		$this->addColumn('ID', 'id');
-		$this->addColumn(self::translate('origin_table_header_active'), 'active');
-		$this->addColumn(self::translate('origin_table_header_title'), 'title');
-		$this->addColumn(self::translate('origin_table_header_description'), 'description');
-		$this->addColumn(self::translate('origin_table_header_usage_type'), 'object_type');
-		$this->addColumn(self::translate('origin_table_header_last_update'), 'last_sync');
-		$this->addColumn(self::translate('origin_table_header_count'), 'n_objects');
-		$this->addColumn(self::translate('common_actions'));
+		$this->addColumn(self::plugin()->translate('origin_table_header_active'), 'active');
+		$this->addColumn(self::plugin()->translate('origin_table_header_title'), 'title');
+		$this->addColumn(self::plugin()->translate('origin_table_header_description'), 'description');
+		$this->addColumn(self::plugin()->translate('origin_table_header_usage_type'), 'object_type');
+		$this->addColumn(self::plugin()->translate('origin_table_header_last_update'), 'last_sync');
+		$this->addColumn(self::plugin()->translate('origin_table_header_count'), 'n_objects');
+		$this->addColumn(self::plugin()->translate('common_actions'));
 	}
 
 
@@ -80,7 +80,7 @@ class OriginsTableGUI extends ilTable2GUI {
 			$objectRepository = new $class($origin);
 			$row = [];
 			$row['id'] = $origin->getId();
-			$row['active'] = self::translate("common_" . ($origin->isActive() ? "yes" : "no"));
+			$row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
 			$row['title'] = $origin->getTitle();
 			$row['description'] = $origin->getDescription();
 			$row['object_type'] = $origin->getObjectType(); // TODO: Translate object type
@@ -103,13 +103,13 @@ class OriginsTableGUI extends ilTable2GUI {
 		}
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setId('actions_' . $a_set['id']);
-		$actions->setListTitle(self::translate('common_actions'));
+		$actions->setListTitle(self::plugin()->translate('common_actions'));
 		self::dic()->ctrl()->setParameter($this->parent_obj, 'origin_id', $a_set['id']);
-		$actions->addItem(self::translate('common_edit'), 'edit', self::dic()->ctrl()
+		$actions->addItem(self::plugin()->translate('common_edit'), 'edit', self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_EDIT_ORGIN));
-		$actions->addItem(self::translate('common_delete'), 'delete', self::dic()->ctrl()
+		$actions->addItem(self::plugin()->translate('common_delete'), 'delete', self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE));
-		$actions->addItem(self::translate('origin_table_button_run'), 'runOriginSync', self::dic()->ctrl()
+		$actions->addItem(self::plugin()->translate('origin_table_button_run'), 'runOriginSync', self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
 		$this->tpl->setCurrentBlock('cell');

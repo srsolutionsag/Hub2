@@ -33,8 +33,8 @@ class SessionOriginConfigFormGUI extends OriginConfigFormGUI {
 
 
 	protected function addPropertiesUpdate() {
-		$cb = new ilCheckboxInputGUI(self::translate('sess_prop_move'), $this->prop(SessionOriginProperties::MOVE_SESSION));
-		$cb->setInfo(self::translate('sess_prop_move_info'));
+		$cb = new ilCheckboxInputGUI(self::plugin()->translate('sess_prop_move'), $this->prop(SessionOriginProperties::MOVE_SESSION));
+		$cb->setInfo(self::plugin()->translate('sess_prop_move_info'));
 		$this->addItem($cb);
 
 		parent::addPropertiesUpdate();
@@ -42,16 +42,16 @@ class SessionOriginConfigFormGUI extends OriginConfigFormGUI {
 
 
 	protected function addPropertiesDelete() {
-		$delete = new ilRadioGroupInputGUI(self::translate('sess_prop_delete_mode'), $this->prop(SessionOriginProperties::DELETE_MODE));
+		$delete = new ilRadioGroupInputGUI(self::plugin()->translate('sess_prop_delete_mode'), $this->prop(SessionOriginProperties::DELETE_MODE));
 		$delete->setValue($this->origin->properties()->get(SessionOriginProperties::DELETE_MODE));
 
-		$opt = new ilRadioOption(self::translate('sess_prop_delete_mode_none'), SessionOriginProperties::DELETE_MODE_NONE);
+		$opt = new ilRadioOption(self::plugin()->translate('sess_prop_delete_mode_none'), SessionOriginProperties::DELETE_MODE_NONE);
 		$delete->addOption($opt);
 
-		$opt = new ilRadioOption(self::translate('sess_prop_delete_mode_delete'), SessionOriginProperties::DELETE_MODE_DELETE);
+		$opt = new ilRadioOption(self::plugin()->translate('sess_prop_delete_mode_delete'), SessionOriginProperties::DELETE_MODE_DELETE);
 		$delete->addOption($opt);
 
-		$opt = new ilRadioOption(self::translate('sess_prop_delete_mode_trash'), SessionOriginProperties::DELETE_MODE_MOVE_TO_TRASH);
+		$opt = new ilRadioOption(self::plugin()->translate('sess_prop_delete_mode_trash'), SessionOriginProperties::DELETE_MODE_MOVE_TO_TRASH);
 		$delete->addOption($opt);
 
 		$this->addItem($delete);

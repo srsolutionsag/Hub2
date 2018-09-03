@@ -74,7 +74,7 @@ class DataTableGUI extends ilTable2GUI {
 		$this->originLinkfactory = new ObjectLinkFactory();
 		$this->setPrefix('hub2_');
 		$this->setId('origins');
-		$this->setTitle(self::translate('hub_origins'));
+		$this->setTitle(self::plugin()->translate('hub_origins'));
 		parent::__construct($a_parent_obj, $a_parent_cmd);
 		$this->setFormAction(self::dic()->ctrl()->getFormAction($a_parent_obj));
 		$this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
@@ -88,19 +88,19 @@ class DataTableGUI extends ilTable2GUI {
 	 * @inheritDoc
 	 */
 	public function initFilter() {
-		$origin = new ilSelectInputGUI(self::translate('data_table_header_origin_id'), 'origin_id');
+		$origin = new ilSelectInputGUI(self::plugin()->translate('data_table_header_origin_id'), 'origin_id');
 		$origin->setOptions($this->getAvailableOrigins());
 		$this->addAndReadFilterItem($origin);
 
 		// Status
-		$status = new ilSelectInputGUI(self::translate('data_table_header_status'), 'status');
+		$status = new ilSelectInputGUI(self::plugin()->translate('data_table_header_status'), 'status');
 		$status->setOptions($this->getAvailableStatus());
 		$this->addAndReadFilterItem($status);
 
-		$ext_id = new ilTextInputGUI(self::translate('data_table_header_ext_id'), 'ext_id');
+		$ext_id = new ilTextInputGUI(self::plugin()->translate('data_table_header_ext_id'), 'ext_id');
 		$this->addAndReadFilterItem($ext_id);
 
-		$data = new ilTextInputGUI(self::translate('data_table_header_data'), 'data');
+		$data = new ilTextInputGUI(self::plugin()->translate('data_table_header_data'), 'data');
 		$this->addAndReadFilterItem($data);
 	}
 
@@ -124,9 +124,9 @@ class DataTableGUI extends ilTable2GUI {
 	 */
 	protected function initColumns() {
 		foreach ($this->getFields() as $field) {
-			$this->addColumn(self::translate('data_table_header_' . $field), $field);
+			$this->addColumn(self::plugin()->translate('data_table_header_' . $field), $field);
 		}
-		$this->addColumn(self::translate('data_table_header_view'));
+		$this->addColumn(self::plugin()->translate('data_table_header_view'));
 	}
 
 
@@ -214,7 +214,7 @@ class DataTableGUI extends ilTable2GUI {
 		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl(self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, 'renderData', '', true));
 
-		$button = $factory->button()->shy(self::translate("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
+		$button = $factory->button()->shy(self::plugin()->translate("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
 
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $renderer->render([ $button, $modal ]));
@@ -270,7 +270,7 @@ class DataTableGUI extends ilTable2GUI {
 			return $status;
 		}
 		$r = new ReflectionClass(IObject::class);
-		$status = [ 0 => self::translate("data_table_all") ];
+		$status = [ 0 => self::plugin()->translate("data_table_all") ];
 		foreach ($r->getConstants() as $name => $value) {
 			if (strpos($name, "STATUS_") === 0) {
 				$status[$value] = $name; // TODO: Translate status
@@ -290,7 +290,7 @@ class DataTableGUI extends ilTable2GUI {
 			return $origins;
 		}
 
-		$origins = [ 0 => self::translate("data_table_all") ];
+		$origins = [ 0 => self::plugin()->translate("data_table_all") ];
 		foreach ($this->originFactory->getAll() as $origin) {
 			$origins[$origin->getId()] = $origin->getTitle();
 		}

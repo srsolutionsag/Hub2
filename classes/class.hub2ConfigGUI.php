@@ -36,7 +36,7 @@ class hub2ConfigGUI extends hub2MainGUI {
 				/** @var ilFormPropertyGUI $item */
 				ArConfig::setValueByKey($item->getPostVar(), $form->getInput($item->getPostVar()));
 			}
-			ilUtil::sendSuccess(self::translate('msg_successfully_saved'), true);
+			ilUtil::sendSuccess(self::plugin()->translate('msg_successfully_saved'), true);
 			self::dic()->ctrl()->redirect($this);
 		}
 		$form->setValuesByPost();
