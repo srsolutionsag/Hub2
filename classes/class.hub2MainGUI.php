@@ -65,10 +65,10 @@ class hub2MainGUI {
 	 *
 	 */
 	protected function initTabs() {
-		self::dic()->tabs()->addTab(self::TAB_PLUGIN_CONFIG, self::translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
+		self::dic()->tabs()->addTab(self::TAB_PLUGIN_CONFIG, self::plugin()->translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigGUI::class));
 
-		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::translate(self::TAB_ORIGINS), self::dic()->ctrl()
+		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
 	}
 
