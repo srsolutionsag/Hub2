@@ -69,7 +69,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$opt = new ilRadioOption(self::translate('cat_prop_delete_mode_none'), CategoryOriginProperties::DELETE_MODE_NONE);
 		$delete->addOption($opt);
 
-		$opt = new ilRadioOption(sprintf(self::translate('cat_prop_delete_mode_inactive'), self::translate('com_prop_mark_deleted_text')), CategoryOriginProperties::DELETE_MODE_MARK);
+		$opt = new ilRadioOption(self::translate('cat_prop_delete_mode_inactive', "", [ self::translate('com_prop_mark_deleted_text') ]), CategoryOriginProperties::DELETE_MODE_MARK);
 		$delete->addOption($opt);
 
 		$te = new ilTextInputGUI(self::translate('cat_prop_delete_mode_inactive_text'), $this->prop(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));

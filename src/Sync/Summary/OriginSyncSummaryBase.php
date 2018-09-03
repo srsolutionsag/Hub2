@@ -60,13 +60,13 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 	 */
 	private function renderOneSync(IOriginSync $originSync) {
 		// Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
-		$msg = sprintf(self::translate("summary_for"), $originSync->getOrigin()->getTitle()) . "\n**********\n";
-		$msg .= sprintf(self::translate("summary_delivered_data_sets"), $originSync->getCountDelivered()) . "\n";
-		$msg .= sprintf(self::translate("summary_created"), $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)) . "\n";
-		$msg .= sprintf(self::translate("summary_updated"), $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)) . "\n";
-		$msg .= sprintf(self::translate("summary_deleted"), $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED)) . "\n";
-		$msg .= sprintf(self::translate("summary_ignored"), $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)) . "\n";
-		$msg .= sprintf(self::translate("summary_no_changes"), $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE)) . "\n\n";
+		$msg = self::translate("summary_for", "", [ $originSync->getOrigin()->getTitle() ]) . "\n**********\n";
+		$msg .= self::translate("summary_delivered_data_sets", "", [ $originSync->getCountDelivered() ]) . "\n";
+		$msg .= self::translate("summary_created", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED) ]) . "\n";
+		$msg .= self::translate("summary_updated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED) ]) . "\n";
+		$msg .= self::translate("summary_deleted", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED) ]) . "\n";
+		$msg .= self::translate("summary_ignored", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) ]) . "\n";
+		$msg .= self::translate("summary_no_changes", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE) ]) . "\n\n";
 		foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
 			$msg .= "$context: \n**********\n";
 			foreach ($messages as $message) {
@@ -104,18 +104,18 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 			$error_email = $originSync->getOrigin()->config()->getNotificationsErrors();
 			$title = $originSync->getOrigin()->getTitle();
 			if ($summary_email) {
-				$mail->Subject(sprintf(self::translate("summary_notification"), $title));
+				$mail->Subject(self::translate("summary_notification", "", [ $title ]));
 				$mail->To($summary_email);
 				$mail->Body($this->renderOneSync($originSync));
 				$mail->Send();
 			}
 			if ($error_email && $originSync->getExceptions()) {
 				$mail->To($error_email);
-				$mail->Subject(sprintf(self::translate("summary_exceptions_in"), $title));
+				$mail->Subject(self::translate("summary_exceptions_in", "", [ $title ]));
 				$msg = self::translate("summary_exceptions");
 				foreach ($originSync->getExceptions() as $exception) {
 					$msg .= "{$exception->getMessage()}\n";
-					$msg .= sprintf(self::translate("summary_in"), $exception->getFile()) . "\n";
+					$msg .= self::translate("summary_in", "", [ $exception->getFile() ]) . "\n";
 				}
 				$msg = rtrim($msg, "\n");
 

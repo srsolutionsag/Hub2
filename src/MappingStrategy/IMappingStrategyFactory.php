@@ -21,6 +21,10 @@ interface IMappingStrategyFactory {
 	 */
 	public function byLogin(): IMappingStrategy;
 
+	/**
+	 * @return IMappingStrategy
+	 */
+	public function byExternalAccount(): IMappingStrategy;
 
 	/**
 	 * @return IMappingStrategy
