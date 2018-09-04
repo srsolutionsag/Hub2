@@ -95,7 +95,7 @@ crs_prop_notification_from#:#Von
 crs_prop_send_notification#:#Benachrichtigung aktivieren
 crs_prop_send_notification_info#:#Nach dem Erstellen des Kurses sendet Hub eine E-Mail an die in CourseDTO::notificationEmails definierten Adressen
 com_prop_check_amount#:#Mengenvergleich
-com_prop_check_amount_info#:#Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden.
+com_prop_check_amount_info#:#Fehler, wenn weniger als X%% der bestehenden Datensätzen geliefert werden.
 com_prop_check_amount_percentage#:#Prozentwert
 com_prop_force_login#:#Login erfordern
 com_prop_link_to_origin#:#Verknüpfung mit anderer Anbindung
