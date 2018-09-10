@@ -1,4 +1,25 @@
 {
+  "name": "srag/plugins/hub2",
+  "description": "",
+  "version": "1.1.2",
+  "type": "library",
+  "keywords": [
+    "ILIAS",
+    "Plugin",
+    "Hub2"
+  ],
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "srag",
+      "email": "support@studer-raimann.ch",
+      "homepage": "https://studer-raimann.ch",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "support@studer-raimann.ch"
+  },
   "require": {
     "php": ">=7.0",
     "srag/activerecordconfig": ">=0.1.0",
