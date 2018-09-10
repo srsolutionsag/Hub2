@@ -26,4 +26,3 @@ sudo -u www-data composer install
 * [srag/removeplugindataconfirm](https://packagist.org/packages/srag/removeplugindataconfirm)
 
 Please use it for further development!
-
