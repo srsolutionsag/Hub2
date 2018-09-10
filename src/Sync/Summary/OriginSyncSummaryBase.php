@@ -97,7 +97,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 	 */
 	public function sendNotifications() {
 		$mail = new ilMimeMail();
-		$mail->From($this->dic()->mailMimeSenderFactory()->system());
+		$mail->From(self::dic()->mailMimeSenderFactory()->system());
 
 		foreach ($this->syncs as $originSync) {
 			$summary_email = $originSync->getOrigin()->config()->getNotificationsSummary();
