@@ -1,7 +1,7 @@
 ## Installation
 
 ### Install Hub2 plugin
-Start at your ILIAS root directory 
+Start at your ILIAS root directory
 
 ```bash
 mkdir -p Customizing/global/plugins/Services/Cron/CronHook
