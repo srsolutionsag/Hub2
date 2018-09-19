@@ -1,24 +1,24 @@
 [
     {
         "name": "srag/activerecordconfig",
-        "version": "0.5.9",
-        "version_normalized": "0.5.9.0",
+        "version": "0.6.4",
+        "version_normalized": "0.6.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/studer-raimann/ActiveRecordConfig.git",
-            "reference": "4d2045cae8cf80bb1b9258be5032036213d14a82"
+            "reference": "c67b5662ce36645a44ecb1491780cefbb14f935e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/4d2045cae8cf80bb1b9258be5032036213d14a82",
-            "reference": "4d2045cae8cf80bb1b9258be5032036213d14a82",
+            "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/c67b5662ce36645a44ecb1491780cefbb14f935e",
+            "reference": "c67b5662ce36645a44ecb1491780cefbb14f935e",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6",
             "srag/dic": ">=0.1.0"
         },
-        "time": "2018-08-31T09:51:36+00:00",
+        "time": "2018-09-17T09:03:25+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -32,7 +32,7 @@
         ],
         "authors": [
             {
-                "name": "srag",
+                "name": "studer + raimann ag - Team Custom 1",
                 "email": "support-custom1@studer-raimann.ch",
                 "homepage": "https://studer-raimann.ch",
                 "role": "Developer"
@@ -48,23 +48,23 @@
     },
     {
         "name": "srag/dic",
-        "version": "0.7.1",
-        "version_normalized": "0.7.1.0",
+        "version": "0.8.11",
+        "version_normalized": "0.8.11.0",
         "source": {
             "type": "git",
             "url": "https://github.com/studer-raimann/DIC.git",
-            "reference": "8df28d5d4e794bf7cc3912bd889e96a81b402163"
+            "reference": "6b0810095546c8aefb41151c249347981f2ed80b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/studer-raimann/DIC/zipball/8df28d5d4e794bf7cc3912bd889e96a81b402163",
-            "reference": "8df28d5d4e794bf7cc3912bd889e96a81b402163",
+            "url": "https://api.github.com/repos/studer-raimann/DIC/zipball/6b0810095546c8aefb41151c249347981f2ed80b",
+            "reference": "6b0810095546c8aefb41151c249347981f2ed80b",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6"
         },
-        "time": "2018-09-03T08:18:36+00:00",
+        "time": "2018-09-18T08:30:39+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -78,7 +78,7 @@
         ],
         "authors": [
             {
-                "name": "srag",
+                "name": "studer + raimann ag - Team Custom 1",
                 "email": "support-custom1@studer-raimann.ch",
                 "homepage": "https://studer-raimann.ch",
                 "role": "Developer"
@@ -95,24 +95,24 @@
     },
     {
         "name": "srag/removeplugindataconfirm",
-        "version": "0.1.13",
-        "version_normalized": "0.1.13.0",
+        "version": "0.2.5",
+        "version_normalized": "0.2.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/studer-raimann/RemovePluginDataConfirm.git",
-            "reference": "df6952d1308d538e2747ae3da7da494dabbad826"
+            "reference": "911c0ff316181c3efdf9068cf1cc2eb0e5ed6c8f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/studer-raimann/RemovePluginDataConfirm/zipball/df6952d1308d538e2747ae3da7da494dabbad826",
-            "reference": "df6952d1308d538e2747ae3da7da494dabbad826",
+            "url": "https://api.github.com/repos/studer-raimann/RemovePluginDataConfirm/zipball/911c0ff316181c3efdf9068cf1cc2eb0e5ed6c8f",
+            "reference": "911c0ff316181c3efdf9068cf1cc2eb0e5ed6c8f",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6",
             "srag/dic": ">=0.1.0"
         },
-        "time": "2018-09-03T08:11:15+00:00",
+        "time": "2018-09-17T09:07:15+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -126,7 +126,7 @@
         ],
         "authors": [
             {
-                "name": "srag",
+                "name": "studer + raimann ag - Team Custom 1",
                 "email": "support-custom1@studer-raimann.ch",
                 "homepage": "https://studer-raimann.ch",
                 "role": "Developer"
