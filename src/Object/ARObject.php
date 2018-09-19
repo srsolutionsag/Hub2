@@ -204,7 +204,11 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	public function wakeUp($field_name, $field_value) {
 		switch ($field_name) {
 			case 'data':
-				return json_decode($field_value, true);
+				$data = json_decode($field_value, true);
+				if (!is_array($data)) {
+					$data = [];
+				}
+				return $data;
 			case 'meta_data':
 				if (is_null($field_value)) {
 					return [];
