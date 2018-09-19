@@ -181,7 +181,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
 				$org_unit_id = $org_unit->getILIASId();
 
-				if ($org_unit_id === NULL) {
+				if (empty($org_unit_id)) {
 					throw new HubException("External ID {$ext_id} not found!");
 				}
 				break;
@@ -193,7 +193,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 		}
 
 		$org_unit = $this->getOrgUnitObject($org_unit_id);
-		if ($org_unit === NULL) {
+		if (empty($org_unit)) {
 			throw new HubException("Org Unit {$org_unit_id} not found!");
 		}
 
