@@ -12,6 +12,8 @@ use srag\DIC\DICTrait;
  * Class ActiveRecordConfig
  *
  * @package srag\ActiveRecordConfig
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 abstract class ActiveRecordConfig extends ActiveRecord {
 
@@ -35,7 +37,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @access protected
 	 */
-	public final function getConnectorContainerName() {
+	public final function getConnectorContainerName()/*: string*/ {
 		return static::TABLE_NAME;
 	}
 
@@ -47,7 +49,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @deprecated
 	 */
-	public static final function returnDbTableName() {
+	public static final function returnDbTableName()/*: string*/ {
 		return static::TABLE_NAME;
 	}
 
@@ -58,7 +60,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return static
 	 */
-	protected static final function getConfig($name, $store_new = true) {
+	protected static final function getConfig(/*string*/
+		$name, /*bool*/
+		$store_new = true)/*: static*/ {
 		/**
 		 * @var static $config
 		 */
@@ -87,7 +91,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return mixed
 	 */
-	protected static final function getXValue($name, $default_value = NULL) {
+	protected static final function getXValue(/*string*/
+		$name, $default_value = NULL) {
 		$config = self::getConfig($name);
 
 		$value = $config->getValue();
@@ -104,7 +109,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string $name
 	 * @param mixed  $value
 	 */
-	protected static final function setXValue($name, $value) {
+	protected static final function setXValue(/*string*/
+		$name, $value)/*: void*/ {
 		$config = self::getConfig($name, false);
 
 		$config->setValue($value);
@@ -118,7 +124,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return string[] [ [ "name" => value ], ... ]
 	 */
-	protected static final function getValues() {
+	protected static final function getValues()/*: array*/ {
 		return array_reduce(self::get(), function (array $configs, self $config) {
 			$configs[$config->getName()] = $config->getValue();
 
@@ -132,7 +138,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return string[] [ "name", ... ]
 	 */
-	protected static final function getNames() {
+	protected static final function getNames()/*: array*/ {
 		return array_keys(self::getValues());
 	}
 
@@ -143,7 +149,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param array $configs       [ [ "name" => value ], ... ]
 	 * @param bool  $remove_exists Delete all exists name before
 	 */
-	protected static final function setValues(array $configs, $remove_exists = false) {
+	protected static final function setValues(array $configs, /*bool*/
+		$remove_exists = false)/*: void*/ {
 		if ($remove_exists) {
 			self::truncateDB();
 		}
@@ -159,7 +166,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @param string $name Name
 	 */
-	protected static final function removeName($name) {
+	protected static final function removeName(/*string*/
+		$name)/*: void*/ {
 		$config = self::getConfig($name, false);
 
 		$config->delete();
@@ -172,7 +180,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return string
 	 */
-	protected static final function getStringValue($name, $default_value = "") {
+	protected static final function getStringValue(/*string*/
+		$name, /*string*/
+		$default_value = "")/*: string*/ {
 		return strval(self::getXValue($name, $default_value));
 	}
 
@@ -181,7 +191,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string $name
 	 * @param string $value
 	 */
-	protected static final function setStringValue($name, $value) {
+	protected static final function setStringValue(/*string*/
+		$name, $value)/*: void*/ {
 		self::setXValue($name, strval($value));
 	}
 
@@ -192,7 +203,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return int
 	 */
-	protected static final function getIntegerValue($name, $default_value = 0) {
+	protected static final function getIntegerValue(/*string*/
+		$name, /*int*/
+		$default_value = 0)/*: int*/ {
 		return intval(self::getXValue($name, $default_value));
 	}
 
@@ -201,7 +214,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string $name
 	 * @param int    $value
 	 */
-	protected static final function setIntegerValue($name, $value) {
+	protected static final function setIntegerValue(/*string*/
+		$name, $value)/*: void*/ {
 		self::setXValue($name, intval($value));
 	}
 
@@ -212,7 +226,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return double
 	 */
-	protected static final function getDoubleValue($name, $default_value = 0.0) {
+	protected static final function getDoubleValue(/*string*/
+		$name, /*double*/
+		$default_value = 0.0)/*: double*/ {
 		return doubleval(self::getXValue($name, $default_value));
 	}
 
@@ -221,7 +237,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string $name
 	 * @param double $value
 	 */
-	protected static final function setDoubleValue($name, $value) {
+	protected static final function setDoubleValue(/*string*/
+		$name, $value)/*: void*/ {
 		self::setXValue($name, doubleval($value));
 	}
 
@@ -232,7 +249,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return bool
 	 */
-	protected static final function getBooleanValue($name, $default_value = false) {
+	protected static final function getBooleanValue(/*string*/
+		$name, /*bool*/
+		$default_value = false)/*: bool*/ {
 		return boolval(self::getXValue($name, $default_value));
 	}
 
@@ -241,7 +260,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string $name
 	 * @param bool   $value
 	 */
-	protected static final function setBooleanValue($name, $value) {
+	protected static final function setBooleanValue(/*string*/
+		$name, $value)/*: void*/ {
 		self::setXValue($name, boolval($value));
 	}
 
@@ -252,7 +272,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return int
 	 */
-	protected static final function getTimestampValue($name, $default_value = 0) {
+	protected static final function getTimestampValue(/*string*/
+		$name, /*int*/
+		$default_value = 0)/*: int*/ {
 		$value = self::getXValue($name);
 
 		if ($value !== NULL) {
@@ -269,7 +291,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string $name
 	 * @param int    $value
 	 */
-	protected static final function setTimestampValue($name, $value) {
+	protected static final function setTimestampValue(/*string*/
+		$name, $value)/*: void*/ {
 		if ($value !== NULL) {
 			$date_time = new DateTime("@" . $value);
 
@@ -290,7 +313,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return mixed
 	 */
-	protected static final function getJsonValue($name, $assoc = false, $default_value = NULL) {
+	protected static final function getJsonValue(/*string*/
+		$name, /*bool*/
+		$assoc = false, $default_value = NULL) {
 		return json_decode(self::getXValue($name, json_encode($default_value)), $assoc);
 	}
 
@@ -299,7 +324,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string $name
 	 * @param mixed  $value
 	 */
-	protected static final function setJsonValue($name, $value) {
+	protected static final function setJsonValue(/*string*/
+		$name, $value)/*: void*/ {
 		self::setXValue($name, json_encode($value));
 	}
 
@@ -309,7 +335,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @return bool
 	 */
-	protected static final function isNullValue($name) {
+	protected static final function isNullValue(/*string*/
+		$name)/*: bool*/ {
 		return (self::getXValue($name) === NULL);
 	}
 
@@ -317,7 +344,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @param string $name
 	 */
-	protected static final function setNullValue($name) {
+	protected static final function setNullValue(/*string*/
+		$name)/*: void*/ {
 		self::setXValue($name, NULL);
 	}
 
@@ -345,7 +373,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @return string
 	 */
-	protected final function getName() {
+	protected final function getName()/*: string*/ {
 		return $this->name;
 	}
 
@@ -353,7 +381,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @param string $name
 	 */
-	protected final function setName($name) {
+	protected final function setName(/*string*/
+		$name)/*: void*/ {
 		$this->name = $name;
 	}
 
@@ -361,7 +390,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @return string
 	 */
-	protected final function getValue() {
+	protected final function getValue()/*: string*/ {
 		return $this->value;
 	}
 
@@ -369,7 +398,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @param string $value
 	 */
-	protected final function setValue($value) {
+	protected final function setValue(/*string*/
+		$value)/*: void*/ {
 		$this->value = $value;
 	}
 
@@ -382,7 +412,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @access protected
 	 */
-	public static final function find($primary_key, array $add_constructor_args = []) {
+	public static final function find(/*string*/
+		$primary_key, array $add_constructor_args = [])/*: static*/ {
 		/**
 		 * @var static $config
 		 */
@@ -401,7 +432,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @access protected
 	 */
-	public static final function findOrGetInstance($primary_key, array $add_constructor_args = []) {
+	public static final function findOrGetInstance(/*string*/
+		$primary_key, array $add_constructor_args = [])/*: static*/ {
 		/**
 		 * @var static $config
 		 */
@@ -421,7 +453,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @access protected
 	 */
-	public static final function findOrFail($primary_key, array $add_constructor_args = []) {
+	public static final function findOrFail(/*string*/
+		$primary_key, array $add_constructor_args = [])/*: static*/ {
 		/**
 		 * @var static $config
 		 */
@@ -438,7 +471,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 * @param string|null      $primary_name_value
 	 * @param arConnector|null $connector
 	 */
-	public final function __construct($primary_name_value = NULL, arConnector $connector = NULL) {
+	public final function __construct(/*?string*/
+		$primary_name_value = NULL, /*?*/
+		arConnector $connector = NULL) {
 		parent::__construct($primary_name_value, $connector);
 	}
 
@@ -450,7 +485,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @access protected
 	 */
-	public final function sleep($field_name) {
+	public final function sleep(/*string*/
+		$field_name) {
 		$field_value = $this->{$field_name};
 
 		switch ($field_name) {
@@ -468,7 +504,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @access protected
 	 */
-	public final function wakeUp($field_name, $field_value) {
+	public final function wakeUp(/*string*/
+		$field_name, $field_value) {
 		switch ($field_name) {
 			default:
 				return NULL;
@@ -481,7 +518,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @access protected
 	 */
-	public final function read() {
+	public final function read()/*: void*/ {
 		parent::read();
 	}
 
@@ -489,7 +526,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @access protected
 	 */
-	public final function afterObjectLoad() {
+	public final function afterObjectLoad()/*: void*/ {
 		parent::afterObjectLoad();
 	}
 
@@ -497,7 +534,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @access protected
 	 */
-	public final function create() {
+	public final function create()/*: void*/ {
 		parent::create();
 	}
 
@@ -505,7 +542,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @access protected
 	 */
-	public final function update() {
+	public final function update()/*: void*/ {
 		parent::update();
 	}
 
@@ -513,7 +550,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @access protected
 	 */
-	public final function delete() {
+	public final function delete()/*: void*/ {
 		parent::delete();
 	}
 
@@ -521,7 +558,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @access protected
 	 */
-	public final function store() {
+	public final function store()/*: void*/ {
 		parent::store();
 	}
 
@@ -531,7 +568,7 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	 *
 	 * @deprecated Use store
 	 */
-	public final function save() {
+	public final function save()/*: void*/ {
 		parent::save();
 	}
 
@@ -539,12 +576,19 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	/**
 	 * @param string|null $new_id
 	 *
-	 * @return ActiveRecord
+	 * @return static
 	 * @throws arException
 	 *
 	 * @access protected
 	 */
-	public final function copy($new_id = NULL) {
-		return parent::copy($new_id);
+	public final function copy(/*?string*/
+		$new_id = NULL)/*: static*/ {
+		/**
+		 * @var static $config
+		 */
+
+		$config = parent::copy($new_id);
+
+		return $config;
 	}
 }
