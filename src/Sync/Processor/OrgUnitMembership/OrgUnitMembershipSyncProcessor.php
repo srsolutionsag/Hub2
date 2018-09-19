@@ -208,13 +208,13 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	 */
 	protected function getOrgUnitObject(int $obj_id) {
 		$ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
-		if (!$ref_id) {
+		if (empty($ref_id)) {
 			return NULL;
 		}
 
 		$orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
 
-		if ($orgUnit !== false && $orgUnit instanceof ilObjOrgUnit) {
+		if (!empty($orgUnit) && $orgUnit instanceof ilObjOrgUnit) {
 			return $orgUnit;
 		} else {
 			return NULL;
