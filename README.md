@@ -1,7 +1,7 @@
 ## Installation
 
 ### Install Hub2 plugin
-Start at your ILIAS root directory 
+Start at your ILIAS root directory
 
 ```bash
 mkdir -p Customizing/global/plugins/Services/Cron/CronHook
@@ -21,6 +21,7 @@ sudo -u www-data composer install
 ```
 
 ### Dependencies
+* [composer](https://getcomposer.org)
 * [srag/activerecordconfig](https://packagist.org/packages/srag/activerecordconfig)
 * [srag/dic](https://packagist.org/packages/srag/dic)
 * [srag/removeplugindataconfirm](https://packagist.org/packages/srag/removeplugindataconfirm)
