@@ -18,14 +18,6 @@ class hub2RemoveDataConfirm extends AbstractRemovePluginDataConfirm {
 	/**
 	 * @inheritdoc
 	 */
-	public function removeUninstallRemovesData() {
-		ArConfig::removeUninstallRemovesData();
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
 	public function getUninstallRemovesData() {
 		return ArConfig::getUninstallRemovesData();
 	}
@@ -36,5 +28,13 @@ class hub2RemoveDataConfirm extends AbstractRemovePluginDataConfirm {
 	 */
 	public function setUninstallRemovesData($uninstall_removes_data) {
 		ArConfig::setUninstallRemovesData($uninstall_removes_data);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function removeUninstallRemovesData() {
+		ArConfig::removeUninstallRemovesData();
 	}
 }

@@ -34,7 +34,7 @@ class XConfig extends ActiveRecordConfig {
 	//...
 	const TABLE_NAME = "db_table_name";
 	//...
-	const PLUGIN_CLASS_NAME = XPlugin::class;
+	const PLUGIN_CLASS_NAME = ilXPlugin::class;
 	//...
 }
 ```
@@ -51,14 +51,14 @@ And now add some configs:
 	/**
 	 * @return string
 	 */
-	public static function getSome() {
+	public static function getSome()/*: string*/ {
 		return self::getStringValue(self::KEY_SOME, self::DEFAULT_SOME);
 	}
 
 	/**
 	 * @param string $some
 	 */
-	public static function setSome($some) {
+	public static function setSome(/*string*/$some)/*: void*/ {
 		self::setStringValue(self::KEY_SOME, $some);
 	}
 ```
@@ -68,7 +68,7 @@ If you need to remove a config add:
 /**
  *
  */
-public static function removeSome() {
+public static function removeSome()/*: void*/ {
 	self::removeName(self::KEY_SOME);
 }
 ```
@@ -97,14 +97,14 @@ The following additional methods exist:
  *
  * @return string[] [ "name", ... ]
  */
-self::getNames();
+self::getNames()/*: array*/;
 
 /**
  * Get all values
  *
  * @return string[] [ [ "name" => value ], ... ]
  */
-self::getValues();
+self::getValues()/*: array*/;
 
 /**
  * Set all values
@@ -112,17 +112,74 @@ self::getValues();
  * @param array $configs        [ [ "name" => value ], ... ]
  * @param bool  $delete_existss Delete all exists name before
  */
-self::setValues(array $configs, $delete_exists = false);
+self::setValues(array $configs, /*bool*/$delete_exists = false)/*: void*/;
 
 /**
  * Remove a name
  * 
  * @param string $name Name
  */
-self::removeName($name);
+self::removeName(/*string*/$name)/*: void*/;
 ```
 
 Other `ActiveRecord` methods should be not used!
+
+### ActiveRecordConfigGUI
+Create a class `ilXConfigGUI`:
+```php
+//...
+use srag\ActiveRecordConfig\ActiveRecordConfigGUI;
+//...
+class ilXConfigGUI extends ActiveRecordConfigGUI {
+	//...
+	const PLUGIN_CLASS_NAME = ilXPlugin::class;
+	const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = XConfigFormGUI::class;
+}
+```
+and a class `XConfigFormGUI`:
+```php
+//...
+use srag\ActiveRecordConfig\ActiveRecordConfigFormGUI;
+//...
+class XConfigFormGUI extends ActiveRecordConfigFormGUI {
+	//...
+	const PLUGIN_CLASS_NAME = ilXPlugin::class;
+	
+	/**
+     * @inheritdoc
+     */
+    protected function setForm()/*: void*/ {
+        parent::setForm();
+        
+        // TODO: Fill your config form
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function updateConfig()/*: void*/ {
+        // TODO: Update your config
+    }
+}
+```
+`ilXPlugin` is the name of your plugin class ([DICTrait](https://github.com/studer-raimann/DIC)).
+`XConfigFormGUI` is the name of your config form gui class.
+
+
+Then you need to declare some language variables like:
+English:
+```
+activerecordconfig_configuration#:#Configuration
+activerecordconfig_configuration_saved#:#Configuration saved
+activerecordconfig_save#:#Save
+```
+German:
+```
+activerecordconfig_configuration#:#Konfiguration
+activerecordconfig_configuration_saved#:#Konfiguration gespeichert
+activerecordconfig_save#:#Speichern
+```
 
 ### Migrate from your old config class
 
@@ -154,9 +211,9 @@ Column name based:
 XConfig::updateDB();
 
 if (\srag\DIC\DICStatic::dic()->database()->tableExists(XConfigOld::TABLE_NAME)) {
-	$config = XConfigOld::getConfig();
+	$config_old = XConfigOld::getConfig();
 
- 	XConfig::setSome($config->getSome());
+ 	XConfig::setSome($config_old->getSome());
 	//...
 
 	\srag\DIC\DICStatic::dic()->database()->dropTable(XConfigOld::TABLE_NAME);
@@ -190,18 +247,24 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(XConfigOld::TABLE_NAME))
 ?>
 ```
 
+### Dependencies
+* [composer](https://getcomposer.org)
+* [srag/dic](https://packagist.org/packages/srag/dic)
+
+Please use it for further development!
+
 ### Adjustment suggestions
 * Adjustment suggestions by pull requests on https://git.studer-raimann.ch/ILIAS/Plugins/ActiveRecordConfig/tree/develop
 * Adjustment suggestions which are not yet worked out in detail by Jira tasks under https://jira.studer-raimann.ch/projects/ACCONF
 * Bug reports under https://jira.studer-raimann.ch/projects/ACCONF
-* For external developers please send an email to support-custom1@studer-raimann.ch
+* For external users please send an email to support-custom1@studer-raimann.ch
 
 ### Development
 If you want development in this library you should install this library like follow:
 
-Start at your ILIAS root directory 
+Start at your ILIAS root directory
 ```bash
-mkdir -p Customizing/global/plugins/Libraries/  
-cd Customizing/global/plugins/Libraries/  
+mkdir -p Customizing/global/plugins/Libraries
+cd Customizing/global/plugins/Libraries
 git clone git@git.studer-raimann.ch:ILIAS/Plugins/ActiveRecordConfig.git ActiveRecordConfig
 ```

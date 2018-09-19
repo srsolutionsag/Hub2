@@ -177,7 +177,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		$org_unit = $this->getOrgUnitObject($ilias_id);
-		if ($org_unit === NULL) {
+		if (empty($org_unit)) {
 			return NULL;
 		}
 
@@ -212,7 +212,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function handleDelete($ilias_id) {
 		$org_unit = $this->getOrgUnitObject($ilias_id);
-		if ($org_unit === NULL) {
+		if (empty($org_unit)) {
 			return NULL;
 		}
 
@@ -229,13 +229,13 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function getOrgUnitObject(int $obj_id) {
 		$ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
-		if (!$ref_id) {
+		if (empty($ref_id)) {
 			return NULL;
 		}
 
 		$orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
 
-		if ($orgUnit !== false && $orgUnit instanceof ilObjOrgUnit) {
+		if (!empty($orgUnit) && $orgUnit instanceof ilObjOrgUnit) {
 			return $orgUnit;
 		} else {
 			return NULL;
@@ -285,7 +285,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 					$parent_id = $parent_org_unit->getILIASId();
 
-					if ($parent_id === NULL || $this->getOrgUnitObject($parent_id) === NULL) {
+					if (empty($parent_id) || empty($this->getOrgUnitObject($parent_id))) {
 						throw new HubException("External ID {$ext_id} not found!");
 					}
 
