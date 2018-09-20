@@ -202,7 +202,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$mail_field = $dto->getEmail();
 		if ($mail_field) {
 			$mail = new ilMimeMail();
-			$mail->From($this->mailMimeSenderFactory()->system());
+			$mail->From(self::dic()->mailMimeSenderFactory()->system());
 			$mail->To($dto->getEmail());
 			$body = $this->props->get(UserOriginProperties::PASSWORD_MAIL_BODY);
 
