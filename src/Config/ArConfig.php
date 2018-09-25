@@ -25,9 +25,10 @@ class ArConfig extends ActiveRecordConfig {
 	 *
 	 * @return string
 	 *
-	 * @deprecated Use ActiveRecordConfig directly with getStringValue or similar method
+	 * @deprecated TODO: Use for each key seperate methods with corresponding datatype and default value
 	 */
-	public static function getValueByKey(string $key, $default_value = NULL) {
+	public static function getValueByKey(string $key, /*?*/
+		string $default_value = NULL): string {
 		return self::getStringValue($key, $default_value);
 	}
 
@@ -36,11 +37,10 @@ class ArConfig extends ActiveRecordConfig {
 	 * @param string $name
 	 * @param string $value
 	 *
-	 * @deprecated Use ActiveRecordConfig directly with setStringValue or similar method
-	 *
+	 * @deprecated TODO: Use for each key seperate methods with corresponding datatype and default value
 	 */
-	public static function setValueByKey(string $name, $value) {
-		self::setStringValue($name, (string)$value);
+	public static function setValueByKey(string $name, string $value)/*: void*/ {
+		self::setStringValue($name, $value);
 	}
 
 
