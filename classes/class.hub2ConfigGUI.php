@@ -34,7 +34,7 @@ class hub2ConfigGUI extends hub2MainGUI {
 		if ($form->checkInput()) {
 			foreach ($form->getInputItemsRecursive() as $item) {
 				/** @var ilFormPropertyGUI $item */
-				ArConfig::setValueByKey($item->getPostVar(), $form->getInput($item->getPostVar()));
+				ArConfig::setValueByKey(strval($item->getPostVar()), strval($form->getInput($item->getPostVar())));
 			}
 			ilUtil::sendSuccess(self::plugin()->translate('msg_successfully_saved'), true);
 			self::dic()->ctrl()->redirect($this);
