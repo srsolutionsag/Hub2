@@ -25,7 +25,7 @@ class ArConfig extends ActiveRecordConfig {
 	 *
 	 * @return string
 	 *
-	 * @deprecated TODO: Use for each key seperate methods with corresponding datatype and default value
+	 * @deprecated TODO: Use ArConfig and merge it with HubConfig (Static methods). Use for each key seperate methods with corresponding datatype and default value
 	 */
 	public static function getValueByKey(string $key, /*?*/
 		string $default_value = NULL): string {
@@ -37,7 +37,7 @@ class ArConfig extends ActiveRecordConfig {
 	 * @param string $name
 	 * @param string $value
 	 *
-	 * @deprecated TODO: Use for each key seperate methods with corresponding datatype and default value
+	 * @deprecated TODO: Use ArConfig and merge it with HubConfig (Static methods). Use for each key seperate methods with corresponding datatype and default value
 	 */
 	public static function setValueByKey(string $name, string $value)/*: void*/ {
 		self::setStringValue($name, $value);
