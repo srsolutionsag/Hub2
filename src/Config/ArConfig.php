@@ -31,11 +31,12 @@ class ArConfig extends ActiveRecordConfig {
 
 
 	/**
+	 * @deprecated Use ActiveRecordConfig directly with setStringValue or similar method
 	 * @param string $name
 	 * @param string $value
 	 */
 	public static function setValueByKey(string $name, $value) {
-		self::setStringValue($name, $value);
+		self::setStringValue($name, (string)$value);
 	}
 
 

@@ -43,7 +43,7 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(\SRAG\Plugins\Hub2\Confi
 		 */
 		switch ($config->getKey()) {
 			default:
-				\SRAG\Plugins\Hub2\Config\ArConfig::setValueByKey($config->getValue(), $config->getValue());
+				\SRAG\Plugins\Hub2\Config\ArConfig::setValueByKey((string)$config->getKey(), $config->getValue());
 				break;
 		}
 	}
