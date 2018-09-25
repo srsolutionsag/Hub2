@@ -5,9 +5,11 @@ namespace SRAG\Plugins\Hub2\Config;
 /**
  * Interface IHubConfig
  *
- * @package SRAG\Plugins\Hub2\Config
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @package     SRAG\Plugins\Hub2\Config
+ * @author      Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author      Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @deprecated  TODO: Use ArConfig and merge it with HubConfig (Static methods). Use for each key seperate methods with corresponding datatype and default value
  */
 interface IHubConfig {
 
@@ -23,6 +25,8 @@ interface IHubConfig {
 	 * Get the path to the class files of origin implementations
 	 *
 	 * @return string
+	 *
+	 * @deprecated
 	 */
 	public function getOriginImplementationsPath();
 
@@ -31,6 +35,8 @@ interface IHubConfig {
 	 * Get the message presented to the user if the ILIAS object was not found via shortlink.
 	 *
 	 * @return string
+	 *
+	 * @deprecated
 	 */
 	public function getShortLinkObjectNotFound();
 
@@ -39,12 +45,16 @@ interface IHubConfig {
 	 * Get the message presented to the user if no ILIAS-ID is existing for the shortlink.
 	 *
 	 * @return string
+	 *
+	 * @deprecated
 	 */
 	public function getShortLinkObjectNotAccessible();
 
 
 	/**
 	 * @return string
+	 *
+	 * @deprecated
 	 */
 	public function getShortlinkSuccess();
 
@@ -53,6 +63,8 @@ interface IHubConfig {
 	 * Get role IDs of ILIAS roles allowing to administrate hub, e.g. add and configure origins
 	 *
 	 * @return array
+	 *
+	 * @deprecated
 	 */
 	public function getAdministrationRoleIds();
 
@@ -61,6 +73,8 @@ interface IHubConfig {
 	 * Should settings of origins be locked?
 	 *
 	 * @return bool
+	 *
+	 * @deprecated
 	 */
 	public function isOriginsConfigLocked();
 
@@ -72,7 +86,7 @@ interface IHubConfig {
 	 *
 	 * @return string
 	 *
-	 * @deprecated TODO: Use ArConfig directly. Use for each key seperate methods with corresponding datatype and default value
+	 * @deprecated
 	 */
 	public function get(string $key): string;
 }

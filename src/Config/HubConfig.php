@@ -8,9 +8,11 @@ use srag\DIC\DICTrait;
 /**
  * Class HubConfig
  *
- * @package SRAG\Plugins\Hub2\Config
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @package     SRAG\Plugins\Hub2\Config
+ * @author      Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author      Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @deprecated  TODO: Use ArConfig and merge it with HubConfig (Static methods). Use for each key seperate methods with corresponding datatype and default value
  */
 class HubConfig implements IHubConfig {
 
@@ -20,6 +22,8 @@ class HubConfig implements IHubConfig {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
 	public function getOriginImplementationsPath() {
 		$path = $this->get(IHubConfig::ORIGIN_IMPLEMENTATION_PATH);
@@ -30,6 +34,8 @@ class HubConfig implements IHubConfig {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
 	public function getShortLinkObjectNotFound() {
 		return $this->get(IHubConfig::SHORTLINK_OBJECT_NOT_FOUND);
@@ -38,6 +44,8 @@ class HubConfig implements IHubConfig {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
 	public function getShortLinkObjectNotAccessible() {
 		return $this->get(IHubConfig::SHORTLINK_OBJECT_NOT_ACCESSIBLE);
@@ -46,6 +54,8 @@ class HubConfig implements IHubConfig {
 
 	/**
 	 * @inheritDoc
+	 *
+	 * @deprecated
 	 */
 	public function getShortlinkSuccess() {
 		return $this->get(IHubConfig::SHORTLINK_SUCCESS);
@@ -54,6 +64,8 @@ class HubConfig implements IHubConfig {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
 	public function isOriginsConfigLocked() {
 		return (bool)$this->get(IHubConfig::LOCK_ORIGINS_CONFIG);
@@ -62,6 +74,8 @@ class HubConfig implements IHubConfig {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
 	public function getAdministrationRoleIds() {
 		$roles = $this->get(IHubConfig::ADMINISTRATE_HUB_ROLE_IDS);
@@ -76,7 +90,7 @@ class HubConfig implements IHubConfig {
 	/**
 	 * @inheritdoc
 	 *
-	 * @deprecated TODO: Use ArConfig directly. Use for each key seperate methods with corresponding datatype and default value
+	 * @deprecated
 	 */
 	public function get(string $key): string {
 		return ArConfig::getValueByKey($key);
