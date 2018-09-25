@@ -79,7 +79,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @inheritdoc
 	 */
-	protected function deleteData() {
+	protected function deleteData()/*: void*/ {
 		self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);

@@ -24,6 +24,8 @@ class ArConfig extends ActiveRecordConfig {
 	 * @param string|null $default_value
 	 *
 	 * @return string
+	 *
+	 * @deprecated Use ActiveRecordConfig directly with getStringValue or similar method
 	 */
 	public static function getValueByKey(string $key, $default_value = NULL) {
 		return self::getStringValue($key, $default_value);
@@ -31,9 +33,11 @@ class ArConfig extends ActiveRecordConfig {
 
 
 	/**
-	 * @deprecated Use ActiveRecordConfig directly with setStringValue or similar method
 	 * @param string $name
 	 * @param string $value
+	 *
+	 * @deprecated Use ActiveRecordConfig directly with setStringValue or similar method
+	 *
 	 */
 	public static function setValueByKey(string $name, $value) {
 		self::setStringValue($name, (string)$value);
@@ -43,7 +47,7 @@ class ArConfig extends ActiveRecordConfig {
 	/**
 	 * @return bool|null
 	 */
-	public static function getUninstallRemovesData() {
+	public static function getUninstallRemovesData()/*: ?bool*/ {
 		return self::getXValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, hub2RemoveDataConfirm::DEFAULT_UNINSTALL_REMOVES_DATA);
 	}
 
@@ -51,7 +55,7 @@ class ArConfig extends ActiveRecordConfig {
 	/**
 	 * @param bool $uninstall_removes_data
 	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data) {
+	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/ {
 		self::setBooleanValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, $uninstall_removes_data);
 	}
 
@@ -59,7 +63,7 @@ class ArConfig extends ActiveRecordConfig {
 	/**
 	 *
 	 */
-	public static function removeUninstallRemovesData() {
+	public static function removeUninstallRemovesData()/*: void*/ {
 		self::removeName(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA);
 	}
 }
