@@ -70,7 +70,9 @@ interface IHubConfig {
 	 *
 	 * @param string $key
 	 *
-	 * @return mixed
+	 * @return string
+	 *
+	 * @deprecated TODO: Use ArConfig directly. Use for each key seperate methods with corresponding datatype and default value
 	 */
-	public function get($key);
+	public function get(string $key);
 }
