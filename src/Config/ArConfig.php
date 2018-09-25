@@ -24,26 +24,30 @@ class ArConfig extends ActiveRecordConfig {
 	 * @param string|null $default_value
 	 *
 	 * @return string
+	 *
+	 * @deprecated TODO: Use for each key seperate methods with corresponding datatype and default value
 	 */
-	public static function getValueByKey(string $key, $default_value = NULL) {
+	public static function getValueByKey(string $key, /*?*/
+		string $default_value = NULL): string {
 		return self::getStringValue($key, $default_value);
 	}
 
 
 	/**
-	 * @deprecated Use ActiveRecordConfig directly with setStringValue or similar method
 	 * @param string $name
 	 * @param string $value
+	 *
+	 * @deprecated TODO: Use for each key seperate methods with corresponding datatype and default value
 	 */
-	public static function setValueByKey(string $name, $value) {
-		self::setStringValue($name, (string)$value);
+	public static function setValueByKey(string $name, string $value)/*: void*/ {
+		self::setStringValue($name, $value);
 	}
 
 
 	/**
 	 * @return bool|null
 	 */
-	public static function getUninstallRemovesData() {
+	public static function getUninstallRemovesData()/*: ?bool*/ {
 		return self::getXValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, hub2RemoveDataConfirm::DEFAULT_UNINSTALL_REMOVES_DATA);
 	}
 
@@ -51,7 +55,7 @@ class ArConfig extends ActiveRecordConfig {
 	/**
 	 * @param bool $uninstall_removes_data
 	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data) {
+	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/ {
 		self::setBooleanValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, $uninstall_removes_data);
 	}
 
@@ -59,7 +63,7 @@ class ArConfig extends ActiveRecordConfig {
 	/**
 	 *
 	 */
-	public static function removeUninstallRemovesData() {
+	public static function removeUninstallRemovesData()/*: void*/ {
 		self::removeName(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA);
 	}
 }
