@@ -13,11 +13,41 @@ namespace SRAG\Plugins\Hub2\Config;
  */
 interface IHubConfig {
 
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const ORIGIN_IMPLEMENTATION_PATH = 'origin_implementation_path';
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const SHORTLINK_OBJECT_NOT_FOUND = 'shortlink_not_found';
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const SHORTLINK_OBJECT_NOT_ACCESSIBLE = 'shortlink_no_access';
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const SHORTLINK_SUCCESS = 'shortlink_success';
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const ADMINISTRATE_HUB_ROLE_IDS = 'administrate_hub_role_ids';
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const LOCK_ORIGINS_CONFIG = 'lock_origins_config';
 
 
