@@ -78,7 +78,7 @@ class HubConfig implements IHubConfig {
 	 *
 	 * @deprecated TODO: Use ArConfig directly. Use for each key seperate methods with corresponding datatype and default value
 	 */
-	public function get(string $key) {
+	public function get(string $key): string {
 		return ArConfig::getValueByKey($key);
 	}
 }
