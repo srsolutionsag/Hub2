@@ -122,4 +122,12 @@ class HookObject {
 	public function getDTO(): IDataTransferObject {
 		return $this->dto;
 	}
+
+
+	/**
+	 * @return IObject the internal AR Object, not the ILIAS Object
+	 */
+	public function getObject(): IObject {
+		return $this->object;
+	}
 }
