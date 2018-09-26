@@ -34,7 +34,7 @@ class hub2MainGUI {
 	/**
 	 *
 	 */
-	public function executeCommand() {
+	public function executeCommand()/*: void*/ {
 		$this->initTabs();
 		$nextClass = self::dic()->ctrl()->getNextClass();
 		switch ($nextClass) {
@@ -56,7 +56,7 @@ class hub2MainGUI {
 	/**
 	 *
 	 */
-	protected function index() {
+	protected function index()/*: void*/ {
 		self::dic()->ctrl()->redirectByClass(hub2ConfigGUI::class);
 	}
 
@@ -64,7 +64,7 @@ class hub2MainGUI {
 	/**
 	 *
 	 */
-	protected function initTabs() {
+	protected function initTabs()/*: void*/ {
 		self::dic()->tabs()->addTab(self::TAB_PLUGIN_CONFIG, self::plugin()->translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigGUI::class));
 
@@ -76,7 +76,7 @@ class hub2MainGUI {
 	/**
 	 *
 	 */
-	protected function cancel() {
+	protected function cancel()/*: void*/ {
 		$this->index();
 	}
 }

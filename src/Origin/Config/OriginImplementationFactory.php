@@ -2,7 +2,7 @@
 
 namespace SRAG\Plugins\Hub2\Origin\Config;
 
-use SRAG\Plugins\Hub2\Config\IHubConfig;
+use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
@@ -27,10 +27,6 @@ class OriginImplementationFactory {
 	 */
 	protected $origin;
 	/**
-	 * @var IHubConfig
-	 */
-	protected $hubConfig;
-	/**
 	 * @var ILog
 	 */
 	protected $originLog;
@@ -41,13 +37,11 @@ class OriginImplementationFactory {
 
 
 	/**
-	 * @param IHubConfig          $hubConfig
 	 * @param IOrigin             $origin
 	 * @param ILog                $originLog
 	 * @param OriginNotifications $originNotifications
 	 */
-	public function __construct(IHubConfig $hubConfig, IOrigin $origin, ILog $originLog, OriginNotifications $originNotifications) {
-		$this->hubConfig = $hubConfig;
+	public function __construct(IOrigin $origin, ILog $originLog, OriginNotifications $originNotifications) {
 		$this->origin = $origin;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
@@ -59,7 +53,7 @@ class OriginImplementationFactory {
 	 * @throws HubException
 	 */
 	public function instance() {
-		$basePath = rtrim($this->hubConfig->getOriginImplementationsPath(), '/') . '/';
+		$basePath = rtrim(ArConfig::getOriginImplementationsPath(), '/') . '/';
 		$path = $basePath . $this->origin->getObjectType() . '/';
 		$className = $this->origin->getImplementationClassName();
 		$namespace = $this->origin->getImplementationNamespace();

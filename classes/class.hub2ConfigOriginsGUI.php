@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use SRAG\Plugins\Hub2\Config\HubConfig;
+use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Exception\HubException;
 use SRAG\Plugins\Hub2\Log\OriginLog;
 use SRAG\Plugins\Hub2\Origin\AROrigin;
@@ -52,10 +52,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 */
 	protected $originFactory;
 	/**
-	 * @var HubConfig
-	 */
-	protected $hubConfig;
-	/**
 	 * @var IOriginRepository
 	 */
 	protected $originRepository;
@@ -67,7 +63,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	public function __construct() {
 		parent::__construct();
 		$this->originFactory = new OriginFactory();
-		$this->hubConfig = new HubConfig();
 		$this->originRepository = new OriginRepository();
 		$this->summaryFactory = new OriginSyncSummaryFactory();
 	}
@@ -140,7 +135,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function addOrigin() {
-		$form = new OriginConfigFormGUI($this, $this->hubConfig, new OriginRepository(), new ARUserOrigin());
+		$form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
 		self::dic()->template()->setContent($form->getHTML());
 	}
 
@@ -149,7 +144,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function createOrigin() {
-		$form = new OriginConfigFormGUI($this, $this->hubConfig, new OriginRepository(), new ARUserOrigin());
+		$form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
 		if ($form->checkInput()) {
 			$origin = $this->originFactory->createByType($form->getInput('object_type'));
 			$origin->setTitle($form->getInput('title'));
@@ -195,14 +190,16 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$origin->save();
 			ilUtil::sendSuccess(self::plugin()->translate('msg_origin_saved'), true);
 			// Try to create the implementation class file automatically
-			$generator = new OriginImplementationTemplateGenerator($this->hubConfig);
+			$generator = new OriginImplementationTemplateGenerator();
 			try {
 				$result = $generator->create($origin);
 				if ($result) {
-					ilUtil::sendInfo(self::plugin()->translate("msg_created_class_implementation_file", "", [ $generator->getClassFilePath($origin) ]), true);
+					ilUtil::sendInfo(self::plugin()
+						->translate("msg_created_class_implementation_file", "", [ $generator->getClassFilePath($origin) ]), true);
 				}
 			} catch (HubException $e) {
-				ilUtil::sendInfo(self::plugin()->translate("msg_created_class_implementation_file_failed", "", [ $generator->getClassFilePath($origin) ]), true);
+				ilUtil::sendInfo(self::plugin()
+					->translate("msg_created_class_implementation_file_failed", "", [ $generator->getClassFilePath($origin) ]), true);
 			}
 			self::dic()->ctrl()->saveParameter($this, self::ORIGIN_ID);
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
@@ -343,7 +340,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 * Returns to personal desktop if a user does not have permission to administrate hub.
 	 */
 	protected function checkAccess() {
-		$roles = array_unique(array_merge($this->hubConfig->getAdministrationRoleIds(), [ 2 ]));
+		$roles = array_unique(array_merge(ArConfig::getAdministrationRoleIds(), [ 2 ]));
 		if (!self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(self::dic()->user()->getId(), $roles)) {
 			ilUtil::sendFailure(self::plugin()->translate('permission_denied', "", [], false), true);
 			self::dic()->ctrl()->redirectByClass(ilPersonalDesktopGUI::class);
@@ -359,7 +356,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function getForm(AROrigin $origin) {
 		$formFactory = new OriginFormFactory();
 		$formClass = $formFactory->getFormClassNameByOrigin($origin);
-		$form = new $formClass($this, $this->hubConfig, new OriginRepository(), $origin);
+		$form = new $formClass($this, new OriginRepository(), $origin);
 
 		return $form;
 	}
