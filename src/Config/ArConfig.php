@@ -23,7 +23,7 @@ class ArConfig extends ActiveRecordConfig implements IArConfig {
 	 * @inheritdoc
 	 */
 	public static function getOriginImplementationsPath(): string {
-		return self::getStringValue(self::KEY_ORIGIN_IMPLEMENTATION_PATH, dirname(dirname(__DIR__)) . '/origins/'); // TODO: Use self::DEFAULT_ORIGIN_IMPLEMENTATION_PATH but there you can not use function like dirname! And not use realpath!
+		return self::getStringValue(self::KEY_ORIGIN_IMPLEMENTATION_PATH, dirname(dirname(__DIR__)) . '/origins/'); // TODO: Use self::DEFAULT_ORIGIN_IMPLEMENTATION_PATH but there you can not use function like dirname! And not use realpath if you think to use it!
 	}
 
 
