@@ -7,6 +7,7 @@ use DateTime;
 use Exception;
 use ilHub2Plugin;
 use InvalidArgumentException;
+use srag\ActiveRecordConfig\ActiveRecordConfig;
 use srag\DIC\DICTrait;
 use SRAG\Plugins\Hub2\Metadata\Metadata;
 use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
@@ -208,6 +209,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 				if (!is_array($data)) {
 					$data = [];
 				}
+
 				return $data;
 			case 'meta_data':
 				if (is_null($field_value)) {
@@ -314,7 +316,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function setDeliveryDate($unix_timestamp) {
-		$this->delivery_date = date('Y-m-d H:i:s', $unix_timestamp);
+		$this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
 
@@ -322,7 +324,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function setProcessedDate($unix_timestamp) {
-		$this->processed_date = date('Y-m-d H:i:s', $unix_timestamp);
+		$this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
 
