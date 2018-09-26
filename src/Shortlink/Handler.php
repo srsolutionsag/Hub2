@@ -7,7 +7,7 @@ use ilDBInterface;
 use ilHub2Plugin;
 use ilInitialisation;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Config\HubConfig;
+use SRAG\Plugins\Hub2\Config\ArConfig;
 use SRAG\Plugins\Hub2\Exception\ShortlinkException;
 use SRAG\Plugins\Hub2\Exception\ShortLinkNotFoundException;
 
@@ -31,10 +31,6 @@ class Handler {
 	 */
 	protected $object_link_factory;
 	/**
-	 * @var HubConfig
-	 */
-	protected $config;
-	/**
 	 * @var string
 	 */
 	protected $ext_id = '';
@@ -48,7 +44,6 @@ class Handler {
 	public function __construct(string $ext_id) {
 		$this->init = false;
 		$this->ext_id = $ext_id;
-		$this->config = new HubConfig();
 	}
 
 
@@ -70,15 +65,15 @@ class Handler {
 		$link = $object_link_factory->findByExtId($this->ext_id);
 
 		if (!$link->doesObjectExist()) {
-			$this->sendMessage((string)$this->config->getShortLinkObjectNotFound());
+			$this->sendMessage(ArConfig::getShortLinkObjectNotFound());
 			$this->doRedirect($link->getNonExistingLink());
 		}
 
 		if (!$link->isAccessGranted()) {
-			$this->sendMessage((string)$this->config->getShortLinkObjectNotAccessible());
+			$this->sendMessage(ArConfig::getShortLinkObjectNotAccessible());
 			$this->doRedirect($link->getAccessDeniedLink());
 		}
-		$this->sendMessage((string)$this->config->getShortlinkSuccess());
+		$this->sendMessage(ArConfig::getShortlinkSuccess());
 		$this->doRedirect($link->getAccessGrantedExternalLink());
 	}
 

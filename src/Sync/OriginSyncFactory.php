@@ -4,7 +4,6 @@ namespace SRAG\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Config\HubConfig;
 use SRAG\Plugins\Hub2\Log\ILog;
 use SRAG\Plugins\Hub2\Log\OriginLog;
 use SRAG\Plugins\Hub2\Notification\OriginNotifications;
@@ -48,7 +47,7 @@ class OriginSyncFactory {
 		$statusTransition = new ObjectStatusTransition($this->origin->config());
 		$originLog = new OriginLog($this->origin);
 		$originNotifications = new OriginNotifications();
-		$implementationFactory = new OriginImplementationFactory(new HubConfig(), $this->origin, $originLog, $originNotifications);
+		$implementationFactory = new OriginImplementationFactory($this->origin, $originLog, $originNotifications);
 		$originImplementation = $implementationFactory->instance();
 		$originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $this->getSyncProcessor($this->origin, $originImplementation, $statusTransition, $originLog, $originNotifications), $statusTransition, $originImplementation, $originNotifications);
 
