@@ -10,6 +10,7 @@ use srag\DIC\DICTrait;
  * Class ArConfigOld
  *
  * @package SRAG\Plugins\Hub2\Config
+ *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

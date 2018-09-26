@@ -7,7 +7,6 @@ require_once __DIR__ . "/../vendor/autoload.php";
 /**
  * Class ilHub2ConfigGUI
  *
- * @package
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
