@@ -70,7 +70,7 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 		$this->addItem($item);
 
 		$item = new ilTextInputGUI(self::plugin()->translate('common_roles'), IArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
-		$item->setValue(implode(', ', ArConfig::getAdministrationRoleIds())); // TODO: Use array
+		$item->setValue(implode(', ', ArConfig::getAdministrationRoleIds())); // TODO: Use better config gui for getAdministrationRoleIds
 		$item->setInfo(self::plugin()->translate('admin_roles_info'));
 		$this->addItem($item);
 
@@ -162,7 +162,7 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 					$administration_role_ids = array_map(function (string $id): int {
 						return intval($id);
 					}, $administration_role_ids);
-					ArConfig::setAdministrationRoleIds($administration_role_ids); // TODO: Use array
+					ArConfig::setAdministrationRoleIds($administration_role_ids); // TODO: Use better config gui for getAdministrationRoleIds
 					break;
 				case IArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND:
 					ArConfig::setShortLinkObjectNotFound($this->getInput($item->getPostVar()));
