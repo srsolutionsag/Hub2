@@ -33,7 +33,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	const PLUGIN_CLASS_NAME = self::class;
 	const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = hub2RemoveDataConfirm::class;
 	/**
-	 * @var ilHub2Plugin
+	 * @var self
 	 */
 	protected static $instance;
 
@@ -47,9 +47,9 @@ class ilHub2Plugin extends ilCronHookPlugin {
 
 
 	/**
-	 * @return ilHub2Plugin
+	 * @return self
 	 */
-	public static function getInstance(): ilHub2Plugin {
+	public static function getInstance(): self {
 		if (self::$instance === NULL) {
 			self::$instance = new self();
 		}
@@ -79,7 +79,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @inheritdoc
 	 */
-	protected function deleteData() {
+	protected function deleteData()/*: void*/ {
 		self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);
