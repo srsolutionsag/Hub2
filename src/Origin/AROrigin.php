@@ -404,7 +404,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	//	 * @inheritdoc
 	//	 */
 	//	public function implementation() {
-	//		$factory = new OriginImplementationFactory(new HubConfig(), $this);
+	//		$factory = new OriginImplementationFactory($this);
 	//		return $factory->instance();
 	//	}
 

@@ -51,3 +51,16 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(\SRAG\Plugins\Hub2\Confi
 	\srag\DIC\DICStatic::dic()->database()->dropTable(\SRAG\Plugins\Hub2\Config\ArConfigOld::TABLE_NAME);
 }
 ?>
+<#5>
+<?php
+$administration_role_ids = \SRAG\Plugins\Hub2\Config\ArConfig::getValueByKey(\SRAG\Plugins\Hub2\Config\IArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS, json_encode(\SRAG\Plugins\Hub2\Config\IArConfig::DEFAULT_ADMINISTRATE_HUB_ROLE_IDS));
+
+if (strpos($administration_role_ids, "[") === false) {
+	$administration_role_ids = preg_split('/, */', $administration_role_ids);
+	$administration_role_ids = array_map(function (string $id): int {
+		return intval($id);
+	}, $administration_role_ids);
+
+	\SRAG\Plugins\Hub2\Config\ArConfig::setAdministrationRoleIds($administration_role_ids);
+}
+?>
