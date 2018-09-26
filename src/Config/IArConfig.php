@@ -21,7 +21,7 @@ interface IArConfig {
 	/**
 	 * @var string
 	 *
-	 * TODO: Use self::DEFAULT_ORIGIN_IMPLEMENTATION_PATH but there you can not use function like dirname! And not use realpath!
+	 * TODO: Use self::DEFAULT_ORIGIN_IMPLEMENTATION_PATH but there you can not use function like dirname! And not use realpath if you think to use it!
 	 */
 	const DEFAULT_ORIGIN_IMPLEMENTATION_PATH = '';
 	const DEFAULT_SHORTLINK_OBJECT_NOT_FOUND = '';
