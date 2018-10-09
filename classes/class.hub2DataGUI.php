@@ -31,7 +31,7 @@ class hub2DataGUI extends hub2MainGUI {
 	 */
 	protected function index() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
-		self::dic()->template()->setContent($table->getHTML());
+		self::dic()->mainTemplate()->setContent($table->getHTML());
 	}
 
 
