@@ -119,7 +119,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		self::dic()->toolbar()->addButtonInstance($button);
 
 		$table = new OriginsTableGUI($this, self::CMD_INDEX, new OriginRepository());
-		self::dic()->template()->setContent($table->getHTML());
+		self::dic()->mainTemplate()->setContent($table->getHTML());
 	}
 
 
@@ -136,7 +136,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 */
 	protected function addOrigin() {
 		$form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
-		self::dic()->template()->setContent($form->getHTML());
+		self::dic()->mainTemplate()->setContent($form->getHTML());
 	}
 
 
@@ -155,7 +155,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
 		}
 		$form->setValuesByPost();
-		self::dic()->template()->setContent($form->getHTML());
+		self::dic()->mainTemplate()->setContent($form->getHTML());
 	}
 
 
@@ -165,7 +165,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function saveOrigin() {
 		/** @var AROrigin $origin */
 		$origin = $this->getOrigin((int)$_POST[self::ORIGIN_ID]);
-		self::dic()->template()->setTitle($origin->getTitle());
+		self::dic()->mainTemplate()->setTitle($origin->getTitle());
 		$form = $this->getForm($origin);
 		if ($form->checkInput()) {
 			$origin->setTitle($form->getInput('title'));
@@ -205,7 +205,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
 		}
 		$form->setValuesByPost();
-		self::dic()->template()->setContent($form->getHTML());
+		self::dic()->mainTemplate()->setContent($form->getHTML());
 	}
 
 
@@ -214,9 +214,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 */
 	protected function editOrigin() {
 		$origin = $this->getOrigin((int)$_GET[self::ORIGIN_ID]);
-		self::dic()->template()->setTitle($origin->getTitle());
+		self::dic()->mainTemplate()->setTitle($origin->getTitle());
 		$form = $this->getForm($origin);
-		self::dic()->template()->setContent($form->getHTML());
+		self::dic()->mainTemplate()->setContent($form->getHTML());
 	}
 
 
@@ -320,7 +320,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$c->setConfirm(self::plugin()->translate('confirm_delete_button'), self::CMD_DELETE);
 		$c->setCancel(self::plugin()->translate('cancel_delete_button'), self::CMD_INDEX);
 
-		self::dic()->template()->setContent($c->getHTML());
+		self::dic()->mainTemplate()->setContent($c->getHTML());
 	}
 
 
