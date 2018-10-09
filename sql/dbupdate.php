@@ -37,6 +37,8 @@
 \SRAG\Plugins\Hub2\Config\ArConfig::updateDB();
 
 if (\srag\DIC\DICStatic::dic()->database()->tableExists(\SRAG\Plugins\Hub2\Config\ArConfigOld::TABLE_NAME)) {
+	\SRAG\Plugins\Hub2\Config\ArConfigOld::updateDB();
+
 	foreach (\SRAG\Plugins\Hub2\Config\ArConfigOld::get() as $config) {
 		/**
 		 * @var \SRAG\Plugins\Hub2\Config\ArConfigOld $config
