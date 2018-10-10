@@ -21,7 +21,7 @@ sudo -u www-data composer install
 ```
 
 ### Dependencies
-* PHP 7.0
+* PHP >=7.0
 * [composer](https://getcomposer.org)
 * [srag/activerecordconfig](https://packagist.org/packages/srag/activerecordconfig)
 * [srag/dic](https://packagist.org/packages/srag/dic)
