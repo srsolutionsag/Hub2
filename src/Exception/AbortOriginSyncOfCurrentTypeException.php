@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Exception;
+namespace srag\Plugins\Hub2\Exception;
 
 /**
  * Class AbortOriginSyncOfCurrentTypeException
@@ -8,7 +8,7 @@ namespace SRAG\Plugins\Hub2\Exception;
  * Throw this exception to abort the current sync of the origin AND all also skip following syncs
  * from origins of the same object type, e.g. User, Course etc.
  *
- * @package SRAG\Plugins\Hub2\Exception
+ * @package srag\Plugins\Hub2\Exception
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

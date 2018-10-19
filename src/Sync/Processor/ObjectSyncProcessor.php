@@ -1,32 +1,32 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor;
+namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IMetadataAwareObject;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\HookObject;
+use srag\Plugins\Hub2\Object\IMetadataAwareObject;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 
 /**
  * Class ObjectProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

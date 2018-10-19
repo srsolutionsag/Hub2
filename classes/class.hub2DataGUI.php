@@ -1,10 +1,10 @@
 <?php
 
-use SRAG\Plugins\Hub2\Object\IMetadataAwareObject;
-use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
-use SRAG\Plugins\Hub2\UI\DataTableGUI;
+use srag\Plugins\Hub2\Object\IMetadataAwareObject;
+use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\UI\DataTableGUI;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 

@@ -1,19 +1,19 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use ilCheckboxInputGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilTextInputGUI;
-use SRAG\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
-use SRAG\Plugins\Hub2\Origin\Config\ICategoryOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use srag\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
+use srag\Plugins\Hub2\Origin\Config\ICategoryOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 
 /**
  * Class CategoryOriginConfigFormGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

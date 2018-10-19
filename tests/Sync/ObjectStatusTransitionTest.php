@@ -2,10 +2,9 @@
 
 require_once __DIR__ . "/../AbstractHub2Tests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Sync\ObjectStatusTransition;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Sync\ObjectStatusTransition;
 
 /**
  * Class ObjectStatusTransitionTest
@@ -20,7 +19,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
 
 	public function test_intermediate_to_final() {
-		$config = Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig");
+		$config = Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig");
 		$transition = new ObjectStatusTransition($config);
 
 		// TO_CREATE -> CREATED
@@ -42,7 +41,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
 
 	public function test_final_to_intermediate() {
-		$config = Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig");
+		$config = Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')->andReturn('Period1');
 		$transition = new ObjectStatusTransition($config);
 
@@ -65,7 +64,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
 
 	public function test_status_is_to_create_if_ignored_and_no_ilias_object_exists() {
-		$config = Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig");
+		$config = Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')->andReturn('Period1');
 		$transition = new ObjectStatusTransition($config);
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED, 'Period1');
@@ -75,7 +74,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
 
 	public function test_status_is_to_update_if_ignored_and_ilias_object_exists() {
-		$config = Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig");
+		$config = Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')->andReturn('Period1');
 		$transition = new ObjectStatusTransition($config);
 
@@ -90,7 +89,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
 
 	public function test_status_gets_ignored_if_period_does_not_match() {
-		$config = Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig");
+		$config = Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig");
 		$config->shouldReceive('getActivePeriod')->andReturn('ActualPeriod');
 		$transition = new ObjectStatusTransition($config);
 
@@ -103,7 +102,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 
 
 	public function test_intermediate_to_final_status_does_not_change_if_already_final() {
-		$config = Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig");
+		$config = Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig");
 		$transition = new ObjectStatusTransition($config);
 
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_UPDATED);
@@ -130,7 +129,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 	 * @return MockInterface
 	 */
 	protected function getObjectMockWithStatusAndPeriod($status, $period = '') {
-		$object = Mockery::mock("SRAG\Plugins\Hub2\Object\IObject");
+		$object = Mockery::mock("srag\Plugins\Hub2\Object\IObject");
 		$object->shouldReceive('getStatus')->andReturn($status);
 		if ($period) {
 			$object->shouldReceive('getPeriod')->andReturn($period);

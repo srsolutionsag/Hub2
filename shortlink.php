@@ -8,7 +8,7 @@ chdir(substr(__FILE__, 0, strpos(__FILE__, '/Customizing')));
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use SRAG\Plugins\Hub2\Shortlink\Handler;
+use srag\Plugins\Hub2\Shortlink\Handler;
 
 $shortlink = new Handler($_GET['q']);
 $shortlink->storeQuery();

@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use hub2ConfigGUI;
 use ilCheckboxInputGUI;
@@ -12,13 +12,13 @@ use ilPropertyFormGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Config\IArConfig;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Config\IArConfig;
 
 /**
  * Class ConfigFOrmGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>

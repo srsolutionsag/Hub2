@@ -1,22 +1,22 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
-use SRAG\Plugins\Hub2\Origin\Category\ICategoryOrigin;
-use SRAG\Plugins\Hub2\Origin\Course\ICourseOrigin;
-use SRAG\Plugins\Hub2\Origin\CourseMembership\ICourseMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\Group\IGroupOrigin;
-use SRAG\Plugins\Hub2\Origin\GroupMembership\IGroupMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
-use SRAG\Plugins\Hub2\Origin\OrgUnitMembership\IOrgUnitMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\Session\ISessionOrigin;
-use SRAG\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\User\IUserOrigin;
+use srag\Plugins\Hub2\Origin\Category\ICategoryOrigin;
+use srag\Plugins\Hub2\Origin\Course\ICourseOrigin;
+use srag\Plugins\Hub2\Origin\CourseMembership\ICourseMembershipOrigin;
+use srag\Plugins\Hub2\Origin\Group\IGroupOrigin;
+use srag\Plugins\Hub2\Origin\GroupMembership\IGroupMembershipOrigin;
+use srag\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
+use srag\Plugins\Hub2\Origin\OrgUnitMembership\IOrgUnitMembershipOrigin;
+use srag\Plugins\Hub2\Origin\Session\ISessionOrigin;
+use srag\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin;
+use srag\Plugins\Hub2\Origin\User\IUserOrigin;
 
 /**
  * Interface IOriginFactory
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginRepository {

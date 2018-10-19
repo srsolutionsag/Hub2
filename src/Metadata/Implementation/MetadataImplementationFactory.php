@@ -1,21 +1,21 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Metadata\Implementation;
+namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Metadata\IMetadata;
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
-use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Metadata\IMetadata;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\Group\GroupDTO;
+use srag\Plugins\Hub2\Object\Session\SessionDTO;
+use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class IMetadataImplementationFactory
  *
- * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class MetadataImplementationFactory implements IMetadataImplementationFactory {

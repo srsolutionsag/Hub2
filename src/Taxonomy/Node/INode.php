@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy\Node;
+namespace srag\Plugins\Hub2\Taxonomy\Node;
 
 /**
  * Interface INode
  *
- * @package SRAG\Plugins\Hub2\Taxonomy\Node
+ * @package srag\Plugins\Hub2\Taxonomy\Node
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface INode {

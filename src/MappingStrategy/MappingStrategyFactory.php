@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\MappingStrategy;
+namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
@@ -8,7 +8,7 @@ use srag\DIC\DICTrait;
 /**
  * Class MappingStrategyFactory
  *
- * @package SRAG\Plugins\Hub2\MappingStrategy
+ * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class MappingStrategyFactory implements IMappingStrategyFactory {

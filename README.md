@@ -21,6 +21,8 @@ sudo -u www-data composer install
 ```
 
 ### Dependencies
+* ILIAS 5.3
+* PHP >=7.0
 * [composer](https://getcomposer.org)
 * [srag/activerecordconfig](https://packagist.org/packages/srag/activerecordconfig)
 * [srag/dic](https://packagist.org/packages/srag/dic)

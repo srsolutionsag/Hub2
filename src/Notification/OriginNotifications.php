@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Notification;
+namespace srag\Plugins\Hub2\Notification;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
@@ -10,7 +10,7 @@ use srag\DIC\DICTrait;
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Notification
+ * @package srag\Plugins\Hub2\Notification
  */
 class OriginNotifications {
 

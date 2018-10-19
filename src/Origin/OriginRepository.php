@@ -1,23 +1,23 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
-use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
-use SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\Group\ARGroupOrigin;
-use SRAG\Plugins\Hub2\Origin\GroupMembership\ARGroupMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
-use SRAG\Plugins\Hub2\Origin\Session\ARSessionOrigin;
-use SRAG\Plugins\Hub2\Origin\SessionMembership\ARSessionMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
+use srag\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
+use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
+use srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
+use srag\Plugins\Hub2\Origin\Group\ARGroupOrigin;
+use srag\Plugins\Hub2\Origin\GroupMembership\ARGroupMembershipOrigin;
+use srag\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
+use srag\Plugins\Hub2\Origin\Session\ARSessionOrigin;
+use srag\Plugins\Hub2\Origin\SessionMembership\ARSessionMembershipOrigin;
+use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 
 /**
  * Class OriginRepository
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

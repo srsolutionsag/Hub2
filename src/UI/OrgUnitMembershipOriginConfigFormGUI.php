@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
-use SRAG\Plugins\Hub2\Origin\OrgUnitMembership\AROrgUnitMembershipOrigin;
+use srag\Plugins\Hub2\Origin\OrgUnitMembership\AROrgUnitMembershipOrigin;
 
 /**
  * Class OrgUnitMembershipOriginConfigFormGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OrgUnitMembershipOriginConfigFormGUI extends OriginConfigFormGUI {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\DTO;
+namespace srag\Plugins\Hub2\Object\DTO;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
@@ -8,7 +8,7 @@ use srag\DIC\DICTrait;
 /**
  * Class ObjectDTO
  *
- * @package SRAG\Plugins\Hub2\Object\DTO
+ * @package srag\Plugins\Hub2\Object\DTO
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

@@ -1,18 +1,18 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor;
+namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilContainer;
 use ilObject;
 use ilObjectServiceSettingsGUI;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 
 /**
  * Class MetadataSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait MetadataSyncProcessor {

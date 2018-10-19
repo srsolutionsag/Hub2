@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Jobs\Result;
+namespace srag\Plugins\Hub2\Jobs\Result;
 
 /**
  * Class Error
  *
- * @package SRAG\Plugins\Hub2\Jobs\Result
+ * @package srag\Plugins\Hub2\Jobs\Result
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Error extends AbstractResult {

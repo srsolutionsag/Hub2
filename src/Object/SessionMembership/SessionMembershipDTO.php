@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\SessionMembership;
+namespace srag\Plugins\Hub2\Object\SessionMembership;
 
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class SessionMembershipDTO
  *
- * @package SRAG\Plugins\Hub2\Object\SessionMembership
+ * @package srag\Plugins\Hub2\Object\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionMembershipDTO extends DataTransferObject {

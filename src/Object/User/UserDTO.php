@@ -1,20 +1,20 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\User;
+namespace srag\Plugins\Hub2\Object\User;
 
 use DateTime;
 use InvalidArgumentException;
 use srag\ActiveRecordConfig\ActiveRecordConfig;
-use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
  * Class UserDTO
  *
- * @package SRAG\Plugins\Hub2\Object\User
+ * @package srag\Plugins\Hub2\Object\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

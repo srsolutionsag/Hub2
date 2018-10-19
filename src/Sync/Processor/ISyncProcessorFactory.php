@@ -1,22 +1,22 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor;
+namespace srag\Plugins\Hub2\Sync\Processor;
 
-use SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\IGroupMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Session\ISessionSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\ISessionMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Course\ICourseSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Group\IGroupSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\GroupMembership\IGroupMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Session\ISessionSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\SessionMembership\ISessionMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor;
 
 /**
  * Interface ISyncProcessorFactory
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ISyncProcessorFactory {

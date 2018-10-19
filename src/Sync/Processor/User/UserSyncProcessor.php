@@ -1,27 +1,27 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\User;
+namespace srag\Plugins\Hub2\Sync\Processor\User;
 
 use ilMimeMail;
 use ilObjUser;
 use ilUtil;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
-use SRAG\Plugins\Hub2\Origin\Config\IUserOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Config\UserOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Origin\Config\IUserOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\UserOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\Properties\UserOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class UserProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\User
+ * @package srag\Plugins\Hub2\Sync\Processor\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

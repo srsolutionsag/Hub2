@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Exception;
+namespace srag\Plugins\Hub2\Exception;
 
 /**
  * Class ShortlinkException
  *
- * @package SRAG\Plugins\Hub2\Exception
+ * @package srag\Plugins\Hub2\Exception
  *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Summary;
+namespace srag\Plugins\Hub2\Sync\Summary;
 
 /**
  * Interface IOriginSyncSummaryFactory
  *
- * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginSyncSummaryFactory {

@@ -2,15 +2,14 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
-use SRAG\Plugins\Hub2\Object\Group\IGroup;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Origin\Config\GroupOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities;
+use srag\Plugins\Hub2\Object\Group\GroupDTO;
+use srag\Plugins\Hub2\Object\Group\IGroup;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Origin\Config\GroupOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
+use srag\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Group\IGroupActivities;
 
 /**
  * Class GroupSyncProcessorTest
@@ -61,7 +60,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Group\IGroup');
+		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Group\IGroup');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -79,7 +78,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Group\IGroupActivities');
+		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Group\IGroupActivities');
 
 		$this->initOrigin(new GroupOriginProperties(), new GroupOriginConfig([]));
 		$this->setupGeneralDependencies();

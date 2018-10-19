@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Config;
+namespace srag\Plugins\Hub2\Config;
 
 /**
  * Interface IArConfig
  *
- * @package     SRAG\Plugins\Hub2\Config
+ * @package     srag\Plugins\Hub2\Config
  *
  * @author      Stefan Wanzenried <sw@studer-raimann.ch>
  * @author      Fabian Schmid <fs@studer-raimann.ch>

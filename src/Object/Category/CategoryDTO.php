@@ -1,18 +1,18 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\Category;
+namespace srag\Plugins\Hub2\Object\Category;
 
 use InvalidArgumentException;
-use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 
 /**
  * Class CategoryDTO
  *
- * @package SRAG\Plugins\Hub2\Object\Category
+ * @package srag\Plugins\Hub2\Object\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
@@ -8,7 +8,7 @@ use srag\DIC\DICTrait;
 /**
  * Class OriginFactory
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -92,7 +92,7 @@ class OriginFactory implements IOriginFactory {
 	 */
 	protected function getClass($type) {
 		$ucfirst = ucfirst($type);
-		$class = "SRAG\\Plugins\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
+		$class = "srag\\Plugins\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
 
 		return $class;
 	}

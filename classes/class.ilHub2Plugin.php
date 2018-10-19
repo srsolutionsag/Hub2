@@ -2,20 +2,20 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Config\ArConfigOld;
-use SRAG\Plugins\Hub2\Jobs\RunSync;
-use SRAG\Plugins\Hub2\Object\Category\ARCategory;
-use SRAG\Plugins\Hub2\Object\Course\ARCourse;
-use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
-use SRAG\Plugins\Hub2\Object\Group\ARGroup;
-use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
-use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
-use SRAG\Plugins\Hub2\Object\Session\ARSession;
-use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
-use SRAG\Plugins\Hub2\Object\User\ARUser;
-use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Config\ArConfigOld;
+use srag\Plugins\Hub2\Jobs\RunSync;
+use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\Course\ARCourse;
+use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use srag\Plugins\Hub2\Object\Group\ARGroup;
+use srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use srag\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
+use srag\Plugins\Hub2\Object\Session\ARSession;
+use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
+use srag\Plugins\Hub2\Object\User\ARUser;
+use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\RemovePluginDataConfirm\PluginUninstallTrait;
 
 /**

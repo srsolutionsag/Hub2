@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Shortlink;
+namespace srag\Plugins\Hub2\Shortlink;
 
 use ilAdministrationGUI;
 use ilLink;

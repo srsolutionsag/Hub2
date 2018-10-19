@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Group;
+namespace srag\Plugins\Hub2\Origin\Group;
 
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\GroupOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\GroupOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
 
 /**
  * Class ARGroupOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\Group
+ * @package srag\Plugins\Hub2\Origin\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARGroupOrigin extends AROrigin implements IGroupOrigin {

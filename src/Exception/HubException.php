@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Exception;
+namespace srag\Plugins\Hub2\Exception;
 
 use ilException;
 use ilHub2Plugin;
@@ -9,7 +9,7 @@ use srag\DIC\DICTrait;
 /**
  * Class HubException
  *
- * @package SRAG\Plugins\Hub2\Exception
+ * @package srag\Plugins\Hub2\Exception
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

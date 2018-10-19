@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Config;
+namespace srag\Plugins\Hub2\Origin\Config;
 
 /**
  * Class GroupOriginConfig
  *
- * @package SRAG\Plugins\Hub2\Origin\Config
+ * @package srag\Plugins\Hub2\Origin\Config
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupOriginConfig extends OriginConfig implements IGroupOriginConfig {

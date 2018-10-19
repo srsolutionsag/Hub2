@@ -1,18 +1,17 @@
 <?php
 
-use Mockery;
+require_once __DIR__ . "/AbstractHub2Tests.php";
+
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
-use SRAG\Plugins\Hub2\Sync\ObjectStatusTransition;
-
-require_once __DIR__ . "/AbstractHub2Tests.php";
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Sync\ObjectStatusTransition;
 
 /**
  * Base class for all unit tests of Hub2
@@ -71,7 +70,7 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
 
 	protected function initLog() {
-		$this->originLog = Mockery::mock("SRAG\Plugins\Hub2\Log\OriginLog");
+		$this->originLog = Mockery::mock("srag\Plugins\Hub2\Log\OriginLog");
 	}
 
 
@@ -81,7 +80,7 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 
 
 	protected function initStatusTransitions() {
-		$this->statusTransition = new ObjectStatusTransition(Mockery::mock("SRAG\Plugins\Hub2\Origin\Config\IOriginConfig"));
+		$this->statusTransition = new ObjectStatusTransition(Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig"));
 	}
 
 
@@ -100,11 +99,11 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected function initOrigin(IOriginProperties $properties, IOriginConfig $config) {
 		$this->originProperties = $properties;
 		$this->originConfig = $config;
-		$this->origin = Mockery::mock("SRAG\Plugins\Hub2\Origin\IOrigin");
+		$this->origin = Mockery::mock("srag\Plugins\Hub2\Origin\IOrigin");
 		$this->origin->shouldReceive('properties')->andReturn($properties);
 		$this->origin->shouldReceive('getId');
 		$this->origin->shouldReceive('config')->andReturn($config);
-		$this->originImplementation = Mockery::mock('\SRAG\Plugins\Hub2\Origin\IOriginImplementation');
+		$this->originImplementation = Mockery::mock('\srag\Plugins\Hub2\Origin\IOriginImplementation');
 	}
 
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Metadata\Implementation;
+namespace srag\Plugins\Hub2\Metadata\Implementation;
 
-use SRAG\Plugins\Hub2\Metadata\IMetadata;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Metadata\IMetadata;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 
 /**
  * Class IMetadataImplementationFactory
  *
- * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IMetadataImplementationFactory {

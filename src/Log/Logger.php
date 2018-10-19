@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Log;
+namespace srag\Plugins\Hub2\Log;
 
 use ilHub2Plugin;
 use ILIAS\Filesystem\Exception\IOException;
