@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use ActiveRecordList;
 use hub2DataGUI;
@@ -12,26 +12,26 @@ use ilTable2GUI;
 use ilTextInputGUI;
 use ReflectionClass;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Object\Category\ARCategory;
-use SRAG\Plugins\Hub2\Object\Course\ARCourse;
-use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
-use SRAG\Plugins\Hub2\Object\Group\ARGroup;
-use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
-use SRAG\Plugins\Hub2\Object\Session\ARSession;
-use SRAG\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
-use SRAG\Plugins\Hub2\Object\User\ARUser;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginRepository;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
-use SRAG\Plugins\Hub2\Shortlink\ObjectLinkFactory;
+use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\Course\ARCourse;
+use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use srag\Plugins\Hub2\Object\Group\ARGroup;
+use srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
+use srag\Plugins\Hub2\Object\Session\ARSession;
+use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
+use srag\Plugins\Hub2\Object\User\ARUser;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginRepository;
+use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
 
 /**
  * Class OriginsTableGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class DataTableGUI extends ilTable2GUI {

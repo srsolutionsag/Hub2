@@ -1,22 +1,22 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\DTO;
+namespace srag\Plugins\Hub2\Object\DTO;
 
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
-use SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
-use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
-use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use srag\Plugins\Hub2\Object\Group\GroupDTO;
+use srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
+use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
+use srag\Plugins\Hub2\Object\Session\SessionDTO;
+use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
+use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Interface IDataTransferObjectFactory
  *
- * @package SRAG\Plugins\Hub2\Object\DTO
+ * @package srag\Plugins\Hub2\Object\DTO
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IDataTransferObjectFactory {

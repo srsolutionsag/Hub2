@@ -2,15 +2,14 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\Course\ICourse;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\Course\ICourse;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities;
 
 /**
  * Class CourseSyncProcessorTest
@@ -59,7 +58,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Course\ICourse');
+		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Course\ICourse');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -77,7 +76,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
+		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
 
 		$this->initOrigin(new CourseOriginProperties(), new CourseOriginConfig([]));
 		$this->setupGeneralDependencies();

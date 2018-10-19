@@ -1,17 +1,17 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use ilCheckboxInputGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
-use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
-use SRAG\Plugins\Hub2\Origin\Session\ARSessionOrigin;
+use srag\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
+use srag\Plugins\Hub2\Origin\Session\ARSessionOrigin;
 
 /**
  * Class SessionOriginConfigFormGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionOriginConfigFormGUI extends OriginConfigFormGUI {

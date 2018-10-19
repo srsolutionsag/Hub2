@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object;
 
-use SRAG\Plugins\Hub2\Metadata\IMetadata;
+use srag\Plugins\Hub2\Metadata\IMetadata;
 
 /**
  * Interface IMetadataAwareObject
  *
- * @package SRAG\Plugins\Hub2\Object
+ * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IMetadataAwareObject extends IObject {

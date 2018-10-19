@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Metadata;
+namespace srag\Plugins\Hub2\Metadata;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
@@ -8,7 +8,7 @@ use srag\DIC\DICTrait;
 /**
  * Class Metadata
  *
- * @package SRAG\Plugins\Hub2\Metadata
+ * @package srag\Plugins\Hub2\Metadata
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Metadata implements IMetadata {

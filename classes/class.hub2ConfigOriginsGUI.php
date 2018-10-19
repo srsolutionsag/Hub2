@@ -1,21 +1,21 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\OriginLog;
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginRepository;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
-use SRAG\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
-use SRAG\Plugins\Hub2\Origin\User\ARUserOrigin;
-use SRAG\Plugins\Hub2\Sync\OriginSyncFactory;
-use SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
-use SRAG\Plugins\Hub2\UI\OriginConfigFormGUI;
-use SRAG\Plugins\Hub2\UI\OriginFormFactory;
-use SRAG\Plugins\Hub2\UI\OriginsTableGUI;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\OriginLog;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginRepository;
+use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
+use srag\Plugins\Hub2\Origin\OriginRepository;
+use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
+use srag\Plugins\Hub2\Sync\OriginSyncFactory;
+use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginFormFactory;
+use srag\Plugins\Hub2\UI\OriginsTableGUI;
 
 /**
  * Class hub2ConfigOriginsGUI

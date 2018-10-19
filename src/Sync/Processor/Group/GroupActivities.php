@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Group;
+namespace srag\Plugins\Hub2\Sync\Processor\Group;
 
 use ilDB;
 use ilDBInterface;
@@ -10,7 +10,7 @@ use ilObjGroup;
 /**
  * Class GroupActivities
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\Group
+ * @package srag\Plugins\Hub2\Sync\Processor\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupActivities implements IGroupActivities {

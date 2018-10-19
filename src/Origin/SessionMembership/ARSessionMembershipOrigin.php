@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\SessionMembership;
+namespace srag\Plugins\Hub2\Origin\SessionMembership;
 
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\SessionMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\SessionMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties;
 
 /**
  * Class ARSessionMembershipOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\SessionMembership
+ * @package srag\Plugins\Hub2\Origin\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOrigin {

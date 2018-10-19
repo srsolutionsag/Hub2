@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\MappingStrategy;
+namespace srag\Plugins\Hub2\MappingStrategy;
 
 /**
  * Interface IMappingStrategyFactory
  *
- * @package SRAG\Plugins\Hub2\MappingStrategy
+ * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IMappingStrategyFactory {

@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
+namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilObject2;
 use ilObjTaxonomy;
 use ilTaxonomyNode;
-use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Class TaxonomyCreate
  *
- * @package SRAG\Plugins\Hub2\Taxonomy\Implementation
+ * @package srag\Plugins\Hub2\Taxonomy\Implementation
  */
 class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation {
 

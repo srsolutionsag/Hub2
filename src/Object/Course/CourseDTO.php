@@ -1,20 +1,20 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\Course;
+namespace srag\Plugins\Hub2\Object\Course;
 
 use InvalidArgumentException;
 use Serializable;
-use SRAG\Plugins\Hub2\Exception\LanguageCodeException;
-use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Exception\LanguageCodeException;
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 
 /**
  * Class CourseDTO
  *
- * @package SRAG\Plugins\Hub2\Object\Course
+ * @package srag\Plugins\Hub2\Object\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

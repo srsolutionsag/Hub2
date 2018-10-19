@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Metadata;
+namespace srag\Plugins\Hub2\Metadata;
 
 /**
  * Interface IMetadata
  *
- * @package SRAG\Plugins\Hub2\Metadata
+ * @package srag\Plugins\Hub2\Metadata
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IMetadata {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
 use DateTime;
@@ -9,15 +9,15 @@ use ilHub2Plugin;
 use InvalidArgumentException;
 use srag\ActiveRecordConfig\ActiveRecordConfig;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Metadata\Metadata;
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
-use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
-use SRAG\Plugins\Hub2\Taxonomy\Taxonomy;
+use srag\Plugins\Hub2\Metadata\Metadata;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Taxonomy\Node\Node;
+use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 
 /**
  * Class ARObject
  *
- * @package SRAG\Plugins\Hub2\Object
+ * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

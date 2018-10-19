@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Group;
+namespace srag\Plugins\Hub2\Sync\Processor\Group;
 
 use ilObjGroup;
 
 /**
  * Interface IGroupActivities
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\Group
+ * @package srag\Plugins\Hub2\Sync\Processor\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IGroupActivities {

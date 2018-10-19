@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Category;
+namespace srag\Plugins\Hub2\Origin\Category;
 
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
 
 /**
  * Class ARCategoryOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\Category
+ * @package srag\Plugins\Hub2\Origin\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

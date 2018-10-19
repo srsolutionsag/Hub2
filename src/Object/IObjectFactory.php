@@ -1,32 +1,32 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
-use SRAG\Plugins\Hub2\Object\Category\ARCategory;
-use SRAG\Plugins\Hub2\Object\Category\ICategory;
-use SRAG\Plugins\Hub2\Object\Course\ARCourse;
-use SRAG\Plugins\Hub2\Object\Course\ICourse;
-use SRAG\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
-use SRAG\Plugins\Hub2\Object\CourseMembership\ICourseMembership;
-use SRAG\Plugins\Hub2\Object\Group\ARGroup;
-use SRAG\Plugins\Hub2\Object\Group\IGroup;
-use SRAG\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
-use SRAG\Plugins\Hub2\Object\GroupMembership\IGroupMembership;
-use SRAG\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
-use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembership;
-use SRAG\Plugins\Hub2\Object\Session\ARSession;
-use SRAG\Plugins\Hub2\Object\Session\ISession;
-use SRAG\Plugins\Hub2\Object\SessionMembership\ISessionMembership;
-use SRAG\Plugins\Hub2\Object\User\ARUser;
-use SRAG\Plugins\Hub2\Object\User\IUser;
+use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\Category\ICategory;
+use srag\Plugins\Hub2\Object\Course\ARCourse;
+use srag\Plugins\Hub2\Object\Course\ICourse;
+use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use srag\Plugins\Hub2\Object\CourseMembership\ICourseMembership;
+use srag\Plugins\Hub2\Object\Group\ARGroup;
+use srag\Plugins\Hub2\Object\Group\IGroup;
+use srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use srag\Plugins\Hub2\Object\GroupMembership\IGroupMembership;
+use srag\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
+use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembership;
+use srag\Plugins\Hub2\Object\Session\ARSession;
+use srag\Plugins\Hub2\Object\Session\ISession;
+use srag\Plugins\Hub2\Object\SessionMembership\ISessionMembership;
+use srag\Plugins\Hub2\Object\User\ARUser;
+use srag\Plugins\Hub2\Object\User\IUser;
 
 /**
  * Interface IObjectFactory
  *
- * @package SRAG\Plugins\Hub2\Object
+ * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IObjectFactory {

@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\GroupMembership;
+namespace srag\Plugins\Hub2\Origin\GroupMembership;
 
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\GroupMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\GroupMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\GroupMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\GroupMembershipOriginProperties;
 
 /**
  * Class ARGroupMembershipOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\GroupMembership
+ * @package srag\Plugins\Hub2\Origin\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARGroupMembershipOrigin extends AROrigin implements IGroupMembershipOrigin {
