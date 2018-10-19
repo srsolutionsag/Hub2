@@ -1,23 +1,23 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\MappingStrategy;
+namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilObject2;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
-use SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnit\OrgUnitDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\Group\GroupDTO;
+use srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
+use srag\Plugins\Hub2\Object\OrgUnit\OrgUnitDTO;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
+use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class ByTitle
  *
- * @package SRAG\Plugins\Hub2\MappingStrategy
+ * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ByTitle extends AMappingStrategy implements IMappingStrategy {

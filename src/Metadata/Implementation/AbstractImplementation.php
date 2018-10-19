@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Metadata\Implementation;
+namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Metadata\IMetadata;
+use srag\Plugins\Hub2\Metadata\IMetadata;
 
 /**
  * Class CustomMetadata
  *
- * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractImplementation implements IMetadataImplementation {

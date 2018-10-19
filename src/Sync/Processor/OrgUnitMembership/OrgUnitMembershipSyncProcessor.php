@@ -1,30 +1,30 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
+namespace srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 
 use ilObjectFactory;
 use ilObjOrgUnit;
 use ilOrgUnitPosition;
 use ilOrgUnitUserAssignment;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class OrgUnitMembershipSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership
+ * @package srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrgUnitMembershipSyncProcessor {

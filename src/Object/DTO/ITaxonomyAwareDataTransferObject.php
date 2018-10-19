@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\DTO;
+namespace srag\Plugins\Hub2\Object\DTO;
 
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**
  * Interface ITaxonomyAwareDataTransferObject
  *
- * @package SRAG\Plugins\Hub2\Object\DTO
+ * @package srag\Plugins\Hub2\Object\DTO
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ITaxonomyAwareDataTransferObject extends IDataTransferObject {

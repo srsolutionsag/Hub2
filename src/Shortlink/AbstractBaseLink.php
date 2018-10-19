@@ -1,10 +1,10 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Shortlink;
+namespace srag\Plugins\Hub2\Shortlink;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class NullLink

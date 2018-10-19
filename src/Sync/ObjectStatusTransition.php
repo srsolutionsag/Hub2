@@ -1,17 +1,17 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync;
+namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 
 /**
  * Class ObjectStatusTransition
  *
- * @package SRAG\Plugins\Hub2\Sync
+ * @package srag\Plugins\Hub2\Sync
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

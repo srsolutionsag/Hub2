@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\OrgUnitMembership;
+namespace srag\Plugins\Hub2\Object\OrgUnitMembership;
 
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObject;
 
 /**
  * Class OrgUnitMembershipDTO
  *
- * @package SRAG\Plugins\Hub2\Object\OrgUnitMembership
+ * @package srag\Plugins\Hub2\Object\OrgUnitMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembershipDTO {

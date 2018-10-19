@@ -1,22 +1,22 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 use Exception;
 use ilCSVReader;
-use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
-use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
-use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
-use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
+use srag\Plugins\Hub2\Exception\ConnectionFailedException;
+use srag\Plugins\Hub2\Exception\ParseDataFailedException;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\HookObject;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use stdClass;
 
 /**
  * Class demoOrgUnitMembership
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class demoOrgUnitMembership extends AbstractOriginImplementation {

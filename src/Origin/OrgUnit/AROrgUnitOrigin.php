@@ -1,17 +1,17 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\OrgUnit;
+namespace srag\Plugins\Hub2\Origin\OrgUnit;
 
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Config\OrgUnitOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
-use SRAG\Plugins\Hub2\Origin\Properties\OrgUnitOriginProperties;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\OrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnitOriginProperties;
 
 /**
  * Class AROrgUnitOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\OrgUnit
+ * @package srag\Plugins\Hub2\Origin\OrgUnit
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin {

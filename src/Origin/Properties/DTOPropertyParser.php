@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Properties;
+namespace srag\Plugins\Hub2\Origin\Properties;
 
 use ReflectionClass;
 use ReflectionProperty;
@@ -8,7 +8,7 @@ use ReflectionProperty;
 /**
  * Class DTOPropertyParser
  *
- * @package SRAG\Plugins\Hub2\Origin\Properties
+ * @package srag\Plugins\Hub2\Origin\Properties
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

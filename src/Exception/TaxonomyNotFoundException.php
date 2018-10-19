@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Exception;
+namespace srag\Plugins\Hub2\Exception;
 
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**
  * Class TaxonomyNotFoundException
  *
- * @package SRAG\Plugins\Hub2\Exception
+ * @package srag\Plugins\Hub2\Exception
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class TaxonomyNotFoundException extends HubException {

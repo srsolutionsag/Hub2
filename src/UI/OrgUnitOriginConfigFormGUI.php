@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use ilTextInputGUI;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
-use SRAG\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
 
 /**
  * Class OrgUnitOriginConfigFormGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI {

@@ -1,12 +1,12 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Config;
+namespace srag\Plugins\Hub2\Origin\Config;
 
 /**
  * Interface ISessionOriginConfig
  *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Origin\Config
+ * @package srag\Plugins\Hub2\Origin\Config
  */
 interface ISessionOriginConfig extends IOriginConfig {
 

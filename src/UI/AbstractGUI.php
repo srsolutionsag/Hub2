@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
@@ -8,7 +8,7 @@ use srag\DIC\DICTrait;
 /**
  * Class AbstractGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @deprecated
  */

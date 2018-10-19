@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\User;
+namespace srag\Plugins\Hub2\Origin\User;
 
-use SRAG\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Interface IUserOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\User
+ * @package srag\Plugins\Hub2\Origin\User
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IUserOrigin extends IOrigin {

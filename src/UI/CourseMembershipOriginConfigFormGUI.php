@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use ilRadioGroupInputGUI;
 use ilRadioOption;
-use SRAG\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
+use srag\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
 
 /**
  * Class CourseMembershipOriginConfigFormGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI {

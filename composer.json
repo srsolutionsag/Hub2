@@ -34,7 +34,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SRAG\\Plugins\\Hub2\\": "src/"
+      "srag\\Plugins\\Hub2\\": "src/"
     },
     "classmap": [
       "classes"

@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Summary;
+namespace srag\Plugins\Hub2\Sync\Summary;
 
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Sync\IOriginSync;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Sync\IOriginSync;
 
 /**
  * Class OriginSyncSummary
  *
- * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncSummary {

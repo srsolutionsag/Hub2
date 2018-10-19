@@ -1,18 +1,18 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
+namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilHub2Plugin;
 use ilObjTaxonomy;
 use ilTaxonomyTree;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
-use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Class AbstractTaxonomy
  *
- * @package SRAG\Plugins\Hub2\Taxonomy\Implementation
+ * @package srag\Plugins\Hub2\Taxonomy\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractTaxonomy implements ITaxonomyImplementation {

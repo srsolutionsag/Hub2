@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Jobs\Result;
+namespace srag\Plugins\Hub2\Jobs\Result;
 
 use ilCronJobResult;
 use ilHub2Plugin;
@@ -9,7 +9,7 @@ use srag\DIC\DICTrait;
 /**
  * Class AbstractResult
  *
- * @package SRAG\Plugins\Hub2\Jobs\Result
+ * @package srag\Plugins\Hub2\Jobs\Result
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractResult extends ilCronJobResult {

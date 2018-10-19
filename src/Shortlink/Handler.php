@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Shortlink;
+namespace srag\Plugins\Hub2\Shortlink;
 
 use ilContext;
 use ilDBInterface;
@@ -8,14 +8,14 @@ use ilHub2Plugin;
 use ilUtil;
 use ilInitialisation;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Exception\ShortlinkException;
-use SRAG\Plugins\Hub2\Exception\ShortLinkNotFoundException;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Exception\ShortlinkException;
+use srag\Plugins\Hub2\Exception\ShortLinkNotFoundException;
 
 /**
  * Class Handler
  *
- * @package SRAG\Plugins\Hub2\Handler
+ * @package srag\Plugins\Hub2\Handler
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Handler {

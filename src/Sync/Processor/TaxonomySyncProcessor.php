@@ -1,17 +1,17 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor;
+namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilContainer;
 use ilObject;
 use ilObjectServiceSettingsGUI;
-use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Taxonomy\Implementation\TaxonomyImplementationFactory;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\Taxonomy\Implementation\TaxonomyImplementationFactory;
 
 /**
  * Class TaxonomySyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait TaxonomySyncProcessor {

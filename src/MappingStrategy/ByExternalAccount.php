@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\MappingStrategy;
+namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilObjUser;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class ByExternalAccount
  *
- * @package SRAG\Plugins\Hub2\MappingStrategy
+ * @package srag\Plugins\Hub2\MappingStrategy
  */
 class ByExternalAccount extends AMappingStrategy implements IMappingStrategy {
 
