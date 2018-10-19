@@ -1,19 +1,19 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\Group;
+namespace srag\Plugins\Hub2\Object\Group;
 
-use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 
 /**
  * Class GroupDTO
  *
- * @package SRAG\Plugins\Hub2\Object\Group
+ * @package srag\Plugins\Hub2\Object\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject, IMappingStrategyAwareDataTransferObject {

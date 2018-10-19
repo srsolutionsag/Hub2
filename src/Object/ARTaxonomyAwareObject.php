@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object;
 
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**
  * Class ARTaxonomyAwareObject
  *
- * @package SRAG\Plugins\Hub2\Object
+ * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait ARTaxonomyAwareObject {

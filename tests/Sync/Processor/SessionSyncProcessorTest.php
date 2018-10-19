@@ -2,14 +2,13 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Object\Session\ISession;
-use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
-use SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\Session\ISession;
+use srag\Plugins\Hub2\Object\Session\SessionDTO;
+use srag\Plugins\Hub2\Origin\Config\SessionOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
+use srag\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 
 /**
  * Class SessionSyncProcessorTest
@@ -99,7 +98,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Session\ISession');
+		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Session\ISession');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();

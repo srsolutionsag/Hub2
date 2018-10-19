@@ -1,17 +1,17 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\OrgUnitMembership;
+namespace srag\Plugins\Hub2\Origin\OrgUnitMembership;
 
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Config\OrgUnitMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
-use SRAG\Plugins\Hub2\Origin\Properties\OrgUnitMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\OrgUnitMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembershipOriginProperties;
 
 /**
  * Class AROrgUnitMembershipOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\OrgUnitMembership
+ * @package srag\Plugins\Hub2\Origin\OrgUnitMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOrigin {

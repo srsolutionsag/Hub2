@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy;
+namespace srag\Plugins\Hub2\Taxonomy;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Class Taxonomy
  *
- * @package SRAG\Plugins\Hub2\Taxonomy
+ * @package srag\Plugins\Hub2\Taxonomy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Taxonomy implements ITaxonomy {

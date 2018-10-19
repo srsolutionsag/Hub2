@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\CourseMembership;
+namespace srag\Plugins\Hub2\Object\CourseMembership;
 
-use SRAG\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class ARCourse
  *
- * @package SRAG\Plugins\Hub2\Object\CourseMembership
+ * @package srag\Plugins\Hub2\Object\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARCourseMembership extends ARObject implements ICourseMembership {

@@ -1,19 +1,19 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object;
 
 use ilHub2Plugin;
 use ilObject;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\NullDTO;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\NullDTO;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 
 /**
  * Class HookObject
  *
- * @package SRAG\Plugins\Hub2\Object
+ * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

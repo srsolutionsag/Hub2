@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Course;
+namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
 use ilLink;
 use ilMailMimeSenderFactory;
@@ -10,26 +10,26 @@ use ilMimeMail;
 use ilObjCategory;
 use ilObjCourse;
 use ilRepUtil;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginRepository;
+use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class CourseSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\Course
+ * @package srag\Plugins\Hub2\Sync\Processor\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

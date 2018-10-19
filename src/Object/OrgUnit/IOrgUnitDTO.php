@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\OrgUnit;
+namespace srag\Plugins\Hub2\Object\OrgUnit;
 
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Interface IOrgUnitDTO
  *
- * @package SRAG\Plugins\Hub2\Object\OrgUnit
+ * @package srag\Plugins\Hub2\Object\OrgUnit
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOrgUnitDTO extends IDataTransferObject {
