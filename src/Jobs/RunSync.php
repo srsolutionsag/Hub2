@@ -1,20 +1,20 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Jobs;
+namespace srag\Plugins\Hub2\Jobs;
 
 use Exception;
 use ilCronJob;
-use SRAG\Plugins\Hub2\Jobs\Result\AbstractResult;
-use SRAG\Plugins\Hub2\Jobs\Result\ResultFactory;
-use SRAG\Plugins\Hub2\Log\OriginLog;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
-use SRAG\Plugins\Hub2\Sync\OriginSyncFactory;
-use SRAG\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
+use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
+use srag\Plugins\Hub2\Log\OriginLog;
+use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Sync\OriginSyncFactory;
+use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 
 /**
  * Class RunSync
  *
- * @package SRAG\Plugins\Hub2\Jobs
+ * @package srag\Plugins\Hub2\Jobs
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class RunSync extends AbstractJob {

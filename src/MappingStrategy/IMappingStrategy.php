@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\MappingStrategy;
+namespace srag\Plugins\Hub2\MappingStrategy;
 
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Interface IMappingStrategy
  *
- * @package SRAG\Plugins\Hub2\MappingStrategy
+ * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IMappingStrategy {

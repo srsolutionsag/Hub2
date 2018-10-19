@@ -1,18 +1,18 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Summary;
+namespace srag\Plugins\Hub2\Sync\Summary;
 
 use ilHub2Plugin;
 use ilMimeMail;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Sync\IOriginSync;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Sync\IOriginSync;
 
 /**
  * Class OriginSyncSummaryCron
  *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @package srag\Plugins\Hub2\Sync\Summary
  */
 abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 

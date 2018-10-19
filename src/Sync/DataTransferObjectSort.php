@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync;
+namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class DataTransferObjectSort
  *
- * @package SRAG\Plugins\Hub2\Sync
+ * @package srag\Plugins\Hub2\Sync
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 final class DataTransferObjectSort implements IDataTransferObjectSort {

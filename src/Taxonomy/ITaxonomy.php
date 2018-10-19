@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy;
+namespace srag\Plugins\Hub2\Taxonomy;
 
-use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Interface ITaxonomy
  *
- * @package SRAG\Plugins\Hub2\Taxonomy
+ * @package srag\Plugins\Hub2\Taxonomy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ITaxonomy {

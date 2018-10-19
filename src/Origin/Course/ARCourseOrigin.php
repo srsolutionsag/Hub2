@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Course;
+namespace srag\Plugins\Hub2\Origin\Course;
 
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 
 /**
  * Class ARCourseOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\Course
+ * @package srag\Plugins\Hub2\Origin\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

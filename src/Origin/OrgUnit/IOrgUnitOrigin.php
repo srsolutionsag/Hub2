@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\OrgUnit;
+namespace srag\Plugins\Hub2\Origin\OrgUnit;
 
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
 
 /**
  * Interface IOrgUnitOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\OrgUnit
+ * @package srag\Plugins\Hub2\Origin\OrgUnit
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOrgUnitOrigin extends IOrigin {

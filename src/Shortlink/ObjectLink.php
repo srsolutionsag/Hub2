@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Shortlink;
+namespace srag\Plugins\Hub2\Shortlink;
 
 use ilDBInterface;
-use SRAG\Plugins\Hub2\Object\ARObject;
-use SRAG\Plugins\Hub2\Object\Category\ARCategory;
-use SRAG\Plugins\Hub2\Object\Course\ARCourse;
-use SRAG\Plugins\Hub2\Object\Group\ARGroup;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\Session\ARSession;
-use SRAG\Plugins\Hub2\Object\User\ARUser;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\Course\ARCourse;
+use srag\Plugins\Hub2\Object\Group\ARGroup;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\Session\ARSession;
+use srag\Plugins\Hub2\Object\User\ARUser;
+use srag\Plugins\Hub2\Origin\OriginFactory;
 
 /**
  * Class ObjectLink

@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use hub2ConfigOriginsGUI;
 use ilCheckboxInputGUI;
@@ -15,18 +15,18 @@ use ilSelectInputGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Origin\AROrigin;
-use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginRepository;
-use SRAG\Plugins\Hub2\Origin\Properties\DTOPropertyParser;
-use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginRepository;
+use srag\Plugins\Hub2\Origin\Properties\DTOPropertyParser;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class OriginConfigFormGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -113,7 +113,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 	 */
 	protected function addPropertiesUpdate() {
 		$ucfirst = ucfirst($this->origin->getObjectType());
-		$parser = new DTOPropertyParser("SRAG\\Plugins\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}DTO");
+		$parser = new DTOPropertyParser("srag\\Plugins\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}DTO");
 		foreach ($parser->getProperties() as $property) {
 			$postVar = IOriginProperties::PREFIX_UPDATE_DTO . $property->name;
 			$title = self::plugin()->translate('origin_form_field_update_dto', "", [ ucfirst($property->name) ]);

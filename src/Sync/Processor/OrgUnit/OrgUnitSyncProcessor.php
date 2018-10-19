@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnit;
+namespace srag\Plugins\Hub2\Sync\Processor\OrgUnit;
 
 use ilObject;
 use ilObjectFactory;
@@ -8,25 +8,25 @@ use ilObjOrgUnit;
 use ilOrgUnitType;
 use ilOrgUnitTypeTranslation;
 use ilRepUtil;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IDataTransferObjectSort;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
+use srag\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use srag\Plugins\Hub2\Sync\IDataTransferObjectSort;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class OrgUnitSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\OrgUnit
+ * @package srag\Plugins\Hub2\Sync\Processor\OrgUnit
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncProcessor {

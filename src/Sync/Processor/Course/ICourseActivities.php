@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Course;
+namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
 use ilObjCourse;
 
 /**
  * Interface ICourseActivities
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\Course
+ * @package srag\Plugins\Hub2\Sync\Processor\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

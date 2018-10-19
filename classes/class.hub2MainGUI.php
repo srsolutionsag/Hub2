@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 
 use srag\DIC\DICTrait;
-use SRAG\Plugins\Hub2\Helper\DIC;
+use srag\Plugins\Hub2\Helper\DIC;
 
 /**
  * Class hub2MainGUI

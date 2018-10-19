@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI;
 
 use ilCheckboxInputGUI;
 use ilEMailInputGUI;
@@ -8,14 +8,14 @@ use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
-use SRAG\Plugins\Hub2\Origin\Config\ICourseOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\ICourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
+use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
 
 /**
  * Class CourseOriginConfigFormGUI
  *
- * @package SRAG\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

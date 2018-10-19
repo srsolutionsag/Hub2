@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 use Exception;
-use SRAG\Plugins\Hub2\Object\HookObject;
+use srag\Plugins\Hub2\Object\HookObject;
 
 /**
  * Class Template
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Template extends AbstractOriginImplementation {

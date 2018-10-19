@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Metadata\Implementation;
+namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilADTDate;
 use ilADTExternalLink;
@@ -12,7 +12,7 @@ use ilDateTime;
 /**
  * Class CustomMetadata
  *
- * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CustomMetadata extends AbstractImplementation implements IMetadataImplementation {

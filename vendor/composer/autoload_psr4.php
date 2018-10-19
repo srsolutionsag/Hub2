@@ -7,7 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'srag\\RemovePluginDataConfirm\\' => array($vendorDir . '/srag/removeplugindataconfirm/src'),
+    'srag\\Plugins\\Hub2\\' => array($baseDir . '/src'),
     'srag\\DIC\\' => array($vendorDir . '/srag/dic/src'),
     'srag\\ActiveRecordConfig\\' => array($vendorDir . '/srag/activerecordconfig/src'),
-    'SRAG\\Plugins\\Hub2\\' => array($baseDir . '/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
+    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\Session;
+namespace srag\Plugins\Hub2\Object\Session;
 
-use SRAG\Plugins\Hub2\Object\IMetadataAwareObject;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Object\ITaxonomyAwareObject;
+use srag\Plugins\Hub2\Object\IMetadataAwareObject;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 
 /**
  * Interface ISession
  *
- * @package SRAG\Plugins\Hub2\Object\Session
+ * @package srag\Plugins\Hub2\Object\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ISession extends IObject, IMetadataAwareObject, ITaxonomyAwareObject {

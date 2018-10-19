@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\GroupMembership;
+namespace srag\Plugins\Hub2\Origin\GroupMembership;
 
-use SRAG\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Interface IGroupMembershipOrigin
  *
- * @package SRAG\Plugins\Hub2\Origin\GroupMembership
+ * @package srag\Plugins\Hub2\Origin\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IGroupMembershipOrigin extends IOrigin {

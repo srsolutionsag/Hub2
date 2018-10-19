@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use SRAG\Plugins\Hub2\UI\ConfigFormGUI;
+use srag\Plugins\Hub2\UI\ConfigFormGUI;
 
 /**
  * Class hub2ConfigGUI

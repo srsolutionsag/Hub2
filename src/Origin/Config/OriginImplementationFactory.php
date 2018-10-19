@@ -1,24 +1,24 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Config;
+namespace srag\Plugins\Hub2\Origin\Config;
 
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
-use SRAG\Plugins\Hub2\Metadata\MetadataFactory;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Taxonomy\TaxonomyFactory;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
+use srag\Plugins\Hub2\Metadata\MetadataFactory;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Taxonomy\TaxonomyFactory;
 
 /**
  * Class OriginImplementationFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Origin\Config
+ * @package srag\Plugins\Hub2\Origin\Config
  */
 class OriginImplementationFactory {
 

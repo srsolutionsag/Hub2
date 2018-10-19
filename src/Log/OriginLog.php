@@ -1,16 +1,16 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Log;
+namespace srag\Plugins\Hub2\Log;
 
 use ilHub2Plugin;
 use ILIAS\Filesystem\Exception\IOException;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class OriginLog
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package SRAG\ILIAS\Plugins\Log
+ * @package srag\ILIAS\Plugins\Log
  */
 class OriginLog implements ILog {
 
