@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Jobs;
 
 use Exception;
 use ilCronJob;
+use ilHub2Plugin;
 use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
 use srag\Plugins\Hub2\Log\OriginLog;
@@ -22,15 +23,31 @@ class RunSync extends AbstractJob {
 	/**
 	 * @return string
 	 */
-	public function getId() {
+	public function getId(): string {
 		return get_class($this);
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getTitle(): string {
+		return ilHub2Plugin::PLUGIN_NAME;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getDescription(): string {
+		return "";
 	}
 
 
 	/**
 	 * @return bool
 	 */
-	public function hasAutoActivation() {
+	public function hasAutoActivation(): bool {
 		return true;
 	}
 
@@ -38,7 +55,7 @@ class RunSync extends AbstractJob {
 	/**
 	 * @return bool
 	 */
-	public function hasFlexibleSchedule() {
+	public function hasFlexibleSchedule(): bool {
 		return true;
 	}
 
@@ -46,7 +63,7 @@ class RunSync extends AbstractJob {
 	/**
 	 * @return int
 	 */
-	public function getDefaultScheduleType() {
+	public function getDefaultScheduleType(): int {
 		return ilCronJob::SCHEDULE_TYPE_DAILY;
 	}
 
@@ -62,7 +79,7 @@ class RunSync extends AbstractJob {
 	/**
 	 * @return AbstractResult
 	 */
-	public function run() {
+	public function run(): AbstractResult {
 		try {
 			$OriginSyncSummaryFactory = new OriginSyncSummaryFactory();
 
