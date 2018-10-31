@@ -111,7 +111,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 throw new HubException('Creation of course with ext_id = ' . $dto->getExtId() . ' failed: template course with ref_id = ' . $template_id . ' does not exist in ILIAS');
             }
             $return = $this->cloneAllObject($parentRefId, $template_id, $this->getCloneOptions($template_id));
-            $ilObjCourse = new ilObjCourse($return['ref_id']);
+            $ilObjCourse = new ilObjCourse($return);
         } else {
             // create new one
             $ilObjCourse = new ilObjCourse();
