@@ -21,7 +21,7 @@ abstract class AbstractJob extends ilCronJob {
 	/**
 	 * @param string $message
 	 */
-	protected function log($message) {
+	protected function log(string $message) {
 		self::dic()->log()->write($message);
 	}
 }
