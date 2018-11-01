@@ -98,6 +98,25 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 		$item->setInfo(self::plugin()->translate('admin_msg_' . IArConfig::KEY_SHORTLINK_SUCCESS . '_info'));
 		$this->addItem($item);
 
+        $h = new ilFormSectionHeaderGUI();
+        $h->setTitle(self::plugin()->translate('views'));
+        $this->addItem($h);
+
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('admin_msg_' .IArConfig::KEY_CUSTOM_VIEWS_ACTIVE), IArConfig::KEY_CUSTOM_VIEWS_ACTIVE);
+        $cb->setChecked(ArConfig::isCustomViewsActive());
+        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' .IArConfig::KEY_CUSTOM_VIEWS_PATH), IArConfig::KEY_CUSTOM_VIEWS_PATH);
+        $sub_item->setValue(ArConfig::getCustomViewsPath());
+        $sub_item->setInfo(self::plugin()->translate('admin_msg_' .IArConfig::KEY_CUSTOM_VIEWS_PATH.'_info'));
+        $cb->addSubItem($sub_item);
+        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' .IArConfig::KEY_CUSTOM_VIEWS_CLASS), IArConfig::KEY_CUSTOM_VIEWS_CLASS);
+        $sub_item->setValue(ArConfig::getCustomViewsClass());
+        $sub_item->setInfo(self::plugin()->translate('admin_msg_' .IArConfig::KEY_CUSTOM_VIEWS_CLASS.'_info'));
+        $cb->addSubItem($sub_item);
+        $this->addItem($cb);
+
+
+
+
 		//		$h = new ilFormSectionHeaderGUI();
 		//		$h->setTitle(self::plugin()->translate('admin_membership'));
 		//		$this->addItem($h);
@@ -173,6 +192,15 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 				case IArConfig::KEY_SHORTLINK_SUCCESS:
 					ArConfig::setShortlinkSuccess($this->getInput($item->getPostVar()));
 					break;
+                case IArConfig::KEY_CUSTOM_VIEWS_ACTIVE:
+                    ArConfig::setCustomViewsActive($this->getInput($item->getPostVar()));
+                    break;
+                case IArConfig::KEY_CUSTOM_VIEWS_PATH:
+                    ArConfig::setCustomViewsPath($this->getInput($item->getPostVar()));
+                    break;
+                case IArConfig::KEY_CUSTOM_VIEWS_CLASS:
+                    ArConfig::setCustomViewsClass($this->getInput($item->getPostVar()));
+                    break;
 				default:
 					break;
 			}

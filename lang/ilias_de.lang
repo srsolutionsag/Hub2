@@ -38,8 +38,16 @@ admin_msg_shortlink_no_access#:#Nachricht bei "Kein Zugriff"
 admin_msg_shortlink_no_access_info#:#Nachricht wird angezeigt, wenn ein/e Benutzer/in einen Shortlink nutzt, auf den er/sie keinen Zugriff hat
 admin_msg_shortlink_success#:#Nachricht bei erfolgreicher Weiterleitung
 admin_msg_shortlink_success_info#:#Die Meldung wird angezeigt, wenn nach dem zugriff via Shortlink eine erfolgreiche Weiterleitung zum ILIAS Objekt stattfindet.
+admin_msg_key_custom_views_active#:#Aktiviere Benutzerdefinierte Ansichten
+admin_msg_key_custom_views_path#:#Benutzerdefinierte Ansichten Klassenpfad
+admin_msg_key_custom_views_path_info#:#Pfad zur Klasse um Benutzerdefinierte Ansichten zu definieren.
+admin_msg_key_custom_views_class#:#Benutzerdefinierte Ansichten Klasse
+admin_msg_key_custom_views_class_info#:#Namespace oder Name der Klasse um Benutzerdefinierte Ansichten zu definieren.
 cat_prop_base_node_external#:#Basis-Node extern
 cat_prop_base_node_external_info#:#Fallback Externe-ID einer Kategorie (dieser Anbindung), die als übergeordnetes Element verwendet wird, nur wenn das angegebene übergeordnete Element nicht über die externe ID gefunden werden konnte
+admin_tab_custom_views#:#Benutzerdefinierte Ansichten
+admin_custom_view_class_not_found_1#:#Ein Fehler mit der Klasse definiert in:
+admin_custom_view_class_not_found_2#:# ist aufgetreten. Meldung:
 cat_prop_base_node_ilias#:#Basis-Node ILIAS
 cat_prop_base_node_ilias_info#:#Fallback Ref-ID wird als Elternteil für die Kategorie verwendet, nur wenn das angegebene Elternteil nicht über die Ref-ID gefunden werden konnte.
 cat_prop_change_icon#:#Icon ersetzen (%s)

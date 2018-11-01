@@ -38,6 +38,15 @@ admin_msg_shortlink_no_access#:#"No Access" Message
 admin_msg_shortlink_no_access_info#:#Message is display to users which use a Shortlink to an object without read-access.
 admin_msg_shortlink_success#:#Message for successful redirects
 admin_msg_shortlink_success_info#:#Message is shwon whenever a sucessful redirect via Shortlink happened.
+admin_msg_shortlink_success_info
+admin_msg_key_custom_views_active#:#Activate Custom Views
+admin_msg_key_custom_views_path#:#Custom View Class Path
+admin_msg_key_custom_views_path_info#:#Path to class controlling the custom views.
+admin_msg_key_custom_views_class#:#Custom View Class
+admin_msg_key_custom_views_class_info#:#Name or namespace of the class controlling the custom views.
+admin_tab_custom_views#:#Custom Views
+admin_custom_view_class_not_found_1#:#There was a problem with the class defined in
+admin_custom_view_class_not_found_2#:# Error Message:
 cat_prop_base_node_external#:#External base node
 cat_prop_base_node_external_info#:#Fallback external ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID.
 cat_prop_base_node_ilias#:#ILIAS base node
