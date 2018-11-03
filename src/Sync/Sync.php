@@ -53,6 +53,16 @@ class Sync implements ISync {
 	 */
 	public function execute() {
 		$skip_object_type = '';
+		try{
+            $global_hook = new GlobalHook();
+            if(!$global_hook->beforeSync($this->origins)){
+                $global_hook->handleExceptions($this->exceptions);
+                return;
+            }
+        }catch (Exception $e) {
+            $this->exceptions[] = $e;
+        }
+
 		foreach ($this->origins as $origin) {
 			if ($origin->getObjectType() == $skip_object_type) {
 				continue;
@@ -77,7 +87,14 @@ class Sync implements ISync {
 			}
 			$this->exceptions = array_merge($this->exceptions, $originSync->getExceptions());
 		}
-	}
+        try{
+            $global_hook->afterSync($this->origins);
+        }catch (Exception $e) {
+            $this->exceptions[] = $e;
+        }
+		$global_hook->handleExceptions($this->exceptions);
+
+    }
 
 
 	/**

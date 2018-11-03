@@ -38,6 +38,11 @@ admin_msg_shortlink_no_access#:#"No Access" Message
 admin_msg_shortlink_no_access_info#:#Message is display to users which use a Shortlink to an object without read-access.
 admin_msg_shortlink_success#:#Message for successful redirects
 admin_msg_shortlink_success_info#:#Message is shwon whenever a sucessful redirect via Shortlink happened.
+admin_msg_key_global_hock_active#:#Activate a Global Hook
+admin_msg_key_global_hock_path#:#Global Hook Class Path
+admin_msg_key_global_hock_path_info#:#Path to the class of the Global Hook.
+admin_msg_key_global_hock_class#:#Global Hook Class
+admin_msg_key_global_hock_class_info#:#Name or namespace of the class enabling to customize global before and after sync methods.
 cat_prop_base_node_external#:#External base node
 cat_prop_base_node_external_info#:#Fallback external ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID.
 cat_prop_base_node_ilias#:#ILIAS base node
