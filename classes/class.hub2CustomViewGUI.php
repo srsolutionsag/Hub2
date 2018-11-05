@@ -15,7 +15,11 @@ use srag\Plugins\Hub2\Config\ArConfig;
 class hub2CustomViewGUI {
 
 	use DICTrait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    /**
+     * @throws \srag\DIC\Exception\DICException
+     */
 	public function executeCommand()/*: void*/ {
 
         try{
