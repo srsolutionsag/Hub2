@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Utils;
 
 use srag\Plugins\Hub2\Access\Access;
-use srag\Plugins\Hub2\Access\Permission;
+use srag\Plugins\Hub2\Access\Ilias;
 
 /**
  * Trait Hub2Trait
@@ -23,9 +23,9 @@ trait Hub2Trait {
 
 
 	/**
-	 * @return Permission
+	 * @return Ilias
 	 */
-	protected static function permission(): Permission {
-		return Permission::getInstance();
+	protected static function ilias(): Ilias {
+		return Ilias::getInstance();
 	}
 }
