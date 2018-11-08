@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Config;
 
-use hub2RemoveDataConfirm;
 use ilHub2Plugin;
 use srag\ActiveRecordConfig\ActiveRecordConfig;
 
@@ -18,6 +17,12 @@ class ArConfig extends ActiveRecordConfig implements IArConfig {
 
 	const TABLE_NAME = 'sr_hub2_config_n';
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+	/**
+	 * @var array
+	 */
+	protected static $field = [
+		// TODO: Define fields here :)
+	];
 
 
 	/**
@@ -114,30 +119,6 @@ class ArConfig extends ActiveRecordConfig implements IArConfig {
 	 */
 	public static function setOriginsConfigLocked(bool $origins_config_locked)/*: void*/ {
 		self::setBooleanValue(self::KEY_LOCK_ORIGINS_CONFIG, $origins_config_locked);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function getUninstallRemovesData()/*: ?bool*/ {
-		return self::getXValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, hub2RemoveDataConfirm::DEFAULT_UNINSTALL_REMOVES_DATA);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/ {
-		self::setBooleanValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, $uninstall_removes_data);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function removeUninstallRemovesData()/*: void*/ {
-		self::removeName(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA);
 	}
 
 

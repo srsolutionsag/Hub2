@@ -117,25 +117,4 @@ interface IArConfig {
 	 */
 	public static function setOriginsConfigLocked(bool $origins_config_locked)/*: void*/
 	;
-
-
-	/**
-	 * @return bool|null
-	 */
-	public static function getUninstallRemovesData()/*: ?bool*/
-	;
-
-
-	/**
-	 * @param bool $uninstall_removes_data
-	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/
-	;
-
-
-	/**
-	 *
-	 */
-	public static function removeUninstallRemovesData()/*: void*/
-	;
 }
