@@ -22,7 +22,7 @@ class OriginImplementationTemplateGenerator {
 
 
 	/**
-	 * OriginImplementationTemplateGenerator constructor.
+	 * OriginImplementationTemplateGenerator constructor
 	 */
 	public function __construct() {
 

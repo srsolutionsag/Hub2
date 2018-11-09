@@ -27,7 +27,7 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * UDF constructor.
+	 * UDF constructor
 	 *
 	 * @param IMetadata $metadata
 	 */

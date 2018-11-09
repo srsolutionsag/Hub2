@@ -26,7 +26,7 @@ class Node implements INode {
 
 
 	/**
-	 * Node constructor.
+	 * Node constructor
 	 *
 	 * @param string $title
 	 */

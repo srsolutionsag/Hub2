@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
+use ilCopyWizardOptions;
 use ilLink;
 use ilMailMimeSenderFactory;
 use ilMD;
@@ -10,6 +11,8 @@ use ilMimeMail;
 use ilObjCategory;
 use ilObjCourse;
 use ilRepUtil;
+use ilSession;
+use ilSoapFunctions;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
@@ -98,16 +101,29 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
 		/** @var CourseDTO $dto */
-		$ilObjCourse = new ilObjCourse();
-		$ilObjCourse->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
 		// Check if we should create some dependence categories
 		$parentRefId = $this->buildDependenceCategories($dto, $parentRefId);
-		$ilObjCourse->create();
-		$ilObjCourse->createReference();
-		$ilObjCourse->putInTree($parentRefId);
-		$ilObjCourse->setPermissions($parentRefId);
+
+		if ($template_id = $dto->getTemplateId()) {
+			// copy from template
+			if (!ilObjCourse::_exists($template_id, true)) {
+				throw new HubException('Creation of course with ext_id = ' . $dto->getExtId() . ' failed: template course with ref_id = '
+					. $template_id . ' does not exist in ILIAS');
+			}
+			$return = $this->cloneAllObject($parentRefId, $template_id, $this->getCloneOptions($template_id));
+			$ilObjCourse = new ilObjCourse($return);
+		} else {
+			// create new one
+			$ilObjCourse = new ilObjCourse();
+			$ilObjCourse->setImportId($this->getImportId($dto));
+			$ilObjCourse->create();
+			$ilObjCourse->createReference();
+			$ilObjCourse->putInTree($parentRefId);
+			$ilObjCourse->setPermissions($parentRefId);
+		}
+
 		// Pass properties from DTO to ilObjUser
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
@@ -142,6 +158,70 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
+	}
+
+
+	/**
+	 * @param $source_id
+	 *
+	 * @return array
+	 */
+	protected function getCloneOptions($source_id) {
+		$options = [];
+		foreach (self::dic()->tree()->getSubTree($root = self::dic()->tree()->getNodeData($source_id)) as $node) {
+			if ($node['type'] == 'rolf') {
+				continue;
+			}
+
+			if (self::dic()->objDefinition()->allowCopy($node['type'])) {
+				$options[$node['ref_id']] = [ 'type' => ilCopyWizardOptions::COPY_WIZARD_COPY ];
+			}
+			// this should be a config
+			//            else if (self::LINK_IF_COPY_NOT_POSSIBLE && self::dic()->objDefinition()->allowLink($node['type'])) {
+			//                $options[$node['ref_id']] = ['type' => ilCopyWizardOptions::COPY_WIZARD_LINK];
+			//            }
+
+		}
+
+		return $options;
+	}
+
+
+	/**
+	 * This is a leaner version of ilContainer::cloneAllObject, which doens't use soap
+	 *
+	 * @param int   $parent_ref_id
+	 * @param int   $clone_source
+	 * @param array $options
+	 *
+	 * @return int $ref_id
+	 */
+	public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options): int {
+		// Save wizard options
+		$copy_id = ilCopyWizardOptions::_allocateCopyId();
+		$wizard_options = ilCopyWizardOptions::_getInstance($copy_id);
+		$wizard_options->saveOwner(self::dic()->user()->getId());
+		$wizard_options->saveRoot($clone_source);
+
+		// add entry for source container
+		$wizard_options->initContainer($clone_source, $parent_ref_id);
+
+		foreach ($options as $source_id => $option) {
+			$wizard_options->addEntry($source_id, $option);
+		}
+		$wizard_options->read();
+		$wizard_options->storeTree($clone_source);
+
+		// Duplicate session to avoid logout problems with backgrounded SOAP calls
+		$new_session_id = ilSession::_duplicate($_COOKIE['PHPSESSID']);
+
+		$wizard_options->disableSOAP();
+		$wizard_options->read();
+
+		include_once('./webservice/soap/include/inc.soap_functions.php');
+		$parent_ref_id = ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
+
+		return $parent_ref_id;
 	}
 
 

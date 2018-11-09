@@ -34,7 +34,7 @@ class ObjectLinkFactory {
 
 
 	/**
-	 * ObjectLinkFactory constructor.
+	 * ObjectLinkFactory constructor
 	 */
 	public function __construct() {
 		$this->origin_factory = new OriginFactory();
