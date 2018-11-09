@@ -18,6 +18,12 @@ interface IArConfig {
 	const KEY_SHORTLINK_SUCCESS = 'shortlink_success';
 	const KEY_ADMINISTRATE_HUB_ROLE_IDS = 'administrate_hub_role_ids';
 	const KEY_LOCK_ORIGINS_CONFIG = 'lock_origins_config';
+	const KEY_CUSTOM_VIEWS_ACTIVE = 'key_custom_views_active';
+	const KEY_CUSTOM_VIEWS_PATH = 'key_custom_views_path';
+	const KEY_CUSTOM_VIEWS_CLASS = 'key_custom_views_class';
+	const KEY_GLOBAL_HOCK_ACTIVE = 'key_global_hock_active';
+	const KEY_GLOBAL_HOCK_PATH = 'key_global_hock_path';
+	const KEY_GLOBAL_HOCK_CLASS = 'key_global_hock_class';
 	/**
 	 * @var string
 	 *
@@ -29,6 +35,12 @@ interface IArConfig {
 	const DEFAULT_SHORTLINK_SUCCESS = '';
 	const DEFAULT_ADMINISTRATE_HUB_ROLE_IDS = [];
 	const DEFAULT_LOCK_ORIGINS_CONFIG = '';
+	const DEFAULT_CUSTOM_VIEWS_ACTIVE = false;
+	const DEFAULT_CUSTOM_VIEWS_PATH = '';
+	const DEFAULT_CUSTOM_VIEWS_CLASS = '';
+	const DEFAULT_GLOBAL_HOCK_ACTIVE = false;
+	const DEFAULT_GLOBAL_HOCK_PATH = '';
+	const DEFAULT_GLOBAL_HOCK_CLASS = '';
 
 
 	/**
@@ -120,6 +132,42 @@ interface IArConfig {
 
 
 	/**
+	 * @param bool $active
+	 */
+	public static function setCustomViewsActive(bool $active);
+
+
+	/**
+	 * @return bool
+	 */
+	public static function isCustomViewsActive(): bool;
+
+
+	/**
+	 * @param string $active
+	 */
+	public static function setCustomViewsPath(string $path);
+
+
+	/**
+	 * @return string
+	 */
+	public static function getCustomViewsPath(): string;
+
+
+	/**
+	 * @param string $active
+	 */
+	public static function setCustomViewsClass(string $path);
+
+
+	/**
+	 * @return string
+	 */
+	public static function getCustomViewsClass(): string;
+
+
+	/**
 	 * @return bool|null
 	 */
 	public static function getUninstallRemovesData()/*: ?bool*/
@@ -138,4 +186,40 @@ interface IArConfig {
 	 */
 	public static function removeUninstallRemovesData()/*: void*/
 	;
+
+
+	/**
+	 * @param bool $active
+	 */
+	public static function setGlobalHookActive(bool $active);
+
+
+	/**
+	 * @return bool
+	 */
+	public static function isGlobalHookActive(): bool;
+
+
+	/**
+	 * @param string $active
+	 */
+	public static function setGlobalHookPath(string $path);
+
+
+	/**
+	 * @return string
+	 */
+	public static function getGlobalHookPath(): string;
+
+
+	/**
+	 * @param string $active
+	 */
+	public static function setGlobalHookClass(string $path);
+
+
+	/**
+	 * @return string
+	 */
+	public static function getGlobalHookClass(): string;
 }

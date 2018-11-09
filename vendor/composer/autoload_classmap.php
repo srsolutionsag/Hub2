@@ -541,6 +541,7 @@ return array(
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'hub2ConfigGUI' => $baseDir . '/classes/class.hub2ConfigGUI.php',
     'hub2ConfigOriginsGUI' => $baseDir . '/classes/class.hub2ConfigOriginsGUI.php',
+    'hub2CustomViewGUI' => $baseDir . '/classes/class.hub2CustomViewGUI.php',
     'hub2DataGUI' => $baseDir . '/classes/class.hub2DataGUI.php',
     'hub2MainGUI' => $baseDir . '/classes/class.hub2MainGUI.php',
     'hub2RemoveDataConfirm' => $baseDir . '/classes/uninstall/class.hub2RemoveDataConfirm.php',
