@@ -9,11 +9,10 @@ use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
 use srag\Plugins\Hub2\Log\OriginLog;
 use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
-use srag\Plugins\Hub2\Sync\GlobalHook;
 
-use srag\Plugins\Hub2\Config\ArConfig;
 /**
  * Class RunSync
  *
@@ -87,10 +86,10 @@ class RunSync extends AbstractJob {
 
 			$OriginFactory = new OriginFactory();
 
-            $global_hook = new GlobalHook();
-            if(!$global_hook->beforeSync($OriginFactory->getAllActive())){
-                return;
-            }
+			$global_hook = new GlobalHook();
+			if (!$global_hook->beforeSync($OriginFactory->getAllActive())) {
+				return ResultFactory::error("there was an error");
+			}
 
 			$summary = $OriginSyncSummaryFactory->cron();
 			foreach ($OriginFactory->getAllActive() as $origin) {
@@ -106,13 +105,13 @@ class RunSync extends AbstractJob {
 
 				$summary->addOriginSync($originSync);
 			}
-            $global_hook->afterSync($OriginFactory->getAllActive());
+			$global_hook->afterSync($OriginFactory->getAllActive());
 
 			return ResultFactory::ok("everything's fine.");
 		} catch (Exception $e) {
-            $global_hook->handleExceptions($e);
+			$global_hook->handleExceptions($e);
 
-            return ResultFactory::error("there was an error");
+			return ResultFactory::error("there was an error");
 		}
 	}
 }

@@ -8,6 +8,7 @@ use srag\DIC\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use Throwable;
 
 /**
@@ -53,15 +54,16 @@ class Sync implements ISync {
 	 */
 	public function execute() {
 		$skip_object_type = '';
-		try{
-            $global_hook = new GlobalHook();
-            if(!$global_hook->beforeSync($this->origins)){
-                $global_hook->handleExceptions($this->exceptions);
-                return;
-            }
-        }catch (Exception $e) {
-            $this->exceptions[] = $e;
-        }
+		try {
+			$global_hook = new GlobalHook();
+			if (!$global_hook->beforeSync($this->origins)) {
+				$global_hook->handleExceptions($this->exceptions);
+
+				return;
+			}
+		} catch (Exception $e) {
+			$this->exceptions[] = $e;
+		}
 
 		foreach ($this->origins as $origin) {
 			if ($origin->getObjectType() == $skip_object_type) {
@@ -87,14 +89,13 @@ class Sync implements ISync {
 			}
 			$this->exceptions = array_merge($this->exceptions, $originSync->getExceptions());
 		}
-        try{
-            $global_hook->afterSync($this->origins);
-        }catch (Exception $e) {
-            $this->exceptions[] = $e;
-        }
+		try {
+			$global_hook->afterSync($this->origins);
+		} catch (Exception $e) {
+			$this->exceptions[] = $e;
+		}
 		$global_hook->handleExceptions($this->exceptions);
-
-    }
+	}
 
 
 	/**
