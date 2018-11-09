@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
+use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
@@ -252,6 +253,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function run() {
 		$force = (bool)self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE];
 		$summary = $this->summaryFactory->web();
+		try {
+			$global_hook = new GlobalHook();
+			if (!$global_hook->beforeSync($this->originFactory->getAllActive())) {
+				return;
+			}
+		} catch (Exception $e) {
+			$global_hook->handleExceptions($e);
+		}
 		foreach ($this->originFactory->getAllActive() as $origin) {
 			/**
 			 * @var IOrigin $origin
@@ -264,6 +273,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			try {
 				$originSync->execute();
 			} catch (Throwable $e) {
+				$global_hook->handleExceptions($e);
 				// Any exception being forwarded to here means that we failed to execute the sync at some point
 				ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 			}
@@ -273,6 +283,13 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$summary->addOriginSync($originSync);
 		}
 		$summary->sendNotifications();
+		try {
+			$global_hook->afterSync($this->originFactory->getAllActive());
+		} catch (Exception $e) {
+			$global_hook->handleExceptions($e);
+			ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
+		}
+
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
 		self::dic()->ctrl()->redirect($this);
 	}
