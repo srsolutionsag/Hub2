@@ -218,30 +218,6 @@ class ArConfig extends ActiveRecordConfig implements IArConfig {
 
 
 	/**
-	 * @inheritdoc
-	 */
-	public static function getUninstallRemovesData()/*: ?bool*/ {
-		return self::getXValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, hub2RemoveDataConfirm::DEFAULT_UNINSTALL_REMOVES_DATA);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/ {
-		self::setBooleanValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, $uninstall_removes_data);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function removeUninstallRemovesData()/*: void*/ {
-		self::removeName(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA);
-	}
-
-
-	/**
 	 * @param string      $key
 	 * @param string|null $default_value
 	 *

@@ -168,27 +168,6 @@ interface IArConfig {
 
 
 	/**
-	 * @return bool|null
-	 */
-	public static function getUninstallRemovesData()/*: ?bool*/
-	;
-
-
-	/**
-	 * @param bool $uninstall_removes_data
-	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/
-	;
-
-
-	/**
-	 *
-	 */
-	public static function removeUninstallRemovesData()/*: void*/
-	;
-
-
-	/**
 	 * @param bool $active
 	 */
 	public static function setGlobalHookActive(bool $active);
