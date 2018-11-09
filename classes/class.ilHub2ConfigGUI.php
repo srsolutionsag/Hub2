@@ -1,8 +1,8 @@
 <?php
 
-use srag\DIC\DICTrait;
-
 require_once __DIR__ . "/../vendor/autoload.php";
+
+use srag\DIC\DICTrait;
 
 /**
  * Class ilHub2ConfigGUI

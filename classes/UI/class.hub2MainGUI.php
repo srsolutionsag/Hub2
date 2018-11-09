@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . "/../vendor/autoload.php";
+
+require_once __DIR__ . "/../../vendor/autoload.php";
 
 use srag\DIC\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\Helper\DIC;
 
 /**
  * Class hub2MainGUI

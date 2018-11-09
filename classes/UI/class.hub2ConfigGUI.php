@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . "/../vendor/autoload.php";
+
+require_once __DIR__ . "/../../vendor/autoload.php";
 
 use srag\Plugins\Hub2\UI\ConfigFormGUI;
 
