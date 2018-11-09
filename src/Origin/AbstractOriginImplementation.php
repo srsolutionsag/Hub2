@@ -61,7 +61,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 
 	/**
-	 * AbstractOriginImplementation constructor.
+	 * AbstractOriginImplementation constructor
 	 *
 	 * @param IOriginConfig              $config
 	 * @param IDataTransferObjectFactory $factory

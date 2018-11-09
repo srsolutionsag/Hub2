@@ -250,6 +250,10 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	private $thirdDependenceCategory;
 	/**
+	 * @var int
+	 */
+	private $template_id;
+	/**
 	 * @var array
 	 */
 	private $notificationEmails = [];
@@ -458,6 +462,26 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	 */
 	public function setThirdDependenceCategory($thirdDependenceCategory) {
 		$this->thirdDependenceCategory = $thirdDependenceCategory;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getTemplateId(): int {
+		return $this->template_id;
+	}
+
+
+	/**
+	 * @param int $template_id
+	 *
+	 * @return $this
+	 */
+	public function setTemplateId(int $template_id) {
+		$this->template_id = $template_id;
 
 		return $this;
 	}

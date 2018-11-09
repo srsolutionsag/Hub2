@@ -46,7 +46,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 
 	/**
-	 * Taxonomy constructor.
+	 * Taxonomy constructor
 	 *
 	 * @param ITaxonomy $taxonomy
 	 */

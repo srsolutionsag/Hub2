@@ -1,8 +1,8 @@
 <?php
 
-use srag\DIC\DICTrait;
-
 require_once __DIR__ . "/../vendor/autoload.php";
+
+use srag\DIC\DICTrait;
 
 /**
  * Class ilHub2ConfigGUI
@@ -17,25 +17,18 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI {
 
 
 	/**
-	 * @inheritDoc
+	 * @param string $cmd
 	 */
-	public function executeCommand() {
-		parent::executeCommand();
+	public function performCommand($cmd) {
 		switch (self::dic()->ctrl()->getNextClass()) {
 			case strtolower(hub2MainGUI::class):
 				$h = new hub2MainGUI();
 				self::dic()->ctrl()->forwardCommand($h);
+				break;
 
-				return;
+			default:
+				self::dic()->ctrl()->redirectByClass([ hub2MainGUI::class ]);
+				break;
 		}
-		self::dic()->ctrl()->redirectByClass([ hub2MainGUI::class ]);
-	}
-
-
-	/**
-	 * @param string $cmd
-	 */
-	public function performCommand($cmd) {
-		// noting to to here
 	}
 }

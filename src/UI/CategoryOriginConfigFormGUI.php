@@ -28,12 +28,14 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 	protected function addSyncConfig() {
 		parent::addSyncConfig();
 
-		$te = new ilTextInputGUI(self::plugin()->translate('cat_prop_base_node_ilias'), $this->conf(ICategoryOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
+		$te = new ilTextInputGUI(self::plugin()
+			->translate('cat_prop_base_node_ilias'), $this->conf(ICategoryOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
 		$te->setInfo(self::plugin()->translate('cat_prop_base_node_ilias_info'));
 		$te->setValue($this->origin->config()->getParentRefIdIfNoParentIdFound());
 		$this->addItem($te);
 
-		$te = new ilTextInputGUI(self::plugin()->translate('cat_prop_base_node_external'), $this->conf(ICategoryOriginConfig::EXT_ID_NO_PARENT_ID_FOUND));
+		$te = new ilTextInputGUI(self::plugin()
+			->translate('cat_prop_base_node_external'), $this->conf(ICategoryOriginConfig::EXT_ID_NO_PARENT_ID_FOUND));
 		$te->setInfo(self::plugin()->translate('cat_prop_base_node_external_info'));
 		$te->setValue($this->origin->config()->getExternalParentIdIfNoParentIdFound());
 		$this->addItem($te);
@@ -69,10 +71,13 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
 		$opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_none'), CategoryOriginProperties::DELETE_MODE_NONE);
 		$delete->addOption($opt);
 
-		$opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_inactive', "", [ self::plugin()->translate('com_prop_mark_deleted_text') ]), CategoryOriginProperties::DELETE_MODE_MARK);
+		$opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_inactive', "", [
+			self::plugin()->translate('com_prop_mark_deleted_text')
+		]), CategoryOriginProperties::DELETE_MODE_MARK);
 		$delete->addOption($opt);
 
-		$te = new ilTextInputGUI(self::plugin()->translate('cat_prop_delete_mode_inactive_text'), $this->prop(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
+		$te = new ilTextInputGUI(self::plugin()
+			->translate('cat_prop_delete_mode_inactive_text'), $this->prop(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
 		$te->setValue($this->origin->properties()->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
 		$opt->addSubItem($te);
 

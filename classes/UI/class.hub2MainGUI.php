@@ -1,8 +1,9 @@
 <?php
-require_once __DIR__ . "/../vendor/autoload.php";
+
+require_once __DIR__ . "/../../vendor/autoload.php";
 
 use srag\DIC\DICTrait;
-use srag\Plugins\Hub2\Helper\DIC;
+use srag\Plugins\Hub2\Config\ArConfig;
 
 /**
  * Class hub2MainGUI
@@ -13,6 +14,7 @@ use srag\Plugins\Hub2\Helper\DIC;
  * @ilCtrl_IsCalledBy hub2MainGUI: ilHub2ConfigGUI
  * @ilCtrl_calls      hub2MainGUI: hub2ConfigOriginsGUI
  * @ilCtrl_calls      hub2MainGUI: hub2ConfigGUI
+ * @ilCtrl_calls      hub2MainGUI: hub2CustomViewGUI
  */
 class hub2MainGUI {
 
@@ -20,11 +22,12 @@ class hub2MainGUI {
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
 	const TAB_ORIGINS = 'tab_origins';
+	const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
 	const CMD_INDEX = 'index';
 
 
 	/**
-	 * hub2MainGUI constructor.
+	 * hub2MainGUI constructor
 	 */
 	public function __construct() {
 
@@ -37,12 +40,17 @@ class hub2MainGUI {
 	public function executeCommand()/*: void*/ {
 		$this->initTabs();
 		$nextClass = self::dic()->ctrl()->getNextClass();
+
 		switch ($nextClass) {
 			case strtolower(hub2ConfigGUI::class):
 				self::dic()->ctrl()->forwardCommand(new hub2ConfigGUI());
 				break;
 			case strtolower(hub2ConfigOriginsGUI::class):
 				self::dic()->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
+				break;
+			case strtolower(hub2CustomViewGUI::class):
+				self::dic()->tabs()->activateTab(self::TAB_CUSTOM_VIEWS);
+				self::dic()->ctrl()->forwardCommand(new hub2CustomViewGUI());
 				break;
 			case strtolower(hub2DataGUI::class):
 				break;
@@ -70,6 +78,11 @@ class hub2MainGUI {
 
 		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
+
+		if (ArConfig::isCustomViewsActive()) {
+			self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
+				->getLinkTargetByClass(hub2CustomViewGUI::class));
+		}
 	}
 
 
