@@ -21,7 +21,7 @@ abstract class AbstractResult extends ilCronJobResult {
 
 
 	/**
-	 * AbstractResult constructor.
+	 * AbstractResult constructor
 	 *
 	 * @param string $message
 	 */

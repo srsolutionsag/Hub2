@@ -17,6 +17,7 @@ abstract class AbstractGUI {
 	use DICTrait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+
 	public function __construct() {
 
 	}

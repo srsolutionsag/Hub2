@@ -35,7 +35,7 @@ class Taxonomy implements ITaxonomy {
 
 
 	/**
-	 * Taxonomy constructor.
+	 * Taxonomy constructor
 	 *
 	 * @param string $title
 	 * @param int    $mode

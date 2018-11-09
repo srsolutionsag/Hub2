@@ -22,7 +22,7 @@ abstract class AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * AbstractBaseLink constructor.
+	 * AbstractBaseLink constructor
 	 *
 	 * @param ARObject $object
 	 */

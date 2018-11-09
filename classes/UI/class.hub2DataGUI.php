@@ -1,12 +1,12 @@
 <?php
 
+require_once __DIR__ . "/../../vendor/autoload.php";
+
 use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\UI\DataTableGUI;
-
-require_once __DIR__ . "/../vendor/autoload.php";
 
 /**
  * Class hub2DataGUI
@@ -116,7 +116,8 @@ class hub2DataGUI extends hub2MainGUI {
 		ksort($filtered);
 
 		// Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-		$data_table = $factory->item()->standard(self::plugin()->translate("data_table_ext_id", "", [ $object->getExtId() ]))->withProperties($filtered);
+		$data_table = $factory->item()->standard(self::plugin()->translate("data_table_ext_id", "", [ $object->getExtId() ]))
+			->withProperties($filtered);
 
 		$data_table = $factory->listing()->descriptive($filtered);
 

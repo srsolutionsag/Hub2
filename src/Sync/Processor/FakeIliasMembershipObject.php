@@ -22,7 +22,7 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 
 
 	/**
-	 * FakeIliasMembershipObject constructor.
+	 * FakeIliasMembershipObject constructor
 	 *
 	 * @param int $container_id_ilias
 	 * @param int $user_id_ilias

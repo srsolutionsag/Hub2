@@ -26,7 +26,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * Metadata constructor.
+	 * Metadata constructor
 	 *
 	 * @param int $identifier
 	 */

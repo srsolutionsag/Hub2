@@ -34,7 +34,7 @@ class ObjectLink {
 
 
 	/**
-	 * ObjectLink constructor.
+	 * ObjectLink constructor
 	 *
 	 * @param string $ext_id
 	 */

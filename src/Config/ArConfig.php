@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Config;
 
-use hub2RemoveDataConfirm;
 use ilHub2Plugin;
 use srag\ActiveRecordConfig\ActiveRecordConfig;
 
@@ -18,6 +17,11 @@ class ArConfig extends ActiveRecordConfig implements IArConfig {
 
 	const TABLE_NAME = 'sr_hub2_config_n';
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+	/**
+	 * @var array
+	 */
+	protected static $field = [// TODO: Define fields here :)
+	];
 
 
 	/**
@@ -120,24 +124,96 @@ class ArConfig extends ActiveRecordConfig implements IArConfig {
 	/**
 	 * @inheritdoc
 	 */
-	public static function getUninstallRemovesData()/*: ?bool*/ {
-		return self::getXValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, hub2RemoveDataConfirm::DEFAULT_UNINSTALL_REMOVES_DATA);
+	public static function setCustomViewsActive(bool $active) {
+		self::setBooleanValue(self::KEY_CUSTOM_VIEWS_ACTIVE, $active);
 	}
 
 
 	/**
 	 * @inheritdoc
 	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/ {
-		self::setBooleanValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, $uninstall_removes_data);
+	public static function setGlobalHookActive(bool $active) {
+		self::setBooleanValue(self::KEY_GLOBAL_HOCK_ACTIVE, $active);
 	}
 
 
 	/**
 	 * @inheritdoc
 	 */
-	public static function removeUninstallRemovesData()/*: void*/ {
-		self::removeName(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA);
+	public static function isCustomViewsActive(): bool {
+		return self::getBooleanValue(self::KEY_CUSTOM_VIEWS_ACTIVE, self::DEFAULT_CUSTOM_VIEWS_ACTIVE);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function isGlobalHookActive(): bool {
+		return self::getBooleanValue(self::KEY_GLOBAL_HOCK_ACTIVE, self::DEFAULT_GLOBAL_HOCK_ACTIVE);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function setCustomViewsPath(string $path) {
+		self::setStringValue(self::KEY_CUSTOM_VIEWS_PATH, $path);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function setGlobalHookPath(string $path) {
+		self::setStringValue(self::KEY_GLOBAL_HOCK_PATH, $path);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function getCustomViewsPath(): string {
+		return self::getStringValue(self::KEY_CUSTOM_VIEWS_PATH, self::DEFAULT_CUSTOM_VIEWS_PATH);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function getGlobalHookPath(): string {
+		return self::getStringValue(self::KEY_GLOBAL_HOCK_PATH, self::DEFAULT_GLOBAL_HOCK_PATH);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function setCustomViewsClass(string $class) {
+		self::setStringValue(self::KEY_CUSTOM_VIEWS_CLASS, $class);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function setGlobalHookClass(string $class) {
+		self::setStringValue(self::KEY_GLOBAL_HOCK_CLASS, $class);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function getCustomViewsClass(): string {
+		return self::getStringValue(self::KEY_CUSTOM_VIEWS_CLASS, self::DEFAULT_CUSTOM_VIEWS_CLASS);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public static function getGlobalHookClass(): string {
+		return self::getStringValue(self::KEY_GLOBAL_HOCK_CLASS, self::DEFAULT_GLOBAL_HOCK_CLASS);
 	}
 
 

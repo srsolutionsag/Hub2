@@ -19,7 +19,7 @@ class TaxonomyNodeNotFoundException extends HubException {
 
 
 	/**
-	 * TaxonomyNodeNotFoundException constructor.
+	 * TaxonomyNodeNotFoundException constructor
 	 *
 	 * @param INode $node
 	 */
