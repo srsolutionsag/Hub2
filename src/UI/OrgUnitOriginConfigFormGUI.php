@@ -26,7 +26,8 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI {
 	protected function addSyncConfig() {
 		parent::addSyncConfig();
 
-		$ref_id_if_no_parent_id = new ilTextInputGUI(self::plugin()->translate("orgunit_ref_id_if_no_parent_id"), $this->conf(IOrgUnitOriginConfig::REF_ID_IF_NO_PARENT_ID));
+		$ref_id_if_no_parent_id = new ilTextInputGUI(self::plugin()
+			->translate("orgunit_ref_id_if_no_parent_id"), $this->conf(IOrgUnitOriginConfig::REF_ID_IF_NO_PARENT_ID));
 		$ref_id_if_no_parent_id->setInfo(self::plugin()->translate("orgunit_ref_id_if_no_parent_id_info"));
 		$ref_id_if_no_parent_id->setValue($this->origin->config()->getRefIdIfNoParentId());
 		$this->addItem($ref_id_if_no_parent_id);

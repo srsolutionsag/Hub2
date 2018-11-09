@@ -32,12 +32,14 @@ class MappingStrategyFactory implements IMappingStrategyFactory {
 		return new ByLogin();
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function byExternalAccount(): IMappingStrategy {
 		return new ByExternalAccount();
 	}
+
 
 	/**
 	 * @inheritdoc

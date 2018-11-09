@@ -55,20 +55,24 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		//		$cb = new ilCheckboxInputGUI(self::plugin()->translate('crs_prop_create_icon'), $this->prop(CourseOriginProperties::CREATE_ICON));
 		//		$this->addItem($cb);
 
-		$send_mail = new ilCheckboxInputGUI(self::plugin()->translate('crs_prop_send_notification'), $this->prop(CourseOriginProperties::SEND_CREATE_NOTIFICATION));
+		$send_mail = new ilCheckboxInputGUI(self::plugin()
+			->translate('crs_prop_send_notification'), $this->prop(CourseOriginProperties::SEND_CREATE_NOTIFICATION));
 		$send_mail->setInfo(self::plugin()->translate('crs_prop_send_notification_info'));
 		$send_mail->setChecked($this->origin->properties()->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION));
-		$notification_subject = new ilTextInputGUI(self::plugin()->translate('crs_prop_notification_subject'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
+		$notification_subject = new ilTextInputGUI(self::plugin()
+			->translate('crs_prop_notification_subject'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
 		$notification_subject->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
 
 		$send_mail->addSubItem($notification_subject);
-		$notification_body = new ilTextAreaInputGUI(self::plugin()->translate('crs_prop_notification_body'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_BODY));
+		$notification_body = new ilTextAreaInputGUI(self::plugin()
+			->translate('crs_prop_notification_body'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_BODY));
 		$notification_body->setInfo(CourseOriginProperties::getPlaceHolderStrings());
 		$notification_body->setRows(6);
 		$notification_body->setCols(100);
 		$notification_body->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY));
 		$send_mail->addSubItem($notification_body);
-		$notification_from = new ilEMailInputGUI(self::plugin()->translate('crs_prop_notification_from'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
+		$notification_from = new ilEMailInputGUI(self::plugin()
+			->translate('crs_prop_notification_from'), $this->prop(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
 		$notification_from->setValue($this->origin->properties()->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
 		$send_mail->addSubItem($notification_from);
 		$this->addItem($send_mail);
@@ -101,7 +105,8 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		$opt = new ilRadioOption(self::plugin()->translate('crs_prop_delete_mode_delete'), CourseOriginProperties::DELETE_MODE_DELETE);
 		$delete->addOption($opt);
 
-		$opt = new ilRadioOption(self::plugin()->translate('crs_prop_delete_mode_delete_or_inactive'), CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE);
+		$opt = new ilRadioOption(self::plugin()
+			->translate('crs_prop_delete_mode_delete_or_inactive'), CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE);
 		$opt->setInfo(self::plugin()->translate('crs_prop_delete_mode_delete_or_inactive_info'));
 		$delete->addOption($opt);
 

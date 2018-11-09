@@ -2,7 +2,6 @@
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
-use srag\Plugins\Hub2\Config\ArConfig;
 use srag\RemovePluginDataConfirm\AbstractRemovePluginDataConfirm;
 
 /**
@@ -13,29 +12,4 @@ use srag\RemovePluginDataConfirm\AbstractRemovePluginDataConfirm;
 class hub2RemoveDataConfirm extends AbstractRemovePluginDataConfirm {
 
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getUninstallRemovesData()/*: ?bool*/ {
-		return ArConfig::getUninstallRemovesData();
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function setUninstallRemovesData(/*bool*/
-		$uninstall_removes_data)/*: void*/ {
-		ArConfig::setUninstallRemovesData($uninstall_removes_data);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function removeUninstallRemovesData()/*: void*/ {
-		ArConfig::removeUninstallRemovesData();
-	}
 }

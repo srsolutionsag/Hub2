@@ -60,7 +60,8 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI {
 		$opt = new ilRadioOption(self::plugin()->translate('grp_prop_delete_mode_delete'), GroupOriginProperties::DELETE_MODE_DELETE);
 		$delete->addOption($opt);
 
-		$opt = new ilRadioOption(self::plugin()->translate('grp_prop_delete_mode_delete_or_close'), GroupOriginProperties::DELETE_MODE_DELETE_OR_CLOSE);
+		$opt = new ilRadioOption(self::plugin()
+			->translate('grp_prop_delete_mode_delete_or_close'), GroupOriginProperties::DELETE_MODE_DELETE_OR_CLOSE);
 		$opt->setInfo(self::plugin()->translate('grp_prop_delete_mode_delete_or_close_info'));
 		$delete->addOption($opt);
 

@@ -37,7 +37,7 @@ class Handler {
 
 
 	/**
-	 * Handler constructor.
+	 * Handler constructor
 	 *
 	 * @param string $ext_id
 	 */

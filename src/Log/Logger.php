@@ -30,7 +30,7 @@ class Logger {
 
 
 	/**
-	 * Logger constructor.
+	 * Logger constructor
 	 *
 	 * @param string $path
 	 *
