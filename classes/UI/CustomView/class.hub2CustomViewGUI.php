@@ -4,7 +4,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use srag\DIC\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\UI\BaseCustomViewGUI;
+use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
 
 /**
  * Class hub2CustomViewGUI
@@ -18,10 +18,17 @@ class hub2CustomViewGUI {
 
 
 	/**
+	 * hub2CustomViewGUI constructor
+	 */
+	public function __construct() {
+
+	}
+
+
+	/**
 	 *
 	 */
 	public function executeCommand()/*: void*/ {
-
 		try {
 			if (!file_exists(ArConfig::getCustomViewsPath())) {
 				throw new Exception("File " . ArConfig::getCustomViewsPath() . " doest not Exist");

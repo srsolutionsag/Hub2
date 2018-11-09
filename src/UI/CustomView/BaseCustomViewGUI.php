@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\CustomView;
 
 use hub2CustomViewGUI;
 use ilHub2Plugin;
@@ -9,7 +9,7 @@ use srag\DIC\DICTrait;
 /**
  * Class BaseCustomViewGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\CustomView
  * @author  Timon Amstutz
  */
 abstract class BaseCustomViewGUI {
@@ -35,5 +35,6 @@ abstract class BaseCustomViewGUI {
 	/**
 	 *
 	 */
-	public abstract function executeCommand()/*: void*/;
+	public abstract function executeCommand()/*: void*/
+	;
 }
