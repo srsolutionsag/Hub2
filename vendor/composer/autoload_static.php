@@ -631,6 +631,7 @@ class ComposerStaticInitf386b343b0dde4940e1f686502a78c41
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'hub2ConfigGUI' => __DIR__ . '/../..' . '/classes/class.hub2ConfigGUI.php',
         'hub2ConfigOriginsGUI' => __DIR__ . '/../..' . '/classes/class.hub2ConfigOriginsGUI.php',
+        'hub2CustomViewGUI' => __DIR__ . '/../..' . '/classes/class.hub2CustomViewGUI.php',
         'hub2DataGUI' => __DIR__ . '/../..' . '/classes/class.hub2DataGUI.php',
         'hub2MainGUI' => __DIR__ . '/../..' . '/classes/class.hub2MainGUI.php',
         'hub2RemoveDataConfirm' => __DIR__ . '/../..' . '/classes/uninstall/class.hub2RemoveDataConfirm.php',

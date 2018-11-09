@@ -252,7 +252,8 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 	protected static final function getBooleanValue(/*string*/
 		$name, /*bool*/
 		$default_value = false)/*: bool*/ {
-		return boolval(self::getXValue($name, $default_value));
+
+		return self::getXValue($name, $default_value) === 'true'? true: false;
 	}
 
 
