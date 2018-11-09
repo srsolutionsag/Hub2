@@ -20,7 +20,7 @@ final class GlobalHook implements IGlobalHook {
 
 
 	/**
-	 * GlobalHook constructor.
+	 * GlobalHook constructor
 	 *
 	 * @throws HubException
 	 */

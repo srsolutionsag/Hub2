@@ -29,7 +29,7 @@ abstract class ObjectRepository implements IObjectRepository {
 
 
 	/**
-	 * ObjectRepository constructor.
+	 * ObjectRepository constructor
 	 *
 	 * @param IOrigin $origin
 	 */

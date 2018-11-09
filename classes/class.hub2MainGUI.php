@@ -27,7 +27,7 @@ class hub2MainGUI {
 
 
 	/**
-	 * hub2MainGUI constructor.
+	 * hub2MainGUI constructor
 	 */
 	public function __construct() {
 

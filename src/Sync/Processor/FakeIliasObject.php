@@ -22,7 +22,7 @@ abstract class FakeIliasObject {
 
 
 	/**
-	 * FakeIliasObject constructor.
+	 * FakeIliasObject constructor
 	 *
 	 * @param string $id
 	 */

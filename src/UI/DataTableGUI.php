@@ -63,7 +63,7 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * DataTableGUI constructor.
+	 * DataTableGUI constructor
 	 *
 	 * @param hub2DataGUI $a_parent_obj
 	 * @param string      $a_parent_cmd
