@@ -43,6 +43,11 @@ admin_msg_key_custom_views_path#:#Benutzerdefinierte Ansichten Klassenpfad
 admin_msg_key_custom_views_path_info#:#Pfad zur Klasse um Benutzerdefinierte Ansichten zu definieren.
 admin_msg_key_custom_views_class#:#Benutzerdefinierte Ansichten Klasse
 admin_msg_key_custom_views_class_info#:#Namespace oder Name der Klasse um Benutzerdefinierte Ansichten zu definieren.
+admin_msg_key_global_hock_active#:#Einen Global Hook aktivieren
+admin_msg_key_global_hock_path#:#Global Hook Klassenpfad
+admin_msg_key_global_hock_path_info#:#Pfad zur Klasse des Global Hooks
+admin_msg_key_global_hock_class#:#Global Hook Klasse
+admin_msg_key_global_hock_class_info#:#Namespace oder Name der Klasse um den Globalen Hook zu definieren.
 cat_prop_base_node_external#:#Basis-Node extern
 cat_prop_base_node_external_info#:#Fallback Externe-ID einer Kategorie (dieser Anbindung), die als übergeordnetes Element verwendet wird, nur wenn das angegebene übergeordnete Element nicht über die externe ID gefunden werden konnte
 admin_tab_custom_views#:#Benutzerdefinierte Ansichten

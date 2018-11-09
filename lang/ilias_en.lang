@@ -47,6 +47,11 @@ admin_msg_key_custom_views_class_info#:#Name or namespace of the class controlli
 admin_tab_custom_views#:#Custom Views
 admin_custom_view_class_not_found_1#:#There was a problem with the class defined in
 admin_custom_view_class_not_found_2#:# Error Message:
+admin_msg_key_global_hock_active#:#Activate a Global Hook
+admin_msg_key_global_hock_path#:#Global Hook Class Path
+admin_msg_key_global_hock_path_info#:#Path to the class of the Global Hook.
+admin_msg_key_global_hock_class#:#Global Hook Class
+admin_msg_key_global_hock_class_info#:#Name or namespace of the class enabling to customize global before and after sync methods.
 cat_prop_base_node_external#:#External base node
 cat_prop_base_node_external_info#:#Fallback external ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID.
 cat_prop_base_node_ilias#:#ILIAS base node
