@@ -24,6 +24,7 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	use MappingStrategyAwareDataTransferObject;
 	const GENDER_MALE = 'm';
 	const GENDER_FEMALE = 'f';
+    const GENDER_NONE = " ";
 	const AUTH_MODE_ILIAS = 'local';
 	const AUTH_MODE_SHIB = 'shibboleth';
 	const AUTH_MODE_LDAP = 'ldap';
@@ -34,6 +35,7 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	private static $genders = [
 		self::GENDER_MALE,
 		self::GENDER_FEMALE,
+        self::GENDER_NONE
 	];
 	/**
 	 * @var array
