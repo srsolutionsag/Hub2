@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Config;
 
-use hub2RemoveDataConfirm;
 use ilHub2Plugin;
 use srag\ActiveRecordConfig\ActiveRecordConfig;
 
@@ -18,6 +17,11 @@ class ArConfig extends ActiveRecordConfig implements IArConfig {
 
 	const TABLE_NAME = 'sr_hub2_config_n';
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+	/**
+	 * @var array
+	 */
+	protected static $field = [// TODO: Define fields here :)
+	];
 
 
 	/**
