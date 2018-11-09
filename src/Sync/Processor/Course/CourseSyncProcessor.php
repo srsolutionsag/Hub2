@@ -12,6 +12,7 @@ use ilObjCategory;
 use ilObjCourse;
 use ilRepUtil;
 use ilSession;
+use ilSoapFunctions;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
@@ -218,7 +219,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$wizard_options->read();
 
 		include_once('./webservice/soap/include/inc.soap_functions.php');
-		$parent_ref_id = \ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
+		$parent_ref_id = ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
 
 		return $parent_ref_id;
 	}

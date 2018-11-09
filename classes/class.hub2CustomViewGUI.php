@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . "/../vendor/autoload.php";
 
 use srag\DIC\DICTrait;
@@ -8,9 +9,7 @@ use srag\Plugins\Hub2\UI\BaseCustomViewGUI;
 /**
  * Class hub2CustomViewGUI
  *
- * @package
  * @author  Timon Amstutz
- *
  */
 class hub2CustomViewGUI {
 
@@ -19,7 +18,7 @@ class hub2CustomViewGUI {
 
 
 	/**
-	 * @throws \srag\DIC\Exception\DICException
+	 *
 	 */
 	public function executeCommand()/*: void*/ {
 
@@ -36,7 +35,7 @@ class hub2CustomViewGUI {
 			if (!($class instanceof BaseCustomViewGUI)) {
 				throw new Exception("Class " . $class_name . " is not an instance of BaseCustomViewGUI");
 			}
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			ilUtil::sendInfo(self::plugin()->translate("admin_custom_view_class_not_found_1") . " '" . ArConfig::getCustomViewsPath() . "' "
 				. self::plugin()->translate("admin_custom_view_class_not_found_2") . " Error: " . $e->getMessage());
 		}
