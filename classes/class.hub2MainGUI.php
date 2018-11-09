@@ -2,8 +2,9 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 
 use srag\DIC\DICTrait;
-use srag\Plugins\Hub2\Helper\DIC;
 use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Helper\DIC;
+
 /**
  * Class hub2MainGUI
  *
@@ -21,7 +22,7 @@ class hub2MainGUI {
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
 	const TAB_ORIGINS = 'tab_origins';
-    const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
+	const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
 	const CMD_INDEX = 'index';
 
 
@@ -47,10 +48,10 @@ class hub2MainGUI {
 			case strtolower(hub2ConfigOriginsGUI::class):
 				self::dic()->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
 				break;
-            case strtolower(hub2CustomViewGUI::class):
-                self::dic()->tabs()->activateTab(self::TAB_CUSTOM_VIEWS);
-                self::dic()->ctrl()->forwardCommand(new hub2CustomViewGUI());
-                break;
+			case strtolower(hub2CustomViewGUI::class):
+				self::dic()->tabs()->activateTab(self::TAB_CUSTOM_VIEWS);
+				self::dic()->ctrl()->forwardCommand(new hub2CustomViewGUI());
+				break;
 			case strtolower(hub2DataGUI::class):
 				break;
 			default:
@@ -67,6 +68,7 @@ class hub2MainGUI {
 		self::dic()->ctrl()->redirectByClass(hub2ConfigGUI::class);
 	}
 
+
 	/**
 	 *
 	 */
@@ -77,11 +79,10 @@ class hub2MainGUI {
 		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
 
-		if(ArConfig::isCustomViewsActive()){
-            self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
-                ->getLinkTargetByClass(hub2CustomViewGUI::class));
-        }
-
+		if (ArConfig::isCustomViewsActive()) {
+			self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
+				->getLinkTargetByClass(hub2CustomViewGUI::class));
+		}
 	}
 
 

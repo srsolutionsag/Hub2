@@ -83,10 +83,10 @@ class DataTableGUI extends ilTable2GUI {
 		$this->setExternalSegmentation(true);
 		$this->setExternalSorting(true);
 		$this->determineLimit();
-		if($this->getLimit() > 999){
-		    $this->setLimit(999);
-        }
-        $this->determineOffsetAndOrder();
+		if ($this->getLimit() > 999) {
+			$this->setLimit(999);
+		}
+		$this->determineOffsetAndOrder();
 		$this->initTableData();
 	}
 
@@ -178,22 +178,23 @@ class DataTableGUI extends ilTable2GUI {
 			$data = array_merge($data, $collection->getArray(NULL, $fields));
 		}
 
-		uasort($data, function($valuesA,$valuesB) {
-            $a = $valuesA[$this->getOrderField()];
-            $b = $valuesB[$this->getOrderField()];
+		uasort($data, function ($valuesA, $valuesB) {
+			$a = $valuesA[$this->getOrderField()];
+			$b = $valuesB[$this->getOrderField()];
 
-            if ($a == $b) {
-                return 0;
-            }
+			if ($a == $b) {
+				return 0;
+			}
 
-            if($this->getOrderDirection() == "asc"){
-                return ($a < $b) ? -1 : 1;
-            }
-            return ($a < $b) ? 1 : -1;
-        });
+			if ($this->getOrderDirection() == "asc") {
+				return ($a < $b) ? - 1 : 1;
+			}
+
+			return ($a < $b) ? 1 : - 1;
+		});
 
 		$this->setMaxCount(count($data));
-        $data = array_slice($data,$this->getOffset(),$this->getLimit());
+		$data = array_slice($data, $this->getOffset(), $this->getLimit());
 		$this->setData($data);
 	}
 
