@@ -112,6 +112,7 @@ final class LibrariesNamespaceChanger {
 					$this->getFiles($folder, $files);
 				}
 			}
+			$this->getFiles(__DIR__ . "/../../../composer", $files);
 
 			foreach ($libraries as $library => $folder) {
 				if (is_dir($folder)) {

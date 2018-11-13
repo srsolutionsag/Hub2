@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "srag/activerecordconfig",
-            "version": "v0.9.4",
+            "version": "v0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/ActiveRecordConfig.git",
-                "reference": "55d2213f1e0c9d4bd4a9e9dc9d51e5493d03152d"
+                "reference": "b233feebd9c81229ce20ba7f0a97ecc256f37bcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/55d2213f1e0c9d4bd4a9e9dc9d51e5493d03152d",
-                "reference": "55d2213f1e0c9d4bd4a9e9dc9d51e5493d03152d",
+                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/b233feebd9c81229ce20ba7f0a97ecc256f37bcd",
+                "reference": "b233feebd9c81229ce20ba7f0a97ecc256f37bcd",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "activerecord",
                 "config"
             ],
-            "time": "2018-11-08T07:41:24+00:00"
+            "time": "2018-11-13T13:30:14+00:00"
         },
         {
             "name": "srag/dic",
@@ -98,16 +98,16 @@
         },
         {
             "name": "srag/librariesnamespacechanger",
-            "version": "v0.3.2",
+            "version": "v0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/LibrariesNamespaceChanger.git",
-                "reference": "60c9c9293acb9a2b9d51b3ce3ce18722c0ac87bb"
+                "reference": "ea4ba1f06288b8de22c7616a643dd2c76627204c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/60c9c9293acb9a2b9d51b3ce3ce18722c0ac87bb",
-                "reference": "60c9c9293acb9a2b9d51b3ce3ce18722c0ac87bb",
+                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/ea4ba1f06288b8de22c7616a643dd2c76627204c",
+                "reference": "ea4ba1f06288b8de22c7616a643dd2c76627204c",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +137,7 @@
                 "ILIAS",
                 "libraries"
             ],
-            "time": "2018-11-13T10:30:02+00:00"
+            "time": "2018-11-13T14:07:48+00:00"
         },
         {
             "name": "srag/removeplugindataconfirm",

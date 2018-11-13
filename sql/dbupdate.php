@@ -22,10 +22,11 @@
 		"type" => "text",
 		"length" => 256,
 	));
-\srag\DIC\Hub2\DICStatic::dic()->database()->modifyTableColumn(\srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, 'ilias_id', array(
-	"type" => "text",
-	"length" => 256,
-));
+\srag\DIC\Hub2\DICStatic::dic()->database()
+	->modifyTableColumn(\srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, 'ilias_id', array(
+		"type" => "text",
+		"length" => 256,
+	));
 ?>
 <#3>
 <?php
@@ -45,7 +46,7 @@ if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\Hub2\
 		 */
 		switch ($config->getKey()) {
 			default:
-				\srag\Plugins\Hub2\Config\ArConfig::setValueByKey(strval($config->getKey()), strval($config->getValue()));
+				\srag\Plugins\Hub2\Config\ArConfig::setField(strval($config->getKey()), $config->getValue());
 				break;
 		}
 	}
@@ -55,7 +56,7 @@ if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\Hub2\
 ?>
 <#5>
 <?php
-$administration_role_ids = \srag\Plugins\Hub2\Config\ArConfig::getValueByKey(\srag\Plugins\Hub2\Config\IArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS, json_encode(\srag\Plugins\Hub2\Config\IArConfig::DEFAULT_ADMINISTRATE_HUB_ROLE_IDS));
+$administration_role_ids = json_encode(\srag\Plugins\Hub2\Config\ArConfig::getField(\srag\Plugins\Hub2\Config\ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS));
 
 if (strpos($administration_role_ids, "[") === false) {
 	$administration_role_ids = preg_split('/, */', $administration_role_ids);
@@ -63,6 +64,6 @@ if (strpos($administration_role_ids, "[") === false) {
 		return intval($id);
 	}, $administration_role_ids);
 
-	\srag\Plugins\Hub2\Config\ArConfig::setAdministrationRoleIds($administration_role_ids);
+	\srag\Plugins\Hub2\Config\ArConfig::setField(\srag\Plugins\Hub2\Config\ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS, $administration_role_ids);
 }
 ?>

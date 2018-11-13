@@ -218,7 +218,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		$this->addItem($h);
 
 		$te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_class_name'), 'implementation_class_name');
-		$te->setInfo(self::plugin()->translate('origin_form_field_class_name_info', "", [ ArConfig::getOriginImplementationsPath() ]));
+		$te->setInfo(self::plugin()
+			->translate('origin_form_field_class_name_info', "", [ ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH) ]));
 		$te->setValue($this->origin->getImplementationClassName());
 		$te->setRequired(true);
 		$this->addItem($te);

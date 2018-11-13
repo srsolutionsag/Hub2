@@ -53,7 +53,7 @@ class OriginImplementationFactory {
 	 * @throws HubException
 	 */
 	public function instance() {
-		$basePath = rtrim(ArConfig::getOriginImplementationsPath(), '/') . '/';
+		$basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
 		$path = $basePath . $this->origin->getObjectType() . '/';
 		$className = $this->origin->getImplementationClassName();
 		$namespace = $this->origin->getImplementationNamespace();

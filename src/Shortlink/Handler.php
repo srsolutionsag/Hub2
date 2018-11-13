@@ -67,15 +67,15 @@ class Handler {
 		$link = $object_link_factory->findByExtId($this->ext_id);
 
 		if (!$link->doesObjectExist()) {
-			$this->sendMessage(ArConfig::getShortLinkObjectNotFound());
+			$this->sendMessage(ArConfig::getField(ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND));
 			$this->doRedirect($link->getNonExistingLink());
 		}
 
 		if (!$link->isAccessGranted()) {
-			$this->sendMessage(ArConfig::getShortLinkObjectNotAccessible());
+			$this->sendMessage(ArConfig::getField(ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE));
 			$this->doRedirect($link->getAccessDeniedLink());
 		}
-		$this->sendMessage(ArConfig::getShortlinkSuccess());
+		$this->sendMessage(ArConfig::getField(ArConfig::KEY_SHORTLINK_SUCCESS));
 		$this->doRedirect($link->getAccessGrantedExternalLink());
 	}
 

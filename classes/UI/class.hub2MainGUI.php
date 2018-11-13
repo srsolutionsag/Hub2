@@ -81,7 +81,7 @@ class hub2MainGUI {
 		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
 
-		if (ArConfig::isCustomViewsActive()) {
+		if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
 			self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
 				->getLinkTargetByClass(hub2CustomViewGUI::class));
 		}

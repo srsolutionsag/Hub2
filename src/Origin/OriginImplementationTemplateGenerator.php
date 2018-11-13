@@ -94,7 +94,7 @@ class OriginImplementationTemplateGenerator {
 	 * @return string
 	 */
 	protected function getPath(IOrigin $origin) {
-		$basePath = rtrim(ArConfig::getOriginImplementationsPath(), '/') . '/';
+		$basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
 		$path = $basePath . $origin->getObjectType() . '/';
 
 		return $path;
