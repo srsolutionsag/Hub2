@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Config;
 
 use ilHub2Plugin;
 use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ArConfig
@@ -15,6 +16,7 @@ use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
  */
 class ArConfig extends ActiveRecordConfig implements IArConfig {
 
+	use Hub2Trait;
 	const TABLE_NAME = 'sr_hub2_config_n';
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**

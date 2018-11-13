@@ -13,6 +13,7 @@ use srag\Plugins\Hub2\Metadata\Metadata;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\Node;
 use srag\Plugins\Hub2\Taxonomy\Taxonomy;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ARObject
@@ -24,6 +25,7 @@ use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 abstract class ARObject extends ActiveRecord implements IObject {
 
 	use DICTrait;
+	use Hub2Trait;
 	/**
 	 * @abstract
 	 */

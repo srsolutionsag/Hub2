@@ -13,6 +13,7 @@ use srag\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
 use srag\Plugins\Hub2\Origin\Session\ARSessionOrigin;
 use srag\Plugins\Hub2\Origin\SessionMembership\ARSessionMembershipOrigin;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginRepository
@@ -24,6 +25,7 @@ use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 class OriginRepository implements IOriginRepository {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

@@ -5,6 +5,7 @@ require_once __DIR__ . "/../../../vendor/autoload.php";
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class hub2CustomViewGUI
@@ -14,6 +15,7 @@ use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
 class hub2CustomViewGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

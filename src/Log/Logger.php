@@ -7,6 +7,7 @@ use ILIAS\Filesystem\Exception\IOException;
 use ILIAS\Filesystem\Stream\Stream;
 use ILIAS\Filesystem\Stream\Streams;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Logger
@@ -18,6 +19,7 @@ use srag\DIC\Hub2\DICTrait;
 class Logger {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var string

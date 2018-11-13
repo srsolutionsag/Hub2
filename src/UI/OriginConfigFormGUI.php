@@ -22,6 +22,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\DTOPropertyParser;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginConfigFormGUI
@@ -33,6 +34,7 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 class OriginConfigFormGUI extends ilPropertyFormGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	protected $parent_gui;
 	/**

@@ -9,6 +9,7 @@ use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 
 /**
@@ -21,6 +22,7 @@ use Throwable;
 class Sync implements ISync {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin[]

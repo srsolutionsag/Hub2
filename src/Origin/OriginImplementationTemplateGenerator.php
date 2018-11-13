@@ -7,6 +7,7 @@ use ilUtil;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginImplementationTemplateGenerator
@@ -18,6 +19,7 @@ use srag\Plugins\Hub2\Exception\HubException;
 class OriginImplementationTemplateGenerator {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

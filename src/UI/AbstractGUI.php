@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\UI;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractGUI
@@ -15,6 +16,7 @@ use srag\DIC\Hub2\DICTrait;
 abstract class AbstractGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

@@ -10,6 +10,7 @@ use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
 use srag\Plugins\Hub2\Exception\ShortLinkNotFoundException;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Handler
@@ -20,6 +21,7 @@ use srag\Plugins\Hub2\Exception\ShortLinkNotFoundException;
 class Handler {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 	/**

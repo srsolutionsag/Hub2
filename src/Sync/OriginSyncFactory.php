@@ -14,6 +14,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\SyncProcessorFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginSyncFactory
@@ -25,6 +26,7 @@ use srag\Plugins\Hub2\Sync\Processor\SyncProcessorFactory;
 class OriginSyncFactory {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin

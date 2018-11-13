@@ -5,6 +5,7 @@ namespace srag\Plugins\Hub2\Taxonomy;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Taxonomy
@@ -15,6 +16,7 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 class Taxonomy implements ITaxonomy {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var INode[]

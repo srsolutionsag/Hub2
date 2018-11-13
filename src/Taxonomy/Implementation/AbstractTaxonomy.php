@@ -8,6 +8,7 @@ use ilTaxonomyTree;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractTaxonomy
@@ -18,6 +19,7 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int

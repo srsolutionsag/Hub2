@@ -14,6 +14,7 @@ use ilTextInputGUI;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\IArConfig;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ConfigFOrmGUI
@@ -26,6 +27,7 @@ use srag\Plugins\Hub2\Config\IArConfig;
 class ConfigFormGUI extends ilPropertyFormGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var ilHub2ConfigGUI

@@ -5,6 +5,7 @@ namespace srag\Plugins\Hub2\Sync;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class DataTransferObjectSort
@@ -15,6 +16,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 final class DataTransferObjectSort implements IDataTransferObjectSort {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IDataTransferObject

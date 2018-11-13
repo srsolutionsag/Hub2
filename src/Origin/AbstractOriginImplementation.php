@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractOriginImplementation
@@ -25,6 +26,7 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IMappingStrategyFactory

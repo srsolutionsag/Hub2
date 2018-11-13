@@ -27,6 +27,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginsTableGUI
@@ -37,6 +38,7 @@ use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
 class DataTableGUI extends ilTable2GUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const F_ORIGIN_ID = 'origin_id';
 	const F_EXT_ID = 'ext_id';

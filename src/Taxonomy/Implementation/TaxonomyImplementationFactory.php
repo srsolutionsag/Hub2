@@ -6,6 +6,7 @@ use ilHub2Plugin;
 use ilObject;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ITaxonomyImplementationFactory
@@ -16,6 +17,7 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

@@ -7,6 +7,7 @@ use ilMimeMail;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IOriginSync;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginSyncSummaryCron
@@ -17,6 +18,7 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
 abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOriginSync[]
