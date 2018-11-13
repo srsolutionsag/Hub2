@@ -1,14 +1,14 @@
 <?php
 
-namespace srag\RemovePluginDataConfirm;
+namespace srag\RemovePluginDataConfirm\Hub2;
 
 use ilUIPluginRouterGUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Trait AbstractPluginUninstallTrait
  *
- * @package srag\RemovePluginDataConfirm
+ * @package srag\RemovePluginDataConfirm\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  *

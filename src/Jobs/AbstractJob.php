@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Jobs;
 
 use ilCronJob;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class AbstractJob

@@ -1,14 +1,14 @@
 <?php
 
-namespace srag\ActiveRecordConfig;
+namespace srag\ActiveRecordConfig\Hub2;
 
 use ilPropertyFormGUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class ActiveRecordConfigFormGUI
  *
- * @package srag\ActiveRecordConfig
+ * @package srag\ActiveRecordConfig\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */

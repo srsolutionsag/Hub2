@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Config;
 
 use ActiveRecord;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class ArConfigOld

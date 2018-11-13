@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Sync;
 use Error;
 use Exception;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;

@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Origin\IOrigin;

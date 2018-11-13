@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf386b343b0dde4940e1f686502a78c41
+class ComposerStaticInitf7d3998006746f487f26f0c31813455a
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -15,6 +15,7 @@ class ComposerStaticInitf386b343b0dde4940e1f686502a78c41
         array (
             'srag\\RemovePluginDataConfirm\\' => 29,
             'srag\\Plugins\\Hub2\\' => 18,
+            'srag\\LibrariesNamespaceChanger\\' => 31,
             'srag\\DIC\\' => 9,
             'srag\\ActiveRecordConfig\\' => 24,
         ),
@@ -45,6 +46,10 @@ class ComposerStaticInitf386b343b0dde4940e1f686502a78c41
         'srag\\Plugins\\Hub2\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'srag\\LibrariesNamespaceChanger\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
         'srag\\DIC\\' => 
         array (
@@ -642,10 +647,10 @@ class ComposerStaticInitf386b343b0dde4940e1f686502a78c41
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf386b343b0dde4940e1f686502a78c41::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf386b343b0dde4940e1f686502a78c41::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitf386b343b0dde4940e1f686502a78c41::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitf386b343b0dde4940e1f686502a78c41::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf7d3998006746f487f26f0c31813455a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf7d3998006746f487f26f0c31813455a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitf7d3998006746f487f26f0c31813455a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitf7d3998006746f487f26f0c31813455a::$classMap;
 
         }, null, ClassLoader::class);
     }

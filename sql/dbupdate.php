@@ -12,17 +12,17 @@
 ?>
 <#2>
 <?php
-\srag\DIC\DICStatic::dic()->database()
+\srag\DIC\Hub2\DICStatic::dic()->database()
 	->modifyTableColumn(\srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership::TABLE_NAME, 'ilias_id', array(
 		"type" => "text",
 		"length" => 256,
 	));
-\srag\DIC\DICStatic::dic()->database()
+\srag\DIC\Hub2\DICStatic::dic()->database()
 	->modifyTableColumn(\srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, 'ilias_id', array(
 		"type" => "text",
 		"length" => 256,
 	));
-\srag\DIC\DICStatic::dic()->database()->modifyTableColumn(\srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, 'ilias_id', array(
+\srag\DIC\Hub2\DICStatic::dic()->database()->modifyTableColumn(\srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, 'ilias_id', array(
 	"type" => "text",
 	"length" => 256,
 ));
@@ -36,7 +36,7 @@
 <?php
 \srag\Plugins\Hub2\Config\ArConfig::updateDB();
 
-if (\srag\DIC\DICStatic::dic()->database()->tableExists(\srag\Plugins\Hub2\Config\ArConfigOld::TABLE_NAME)) {
+if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\Hub2\Config\ArConfigOld::TABLE_NAME)) {
 	\srag\Plugins\Hub2\Config\ArConfigOld::updateDB();
 
 	foreach (\srag\Plugins\Hub2\Config\ArConfigOld::get() as $config) {
@@ -50,7 +50,7 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(\srag\Plugins\Hub2\Confi
 		}
 	}
 
-	\srag\DIC\DICStatic::dic()->database()->dropTable(\srag\Plugins\Hub2\Config\ArConfigOld::TABLE_NAME);
+	\srag\DIC\Hub2\DICStatic::dic()->database()->dropTable(\srag\Plugins\Hub2\Config\ArConfigOld::TABLE_NAME);
 }
 ?>
 <#5>

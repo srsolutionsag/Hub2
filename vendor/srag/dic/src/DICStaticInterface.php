@@ -1,16 +1,16 @@
 <?php
 
-namespace srag\DIC;
+namespace srag\DIC\Hub2;
 
-use srag\DIC\DIC\DICInterface;
-use srag\DIC\Exception\DICException;
-use srag\DIC\Plugin\PluginInterface;
-use srag\DIC\Version\VersionInterface;
+use srag\DIC\Hub2\DIC\DICInterface;
+use srag\DIC\Hub2\Exception\DICException;
+use srag\DIC\Hub2\Plugin\PluginInterface;
+use srag\DIC\Hub2\Version\VersionInterface;
 
 /**
  * Interface DICStaticInterface
  *
- * @package srag\DIC
+ * @package srag\DIC\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */

@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 use ilHub2Plugin;
 use ilObjTaxonomy;
 use ilTaxonomyTree;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
 

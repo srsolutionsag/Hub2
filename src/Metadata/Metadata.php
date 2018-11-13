@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Metadata;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class Metadata

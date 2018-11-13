@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Config;
 
 use ilHub2Plugin;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 
 /**
  * Class ArConfig

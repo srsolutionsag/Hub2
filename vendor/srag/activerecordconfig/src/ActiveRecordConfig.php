@@ -1,19 +1,19 @@
 <?php
 
-namespace srag\ActiveRecordConfig;
+namespace srag\ActiveRecordConfig\Hub2;
 
 use ActiveRecord;
 use arConnector;
 use arException;
 use ilDateTime;
 use ilDateTimeException;
-use srag\ActiveRecordConfig\Exception\ActiveRecordConfigException;
-use srag\DIC\DICTrait;
+use srag\ActiveRecordConfig\Hub2\Exception\ActiveRecordConfigException;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class ActiveRecordConfig
  *
- * @package srag\ActiveRecordConfig
+ * @package srag\ActiveRecordConfig\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */

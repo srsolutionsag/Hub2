@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Object;
 
 use ilHub2Plugin;
 use LogicException;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;

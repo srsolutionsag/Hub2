@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
 use ilUtil;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
 

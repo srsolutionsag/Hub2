@@ -6,7 +6,7 @@ use hub2ConfigOriginsGUI;
 use ilAdvancedSelectionListGUI;
 use ilHub2Plugin;
 use ilTable2GUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 

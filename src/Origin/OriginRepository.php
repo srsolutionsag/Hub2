@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;

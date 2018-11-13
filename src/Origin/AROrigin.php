@@ -5,8 +5,8 @@ namespace srag\Plugins\Hub2\Origin;
 use ActiveRecord;
 use ilHub2Plugin;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
-use srag\DIC\DICTrait;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 

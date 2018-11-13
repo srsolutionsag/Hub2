@@ -14,7 +14,7 @@ use ilRadioOption;
 use ilSelectInputGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;

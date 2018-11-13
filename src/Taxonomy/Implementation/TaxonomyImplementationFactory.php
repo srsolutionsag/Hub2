@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilHub2Plugin;
 use ilObject;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**

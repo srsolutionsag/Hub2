@@ -6,7 +6,7 @@ use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
 use srag\Plugins\Hub2\Log\ILog;

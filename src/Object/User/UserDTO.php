@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Object\User;
 
 use DateTime;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;

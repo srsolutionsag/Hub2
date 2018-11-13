@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Taxonomy;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
 use srag\Plugins\Hub2\Taxonomy\Node\Node;
 

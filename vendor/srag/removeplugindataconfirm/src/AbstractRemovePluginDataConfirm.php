@@ -1,18 +1,18 @@
 <?php
 
-namespace srag\RemovePluginDataConfirm;
+namespace srag\RemovePluginDataConfirm\Hub2;
 
 use ilAdministrationGUI;
 use ilConfirmationGUI;
 use ilObjComponentSettingsGUI;
 use ilSession;
 use ilUtil;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class AbstractRemovePluginDataConfirm
  *
- * @package srag\RemovePluginDataConfirm
+ * @package srag\RemovePluginDataConfirm\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */

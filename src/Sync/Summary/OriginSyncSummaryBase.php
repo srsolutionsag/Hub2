@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Sync\Summary;
 
 use ilHub2Plugin;
 use ilMimeMail;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IOriginSync;
 

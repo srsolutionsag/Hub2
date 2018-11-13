@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Object\DTO;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;

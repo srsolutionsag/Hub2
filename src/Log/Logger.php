@@ -6,7 +6,7 @@ use ilHub2Plugin;
 use ILIAS\Filesystem\Exception\IOException;
 use ILIAS\Filesystem\Stream\Stream;
 use ILIAS\Filesystem\Stream\Streams;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class Logger

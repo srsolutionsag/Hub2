@@ -16,7 +16,7 @@ use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
-use srag\RemovePluginDataConfirm\PluginUninstallTrait;
+use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
 
 /**
  * Class ilHub2Plugin

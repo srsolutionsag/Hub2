@@ -11,7 +11,7 @@ use ilHub2Plugin;
 use ilPropertyFormGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\IArConfig;
 
