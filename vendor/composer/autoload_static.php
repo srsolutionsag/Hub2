@@ -13,11 +13,11 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
-            'srag\\RemovePluginDataConfirm\\' => 29,
+            'srag\\RemovePluginDataConfirm\\Hub2\\' => 34,
             'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
-            'srag\\DIC\\' => 9,
-            'srag\\ActiveRecordConfig\\' => 24,
+            'srag\\DIC\\Hub2\\' => 14,
+            'srag\\ActiveRecordConfig\\Hub2\\' => 29,
         ),
         'p' => 
         array (
@@ -39,7 +39,7 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
     );
 
     public static $prefixDirsPsr4 = array (
-        'srag\\RemovePluginDataConfirm\\' => 
+        'srag\\RemovePluginDataConfirm\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/removeplugindataconfirm/src',
         ),
@@ -51,11 +51,11 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
         array (
             0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
-        'srag\\DIC\\' => 
+        'srag\\DIC\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
-        'srag\\ActiveRecordConfig\\' => 
+        'srag\\ActiveRecordConfig\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/activerecordconfig/src',
         ),
