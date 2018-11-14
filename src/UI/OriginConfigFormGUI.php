@@ -295,7 +295,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		if ($this->origin->getId()) {
 			$item = new ilNonEditableValueGUI();
 			$item->setTitle(self::plugin()->translate('origin_form_field_usage_type'));
-			$item->setValue($this->origin->getObjectType()); // TODO: Translate object type
+			$item->setValue(self::plugin()->translate("origin_object_type_" . $this->origin->getObjectType()));
 			$this->addItem($item);
 			$item = new ilCheckboxInputGUI(self::plugin()->translate('origin_form_field_active'), 'active');
 			$item->setChecked($this->origin->isActive());

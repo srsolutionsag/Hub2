@@ -299,7 +299,7 @@ class DataTableGUI extends ilTable2GUI {
 		$status = [ 0 => self::plugin()->translate("data_table_all") ];
 		foreach ($r->getConstants() as $name => $value) {
 			if (strpos($name, "STATUS_") === 0) {
-				$status[$value] = $name; // TODO: Translate status
+				$status[$value] = self::plugin()->translate("data_table_" . strtolower($name));
 			}
 		}
 

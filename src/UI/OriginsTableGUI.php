@@ -85,7 +85,7 @@ class OriginsTableGUI extends ilTable2GUI {
 			$row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
 			$row['title'] = $origin->getTitle();
 			$row['description'] = $origin->getDescription();
-			$row['object_type'] = $origin->getObjectType(); // TODO: Translate object type
+			$row['object_type'] = self::plugin()->translate("origin_object_type_" . $origin->getObjectType());
 			$row['last_sync'] = $origin->getLastRun();
 			$row['n_objects'] = $objectRepository->count();
 			$data[] = $row;
