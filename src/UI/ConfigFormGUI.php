@@ -140,7 +140,7 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 		//		$this->addItem($mm);
 		//
 		//		$mm = new ilTextAreaInputGUI(self::plugin()->translate('admin_membership_mail_msg'), ArConfig::KEY_MMAIL_MSG);
-		//		$mm->setInfo(self::plugin()->translate('admin_membership_mail_msg_info'));
+		//		$mm->setInfo(nl2br(self::plugin()->translate('admin_membership_mail_msg_info'), false));
 		//		$this->addItem($mm);
 		//
 		//		$h = new ilFormSectionHeaderGUI();

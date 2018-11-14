@@ -107,7 +107,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		$opt = new ilRadioOption(self::plugin()
 			->translate('crs_prop_delete_mode_delete_or_inactive'), CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE);
-		$opt->setInfo(self::plugin()->translate('crs_prop_delete_mode_delete_or_inactive_info'));
+		$opt->setInfo(nl2br(self::plugin()->translate('crs_prop_delete_mode_delete_or_inactive_info'), false));
 		$delete->addOption($opt);
 
 		$opt = new ilRadioOption(self::plugin()->translate('crs_prop_delete_mode_trash'), CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH);
