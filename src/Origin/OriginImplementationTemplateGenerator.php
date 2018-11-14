@@ -51,7 +51,7 @@ class OriginImplementationTemplateGenerator {
 				throw new HubException("Could not create directory: $path");
 			};
 		}
-		$template = file_get_contents(__DIR__ . '/OriginImplementationTemplate.tpl');
+		$template = file_get_contents(__DIR__ . '/../../templates/OriginImplementationTemplate.tpl');
 		if ($template === false) {
 			throw new HubException("Could not load template: $template");
 		}
