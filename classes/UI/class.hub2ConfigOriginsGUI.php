@@ -291,7 +291,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 		}
 
-		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
+		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
 		self::dic()->ctrl()->redirect($this);
 	}
 
@@ -320,7 +320,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		}
 		$summary->addOriginSync($originSync);
 		$summary->sendNotifications();
-		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
+		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
 		self::dic()->ctrl()->redirect($this);
 	}
 
