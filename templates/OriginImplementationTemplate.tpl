@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\Origin;
+namespace [[NAMESPACE]];
 
 use Exception;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
@@ -14,7 +14,7 @@ use stdClass;
 /**
  * Class [[CLASSNAME]]
  *
- * @package srag\Plugins\Hub2\Origin
+ * @package [[NAMESPACE]]
  */
 class [[CLASSNAME]] extends AbstractOriginImplementation {
 

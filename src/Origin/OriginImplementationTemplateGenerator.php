@@ -56,8 +56,9 @@ class OriginImplementationTemplateGenerator {
 			throw new HubException("Could not load template: $template");
 		}
 		$className = $origin->getImplementationClassName();
+		$namespace = $origin->getImplementationNamespace();
 		$content = str_replace('[[CLASSNAME]]', $className, $template);
-		// TODO: Insert [[NAMESPACE]] with $origin->getImplementationNamespace()
+		$content = str_replace('[[NAMESPACE]]', $namespace, $content);
 		$result = file_put_contents($classFile, $content);
 		if ($result === false) {
 			throw new HubException("Unable to create template for origin implementation");
