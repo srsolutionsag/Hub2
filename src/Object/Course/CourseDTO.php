@@ -252,7 +252,7 @@ class CourseDTO extends DataTransferObject implements ITaxonomyAndMetadataAwareD
 	/**
 	 * @var int
 	 */
-	private $template_id;
+	private $template_id = 0;
 	/**
 	 * @var array
 	 */
