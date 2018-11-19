@@ -85,8 +85,8 @@ class DataTableGUI extends ilTable2GUI {
 		$this->setExternalSegmentation(true);
 		$this->setExternalSorting(true);
 		$this->determineLimit();
-		if ($this->getLimit() > 999) {
-			$this->setLimit(999);
+		if ($this->getLimit() > 99) {
+			$this->setLimit(99);
 		}
 		$this->determineOffsetAndOrder();
 		$this->initTableData();
@@ -217,7 +217,11 @@ class DataTableGUI extends ilTable2GUI {
 					$this->tpl->setVariable('VALUE', $this->getAvailableStatus()[$value]);
 					break;
 				case self::F_EXT_ID:
-					$this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $origin));
+                    if ($origin) {
+                        $this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $origin));
+                    }else{
+                        $this->tpl->setVariable('VALUE', $value);
+                    }
 					break;
 				case self::F_ORIGIN_ID:
 					if (!$origin) {
