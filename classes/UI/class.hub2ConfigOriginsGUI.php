@@ -260,8 +260,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function run() {
-		$force = boolvar(self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE]);
-		$reset = boolvar(self::dic()->http()->request()->getParsedBody()[self::Q_RESET]);
+		$force = boolval(self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE]);
+		$reset = boolval(self::dic()->http()->request()->getParsedBody()[self::Q_RESET]);
 
 		if ($reset) {
 			$this->reset();
@@ -271,7 +271,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		try {
 			$global_hook = new GlobalHook();
 			if (!$global_hook->beforeSync($this->originFactory->getAllActive())) {
-				return;
+				self::dic()->ctrl()->redirect($this);
 			}
 		} catch (Exception $e) {
 			$global_hook->handleExceptions($e);
@@ -314,7 +314,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function runOriginSync() {
-		$force = boolvar(self::dic()->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE]);
+		$force = boolval(self::dic()->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE]);
 		/**
 		 * @var IOrigin $origin
 		 */
