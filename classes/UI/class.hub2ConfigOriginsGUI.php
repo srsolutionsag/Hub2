@@ -15,6 +15,7 @@ use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use srag\Plugins\Hub2\UI\DataTableGUI;
 use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
 use srag\Plugins\Hub2\UI\OriginsTableGUI;
@@ -37,6 +38,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	const CMD_RUN = 'run';
 	const CMD_ADD_ORIGIN = 'addOrigin';
 	const Q_FORCE_UPDATE = 'force_update';
+	const Q_RESET = 'reset';
 	const CMD_EDIT_ORGIN = 'editOrigin';
 	const CMD_RUN_ORIGIN_SYNC = 'runOriginSync';
 	const CMD_CONFIRM_DELETE = 'confirmDelete';
@@ -113,7 +115,13 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 		self::dic()->toolbar()->addSeparator();
 
-		self::dic()->toolbar()->addInputItem(new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_force'), self::Q_FORCE_UPDATE));
+		$check = new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_force'), self::Q_FORCE_UPDATE);
+		$check->setOptionTitle($check->getTitle()); // Fix what???!!!
+		self::dic()->toolbar()->addInputItem($check);
+
+		$check = new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_reset'), self::Q_RESET);
+		$check->setOptionTitle($check->getTitle());
+		self::dic()->toolbar()->addInputItem($check);
 
 		$button = ilSubmitButton::getInstance();
 		$button->setCaption(self::plugin()->translate('origin_table_button_run'), false);
@@ -252,7 +260,13 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function run() {
-		$force = (bool)self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE];
+		$force = boolvar(self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE]);
+		$reset = boolvar(self::dic()->http()->request()->getParsedBody()[self::Q_RESET]);
+
+		if ($reset) {
+			$this->reset();
+		}
+
 		$summary = $this->summaryFactory->web();
 		try {
 			$global_hook = new GlobalHook();
@@ -300,7 +314,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function runOriginSync() {
-		$force = (bool)self::dic()->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE];
+		$force = boolvar(self::dic()->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE]);
 		/**
 		 * @var IOrigin $origin
 		 */
@@ -394,5 +408,15 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		}
 
 		return $origin;
+	}
+
+
+	/**
+	 *
+	 */
+	protected function reset()/*: void*/ {
+		foreach (DataTableGUI::$classes as $class) {
+			$class::truncateDB();
+		}
 	}
 }

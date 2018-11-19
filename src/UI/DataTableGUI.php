@@ -12,6 +12,7 @@ use ilTable2GUI;
 use ilTextInputGUI;
 use ReflectionClass;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -42,6 +43,21 @@ class DataTableGUI extends ilTable2GUI {
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const F_ORIGIN_ID = 'origin_id';
 	const F_EXT_ID = 'ext_id';
+	/**
+	 * @var ARObject[]
+	 */
+	public static $classes = [
+		ARUser::class,
+		ARCourse::class,
+		ARGroup::class,
+		ARSession::class,
+		ARCategory::class,
+		ARCourseMembership::class,
+		ARGroupMembership::class,
+		ARSessionMembership::class,
+		AROrgUnit::class,
+		AROrgUnitMembership::class,
+	];
 	/**
 	 * @var ObjectLinkFactory
 	 */
@@ -144,23 +160,11 @@ class DataTableGUI extends ilTable2GUI {
 	 */
 	protected function initTableData() {
 		$fields = $this->getFields();
-		$classes = [
-			ARUser::class,
-			ARCourse::class,
-			ARGroup::class,
-			ARSession::class,
-			ARCategory::class,
-			ARCourseMembership::class,
-			ARGroupMembership::class,
-			ARSessionMembership::class,
-			AROrgUnit::class,
-			AROrgUnitMembership::class,
-		];
 		$data = [];
 		/**
 		 * @var ActiveRecordList $collection
 		 */
-		foreach ($classes as $class) {
+		foreach (self::$classes as $class) {
 			$collection = $class::getCollection();
 			foreach ($this->filtered as $postvar => $value) {
 				if (!$postvar || !$value) {
@@ -217,11 +221,11 @@ class DataTableGUI extends ilTable2GUI {
 					$this->tpl->setVariable('VALUE', $this->getAvailableStatus()[$value]);
 					break;
 				case self::F_EXT_ID:
-                    if ($origin) {
-                        $this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $origin));
-                    }else{
-                        $this->tpl->setVariable('VALUE', $value);
-                    }
+					if ($origin) {
+						$this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $origin));
+					} else {
+						$this->tpl->setVariable('VALUE', $value);
+					}
 					break;
 				case self::F_ORIGIN_ID:
 					if (!$origin) {
