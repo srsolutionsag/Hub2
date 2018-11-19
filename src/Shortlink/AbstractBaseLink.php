@@ -32,7 +32,7 @@ abstract class AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getNonExistingLink(): string {
 		return "index.php";

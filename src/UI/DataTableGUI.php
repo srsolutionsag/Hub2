@@ -110,7 +110,7 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function initFilter() {
 		$origin = new ilSelectInputGUI(self::plugin()->translate('data_table_header_origin_id'), 'origin_id');

@@ -183,7 +183,7 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sessionMembership($ext_id) {
 		$session_membership = ARSessionMembership::find($this->getId($ext_id));
@@ -198,7 +198,7 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnit(string $ext_id): IOrgUnit {
 		$org_unit = AROrgUnit::find($this->getId($ext_id));
@@ -213,7 +213,7 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnitMembership(string $ext_id): IOrgUnitMembership {
 		$org_unit_membership = AROrgUnitMembership::find($this->getId($ext_id));

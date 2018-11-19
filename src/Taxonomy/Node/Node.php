@@ -52,7 +52,7 @@ class Node implements INode {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getNodes(): array {
 		return $this->nodes;
@@ -60,7 +60,7 @@ class Node implements INode {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getNodeTitlesAsArray(): array {
 		$titles = [];
@@ -73,7 +73,7 @@ class Node implements INode {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function attach(INode $node): INode {
 		$this->nodes[] = $node;

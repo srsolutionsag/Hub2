@@ -12,12 +12,12 @@ use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Object\Session\SessionDTO;
-use srag\Plugins\Hub2\Origin\Config\SessionOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\Session\SessionOriginConfig;
 use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -34,7 +34,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	use MetadataSyncProcessor;
 	use TaxonomySyncProcessor;
 	/**
-	 * @var SessionOriginProperties
+	 * @var SessionProperties
 	 */
 	private $props;
 	/**
@@ -157,14 +157,14 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			return NULL;
 		}
 
-		if ($this->props->get(SessionOriginProperties::DELETE_MODE) == SessionOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(SessionProperties::DELETE_MODE) == SessionProperties::DELETE_MODE_NONE) {
 			return $ilObjSession;
 		}
-		switch ($this->props->get(SessionOriginProperties::DELETE_MODE)) {
-			case SessionOriginProperties::DELETE_MODE_DELETE:
+		switch ($this->props->get(SessionProperties::DELETE_MODE)) {
+			case SessionProperties::DELETE_MODE_DELETE:
 				$ilObjSession->delete();
 				break;
-			case SessionOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
+			case SessionProperties::DELETE_MODE_MOVE_TO_TRASH:
 				self::dic()->tree()->moveToTrash($ilObjSession->getRefId(), true);
 				break;
 		}

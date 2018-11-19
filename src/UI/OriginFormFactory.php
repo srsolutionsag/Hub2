@@ -28,6 +28,8 @@ class OriginFormFactory {
 	public function getFormClassNameByOrigin(AROrigin $origin) {
 		$type = $origin->getObjectType();
 
-		return "srag\\Plugins\\Hub2\\UI\\" . ucfirst($type) . 'OriginConfigFormGUI';
+		$ucfirst = ucfirst($type);
+
+		return "srag\\Plugins\\Hub2\\UI\\" . $ucfirst . "\\" . $ucfirst . "OriginConfigFormGUI";
 	}
 }

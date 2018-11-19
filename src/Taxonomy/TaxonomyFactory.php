@@ -22,7 +22,7 @@ class TaxonomyFactory implements ITaxonomyFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function select(string $title): ITaxonomy {
 		return new Taxonomy($title, ITaxonomy::MODE_SELECT);
@@ -30,7 +30,7 @@ class TaxonomyFactory implements ITaxonomyFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function create(string $title): ITaxonomy {
 		return new Taxonomy($title, ITaxonomy::MODE_CREATE);
@@ -38,7 +38,7 @@ class TaxonomyFactory implements ITaxonomyFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function node(string $node_title): INode {
 		return new Node($node_title);

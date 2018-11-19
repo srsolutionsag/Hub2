@@ -35,7 +35,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function addOriginSync(IOriginSync $originSync) {
 		$this->syncs[] = $originSync;
@@ -43,7 +43,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getOutputAsString() {
 		$return = "";
@@ -88,7 +88,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getSummaryOfOrigin(IOriginSync $originSync) {
 		return $this->renderOneSync($originSync);
@@ -96,7 +96,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sendNotifications() {
 		$mail = new ilMimeMail();

@@ -2,15 +2,16 @@
 
 namespace srag\Plugins\Hub2\Origin\OrgUnit;
 
-use srag\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\OrgUnit\IOrgUnitOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
-use srag\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties;
 
 /**
  * Interface IOrgUnitOrigin
  *
  * @package srag\Plugins\Hub2\Origin\OrgUnit
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface IOrgUnitOrigin extends IOrigin {
 
@@ -21,7 +22,7 @@ interface IOrgUnitOrigin extends IOrigin {
 
 
 	/**
-	 * @return IOrgUnitOriginProperties
+	 * @return IOrgUnitProperties
 	 */
-	public function properties(): IOrgUnitOriginProperties;
+	public function properties(): IOrgUnitProperties;
 }

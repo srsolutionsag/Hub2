@@ -11,12 +11,8 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupMembershipDTO extends DataTransferObject {
+class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipDTO {
 
-	const PARENT_ID_TYPE_REF_ID = 1;
-	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
-	const ROLE_MEMBER = 2;
-	const ROLE_ADMIN = 1;
 	/**
 	 * @var int
 	 */
@@ -40,7 +36,7 @@ class GroupMembershipDTO extends DataTransferObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function __construct($group_id, $user_id) {
 		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $group_id, $user_id ]));

@@ -370,7 +370,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function updateStatus($status) {
 		if (!in_array($status, self::$status_allowed_to_update_to)) {

@@ -6,10 +6,10 @@ use Mockery\MockInterface;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\User\IUser;
 use srag\Plugins\Hub2\Object\User\UserDTO;
-use srag\Plugins\Hub2\Origin\Config\IUserOriginConfig;
-use srag\Plugins\Hub2\Origin\Config\UserOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\UserOriginProperties;
-use srag\Plugins\Hub2\Sync\Processor\IUserSyncProcessor;
+use srag\Plugins\Hub2\Origin\Config\User\IUserOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\User\UserOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
+use srag\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
@@ -51,7 +51,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected function setUp() {
 		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Category\IUserActivities');
-		$this->initOrigin(new UserOriginProperties(), new UserOriginConfig([]));
+		$this->initOrigin(new UserProperties(), new UserOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
 		$this->initILIASObject();
@@ -132,7 +132,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create ILIAS user: Test that user is not active AND profile is set to incomplete.
 	 */
 	public function test_create_user_with_inactive_account() {
-		$this->originProperties->setData([ UserOriginProperties::ACTIVATE_ACCOUNT => false ]);
+		$this->originProperties->setData([ UserProperties::ACTIVATE_ACCOUNT => false ]);
 		$this->initDataExpectations();
 		$this->ilObject->shouldReceive('setActive')->once()->with(false);
 		$this->ilObject->shouldReceive('setProfileIncomplete')->once()->with(true);
@@ -180,7 +180,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	public function test_delete_user_mode_none() {
 		$this->setDefaultExpectationsForDeletionOfILIASUser();
-		$this->originProperties->setData([ UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_NONE ]);
+		$this->originProperties->setData([ UserProperties::DELETE => UserProperties::DELETE_MODE_NONE ]);
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
 		$this->ilObject->shouldNotReceive('update');
@@ -192,7 +192,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	public function test_delete_user_mode_inactive() {
 		$this->setDefaultExpectationsForDeletionOfILIASUser();
-		$this->originProperties->setData([ UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_INACTIVE ]);
+		$this->originProperties->setData([ UserProperties::DELETE => UserProperties::DELETE_MODE_INACTIVE ]);
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
 		$this->ilObject->shouldReceive('setActive')->with(false)->once();
@@ -205,7 +205,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	public function test_delete_user_mode_delete_user() {
 		$this->setDefaultExpectationsForDeletionOfILIASUser();
-		$this->originProperties->setData([ UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_DELETE ]);
+		$this->originProperties->setData([ UserProperties::DELETE => UserProperties::DELETE_MODE_DELETE ]);
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
 		$this->ilObject->shouldReceive('delete');

@@ -10,11 +10,11 @@ use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
 use srag\Plugins\Hub2\Object\ObjectFactory;
-use srag\Plugins\Hub2\Origin\Config\GroupOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\Group\GroupOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -29,7 +29,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroupMembershipSyncProcessor {
 
 	/**
-	 * @var GroupOriginProperties
+	 * @var GroupProperties
 	 */
 	protected $props;
 	/**

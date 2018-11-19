@@ -105,7 +105,7 @@ class OriginRepository implements IOriginRepository {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sessionsMemberships() {
 		return ARSessionMembershipOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP ])->get();
@@ -113,7 +113,7 @@ class OriginRepository implements IOriginRepository {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnits(): array {
 		return AROrgUnitOrigin::where([ "object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT ])->get();
@@ -121,7 +121,7 @@ class OriginRepository implements IOriginRepository {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnitMemberships(): array {
 		return AROrgUnitOrigin::where([ "object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP ])->get();

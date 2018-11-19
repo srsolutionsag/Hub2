@@ -11,8 +11,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  *
  * @package srag\Plugins\Hub2\Config
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class ArConfig extends ActiveRecordConfig {
 

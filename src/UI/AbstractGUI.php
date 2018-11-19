@@ -9,9 +9,9 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class AbstractGUI
  *
- * @package srag\Plugins\Hub2\UI
- * @author  Fabian Schmid <fs@studer-raimann.ch>
- * @deprecated
+ * @package    srag\Plugins\Hub2\UI
+ * @author     Fabian Schmid <fs@studer-raimann.ch>
+ * @deprecated TODO: ???
  */
 abstract class AbstractGUI {
 
@@ -20,6 +20,9 @@ abstract class AbstractGUI {
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
+	/**
+	 * AbstractGUI constructor
+	 */
 	public function __construct() {
 
 	}

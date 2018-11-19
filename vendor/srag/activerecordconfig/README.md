@@ -143,22 +143,13 @@ use srag\ActiveRecordConfig\Hub2\ActiveRecordConfigFormGUI;
 class ConfigFormGUI extends ActiveRecordConfigFormGUI {
     //...
     const PLUGIN_CLASS_NAME = ilXPlugin::class;
+    const CONFIG_CLASS_NAME = Config::class;
     
     /**
      * @inheritdoc
      */
-    protected function initForm()/*: void*/ {
-        parent::initForm();
-        
+    protected function initFields()/*: void*/ {
         // TODO: Fill your config form
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function updateConfig()/*: void*/ {
-        // TODO: Update your config
     }
 }
 ```
@@ -347,6 +338,7 @@ if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Con
 ### Dependencies
 * PHP >=5.6
 * [composer](https://getcomposer.org)
+* [srag/custominputguis](https://packagist.org/packages/srag/custominputguis)
 * [srag/dic](https://packagist.org/packages/srag/dic)
 
 Please use it for further development!

@@ -13,7 +13,7 @@ use ilObject2;
 abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjectLink {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function doesObjectExist(): bool {
 		if (!$this->object->getILIASId()) {
@@ -25,7 +25,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function isAccessGranted(): bool {
 		return (bool)self::dic()->access()->checkAccess("read", '', $this->object->getILIASId());
@@ -33,7 +33,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessGrantedInternalLink(): string {
 		if ($this->isAccessGranted()) {
@@ -45,7 +45,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessGrantedExternalLink(): string {
 		$ref_id = $this->object->getILIASId();
@@ -56,7 +56,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessDeniedLink(): string {
 		$ref_id = $this->findReadableParent();

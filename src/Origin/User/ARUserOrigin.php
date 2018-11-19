@@ -3,8 +3,8 @@
 namespace srag\Plugins\Hub2\Origin\User;
 
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Origin\Config\UserOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\UserOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\User\UserOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
 
 /**
  * Class ARUserOrigin
@@ -27,6 +27,6 @@ class ARUserOrigin extends AROrigin implements IUserOrigin {
 	 * @inheritdoc
 	 */
 	protected function getOriginProperties(array $data) {
-		return new UserOriginProperties($data);
+		return new UserProperties($data);
 	}
 }

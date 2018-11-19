@@ -72,7 +72,7 @@ class OriginFactory implements IOriginFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAll(): array {
 		$origins = [];

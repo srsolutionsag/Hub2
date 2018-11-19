@@ -9,7 +9,8 @@ use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObje
  * Class OrgUnitMembershipDTO
  *
  * @package srag\Plugins\Hub2\Object\OrgUnitMembership
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembershipDTO {
 

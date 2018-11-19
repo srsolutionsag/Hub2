@@ -40,19 +40,19 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	abstract public function write();
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	abstract public function read();
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getMetadata(): IMetadata {
 		return $this->metadata;
@@ -60,7 +60,7 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getIliasId(): int {
 		return $this->ilias_id;

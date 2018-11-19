@@ -8,26 +8,27 @@
     "packages": [
         {
             "name": "srag/activerecordconfig",
-            "version": "v0.10.0",
+            "version": "v0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/ActiveRecordConfig.git",
-                "reference": "b233feebd9c81229ce20ba7f0a97ecc256f37bcd"
+                "reference": "99651689346fd2333254725c4faa8852a60a4a8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/b233feebd9c81229ce20ba7f0a97ecc256f37bcd",
-                "reference": "b233feebd9c81229ce20ba7f0a97ecc256f37bcd",
+                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/99651689346fd2333254725c4faa8852a60a4a8a",
+                "reference": "99651689346fd2333254725c4faa8852a60a4a8a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
+                "srag/custominputguis": ">=0.1.0",
                 "srag/dic": ">=0.1.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "srag\\ActiveRecordConfig\\Hub2\\": "src/"
+                    "srag\\ActiveRecordConfig\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49,7 +50,54 @@
                 "activerecord",
                 "config"
             ],
-            "time": "2018-11-13T13:30:14+00:00"
+            "time": "2018-11-16T13:52:24+00:00"
+        },
+        {
+            "name": "srag/custominputguis",
+            "version": "v0.13.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studer-raimann/CustomInputGUIs.git",
+                "reference": "44d159de3e33d156086a4bf77ef1fbefdb0c696c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studer-raimann/CustomInputGUIs/zipball/44d159de3e33d156086a4bf77ef1fbefdb0c696c",
+                "reference": "44d159de3e33d156086a4bf77ef1fbefdb0c696c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "srag/dic": ">=0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "srag\\CustomInputGUIs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "studer + raimann ag - Team Custom 1",
+                    "email": "support-custom1@studer-raimann.ch",
+                    "homepage": "https://studer-raimann.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Custom Input-GUI's",
+            "homepage": "https://github.com/studer-raimann/CustomInputGUIs",
+            "keywords": [
+                "ILIAS",
+                "PropertyForm",
+                "gui",
+                "input",
+                "table"
+            ],
+            "time": "2018-11-19T07:53:23+00:00"
         },
         {
             "name": "srag/dic",
@@ -98,16 +146,16 @@
         },
         {
             "name": "srag/librariesnamespacechanger",
-            "version": "v0.3.4",
+            "version": "v0.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/LibrariesNamespaceChanger.git",
-                "reference": "88b76b0f5174c3ad1e1f65a5fedbfade194cbe99"
+                "reference": "d4acc7bff635ef9126ad350e5efdb8a9c0a2de94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/88b76b0f5174c3ad1e1f65a5fedbfade194cbe99",
-                "reference": "88b76b0f5174c3ad1e1f65a5fedbfade194cbe99",
+                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/d4acc7bff635ef9126ad350e5efdb8a9c0a2de94",
+                "reference": "d4acc7bff635ef9126ad350e5efdb8a9c0a2de94",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +185,7 @@
                 "ILIAS",
                 "libraries"
             ],
-            "time": "2018-11-13T14:22:33+00:00"
+            "time": "2018-11-14T06:11:41+00:00"
         },
         {
             "name": "srag/removeplugindataconfirm",

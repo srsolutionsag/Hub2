@@ -161,7 +161,7 @@ final class LibrariesNamespaceChanger {
 	 * @param array  $files
 	 */
 	private function getFiles(/*string*/
-		$folder, &$files = [])/*: void*/ {
+		$folder, array &$files = [])/*: void*/ {
 		$paths = scandir($folder);
 
 		foreach ($paths as $file) {

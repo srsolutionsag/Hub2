@@ -12,11 +12,11 @@ use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
-use srag\Plugins\Hub2\Origin\Config\SessionMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\SessionMembership\SessionMembershipOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -30,7 +30,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISessionMembershipSyncProcessor {
 
 	/**
-	 * @var SessionMembershipOriginProperties
+	 * @var SessionMembershipProperties
 	 */
 	private $props;
 	/**

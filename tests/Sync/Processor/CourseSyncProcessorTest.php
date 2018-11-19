@@ -6,8 +6,8 @@ use Mockery\MockInterface;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\Course\ICourse;
 use srag\Plugins\Hub2\Object\IObject;
-use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 use srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities;
 
@@ -78,7 +78,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	protected function setUp() {
 		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
 
-		$this->initOrigin(new CourseOriginProperties(), new CourseOriginConfig([]));
+		$this->initOrigin(new CourseProperties(), new CourseOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
 		$this->initILIASObject();

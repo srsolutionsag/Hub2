@@ -14,7 +14,7 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
 class OriginSyncSummaryCron extends OriginSyncSummaryBase implements IOriginSyncSummary {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getOutputAsString() {
 		$return = "";
@@ -59,7 +59,7 @@ class OriginSyncSummaryCron extends OriginSyncSummaryBase implements IOriginSync
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getSummaryOfOrigin(IOriginSync $originSync) {
 		return $this->renderOneSync($originSync);

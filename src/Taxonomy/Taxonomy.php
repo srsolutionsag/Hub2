@@ -57,7 +57,7 @@ class Taxonomy implements ITaxonomy {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getMode(): int {
 		return $this->mode;
@@ -65,7 +65,7 @@ class Taxonomy implements ITaxonomy {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getNodes(): array {
 		return $this->nodes;
@@ -73,7 +73,7 @@ class Taxonomy implements ITaxonomy {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getNodeTitlesAsArray(): array {
 		$titles = [];
@@ -86,7 +86,7 @@ class Taxonomy implements ITaxonomy {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function attach(INode $node): ITaxonomy {
 		$this->nodes[] = $node;
@@ -116,7 +116,7 @@ class Taxonomy implements ITaxonomy {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function __toString(): string {
 		return ""; // Is this needed?

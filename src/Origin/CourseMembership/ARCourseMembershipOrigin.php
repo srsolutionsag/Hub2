@@ -3,8 +3,8 @@
 namespace srag\Plugins\Hub2\Origin\CourseMembership;
 
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Origin\Config\CourseMembershipOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\CourseMembership\CourseMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipProperties;
 
 /**
  * Class ARCourseMembershipOrigin
@@ -26,6 +26,6 @@ class ARCourseMembershipOrigin extends AROrigin implements ICourseMembershipOrig
 	 * @inheritdoc
 	 */
 	protected function getOriginProperties(array $data) {
-		return new CourseMembershipOriginProperties($data);
+		return new CourseMembershipProperties($data);
 	}
 }

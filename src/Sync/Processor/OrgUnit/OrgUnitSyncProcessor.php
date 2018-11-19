@@ -14,11 +14,11 @@ use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
-use srag\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\OrgUnit\IOrgUnitOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
-use srag\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties;
 use srag\Plugins\Hub2\Sync\IDataTransferObjectSort;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -27,12 +27,13 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  * Class OrgUnitSyncProcessor
  *
  * @package srag\Plugins\Hub2\Sync\Processor\OrgUnit
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncProcessor {
 
 	/**
-	 * @var IOrgUnitOriginProperties
+	 * @var IOrgUnitProperties
 	 */
 	protected $props;
 	/**
@@ -181,23 +182,23 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 			return NULL;
 		}
 
-		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_TITLE)) {
+		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_TITLE)) {
 			$org_unit->setTitle($dto->getTitle());
 		}
-		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_DESCRIPTION)) {
+		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_DESCRIPTION)) {
 			$org_unit->setDescription($dto->getDescription());
 		}
-		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_OWNER)) {
+		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_OWNER)) {
 			$org_unit->setOwner($dto->getOwner());
 		}
-		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_ORG_UNIT_TYPE)) {
+		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_ORG_UNIT_TYPE)) {
 			$org_unit->setOrgUnitTypeId($this->getOrgUnitTypeId($dto));
 		}
 
 		$org_unit->update();
 
-		if ($this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_PARENT_ID)
-			|| $this->props->updateDTOProperty(IOrgUnitOriginProperties::PROP_PARENT_ID_TYPE)) {
+		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
+			|| $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)) {
 			$this->moveOrgUnit($org_unit, $dto);
 		}
 

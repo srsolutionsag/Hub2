@@ -302,7 +302,7 @@ class OriginSync implements IOriginSync {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getOrigin() {
 		return $this->origin;

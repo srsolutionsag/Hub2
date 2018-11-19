@@ -89,7 +89,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sessionMembership($session_id, $user_id) {
 		return new SessionMembershipDTO($session_id, $user_id);

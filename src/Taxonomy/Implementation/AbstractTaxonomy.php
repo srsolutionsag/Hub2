@@ -110,13 +110,13 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	abstract public function write();
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getTaxonomy(): ITaxonomy {
 		return $this->taxonomy;
@@ -124,7 +124,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getILIASParentId(): int {
 		return $this->ilias_parent_id;

@@ -19,7 +19,7 @@ trait MappingStrategyAwareDataTransferObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getMappingStrategy(): IMappingStrategy {
 		return $this->_mapping_strategy ? $this->_mapping_strategy : new None();
@@ -27,7 +27,7 @@ trait MappingStrategyAwareDataTransferObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function overrideMappingStrategy(IMappingStrategy $strategy): IDataTransferObject {
 		$this->_mapping_strategy = $strategy;

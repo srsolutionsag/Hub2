@@ -43,7 +43,7 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getImplementationForDTO(IMetadataAwareDataTransferObject $dto, IMetadata $metadata, int $ilias_id): IMetadataImplementation {
 		switch (true) {

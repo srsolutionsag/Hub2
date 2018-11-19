@@ -6,8 +6,8 @@ use Mockery\MockInterface;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
 use srag\Plugins\Hub2\Object\Group\IGroup;
 use srag\Plugins\Hub2\Object\IObject;
-use srag\Plugins\Hub2\Origin\Config\GroupOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\Group\GroupOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
 use srag\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Group\IGroupActivities;
 
@@ -80,7 +80,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	protected function setUp() {
 		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Group\IGroupActivities');
 
-		$this->initOrigin(new GroupOriginProperties(), new GroupOriginConfig([]));
+		$this->initOrigin(new GroupProperties(), new GroupOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
 		$this->initILIASObject();

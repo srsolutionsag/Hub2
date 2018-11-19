@@ -10,7 +10,7 @@ namespace srag\Plugins\Hub2\Shortlink;
 class NullLink implements IObjectLink {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function doesObjectExist(): bool {
 		return false;
@@ -18,7 +18,7 @@ class NullLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function isAccessGranted(): bool {
 		return false;
@@ -26,7 +26,7 @@ class NullLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessGrantedExternalLink(): string {
 		return "index.php";
@@ -34,7 +34,7 @@ class NullLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessDeniedLink(): string {
 		return "index.php";
@@ -42,7 +42,7 @@ class NullLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getNonExistingLink(): string {
 		return "index.php";
@@ -50,7 +50,7 @@ class NullLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessGrantedInternalLink(): string {
 		return "index.php";

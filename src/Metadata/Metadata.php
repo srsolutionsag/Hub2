@@ -38,7 +38,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function setValue($value): IMetadata {
 		$this->value = $value;
@@ -48,7 +48,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function setIdentifier(int $identifier): IMetadata {
 		$this->identifier = $identifier;
@@ -58,7 +58,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getValue() {
 		return $this->value;
@@ -66,7 +66,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getIdentifier() {
 		return $this->identifier;
@@ -74,7 +74,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function __toString(): string {
 		$json_encode = json_encode([ $this->getIdentifier() => $this->getValue() ]);
