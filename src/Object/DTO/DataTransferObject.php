@@ -26,6 +26,10 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 * @var string
 	 */
 	private $period = '';
+	/**
+	 * @var bool
+	 */
+	private $should_deleted = false;
 
 
 	/**
@@ -80,7 +84,9 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 */
 	public function setData(array $data) {
 		foreach ($data as $key => $value) {
-			$this->{$key} = $value;
+			if ($key !== "should_deleted") {
+				$this->{$key} = $value;
+			}
 		}
 
 		return $this;
@@ -91,14 +97,37 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 * @return array
 	 */
 	protected function getProperties() {
-		return array_keys(get_class_vars(get_class($this)));
+		return array_filter(array_keys(get_class_vars(get_class($this))), function (string $property): bool {
+			return ($property !== "should_deleted");
+		});
 	}
 
 
+	/**
+	 * @return string
+	 */
 	public function __toString() {
 		return implode(', ', [
 			"ext_id: " . $this->getExtId(),
 			"period: " . $this->getPeriod(),
 		]);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function shouldDeleted(): bool {
+		return $this->should_deleted;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setShouldDeleted(bool $should_deleted) {
+		$this->should_deleted = $should_deleted;
+
+		return $this;
 	}
 }

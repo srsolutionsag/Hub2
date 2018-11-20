@@ -145,9 +145,26 @@ class OriginSync implements IOriginSync {
 		$type = $this->origin->getObjectType();
 
 		if ($this->origin->isAdHoc()) {
-			// Simple complete all data with the new adhoc data
-			$this->dtoObjects = $this->dtoObjects + $this->factory->{$type . "s"}();
+			// Simple complete all data with the new adhoc data. Be shure that keys are persists
+			$this->dtoObjects = $this->dtoObjects + array_map(function (IObject $object) use ($type): IDataTransferObject {
+					/**
+					 * @var IDataTransferObject $dto_object
+					 */
+					$dto_object = $this->factory->{$type}();
+
+					$dto_object->setData($object->getData());
+
+					return $dto_object;
+				}, $this->factory->{$type . "s"})();
 		}
+
+		// Separate shouldDeleted
+		$delivered_objects_to_delete = array_filter($this->dtoObjects, function (IDataTransferObject $dto_object): bool {
+			return $dto_object->shouldDeleted();
+		});
+		$this->dtoObjects = array_filter($this->dtoObjects, function (IDataTransferObject $dto_object) use (&$delivered_objects_to_delete): bool {
+			return (!in_array($dto_object->getExtId(), $delivered_objects_to_delete));
+		});
 
 		// Sort dto objects
 		$this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
@@ -174,7 +191,9 @@ class OriginSync implements IOriginSync {
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
 
-		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
+		$delivered_objects_to_delete = array_unique(array_merge($delivered_objects_to_delete, $this->repository->getToDelete($ext_ids_delivered)));
+
+		foreach ($delivered_objects_to_delete as $object) {
 			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
 			$object->setStatus(IObject::STATUS_TO_DELETE);
 			$this->processObject($object, $nullDTO);
