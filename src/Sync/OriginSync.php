@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\NullDTO;
 use srag\Plugins\Hub2\Object\IObject;
@@ -150,12 +151,12 @@ class OriginSync implements IOriginSync {
 					/**
 					 * @var IDataTransferObject $dto_object
 					 */
-					$dto_object = $this->factory->{$type}();
+					$dto_object = (new DataTransferObjectFactory())->{$type}(NULL);
 
 					$dto_object->setData($object->getData());
 
 					return $dto_object;
-				}, $this->factory->{$type . "s"})();
+				}, $this->factory->{$type . "s"}());
 		}
 
 		// Separate shouldDeleted

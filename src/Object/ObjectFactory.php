@@ -244,7 +244,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function users(): array {
-		return ARUser::getArray();
+		return ARUser::get();
 	}
 
 
@@ -252,7 +252,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function courses(): array {
-		return ARCourse::getArray();
+		return ARCourse::get();
 	}
 
 
@@ -260,7 +260,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function categories(): array {
-		return ARCategory::getArray();
+		return ARCategory::get();
 	}
 
 
@@ -268,7 +268,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function groups(): array {
-		return ARGroup::getArray();
+		return ARGroup::get();
 	}
 
 
@@ -276,7 +276,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function sessions(): array {
-		return ARSession::getArray();
+		return ARSession::get();
 	}
 
 
@@ -284,7 +284,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function courseMemberships(): array {
-		return ARCourseMembership::getArray();
+		return ARCourseMembership::get();
 	}
 
 
@@ -292,7 +292,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function groupMemberships(): array {
-		return ARGroupMembership::getArray();
+		return ARGroupMembership::get();
 	}
 
 
@@ -300,7 +300,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function sessionMemberships(): array {
-		return ARSessionMembership::getArray();
+		return ARSessionMembership::get();
 	}
 
 
@@ -308,7 +308,7 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function orgUnits(): array {
-		return AROrgUnit::getArray();
+		return AROrgUnit::get();
 	}
 
 
@@ -316,6 +316,6 @@ class ObjectFactory implements IObjectFactory {
 	 * @inheritdoc
 	 */
 	public function orgUnitMemberships(): array {
-		return AROrgUnitMembership::getArray();
+		return AROrgUnitMembership::get();
 	}
 }
