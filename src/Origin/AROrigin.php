@@ -173,9 +173,10 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	/**
 	 * @var bool
 	 *
-	 * @con_has_field   true
-	 * @con_fieldtype   integer
-	 * @con_length      1
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       1
+	 * @con_is_notnull   true
 	 */
 	protected $adhoc = false;
 
