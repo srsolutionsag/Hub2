@@ -142,6 +142,13 @@ class OriginSync implements IOriginSync {
 			throw $e;
 		}
 
+		$type = $this->origin->getObjectType();
+
+		if ($this->origin->isAdHoc()) {
+			// Simple complete all data with the new adhoc data
+			$this->dtoObjects = $this->dtoObjects + $this->factory->{$type . "s"}();
+		}
+
 		// Sort dto objects
 		$this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
 
@@ -151,7 +158,6 @@ class OriginSync implements IOriginSync {
 		// 2. Let the processor process the corresponding ILIAS object
 
 		$ext_ids_delivered = [];
-		$type = $this->origin->getObjectType();
 		foreach ($this->dtoObjects as $dto) {
 			$ext_ids_delivered[] = $dto->getExtId();
 			/** @var IObject $object */

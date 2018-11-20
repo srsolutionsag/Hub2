@@ -238,4 +238,84 @@ class ObjectFactory implements IObjectFactory {
 	protected function getId($ext_id) {
 		return $this->origin->getId() . $ext_id;
 	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function users(): array {
+		return ARUser::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function courses(): array {
+		return ARCourse::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function categories(): array {
+		return ARCategory::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function groups(): array {
+		return ARGroup::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function sessions(): array {
+		return ARSession::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function courseMemberships(): array {
+		return ARCourseMembership::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function groupMemberships(): array {
+		return ARGroupMembership::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function sessionMemberships(): array {
+		return ARSessionMembership::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function orgUnits(): array {
+		return AROrgUnit::getArray();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function orgUnitMemberships(): array {
+		return AROrgUnitMembership::getArray();
+	}
 }
