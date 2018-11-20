@@ -119,8 +119,10 @@ class DataTableGUI extends ilTable2GUI {
 
 		// Status
 		$status = new ilSelectInputGUI(self::plugin()->translate('data_table_header_status'), 'status');
-		$status->setOptions($this->getAvailableStatus());
-		$status->setValue(IObject::STATUS_IGNORED);
+		$status->setOptions($this->getAvailableStatus() + [
+				"!" . IObject::STATUS_IGNORED => self::plugin()->translate("data_table_status_not_ignored")
+			]);
+		$status->setValue("!" . IObject::STATUS_IGNORED);
 		$this->addAndReadFilterItem($status);
 
 		$ext_id = new ilTextInputGUI(self::plugin()->translate('data_table_header_ext_id'), 'ext_id');
@@ -189,6 +191,15 @@ class DataTableGUI extends ilTable2GUI {
 					case 'ext_id':
 						$str = "%{$value}%";
 						$collection = $collection->where([ $postvar => $str ], 'LIKE');
+						break;
+					case "status":
+						if (!empty($value) && $value[0] === "!") {
+							$not = true;
+							$value = substr($value, 1);
+						} else {
+							$not = false;
+						}
+						$collection = $collection->where([ $postvar => $value ], $not ? "!=" : "=");
 						break;
 					default:
 						$collection = $collection->where([ $postvar => $value ]);
