@@ -179,4 +179,17 @@ interface IOrigin {
 	 * @return bool
 	 */
 	public function isUpdateForced(): bool;
+
+
+	/**
+	 * @return bool
+	 */
+	public function isAdHoc(): bool;
+
+
+	/**
+	 * @param bool $active
+	 */
+	public function setAdHoc(bool $adhoc)/*: void*/
+	;
 }
