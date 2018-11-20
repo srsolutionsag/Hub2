@@ -4,7 +4,6 @@ require_once __DIR__ . "/../../vendor/autoload.php";
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\OriginLog;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
@@ -292,8 +291,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 				// Any exception being forwarded to here means that we failed to execute the sync at some point
 				ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 			}
-			$OriginLog = new OriginLog($originSync->getOrigin());
-			$OriginLog->write($summary->getSummaryOfOrigin($originSync));
+			self::logs()->originLog($originSync->getOrigin())->withMessage($summary->getSummaryOfOrigin($originSync))->store();
 
 			$summary->addOriginSync($originSync);
 		}

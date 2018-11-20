@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Origin\Config;
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\MetadataFactory;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
@@ -27,7 +27,9 @@ class OriginImplementationFactory {
 	 */
 	protected $origin;
 	/**
-	 * @var ILog
+	 * @var ILogOld
+	 *
+	 * @deprecated
 	 */
 	protected $originLog;
 	/**
@@ -38,10 +40,10 @@ class OriginImplementationFactory {
 
 	/**
 	 * @param IOrigin             $origin
-	 * @param ILog                $originLog
+	 * @param ILogOld             $originLog
 	 * @param OriginNotifications $originNotifications
 	 */
-	public function __construct(IOrigin $origin, ILog $originLog, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, ILogOld $originLog, OriginNotifications $originNotifications) {
 		$this->origin = $origin;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;

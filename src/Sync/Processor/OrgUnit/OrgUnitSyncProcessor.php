@@ -9,7 +9,7 @@ use ilOrgUnitType;
 use ilOrgUnitTypeTranslation;
 use ilRepUtil;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -50,10 +50,10 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 * @param IOrgUnitOrigin          $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
+	 * @param ILogOld                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILogOld $originLog, OriginNotifications $originNotifications) {
 		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();

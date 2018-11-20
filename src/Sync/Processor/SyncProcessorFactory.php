@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
@@ -46,7 +46,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	protected $statusTransition;
 	/**
-	 * @var ILog
+	 * @var ILogOld
 	 */
 	protected $originLog;
 	/**
@@ -63,10 +63,10 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $statusTransition
-	 * @param ILog                    $originLog
+	 * @param ILogOld                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition, ILog $originLog, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition, ILogOld $originLog, OriginNotifications $originNotifications) {
 		$this->origin = $origin;
 		$this->statusTransition = $statusTransition;
 		$this->originLog = $originLog;

@@ -4,8 +4,8 @@ namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Log\OriginLog;
+use srag\Plugins\Hub2\Log\Old\ILogOld;
+use srag\Plugins\Hub2\Log\Old\OriginLogOld;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -47,7 +47,7 @@ class OriginSyncFactory {
 	 */
 	public function instance() {
 		$statusTransition = new ObjectStatusTransition($this->origin->config());
-		$originLog = new OriginLog($this->origin);
+		$originLog = new OriginLogOld($this->origin);
 		$originNotifications = new OriginNotifications();
 		$implementationFactory = new OriginImplementationFactory($this->origin, $originLog, $originNotifications);
 		$originImplementation = $implementationFactory->instance();
@@ -72,12 +72,12 @@ class OriginSyncFactory {
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $statusTransition
-	 * @param ILog                    $originLog
+	 * @param ILogOld                 $originLog
 	 * @param OriginNotifications     $originNotifications
 	 *
 	 * @return IObjectSyncProcessor
 	 */
-	protected function getSyncProcessor(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition, ILog $originLog, OriginNotifications $originNotifications) {
+	protected function getSyncProcessor(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition, ILogOld $originLog, OriginNotifications $originNotifications) {
 		$processorFactory = new SyncProcessorFactory($origin, $implementation, $statusTransition, $originLog, $originNotifications);
 		$processor = $origin->getObjectType();
 

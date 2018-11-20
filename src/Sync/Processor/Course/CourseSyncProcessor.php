@@ -14,7 +14,7 @@ use ilRepUtil;
 use ilSession;
 use ilSoapFunctions;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -76,11 +76,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
+	 * @param ILogOld                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 * @param ICourseActivities       $courseActivities
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications, ICourseActivities $courseActivities) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILogOld $originLog, OriginNotifications $originNotifications, ICourseActivities $courseActivities) {
 		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();

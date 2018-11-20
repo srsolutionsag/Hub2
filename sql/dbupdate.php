@@ -67,3 +67,7 @@ if (strpos($administration_role_ids, "[") === false) {
 	\srag\Plugins\Hub2\Config\ArConfig::setField(\srag\Plugins\Hub2\Config\ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS, $administration_role_ids);
 }
 ?>
+<#5>
+<?php
+\srag\Plugins\Hub2\Log\OriginLog::updateDB();
+?>

@@ -7,7 +7,6 @@ use ilCronJob;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
-use srag\Plugins\Hub2\Log\OriginLog;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
@@ -100,8 +99,7 @@ class RunSync extends AbstractJob {
 				} catch (Exception $e) {
 
 				}
-				$OriginLog = new OriginLog($originSync->getOrigin());
-				$OriginLog->write($summary->getSummaryOfOrigin($originSync));
+				self::logs()->originLog($originSync->getOrigin())->withMessage($summary->getSummaryOfOrigin($originSync))->store();
 
 				$summary->addOriginSync($originSync);
 			}

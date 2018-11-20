@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
@@ -49,7 +49,9 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	private $factory;
 	/**
-	 * @var ILog
+	 * @var ILogOld
+	 *
+	 * @deprecated
 	 */
 	private $originLog;
 	/**
@@ -67,12 +69,12 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 *
 	 * @param IOriginConfig              $config
 	 * @param IDataTransferObjectFactory $factory
-	 * @param ILog                       $originLog
+	 * @param ILogOld                    $originLog
 	 * @param OriginNotifications        $originNotifications
 	 * @param IMetadataFactory           $metadataFactory
 	 * @param ITaxonomyFactory           $taxonomyFactory
 	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILogOld $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
 		$this->originLog = $originLog;
@@ -124,7 +126,9 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 
 	/**
-	 * @return ILog
+	 * @return ILogOld
+	 *
+	 * @deprecated
 	 */
 	final protected function log() {
 		return $this->originLog;

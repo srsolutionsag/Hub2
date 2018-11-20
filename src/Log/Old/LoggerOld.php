@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\Log;
+namespace srag\Plugins\Hub2\Log\Old;
 
 use ilHub2Plugin;
 use ILIAS\Filesystem\Exception\IOException;
@@ -10,33 +10,48 @@ use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
- * Class Logger
+ * Class LoggerOld
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package srag\ILIAS\Plugins\Log\Old
+ *
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  *
  * @internal
+ *
+ * @deprecated
  */
-class Logger {
+class LoggerOld {
 
 	use DICTrait;
 	use Hub2Trait;
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var string
+	 *
+	 * @deprecated
 	 */
 	protected $path;
 	/**
 	 * @var Stream
+	 *
+	 * @deprecated
 	 */
 	protected $stream;
 
 
 	/**
-	 * Logger constructor
+	 * LoggerOld constructor
 	 *
 	 * @param string $path
 	 *
 	 * @throws IOException
+	 *
+	 * @deprecated
 	 */
 	public function __construct(string $path) {
 		$this->path = $path;
@@ -51,6 +66,8 @@ class Logger {
 
 	/**
 	 * @param string $string
+	 *
+	 * @deprecated
 	 */
 	public function write($string) {
 		$this->stream->seek($this->stream->getSize());
