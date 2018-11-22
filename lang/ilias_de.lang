@@ -254,7 +254,6 @@ origin_object_type_session#:#Sitzung
 origin_object_type_sessionMembership#:#Sitzung-Mitglied
 origin_form_field_namespace#:#PHP-Namespace
 origin_form_field_namespace_info#:#PHP-Namespace
-origin_table_button_force#:#Aktualisieren erzwingen
 origin_object_type_orgUnit#:#Organisationseinheiten
 origin_object_type_orgUnitMembership#:#Organisationseinheit-Mitgliedschaften
 object_type_user#:#Benutzer
@@ -404,6 +403,7 @@ data_table_status_ignored#:#Ignoriert
 data_table_status_not_ignored#:#Nicht ignoriert
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Es werden nur die Daten geliefert, die geändert wurden
+origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
 removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren

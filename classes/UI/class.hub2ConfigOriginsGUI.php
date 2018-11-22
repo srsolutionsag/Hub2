@@ -34,10 +34,11 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	const SUBTAB_DATA = 'subtab_data';
 	const SUBTAB_ORIGINS = 'subtab_origins';
 	const CMD_RUN = 'run';
+	const CMD_RUN_FORCE_UPDATE = 'runForceUpdate';
 	const CMD_ADD_ORIGIN = 'addOrigin';
-	const Q_FORCE_UPDATE = 'force_update';
 	const CMD_EDIT_ORGIN = 'editOrigin';
 	const CMD_RUN_ORIGIN_SYNC = 'runOriginSync';
+	const CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE = 'runOriginSyncForceUpdate';
 	const CMD_CONFIRM_DELETE = 'confirmDelete';
 	const CMD_CREATE_ORIGIN = 'createOrigin';
 	const CMD_SAVE_ORIGIN = 'saveOrigin';
@@ -112,13 +113,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 		self::dic()->toolbar()->addSeparator();
 
-		$check = new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_force'), self::Q_FORCE_UPDATE);
-		$check->setOptionTitle($check->getTitle()); // Fix what???!!!
-		self::dic()->toolbar()->addInputItem($check);
-
 		$button = ilSubmitButton::getInstance();
 		$button->setCaption(self::plugin()->translate('origin_table_button_run'), false);
 		$button->setCommand(self::CMD_RUN);
+		self::dic()->toolbar()->addButtonInstance($button);
+
+		$button = ilSubmitButton::getInstance();
+		$button->setCaption(self::plugin()->translate('origin_table_button_run_forece_update'), false);
+		$button->setCommand(self::CMD_RUN_FORCE_UPDATE);
 		self::dic()->toolbar()->addButtonInstance($button);
 
 		$table = new OriginsTableGUI($this, self::CMD_INDEX, new OriginRepository());
@@ -251,11 +253,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	/**
-	 *
+	 * @param bool $force_update
 	 */
-	protected function run() {
-		$force = boolval(self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE]);
-
+	protected function run(bool $force_update = false)/*: void*/ {
 		$summary = $this->summaryFactory->web();
 		try {
 			$global_hook = new GlobalHook();
@@ -269,7 +269,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			/**
 			 * @var IOrigin $origin
 			 */
-			if ($force) {
+			if ($force_update) {
 				$origin->forceUpdate();
 			}
 			$originSyncFactory = new OriginSyncFactory($origin);
@@ -301,14 +301,17 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	/**
 	 *
 	 */
-	protected function runOriginSync() {
-		$force = boolval(self::dic()->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE]);
-		/**
-		 * @var IOrigin $origin
-		 */
+	protected function runForceUpdate()/*: void*/ {
+		$this->run(true);
+	}
 
-		$origin = $this->getOrigin((int)$_GET[self::ORIGIN_ID]);
-		if ($force) {
+
+	/**
+	 * @param bool $force_update
+	 */
+	protected function runOriginSync(bool $force_update = false)/*: void*/ {
+		$origin = $this->getOrigin(intval(filter_input(INPUT_GET, self::ORIGIN_ID)));
+		if ($force_update) {
 			$origin->forceUpdate();
 		}
 		$summary = $this->summaryFactory->web();
@@ -324,6 +327,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$summary->sendNotifications();
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
 		self::dic()->ctrl()->redirect($this);
+	}
+
+
+	/**
+	 *
+	 */
+	protected function runOriginSyncForceUpdate()/*: void*/ {
+		$this->runOriginSync(true);
 	}
 
 

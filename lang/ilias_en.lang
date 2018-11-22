@@ -255,7 +255,6 @@ origin_object_type_session#:#Session
 origin_object_type_sessionMembership#:#Session Membership
 origin_form_field_namespace#:#PHP namespace
 origin_form_field_namespace_info#:#PHP namespace
-origin_table_button_force#:#Force update
 origin_object_type_orgUnit#:#Organisational units
 origin_object_type_orgUnitMembership#:#Organisational unit memberships
 object_type_user#:#User
@@ -405,6 +404,7 @@ data_table_status_ignored#:#Ignored
 data_table_status_not_ignored#:#Not ignored
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
+origin_table_button_run_force_update#:#Sync (Force update)
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
 removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin

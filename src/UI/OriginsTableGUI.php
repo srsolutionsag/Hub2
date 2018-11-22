@@ -113,6 +113,8 @@ class OriginsTableGUI extends ilTable2GUI {
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE));
 		$actions->addItem(self::plugin()->translate('origin_table_button_run'), 'runOriginSync', self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
+		$actions->addItem(self::plugin()->translate('origin_table_button_run_force_update'), 'runOriginSyncForceUpdate', self::dic()->ctrl()
+			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE));
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', $actions->getHTML());
