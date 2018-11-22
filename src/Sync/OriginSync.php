@@ -160,9 +160,11 @@ class OriginSync implements IOriginSync {
 		}
 
 		// Separate shouldDeleted
-		$delivered_objects_to_delete = array_filter($this->dtoObjects, function (IDataTransferObject $dto_object): bool {
+		$delivered_objects_to_delete = array_map(function (IDataTransferObject $dto_object) {
+			return $dto_object->getExtId();
+		}, array_filter($this->dtoObjects, function (IDataTransferObject $dto_object): bool {
 			return $dto_object->shouldDeleted();
-		});
+		}));
 		$this->dtoObjects = array_filter($this->dtoObjects, function (IDataTransferObject $dto_object) use (&$delivered_objects_to_delete): bool {
 			return (!in_array($dto_object->getExtId(), $delivered_objects_to_delete));
 		});
@@ -192,6 +194,9 @@ class OriginSync implements IOriginSync {
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
 
+		$delivered_objects_to_delete = array_map(function ($ext_id) use ($type) {
+			return $this->factory->{$type}($ext_id);
+		}, $delivered_objects_to_delete);
 		$delivered_objects_to_delete = array_unique(array_merge($delivered_objects_to_delete, $this->repository->getToDelete($ext_ids_delivered)));
 
 		foreach ($delivered_objects_to_delete as $object) {
