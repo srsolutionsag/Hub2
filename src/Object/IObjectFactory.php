@@ -117,4 +117,64 @@ interface IObjectFactory {
 	 * @return IOrgUnitMembership
 	 */
 	public function orgUnitMembership(string $ext_id): IOrgUnitMembership;
+
+
+	/**
+	 * @return IUser[]
+	 */
+	public function users(): array;
+
+
+	/**
+	 * @return ICourse[]
+	 */
+	public function courses(): array;
+
+
+	/**
+	 * @return ICategory[]
+	 */
+	public function categories(): array;
+
+
+	/**
+	 * @return IGroup[]
+	 */
+	public function groups(): array;
+
+
+	/**
+	 * @return ISession[]
+	 */
+	public function sessions(): array;
+
+
+	/**
+	 * @return ICourseMembership[]
+	 */
+	public function courseMemberships(): array;
+
+
+	/**
+	 * @return IGroupMembership[]
+	 */
+	public function groupMemberships(): array;
+
+
+	/**
+	 * @return ISessionMembership[]
+	 */
+	public function sessionMemberships(): array;
+
+
+	/**
+	 * @return IOrgUnit[]
+	 */
+	public function orgUnits(): array;
+
+
+	/**
+	 * @return IOrgUnitMembership[]
+	 */
+	public function orgUnitMemberships(): array;
 }

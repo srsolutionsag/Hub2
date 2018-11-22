@@ -401,7 +401,10 @@ data_table_status_deleted#:#Gelöscht
 data_table_status_to_update_newly_delivered#:#Zum Aktualisieren neu geliefert
 data_table_status_nothing_to_update#:#Nichts zu aktualisieren
 data_table_status_ignored#:#Ignoriert
+data_table_status_not_ignored#:#Nicht ignoriert
 origin_table_button_reset#:#Alle Daten als Neu markieren
+origin_form_field_adhoc#:#AdHoc
+origin_form_field_adhoc_info#:#Es werden nur die Daten geliefert, die geändert wurden
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
 removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren

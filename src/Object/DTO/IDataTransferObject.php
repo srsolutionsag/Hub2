@@ -55,4 +55,18 @@ interface IDataTransferObject {
 	 * @return $this
 	 */
 	public function setData(array $data);
+
+
+	/**
+	 * @return bool
+	 */
+	public function shouldDeleted(): bool;
+
+
+	/**
+	 * @param bool $should_deleted
+	 *
+	 * @return static
+	 */
+	public function setShouldDeleted(bool $should_deleted);
 }
