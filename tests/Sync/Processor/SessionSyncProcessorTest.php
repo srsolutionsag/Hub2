@@ -55,9 +55,9 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected function setUp() {
 		$arr = [
-			'update_dto_title'       => true,
+			'update_dto_title' => true,
 			'update_dto_description' => true,
-			'update_dto_location'    => true,
+			'update_dto_location' => true,
 		];
 		$this->initOrigin(new SessionProperties($arr), new SessionOriginConfig([]));
 		$this->setupGeneralDependencies();
@@ -82,7 +82,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$session_appointment_mock->shouldReceive("setSessionId")->with(self::REF_ID);
 		$session_appointment_mock->shouldReceive("create");
 		$session_appointment_mock->shouldReceive("update");
-		$this->appointments = [$session_appointment_mock];
+		$this->appointments = [ $session_appointment_mock ];
 
 		$this->ilObject->shouldReceive('setTitle')->once()->with($this->dto->getTitle());
 		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getDescription());
@@ -109,12 +109,10 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs(
-			[
-				self::REF_ID,
-				true,
-			]
-		)->andReturn(true);
+		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
+			self::REF_ID,
+			true,
+		])->andReturn(true);
 
 		$this->ilObject = Mockery::mock('overload:\ilObjSession', '\ilObject');
 		$this->ilObject->shouldReceive('getId')->andReturn(self::REF_ID);
@@ -139,7 +137,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-		$this->originImplementation->shouldReceive('overrideStatus')->once();
+
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfSession');
 		$this->ilObject->shouldReceive('create')->once();
 		$this->ilObject->shouldReceive('createReference')->once();
@@ -173,7 +171,6 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->originImplementation->shouldReceive('beforeUpdateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
-		$this->originImplementation->shouldReceive('overrideStatus')->once();
 
 		$this->ilObject->shouldReceive('update')->once();
 		$this->ilObject->shouldNotReceive('createReference');

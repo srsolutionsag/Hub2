@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Shortlink;
 use ilContext;
 use ilDBInterface;
 use ilHub2Plugin;
-use ilUtil;
 use ilInitialisation;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
@@ -95,7 +94,7 @@ class Handler {
 	 */
 	protected function sendMessage(string $message) {
 		if ($message !== '') {
-			ilUtil::sendInfo($message, true);
+			\ilUtil::sendInfo($message, true);
 		}
 	}
 

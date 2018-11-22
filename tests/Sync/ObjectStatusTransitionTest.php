@@ -68,7 +68,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 		$config->shouldReceive('getActivePeriod')->andReturn('Period1');
 		$transition = new ObjectStatusTransition($config);
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED, 'Period1');
-		$object->shouldReceive('getILIASId')->andReturn(null);
+		$object->shouldReceive('getILIASId')->andReturn(NULL);
 		$this->assertEquals(IObject::STATUS_TO_CREATE, $transition->finalToIntermediate($object));
 	}
 

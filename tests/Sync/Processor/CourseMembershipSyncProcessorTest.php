@@ -72,12 +72,10 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject = Mockery::mock(FakeIliasObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
-		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs(
-			[
-				self::COURSE_REF_ID,
-				true,
-			]
-		)->andReturn(true);
+		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
+			self::COURSE_REF_ID,
+			true,
+		])->andReturn(true);
 
 		$this->ilObjCourse = Mockery::mock("overload:\ilObjCourse", "ilObject");
 
@@ -112,13 +110,11 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-		$this->originImplementation->shouldReceive('overrideStatus')->once();
-		$this->ilCourseParticipants->shouldReceive('add')->once()->withArgs(
-			array(
-				$this->dto->getUserId(),
-				$this->dto->getRole(),
-			)
-		);
+
+		$this->ilCourseParticipants->shouldReceive('add')->once()->withArgs(array(
+			$this->dto->getUserId(),
+			$this->dto->getRole(),
+		));
 
 		$this->iobject->shouldReceive('setILIASId')->once()->with(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
@@ -138,18 +134,15 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->originImplementation->shouldReceive('beforeUpdateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
-		$this->originImplementation->shouldReceive('overrideStatus')->once();
 
 		$this->ilObjCourse->shouldReceive('getDefaultTutorRole')->once()->andReturn(self::IL_CRS_TUTOR_123);
 
 		$this->ilObjCourse->shouldReceive("getRefId")->once()->andReturn(self::COURSE_REF_ID);
 
-		$this->ilCourseParticipants->shouldReceive('updateRoleAssignments')->once()->withArgs(
-			array(
-				$this->dto->getUserId(),
-				[self::IL_CRS_TUTOR_123],
-			)
-		);
+		$this->ilCourseParticipants->shouldReceive('updateRoleAssignments')->once()->withArgs(array(
+			$this->dto->getUserId(),
+			[ self::IL_CRS_TUTOR_123 ],
+		));
 
 		$processor->process($this->iobject, $this->dto);
 	}

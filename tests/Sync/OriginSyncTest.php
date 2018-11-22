@@ -134,7 +134,6 @@ class OriginSyncTest extends AbstractHub2Tests {
 
 
 	public function test_processing() {
-		$this->processor->shouldReceive('handleSort')->once();
 		$this->originImplementation->shouldReceive('connect');
 		$this->originImplementation->shouldReceive('parseData')->andReturn(4);
 		$this->originImplementation->shouldReceive('handleException')->once()->withAnyArgs();
@@ -143,15 +142,15 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->repository->shouldReceive('count');
 		$this->origin->shouldReceive('getObjectType')->andReturn('dummy');
 		// Build 4 dummyDTOs returned by the origin implementation
-		for ($i = 0; $i < 4; $i ++) {
 		$dummyDTOs = [];
+		for ($i = 0; $i < 4; $i ++) {
 			$dummyDTO = Mockery::mock('\srag\Plugins\Hub2\Object\DTO\IDataTransferObject');
 			$dummyDTO->shouldReceive('getExtId', 'setData');
 			$dummyDTO->shouldReceive('getData')->andReturn([]);
 			$dummyDTOs[] = $dummyDTO;
 		}
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn($dummyDTOs);
-		$status = [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_DELETED, IObject::STATUS_IGNORED];
+		$status = [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_DELETED, IObject::STATUS_IGNORED ];
 		// Build 4 dummy objects that correspond to a dummyDTO, each having a different final status
 		$objects = [];
 		for ($i = 0; $i < 4; $i ++) {
@@ -181,7 +180,6 @@ class OriginSyncTest extends AbstractHub2Tests {
 
 
 	public function test_that_any_exception_during_processing_is_forwarded_to_the_origin_implementation() {
-		$this->processor->shouldReceive('handleSort')->once();
 		$this->originImplementation->shouldReceive('connect');
 		$this->originImplementation->shouldReceive('parseData')->andReturn(1);
 		$this->originImplementation->shouldReceive('handleException')->once()->withAnyArgs();
@@ -189,7 +187,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->originConfig->shouldReceive('getCheckAmountData')->andReturn(false);
 		$this->repository->shouldReceive('count');
 		$this->origin->shouldReceive('getObjectType')->andReturn('user');
-		$this->originImplementation->shouldReceive('buildObjects')->andReturn([new UserDTO(1)]);
+		$this->originImplementation->shouldReceive('buildObjects')->andReturn([ new UserDTO(1) ]);
 		$this->statusTransition->shouldReceive('finalToIntermediate');
 		$userMock = Mockery::mock('\srag\Plugins\Hub2\Object\User\IUser');
 		$userMock->shouldReceive('setDeliveryDate', 'setStatus');
