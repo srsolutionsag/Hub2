@@ -10,7 +10,6 @@ use ilUtil;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
-use srag\Plugins\Hub2\Exception\ShortLinkNotFoundException;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
