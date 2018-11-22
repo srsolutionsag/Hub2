@@ -2,8 +2,10 @@
 
 namespace srag\Plugins\Hub2\Origin;
 
+use ActiveRecord;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\UI\DataTableGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -97,5 +99,24 @@ class OriginFactory implements IOriginFactory {
 		$class = "srag\\Plugins\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
 
 		return $class;
+	}
+
+
+	/**
+	 * @param int $origin_id
+	 */
+	public function delete(int $origin_id) {
+		/**
+		 * @var ActiveRecord $object
+		 */
+
+		foreach (DataTableGUI::$classes as $class) {
+			foreach ($class::where([ "origin_id" => $origin_id ])->get() as $object) {
+				$object->delete();
+			}
+		}
+
+		$object = $this->getById($origin_id);
+		$object->delete();
 	}
 }

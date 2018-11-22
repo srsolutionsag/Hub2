@@ -359,9 +359,11 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function delete() {
+		$origin_id = intval(self::dic()->http()->request()->getParsedBody()[self::ORIGIN_ID]);
+
 		$f = new OriginFactory();
-		$o = $f->getById(self::dic()->http()->request()->getParsedBody()[self::ORIGIN_ID]);
-		$o->delete();
+		$f->delete($origin_id);
+
 		self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
 	}
 
