@@ -51,7 +51,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->dto = new CourseDTO('extIdOfCourse');
 		$this->dto->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->setParentId(1)->setDescription("Description")->setTitle("Title")
 			->setContactEmail("contact@email.com")->setContactResponsibility("Responsibility")->setImportantInformation("Important Information")
-			->setNotificationEmails([ "notification@email.com" ])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
+			->setNotificationEmails(["notification@email.com"])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
 			->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setContactName("Contact Name")->setSyllabus('Syllabus')
 			->setContactConsultation('1 2 3 4 5 6')->setContactPhone('+41 123 456 789');
 	}
@@ -101,7 +101,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfCourse');
 		$this->ilObject->shouldReceive('create')->once();
 		$this->ilObject->shouldReceive('createReference')->once();

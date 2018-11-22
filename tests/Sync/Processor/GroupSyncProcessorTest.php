@@ -105,7 +105,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfGroup');
 		$this->ilObject->shouldReceive('create')->once();
 		$this->ilObject->shouldReceive('createReference')->once();

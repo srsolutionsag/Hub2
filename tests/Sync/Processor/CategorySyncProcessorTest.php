@@ -75,6 +75,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfCategory');
 		$this->ilObject->shouldReceive('create')->once();
