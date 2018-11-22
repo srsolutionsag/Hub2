@@ -72,6 +72,7 @@ if (strpos($administration_role_ids, "[") === false) {
 /* */
 ?>
 <#6>
+<?php
 /* */
 ?>
 <#7>
