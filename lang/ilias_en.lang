@@ -403,7 +403,6 @@ data_table_status_to_update_newly_delivered#:#To update newly delivered
 data_table_status_nothing_to_update#:#Nothing to update
 data_table_status_ignored#:#Ignored
 data_table_status_not_ignored#:#Not ignored
-origin_table_button_reset#:#Mark all data as New
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
 removeplugindataconfirm_cancel#:#Cancel
