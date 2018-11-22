@@ -27,7 +27,7 @@ trait MappingStrategyAwareDataTransferObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
      *
      * @return static
 	 */
