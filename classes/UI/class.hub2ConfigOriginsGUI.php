@@ -119,7 +119,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		self::dic()->toolbar()->addButtonInstance($button);
 
 		$button = ilSubmitButton::getInstance();
-		$button->setCaption(self::plugin()->translate('origin_table_button_run_forece_update'), false);
+		$button->setCaption(self::plugin()->translate('origin_table_button_run_force_update'), false);
 		$button->setCommand(self::CMD_RUN_FORCE_UPDATE);
 		self::dic()->toolbar()->addButtonInstance($button);
 
