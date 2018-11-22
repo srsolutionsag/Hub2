@@ -286,6 +286,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$appendix ++;
 		}
 
+		$user->setLogin($login);
 		return $login;
 	}
 
