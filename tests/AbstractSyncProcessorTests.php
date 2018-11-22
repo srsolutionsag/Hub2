@@ -4,7 +4,7 @@ require_once __DIR__ . "/AbstractHub2Tests.php";
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
-use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -39,7 +39,7 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	 */
 	protected $statusTransition;
 	/**
-	 * @var MockInterface|ILog
+	 * @var MockInterface|ILogOld
 	 */
 	protected $originLog;
 	/**

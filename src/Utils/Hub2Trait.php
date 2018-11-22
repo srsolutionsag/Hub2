@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Utils;
 
 use srag\Plugins\Hub2\Access\Access;
 use srag\Plugins\Hub2\Access\Ilias;
+use srag\Plugins\Hub2\Logs\Logs;
 
 /**
  * Trait Hub2Trait
@@ -27,5 +28,13 @@ trait Hub2Trait {
 	 */
 	protected static function ilias(): Ilias {
 		return Ilias::getInstance();
+	}
+
+
+	/**
+	 * @return Logs
+	 */
+	protected static function logs(): Logs {
+		return Logs::getInstance();
 	}
 }

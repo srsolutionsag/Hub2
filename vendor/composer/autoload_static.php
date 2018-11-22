@@ -17,8 +17,8 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
             'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
             'srag\\DIC\\Hub2\\' => 14,
-            'srag\\CustomInputGUIs\\' => 21,
-            'srag\\ActiveRecordConfig\\' => 24,
+            'srag\\CustomInputGUIs\\Hub2\\' => 26,
+            'srag\\ActiveRecordConfig\\Hub2\\' => 29,
         ),
         'p' => 
         array (
@@ -56,11 +56,11 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
-        'srag\\CustomInputGUIs\\' => 
+        'srag\\CustomInputGUIs\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/custominputguis/src',
         ),
-        'srag\\ActiveRecordConfig\\' => 
+        'srag\\ActiveRecordConfig\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/activerecordconfig/src',
         ),
@@ -991,8 +991,13 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
         'srag\\Plugins\\Hub2\\Jobs\\Result\\ResultFactory' => __DIR__ . '/../..' . '/src/Jobs/Result/ResultFactory.php',
         'srag\\Plugins\\Hub2\\Jobs\\RunSync' => __DIR__ . '/../..' . '/src/Jobs/RunSync.php',
         'srag\\Plugins\\Hub2\\Log\\ILog' => __DIR__ . '/../..' . '/src/Log/ILog.php',
-        'srag\\Plugins\\Hub2\\Log\\Logger' => __DIR__ . '/../..' . '/src/Log/Logger.php',
+        'srag\\Plugins\\Hub2\\Log\\IOriginLog' => __DIR__ . '/../..' . '/src/Log/IOriginLog.php',
+        'srag\\Plugins\\Hub2\\Log\\Log' => __DIR__ . '/../..' . '/src/Log/Log.php',
+        'srag\\Plugins\\Hub2\\Log\\Old\\ILogOld' => __DIR__ . '/../..' . '/src/Log/Old/ILogOld.php',
+        'srag\\Plugins\\Hub2\\Log\\Old\\LoggerOld' => __DIR__ . '/../..' . '/src/Log/Old/LoggerOld.php',
+        'srag\\Plugins\\Hub2\\Log\\Old\\OriginLogOld' => __DIR__ . '/../..' . '/src/Log/Old/OriginLogOld.php',
         'srag\\Plugins\\Hub2\\Log\\OriginLog' => __DIR__ . '/../..' . '/src/Log/OriginLog.php',
+        'srag\\Plugins\\Hub2\\Logs\\Logs' => __DIR__ . '/../..' . '/src/Log/Logs.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\AMappingStrategy' => __DIR__ . '/../..' . '/src/MappingStrategy/AMappingStrategy.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\ByEmail' => __DIR__ . '/../..' . '/src/MappingStrategy/ByEmail.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\ByExternalAccount' => __DIR__ . '/../..' . '/src/MappingStrategy/ByExternalAccount.php',

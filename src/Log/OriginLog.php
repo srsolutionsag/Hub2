@@ -2,70 +2,59 @@
 
 namespace srag\Plugins\Hub2\Log;
 
-use ilHub2Plugin;
-use ILIAS\Filesystem\Exception\IOException;
-use srag\Plugins\Hub2\Origin\IOrigin;
-
 /**
  * Class OriginLog
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @package srag\ILIAS\Plugins\Log
+ * @package srag\Plugins\Hub2\Log
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class OriginLog implements ILog {
+class OriginLog extends Log implements IOriginLog {
 
+	const TABLE_NAME = "sr_hub2_origin_log";
 	/**
-	 * @var IOrigin
-	 */
-	protected $origin;
-	/**
-	 * @var Logger
-	 */
-	protected $log;
-	/**
-	 * @var array
-	 */
-	protected static $ilLogInstances = [];
-
-
-	/**
-	 * @param IOrigin $origin
-	 */
-	public function __construct(IOrigin $origin) {
-		$this->origin = $origin;
-		$this->log = $this->getLogInstance($origin);
-	}
-
-
-	/**
-	 * @param string $message
-	 * @param int    $level
-	 */
-	public function write($message, $level = self::LEVEL_INFO) {
-		$this->log->write($message);
-	}
-
-
-	/**
-	 * @param IOrigin $origin
+	 * @var int
 	 *
-	 * @return Logger
-	 * @throws IOException
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       8
+	 * @con_is_notnull   false
 	 */
-	private function getLogInstance(IOrigin $origin) {
-		if (isset(self::$ilLogInstances[$origin->getId()])) {
-			return self::$ilLogInstances[$origin->getId()];
+	protected $origin_id = NULL;
+
+
+	/**
+	 * @param string $field_name
+	 * @param mixed  $field_value
+	 *
+	 * @return mixed|null
+	 */
+	public function wakeUp(/*string*/
+		$field_name, $field_value) {
+		switch ($field_name) {
+			case "origin_id":
+				return intval($field_value);
+
+			default:
+				return parent::wakeUp($field_name, $field_value);
 		}
-		$filename = implode('-', [
-			ilHub2Plugin::PLUGIN_ID,
-			'origin',
-			$origin->getObjectType(),
-			$origin->getId(),
-		]);
+	}
 
-		$logger = new Logger('hub/' . $filename . '.log');
-		self::$ilLogInstances[$origin->getId()] = $logger;
 
-		return $logger;
+	/**
+	 * @inheritdoc
+	 */
+	public function getOriginId(): int {
+		return $this->origin_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withOriginId(int $origin_id): IOriginLog {
+		$this->origin_id = $origin_id;
+
+		return $this;
 	}
 }
