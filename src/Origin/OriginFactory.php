@@ -105,7 +105,7 @@ class OriginFactory implements IOriginFactory {
 	/**
 	 * @param int $origin_id
 	 */
-	public function delete(int $origin_id) {
+	public function delete(int $origin_id)/*: void*/ {
 		/**
 		 * @var ActiveRecord $object
 		 */
