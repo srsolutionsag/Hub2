@@ -15,6 +15,7 @@ use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use srag\Plugins\Hub2\UI\DataTableGUI;
 use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
 use srag\Plugins\Hub2\UI\OriginsTableGUI;
@@ -37,6 +38,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	const CMD_RUN = 'run';
 	const CMD_ADD_ORIGIN = 'addOrigin';
 	const Q_FORCE_UPDATE = 'force_update';
+	const Q_RESET = 'reset';
 	const CMD_EDIT_ORGIN = 'editOrigin';
 	const CMD_RUN_ORIGIN_SYNC = 'runOriginSync';
 	const CMD_CONFIRM_DELETE = 'confirmDelete';
@@ -113,7 +115,13 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 		self::dic()->toolbar()->addSeparator();
 
-		self::dic()->toolbar()->addInputItem(new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_force'), self::Q_FORCE_UPDATE));
+		$check = new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_force'), self::Q_FORCE_UPDATE);
+		$check->setOptionTitle($check->getTitle()); // Fix what???!!!
+		self::dic()->toolbar()->addInputItem($check);
+
+		$check = new ilCheckboxInputGUI(self::plugin()->translate('origin_table_button_reset'), self::Q_RESET);
+		$check->setOptionTitle($check->getTitle());
+		self::dic()->toolbar()->addInputItem($check);
 
 		$button = ilSubmitButton::getInstance();
 		$button->setCaption(self::plugin()->translate('origin_table_button_run'), false);
@@ -252,12 +260,18 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function run() {
-		$force = (bool)self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE];
+		$force = boolval(self::dic()->http()->request()->getParsedBody()[self::Q_FORCE_UPDATE]);
+		$reset = boolval(self::dic()->http()->request()->getParsedBody()[self::Q_RESET]);
+
+		if ($reset) {
+			$this->reset();
+		}
+
 		$summary = $this->summaryFactory->web();
 		try {
 			$global_hook = new GlobalHook();
 			if (!$global_hook->beforeSync($this->originFactory->getAllActive())) {
-				return;
+				self::dic()->ctrl()->redirect($this);
 			}
 		} catch (Exception $e) {
 			$global_hook->handleExceptions($e);
@@ -291,7 +305,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 		}
 
-		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
+		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
 		self::dic()->ctrl()->redirect($this);
 	}
 
@@ -300,7 +314,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function runOriginSync() {
-		$force = (bool)self::dic()->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE];
+		$force = boolval(self::dic()->http()->request()->getQueryParams()[self::Q_FORCE_UPDATE]);
 		/**
 		 * @var IOrigin $origin
 		 */
@@ -320,7 +334,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		}
 		$summary->addOriginSync($originSync);
 		$summary->sendNotifications();
-		ilUtil::sendInfo(nl2br($summary->getOutputAsString()), true);
+		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
 		self::dic()->ctrl()->redirect($this);
 	}
 
@@ -358,7 +372,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 * Returns to personal desktop if a user does not have permission to administrate hub.
 	 */
 	protected function checkAccess() {
-		$roles = array_unique(array_merge(ArConfig::getAdministrationRoleIds(), [ 2 ]));
+		$roles = array_unique(array_merge(ArConfig::getField(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS), [ 2 ]));
 		if (!self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(self::dic()->user()->getId(), $roles)) {
 			ilUtil::sendFailure(self::plugin()->translate('permission_denied', "", [], false), true);
 			self::dic()->ctrl()->redirectByClass(ilPersonalDesktopGUI::class);
@@ -394,5 +408,15 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		}
 
 		return $origin;
+	}
+
+
+	/**
+	 *
+	 */
+	protected function reset()/*: void*/ {
+		foreach (DataTableGUI::$classes as $class) {
+			$class::truncateDB();
+		}
 	}
 }

@@ -18,7 +18,7 @@ use ilDateTime;
 class CustomMetadata extends AbstractImplementation implements IMetadataImplementation {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function write() {
 		$id = $this->getMetadata()->getIdentifier();
@@ -50,7 +50,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function read() {
 		// no need for a read-Method since wo have to update them anyways due to performance-issues when reading all metadata everytime

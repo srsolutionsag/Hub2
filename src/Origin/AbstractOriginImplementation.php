@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractOriginImplementation
@@ -25,6 +26,7 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IMappingStrategyFactory
@@ -140,7 +142,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function overrideStatus(HookObject $hook) {
 		// TODO: Implement overrideStatus() method.

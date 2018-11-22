@@ -11,13 +11,10 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  * @package srag\Plugins\Hub2\Object\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseMembershipDTO extends DataTransferObject {
-
-	const GLUE = "|||";
-
+class CourseMembershipDTO extends DataTransferObject implements ICourseMembershipDTO {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function __construct($course_ext_id, $user_id) {
 		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $course_ext_id, $user_id ]));

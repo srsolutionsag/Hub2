@@ -25,7 +25,7 @@ final class GlobalHook implements IGlobalHook {
 	 * @throws HubException
 	 */
 	public function __construct() {
-		if (ArConfig::isGlobalHookActive()) {
+		if (ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_ACTIVE)) {
 			$this->global_hook = $this->instantiateGlobalHook();
 		}
 	}
@@ -35,14 +35,17 @@ final class GlobalHook implements IGlobalHook {
 	 * @throws HubException
 	 */
 	protected function instantiateGlobalHook() {
-		if (!file_exists(ArConfig::getGlobalHookPath())) {
-			throw new HubException("File " . ArConfig::getGlobalHookClass() . " doest not Exist");
+		$class_path = ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_PATH);
+		if (!file_exists($class_path)) {
+			throw new HubException("File " . $class_path . " doest not Exist");
 		}
-		include_once(ArConfig::getGlobalHookPath());
-		$class_name = ArConfig::getGlobalHookClass();
+		require_once $class_path;
+
+		$class_name = ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_CLASS);
 		if (!class_exists($class_name)) {
 			throw new HubException("Class " . $class_name . " not found. Note that namespaces need to be entered completely");
 		}
+
 		$global_hook = new $class_name();
 		if (!($global_hook instanceof IGlobalHook)) {
 			throw new HubException("Class " . $class_name . " is not an instance of BaseCustomViewGUI");

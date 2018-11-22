@@ -6,8 +6,8 @@ use Mockery\MockInterface;
 use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Object\CourseMembership\ICourseMembership;
 use srag\Plugins\Hub2\Object\IObject;
-use srag\Plugins\Hub2\Origin\Config\CourseMembershipOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\CourseMembership\CourseMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipProperties;
 use srag\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
@@ -92,7 +92,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->initOrigin(new CourseMembershipOriginProperties(['update_dto_role' => true]), new CourseMembershipOriginConfig([]));
+		$this->initOrigin(new CourseMembershipProperties([ 'update_dto_role' => true ]), new CourseMembershipOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
 		$this->initILIASObject();

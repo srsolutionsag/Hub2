@@ -2,7 +2,8 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ilHub2ConfigGUI
@@ -13,6 +14,7 @@ use srag\DIC\DICTrait;
 class ilHub2ConfigGUI extends ilPluginConfigGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

@@ -34,7 +34,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function write() {
 		$this->initSelectableTaxonomies();
@@ -93,7 +93,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	protected function taxonomyExists(): bool {
 		return in_array($this->getTaxonomy()->getTitle(), $this->selectable_taxonomies);

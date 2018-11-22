@@ -3,7 +3,8 @@
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class MappingStrategyFactory
@@ -14,6 +15,7 @@ use srag\DIC\DICTrait;
 class MappingStrategyFactory implements IMappingStrategyFactory {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

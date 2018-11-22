@@ -4,11 +4,9 @@ namespace srag\Plugins\Hub2\Object\User;
 
 use DateTime;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
-use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
@@ -18,17 +16,10 @@ use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject {
+class UserDTO extends DataTransferObject implements IUserDTO {
 
 	use MetadataAwareDataTransferObject;
 	use MappingStrategyAwareDataTransferObject;
-	const GENDER_MALE = 'm';
-	const GENDER_FEMALE = 'f';
-	const GENDER_NONE = " ";
-	const AUTH_MODE_ILIAS = 'local';
-	const AUTH_MODE_SHIB = 'shibboleth';
-	const AUTH_MODE_LDAP = 'ldap';
-	const AUTH_MODE_RADIUS = 'radius';
 	/**
 	 * @var array
 	 */

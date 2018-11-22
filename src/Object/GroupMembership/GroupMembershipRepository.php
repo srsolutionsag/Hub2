@@ -10,6 +10,6 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupMembershipRepository extends ObjectRepository {
+class GroupMembershipRepository extends ObjectRepository implements IGroupMembershipRepository {
 
 }

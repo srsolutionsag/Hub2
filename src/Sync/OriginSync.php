@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Sync;
 use Error;
 use Exception;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
@@ -19,6 +19,7 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 
 /**
@@ -31,6 +32,7 @@ use Throwable;
 class OriginSync implements IOriginSync {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
@@ -300,7 +302,7 @@ class OriginSync implements IOriginSync {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getOrigin() {
 		return $this->origin;

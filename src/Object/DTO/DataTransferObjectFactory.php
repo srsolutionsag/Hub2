@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Object\DTO;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
@@ -16,6 +16,7 @@ use srag\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
 use srag\Plugins\Hub2\Object\Session\SessionDTO;
 use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
 use srag\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class DataTransferObjectFactory
@@ -27,6 +28,7 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 class DataTransferObjectFactory implements IDataTransferObjectFactory {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
@@ -87,7 +89,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sessionMembership($session_id, $user_id) {
 		return new SessionMembershipDTO($session_id, $user_id);

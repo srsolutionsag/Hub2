@@ -17,7 +17,7 @@ admin_membership_activate_info#:#Benachrichtigung per Email bei neuer Kursteilne
 admin_membership_mail_subject#:#Betreff Benachrichtigungs-Mail
 admin_membership_mail_subject_info#:#Die Platzhalter der Nachricht (unten) können auch hier verwendet werden.
 admin_membership_mail_msg#:#Inhalt Benachrichtigungs-Mail
-admin_membership_mail_msg_info#:#Es können folgende Platzhalter verwendet werden: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]
+admin_membership_mail_msg_info#:#Es können folgende Platzhalter verwendet werden: \n[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]
 admin_msg_shortlink_not_found#:#Nachricht bei "Nicht gefunden"
 admin_msg_shortlink_not_found_info#:#Wird angezeigt, wenn ein Shortlink zu einem nicht existierenden Objekt genutzt wird.
 admin_origins_path#:#Pfad zu den Anbindungen
@@ -151,7 +151,7 @@ mem_prop_add_notification#:#Benachrichtigung aktivieren (wenn gewünscht)
 mem_prop_delete_mode#:#Löschverhalten
 mem_prop_delete_mode_delete#:#Mitgliedschaft beenden
 mem_prop_delete_mode_delete_or_inactive#:#Mitgliedschaft beenden oder Zugriff sperren
-mem_prop_delete_mode_delete_or_inactive_info#:#Wenn das Mitglied bereits Aktivitäten im Kurs hatte, wird der Zugriff gesperrt, <br>ansonsten wird die Mitgliedschaft beendet.
+mem_prop_delete_mode_delete_or_inactive_info#:#Wenn das Mitglied bereits Aktivitäten im Kurs hatte, wird der Zugriff gesperrt, \nansonsten wird die Mitgliedschaft beendet.
 mem_prop_delete_mode_inactive#:#Zugriff sperren
 mem_prop_delete_mode_none#:#Mitgliedschaft bestehen lassen
 mem_prop_deleted_send_mail_admin#:#Admin
@@ -193,7 +193,7 @@ origin_form_title_add#:#Anbindung erstellen
 origin_form_title_edit#:#Anbindung bearbeiten
 origin_form_field_active#:#Synchronisation aktiv
 origin_form_field_class_name#:#PHP-Klassenname
-origin_form_field_class_name_info#:#Die Klassendatei muss in '%s' vorhanden sein.<br>Nach dem Speichern versucht Hub, automatisch eine Vorlage für Sie an diesem Ort zu erstellen.
+origin_form_field_class_name_info#:#Die Klassendatei muss in '%s' vorhanden sein.\nNach dem Speichern versucht Hub, automatisch eine Vorlage für Sie an diesem Ort zu erstellen.
 origin_form_field_conf_type#:#Anbindungstyp
 origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Datenbank
@@ -210,7 +210,7 @@ origin_form_field_conf_type_file_info#:#Daten werden aus einer Datei gelesen.
 origin_form_field_conf_type_file_path#:#Pfad zur Datei
 origin_form_field_description#:#Beschreibung
 origin_form_field_exec_time#:#Zeitpunkt der Synchronisation
-origin_form_field_exec_time_info#:#Format: HH:MM <br>Falls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit <br> ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert.
+origin_form_field_exec_time_info#:#Format: HH:MM \nFalls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit \n ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert.
 origin_form_field_id#:#ID
 origin_form_field_notification_email#:#Benachrichtigung bei Fehler
 origin_form_field_summary_email#:#E-Mailadressen für Zusammenfassung
@@ -349,7 +349,7 @@ data_table_header_view#:#Anzeigen
 data_table_header_data#:#Daten
 data_table_header_origin#:#Anbindung
 data_table_hash#:#Hash: %s
-data_table_all#:#ALLE
+data_table_all#:#Alle
 data_table_ext_id#:#Ext-ID: %s
 data_table_ext_md#:#MD: %s
 data_table_ext_tax#:#TAX: %s
@@ -391,6 +391,17 @@ summary_exceptions_in#:#Hub2: Ausnahmen in %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.
+data_table_status_new#:#Neu
+data_table_status_to_create#:#Zu erstellen
+data_table_status_created#:#Erstellt
+data_table_status_to_update#:#Zu aktualisieren
+data_table_status_updated#:#Aktualisiert
+data_table_status_to_delete#:#Zu löschen
+data_table_status_deleted#:#Gelöscht
+data_table_status_to_update_newly_delivered#:#Zum Aktualisieren neu geliefert
+data_table_status_nothing_to_update#:#Nichts zu aktualisieren
+data_table_status_ignored#:#Ignoriert
+origin_table_button_reset#:#Alle Daten als Neu markieren
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
 removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren

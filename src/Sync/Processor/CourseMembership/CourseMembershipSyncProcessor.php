@@ -10,12 +10,12 @@ use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
-use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\CourseMembershipOriginProperties;
-use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
+use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -30,7 +30,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICourseMembershipSyncProcessor {
 
 	/**
-	 * @var CourseOriginProperties
+	 * @var CourseProperties
 	 */
 	protected $props;
 	/**
@@ -108,7 +108,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	protected function handleDelete($ilias_id) {
 		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-		if ($this->props->get(CourseMembershipOriginProperties::DELETE_MODE) == CourseMembershipOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CourseMembershipProperties::DELETE_MODE) == CourseMembershipProperties::DELETE_MODE_NONE) {
 			return $obj;
 		}
 

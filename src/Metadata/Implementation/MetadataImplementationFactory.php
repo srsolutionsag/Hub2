@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Metadata\IMetadata;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
 use srag\Plugins\Hub2\Object\Session\SessionDTO;
 use srag\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class IMetadataImplementationFactory
@@ -21,6 +22,7 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 class MetadataImplementationFactory implements IMetadataImplementationFactory {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
@@ -41,7 +43,7 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getImplementationForDTO(IMetadataAwareDataTransferObject $dto, IMetadata $metadata, int $ilias_id): IMetadataImplementation {
 		switch (true) {

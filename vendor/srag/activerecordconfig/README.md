@@ -25,7 +25,9 @@ And run a `composer install`.
 
 If you deliver your plugin, the plugin has it's own copy of this library and the user doesn't need to install the library.
 
-Hint: Because of multiple autoloaders of plugins, it could be, that different versions of this library exists and suddenly your plugin use an old version of an other plugin! So you should keep up to date your plugin with `composer update`.
+Tip: Because of multiple autoloaders of plugins, it could be, that different versions of this library exists and suddenly your plugin use an older or a newer version of an other plugin!
+
+So I recommand to use [srag/librariesnamespacechanger](https://packagist.org/packages/srag/librariesnamespacechanger) in your plugin.
 
 #### Use config
 Declare your config class basically like follow:
@@ -33,7 +35,7 @@ Declare your config class basically like follow:
 //...
 namespace srag\Plugins\X\Config
 //...
-use srag\ActiveRecordConfig\ActiveRecordConfig;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 //...
 class Config extends ActiveRecordConfig {
     //...
@@ -56,7 +58,7 @@ And now add some configs:
      * @var array
      */
      protected static $fields = [
-		self::KEY_SOME => [ self::TYPE_STRING, self::DEFAULT_SOME ]
+		self::KEY_SOME => self::TYPE_STRING
      ];
      //...
 ```
@@ -68,6 +70,18 @@ You can define a default value, if the value is empty:
     //...
     self::KEY_SOME => [ self::TYPE_STRING, self::DEFAULT_SOME ]
     //...
+```
+Otherwise you can also get the default value by implement the function `getDefaultValue`, if it should be complexer:
+```php
+    /**
+     * @inheritdoc
+     */
+    protected static function getDefaultValue(/*string*/ $name, /*int*/$type, $default_value) {
+        switch ($name) {
+            default:
+                return $default_value;
+        }
+    }
 ```
 
 If you use the JSON datatype, you can decide if you want assoc objects or not:
@@ -105,7 +119,7 @@ It only supports a config with an `ilPropertyFormGUI` or an `ilTable2GUI`!
 Create a class `ilXConfigGUI`:
 ```php
 //...
-use srag\ActiveRecordConfig\ActiveRecordConfigGUI;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfigGUI;
 //...
 class ilXConfigGUI extends ActiveRecordConfigGUI {
     //...
@@ -124,27 +138,18 @@ A config tab class can be either a class `ConfigFormGUI`:
 //...
 namespace srag\Plugins\X\Config
 //...
-use srag\ActiveRecordConfig\ActiveRecordConfigFormGUI;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfigFormGUI;
 //...
 class ConfigFormGUI extends ActiveRecordConfigFormGUI {
     //...
     const PLUGIN_CLASS_NAME = ilXPlugin::class;
+    const CONFIG_CLASS_NAME = Config::class;
     
     /**
      * @inheritdoc
      */
-    protected function initForm()/*: void*/ {
-        parent::initForm();
-        
+    protected function initFields()/*: void*/ {
         // TODO: Fill your config form
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function updateConfig()/*: void*/ {
-        // TODO: Update your config
     }
 }
 ```
@@ -153,7 +158,7 @@ or a class `ConfigTableGUI`:
 //...
 namespace srag\Plugins\X\Config
 //...
-use srag\ActiveRecordConfig\ActiveRecordConfigTableGUI;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfigTableGUI;
 //...
 class ConfigTableGUI extends ActiveRecordConfigTableGUI {
     //...
@@ -296,7 +301,7 @@ Column name based:
 <?php
 \srag\Plugins\X\Config\Config::updateDB();
 
-if (\srag\DIC\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME)) {
+if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME)) {
     \srag\Plugins\X\Config\ConfigOld::updateDB();
 
     $config_old = \srag\Plugins\X\Config\ConfigOld::getConfig();
@@ -304,7 +309,7 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Config\C
      \srag\Plugins\X\Config\Config::setField(Config::KEY_SOME, $config_old->getSome());
     //...
 
-    \srag\DIC\DICStatic::dic()->database()->dropTable(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME);
+    \srag\DIC\Hub2\DICStatic::dic()->database()->dropTable(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME);
 }
 ?>
 ```
@@ -315,7 +320,7 @@ Key and value based (Similar to this library):
 <?php
 \srag\Plugins\X\Config\Config::updateDB();
 
-if (\srag\DIC\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME)) {
+if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME)) {
     \srag\Plugins\X\Config\ConfigOld::updateDB();
 
     foreach (\srag\Plugins\X\Config\ConfigOld::get() as $config) {
@@ -325,7 +330,7 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Config\C
         \srag\Plugins\X\Config\Config::setField($config->getName(), $config->getValue());
     }
 
-    \srag\DIC\DICStatic::dic()->database()->dropTable(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME);
+    \srag\DIC\Hub2\DICStatic::dic()->database()->dropTable(\srag\Plugins\X\Config\ConfigOld::TABLE_NAME);
 }
 ?>
 ```
@@ -333,6 +338,7 @@ if (\srag\DIC\DICStatic::dic()->database()->tableExists(\srag\Plugins\X\Config\C
 ### Dependencies
 * PHP >=5.6
 * [composer](https://getcomposer.org)
+* [srag/custominputguis](https://packagist.org/packages/srag/custominputguis)
 * [srag/dic](https://packagist.org/packages/srag/dic)
 
 Please use it for further development!
@@ -348,7 +354,7 @@ If you want development in this library you should install this library like fol
 
 Start at your ILIAS root directory
 ```bash
-mkdir -p Customizing/global/plugins/Libraries
-cd Customizing/global/plugins/Libraries
+mkdir -p Customizing/global/libraries
+cd Customizing/global/libraries
 git clone -b develop git@git.studer-raimann.ch:ILIAS/Plugins/ActiveRecordConfig.git ActiveRecordConfig
 ```

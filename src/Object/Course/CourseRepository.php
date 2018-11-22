@@ -11,6 +11,6 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseRepository extends ObjectRepository {
+class CourseRepository extends ObjectRepository implements ICourseRepository {
 
 }

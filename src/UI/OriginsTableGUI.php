@@ -6,9 +6,10 @@ use hub2ConfigOriginsGUI;
 use ilAdvancedSelectionListGUI;
 use ilHub2Plugin;
 use ilTable2GUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginsTableGUI
@@ -20,6 +21,7 @@ use srag\Plugins\Hub2\Origin\IOriginRepository;
 class OriginsTableGUI extends ilTable2GUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
@@ -83,7 +85,7 @@ class OriginsTableGUI extends ilTable2GUI {
 			$row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
 			$row['title'] = $origin->getTitle();
 			$row['description'] = $origin->getDescription();
-			$row['object_type'] = $origin->getObjectType(); // TODO: Translate object type
+			$row['object_type'] = self::plugin()->translate("origin_object_type_" . $origin->getObjectType());
 			$row['last_sync'] = $origin->getLastRun();
 			$row['n_objects'] = $objectRepository->count();
 			$data[] = $row;

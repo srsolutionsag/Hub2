@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Origin\IOrigin;
@@ -23,6 +23,7 @@ use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\OrgUnitMembershipSyncProc
 use srag\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class SyncProcessorFactory
@@ -34,6 +35,7 @@ use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 class SyncProcessorFactory implements ISyncProcessorFactory {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
@@ -107,7 +109,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function courseMembership() {
 		return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
@@ -115,7 +117,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function group() {
 		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new GroupActivities(self::dic()
@@ -124,7 +126,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function groupMembership() {
 		return new GroupMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
@@ -132,7 +134,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sessionMembership() {
 		return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
@@ -140,7 +142,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnit(): IOrgUnitSyncProcessor {
 		return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);
@@ -148,7 +150,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor {
 		return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications);

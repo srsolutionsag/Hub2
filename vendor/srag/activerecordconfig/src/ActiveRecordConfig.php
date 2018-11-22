@@ -1,19 +1,19 @@
 <?php
 
-namespace srag\ActiveRecordConfig;
+namespace srag\ActiveRecordConfig\Hub2;
 
 use ActiveRecord;
 use arConnector;
 use arException;
 use ilDateTime;
 use ilDateTimeException;
-use srag\ActiveRecordConfig\Exception\ActiveRecordConfigException;
-use srag\DIC\DICTrait;
+use srag\ActiveRecordConfig\Hub2\Exception\ActiveRecordConfigException;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class ActiveRecordConfig
  *
- * @package srag\ActiveRecordConfig
+ * @package srag\ActiveRecordConfig\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
@@ -90,6 +90,23 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 
 	/**
 	 * @param string $name
+	 * @param int    $type
+	 * @param mixed  $default_value
+	 *
+	 * @return mixed
+	 */
+	protected static function getDefaultValue(/*string*/
+		$name, /*int*/
+		$type, $default_value) {
+		switch ($name) {
+			default:
+				return $default_value;
+		}
+	}
+
+
+	/**
+	 * @param string $name
 	 *
 	 * @return mixed
 	 *
@@ -105,7 +122,9 @@ abstract class ActiveRecordConfig extends ActiveRecord {
 			}
 
 			$type = $field[0];
+
 			$default_value = $field[1];
+			$default_value = static::getDefaultValue($name, $type, $default_value);
 
 			switch ($type) {
 				case self::TYPE_STRING:

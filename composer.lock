@@ -1,27 +1,28 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e73c9a590ecff18dd9fc488b2e237707",
+    "content-hash": "d3654cc11978ecad06b75687e0dd6b5c",
     "packages": [
         {
             "name": "srag/activerecordconfig",
-            "version": "v0.9.4",
+            "version": "v0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/ActiveRecordConfig.git",
-                "reference": "55d2213f1e0c9d4bd4a9e9dc9d51e5493d03152d"
+                "reference": "99651689346fd2333254725c4faa8852a60a4a8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/55d2213f1e0c9d4bd4a9e9dc9d51e5493d03152d",
-                "reference": "55d2213f1e0c9d4bd4a9e9dc9d51e5493d03152d",
+                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/99651689346fd2333254725c4faa8852a60a4a8a",
+                "reference": "99651689346fd2333254725c4faa8852a60a4a8a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
+                "srag/custominputguis": ">=0.1.0",
                 "srag/dic": ">=0.1.0"
             },
             "type": "library",
@@ -49,7 +50,54 @@
                 "activerecord",
                 "config"
             ],
-            "time": "2018-11-08T07:41:24+00:00"
+            "time": "2018-11-16T13:52:24+00:00"
+        },
+        {
+            "name": "srag/custominputguis",
+            "version": "v0.13.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studer-raimann/CustomInputGUIs.git",
+                "reference": "44d159de3e33d156086a4bf77ef1fbefdb0c696c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studer-raimann/CustomInputGUIs/zipball/44d159de3e33d156086a4bf77ef1fbefdb0c696c",
+                "reference": "44d159de3e33d156086a4bf77ef1fbefdb0c696c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "srag/dic": ">=0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "srag\\CustomInputGUIs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "studer + raimann ag - Team Custom 1",
+                    "email": "support-custom1@studer-raimann.ch",
+                    "homepage": "https://studer-raimann.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Custom Input-GUI's",
+            "homepage": "https://github.com/studer-raimann/CustomInputGUIs",
+            "keywords": [
+                "ILIAS",
+                "PropertyForm",
+                "gui",
+                "input",
+                "table"
+            ],
+            "time": "2018-11-19T07:53:23+00:00"
         },
         {
             "name": "srag/dic",
@@ -71,7 +119,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "srag\\DIC\\": "src/"
+                    "srag\\DIC\\Hub2\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -97,6 +145,49 @@
             "time": "2018-10-15T12:09:44+00:00"
         },
         {
+            "name": "srag/librariesnamespacechanger",
+            "version": "v0.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studer-raimann/LibrariesNamespaceChanger.git",
+                "reference": "d4acc7bff635ef9126ad350e5efdb8a9c0a2de94"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/d4acc7bff635ef9126ad350e5efdb8a9c0a2de94",
+                "reference": "d4acc7bff635ef9126ad350e5efdb8a9c0a2de94",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "srag\\LibrariesNamespaceChanger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "studer + raimann ag - Team Custom 1",
+                    "email": "support-custom1@studer-raimann.ch",
+                    "homepage": "https://studer-raimann.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Change namespace of libraries to plugin namespace",
+            "homepage": "https://github.com/studer-raimann/LibrariesNamespaceChanger",
+            "keywords": [
+                "ILIAS",
+                "libraries"
+            ],
+            "time": "2018-11-14T06:11:41+00:00"
+        },
+        {
             "name": "srag/removeplugindataconfirm",
             "version": "v0.3.1",
             "source": {
@@ -117,7 +208,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "srag\\RemovePluginDataConfirm\\": "src/"
+                    "srag\\RemovePluginDataConfirm\\Hub2\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

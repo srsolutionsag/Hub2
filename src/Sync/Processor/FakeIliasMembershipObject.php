@@ -48,7 +48,7 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getId(): string {
 		return $this->id;

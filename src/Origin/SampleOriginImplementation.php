@@ -148,7 +148,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function overrideStatus(HookObject $hook) { }
 }

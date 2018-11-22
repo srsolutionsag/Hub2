@@ -3,8 +3,8 @@
 namespace srag\Plugins\Hub2\Origin\Category;
 
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\Category\CategoryOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
 
 /**
  * Class ARCategoryOrigin
@@ -27,6 +27,6 @@ class ARCategoryOrigin extends AROrigin implements ICategoryOrigin {
 	 * @inheritdoc
 	 */
 	protected function getOriginProperties(array $data) {
-		return new CategoryOriginProperties($data);
+		return new CategoryProperties($data);
 	}
 }

@@ -16,7 +16,8 @@ use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
-use srag\RemovePluginDataConfirm\PluginUninstallTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
 
 /**
  * Class ilHub2Plugin
@@ -28,6 +29,7 @@ use srag\RemovePluginDataConfirm\PluginUninstallTrait;
 class ilHub2Plugin extends ilCronHookPlugin {
 
 	use PluginUninstallTrait;
+	use Hub2Trait;
 	const PLUGIN_ID = 'hub2';
 	const PLUGIN_NAME = 'Hub2';
 	const PLUGIN_CLASS_NAME = self::class;

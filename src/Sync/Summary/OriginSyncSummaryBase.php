@@ -4,9 +4,10 @@ namespace srag\Plugins\Hub2\Sync\Summary;
 
 use ilHub2Plugin;
 use ilMimeMail;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IOriginSync;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginSyncSummaryCron
@@ -17,6 +18,7 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
 abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOriginSync[]
@@ -33,7 +35,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function addOriginSync(IOriginSync $originSync) {
 		$this->syncs[] = $originSync;
@@ -41,7 +43,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getOutputAsString() {
 		$return = "";
@@ -86,7 +88,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getSummaryOfOrigin(IOriginSync $originSync) {
 		return $this->renderOneSync($originSync);
@@ -94,7 +96,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sendNotifications() {
 		$mail = new ilMimeMail();

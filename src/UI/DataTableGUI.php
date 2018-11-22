@@ -11,7 +11,8 @@ use ilSelectInputGUI;
 use ilTable2GUI;
 use ilTextInputGUI;
 use ReflectionClass;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -27,6 +28,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginsTableGUI
@@ -37,9 +39,25 @@ use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
 class DataTableGUI extends ilTable2GUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const F_ORIGIN_ID = 'origin_id';
 	const F_EXT_ID = 'ext_id';
+	/**
+	 * @var ARObject[]
+	 */
+	public static $classes = [
+		ARUser::class,
+		ARCourse::class,
+		ARGroup::class,
+		ARSession::class,
+		ARCategory::class,
+		ARCourseMembership::class,
+		ARGroupMembership::class,
+		ARSessionMembership::class,
+		AROrgUnit::class,
+		AROrgUnitMembership::class,
+	];
 	/**
 	 * @var ObjectLinkFactory
 	 */
@@ -83,8 +101,8 @@ class DataTableGUI extends ilTable2GUI {
 		$this->setExternalSegmentation(true);
 		$this->setExternalSorting(true);
 		$this->determineLimit();
-		if ($this->getLimit() > 999) {
-			$this->setLimit(999);
+		if ($this->getLimit() > 99) {
+			$this->setLimit(99);
 		}
 		$this->determineOffsetAndOrder();
 		$this->initTableData();
@@ -92,7 +110,7 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function initFilter() {
 		$origin = new ilSelectInputGUI(self::plugin()->translate('data_table_header_origin_id'), 'origin_id');
@@ -142,23 +160,11 @@ class DataTableGUI extends ilTable2GUI {
 	 */
 	protected function initTableData() {
 		$fields = $this->getFields();
-		$classes = [
-			ARUser::class,
-			ARCourse::class,
-			ARGroup::class,
-			ARSession::class,
-			ARCategory::class,
-			ARCourseMembership::class,
-			ARGroupMembership::class,
-			ARSessionMembership::class,
-			AROrgUnit::class,
-			AROrgUnitMembership::class,
-		];
 		$data = [];
 		/**
 		 * @var ActiveRecordList $collection
 		 */
-		foreach ($classes as $class) {
+		foreach (self::$classes as $class) {
 			$collection = $class::getCollection();
 			foreach ($this->filtered as $postvar => $value) {
 				if (!$postvar || !$value) {
@@ -215,7 +221,11 @@ class DataTableGUI extends ilTable2GUI {
 					$this->tpl->setVariable('VALUE', $this->getAvailableStatus()[$value]);
 					break;
 				case self::F_EXT_ID:
-					$this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $origin));
+					if ($origin) {
+						$this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $origin));
+					} else {
+						$this->tpl->setVariable('VALUE', $value);
+					}
 					break;
 				case self::F_ORIGIN_ID:
 					if (!$origin) {
@@ -297,7 +307,7 @@ class DataTableGUI extends ilTable2GUI {
 		$status = [ 0 => self::plugin()->translate("data_table_all") ];
 		foreach ($r->getConstants() as $name => $value) {
 			if (strpos($name, "STATUS_") === 0) {
-				$status[$value] = $name; // TODO: Translate status
+				$status[$value] = self::plugin()->translate("data_table_" . strtolower($name));
 			}
 		}
 

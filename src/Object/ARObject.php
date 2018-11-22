@@ -7,12 +7,13 @@ use DateTime;
 use Exception;
 use ilHub2Plugin;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
-use srag\DIC\DICTrait;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Metadata\Metadata;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\Node;
 use srag\Plugins\Hub2\Taxonomy\Taxonomy;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ARObject
@@ -24,6 +25,7 @@ use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 abstract class ARObject extends ActiveRecord implements IObject {
 
 	use DICTrait;
+	use Hub2Trait;
 	/**
 	 * @abstract
 	 */
@@ -368,7 +370,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function updateStatus($status) {
 		if (!in_array($status, self::$status_allowed_to_update_to)) {

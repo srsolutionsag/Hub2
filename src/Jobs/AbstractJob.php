@@ -4,7 +4,8 @@ namespace srag\Plugins\Hub2\Jobs;
 
 use ilCronJob;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractJob
@@ -15,6 +16,7 @@ use srag\DIC\DICTrait;
 abstract class AbstractJob extends ilCronJob {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 

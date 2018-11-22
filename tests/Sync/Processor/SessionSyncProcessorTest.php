@@ -6,8 +6,8 @@ use Mockery\MockInterface;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\Session\ISession;
 use srag\Plugins\Hub2\Object\Session\SessionDTO;
-use srag\Plugins\Hub2\Origin\Config\SessionOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\Session\SessionOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
 use srag\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 
 /**
@@ -59,7 +59,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 			'update_dto_description' => true,
 			'update_dto_location'    => true,
 		];
-		$this->initOrigin(new SessionOriginProperties($arr), new SessionOriginConfig([]));
+		$this->initOrigin(new SessionProperties($arr), new SessionOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
 		$this->initILIASObject();

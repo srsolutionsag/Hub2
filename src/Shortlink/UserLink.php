@@ -15,7 +15,7 @@ use ilObjUserGUI;
 class UserLink extends AbstractBaseLink implements IObjectLink {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function doesObjectExist(): bool {
 		if (!$this->object->getILIASId()) {
@@ -27,7 +27,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function isAccessGranted(): bool {
 		$userObj = new ilObjUser($this->object->getILIASId());
@@ -40,7 +40,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessGrantedExternalLink(): string {
 		return ilLink::_getLink($this->object->getILIASId(), 'usr');
@@ -48,7 +48,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessDeniedLink(): string {
 		return "ilias.php";
@@ -56,7 +56,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getAccessGrantedInternalLink(): string {
 		self::dic()->ctrl()->setParameterByClass(ilObjUserGUI::class, "ref_id", 7);

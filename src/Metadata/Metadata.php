@@ -3,7 +3,8 @@
 namespace srag\Plugins\Hub2\Metadata;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Metadata
@@ -14,6 +15,7 @@ use srag\DIC\DICTrait;
 class Metadata implements IMetadata {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
@@ -36,7 +38,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function setValue($value): IMetadata {
 		$this->value = $value;
@@ -46,7 +48,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function setIdentifier(int $identifier): IMetadata {
 		$this->identifier = $identifier;
@@ -56,7 +58,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getValue() {
 		return $this->value;
@@ -64,7 +66,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getIdentifier() {
 		return $this->identifier;
@@ -72,7 +74,7 @@ class Metadata implements IMetadata {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function __toString(): string {
 		$json_encode = json_encode([ $this->getIdentifier() => $this->getValue() ]);

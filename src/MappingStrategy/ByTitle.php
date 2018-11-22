@@ -23,7 +23,7 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 class ByTitle extends AMappingStrategy implements IMappingStrategy {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function map(IDataTransferObject $dto): int {
 		switch (true) {

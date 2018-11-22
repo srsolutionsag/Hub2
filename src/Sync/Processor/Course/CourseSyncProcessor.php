@@ -19,11 +19,11 @@ use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
-use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -41,7 +41,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	use TaxonomySyncProcessor;
 	use MetadataSyncProcessor;
 	/**
-	 * @var CourseOriginProperties
+	 * @var CourseProperties
 	 */
 	protected $props;
 	/**
@@ -138,17 +138,17 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($dto->getIcon() !== '') {
 			$ilObjCourse->saveIcons($dto->getIcon());
 		}
-		if ($this->props->get(CourseOriginProperties::SET_ONLINE)) {
+		if ($this->props->get(CourseProperties::SET_ONLINE)) {
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 
-		if ($this->props->get(CourseOriginProperties::CREATE_ICON)) {
+		if ($this->props->get(CourseProperties::CREATE_ICON)) {
 			// TODO
 			//			$this->updateIcon($this->ilias_object);
 			//			$this->ilias_object->update();
 		}
-		if ($this->props->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)) {
+		if ($this->props->get(CourseProperties::SEND_CREATE_NOTIFICATION)) {
 			$this->sendMailNotifications($dto, $ilObjCourse);
 		}
 		$this->setSubscriptionType($dto, $ilObjCourse);
@@ -263,21 +263,21 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$mail = new ilMimeMail();
 		$sender_factory = new ilMailMimeSenderFactory($this->settings());
 		$sender = NULL;
-		if ($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM)) {
-			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
+		if ($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)) {
+			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM));
 		} else {
 			$sender = $sender_factory->system();
 		}
 		$mail->From($sender);
 		$mail->To($dto->getNotificationEmails());
-		$mail->Subject($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
-		$mail->Body($this->replaceBodyTextForMail($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY), $ilObjCourse));
+		$mail->Subject($this->props->get(CourseProperties::CREATE_NOTIFICATION_SUBJECT));
+		$mail->Body($this->replaceBodyTextForMail($this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY), $ilObjCourse));
 		$mail->Send();
 	}
 
 
 	protected function replaceBodyTextForMail($body, ilObjCourse $ilObjCourse) {
-		foreach (CourseOriginProperties::$mail_notification_placeholder as $ph) {
+		foreach (CourseProperties::$mail_notification_placeholder as $ph) {
 			$replacement = '[' . $ph . ']';
 
 			switch ($ph) {
@@ -343,11 +343,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->updateDTOProperty("languageCode")) {
 			$this->setLanguage($dto, $ilObjCourse);
 		}
-		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
+		if ($this->props->get(CourseProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
-		if ($this->props->get(CourseOriginProperties::MOVE_COURSE)) {
+		if ($this->props->get(CourseProperties::MOVE_COURSE)) {
 			$this->moveCourse($ilObjCourse, $dto);
 		}
 		$ilObjCourse->update();
@@ -364,21 +364,21 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($ilObjCourse === NULL) {
 			return NULL;
 		}
-		if ($this->props->get(CourseOriginProperties::DELETE_MODE) == CourseOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CourseProperties::DELETE_MODE) == CourseProperties::DELETE_MODE_NONE) {
 			return $ilObjCourse;
 		}
-		switch ($this->props->get(CourseOriginProperties::DELETE_MODE)) {
-			case CourseOriginProperties::DELETE_MODE_OFFLINE:
+		switch ($this->props->get(CourseProperties::DELETE_MODE)) {
+			case CourseProperties::DELETE_MODE_OFFLINE:
 				$ilObjCourse->setOfflineStatus(true);
 				$ilObjCourse->update();
 				break;
-			case CourseOriginProperties::DELETE_MODE_DELETE:
+			case CourseProperties::DELETE_MODE_DELETE:
 				$ilObjCourse->delete();
 				break;
-			case CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
+			case CourseProperties::DELETE_MODE_MOVE_TO_TRASH:
 				self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
 				break;
-			case CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE:
+			case CourseProperties::DELETE_MODE_DELETE_OR_OFFLINE:
 				if ($this->courseActivities->hasActivities($ilObjCourse)) {
 					$ilObjCourse->setOfflineStatus(true);
 					$ilObjCourse->update();

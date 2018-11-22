@@ -4,9 +4,10 @@ namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
 use ilUtil;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginImplementationTemplateGenerator
@@ -18,6 +19,7 @@ use srag\Plugins\Hub2\Exception\HubException;
 class OriginImplementationTemplateGenerator {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
@@ -49,13 +51,14 @@ class OriginImplementationTemplateGenerator {
 				throw new HubException("Could not create directory: $path");
 			};
 		}
-		$template = file_get_contents(__DIR__ . '/OriginImplementationTemplate.tpl');
+		$template = file_get_contents(__DIR__ . '/../../templates/OriginImplementationTemplate.tpl');
 		if ($template === false) {
 			throw new HubException("Could not load template: $template");
 		}
 		$className = $origin->getImplementationClassName();
+		$namespace = $origin->getImplementationNamespace();
 		$content = str_replace('[[CLASSNAME]]', $className, $template);
-		// TODO: Insert [[NAMESPACE]] with $origin->getImplementationNamespace()
+		$content = str_replace('[[NAMESPACE]]', $namespace, $content);
 		$result = file_put_contents($classFile, $content);
 		if ($result === false) {
 			throw new HubException("Unable to create template for origin implementation");
@@ -92,7 +95,7 @@ class OriginImplementationTemplateGenerator {
 	 * @return string
 	 */
 	protected function getPath(IOrigin $origin) {
-		$basePath = rtrim(ArConfig::getOriginImplementationsPath(), '/') . '/';
+		$basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
 		$path = $basePath . $origin->getObjectType() . '/';
 
 		return $path;

@@ -2,8 +2,9 @@
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class hub2MainGUI
@@ -19,6 +20,7 @@ use srag\Plugins\Hub2\Config\ArConfig;
 class hub2MainGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
 	const TAB_ORIGINS = 'tab_origins';
@@ -79,7 +81,7 @@ class hub2MainGUI {
 		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
 
-		if (ArConfig::isCustomViewsActive()) {
+		if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
 			self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
 				->getLinkTargetByClass(hub2CustomViewGUI::class));
 		}

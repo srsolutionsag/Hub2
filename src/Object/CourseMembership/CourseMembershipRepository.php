@@ -10,6 +10,6 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  * @package srag\Plugins\Hub2\Object\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseMembershipRepository extends ObjectRepository {
+class CourseMembershipRepository extends ObjectRepository implements ICourseMembershipRepository {
 
 }
