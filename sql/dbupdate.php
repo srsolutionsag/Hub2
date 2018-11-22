@@ -73,6 +73,7 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#6>
 /* */
+?>
 <#7>
 <?php
 \srag\Plugins\Hub2\Log\OriginLog::updateDB();
