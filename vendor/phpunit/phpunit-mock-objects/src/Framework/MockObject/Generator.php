@@ -753,7 +753,7 @@ class PHPUnit_Framework_MockObject_Generator
                             " {\n\n" . $prologue . "}\n\n" .
                             "namespace {\n\n";
 
-                $epILogOldue = "\n\n}";
+                $epilogue = "\n\n}";
             }
 
             $cloneTemplate = $this->getTemplate($templateDir . 'mocked_clone.tpl');
@@ -869,7 +869,7 @@ class PHPUnit_Framework_MockObject_Generator
         $classTemplate->setVar(
             [
                 'prologue'          => isset($prologue) ? $prologue : '',
-                'epILogOldue'          => isset($epILogOldue) ? $epILogOldue : '',
+                'epilogue'          => isset($epilogue) ? $epilogue : '',
                 'class_declaration' => $this->generateMockClassDeclaration(
                     $mockClassName,
                     $isInterface,

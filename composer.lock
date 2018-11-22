@@ -54,16 +54,16 @@
         },
         {
             "name": "srag/custominputguis",
-            "version": "v0.13.7",
+            "version": "v0.13.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/CustomInputGUIs.git",
-                "reference": "44d159de3e33d156086a4bf77ef1fbefdb0c696c"
+                "reference": "4a2c8d1269208ec263a809f8234d5e0818e1a542"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/CustomInputGUIs/zipball/44d159de3e33d156086a4bf77ef1fbefdb0c696c",
-                "reference": "44d159de3e33d156086a4bf77ef1fbefdb0c696c",
+                "url": "https://api.github.com/repos/studer-raimann/CustomInputGUIs/zipball/4a2c8d1269208ec263a809f8234d5e0818e1a542",
+                "reference": "4a2c8d1269208ec263a809f8234d5e0818e1a542",
                 "shasum": ""
             },
             "require": {
@@ -97,7 +97,7 @@
                 "input",
                 "table"
             ],
-            "time": "2018-11-19T07:53:23+00:00"
+            "time": "2018-11-22T08:12:51+00:00"
         },
         {
             "name": "srag/dic",
@@ -119,7 +119,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "srag\\DIC\\Hub2\\": "src/"
+                    "srag\\DIC\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -146,16 +146,16 @@
         },
         {
             "name": "srag/librariesnamespacechanger",
-            "version": "v0.3.5",
+            "version": "v0.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/LibrariesNamespaceChanger.git",
-                "reference": "d4acc7bff635ef9126ad350e5efdb8a9c0a2de94"
+                "reference": "cf5f3be4341270fbe46a977bbd1403d744fb797a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/d4acc7bff635ef9126ad350e5efdb8a9c0a2de94",
-                "reference": "d4acc7bff635ef9126ad350e5efdb8a9c0a2de94",
+                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/cf5f3be4341270fbe46a977bbd1403d744fb797a",
+                "reference": "cf5f3be4341270fbe46a977bbd1403d744fb797a",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +185,7 @@
                 "ILIAS",
                 "libraries"
             ],
-            "time": "2018-11-14T06:11:41+00:00"
+            "time": "2018-11-21T08:31:42+00:00"
         },
         {
             "name": "srag/removeplugindataconfirm",
@@ -208,7 +208,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "srag\\RemovePluginDataConfirm\\Hub2\\": "src/"
+                    "srag\\RemovePluginDataConfirm\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

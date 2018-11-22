@@ -2,9 +2,9 @@
 
 namespace srag\CustomInputGUIs\Hub2\PropertyFormGUI\Items;
 
-use ilCustomInputGUI;
 use ilFormPropertyGUI;
 use ilFormSectionHeaderGUI;
+use ilNumberInputGUI;
 use ilPropertyFormGUI;
 use ilRadioOption;
 use srag\CustomInputGUIs\Hub2\PropertyFormGUI\Exception\PropertyFormGUIException;
@@ -12,7 +12,7 @@ use srag\CustomInputGUIs\Hub2\PropertyFormGUI\PropertyFormGUI;
 use srag\CustomInputGUIs\Hub2\TableGUI\TableGUI;
 
 /**
- * Class BasePropertyFormGUI
+ * Class Items
  *
  * @package srag\CustomInputGUIs\Hub2\PropertyFormGUI\Items
  *
@@ -28,7 +28,7 @@ final class Items {
 	 * @param ilPropertyFormGUI|ilFormPropertyGUI $parent_item
 	 * @param PropertyFormGUI|TableGUI            $parent
 	 *
-	 * @return PropertyFormGUI|ilFormSectionHeaderGUI|ilRadioOption
+	 * @return ilFormPropertyGUI|ilFormSectionHeaderGUI|ilRadioOption
 	 */
 	public static final function getItem($key, array $field, $parent_item, $parent) {
 		if (!class_exists($field[PropertyFormGUI::PROPERTY_CLASS])) {
@@ -76,14 +76,18 @@ final class Items {
 			return $item->getDate();
 		}
 
-		if (!($item instanceof ilCustomInputGUI)) {
+		if (method_exists($item, "getValue") && !($item instanceof ilRadioOption)) {
 			if ($item->getMulti()) {
 				return $item->getMultiValues();
 			} else {
 				$value = $item->getValue();
 
-				if (empty($value)) {
-					$value = "";
+				if ($item instanceof ilNumberInputGUI) {
+					$value = floatval($value);
+				} else {
+					if (empty($value) && !is_array($value)) {
+						$value = "";
+					}
 				}
 
 				return $value;
@@ -157,7 +161,7 @@ final class Items {
 			return;
 		}
 
-		if (!($item instanceof ilRadioOption || $item instanceof ilCustomInputGUI)) {
+		if (method_exists($item, "setValue") && !($item instanceof ilRadioOption)) {
 			$item->setValue($value);
 		}
 	}

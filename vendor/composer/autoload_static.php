@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
+class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -13,12 +13,12 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
-            'srag\\RemovePluginDataConfirm\\Hub2\\' => 34,
+            'srag\\RemovePluginDataConfirm\\' => 29,
             'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
-            'srag\\DIC\\Hub2\\' => 14,
-            'srag\\CustomInputGUIs\\Hub2\\' => 26,
-            'srag\\ActiveRecordConfig\\Hub2\\' => 29,
+            'srag\\DIC\\' => 9,
+            'srag\\CustomInputGUIs\\' => 21,
+            'srag\\ActiveRecordConfig\\' => 24,
         ),
         'p' => 
         array (
@@ -40,7 +40,7 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
     );
 
     public static $prefixDirsPsr4 = array (
-        'srag\\RemovePluginDataConfirm\\Hub2\\' => 
+        'srag\\RemovePluginDataConfirm\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/removeplugindataconfirm/src',
         ),
@@ -52,15 +52,15 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
         array (
             0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
-        'srag\\DIC\\Hub2\\' => 
+        'srag\\DIC\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
-        'srag\\CustomInputGUIs\\Hub2\\' => 
+        'srag\\CustomInputGUIs\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/custominputguis/src',
         ),
-        'srag\\ActiveRecordConfig\\Hub2\\' => 
+        'srag\\ActiveRecordConfig\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/activerecordconfig/src',
         ),
@@ -941,13 +941,11 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
         'srag\\CustomInputGUIs\\Hub2\\MultiSelectSearchInputGUI\\MultiSelectSearchInput2GUI' => __DIR__ . '/..' . '/srag/custominputguis/src/MultiSelectSearchInputGUI/MultiSelectSearchInput2GUI.php',
         'srag\\CustomInputGUIs\\Hub2\\MultiSelectSearchInputGUI\\MultiSelectSearchInputGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/MultiSelectSearchInputGUI/MultiSelectSearchInputGUI.php',
         'srag\\CustomInputGUIs\\Hub2\\NumberInputGUI\\NumberInputGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/NumberInputGUI/NumberInputGUI.php',
-        'srag\\CustomInputGUIs\\Hub2\\PropertyFormGUI\\BasePropertyFormGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/PropertyFormGUI/BasePropertyFormGUI.php',
         'srag\\CustomInputGUIs\\Hub2\\PropertyFormGUI\\Exception\\PropertyFormGUIException' => __DIR__ . '/..' . '/srag/custominputguis/src/PropertyFormGUI/Exception/PropertyFormGUIException.php',
         'srag\\CustomInputGUIs\\Hub2\\PropertyFormGUI\\Items\\Items' => __DIR__ . '/..' . '/srag/custominputguis/src/PropertyFormGUI/Items/Items.php',
         'srag\\CustomInputGUIs\\Hub2\\PropertyFormGUI\\PropertyFormGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/PropertyFormGUI/PropertyFormGUI.php',
         'srag\\CustomInputGUIs\\Hub2\\ScreenshotsInputGUI\\ScreenshotsInputGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/ScreenshotsInputGUI/ScreenshotsInputGUI.php',
         'srag\\CustomInputGUIs\\Hub2\\StaticHTMLPresentationInputGUI\\StaticHTMLPresentationInputGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/StaticHTMLPresentationInputGUI/StaticHTMLPresentationInputGUI.php',
-        'srag\\CustomInputGUIs\\Hub2\\TableGUI\\BaseTableGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/TableGUI/BaseTableGUI.php',
         'srag\\CustomInputGUIs\\Hub2\\TableGUI\\Exception\\TableGUIException' => __DIR__ . '/..' . '/srag/custominputguis/src/TableGUI/Exception/TableGUIException.php',
         'srag\\CustomInputGUIs\\Hub2\\TableGUI\\TableGUI' => __DIR__ . '/..' . '/srag/custominputguis/src/TableGUI/TableGUI.php',
         'srag\\CustomInputGUIs\\Hub2\\Template\\Template' => __DIR__ . '/..' . '/srag/custominputguis/src/Template/Template.php',
@@ -1286,10 +1284,10 @@ class ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit49461c7fd58de2a4046d32d7dfce4847::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880::$classMap;
 
         }, null, ClassLoader::class);
     }
