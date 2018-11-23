@@ -5,7 +5,7 @@
 - AdHoc feature
 - CustomView feature
 - GlobalHook feature
-- New Logs will be logged in database, not in files anymore
+- New logs will be logged in database, not in files anymore
 - More meaningful GUI for force update synchs: Buttons. Also implement this for a single origin synch
 - Fix recreate deleted users
 - Refacoring, using new libraries
