@@ -11,7 +11,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * Class DataTransferObjectSort
  *
  * @package srag\Plugins\Hub2\Sync
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 final class DataTransferObjectSort implements IDataTransferObjectSort {
 
