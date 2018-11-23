@@ -46,7 +46,7 @@ final class DataTransferObjectSort implements IDataTransferObjectSort {
 
 
 	/**
-	 * @param IDataTransferObject $dto_object
+	 * @inheritdoc
 	 */
 	public function setDtoObject(IDataTransferObject $dto_object) {
 		$this->dto_object = $dto_object;
