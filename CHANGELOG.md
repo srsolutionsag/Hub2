@@ -8,5 +8,5 @@
 - New logs will be logged in database, not in files anymore
 - More meaningful GUI for force update synchs: Buttons. Also implement this for a single origin synch
 - Fix recreate deleted users
-- Refacoring, using new libraries
+- Refactoring, using new libraries
 - Some other fixes and improvements
