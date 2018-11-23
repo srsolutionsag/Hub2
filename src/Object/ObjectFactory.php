@@ -228,14 +228,9 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
-	 * concatenation of the origins ID with the external-ID, see IObject::create()
-	 *
-	 * @param string $ext_id
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
-	protected function getId($ext_id) {
+	public function getId($ext_id) {
 		return $this->origin->getId() . $ext_id;
 	}
 

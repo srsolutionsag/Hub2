@@ -32,6 +32,17 @@ use srag\Plugins\Hub2\Object\User\IUser;
 interface IObjectFactory {
 
 	/**
+	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
+	 * concatenation of the origins ID with the external-ID, see IObject::create()
+	 *
+	 * @param string $ext_id
+	 *
+	 * @return string
+	 */
+	public function getId($ext_id);
+
+
+	/**
 	 * @param string $ext_id
 	 *
 	 * @return ActiveRecord|ARCategory|ICategory|ARCourse|ICourse|ARCourseMembership|ICourseMembership|ARGroup|IGroup|ARGroupMembership|IGroupMembership|ARSession|ISession|ARUser|IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership

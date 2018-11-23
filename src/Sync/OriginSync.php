@@ -146,7 +146,13 @@ class OriginSync implements IOriginSync {
 		$type = $this->origin->getObjectType();
 
 		if ($this->origin->isAdHoc()) {
-			// Simple complete all data with the new adhoc data. Be shure that keys are persists
+			// First fix and use dto full id as keys
+			$this->dtoObjects = array_reduce($this->dtoObjects, function (array $dto_objects, IDataTransferObject $dto_object): array {
+				$dto_objects[$this->factory->getId($dto_object->getExtId())] = $dto_object;
+
+				return $dto_objects;
+			}, []);
+			// Then simple complete all data with the new adhoc data. Be shure that keys are persists
 			$this->dtoObjects = $this->dtoObjects + array_map(function (IObject $object) use ($type): IDataTransferObject {
 					/**
 					 * @var IDataTransferObject $dto_object
