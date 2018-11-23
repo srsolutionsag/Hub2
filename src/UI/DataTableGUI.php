@@ -269,14 +269,13 @@ class DataTableGUI extends ilTable2GUI {
 
 		// Adds view Glyph
 		$factory = self::dic()->ui()->factory();
-		$renderer = self::dic()->ui()->renderer();
 		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl(self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, 'renderData', '', true));
 
 		$button = $factory->button()->shy(self::plugin()->translate("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
 
 		$this->tpl->setCurrentBlock('cell');
-		$this->tpl->setVariable('VALUE', $renderer->render([ $button, $modal ]));
+		$this->tpl->setVariable('VALUE', self::output()->getHTML([ $button, $modal ]));
 		$this->tpl->parseCurrentBlock();
 
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
@@ -296,9 +295,8 @@ class DataTableGUI extends ilTable2GUI {
 
 		$link = $this->originLinkfactory->findByExtIdAndOrigin($ext_id, $origin);
 		$button_factory = self::dic()->ui()->factory()->button();
-		$renderer = self::dic()->ui()->renderer();
 
-		return $renderer->render($button_factory->shy($ext_id, $link->getAccessGrantedInternalLink()));
+		return self::output()->getHTML($button_factory->shy($ext_id, $link->getAccessGrantedInternalLink()));
 	}
 
 

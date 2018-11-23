@@ -124,7 +124,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		self::dic()->toolbar()->addButtonInstance($button);
 
 		$table = new OriginsTableGUI($this, self::CMD_INDEX, new OriginRepository());
-		self::dic()->mainTemplate()->setContent($table->getHTML());
+		self::output()->output($table);
 	}
 
 
@@ -141,7 +141,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 */
 	protected function addOrigin() {
 		$form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
-		self::dic()->mainTemplate()->setContent($form->getHTML());
+		self::output()->output($form);
 	}
 
 
@@ -160,7 +160,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
 		}
 		$form->setValuesByPost();
-		self::dic()->mainTemplate()->setContent($form->getHTML());
+		self::output()->output($form);
 	}
 
 
@@ -211,7 +211,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
 		}
 		$form->setValuesByPost();
-		self::dic()->mainTemplate()->setContent($form->getHTML());
+		self::output()->output($form);
 	}
 
 
@@ -222,7 +222,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$origin = $this->getOrigin((int)$_GET[self::ORIGIN_ID]);
 		self::dic()->mainTemplate()->setTitle($origin->getTitle());
 		$form = $this->getForm($origin);
-		self::dic()->mainTemplate()->setContent($form->getHTML());
+		self::output()->output($form);
 	}
 
 
@@ -350,8 +350,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$c->addItem(self::ORIGIN_ID, $o->getId(), $o->getTitle());
 		$c->setConfirm(self::plugin()->translate('confirm_delete_button'), self::CMD_DELETE);
 		$c->setCancel(self::plugin()->translate('cancel_delete_button'), self::CMD_INDEX);
-
-		self::dic()->mainTemplate()->setContent($c->getHTML());
+		self::output()->output($c);
 	}
 
 

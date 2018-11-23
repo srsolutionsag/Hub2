@@ -31,7 +31,7 @@ class hub2DataGUI extends hub2MainGUI {
 	 */
 	protected function index() {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
-		self::dic()->mainTemplate()->setContent($table->getHTML());
+		self::output()->output($table);
 	}
 
 
@@ -116,8 +116,8 @@ class hub2DataGUI extends hub2MainGUI {
 		ksort($filtered);
 
 		// Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-		$data_table = $factory->item()->standard(self::plugin()->translate("data_table_ext_id", "", [ $object->getExtId() ]))
-			->withProperties($filtered);
+		/*$data_table = $factory->item()->standard(self::plugin()->translate("data_table_ext_id", "", [ $object->getExtId() ]))
+			->withProperties($filtered);*/
 
 		$data_table = $factory->listing()->descriptive($filtered);
 
