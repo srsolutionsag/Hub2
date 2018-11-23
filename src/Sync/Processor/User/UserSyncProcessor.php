@@ -70,7 +70,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILogOld                    $originLog
+	 * @param ILogOld                 $originLog
 	 * @param OriginNotifications     $originNotifications
 	 */
 	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILogOld $originLog, OriginNotifications $originNotifications) {
@@ -142,7 +142,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		/** @var UserDTO $dto */
 		$ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === NULL) {
-			return NULL;
+			return $this->handleCreate($dto);
 		}
 		$ilObjUser->setImportId($this->getImportId($dto));
 		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
@@ -287,6 +287,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		}
 
 		$user->setLogin($login);
+
 		return $login;
 	}
 
