@@ -274,7 +274,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 				self::dic()->ctrl()->redirect($this);
 			}
 		} catch (Exception $e) {
-			$global_hook->handleExceptions($e);
+			$global_hook->handleExceptions([$e]);
 		}
 		foreach ($this->originFactory->getAllActive() as $origin) {
 			/**
@@ -288,7 +288,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			try {
 				$originSync->execute();
 			} catch (Throwable $e) {
-				$global_hook->handleExceptions($e);
+				$global_hook->handleExceptions([$e]);
 				// Any exception being forwarded to here means that we failed to execute the sync at some point
 				ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 			}
@@ -301,7 +301,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		try {
 			$global_hook->afterSync($this->originFactory->getAllActive());
 		} catch (Exception $e) {
-			$global_hook->handleExceptions($e);
+			$global_hook->handleExceptions([$e]);
 			ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 		}
 

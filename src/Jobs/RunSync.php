@@ -111,7 +111,7 @@ class RunSync extends AbstractJob {
 
 			return ResultFactory::ok("everything's fine.");
 		} catch (Exception $e) {
-			$global_hook->handleExceptions($e);
+			$global_hook->handleExceptions([$e]);
 
 			return ResultFactory::error("there was an error");
 		}
