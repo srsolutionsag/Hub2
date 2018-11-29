@@ -165,7 +165,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn("myHashChanged");
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn("myHash");
-		$this->iobject->shouldReceive('updateStatus')->with(IObject::STATUS_NOTHING_TO_UPDATE);
+		//$this->iobject->shouldReceive('updateStatus')->with(IObject::STATUS_NOTHING_TO_UPDATE);
 		$this->iobject->shouldReceive('getILIASId')->andReturn(self::REF_ID);
 		$this->iobject->shouldReceive('setILIASId')->with(self::REF_ID);
 

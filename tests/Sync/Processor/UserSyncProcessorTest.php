@@ -164,7 +164,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 	public function test_update_user_not_required_if_no_properties_changed() {
 		$this->setDefaultExpectationsForUpdateOfILIASUser();
-		$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
+		//$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
 		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn('actualHashCode');
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn('actualHashCode');
 		$this->iobject->shouldReceive('setMetaData')->once();
@@ -245,7 +245,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected function setDefaultExpectationsForDeletionOfILIASUser() {
 		$this->ilObject->shouldReceive('_exists')->with(self::ILIAS_ID)->andReturn(true);
-		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_DELETE);
+		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_OUTDATED);
 		$this->iobject->shouldReceive('getILIASId')->andReturn(self::ILIAS_ID);
 	}
 

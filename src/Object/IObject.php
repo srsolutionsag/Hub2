@@ -36,17 +36,21 @@ interface IObject {
 	/**
 	 * Intermediate status indicating that the corresponding ILIAS object must be deleted.
 	 */
-	const STATUS_TO_DELETE = 32;
+	const STATUS_TO_OUTDATED = 32;
 	/**
 	 * Final status indicating that the corresponding ILIAS object has been deleted.
 	 */
-	const STATUS_DELETED = 64;
+	const STATUS_OUTDATED = 64;
 	/**
 	 * Intermediate status indicating that the object was deleted an has now been delivered again.
+	 *
+	 * @deprecated
 	 */
 	const STATUS_TO_UPDATE_NEWLY_DELIVERED = 128;
 	/**
 	 * The object has not been modified since the last sync
+	 *
+	 * @deprecated
 	 */
 	const STATUS_NOTHING_TO_UPDATE = 256;
 	/**
@@ -89,7 +93,7 @@ interface IObject {
 	 *
 	 * @return DateTime
 	 */
-	public function getDeliveryDate();
+	public function getDeliveryDate(): DateTime;
 
 
 	/**
@@ -97,7 +101,7 @@ interface IObject {
 	 *
 	 * @return $this
 	 */
-	public function setDeliveryDate($unix_timestamp);
+	public function setDeliveryDate(int $unix_timestamp);
 
 
 	/**
@@ -114,7 +118,7 @@ interface IObject {
 	 *
 	 * @return $this
 	 */
-	public function setProcessedDate($unix_timestamp);
+	public function setProcessedDate(int $unix_timestamp);
 
 
 	/**
@@ -139,7 +143,7 @@ interface IObject {
 	 *
 	 * @return int
 	 */
-	public function getStatus();
+	public function getStatus(): int;
 
 
 	/**
@@ -147,15 +151,7 @@ interface IObject {
 	 *
 	 * @return $this
 	 */
-	public function setStatus($status);
-
-
-	/**
-	 * @param int $status
-	 *
-	 * @return $this
-	 */
-	public function updateStatus($status);
+	public function setStatus(int $status);
 
 
 	/**
@@ -218,5 +214,5 @@ interface IObject {
 	/**
 	 * Persist data in database.
 	 */
-	public function save();
+	public function store();
 }

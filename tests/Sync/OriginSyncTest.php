@@ -150,7 +150,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 			$dummyDTOs[] = $dummyDTO;
 		}
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn($dummyDTOs);
-		$status = [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_DELETED, IObject::STATUS_IGNORED ];
+		$status = [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_OUTDATED, IObject::STATUS_IGNORED ];
 		// Build 4 dummy objects that correspond to a dummyDTO, each having a different final status
 		$objects = [];
 		for ($i = 0; $i < 4; $i ++) {
@@ -173,7 +173,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->assertEquals(4, $originSync->getCountProcessedTotal());
 		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED));
 		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED));
-		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED));
+		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED));
 		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED));
 		$this->assertEquals([], $originSync->getExceptions());
 	}

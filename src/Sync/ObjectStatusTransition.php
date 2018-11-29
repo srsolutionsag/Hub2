@@ -15,30 +15,43 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @package srag\Plugins\Hub2\Sync
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @deprecated
  */
 class ObjectStatusTransition implements IObjectStatusTransition {
 
 	use DICTrait;
 	use Hub2Trait;
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var array
+	 *
+	 * @deprecated
 	 */
 	protected static $final = [
 		IObject::STATUS_NEW,
 		IObject::STATUS_CREATED,
 		IObject::STATUS_UPDATED,
-		IObject::STATUS_DELETED,
+		IObject::STATUS_OUTDATED,
 		IObject::STATUS_IGNORED,
 	];
 	/**
 	 * @var IOriginConfig
+	 *
+	 * @deprecated
 	 */
 	protected $config;
 
 
 	/**
 	 * @param IOriginConfig $config
+	 *
+	 * @deprecated
 	 */
 	public function __construct(IOriginConfig $config) {
 		$this->config = $config;
@@ -47,8 +60,10 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
-	public function finalToIntermediate(IObject $object) {
+	public function finalToIntermediate(IObject $object): int {
 		if (!$this->isFinal($object->getStatus())) {
 			return $object->getStatus();
 		}
@@ -66,7 +81,7 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 			case IObject::STATUS_CREATED:
 			case IObject::STATUS_UPDATED:
 				return IObject::STATUS_TO_UPDATE;
-			case IObject::STATUS_DELETED:
+			case IObject::STATUS_OUTDATED:
 				return IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED;
 			case IObject::STATUS_IGNORED:
 				// Either create or update the ILIAS object
@@ -78,8 +93,10 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
-	public function intermediateToFinal(IObject $object) {
+	public function intermediateToFinal(IObject $object): int {
 		if ($this->isFinal($object->getStatus())) {
 			return $object->getStatus();
 		}
@@ -89,8 +106,8 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 			case IObject::STATUS_TO_UPDATE:
 			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
 				return IObject::STATUS_UPDATED;
-			case IObject::STATUS_TO_DELETE:
-				return IObject::STATUS_DELETED;
+			case IObject::STATUS_TO_OUTDATED:
+				return IObject::STATUS_OUTDATED;
 			case IObject::STATUS_NOTHING_TO_UPDATE:
 				return IObject::STATUS_IGNORED;
 		}
@@ -102,8 +119,10 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 	 * @param int $status
 	 *
 	 * @return bool
+	 *
+	 * @deprecated
 	 */
-	protected function isFinal($status) {
+	protected function isFinal(int $status): bool {
 		return in_array($status, self::$final);
 	}
 }

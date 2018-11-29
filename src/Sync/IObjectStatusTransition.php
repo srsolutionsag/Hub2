@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync;
 
+use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\IObject;
 
 /**
@@ -9,6 +10,8 @@ use srag\Plugins\Hub2\Object\IObject;
  *
  * @package srag\Plugins\Hub2\Sync
  * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @deprecated
  */
 interface IObjectStatusTransition {
 
@@ -22,8 +25,12 @@ interface IObjectStatusTransition {
 	 * @param IObject $object
 	 *
 	 * @return int
+	 *
+	 * @throws HubException Invalid status!
+	 *
+	 * @deprecated
 	 */
-	public function intermediateToFinal(IObject $object);
+	public function intermediateToFinal(IObject $object): int;
 
 
 	/**
@@ -36,6 +43,10 @@ interface IObjectStatusTransition {
 	 * @param IObject $object
 	 *
 	 * @return mixed
+	 *
+	 * @throws HubException Invalid status!
+	 *
+	 * @deprecated
 	 */
-	public function finalToIntermediate(IObject $object);
+	public function finalToIntermediate(IObject $object): int;
 }

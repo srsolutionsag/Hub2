@@ -254,7 +254,7 @@ class DataTableGUI extends ilTable2GUI {
 					break;
 				case self::F_ORIGIN_ID:
 					if (!$origin) {
-						$this->tpl->setVariable('VALUE', " Origin deleted");
+						$this->tpl->setVariable('VALUE', " ".self::plugin()->translate("origin_deleted"));
 					} else {
 						$this->tpl->setVariable('VALUE', $origin->getTitle());
 					}

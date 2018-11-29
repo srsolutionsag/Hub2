@@ -54,20 +54,14 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @var array
 	 */
-	protected static $status_allowed_to_update_to = [
-		IObject::STATUS_NOTHING_TO_UPDATE,
-	];
-	/**
-	 * @var array
-	 */
 	protected static $available_status = [
 		IObject::STATUS_NEW,
 		IObject::STATUS_TO_CREATE,
 		IObject::STATUS_CREATED,
 		IObject::STATUS_UPDATED,
 		IObject::STATUS_TO_UPDATE,
-		IObject::STATUS_TO_DELETE,
-		IObject::STATUS_DELETED,
+		IObject::STATUS_TO_OUTDATED,
+		IObject::STATUS_OUTDATED,
 		IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED,
 		IObject::STATUS_IGNORED,
 		IObject::STATUS_NOTHING_TO_UPDATE,
@@ -301,7 +295,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function getDeliveryDate() {
+	public function getDeliveryDate(): DateTime {
 		return new DateTime($this->delivery_date);
 	}
 
@@ -309,7 +303,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function getProcessedDate() {
+	public function getProcessedDate(): DateTime {
 		return new DateTime($this->processed_date);
 	}
 
@@ -317,7 +311,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function setDeliveryDate($unix_timestamp) {
+	public function setDeliveryDate(int $unix_timestamp) {
 		$this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
@@ -325,7 +319,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function setProcessedDate($unix_timestamp) {
+	public function setProcessedDate(int $unix_timestamp) {
 		$this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
@@ -351,7 +345,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function getStatus() {
+	public function getStatus(): int {
 		return $this->status;
 	}
 
@@ -359,22 +353,9 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function setStatus($status) {
+	public function setStatus(int $status) {
 		if (!in_array($status, self::$available_status)) {
 			throw new InvalidArgumentException("'{$status}' is not a valid status");
-		}
-		$this->status = $status;
-
-		return $this;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function updateStatus($status) {
-		if (!in_array($status, self::$status_allowed_to_update_to)) {
-			throw new InvalidArgumentException("'{$status}' is not valid to switch to");
 		}
 		$this->status = $status;
 

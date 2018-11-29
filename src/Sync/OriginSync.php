@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
-use srag\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\NullDTO;
 use srag\Plugins\Hub2\Object\IObject;
@@ -77,7 +76,7 @@ class OriginSync implements IOriginSync {
 	protected $countProcessed = [
 		IObject::STATUS_CREATED => 0,
 		IObject::STATUS_UPDATED => 0,
-		IObject::STATUS_DELETED => 0,
+		IObject::STATUS_OUTDATED => 0,
 		IObject::STATUS_IGNORED => 0,
 		IObject::STATUS_NOTHING_TO_UPDATE => 0
 	];
@@ -145,7 +144,7 @@ class OriginSync implements IOriginSync {
 
 		$type = $this->origin->getObjectType();
 
-		if ($this->origin->isAdHoc()) {
+		/*if ($this->origin->isAdHoc()) {
 			// First fix and use dto full id as keys
 			$this->dtoObjects = array_reduce($this->dtoObjects, function (array $dto_objects, IDataTransferObject $dto_object): array {
 				$dto_objects[$this->factory->getId($dto_object->getExtId())] = $dto_object;
@@ -156,14 +155,14 @@ class OriginSync implements IOriginSync {
 			$this->dtoObjects = $this->dtoObjects + array_map(function (IObject $object) use ($type): IDataTransferObject {
 					/**
 					 * @var IDataTransferObject $dto_object
-					 */
+					 * /
 					$dto_object = (new DataTransferObjectFactory())->{$type}(NULL);
 
 					$dto_object->setData($object->getData());
 
 					return $dto_object;
 				}, $this->factory->{$type . "s"}());
-		}
+		}*/
 
 		// Separate shouldDeleted
 		$delivered_objects_to_delete = array_map(function (IDataTransferObject $dto_object) {
@@ -203,11 +202,14 @@ class OriginSync implements IOriginSync {
 		$delivered_objects_to_delete = array_map(function ($ext_id) use ($type) {
 			return $this->factory->{$type}($ext_id);
 		}, $delivered_objects_to_delete);
-		$delivered_objects_to_delete = array_unique(array_merge($delivered_objects_to_delete, $this->repository->getToDelete($ext_ids_delivered)));
+		if ($this->origin->isAdHoc()) {
+			// Not delete not not delivered on AdHoc
+			$delivered_objects_to_delete = array_unique(array_merge($delivered_objects_to_delete, $this->repository->getToDelete($ext_ids_delivered)));
+		}
 
 		foreach ($delivered_objects_to_delete as $object) {
 			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
-			$object->setStatus(IObject::STATUS_TO_DELETE);
+			$object->setStatus(IObject::STATUS_TO_OUTDATED);
 			$this->processObject($object, $nullDTO);
 		}
 
@@ -305,26 +307,26 @@ class OriginSync implements IOriginSync {
 		} catch (AbortSyncException $e) {
 			// Any exceptions aborting the global or current sync are forwarded to global sync
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw $e;
 		} catch (AbortOriginSyncOfCurrentTypeException $e) {
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw $e;
 		} catch (AbortOriginSyncException $e) {
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw $e;
 		} catch (Exception $e) {
 			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
 			// which decides how to proceed, e.g. continue or abort
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			$this->implementation->handleException($e);
 		} catch (Error $e) {
 			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw new AbortOriginSyncException($e->getMessage());
 		}
 	}
@@ -333,7 +335,7 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @param int $status
 	 */
-	protected function incrementProcessed($status) {
+	protected function incrementProcessed(int $status) {
 		$this->countProcessed[$status] ++;
 	}
 

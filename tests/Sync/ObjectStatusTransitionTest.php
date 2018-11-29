@@ -35,8 +35,8 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 		$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
 
 		// TO_DELETE -> DELETED
-		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_DELETE);
-		$this->assertEquals(IObject::STATUS_DELETED, $transition->intermediateToFinal($object));
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_OUTDATED);
+		$this->assertEquals(IObject::STATUS_OUTDATED, $transition->intermediateToFinal($object));
 	}
 
 
@@ -58,7 +58,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 		$this->assertEquals(IObject::STATUS_TO_UPDATE, $transition->finalToIntermediate($object));
 
 		// DELETED -> TO_UPDATE_NEWLY_DELIVERED
-		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_DELETED, 'Period1');
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_OUTDATED, 'Period1');
 		$this->assertEquals(IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED, $transition->finalToIntermediate($object));
 	}
 
@@ -111,8 +111,8 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests {
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_CREATED);
 		$this->assertEquals(IObject::STATUS_CREATED, $transition->intermediateToFinal($object));
 
-		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_DELETED);
-		$this->assertEquals(IObject::STATUS_DELETED, $transition->intermediateToFinal($object));
+		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_OUTDATED);
+		$this->assertEquals(IObject::STATUS_OUTDATED, $transition->intermediateToFinal($object));
 
 		$object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED);
 		$this->assertEquals(IObject::STATUS_IGNORED, $transition->intermediateToFinal($object));

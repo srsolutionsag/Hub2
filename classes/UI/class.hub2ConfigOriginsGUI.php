@@ -154,7 +154,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$origin = $this->originFactory->createByType($form->getInput('object_type'));
 			$origin->setTitle($form->getInput('title'));
 			$origin->setDescription($form->getInput('description'));
-			$origin->save();
+			$origin->store();
 			ilUtil::sendSuccess(self::plugin()->translate('msg_success_create_origin'), true);
 			self::dic()->ctrl()->setParameter($this, self::ORIGIN_ID, $origin->getId());
 			self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
@@ -193,7 +193,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			}
 			$origin->config()->setData($configData);
 			$origin->properties()->setData($propertyData);
-			$origin->save();
+			$origin->store();
 			ilUtil::sendSuccess(self::plugin()->translate('msg_origin_saved'), true);
 			// Try to create the implementation class file automatically
 			$generator = new OriginImplementationTemplateGenerator();
@@ -232,7 +232,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function activateAll() {
 		foreach ($this->originRepository->all() as $repository) {
 			$repository->setActive(true);
-			$repository->save();
+			$repository->store();
 		}
 		ilUtil::sendSuccess(self::plugin()->translate('msg_origin_activated'), true);
 		self::dic()->ctrl()->redirect($this);
@@ -245,7 +245,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function deactivateAll() {
 		foreach ($this->originRepository->all() as $repository) {
 			$repository->setActive(false);
-			$repository->save();
+			$repository->store();
 		}
 		ilUtil::sendSuccess(self::plugin()->translate('msg_origin_deactivated'), true);
 		self::dic()->ctrl()->redirect($this);
@@ -263,7 +263,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 				self::dic()->ctrl()->redirect($this);
 			}
 		} catch (Exception $e) {
-			$global_hook->handleExceptions([$e]);
+			$global_hook->handleExceptions([ $e ]);
 		}
 		foreach ($this->originFactory->getAllActive() as $origin) {
 			/**
@@ -277,7 +277,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			try {
 				$originSync->execute();
 			} catch (Throwable $e) {
-				$global_hook->handleExceptions([$e]);
+				$global_hook->handleExceptions([ $e ]);
 				// Any exception being forwarded to here means that we failed to execute the sync at some point
 				ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 			}
@@ -289,7 +289,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		try {
 			$global_hook->afterSync($this->originFactory->getAllActive());
 		} catch (Exception $e) {
-			$global_hook->handleExceptions([$e]);
+			$global_hook->handleExceptions([ $e ]);
 			ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
 		}
 

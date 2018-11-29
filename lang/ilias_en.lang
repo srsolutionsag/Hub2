@@ -382,7 +382,7 @@ summary_for#:#Summary for %s:
 summary_delivered_data_sets#:#Delivered data sets: %s
 summary_created#:#Created: %s
 summary_updated#:#Updated: %s
-summary_deleted#:#Deleted: %s
+summary_outdated#:#Outdated: %s
 summary_ignored#:#Ignored: %s
 summary_no_changes#:#No changes: %s
 summary_exceptions#:#Exceptions:
@@ -396,8 +396,8 @@ data_table_status_to_create#:#To create
 data_table_status_created#:#Created
 data_table_status_to_update#:#To update
 data_table_status_updated#:#Updated
-data_table_status_to_delete#:#To delete
-data_table_status_deleted#:#Deleted
+data_table_status_to_outdated#:#To outdated
+data_table_status_outdated#:#Outdated
 data_table_status_to_update_newly_delivered#:#To update newly delivered
 data_table_status_nothing_to_update#:#Nothing to update
 data_table_status_ignored#:#Ignored
@@ -405,6 +405,7 @@ data_table_status_not_ignored#:#Not ignored
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
 origin_table_button_run_force_update#:#Sync (Force update)
+origin_deleted#:#Origin deleted
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
 removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin

@@ -192,4 +192,10 @@ interface IOrigin {
 	 */
 	public function setAdHoc(bool $adhoc)/*: void*/
 	;
+
+
+	/**
+	 *
+	 */
+	public function store();
 }
