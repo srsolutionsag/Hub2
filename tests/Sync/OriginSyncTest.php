@@ -9,8 +9,15 @@ use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\IObjectFactory;
+use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\OriginSync;
+use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Class OriginSyncTest
@@ -56,14 +63,14 @@ class OriginSyncTest extends AbstractHub2Tests {
 
 
 	protected function setUp() {
-		$this->originImplementation = Mockery::mock('\srag\Plugins\Hub2\Origin\IOriginImplementation');
+		$this->originImplementation = Mockery::mock(IOriginImplementation::class);
 		$this->originImplementation->shouldReceive('beforeSync')->once();
-		$this->origin = Mockery::mock("srag\Plugins\Hub2\Origin\IOrigin");
-		$this->repository = Mockery::mock('\srag\Plugins\Hub2\Object\IObjectRepository');
-		$this->factory = Mockery::mock('\srag\Plugins\Hub2\Object\IObjectFactory');
-		$this->processor = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor');
-		$this->originConfig = Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig");
-		$this->statusTransition = Mockery::mock('srag\Plugins\Hub2\Sync\IObjectStatusTransition');
+		$this->origin = Mockery::mock(IOrigin::class);
+		$this->repository = Mockery::mock(IObjectRepository::class);
+		$this->factory = Mockery::mock(IObjectFactory::class);
+		$this->processor = Mockery::mock(IObjectSyncProcessor::class);
+		$this->originConfig = Mockery::mock(IOriginConfig::class);
+		$this->statusTransition = Mockery::mock(IObjectStatusTransition::class);
 		$this->originNotification = new OriginNotifications();
 	}
 

@@ -136,8 +136,8 @@ interface IOriginImplementation {
 	 * Valid Status are:
 	 * - IObject::STATUS_TO_CREATE
 	 * - IObject::STATUS_TO_UPDATE
-	 * - IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED
-	 * - IObject::STATUS_TO_DELETE
+	 * - IObject::STATUS_TO_OUTDATED
+	 * - IObject::STATUS_TO_RESTORE
 	 * - IObject::STATUS_IGNORED
 	 *
 	 * E.G. $object->overrideStatus(IObject::STATUS_TO_UPDATE);

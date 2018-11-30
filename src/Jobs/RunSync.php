@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Jobs;
 
-use Exception;
 use ilCronJob;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
@@ -11,6 +10,7 @@ use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use Throwable;
 
 /**
  * Class RunSync
@@ -96,7 +96,7 @@ class RunSync extends AbstractJob {
 				$originSync = $originSyncFactory->instance();
 				try {
 					$originSync->execute();
-				} catch (Exception $e) {
+				} catch (Throwable $e) {
 
 				}
 				self::logs()->originLog($originSync->getOrigin())->withMessage($summary->getSummaryOfOrigin($originSync))->store();
@@ -108,8 +108,8 @@ class RunSync extends AbstractJob {
 			$summary->sendNotifications();
 
 			return ResultFactory::ok("everything's fine.");
-		} catch (Exception $e) {
-			$global_hook->handleExceptions([$e]);
+		} catch (Throwable $e) {
+			$global_hook->handleExceptions([ $e ]);
 
 			return ResultFactory::error("there was an error");
 		}

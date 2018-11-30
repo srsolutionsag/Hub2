@@ -63,7 +63,7 @@ class Sync implements ISync {
 
 				return;
 			}
-		} catch (Exception $e) {
+		} catch (Throwable $e) {
 			$this->exceptions[] = $e;
 		}
 

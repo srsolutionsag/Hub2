@@ -47,7 +47,7 @@ class hub2CustomViewGUI {
 			if (!($class instanceof BaseCustomViewGUI)) {
 				throw new Exception("Class " . $class_name . " is not an instance of BaseCustomViewGUI");
 			}
-		} catch (Exception $e) {
+		} catch (Throwable $e) {
 			ilUtil::sendInfo(self::plugin()->translate("admin_custom_view_class_not_found_1") . " '"
 				. ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH) . "' " . self::plugin()->translate("admin_custom_view_class_not_found_2")
 				. " Error: " . $e->getMessage());

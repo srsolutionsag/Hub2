@@ -383,7 +383,6 @@ summary_created#:#Erstellt: %s
 summary_updated#:#Aktualisiert: %s
 summary_outdated#:#Veraltet: %s
 summary_ignored#:#Ignoriert: %s
-summary_no_changes#:#Keine Änderungen: %s
 summary_exceptions#:#Ausnahmen:
 summary_notification#:#Hub2: Zusammenfassung für %s
 summary_exceptions_in#:#Hub2: Ausnahmen in %s
@@ -397,8 +396,7 @@ data_table_status_to_update#:#Zu aktualisieren
 data_table_status_updated#:#Aktualisiert
 data_table_status_to_outdated#:#Zu veraltet
 data_table_status_outdated#:#Veraltet
-data_table_status_to_update_newly_delivered#:#Zum Aktualisieren neu geliefert
-data_table_status_nothing_to_update#:#Nichts zu aktualisieren
+data_table_status_to_restore#:#Zum Wiederherstellen
 data_table_status_ignored#:#Ignoriert
 data_table_status_not_ignored#:#Nicht ignoriert
 origin_form_field_adhoc#:#AdHoc

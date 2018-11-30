@@ -43,16 +43,8 @@ interface IObject {
 	const STATUS_OUTDATED = 64;
 	/**
 	 * Intermediate status indicating that the object was deleted an has now been delivered again.
-	 *
-	 * @deprecated
 	 */
-	const STATUS_TO_UPDATE_NEWLY_DELIVERED = 128;
-	/**
-	 * The object has not been modified since the last sync
-	 *
-	 * @deprecated
-	 */
-	const STATUS_NOTHING_TO_UPDATE = 256;
+	const STATUS_TO_RESTORE = 128;
 	/**
 	 * Final status indicating that the object is ignored and not processed by the sync,
 	 * e.g. the period of the object does not match the actual period defined by the origin.

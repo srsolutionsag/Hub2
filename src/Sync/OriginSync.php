@@ -77,8 +77,7 @@ class OriginSync implements IOriginSync {
 		IObject::STATUS_CREATED => 0,
 		IObject::STATUS_UPDATED => 0,
 		IObject::STATUS_OUTDATED => 0,
-		IObject::STATUS_IGNORED => 0,
-		IObject::STATUS_NOTHING_TO_UPDATE => 0
+		IObject::STATUS_IGNORED => 0
 	];
 	/**
 	 * @var OriginNotifications
@@ -144,36 +143,6 @@ class OriginSync implements IOriginSync {
 
 		$type = $this->origin->getObjectType();
 
-		/*if ($this->origin->isAdHoc()) {
-			// First fix and use dto full id as keys
-			$this->dtoObjects = array_reduce($this->dtoObjects, function (array $dto_objects, IDataTransferObject $dto_object): array {
-				$dto_objects[$this->factory->getId($dto_object->getExtId())] = $dto_object;
-
-				return $dto_objects;
-			}, []);
-			// Then simple complete all data with the new adhoc data. Be shure that keys are persists
-			$this->dtoObjects = $this->dtoObjects + array_map(function (IObject $object) use ($type): IDataTransferObject {
-					/**
-					 * @var IDataTransferObject $dto_object
-					 * /
-					$dto_object = (new DataTransferObjectFactory())->{$type}(NULL);
-
-					$dto_object->setData($object->getData());
-
-					return $dto_object;
-				}, $this->factory->{$type . "s"}());
-		}*/
-
-		// Separate shouldDeleted
-		$delivered_objects_to_delete = array_map(function (IDataTransferObject $dto_object) {
-			return $dto_object->getExtId();
-		}, array_filter($this->dtoObjects, function (IDataTransferObject $dto_object): bool {
-			return $dto_object->shouldDeleted();
-		}));
-		$this->dtoObjects = array_filter($this->dtoObjects, function (IDataTransferObject $dto_object) use (&$delivered_objects_to_delete): bool {
-			return (!in_array($dto_object->getExtId(), $delivered_objects_to_delete));
-		});
-
 		// Sort dto objects
 		$this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
 
@@ -182,32 +151,36 @@ class OriginSync implements IOriginSync {
 		// 1. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
 		// 2. Let the processor process the corresponding ILIAS object
 
+		$objects_to_outdated = [];
+
 		$ext_ids_delivered = [];
 		foreach ($this->dtoObjects as $dto) {
 			$ext_ids_delivered[] = $dto->getExtId();
 			/** @var IObject $object */
 			$object = $this->factory->$type($dto->getExtId());
+
 			$object->setDeliveryDate(time());
-			// We merge the existing data with the new data
-			$data = array_merge($object->getData(), $dto->getData());
-			$dto->setData($data);
-			// Set the intermediate status before processing the ILIAS object
-			$object->setStatus($this->statusTransition->finalToIntermediate($object));
-			$this->processObject($object, $dto);
+
+			if (!$dto->shouldDeleted()) {
+				// We merge the existing data with the new data
+				$data = array_merge($object->getData(), $dto->getData());
+				$dto->setData($data);
+				// Set the intermediate status before processing the ILIAS object
+				$object->setStatus($this->statusTransition->finalToIntermediate($object));
+				$this->processObject($object, $dto);
+			} else {
+				$objects_to_outdated[] = $object;
+			}
 		}
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
 
-		$delivered_objects_to_delete = array_map(function ($ext_id) use ($type) {
-			return $this->factory->{$type}($ext_id);
-		}, $delivered_objects_to_delete);
 		if (!$this->origin->isAdHoc()) {
-			// Not delete not not delivered on AdHoc
-			$delivered_objects_to_delete = array_unique(array_merge($delivered_objects_to_delete, $this->repository->getToDelete($ext_ids_delivered)));
+			$objects_to_outdated = array_unique(array_merge($objects_to_outdated, $this->repository->getToDelete($ext_ids_delivered)));
 		}
 
-		foreach ($delivered_objects_to_delete as $object) {
+		foreach ($objects_to_outdated as $object) {
 			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
 			$object->setStatus(IObject::STATUS_TO_OUTDATED);
 			$this->processObject($object, $nullDTO);

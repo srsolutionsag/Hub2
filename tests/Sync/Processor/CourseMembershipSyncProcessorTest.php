@@ -77,9 +77,9 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 			true,
 		])->andReturn(true);
 
-		$this->ilObjCourse = Mockery::mock("overload:\ilObjCourse", "ilObject");
+		$this->ilObjCourse = Mockery::mock(ilObjCourse::class, ilObject::class);
 
-		$this->ilCourseParticipants = Mockery::mock("overload:\ilCourseParticipants", "\ilParticipants");
+		$this->ilCourseParticipants = Mockery::mock("overload:" . ilCourseParticipants::class, ilParticipants::class);
 		$this->ilObjCourse->shouldReceive("getMembersObject")->once()->andReturn($this->ilCourseParticipants);
 
 		define(IL_CRS_TUTOR, 3);
