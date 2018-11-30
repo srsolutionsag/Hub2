@@ -403,6 +403,8 @@ origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Es werden nur die Daten geliefert, die geändert wurden
 origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
+table_md#:#MD
+table_tax#:#TAX
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
 removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren

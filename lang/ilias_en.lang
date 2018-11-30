@@ -404,6 +404,8 @@ origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
 origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
+table_md#:#MD
+table_tax#:#TAX
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
 removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin
