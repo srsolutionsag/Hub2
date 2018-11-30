@@ -11,6 +11,9 @@ namespace srag\Plugins\Hub2\Log;
  */
 interface IOriginLog extends ILog {
 
+	const LOG_TYPE_ORIGIN = 2;
+
+
 	/**
 	 * @return int
 	 */
@@ -23,4 +26,18 @@ interface IOriginLog extends ILog {
 	 * @return self
 	 */
 	public function withOriginId(int $origin_id): self;
+
+
+	/**
+	 * @return string
+	 */
+	public function getOriginObjectType(): string;
+
+
+	/**
+	 * @param string $origin_object_type
+	 *
+	 * @return self
+	 */
+	public function withOriginObjectType(string $origin_object_type): self;
 }

@@ -17,6 +17,7 @@ interface ILog {
 	const LEVEL_INFO = 200;
 	const LEVEL_WARNING = 300;
 	const LEVEL_CRITICAL = 500;
+	const LOG_TYPE_HUB2 = 1;
 
 
 	/**
@@ -31,6 +32,20 @@ interface ILog {
 	 * @return self
 	 */
 	public function withLogId(int $log_id): self;
+
+
+	/**
+	 * @return int
+	 */
+	public function getLogType(): int;
+
+
+	/**
+	 * @param int $log_type
+	 *
+	 * @return self
+	 */
+	public function withLogType(int $log_type): self;
 
 
 	/**

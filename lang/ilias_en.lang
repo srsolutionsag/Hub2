@@ -358,7 +358,7 @@ status_16#:#Updated
 status_2#:#To create
 status_32#:#To delete
 subtab_origins#:#Overview
-subtab_data#:#Verlauf
+subtab_data#:#History
 grp_prop_activate#:#Activate
 grp_prop_delete_mode#:#Delete behavior
 grp_prop_delete_mode_close#:#Make group a "closed group"
@@ -406,6 +406,19 @@ origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
 table_md#:#MD
 table_tax#:#TAX
+logs_date#:#Date / Time
+logs_level#:#Level
+logs_level_200#:#Info
+logs_level_300#:#Warning
+logs_level_500#:#Critical
+logs_log_type#:#Type
+logs_log_type_1#:#Hub2
+logs_log_type_2#:#Origin
+logs_message#:#Message
+logs_origin_id#:#Origin ID
+logs_origin_object_type#:#Origin object type
+logs_subtab_logs#:#Logs
+logs_title#:#Title
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
 removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin

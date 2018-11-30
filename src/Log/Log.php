@@ -16,23 +16,21 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-abstract class Log extends ActiveRecord implements ILog {
+class Log extends ActiveRecord implements ILog {
 
 	use DICTrait;
 	use Hub2Trait;
 	/**
 	 * @var string
-	 *
-	 * @abstract
 	 */
-	const TABLE_NAME = "";
+	const TABLE_NAME = "sr_hub2_log";
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
 	/**
 	 * @return string
 	 */
-	public final function getConnectorContainerName() {
+	public final function getConnectorContainerName(): string {
 		return static::TABLE_NAME;
 	}
 
@@ -42,11 +40,26 @@ abstract class Log extends ActiveRecord implements ILog {
 	 *
 	 * @deprecated
 	 */
-	public final static function returnDbTableName() {
+	public final static function returnDbTableName(): string {
 		return static::TABLE_NAME;
 	}
 
 
+	/**
+	 * @var array
+	 */
+	public static $log_types = [
+		self::LOG_TYPE_HUB2 => self::LOG_TYPE_HUB2,
+		IOriginLog::LOG_TYPE_ORIGIN => IOriginLog::LOG_TYPE_ORIGIN
+	];
+	/**
+	 * @var array
+	 */
+	public static $levels = [
+		self::LEVEL_INFO => self::LEVEL_INFO,
+		self::LEVEL_WARNING => self::LEVEL_WARNING,
+		self::LEVEL_CRITICAL => self::LEVEL_CRITICAL
+	];
 	/**
 	 * @var int
 	 *
@@ -58,6 +71,15 @@ abstract class Log extends ActiveRecord implements ILog {
 	 * @con_sequence     true
 	 */
 	protected $log_id = NULL;
+	/**
+	 * @var int
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       2
+	 * @con_is_notnull   true
+	 */
+	protected $log_type = self::LOG_TYPE_HUB2;
 	/**
 	 * @var string
 	 *
@@ -147,6 +169,7 @@ abstract class Log extends ActiveRecord implements ILog {
 		$field_name, $field_value) {
 		switch ($field_name) {
 			case "log_id":
+			case "log_type":
 			case "level":
 				return intval($field_value);
 
@@ -187,6 +210,26 @@ abstract class Log extends ActiveRecord implements ILog {
 	 */
 	public function withLogId(int $log_id): ILog {
 		$this->log_id = $log_id;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getLogType(): int {
+		return $this->log_type;
+	}
+
+
+	/**
+	 * @param int $log_type
+	 *
+	 * @return self
+	 */
+	public function withLogType(int $log_type): ILog {
+		$this->log_type = $log_type;
 
 		return $this;
 	}

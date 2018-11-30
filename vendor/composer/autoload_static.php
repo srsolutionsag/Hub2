@@ -16,7 +16,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
             'srag\\RemovePluginDataConfirm\\Hub2\\' => 34,
             'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
-            'srag\\DIC\\' => 9,
+            'srag\\DIC\\Hub2\\' => 14,
             'srag\\CustomInputGUIs\\Hub2\\' => 26,
             'srag\\ActiveRecordConfig\\Hub2\\' => 29,
         ),
@@ -52,7 +52,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         array (
             0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
-        'srag\\DIC\\' => 
+        'srag\\DIC\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
@@ -857,6 +857,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'hub2ConfigOriginsGUI' => __DIR__ . '/../..' . '/classes/UI/class.hub2ConfigOriginsGUI.php',
         'hub2CustomViewGUI' => __DIR__ . '/../..' . '/classes/UI/CustomView/class.hub2CustomViewGUI.php',
         'hub2DataGUI' => __DIR__ . '/../..' . '/classes/UI/class.hub2DataGUI.php',
+        'hub2LogsGUI' => __DIR__ . '/../..' . '/classes/UI/Log/class.hub2LogsGUI.php',
         'hub2MainGUI' => __DIR__ . '/../..' . '/classes/UI/class.hub2MainGUI.php',
         'hub2RemoveDataConfirm' => __DIR__ . '/../..' . '/classes/uninstall/class.hub2RemoveDataConfirm.php',
         'ilHub2ConfigGUI' => __DIR__ . '/../..' . '/classes/class.ilHub2ConfigGUI.php',
@@ -996,6 +997,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Log\\ILog' => __DIR__ . '/../..' . '/src/Log/ILog.php',
         'srag\\Plugins\\Hub2\\Log\\IOriginLog' => __DIR__ . '/../..' . '/src/Log/IOriginLog.php',
         'srag\\Plugins\\Hub2\\Log\\Log' => __DIR__ . '/../..' . '/src/Log/Log.php',
+        'srag\\Plugins\\Hub2\\Log\\LogsTableGUI' => __DIR__ . '/../..' . '/src/Log/LogsTableGUI.php',
         'srag\\Plugins\\Hub2\\Log\\Old\\ILogOld' => __DIR__ . '/../..' . '/src/Log/Old/ILogOld.php',
         'srag\\Plugins\\Hub2\\Log\\Old\\LoggerOld' => __DIR__ . '/../..' . '/src/Log/Old/LoggerOld.php',
         'srag\\Plugins\\Hub2\\Log\\Old\\OriginLogOld' => __DIR__ . '/../..' . '/src/Log/Old/OriginLogOld.php',

@@ -5,6 +5,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\ArConfigOld;
 use srag\Plugins\Hub2\Jobs\RunSync;
+use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Log\OriginLog;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -96,6 +97,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		self::dic()->database()->dropTable(ArConfigOld::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+		self::dic()->database()->dropTable(Log::TABLE_NAME, false);
 		self::dic()->database()->dropTable(OriginLog::TABLE_NAME, false);
 
 		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");

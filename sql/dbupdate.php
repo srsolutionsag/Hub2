@@ -77,6 +77,7 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#8>
 <?php
+\srag\Plugins\Hub2\Log\Log::updateDB();
 \srag\Plugins\Hub2\Log\OriginLog::updateDB();
 ?>
 <#9>
@@ -92,4 +93,9 @@ if (strpos($administration_role_ids, "[") === false) {
 \srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::updateDB();
 \srag\Plugins\Hub2\Object\OrgUnit\AROrgUnit::updateDB();
 \srag\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership::updateDB();
+?>
+<#10>
+<?php
+\srag\Plugins\Hub2\Log\Log::updateDB();
+\srag\Plugins\Hub2\Log\OriginLog::updateDB();
 ?>
