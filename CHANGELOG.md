@@ -12,4 +12,5 @@
 - Fix: Not delete data on origin delete
 - Fix: Recreate deleted users
 - Refactoring, using new libraries
+- PHP version checker
 - Some other fixes and improvements
