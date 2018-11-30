@@ -864,6 +864,7 @@ return array(
     'srag\\DIC\\Hub2\\Exception\\DICException' => $vendorDir . '/srag/dic/src/Exception/DICException.php',
     'srag\\DIC\\Hub2\\Output\\Output' => $vendorDir . '/srag/dic/src/Output/Output.php',
     'srag\\DIC\\Hub2\\Output\\OutputInterface' => $vendorDir . '/srag/dic/src/Output/OutputInterface.php',
+    'srag\\DIC\\Hub2\\PHPVersionChecker' => $vendorDir . '/srag/dic/src/PHPVersionChecker.php',
     'srag\\DIC\\Hub2\\Plugin\\Plugin' => $vendorDir . '/srag/dic/src/Plugin/Plugin.php',
     'srag\\DIC\\Hub2\\Plugin\\PluginInterface' => $vendorDir . '/srag/dic/src/Plugin/PluginInterface.php',
     'srag\\DIC\\Hub2\\Plugin\\Pluginable' => $vendorDir . '/srag/dic/src/Plugin/Pluginable.php',
