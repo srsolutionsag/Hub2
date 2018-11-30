@@ -202,7 +202,7 @@ class OriginSync implements IOriginSync {
 		$delivered_objects_to_delete = array_map(function ($ext_id) use ($type) {
 			return $this->factory->{$type}($ext_id);
 		}, $delivered_objects_to_delete);
-		if ($this->origin->isAdHoc()) {
+		if (!$this->origin->isAdHoc()) {
 			// Not delete not not delivered on AdHoc
 			$delivered_objects_to_delete = array_unique(array_merge($delivered_objects_to_delete, $this->repository->getToDelete($ext_ids_delivered)));
 		}
