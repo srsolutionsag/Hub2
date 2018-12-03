@@ -113,6 +113,8 @@ class DataTableGUI extends ilTable2GUI {
 	 * @inheritdoc
 	 */
 	public function initFilter() {
+		$this->setDisableFilterHiding(true);
+
 		$origin = new ilSelectInputGUI(self::plugin()->translate('data_table_header_origin_id'), 'origin_id');
 		$origin->setOptions($this->getAvailableOrigins());
 		$this->addAndReadFilterItem($origin);
@@ -254,7 +256,7 @@ class DataTableGUI extends ilTable2GUI {
 					break;
 				case self::F_ORIGIN_ID:
 					if (!$origin) {
-						$this->tpl->setVariable('VALUE', " ".self::plugin()->translate("origin_deleted"));
+						$this->tpl->setVariable('VALUE', " " . self::plugin()->translate("origin_deleted"));
 					} else {
 						$this->tpl->setVariable('VALUE', $origin->getTitle());
 					}

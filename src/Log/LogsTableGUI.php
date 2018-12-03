@@ -147,7 +147,7 @@ class LogsTableGUI extends TableGUI {
 		$origin_object_type = $filter["origin_object_type"];
 
 		$this->setData(self::logs()
-			->getArray($this->getOrderColumn(), $this->getOrderDirection(), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type));
+			->getLogs($this->getOrderColumn(), $this->getOrderDirection(), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type));
 	}
 
 
