@@ -166,11 +166,15 @@ class LogsTableGUI extends TableGUI {
 		}
 		$origin_object_type = $filter["origin_object_type"];
 
-		// Fix stupid ilTable2GUI ...
+		// Fix stupid ilTable2GUI !!! ...
 		$this->determineOffsetAndOrder();
 
-		$this->setData(self::logs()
-			->getLogs($this->getOrderField(), $this->getOrderDirection(), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type));
+		$logs = self::logs()
+			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type);
+
+		$this->setData($logs);
+
+		$this->setMaxCount(count($logs));
 	}
 
 
