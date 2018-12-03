@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Log;
 
 use ilDateTime;
+use stdClass;
 
 /**
  * Interface ILog
@@ -105,17 +106,26 @@ interface ILog {
 
 
 	/**
-	 * @return array
+	 * @return stdClass
 	 */
-	public function getAdditionalData(): array;
+	public function getAdditionalData(): stdClass;
 
 
 	/**
-	 * @param array $additional_data
+	 * @param stdClass $additional_data
 	 *
 	 * @return self
 	 */
-	public function withAdditionalData(array $additional_data): self;
+	public function withAdditionalData(stdClass $additional_data): self;
+
+
+	/**
+	 * @param string $key
+	 * @param mixed  $value
+	 *
+	 * @return self
+	 */
+	public function addAdditionalData(string $key, $value): self;
 
 
 	/**

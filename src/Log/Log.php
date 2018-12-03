@@ -8,6 +8,7 @@ use ilDateTime;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use stdClass;
 
 /**
  * Class Log
@@ -114,13 +115,13 @@ class Log extends ActiveRecord implements ILog {
 	 */
 	protected $level = self::LEVEL_INFO;
 	/**
-	 * @var array
+	 * @var stdClass
 	 *
 	 * @con_has_field    true
 	 * @con_fieldtype    text
 	 * @con_is_notnull   true
 	 */
-	protected $additional_data = [];
+	protected $additional_data;
 
 
 	/**
@@ -133,6 +134,8 @@ class Log extends ActiveRecord implements ILog {
 	 */
 	public final function __construct(/*int*/
 		$primary_key_value = 0, arConnector $connector = NULL) {
+		$this->additional_data = new stdClass();
+
 		parent::__construct($primary_key_value, $connector);
 	}
 
@@ -310,7 +313,7 @@ class Log extends ActiveRecord implements ILog {
 	/**
 	 * @inheritdoc
 	 */
-	public function getAdditionalData(): array {
+	public function getAdditionalData(): stdClass {
 		return $this->additional_data;
 	}
 
@@ -318,8 +321,18 @@ class Log extends ActiveRecord implements ILog {
 	/**
 	 * @inheritdoc
 	 */
-	public function withAdditionalData(array $additional_data): ILog {
+	public function withAdditionalData(stdClass $additional_data): ILog {
 		$this->additional_data = $additional_data;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function addAdditionalData(string $key, $value): ILog {
+		$this->additional_data[$key] = $value;
 
 		return $this;
 	}
