@@ -28,6 +28,10 @@ final class Logs {
 	 * @var self
 	 */
 	protected static $instance = NULL;
+	/**
+	 * @var Log[]
+	 */
+	protected static $logs_classes = [ Log::class, OriginLog::class ];
 
 
 	/**
@@ -65,39 +69,44 @@ final class Logs {
 	 * @return array
 	 */
 	public function getArray(string $sort_by = NULL, string $sort_by_direction = NULL, int $log_type = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL): array {
-		// TODO: Include Log::where([])
-		$where = OriginLog::where([]);
+		$logs = [];
 
-		if (!empty($log_type)) {
-			$where = $where->where([ "log_type" => $log_type ]);
-		}
-		if (!empty($title)) {
-			$where = $where->where([ "title" => '%' . $title . '%' ], "LIKE");
-		}
-		if (!empty($message)) {
-			$where = $where->where([ "message" => '%' . $message . '%' ], "LIKE");
-		}
-		if (!empty($date_start)) {
-			$where = $where->where([ "date" => $date_start ], ">=");
-		}
-		if (!empty($date_end)) {
-			$where = $where->where([ "date" => $date_end ], "<=");
-		}
-		if (!empty($level)) {
-			$where = $where->where([ "level" => $level ]);
-		}
-		if (!empty($origin_id)) {
-			$where = $where->where([ "origin_id" => $origin_id ]);
-		}
-		if (!empty($origin_object_type)) {
-			$where = $where->where([ "origin_object_type" => $origin_object_type ]);
+		foreach (self::$logs_classes as $log_class) {
+			$where = $log_class::where([]);
+
+			if (!empty($log_type)) {
+				$where = $where->where([ "log_type" => $log_type ]);
+			}
+			if (!empty($title)) {
+				$where = $where->where([ "title" => '%' . $title . '%' ], "LIKE");
+			}
+			if (!empty($message)) {
+				$where = $where->where([ "message" => '%' . $message . '%' ], "LIKE");
+			}
+			if (!empty($date_start)) {
+				$where = $where->where([ "date" => $date_start->get(IL_CAL_DATETIME) ], ">=");
+			}
+			if (!empty($date_end)) {
+				$where = $where->where([ "date" => $date_end->get(IL_CAL_DATETIME) ], "<=");
+			}
+			if (!empty($level)) {
+				$where = $where->where([ "level" => $level ]);
+			}
+			if (!empty($origin_id)) {
+				$where = $where->where([ "origin_id" => $origin_id ]);
+			}
+			if (!empty($origin_object_type)) {
+				$where = $where->where([ "origin_object_type" => $origin_object_type ]);
+			}
+
+			if (!empty($sort_by)) {
+				$where = $where->orderBy($sort_by, $sort_by_direction);
+			}
+
+			$logs = array_merge($logs, $where->getArray());
 		}
 
-		if (!empty($sort_by)) {
-			$where = $where->orderBy($sort_by, $sort_by_direction);
-		}
-
-		return $where->getArray();
+		return $logs;
 	}
 
 
@@ -114,6 +123,26 @@ final class Logs {
 		$log = Log::where([ "log_id" => $log_id ])->first();
 
 		return $log;
+	}
+
+
+	/**
+	 * @param int $keep_old_logs_time
+	 *
+	 * @return ILog[]
+	 */
+	public function getOldLogs(int $keep_old_logs_time): array {
+		$logs = [];
+
+		$time = time();
+		$keep_old_logs_time_timestamp = ($time - ($keep_old_logs_time * 24 * 60 * 60));
+		$keep_old_logs_time_date = new ilDateTime($keep_old_logs_time_timestamp, IL_CAL_UNIX);
+
+		foreach (self::$logs_classes as $log_class) {
+			$logs = array_merge($logs, $log_class::where([ "date" => $keep_old_logs_time_date->get(IL_CAL_DATETIME) ], "<")->get());
+		}
+
+		return $logs;
 	}
 
 

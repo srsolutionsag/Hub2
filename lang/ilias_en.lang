@@ -406,7 +406,13 @@ origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
 table_md#:#MD
 table_tax#:#TAX
+logs_cron#:#Delete old logs
+logs_cron_description#:#After the specified config time, old logs will be deleted automatically
 logs_date#:#Date / Time
+logs_days#:#Days
+logs_deleted_status#:#Deleted %s log(s)
+logs_keep_old_logs_time#:#Keyp old logs maximal for
+logs_keep_old_logs_time_info#:#After the specified time, old logs will be deleted automatically
 logs_level#:#Level
 logs_level_200#:#Info
 logs_level_300#:#Warning
@@ -414,10 +420,10 @@ logs_level_500#:#Critical
 logs_log_type#:#Type
 logs_log_type_1#:#Hub2
 logs_log_type_2#:#Origin
+logs_logs#:#Logs
 logs_message#:#Message
 logs_origin_id#:#Origin ID
 logs_origin_object_type#:#Origin object type
-logs_subtab_logs#:#Logs
 logs_title#:#Title
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?

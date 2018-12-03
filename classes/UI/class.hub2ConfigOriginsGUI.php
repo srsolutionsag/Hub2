@@ -34,7 +34,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	const ORIGIN_ID = 'origin_id';
 	const SUBTAB_ORIGINS = 'subtab_origins';
 	const SUBTAB_DATA = 'subtab_data';
-	const SUBTAB_LOGS = 'subtab_logs';
+	const SUBTAB_LOGS = "subtab_logs";
 	const CMD_RUN = 'run';
 	const CMD_RUN_FORCE_UPDATE = 'runForceUpdate';
 	const CMD_ADD_ORIGIN = 'addOrigin';
@@ -100,8 +100,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		self::dic()->tabs()->addSubTab(self::SUBTAB_DATA, self::plugin()->translate(self::SUBTAB_DATA), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
 
-		self::dic()->tabs()->addSubTab(self::SUBTAB_LOGS, self::plugin()->translate(self::SUBTAB_LOGS, hub2LogsGUI::LANG_MODULE_LOGS), self::dic()
-			->ctrl()->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX));
+		self::dic()->tabs()->addSubTab(self::SUBTAB_LOGS, self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS), self::dic()->ctrl()
+			->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX));
 
 		self::dic()->tabs()->activateTab(self::TAB_ORIGINS);
 		self::dic()->tabs()->activateSubTab(self::SUBTAB_ORIGINS);

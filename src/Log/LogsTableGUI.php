@@ -212,6 +212,6 @@ class LogsTableGUI extends TableGUI {
 	 * @inheritdoc
 	 */
 	protected function initTitle()/*: void*/ {
-		$this->setTitle("subtab_logs");
+		$this->setTitle("logs");
 	}
 }

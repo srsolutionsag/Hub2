@@ -5,6 +5,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\ArConfigOld;
 use srag\Plugins\Hub2\Jobs\RunSync;
+use srag\Plugins\Hub2\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Log\OriginLog;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
@@ -66,7 +67,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return ilCronJob[]
 	 */
 	public function getCronJobInstances(): array {
-		return [ new RunSync() ];
+		return [ new RunSync(), new DeleteOldLogsJob() ];
 	}
 
 
@@ -75,8 +76,18 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 *
 	 * @return ilCronJob
 	 */
-	public function getCronJobInstance($a_job_id): ilCronJob {
-		return new $a_job_id();
+	public function getCronJobInstance(/*string*/
+		$a_job_id)/*: ?ilCronJob*/ {
+		switch ($a_job_id) {
+			case RunSync::CRON_JOB_ID:
+				return new RunSync();
+
+			case DeleteOldLogsJob::CRON_JOB_ID:
+				return new DeleteOldLogsJob();
+
+			default:
+				return NULL;
+		}
 	}
 
 

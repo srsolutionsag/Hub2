@@ -121,6 +121,13 @@ interface ILog {
 	/**
 	 *
 	 */
+	public function delete()/*: void*/
+	;
+
+
+	/**
+	 *
+	 */
 	public function store()/*: void*/
 	;
 }

@@ -405,7 +405,13 @@ origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
 table_md#:#MD
 table_tax#:#TAX
+logs_cron#:#Alte Logs löschen
+logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht
 logs_date#:#Datum / Zeit
+logs_days#:#Tage
+logs_deleted_status#:#%s Log(s) gelöscht
+logs_keep_old_logs_time#:#Alte Logs maximal behalten für
+logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht
 logs_level#:#Level
 logs_level_200#:#Info
 logs_level_300#:#Warnung
@@ -413,10 +419,10 @@ logs_level_500#:#Kritisch
 logs_log_type#:#Typ
 logs_log_type_1#:#Hub2
 logs_log_type_2#:#Origin
+logs_logs#:#Logs
 logs_message#:#Nachricht
 logs_origin_id#:#Origin-ID
 logs_origin_object_type#:#Origin-Objekt-Typ
-logs_subtab_logs#:#Logs
 logs_title#:#Titel
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?

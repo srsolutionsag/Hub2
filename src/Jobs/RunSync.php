@@ -4,12 +4,14 @@ namespace srag\Plugins\Hub2\Jobs;
 
 use ilCronJob;
 use ilHub2Plugin;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 
 /**
@@ -18,13 +20,19 @@ use Throwable;
  * @package srag\Plugins\Hub2\Jobs
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class RunSync extends AbstractJob {
+class RunSync extends ilCronJob {
+
+	use DICTrait;
+	use Hub2Trait;
+	const CRON_JOB_ID = self::class;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @return string
 	 */
 	public function getId(): string {
-		return get_class($this);
+		return self::CRON_JOB_ID;
 	}
 
 

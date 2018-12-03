@@ -30,6 +30,7 @@ class ArConfig extends ActiveRecordConfig {
 	const KEY_GLOBAL_HOCK_ACTIVE = 'key_global_hock_active';
 	const KEY_GLOBAL_HOCK_PATH = 'key_global_hock_path';
 	const KEY_GLOBAL_HOCK_CLASS = 'key_global_hock_class';
+	const KEY_KEEP_OLD_LOGS_TIME = "keep_old_logs_time";
 	/**
 	 * @var array
 	 */
@@ -45,12 +46,15 @@ class ArConfig extends ActiveRecordConfig {
 		self::KEY_CUSTOM_VIEWS_CLASS => self::TYPE_STRING,
 		self::KEY_GLOBAL_HOCK_ACTIVE => self::TYPE_BOOLEAN,
 		self::KEY_GLOBAL_HOCK_PATH => self::TYPE_STRING,
-		self::KEY_GLOBAL_HOCK_CLASS => self::TYPE_STRING
+		self::KEY_GLOBAL_HOCK_CLASS => self::TYPE_STRING,
+		self::KEY_KEEP_OLD_LOGS_TIME => [ self::TYPE_INTEGER, 7 ]
 	];
 
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated TODO: Only because no functional PHP code in static array supported!
 	 */
 	protected static function getDefaultValue(/*string*/
 		$name, /*int*/
