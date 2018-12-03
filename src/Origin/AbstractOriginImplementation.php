@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
@@ -49,12 +48,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	private $factory;
 	/**
-	 * @var ILogOld
-	 *
-	 * @deprecated
-	 */
-	private $originLog;
-	/**
 	 * @var OriginNotifications
 	 */
 	private $originNotifications;
@@ -62,6 +55,10 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 * @var array
 	 */
 	protected $data = [];
+	/**
+	 * @var IOrigin
+	 */
+	protected $origin;
 
 
 	/**
@@ -69,19 +66,18 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 *
 	 * @param IOriginConfig              $config
 	 * @param IDataTransferObjectFactory $factory
-	 * @param ILogOld                    $originLog
 	 * @param OriginNotifications        $originNotifications
 	 * @param IMetadataFactory           $metadataFactory
 	 * @param ITaxonomyFactory           $taxonomyFactory
 	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILogOld $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy, IOrigin $origin) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
-		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
 		$this->metadataFactory = $metadataFactory;
 		$this->taxonomyFactory = $taxonomyFactory;
 		$this->mapping_strategy_factory = $mapping_strategy;
+		$this->origin = $origin;
 	}
 
 
@@ -122,16 +118,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function taxonomy() {
 		return $this->taxonomyFactory;
-	}
-
-
-	/**
-	 * @return ILogOld
-	 *
-	 * @deprecated
-	 */
-	final protected function log() {
-		return $this->originLog;
 	}
 
 

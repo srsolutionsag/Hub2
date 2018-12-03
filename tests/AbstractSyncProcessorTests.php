@@ -4,8 +4,7 @@ require_once __DIR__ . "/AbstractHub2Tests.php";
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
-use srag\Plugins\Hub2\Log\Old\ILogOld;
-use srag\Plugins\Hub2\Log\OriginLog;
+use srag\DIC\Hub2\DICStatic;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -40,10 +39,6 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	 */
 	protected $statusTransition;
 	/**
-	 * @var MockInterface|ILogOld
-	 */
-	protected $originLog;
-	/**
 	 * @var IDataTransferObject
 	 */
 	protected $dto;
@@ -70,11 +65,6 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected $originImplementation;
 
 
-	protected function initLog() {
-		$this->originLog = Mockery::mock(OriginLog::class);
-	}
-
-
 	protected function initNotifications() {
 		$this->originNotifications = new OriginNotifications();
 	}
@@ -88,7 +78,6 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected function setupGeneralDependencies() {
 		$this->initStatusTransitions();
 		$this->initNotifications();
-		$this->initLog();
 		$this->initDIC();
 	}
 
@@ -120,6 +109,8 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 		$language_mock = Mockery::mock('overload:\ilLanguage', "ilObject");
 		$language_mock->shouldReceive('getDefaultLanguage')->andReturn('en');
 		$DIC->shouldReceive('language')->once()->andReturn($language_mock);
+
+		DICStatic::clearCache();
 	}
 
 

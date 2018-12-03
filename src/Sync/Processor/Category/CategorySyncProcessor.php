@@ -6,7 +6,6 @@ use ilObjCategory;
 use ilObjectServiceSettingsGUI;
 use ilRepUtil;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\Old\ILogOld;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -55,11 +54,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILogOld                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILogOld $originLog, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications) {
+		parent::__construct($origin, $implementation, $transition, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}

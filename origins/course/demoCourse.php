@@ -46,7 +46,7 @@ class demoCourse extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData(): int {
-		$this->log()->write("This is a test-log entry");
+		self::logs()->originLog($this->origin)->withMessage("This is a test-log entry")->store();
 
 		$time = time();
 		for ($x = 1; $x <= 10; $x ++) {
