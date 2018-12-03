@@ -13,6 +13,7 @@ use srag\CustomInputGUIs\Hub2\PropertyFormGUI\PropertyFormGUI;
 use srag\CustomInputGUIs\Hub2\TableGUI\TableGUI;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use stdClass;
 
 /**
  * Class LogsTableGUI
@@ -49,7 +50,14 @@ class LogsTableGUI extends TableGUI {
 				break;
 
 			case "additional_data":
-				$column = json_decode($row[$column]);
+				$column = $row[$column];
+				if (!is_object($column)) {
+					$column = json_decode($column);
+				}
+				if (!is_object($column)) {
+					$column = new stdClass();
+				}
+				$column = get_object_vars($column);
 
 				$column = implode("<br>", array_map(function (string $key, $value): string {
 					return "$key: $value";
@@ -88,7 +96,7 @@ class LogsTableGUI extends TableGUI {
 			return [
 				"id" => $key,
 				"default" => ($key !== "additional_data"),
-				"sort" => true
+				"sort" => ($key !== "additional_data")
 			];
 		}, $columns);
 
@@ -105,9 +113,8 @@ class LogsTableGUI extends TableGUI {
 		$this->setDefaultOrderField("date");
 		$this->setDefaultOrderDirection("desc");
 
-		// TODO: Working setExternalSegmentation and setExternalSorting
-		//$this->setExternalSegmentation(true);
-		//$this->setExternalSorting(true);
+		$this->setExternalSorting(true);
+		$this->setExternalSegmentation(true);
 	}
 
 
@@ -159,8 +166,11 @@ class LogsTableGUI extends TableGUI {
 		}
 		$origin_object_type = $filter["origin_object_type"];
 
+		// Fix stupid ilTable2GUI ...
+		$this->determineOffsetAndOrder();
+
 		$this->setData(self::logs()
-			->getLogs($this->getOrderColumn(), $this->getOrderDirection(), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type));
+			->getLogs($this->getOrderField(), $this->getOrderDirection(), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type));
 	}
 
 
