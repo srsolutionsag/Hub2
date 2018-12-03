@@ -406,6 +406,7 @@ origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
 table_md#:#MD
 table_tax#:#TAX
+logs_additional_data#:#Additional data
 logs_cron#:#Delete old logs
 logs_cron_description#:#After the specified config time, old logs will be deleted automatically
 logs_date#:#Date / Time
@@ -422,6 +423,7 @@ logs_log_type_1#:#Hub2
 logs_log_type_2#:#Origin
 logs_logs#:#Logs
 logs_message#:#Message
+logs_no_additional_data#:#No additional data
 logs_origin_id#:#Origin ID
 logs_origin_object_type#:#Origin object type
 logs_title#:#Title

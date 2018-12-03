@@ -405,6 +405,7 @@ origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
 table_md#:#MD
 table_tax#:#TAX
+logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
 logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht
 logs_date#:#Datum / Zeit
@@ -421,6 +422,7 @@ logs_log_type_1#:#Hub2
 logs_log_type_2#:#Origin
 logs_logs#:#Logs
 logs_message#:#Nachricht
+logs_no_additional_data#:#Keine zusätzlichen Daten
 logs_origin_id#:#Origin-ID
 logs_origin_object_type#:#Origin-Objekt-Typ
 logs_title#:#Titel

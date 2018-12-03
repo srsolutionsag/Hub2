@@ -48,6 +48,18 @@ class LogsTableGUI extends TableGUI {
 				$column = self::plugin()->translate("origin_object_type_" . $row[$column]);
 				break;
 
+			case "additional_data":
+				$column = json_decode($row[$column]);
+
+				$column = implode("<br>", array_map(function (string $key, $value): string {
+					return "$key: $value";
+				}, array_keys($column), $column));
+
+				if (empty($column)) {
+					$column = self::plugin()->translate("no_additional_data", hub2LogsGUI::LANG_MODULE_LOGS);
+				}
+				break;
+
 			default:
 				$column = $row[$column];
 				break;
@@ -68,13 +80,14 @@ class LogsTableGUI extends TableGUI {
 			"date" => "date",
 			"level" => "level",
 			"origin_id" => "origin_id",
-			"origin_object_type" => "origin_object_type"
+			"origin_object_type" => "origin_object_type",
+			"additional_data" => "additional_data"
 		];
 
 		$columns = array_map(function (string $key): array {
 			return [
 				"id" => $key,
-				"default" => true,
+				"default" => ($key !== "additional_data"),
 				"sort" => true
 			];
 		}, $columns);
