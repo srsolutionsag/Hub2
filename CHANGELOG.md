@@ -5,7 +5,7 @@
 - AdHoc feature
 - CustomView feature
 - GlobalHook feature
-- New logs will be logged in database, not in files anymore
+- New logs will be logged in database, not in files anymore. Also cron job to automatic delete old logs with config days
 - More meaningful GUI for force update synch: Buttons. Also implement this for a single origin synch
 - New origin synch status model
 - Fix: Add correct namespace for new origins
