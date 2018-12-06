@@ -320,6 +320,16 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 */
 	protected function runOriginSync(bool $force_update = false)/*: void*/ {
 		$origin = $this->getOrigin(intval(filter_input(INPUT_GET, self::ORIGIN_ID)));
+
+        try {
+            $global_hook = new GlobalHook();
+            if (!$global_hook->beforeSync([$origin])) {
+                self::dic()->ctrl()->redirect($this);
+            }
+        } catch (Throwable $e) {
+            $global_hook->handleExceptions([ $e ]);
+        }
+
 		if ($force_update) {
 			$origin->forceUpdate();
 		}
@@ -330,10 +340,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			$originSync->execute();
 		} catch (Throwable $e) {
 			// Any exception being forwarded to here means that we failed to execute the sync at some point
+            $global_hook->handleExceptions([ $e ]);
+
 			ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
 		}
 		$summary->addOriginSync($originSync);
 		$summary->sendNotifications();
+        $global_hook->afterSync([$origin]);
+
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
 		self::dic()->ctrl()->redirect($this);
 	}
