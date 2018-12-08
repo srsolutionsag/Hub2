@@ -402,6 +402,8 @@ data_table_status_ignored#:#Ignored
 data_table_status_not_ignored#:#Not ignored
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
+origin_form_field_adhoc_parent_scope#:#Set Scope to Parent
+origin_form_field_adhoc_parent_scope_info#:#Only the data of containers which have been changed will be delivered
 origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
 table_md#:#MD

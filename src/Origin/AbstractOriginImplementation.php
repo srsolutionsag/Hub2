@@ -137,4 +137,11 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	public function overrideStatus(HookObject $hook) {
 		// TODO: Implement overrideStatus() method.
 	}
+
+    /**
+     * @inheritdoc
+     */
+    public function getAdHocParentScopesAsExtIds():array{
+	    return [];
+    }
 }
