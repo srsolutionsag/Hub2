@@ -93,6 +93,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 * @inheritdoc
 	 */
 	public function getToDelete(array $ext_ids) {
+        $class = $this->getClass();
 
 		if (count($ext_ids) > 0) {
 			/** @var ActiveRecord $class */
