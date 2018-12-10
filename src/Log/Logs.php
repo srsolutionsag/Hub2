@@ -33,6 +33,12 @@ final class Logs {
 	 */
 	protected static $logs_classes = [ Log::class, OriginLog::class ];
 
+    /**
+     * Additional data which should appear in all logs. E.g. something like
+     * ID of datajunk of delivering system etc.
+     * @var \stdClass
+     */
+    protected $global_additional_data;
 
 	/**
 	 * @return self
@@ -50,7 +56,7 @@ final class Logs {
 	 * Logs constructor
 	 */
 	private function __construct() {
-
+        $this->withGlobalAdditionalData(new \stdClass());
 	}
 
 
@@ -100,6 +106,9 @@ final class Logs {
 			if (!empty($origin_object_type)) {
 				$where = $where->where([ "origin_object_type" => $origin_object_type ]);
 			}
+            if (!empty($additional_data)) {
+                $where = $where->where([ "additional_data" => '%' . $additional_data. '%' ], "LIKE" );
+            }
 
 			if ($sort_by !== NULL && $sort_by_direction !== NULL) {
 				$where = $where->orderBy($sort_by, $sort_by_direction);
@@ -179,7 +188,9 @@ final class Logs {
 	 * @return ILog
 	 */
 	public function log(): ILog {
-		return (new Log());
+	    $log = new Log();
+        $log = $log->withAdditionalData(clone $this->getGlobalAdditionalData());
+		return $log;
 	}
 
 
@@ -187,6 +198,26 @@ final class Logs {
 	 * @return ILog
 	 */
 	public function originLog(IOrigin $orgin): ILog {
-		return (new OriginLog())->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
+	    $log = new OriginLog();
+        $log = $log->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
+        $log = $log->withAdditionalData(clone $this->getGlobalAdditionalData());
+        return $log;
 	}
+
+    /**
+     * @return \stdClass
+     */
+    public function getGlobalAdditionalData(): \stdClass
+    {
+        return $this->global_additional_data;
+    }
+
+    /**
+     * @param \stdClass $global_additional_data
+     * @return $this
+     */
+    public function withGlobalAdditionalData(\stdClass $global_additional_data){
+        $this->global_additional_data = $global_additional_data;
+        return $this;
+    }
 }
