@@ -5,9 +5,9 @@ namespace srag\Plugins\Hub2\Object;
 use ActiveRecord;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
+use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
-use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 
 /**
  * Class ObjectRepository
@@ -65,35 +65,37 @@ abstract class ObjectRepository implements IObjectRepository {
 		])->get();
 	}
 
-    /**
-     * @inheritdoc
-     */
-    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids){
-        $glue = CourseMembershipDTO::GLUE;
-        $class = $this->getClass();
 
-        if (count($parent_ext_ids) > 0){
-            if (count($ext_ids) > 0) {
-                $existing_ext_id_query = " AND ext_id NOT IN ('" . implode("','", $ext_ids) . "') ";
-            }
-            return $class::where(
-                "origin_id = " . $this->origin->getId()
-                . " AND status IN ('" . implode("','", [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED]) . "') "
-                . $existing_ext_id_query
-                . " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','", $parent_ext_ids) . "') "
+	/**
+	 * @inheritdoc
+	 */
+	public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array {
+		$glue = CourseMembershipDTO::GLUE;
+		$class = $this->getClass();
 
-            )->get();
+		if (count($parent_ext_ids) > 0) {
+			if (count($ext_ids) > 0) {
+				$existing_ext_id_query = " AND ext_id NOT IN ('" . implode("','", $ext_ids) . "') ";
+			}
 
+			return $class::where("origin_id = " . $this->origin->getId() . " AND status IN ('" . implode("','", [
+					IObject::STATUS_CREATED,
+					IObject::STATUS_UPDATED,
+					IObject::STATUS_IGNORED
+				]) . "') " . $existing_ext_id_query . " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','", $parent_ext_ids) . "') "
 
-        }
-        return [];
-    }
+			)->get();
+		}
+
+		return [];
+	}
+
 
 	/**
 	 * @inheritdoc
 	 */
 	public function getToDelete(array $ext_ids) {
-        $class = $this->getClass();
+		$class = $this->getClass();
 
 		if (count($ext_ids) > 0) {
 			/** @var ActiveRecord $class */
