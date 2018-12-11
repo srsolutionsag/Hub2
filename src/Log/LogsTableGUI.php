@@ -174,7 +174,7 @@ class LogsTableGUI extends TableGUI {
 
 		$this->setData($logs);
 
-		$this->setMaxCount(count($logs));
+		$this->setMaxCount(count(self::logs()->getLogs()));
 	}
 
 
