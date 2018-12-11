@@ -178,7 +178,11 @@ class OriginSync implements IOriginSync {
 
 		if (!$this->origin->isAdHoc()) {
 			$objects_to_outdated = array_unique(array_merge($objects_to_outdated, $this->repository->getToDelete($ext_ids_delivered)));
-		}
+		} else if($this->origin->isAdHoc() && $this->origin->isAdhocParentScope()){
+		    $adhoc_parent_ids = $this->implementation->getAdHocParentScopesAsExtIds();
+            $objects_in_parent_scope_not_delivered = $this->repository->getToDeleteByParentScope($ext_ids_delivered,$adhoc_parent_ids);
+            $objects_to_outdated = array_unique(array_merge($objects_to_outdated, $objects_in_parent_scope_not_delivered));
+        }
 
 		foreach ($objects_to_outdated as $object) {
 			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)

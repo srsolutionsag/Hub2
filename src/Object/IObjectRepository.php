@@ -10,12 +10,15 @@ namespace srag\Plugins\Hub2\Object;
  */
 interface IObjectRepository {
 
+	const GLUE = "|||";
+
+
 	/**
 	 * Return all objects
 	 *
 	 * @return IObject[]
 	 */
-	public function all();
+	public function all(): array;
 
 
 	/**
@@ -25,7 +28,7 @@ interface IObjectRepository {
 	 *
 	 * @return IObject[]
 	 */
-	public function getByStatus($status);
+	public function getByStatus(int $status): array;
 
 
 	/**
@@ -37,7 +40,19 @@ interface IObjectRepository {
 	 *
 	 * @return IObject[]
 	 */
-	public function getToDelete(array $ext_ids);
+	public function getToDelete(array $ext_ids): array;
+
+
+	/**
+	 * As getToDelete this method returns all objects where the status TO_DELETE should be applied.
+	 * However it only checks for items in the scope of a set of parent containers. E.g. only returns
+	 * membership to delete for memberships of a course with an ext_id in $parent_ext_ids.
+	 *
+	 * @param array $ext_ids
+	 *
+	 * @return IObject[]
+	 */
+	public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array;
 
 
 	/**
@@ -45,5 +60,5 @@ interface IObjectRepository {
 	 *
 	 * @return int
 	 */
-	public function count();
+	public function count(): int;
 }

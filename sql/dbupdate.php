@@ -99,3 +99,7 @@ if (strpos($administration_role_ids, "[") === false) {
 \srag\Plugins\Hub2\Log\Log::updateDB();
 \srag\Plugins\Hub2\Log\OriginLog::updateDB();
 ?>
+<#11>
+<?php
+\srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin::updateDB();
+?>
