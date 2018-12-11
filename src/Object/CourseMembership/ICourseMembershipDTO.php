@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Object\CourseMembership;
 
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\IObjectRepository;
 
 /**
  * Interface ICourseMembershipDTO
@@ -12,5 +13,5 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 interface ICourseMembershipDTO extends IDataTransferObject {
 
-	const GLUE = "|||";
+	const GLUE = IObjectRepository::GLUE;
 }

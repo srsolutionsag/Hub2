@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Object;
 use ActiveRecord;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -44,7 +43,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function all() {
+	public function all(): array {
 		$class = $this->getClass();
 
 		/** @var ActiveRecord $class */
@@ -55,7 +54,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function getByStatus($status) {
+	public function getByStatus(int $status): array {
 		$class = $this->getClass();
 
 		/** @var ActiveRecord $class */
@@ -70,7 +69,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	 * @inheritdoc
 	 */
 	public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array {
-		$glue = CourseMembershipDTO::GLUE;
+		$glue = self::GLUE;
 		$class = $this->getClass();
 
 		if (count($parent_ext_ids) > 0) {
@@ -94,7 +93,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function getToDelete(array $ext_ids) {
+	public function getToDelete(array $ext_ids): array {
 		$class = $this->getClass();
 
 		if (count($ext_ids) > 0) {
@@ -121,7 +120,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function count() {
+	public function count(): int {
 		$class = $this->getClass();
 
 		/** @var ActiveRecord $class */
