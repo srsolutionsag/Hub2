@@ -332,7 +332,7 @@ class Log extends ActiveRecord implements ILog {
 	 * @inheritdoc
 	 */
 	public function addAdditionalData(string $key, $value): ILog {
-		$this->additional_data[$key] = $value;
+		$this->additional_data->{$key} = $value;
 
 		return $this;
 	}
