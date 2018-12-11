@@ -107,7 +107,7 @@ class RunSync extends ilCronJob {
 				} catch (Throwable $e) {
 
 				}
-				self::logs()->originLog($originSync->getOrigin())->withMessage($summary->getSummaryOfOrigin($originSync))->store();
+				self::logs()->originLog($originSync->getOrigin())->write($summary->getSummaryOfOrigin($originSync));
 
 				$summary->addOriginSync($originSync);
 			}
