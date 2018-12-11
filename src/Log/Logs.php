@@ -78,7 +78,21 @@ final class Logs {
 	 *
 	 * @return array
 	 */
-	public function getLogs(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, int $log_type = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL): array {
+	public function getLogs(
+	    string $sort_by = NULL,
+        string $sort_by_direction = NULL,
+        int $limit_start = NULL,
+        int $limit_end = NULL,
+        int $log_type = NULL,
+        string $title = NULL,
+        string $message = NULL,
+        ilDateTime $date_start = NULL,
+        ilDateTime $date_end = NULL,
+        int $level = NULL,
+        int $origin_id = NULL,
+        string $origin_object_type = NULL,
+        string $additional_data = NULL): array {
+
 		$logs = [];
 
 		foreach (self::$logs_classes as $log_class) {
