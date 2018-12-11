@@ -28,8 +28,8 @@ trait MappingStrategyAwareDataTransferObject {
 
 	/**
 	 * @inheritdoc
-     *
-     * @return static
+	 *
+	 * @return static
 	 */
 	public function overrideMappingStrategy(IMappingStrategy $strategy): IDataTransferObject {
 		$this->_mapping_strategy = $strategy;

@@ -170,11 +170,12 @@ interface ILog {
 	public function store()/*: void*/
 	;
 
-    /**
-     * Syntactic sugar for $log->withMessage()->store();
-     *
-     * @param string $message
-     * @return mixed
-     */
-	public function write(string $message)/*: void*/;
+
+	/**
+	 * Syntactic sugar for $log->withMessage()->store();
+	 *
+	 * @param string $message
+	 */
+	public function write(string $message)/*: void*/
+	;
 }

@@ -56,7 +56,7 @@ class OriginImplementationFactory {
 		}
 		require_once $classFile;
 		$class = rtrim($namespace, "\\") . "\\" . $className;
-		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(),$this->origin);
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
 
 		return $instance;
 	}

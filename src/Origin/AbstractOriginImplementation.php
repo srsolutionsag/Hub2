@@ -138,10 +138,11 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 		// TODO: Implement overrideStatus() method.
 	}
 
-    /**
-     * @inheritdoc
-     */
-    public function getAdHocParentScopesAsExtIds():array{
-	    return [];
-    }
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getAdHocParentScopesAsExtIds(): array {
+		return [];
+	}
 }

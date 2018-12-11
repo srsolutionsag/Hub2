@@ -388,10 +388,11 @@ class Log extends ActiveRecord implements ILog {
 		return $this;
 	}
 
-    /**
-     * @inheritdoc
-     */
-	public function write(string $message){
-        return $this->withMessage($message)->store();
-    }
+
+	/**
+	 * @inheritdoc
+	 */
+	public function write(string $message)/*: void*/ {
+		$this->withMessage($message)->store();
+	}
 }

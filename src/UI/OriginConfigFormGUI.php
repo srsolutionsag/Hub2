@@ -301,8 +301,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 			$item = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc"), self::POST_VAR_ADHOC);
 			$item->setChecked($this->origin->isAdHoc());
 			$item->setInfo(self::plugin()->translate("origin_form_field_adhoc_info"));
-            $this->addItem($item);
-            $item = new ilCheckboxInputGUI(self::plugin()->translate('origin_form_field_active'), 'active');
+			$this->addItem($item);
+			$item = new ilCheckboxInputGUI(self::plugin()->translate('origin_form_field_active'), 'active');
 			$item->setChecked($this->origin->isActive());
 			$this->addItem($item);
 		} else {

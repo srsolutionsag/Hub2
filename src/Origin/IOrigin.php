@@ -203,7 +203,8 @@ interface IOrigin {
 	/**
 	 * @param bool $adhoc_parent_scope
 	 */
-	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/;
+	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/
+	;
 
 
 	/**
