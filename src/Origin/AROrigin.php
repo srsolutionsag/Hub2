@@ -179,15 +179,16 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 * @con_is_notnull   true
 	 */
 	protected $adhoc = false;
-    /**
-     * @var bool
-     *
-     * @con_has_field    true
-     * @con_fieldtype    integer
-     * @con_length       1
-     * @con_is_notnull   true
-     */
-    protected $adhoc_parent_scope = false;
+	/**
+	 * @var bool
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       1
+	 * @con_is_notnull   true
+	 */
+	protected $adhoc_parent_scope = false;
+
 
 	/**
 	 *
@@ -234,8 +235,8 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 				}
 
 			case "adhoc":
-            case "adhoc_parent_scope":
-                return ($field_value ? 1 : 0);
+			case "adhoc_parent_scope":
+				return ($field_value ? 1 : 0);
 
 			default:
 				return NULL;
@@ -254,7 +255,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 
 			case "adhoc":
 			case "adhoc_parent_scope":
-                return boolval($field_value);
+				return boolval($field_value);
 
 			default:
 				return NULL;
@@ -505,7 +506,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 
 
 	/**
-	 * @return bool
+	 * @inheritdoc
 	 */
 	public function isAdHoc(): bool {
 		return $this->adhoc;
@@ -513,25 +514,25 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 
 
 	/**
-	 * @param bool $adhoc
+	 * @inheritdoc
 	 */
 	public function setAdHoc(bool $adhoc)/*: void*/ {
 		$this->adhoc = $adhoc;
 	}
 
-    /**
-     * @return bool
-     */
-    public function isAdhocParentScope(): bool
-    {
-        return $this->adhoc_parent_scope;
-    }
 
-    /**
-     * @param bool $adhoc_parent_scope
-     */
-    public function setAdhocParentScope(bool $adhoc_parent_scope)
-    {
-        $this->adhoc_parent_scope = $adhoc_parent_scope;
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function isAdhocParentScope(): bool {
+		return $this->adhoc_parent_scope;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/ {
+		$this->adhoc_parent_scope = $adhoc_parent_scope;
+	}
 }

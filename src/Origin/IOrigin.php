@@ -193,15 +193,18 @@ interface IOrigin {
 	public function setAdHoc(bool $adhoc)/*: void*/
 	;
 
-    /**
-     * @return bool
-     */
-    public function isAdhocParentScope(): bool;
 
-    /**
-     * @param bool $adhoc_parent_scope
-     */
-    public function setAdhocParentScope(bool $adhoc_parent_scope);
+	/**
+	 * @return bool
+	 */
+	public function isAdhocParentScope(): bool;
+
+
+	/**
+	 * @param bool $adhoc_parent_scope
+	 */
+	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/;
+
 
 	/**
 	 *
