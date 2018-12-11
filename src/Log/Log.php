@@ -21,9 +21,6 @@ class Log extends ActiveRecord implements ILog {
 
 	use DICTrait;
 	use Hub2Trait;
-	/**
-	 * @var string
-	 */
 	const TABLE_NAME = "sr_hub2_log";
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
@@ -51,7 +48,7 @@ class Log extends ActiveRecord implements ILog {
 	 */
 	public static $log_types = [
 		self::LOG_TYPE_HUB2 => self::LOG_TYPE_HUB2,
-		IOriginLog::LOG_TYPE_ORIGIN => IOriginLog::LOG_TYPE_ORIGIN
+		self::LOG_TYPE_ORIGIN => self::LOG_TYPE_ORIGIN
 	];
 	/**
 	 * @var array
@@ -122,6 +119,23 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_is_notnull   true
 	 */
 	protected $additional_data;
+	/**
+	 * @var int
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       8
+	 * @con_is_notnull   true
+	 */
+	protected $origin_id = NULL;
+	/**
+	 * @var string
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    text
+	 * @con_is_notnull   true
+	 */
+	protected $origin_object_type = "";
 
 
 	/**
@@ -129,8 +143,6 @@ class Log extends ActiveRecord implements ILog {
 	 *
 	 * @param int              $primary_key_value
 	 * @param arConnector|null $connector
-	 *
-	 * @internal
 	 */
 	public final function __construct(/*int*/
 		$primary_key_value = 0, arConnector $connector = NULL) {
@@ -181,6 +193,9 @@ class Log extends ActiveRecord implements ILog {
 
 			case "additional_data":
 				return json_decode($field_value);
+
+			case "origin_id":
+				return intval($field_value);
 
 			default:
 				return NULL;
@@ -333,6 +348,42 @@ class Log extends ActiveRecord implements ILog {
 	 */
 	public function addAdditionalData(string $key, $value): ILog {
 		$this->additional_data->{$key} = $value;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getOriginId(): int {
+		return $this->origin_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withOriginId(int $origin_id): ILog {
+		$this->origin_id = $origin_id;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getOriginObjectType(): string {
+		return $this->origin_object_type;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withOriginObjectType(string $origin_object_type): ILog {
+		$this->origin_object_type = $origin_object_type;
 
 		return $this;
 	}

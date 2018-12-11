@@ -78,7 +78,6 @@ if (strpos($administration_role_ids, "[") === false) {
 <#8>
 <?php
 \srag\Plugins\Hub2\Log\Log::updateDB();
-\srag\Plugins\Hub2\Log\OriginLog::updateDB();
 ?>
 <#9>
 <?php
@@ -97,7 +96,6 @@ if (strpos($administration_role_ids, "[") === false) {
 <#10>
 <?php
 \srag\Plugins\Hub2\Log\Log::updateDB();
-\srag\Plugins\Hub2\Log\OriginLog::updateDB();
 ?>
 <#11>
 <?php

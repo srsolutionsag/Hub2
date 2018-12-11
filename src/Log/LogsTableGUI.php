@@ -165,13 +165,13 @@ class LogsTableGUI extends TableGUI {
 			$origin_id = NULL;
 		}
 		$origin_object_type = $filter["origin_object_type"];
-        $additional_data = $filter["additional_data"];
+		$additional_data = $filter["additional_data"];
 
 		// Fix stupid ilTable2GUI !!! ...
 		$this->determineOffsetAndOrder();
 
 		$logs = self::logs()
-			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type,$additional_data);
+			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $additional_data);
 
 		$this->setData($logs);
 
@@ -212,12 +212,6 @@ class LogsTableGUI extends TableGUI {
 						return $this->txt("level_" . $level);
 					}, Log::$levels)
 			],
-            /**
-             * Those two fields will not work. This (along with other things, such as ordering)
-             * completely breaks due to the design of the data layer, having logs in 2 tables.
-             *
-             * @Todo: Keep logs in one table only to avoid such issues.
-
 			"origin_id" => [
 				PropertyFormGUI::PROPERTY_CLASS => NumberInputGUI::class,
 				"setMinValue" => 0
@@ -230,10 +224,9 @@ class LogsTableGUI extends TableGUI {
 						return self::plugin()->translate("origin_object_type_" . $origin_object_type);
 					}, AROrigin::$object_types)
 			],
-             *              */
-            "additional_data" => [
-                PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
-            ],
+			"additional_data" => [
+				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
+			],
 		];
 	}
 

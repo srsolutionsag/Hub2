@@ -19,6 +19,7 @@ interface ILog {
 	const LEVEL_WARNING = 300;
 	const LEVEL_CRITICAL = 500;
 	const LOG_TYPE_HUB2 = 1;
+	const LOG_TYPE_ORIGIN = 2;
 
 
 	/**
@@ -126,6 +127,34 @@ interface ILog {
 	 * @return self
 	 */
 	public function addAdditionalData(string $key, $value): self;
+
+
+	/**
+	 * @return int
+	 */
+	public function getOriginId(): int;
+
+
+	/**
+	 * @param int $origin_id
+	 *
+	 * @return self
+	 */
+	public function withOriginId(int $origin_id): self;
+
+
+	/**
+	 * @return string
+	 */
+	public function getOriginObjectType(): string;
+
+
+	/**
+	 * @param string $origin_object_type
+	 *
+	 * @return self
+	 */
+	public function withOriginObjectType(string $origin_object_type): self;
 
 
 	/**
