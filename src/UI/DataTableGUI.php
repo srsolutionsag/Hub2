@@ -101,8 +101,8 @@ class DataTableGUI extends ilTable2GUI {
 		$this->setExternalSegmentation(true);
 		$this->setExternalSorting(true);
 		$this->determineLimit();
-		if ($this->getLimit() > 99) {
-			$this->setLimit(99);
+		if ($this->getLimit() > 999) {
+			$this->setLimit(999);
 		}
 		$this->determineOffsetAndOrder();
 		$this->initTableData();
@@ -177,55 +177,48 @@ class DataTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initTableData() {
-		$fields = $this->getFields();
 		$data = [];
-		/**
-		 * @var ActiveRecordList $collection
-		 */
-		foreach (self::$classes as $class) {
-			$collection = $class::getCollection();
-			foreach ($this->filtered as $postvar => $value) {
-				if (!$postvar || !$value) {
-					continue;
-				}
-				switch ($postvar) {
-					case 'data':
-					case 'ext_id':
-						$str = "%{$value}%";
-						$collection = $collection->where([ $postvar => $str ], 'LIKE');
-						break;
-					case "status":
-						if (!empty($value) && $value[0] === "!") {
-							$not = true;
-							$value = substr($value, 1);
-						} else {
-							$not = false;
-						}
-						$collection = $collection->where([ $postvar => $value ], $not ? "!=" : "=");
-						break;
-					default:
-						$collection = $collection->where([ $postvar => $value ]);
-						break;
-				}
+
+		$where_query = " WHERE true = true";
+		foreach ($this->filtered as $postvar => $value) {
+			if (!$postvar || !$value) {
+				continue;
 			}
-			$data = array_merge($data, $collection->getArray(NULL, $fields));
+			$where_query .= " AND ";
+			switch ($postvar) {
+				case 'data':
+				case 'ext_id':
+					$where_query .= $postvar ." LIKE '%".$value."%'";
+					break;
+				case "status":
+					if (!empty($value) && $value[0] === "!") {
+						$value = substr($value, 1);
+						$where_query .= $postvar ." != ".$value;
+					} else {
+						$where_query .= $postvar ." = ".$value;
+					}
+					break;
+				default:
+					$where_query .= $postvar ." = ".$value;
+					break;
+			}
 		}
 
-		uasort($data, function ($valuesA, $valuesB) {
-			$a = $valuesA[$this->getOrderField()];
-			$b = $valuesB[$this->getOrderField()];
+		$union_query = "";
+		$columns = implode(", ",$this->getFields());
+		$columns = rtrim($columns,", ");
 
-			if ($a == $b) {
-				return 0;
-			}
 
-			if ($this->getOrderDirection() == "asc") {
-				return ($a < $b) ? - 1 : 1;
-			}
+		foreach (self::$classes as $class) {
+			$union_query .= "SELECT $columns FROM " .$class::TABLE_NAME.$where_query." UNION ";
+		}
 
-			return ($a < $b) ? 1 : - 1;
-		});
-
+		$union_query = rtrim($union_query,"UNION ");
+		$query = $union_query;
+		$result = self::dic()->database()->query($query);
+		while($row = $result->fetchRow()){
+			$data[] = $row;
+		}
 		$this->setMaxCount(count($data));
 		$data = array_slice($data, $this->getOffset(), $this->getLimit());
 		$this->setData($data);
