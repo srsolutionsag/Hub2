@@ -73,11 +73,11 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	private function findReadableParent(): int {
 		$ref_id = $this->object->getILIASId();
 
-		while (!self::dic()->access()->checkAccess('read', '', $ref_id) AND $ref_id != 1) {
+		while ($ref_id AND !self::dic()->access()->checkAccess('read', '', $ref_id) AND $ref_id != 1) {
 			$ref_id = (int)self::dic()->tree()->getParentId($ref_id);
 		}
 
-		if ($ref_id === 1) {
+		if (!$ref_id || $ref_id === 1) {
 			if (!self::dic()->access()->checkAccess('read', '', $ref_id)) {
 				return 0;
 			}
