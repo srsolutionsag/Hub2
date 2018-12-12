@@ -259,7 +259,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function sendMailNotifications(CourseDTO $dto, ilObjCourse $ilObjCourse) {
 		$mail = new ilMimeMail();
-		$sender_factory = new ilMailMimeSenderFactory($this->settings());
+		$sender_factory = new ilMailMimeSenderFactory(self::dic()->settings());
 		$sender = NULL;
 		if ($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)) {
 			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM));
