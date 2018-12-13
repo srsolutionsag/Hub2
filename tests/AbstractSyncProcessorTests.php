@@ -2,8 +2,10 @@
 
 require_once __DIR__ . "/AbstractHub2Tests.php";
 
+use ILIAS\DI\Container;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
+use Pimple\Container as PimpleContainer;
 use srag\DIC\Hub2\DICStatic;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -100,13 +102,13 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected function initDIC() {
 		global $DIC;
 
-		$DIC = Mockery::mock('overload:\ILIAS\DI\Container', "Pimple\Container");
-		$tree_mock = Mockery::mock('overload:\ilTree');
+		$DIC = Mockery::mock('overload:' . Container::class, PimpleContainer::class);
+		$tree_mock = Mockery::mock('overload:' . ilTree::class);
 		$tree_mock->shouldReceive('isInTree')->with(1)->once()->andReturn(true);
 		$this->tree = $tree_mock;
 		$DIC->shouldReceive('repositoryTree')->once()->andReturn($tree_mock);
 
-		$language_mock = Mockery::mock('overload:\ilLanguage', "ilObject");
+		$language_mock = Mockery::mock('overload:' . ilLanguage::class, ilObject::class);
 		$language_mock->shouldReceive('getDefaultLanguage')->andReturn('en');
 		$DIC->shouldReceive('language')->once()->andReturn($language_mock);
 

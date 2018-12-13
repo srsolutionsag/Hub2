@@ -8,9 +8,11 @@ use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\IObjectFactory;
 use srag\Plugins\Hub2\Object\IObjectRepository;
+use srag\Plugins\Hub2\Object\User\IUser;
 use srag\Plugins\Hub2\Object\User\UserDTO;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
@@ -151,7 +153,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		// Build 4 dummyDTOs returned by the origin implementation
 		$dummyDTOs = [];
 		for ($i = 0; $i < 4; $i ++) {
-			$dummyDTO = Mockery::mock('\srag\Plugins\Hub2\Object\DTO\IDataTransferObject');
+			$dummyDTO = Mockery::mock(IDataTransferObject::class);
 			$dummyDTO->shouldReceive('getExtId', 'setData');
 			$dummyDTO->shouldReceive('getData')->andReturn([]);
 			$dummyDTOs[] = $dummyDTO;
@@ -161,7 +163,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		// Build 4 dummy objects that correspond to a dummyDTO, each having a different final status
 		$objects = [];
 		for ($i = 0; $i < 4; $i ++) {
-			$object = Mockery::mock('\srag\Plugins\Hub2\Object\IObject');
+			$object = Mockery::mock(IObject::class);
 			$object->shouldReceive('setDeliveryDate', 'setStatus', 'save');
 			$object->shouldReceive('getData')->andReturn([]);
 			$object->shouldReceive('getStatus')->andReturn($status[$i]);
@@ -196,7 +198,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->origin->shouldReceive('getObjectType')->andReturn('user');
 		$this->originImplementation->shouldReceive('buildObjects')->andReturn([ new UserDTO(1) ]);
 		$this->statusTransition->shouldReceive('finalToIntermediate');
-		$userMock = Mockery::mock('\srag\Plugins\Hub2\Object\User\IUser');
+		$userMock = Mockery::mock(IUser::class);
 		$userMock->shouldReceive('setDeliveryDate', 'setStatus');
 		$userMock->shouldReceive('getData')->andReturn([]);
 		$this->factory->shouldReceive('user')->andReturn($userMock);

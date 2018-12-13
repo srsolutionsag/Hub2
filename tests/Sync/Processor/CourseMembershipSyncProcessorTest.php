@@ -60,7 +60,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\CourseMembership\ICourseMembership');
+		$this->iobject = Mockery::mock(ICourseMembership::class);
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -72,7 +72,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject = Mockery::mock(FakeIliasObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
 
-		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
+		Mockery::mock('alias:' . ilObject2::class)->shouldReceive("_exists")->withArgs([
 			self::COURSE_REF_ID,
 			true,
 		])->andReturn(true);

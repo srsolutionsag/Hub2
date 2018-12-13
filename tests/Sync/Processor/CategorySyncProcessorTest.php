@@ -9,6 +9,7 @@ use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Origin\Config\Category\CategoryOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
 use srag\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Category\ICategoryActivities;
 use srag\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
 
 /**
@@ -50,7 +51,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Category\ICategoryActivities');
+		$this->activities = Mockery::mock(ICategoryActivities::class);
 		$this->initOrigin(new CategoryProperties(), new CategoryOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -134,7 +135,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Category\ICategory');
+		$this->iobject = Mockery::mock(ICategory::class);
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -145,7 +146,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = Mockery::mock('overload:\ilObjCategory', '\ilObject');
+		$this->ilObject = Mockery::mock('overload:' . ilObjCategory::class, ilObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::REF_ID);
 		$this->ilObject->shouldReceive('addTranslation');
 	}
