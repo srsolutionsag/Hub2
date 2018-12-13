@@ -254,7 +254,6 @@ origin_object_type_session#:#Sitzung
 origin_object_type_sessionMembership#:#Sitzung-Mitglied
 origin_form_field_namespace#:#PHP-Namespace
 origin_form_field_namespace_info#:#PHP-Namespace
-origin_table_button_force#:#Aktualisieren erzwingen
 origin_object_type_orgUnit#:#Organisationseinheiten
 origin_object_type_orgUnitMembership#:#Organisationseinheit-Mitgliedschaften
 object_type_user#:#Benutzer
@@ -382,9 +381,8 @@ summary_for#:#Zusammenfassung für %s:
 summary_delivered_data_sets#:#Gelieferte Datensätze: %s
 summary_created#:#Erstellt: %s
 summary_updated#:#Aktualisiert: %s
-summary_deleted#:#Gelöscht: %s
+summary_outdated#:#Veraltet: %s
 summary_ignored#:#Ignoriert: %s
-summary_no_changes#:#Keine Änderungen: %s
 summary_exceptions#:#Ausnahmen:
 summary_notification#:#Hub2: Zusammenfassung für %s
 summary_exceptions_in#:#Hub2: Ausnahmen in %s
@@ -396,17 +394,45 @@ data_table_status_to_create#:#Zu erstellen
 data_table_status_created#:#Erstellt
 data_table_status_to_update#:#Zu aktualisieren
 data_table_status_updated#:#Aktualisiert
-data_table_status_to_delete#:#Zu löschen
-data_table_status_deleted#:#Gelöscht
-data_table_status_to_update_newly_delivered#:#Zum Aktualisieren neu geliefert
-data_table_status_nothing_to_update#:#Nichts zu aktualisieren
+data_table_status_to_outdated#:#Zu veraltet
+data_table_status_outdated#:#Veraltet
+data_table_status_to_restore#:#Zum Wiederherstellen
 data_table_status_ignored#:#Ignoriert
-origin_table_button_reset#:#Alle Daten als Neu markieren
+data_table_status_not_ignored#:#Nicht ignoriert
+origin_form_field_adhoc#:#AdHoc
+origin_form_field_adhoc_info#:#Es werden nur die Daten geliefert, die geändert wurden
+origin_form_field_adhoc_parent_scope#:#Setze Parent als Scope
+origin_form_field_adhoc_parent_scope_info#:#Es werden nur die Daten geliefert, die in Container gehören, die geändert wurden
+origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
+origin_deleted#:#Anbindung gelöscht
+table_md#:#MD
+table_tax#:#TAX
+logs_additional_data#:#Zusätzliche Daten
+logs_cron#:#Alte Logs löschen
+logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht
+logs_date#:#Datum / Zeit
+logs_days#:#Tage
+logs_deleted_status#:#%s Log(s) gelöscht
+logs_keep_old_logs_time#:#Alte Logs maximal behalten für
+logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht
+logs_level#:#Level
+logs_level_200#:#Info
+logs_level_300#:#Warnung
+logs_level_500#:#Kritisch
+logs_log_type#:#Typ
+logs_log_type_1#:#Hub2
+logs_log_type_2#:#Origin
+logs_logs#:#Logs
+logs_message#:#Nachricht
+logs_no_additional_data#:#Keine zusätzlichen Daten
+logs_origin_id#:#Origin-ID
+logs_origin_object_type#:#Origin-Objekt-Typ
+logs_title#:#Titel
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
 removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren
 removeplugindataconfirm_data#:#%1$s-Daten
 removeplugindataconfirm_keep_data#:#%1$s-Daten behalten
-removeplugindataconfirm_msg_kept_data#:#Die %1$s-Daten wurden behalten!
-removeplugindataconfirm_msg_removed_data#:#Die %1$s-Daten wurden auch entfernt!
+removeplugindataconfirm_msg_kept_data#:#Die %1$s-Daten wurden behalten
+removeplugindataconfirm_msg_removed_data#:#Die %1$s-Daten wurden auch entfernt
 removeplugindataconfirm_remove_data#:#Entferne %1$s-Daten

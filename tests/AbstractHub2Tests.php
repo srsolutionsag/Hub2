@@ -4,6 +4,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Base class for all unit tests of Hub2

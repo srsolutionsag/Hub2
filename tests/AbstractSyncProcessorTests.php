@@ -4,7 +4,7 @@ require_once __DIR__ . "/AbstractHub2Tests.php";
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
-use srag\Plugins\Hub2\Log\ILog;
+use srag\DIC\Hub2\DICStatic;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -39,10 +39,6 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	 */
 	protected $statusTransition;
 	/**
-	 * @var MockInterface|ILog
-	 */
-	protected $originLog;
-	/**
 	 * @var IDataTransferObject
 	 */
 	protected $dto;
@@ -69,25 +65,19 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected $originImplementation;
 
 
-	protected function initLog() {
-		$this->originLog = Mockery::mock("srag\Plugins\Hub2\Log\OriginLog");
-	}
-
-
 	protected function initNotifications() {
 		$this->originNotifications = new OriginNotifications();
 	}
 
 
 	protected function initStatusTransitions() {
-		$this->statusTransition = new ObjectStatusTransition(Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig"));
+		$this->statusTransition = new ObjectStatusTransition(Mockery::mock(IOriginConfig::class));
 	}
 
 
 	protected function setupGeneralDependencies() {
 		$this->initStatusTransitions();
 		$this->initNotifications();
-		$this->initLog();
 		$this->initDIC();
 	}
 
@@ -99,11 +89,11 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected function initOrigin(IOriginProperties $properties, IOriginConfig $config) {
 		$this->originProperties = $properties;
 		$this->originConfig = $config;
-		$this->origin = Mockery::mock("srag\Plugins\Hub2\Origin\IOrigin");
+		$this->origin = Mockery::mock(IOrigin::class);
 		$this->origin->shouldReceive('properties')->andReturn($properties);
 		$this->origin->shouldReceive('getId');
 		$this->origin->shouldReceive('config')->andReturn($config);
-		$this->originImplementation = Mockery::mock('\srag\Plugins\Hub2\Origin\IOriginImplementation');
+		$this->originImplementation = Mockery::mock(IOriginImplementation::class);
 	}
 
 
@@ -119,6 +109,8 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 		$language_mock = Mockery::mock('overload:\ilLanguage', "ilObject");
 		$language_mock->shouldReceive('getDefaultLanguage')->andReturn('en');
 		$DIC->shouldReceive('language')->once()->andReturn($language_mock);
+
+		DICStatic::clearCache();
 	}
 
 

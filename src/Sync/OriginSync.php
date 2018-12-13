@@ -76,9 +76,8 @@ class OriginSync implements IOriginSync {
 	protected $countProcessed = [
 		IObject::STATUS_CREATED => 0,
 		IObject::STATUS_UPDATED => 0,
-		IObject::STATUS_DELETED => 0,
-		IObject::STATUS_IGNORED => 0,
-		IObject::STATUS_NOTHING_TO_UPDATE => 0
+		IObject::STATUS_OUTDATED => 0,
+		IObject::STATUS_IGNORED => 0
 	];
 	/**
 	 * @var OriginNotifications
@@ -142,6 +141,8 @@ class OriginSync implements IOriginSync {
 			throw $e;
 		}
 
+		$type = $this->origin->getObjectType();
+
 		// Sort dto objects
 		$this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
 
@@ -150,27 +151,44 @@ class OriginSync implements IOriginSync {
 		// 1. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
 		// 2. Let the processor process the corresponding ILIAS object
 
+		$objects_to_outdated = [];
+
 		$ext_ids_delivered = [];
-		$type = $this->origin->getObjectType();
 		foreach ($this->dtoObjects as $dto) {
 			$ext_ids_delivered[] = $dto->getExtId();
 			/** @var IObject $object */
 			$object = $this->factory->$type($dto->getExtId());
+
 			$object->setDeliveryDate(time());
-			// We merge the existing data with the new data
-			$data = array_merge($object->getData(), $dto->getData());
-			$dto->setData($data);
-			// Set the intermediate status before processing the ILIAS object
-			$object->setStatus($this->statusTransition->finalToIntermediate($object));
-			$this->processObject($object, $dto);
+
+			if (!$dto->shouldDeleted()) {
+				// We merge the existing data with the new data
+				$data = array_merge($object->getData(), $dto->getData());
+				$dto->setData($data);
+				// Set the intermediate status before processing the ILIAS object
+				$object->setStatus($this->statusTransition->finalToIntermediate($object));
+				$this->processObject($object, $dto);
+			} else {
+				$objects_to_outdated[] = $object;
+			}
 		}
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
 
-		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
+		if (!$this->origin->isAdHoc()) {
+			$objects_to_outdated = array_unique(array_merge($objects_to_outdated, $this->repository->getToDelete($ext_ids_delivered)));
+		} else {
+			if ($this->origin->isAdHoc() && $this->origin->isAdhocParentScope()) {
+				$adhoc_parent_ids = $this->implementation->getAdHocParentScopesAsExtIds();
+				$objects_in_parent_scope_not_delivered = $this->repository->getToDeleteByParentScope($ext_ids_delivered, $adhoc_parent_ids);
+				$objects_to_outdated = array_unique(array_merge($objects_to_outdated, $objects_in_parent_scope_not_delivered));
+			}
+		}
+
+		foreach ($objects_to_outdated as $object) {
 			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
-			$object->setStatus(IObject::STATUS_TO_DELETE);
+			$object->setStatus(IObject::STATUS_TO_OUTDATED);
 			$this->processObject($object, $nullDTO);
 		}
 
@@ -268,26 +286,26 @@ class OriginSync implements IOriginSync {
 		} catch (AbortSyncException $e) {
 			// Any exceptions aborting the global or current sync are forwarded to global sync
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw $e;
 		} catch (AbortOriginSyncOfCurrentTypeException $e) {
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw $e;
 		} catch (AbortOriginSyncException $e) {
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw $e;
 		} catch (Exception $e) {
 			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
 			// which decides how to proceed, e.g. continue or abort
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			$this->implementation->handleException($e);
 		} catch (Error $e) {
 			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
 			$this->exceptions[] = $e;
-			$object->save();
+			$object->store();
 			throw new AbortOriginSyncException($e->getMessage());
 		}
 	}
@@ -296,7 +314,7 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @param int $status
 	 */
-	protected function incrementProcessed($status) {
+	protected function incrementProcessed(int $status) {
 		$this->countProcessed[$status] ++;
 	}
 

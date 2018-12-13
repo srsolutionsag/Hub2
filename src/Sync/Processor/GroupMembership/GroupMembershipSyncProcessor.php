@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Sync\Processor\GroupMembership;
 use ilObject2;
 use ilObjGroup;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
@@ -42,11 +41,10 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications) {
+		parent::__construct($origin, $implementation, $transition, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}

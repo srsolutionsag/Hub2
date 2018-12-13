@@ -255,7 +255,6 @@ origin_object_type_session#:#Session
 origin_object_type_sessionMembership#:#Session Membership
 origin_form_field_namespace#:#PHP namespace
 origin_form_field_namespace_info#:#PHP namespace
-origin_table_button_force#:#Force update
 origin_object_type_orgUnit#:#Organisational units
 origin_object_type_orgUnitMembership#:#Organisational unit memberships
 object_type_user#:#User
@@ -359,7 +358,7 @@ status_16#:#Updated
 status_2#:#To create
 status_32#:#To delete
 subtab_origins#:#Overview
-subtab_data#:#Verlauf
+subtab_data#:#History
 grp_prop_activate#:#Activate
 grp_prop_delete_mode#:#Delete behavior
 grp_prop_delete_mode_close#:#Make group a "closed group"
@@ -383,9 +382,8 @@ summary_for#:#Summary for %s:
 summary_delivered_data_sets#:#Delivered data sets: %s
 summary_created#:#Created: %s
 summary_updated#:#Updated: %s
-summary_deleted#:#Deleted: %s
+summary_outdated#:#Outdated: %s
 summary_ignored#:#Ignored: %s
-summary_no_changes#:#No changes: %s
 summary_exceptions#:#Exceptions:
 summary_notification#:#Hub2: Summary for %s
 summary_exceptions_in#:#Hub2: Exceptions in %s
@@ -397,17 +395,45 @@ data_table_status_to_create#:#To create
 data_table_status_created#:#Created
 data_table_status_to_update#:#To update
 data_table_status_updated#:#Updated
-data_table_status_to_delete#:#To delete
-data_table_status_deleted#:#Deleted
-data_table_status_to_update_newly_delivered#:#To update newly delivered
-data_table_status_nothing_to_update#:#Nothing to update
+data_table_status_to_outdated#:#To outdated
+data_table_status_outdated#:#Outdated
+data_table_status_to_restore#:#To restore
 data_table_status_ignored#:#Ignored
-origin_table_button_reset#:#Mark all data as New
+data_table_status_not_ignored#:#Not ignored
+origin_form_field_adhoc#:#AdHoc
+origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
+origin_form_field_adhoc_parent_scope#:#Set Scope to Parent
+origin_form_field_adhoc_parent_scope_info#:#Only the data of containers which have been changed will be delivered
+origin_table_button_run_force_update#:#Sync (Force update)
+origin_deleted#:#Origin deleted
+table_md#:#MD
+table_tax#:#TAX
+logs_additional_data#:#Additional data
+logs_cron#:#Delete old logs
+logs_cron_description#:#After the specified config time, old logs will be deleted automatically
+logs_date#:#Date / Time
+logs_days#:#Days
+logs_deleted_status#:#Deleted %s log(s)
+logs_keep_old_logs_time#:#Keyp old logs maximal for
+logs_keep_old_logs_time_info#:#After the specified time, old logs will be deleted automatically
+logs_level#:#Level
+logs_level_200#:#Info
+logs_level_300#:#Warning
+logs_level_500#:#Critical
+logs_log_type#:#Type
+logs_log_type_1#:#Hub2
+logs_log_type_2#:#Origin
+logs_logs#:#Logs
+logs_message#:#Message
+logs_no_additional_data#:#No additional data
+logs_origin_id#:#Origin ID
+logs_origin_object_type#:#Origin object type
+logs_title#:#Title
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
 removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin
 removeplugindataconfirm_data#:#%1$s data
 removeplugindataconfirm_keep_data#:#Keep %1$s data
-removeplugindataconfirm_msg_kept_data#:#The %1$s data was kept!
-removeplugindataconfirm_msg_removed_data#:#The %1$s data was also removed!
+removeplugindataconfirm_msg_kept_data#:#The %1$s data was kept
+removeplugindataconfirm_msg_removed_data#:#The %1$s data was also removed
 removeplugindataconfirm_remove_data#:#Remove %1$s data

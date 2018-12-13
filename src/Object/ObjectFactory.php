@@ -228,14 +228,89 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
-	 * concatenation of the origins ID with the external-ID, see IObject::create()
-	 *
-	 * @param string $ext_id
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
-	protected function getId($ext_id) {
+	public function getId($ext_id) {
 		return $this->origin->getId() . $ext_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function users(): array {
+		return ARUser::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function courses(): array {
+		return ARCourse::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function categories(): array {
+		return ARCategory::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function groups(): array {
+		return ARGroup::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function sessions(): array {
+		return ARSession::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function courseMemberships(): array {
+		return ARCourseMembership::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function groupMemberships(): array {
+		return ARGroupMembership::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function sessionMemberships(): array {
+		return ARSessionMembership::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function orgUnits(): array {
+		return AROrgUnit::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function orgUnitMemberships(): array {
+		return AROrgUnitMembership::get();
 	}
 }

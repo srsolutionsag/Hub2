@@ -9,7 +9,6 @@ use ilObjUser;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
-use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -46,10 +45,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 */
 	protected $transition;
 	/**
-	 * @var ILog
-	 */
-	protected $originLog;
-	/**
 	 * @var OriginNotifications
 	 */
 	protected $originNotifications;
@@ -63,13 +58,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications) {
 		$this->origin = $origin;
 		$this->transition = $transition;
-		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
 		$this->implementation = $implementation;
 	}
@@ -97,11 +90,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			if ($ilias_id > 0) {
 				$object->setStatus(IObject::STATUS_TO_UPDATE);
 				$object->setILIASId($ilias_id);
-				$object->save();
+				$object->store();
 			}
 		}
 
-		if ($object->getStatus() != IObject::STATUS_TO_DELETE) {
+		if ($object->getStatus() !== IObject::STATUS_TO_OUTDATED) {
 			$object->setData($dto->getData());
 			if ($dto instanceof IMetadataAwareDataTransferObject
 				&& $object instanceof IMetadataAwareObject) {
@@ -112,86 +105,86 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$object->setTaxonomies($dto->getTaxonomies());
 			}
 		}
+
+		$time = time();
+
 		switch ($object->getStatus()) {
 			case IObject::STATUS_TO_CREATE:
 				$this->implementation->beforeCreateILIASObject($hook);
+
 				$ilias_object = $this->handleCreate($dto);
+
 				if ($this instanceof IMetadataSyncProcessor) {
 					$this->handleMetadata($dto, $ilias_object);
 				}
+
 				if ($this instanceof ITaxonomySyncProcessor) {
 					$this->handleTaxonomies($dto, $ilias_object);
 				}
+
 				$object->setILIASId($this->getILIASId($ilias_object));
+
 				$this->implementation->afterCreateILIASObject($hook->withILIASObject($ilias_object));
+
+				$object->setStatus(IObject::STATUS_CREATED);
+				$object->setProcessedDate($time);
 				break;
+
 			case IObject::STATUS_TO_UPDATE:
+			case IObject::STATUS_TO_RESTORE:
 				// Updating the ILIAS object is only needed if some properties were changed
-				if (($object->computeHashCode() != $object->getHashCode()) || $force) {
+				if (($object->computeHashCode() != $object->getHashCode()) || $force || $object->getStatus() === iObject::STATUS_TO_RESTORE) {
 					$this->implementation->beforeUpdateILIASObject($hook);
+
 					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
+
 					if ($ilias_object === NULL) {
 						throw new ILIASObjectNotFoundException($object);
 					}
+
 					if ($this instanceof IMetadataSyncProcessor) {
 						$this->handleMetadata($dto, $ilias_object);
 					}
+
 					if ($this instanceof ITaxonomySyncProcessor) {
 						$this->handleTaxonomies($dto, $ilias_object);
 					}
-					$object->setILIASId($this->getILIASId($ilias_object));
-					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
-				} else {
-					$object->updateStatus(IObject::STATUS_NOTHING_TO_UPDATE);
-				}
-				break;
-			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
-				// Updating the ILIAS object if newly delivered. Currently newly delivered will lead
-				// to an Update-Handler which could lead to problems for some configuration such as
-				// deleted (in ILIAS) objects. Some refactoring will be needed to handle this issue,
-				// e.g. to ask the relevant SyncProcessor wheather the related ILIAS object is
-				// avaiable or not. Another approach is the possibility to give MappingStrategies
-				// with your DTO (ans some default as well) which then before the Handler is called
-				// will try to map you DTO with an existing ILIAS Object (which will also be needed
-				// for handling existing objects while Creation as well.
 
-				$this->implementation->beforeUpdateILIASObject($hook);
-				$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
-				if ($ilias_object === NULL) {
-					throw new ILIASObjectNotFoundException($object);
+					$object->setILIASId($this->getILIASId($ilias_object));
+
+					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
+
+					$object->setStatus(IObject::STATUS_UPDATED);
+					$object->setProcessedDate($time);
+				} else {
+					$object->setStatus(IObject::STATUS_IGNORED);
 				}
-				if ($this instanceof IMetadataSyncProcessor) {
-					$this->handleMetadata($dto, $ilias_object);
-				}
-				if ($this instanceof ITaxonomySyncProcessor) {
-					$this->handleTaxonomies($dto, $ilias_object);
-				}
-				$object->setILIASId($this->getILIASId($ilias_object));
-				$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
 				break;
-			case IObject::STATUS_TO_DELETE:
+
+			case IObject::STATUS_TO_OUTDATED:
 				$this->implementation->beforeDeleteILIASObject($hook);
+
 				$ilias_object = $this->handleDelete($object->getILIASId());
+
 				if ($ilias_object === NULL) {
 					throw new ILIASObjectNotFoundException($object);
 				}
+
 				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
 
+				$object->setStatus(IObject::STATUS_OUTDATED);
+				$object->setProcessedDate($time);
 				break;
+
 			case IObject::STATUS_IGNORED:
 				// Nothing to do here, object is ignored
 				break;
+
 			default:
 				throw new HubException("Unrecognized intermediate status '{$object->getStatus()}' while processing {$object}");
 		}
-		$object->setStatus($this->transition->intermediateToFinal($object));
-		if ($object->getStatus() != IObject::STATUS_IGNORED
-			&& $object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
-			$object->setProcessedDate(time());
-		}
-		if ($object->getStatus() != IObject::STATUS_NOTHING_TO_UPDATE) {
-			$object->save();
-		}
+
+		$object->store();
 	}
 
 

@@ -131,7 +131,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create Category
 	 */
 	public function test_create_session_with_default_properties() {
-		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -157,7 +157,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create Category
 	 */
 	public function test_update_session_with_default_properties() {
-		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
 
 		$this->dto->setTitle("Changed Title");
 
@@ -165,7 +165,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn("myHashChanged");
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn("myHash");
-		$this->iobject->shouldReceive('updateStatus')->with(IObject::STATUS_NOTHING_TO_UPDATE);
+		//$this->iobject->shouldReceive('updateStatus')->with(IObject::STATUS_NOTHING_TO_UPDATE);
 		$this->iobject->shouldReceive('getILIASId')->andReturn(self::REF_ID);
 		$this->iobject->shouldReceive('setILIASId')->with(self::REF_ID);
 

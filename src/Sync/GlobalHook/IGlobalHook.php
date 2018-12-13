@@ -2,9 +2,6 @@
 
 namespace srag\Plugins\Hub2\Sync\GlobalHook;
 
-use Exception;
-use srag\Plugins\Hub2\Origin\IOrigin;
-
 /**
  * Interface IGlobalHook
  *
@@ -16,7 +13,9 @@ interface IGlobalHook {
 	/**
 	 * This is executed before all active origins are synced.
 	 *
-	 * @param IOrigin[] $active_orgins all active origins that will be exectued
+	 * @param array $active_orgins all active origins that will be exectued
+	 *
+	 * @return bool
 	 */
 	public function beforeSync(array $active_orgins): bool;
 
@@ -24,7 +23,9 @@ interface IGlobalHook {
 	/**
 	 * This is executed after all active origins have been.
 	 *
-	 * @param IOrigin[] $active_orgins all active origins that have been executed.
+	 * @param array $active_orgins $active_orgins all active origins that have been executed.
+	 *
+	 * @return bool
 	 */
 	public function afterSync(array $active_orgins): bool;
 
@@ -32,7 +33,9 @@ interface IGlobalHook {
 	/**
 	 * This is executed after afterSync and allows the custom processing of exceptions fired during the sync.
 	 *
-	 * @param Exception[] $exceptions
+	 * @param array $exceptions
+	 *
+	 * @return bool
 	 */
 	public function handleExceptions(array $exceptions): bool;
 }

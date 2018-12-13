@@ -37,10 +37,8 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 		$msg .= self::plugin()->translate("summary_delivered_data_sets", "", [ $originSync->getCountDelivered() ]) . "\n";
 		$msg .= self::plugin()->translate("summary_created", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED) ]) . "\n";
 		$msg .= self::plugin()->translate("summary_updated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED) ]) . "\n";
-		$msg .= self::plugin()->translate("summary_deleted", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_outdated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED) ]) . "\n";
 		$msg .= self::plugin()->translate("summary_ignored", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) ]) . "\n";
-		$msg .= self::plugin()->translate("summary_no_changes", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE) ])
-			. "\n\n";
 		foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
 			$msg .= "$context: \n**********\n";
 			foreach ($messages as $message) {

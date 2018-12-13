@@ -77,9 +77,9 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 			true,
 		])->andReturn(true);
 
-		$this->ilObjCourse = Mockery::mock("overload:\ilObjCourse", "ilObject");
+		$this->ilObjCourse = Mockery::mock(ilObjCourse::class, ilObject::class);
 
-		$this->ilCourseParticipants = Mockery::mock("overload:\ilCourseParticipants", "\ilParticipants");
+		$this->ilCourseParticipants = Mockery::mock("overload:" . ilCourseParticipants::class, ilParticipants::class);
 		$this->ilObjCourse->shouldReceive("getMembersObject")->once()->andReturn($this->ilCourseParticipants);
 
 		define(IL_CRS_TUTOR, 3);
@@ -104,7 +104,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function test_create_course_membership() {
-		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -123,7 +123,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function test_update_course_membership() {
-		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
+		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());

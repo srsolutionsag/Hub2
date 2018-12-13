@@ -36,6 +36,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 	use DICTrait;
 	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+	const POST_VAR_ADHOC = "adhoc";
 	protected $parent_gui;
 	/**
 	 * @var IOrigin
@@ -296,6 +297,10 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 			$item = new ilNonEditableValueGUI();
 			$item->setTitle(self::plugin()->translate('origin_form_field_usage_type'));
 			$item->setValue(self::plugin()->translate("origin_object_type_" . $this->origin->getObjectType()));
+			$this->addItem($item);
+			$item = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc"), self::POST_VAR_ADHOC);
+			$item->setChecked($this->origin->isAdHoc());
+			$item->setInfo(self::plugin()->translate("origin_form_field_adhoc_info"));
 			$this->addItem($item);
 			$item = new ilCheckboxInputGUI(self::plugin()->translate('origin_form_field_active'), 'active');
 			$item->setChecked($this->origin->isActive());

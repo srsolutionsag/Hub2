@@ -5,6 +5,8 @@ require_once __DIR__ . "/../vendor/autoload.php";
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\ArConfigOld;
 use srag\Plugins\Hub2\Jobs\RunSync;
+use srag\Plugins\Hub2\Log\DeleteOldLogsJob;
+use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -64,7 +66,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return ilCronJob[]
 	 */
 	public function getCronJobInstances(): array {
-		return [ new RunSync() ];
+		return [ new RunSync(), new DeleteOldLogsJob() ];
 	}
 
 
@@ -73,8 +75,18 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 *
 	 * @return ilCronJob
 	 */
-	public function getCronJobInstance($a_job_id): ilCronJob {
-		return new $a_job_id();
+	public function getCronJobInstance(/*string*/
+		$a_job_id)/*: ?ilCronJob*/ {
+		switch ($a_job_id) {
+			case RunSync::CRON_JOB_ID:
+				return new RunSync();
+
+			case DeleteOldLogsJob::CRON_JOB_ID:
+				return new DeleteOldLogsJob();
+
+			default:
+				return NULL;
+		}
 	}
 
 
@@ -95,6 +107,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		self::dic()->database()->dropTable(ArConfigOld::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+		self::dic()->database()->dropTable(Log::TABLE_NAME, false);
 
 		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 	}

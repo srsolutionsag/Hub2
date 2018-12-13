@@ -4,8 +4,6 @@ namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Log\OriginLog;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -47,11 +45,10 @@ class OriginSyncFactory {
 	 */
 	public function instance() {
 		$statusTransition = new ObjectStatusTransition($this->origin->config());
-		$originLog = new OriginLog($this->origin);
 		$originNotifications = new OriginNotifications();
-		$implementationFactory = new OriginImplementationFactory($this->origin, $originLog, $originNotifications);
+		$implementationFactory = new OriginImplementationFactory($this->origin, $originNotifications);
 		$originImplementation = $implementationFactory->instance();
-		$originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $this->getSyncProcessor($this->origin, $originImplementation, $statusTransition, $originLog, $originNotifications), $statusTransition, $originImplementation, $originNotifications);
+		$originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $this->getSyncProcessor($this->origin, $originImplementation, $statusTransition, $originNotifications), $statusTransition, $originImplementation, $originNotifications);
 
 		return $originSync;
 	}
@@ -72,13 +69,12 @@ class OriginSyncFactory {
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $statusTransition
-	 * @param ILog                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 *
 	 * @return IObjectSyncProcessor
 	 */
-	protected function getSyncProcessor(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition, ILog $originLog, OriginNotifications $originNotifications) {
-		$processorFactory = new SyncProcessorFactory($origin, $implementation, $statusTransition, $originLog, $originNotifications);
+	protected function getSyncProcessor(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition, OriginNotifications $originNotifications) {
+		$processorFactory = new SyncProcessorFactory($origin, $implementation, $statusTransition, $originNotifications);
 		$processor = $origin->getObjectType();
 
 		return $processorFactory->$processor();

@@ -39,4 +39,11 @@ interface IOriginFactory {
 	 * @return IOrigin[]
 	 */
 	public function getAll(): array;
+
+
+	/**
+	 * @param int $origin_id
+	 */
+	public function delete(int $origin_id)/*: void*/
+	;
 }

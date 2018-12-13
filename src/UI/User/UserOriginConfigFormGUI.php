@@ -54,16 +54,14 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 	protected function addPropertiesNew() {
 		parent::addPropertiesNew();
 
-		$activate = new ilCheckboxInputGUI(self::plugin()
-			->translate('usr_prop_activate_account'), $this->prop(UserProperties::ACTIVATE_ACCOUNT));
+		$activate = new ilCheckboxInputGUI(self::plugin()->translate('usr_prop_activate_account'), $this->prop(UserProperties::ACTIVATE_ACCOUNT));
 		$activate->setChecked($this->origin->properties()->get(UserProperties::ACTIVATE_ACCOUNT));
 		$this->addItem($activate);
 		//
 		$cb = new ilCheckboxInputGUI(self::plugin()->translate('usr_prop_create_password'), $this->prop(UserProperties::CREATE_PASSWORD));
 		$cb->setChecked($this->origin->properties()->get(UserProperties::CREATE_PASSWORD));
 		$this->addItem($cb);
-		$send_password = new ilCheckboxInputGUI(self::plugin()
-			->translate('usr_prop_send_password'), $this->prop(UserProperties::SEND_PASSWORD));
+		$send_password = new ilCheckboxInputGUI(self::plugin()->translate('usr_prop_send_password'), $this->prop(UserProperties::SEND_PASSWORD));
 		$send_password->setChecked($this->origin->properties()->get(UserProperties::SEND_PASSWORD));
 		//		$syncfield = new ilSelectInputGUI(self::plugin()->translate('usr_prop_send_password_field'), $this->prop(UserOriginProperties::SEND_PASSWORD_FIELD));
 		//		$opt = array('email'            => 'email',
@@ -103,14 +101,12 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI {
 	protected function addPropertiesUpdate() {
 		parent::addPropertiesUpdate();
 
-		$activate = new ilCheckboxInputGUI(self::plugin()
-			->translate('usr_prop_reactivate_account'), $this->prop(UserProperties::REACTIVATE_ACCOUNT));
+		$activate = new ilCheckboxInputGUI(self::plugin()->translate('usr_prop_reactivate_account'), $this->prop(UserProperties::REACTIVATE_ACCOUNT));
 		$activate->setInfo(self::plugin()->translate('usr_prop_reactivate_account_info'));
 		$activate->setChecked($this->origin->properties()->get(UserProperties::REACTIVATE_ACCOUNT));
 		$this->addItem($activate);
 
-		$activate = new ilCheckboxInputGUI(self::plugin()
-			->translate('usr_prop_resend_password'), $this->prop(UserProperties::RE_SEND_PASSWORD));
+		$activate = new ilCheckboxInputGUI(self::plugin()->translate('usr_prop_resend_password'), $this->prop(UserProperties::RE_SEND_PASSWORD));
 		$activate->setInfo(self::plugin()->translate('usr_prop_resend_password_info'));
 		$activate->setChecked($this->origin->properties()->get(UserProperties::RE_SEND_PASSWORD));
 		$this->addItem($activate);

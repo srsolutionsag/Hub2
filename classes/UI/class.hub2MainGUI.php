@@ -55,6 +55,7 @@ class hub2MainGUI {
 				self::dic()->ctrl()->forwardCommand(new hub2CustomViewGUI());
 				break;
 			case strtolower(hub2DataGUI::class):
+			case strtolower(hub2LogsGUI::class):
 				break;
 			default:
 				$cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);

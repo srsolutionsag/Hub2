@@ -7,10 +7,8 @@ use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
-use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
-use srag\Plugins\Hub2\Object\IObject;
 
 /**
  * Class demoCategory
@@ -48,10 +46,10 @@ class demoCategory extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData(): int {
-		$this->log()->write("This is a test-log entry");
+		self::logs()->originLog($this->origin)->write("This is a test-log entry");
 
 		$time = time();
-		for ($x = 1; $x <= 10; $x++) {
+		for ($x = 1; $x <= 10; $x ++) {
 			if (rand(1, 10) === $x) {
 				// continue; // Simulate some random deletions
 			}
@@ -71,12 +69,8 @@ class demoCategory extends AbstractOriginImplementation {
 			// 	);
 		}
 
-		$this->data[] = $this->factory()->category('ext_001')
-			->setTitle("Manuell")
-			->setDescription("Mapped by Strategy")
-			->setParentId(1)
-			->setParentIdType(CategoryDTO::PARENT_ID_TYPE_REF_ID)
-			->overrideMappingStrategy($this->mapping()->byTitle());
+		$this->data[] = $this->factory()->category('ext_001')->setTitle("Manuell")->setDescription("Mapped by Strategy")->setParentId(1)
+			->setParentIdType(CategoryDTO::PARENT_ID_TYPE_REF_ID)->overrideMappingStrategy($this->mapping()->byTitle());
 
 		return count($this->data);
 	}

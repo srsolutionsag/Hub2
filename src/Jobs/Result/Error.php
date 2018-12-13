@@ -10,6 +10,9 @@ namespace srag\Plugins\Hub2\Jobs\Result;
  */
 class Error extends AbstractResult {
 
+	/**
+	 * @inheritdoc
+	 */
 	protected function initStatus() {
 		$this->setStatus(self::STATUS_CRASHED);
 	}

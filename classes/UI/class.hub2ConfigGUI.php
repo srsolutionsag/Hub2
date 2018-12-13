@@ -31,8 +31,7 @@ class hub2ConfigGUI extends hub2MainGUI {
 	 */
 	protected function index()/*: void*/ {
 		$form = $this->getConfigForm();
-
-		self::plugin()->output($form);
+		self::output()->output($form);
 	}
 
 
@@ -48,8 +47,7 @@ class hub2ConfigGUI extends hub2MainGUI {
 			self::dic()->ctrl()->redirect($this);
 		}
 		$form->setValuesByPost();
-
-		self::plugin()->output($form);
+		self::output()->output($form);
 	}
 
 

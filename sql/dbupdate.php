@@ -67,3 +67,37 @@ if (strpos($administration_role_ids, "[") === false) {
 	\srag\Plugins\Hub2\Config\ArConfig::setField(\srag\Plugins\Hub2\Config\ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS, $administration_role_ids);
 }
 ?>
+<#6>
+<?php
+/* */
+?>
+<#7>
+<?php
+/* */
+?>
+<#8>
+<?php
+\srag\Plugins\Hub2\Log\Log::updateDB();
+?>
+<#9>
+<?php
+\srag\Plugins\Hub2\Origin\User\ARUserOrigin::updateDB();
+\srag\Plugins\Hub2\Object\User\ARUser::updateDB();
+\srag\Plugins\Hub2\Object\Course\ARCourse::updateDB();
+\srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership::updateDB();
+\srag\Plugins\Hub2\Object\Category\ARCategory::updateDB();
+\srag\Plugins\Hub2\Object\Session\ARSession::updateDB();
+\srag\Plugins\Hub2\Object\Group\ARGroup::updateDB();
+\srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::updateDB();
+\srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::updateDB();
+\srag\Plugins\Hub2\Object\OrgUnit\AROrgUnit::updateDB();
+\srag\Plugins\Hub2\Object\OrgUnitMembership\AROrgUnitMembership::updateDB();
+?>
+<#10>
+<?php
+\srag\Plugins\Hub2\Log\Log::updateDB();
+?>
+<#11>
+<?php
+\srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin::updateDB();
+?>

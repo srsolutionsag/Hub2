@@ -28,16 +28,16 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 * @var array
 	 */
 	static $object_types = [
-		IOrigin::OBJECT_TYPE_USER,
-		IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP,
-		IOrigin::OBJECT_TYPE_COURSE,
-		IOrigin::OBJECT_TYPE_CATEGORY,
-		IOrigin::OBJECT_TYPE_GROUP,
-		IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
-		IOrigin::OBJECT_TYPE_SESSION,
-		IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
-		IOrigin::OBJECT_TYPE_ORGNUNIT,
-		IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP
+		IOrigin::OBJECT_TYPE_USER => IOrigin::OBJECT_TYPE_USER,
+		IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP,
+		IOrigin::OBJECT_TYPE_COURSE => IOrigin::OBJECT_TYPE_COURSE,
+		IOrigin::OBJECT_TYPE_CATEGORY => IOrigin::OBJECT_TYPE_CATEGORY,
+		IOrigin::OBJECT_TYPE_GROUP => IOrigin::OBJECT_TYPE_GROUP,
+		IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
+		IOrigin::OBJECT_TYPE_SESSION => IOrigin::OBJECT_TYPE_SESSION,
+		IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
+		IOrigin::OBJECT_TYPE_ORGNUNIT => IOrigin::OBJECT_TYPE_ORGNUNIT,
+		IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP
 	];
 
 
@@ -170,6 +170,24 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 * @var bool
 	 */
 	protected $force_update = false;
+	/**
+	 * @var bool
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       1
+	 * @con_is_notnull   true
+	 */
+	protected $adhoc = false;
+	/**
+	 * @var bool
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       1
+	 * @con_is_notnull   true
+	 */
+	protected $adhoc_parent_scope = false;
 
 
 	/**
@@ -195,6 +213,8 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 * @inheritdoc
 	 */
 	public function sleep($field_name) {
+		$field_value = $this->{$field_name};
+
 		switch ($field_name) {
 			case 'config':
 				if ($this->_config === NULL) {
@@ -204,6 +224,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 				} else {
 					return json_encode($this->config()->getData());
 				}
+
 			case 'properties':
 				if ($this->_properties === NULL) {
 					$properties = $this->getOriginProperties([]);
@@ -212,9 +233,14 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 				} else {
 					return json_encode($this->properties()->getData());
 				}
-		}
 
-		return parent::sleep($field_name);
+			case "adhoc":
+			case "adhoc_parent_scope":
+				return ($field_value ? 1 : 0);
+
+			default:
+				return NULL;
+		}
 	}
 
 
@@ -226,9 +252,14 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 			case 'config':
 			case 'properties':
 				return json_decode($field_value, true);
-		}
 
-		return parent::wakeUp($field_name, $field_value);
+			case "adhoc":
+			case "adhoc_parent_scope":
+				return boolval($field_value);
+
+			default:
+				return NULL;
+		}
 	}
 
 
@@ -471,5 +502,37 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 */
 	public function isUpdateForced(): bool {
 		return $this->force_update;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function isAdHoc(): bool {
+		return $this->adhoc;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setAdHoc(bool $adhoc)/*: void*/ {
+		$this->adhoc = $adhoc;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function isAdhocParentScope(): bool {
+		return $this->adhoc_parent_scope;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/ {
+		$this->adhoc_parent_scope = $adhoc_parent_scope;
 	}
 }

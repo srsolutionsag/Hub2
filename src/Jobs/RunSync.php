@@ -2,16 +2,17 @@
 
 namespace srag\Plugins\Hub2\Jobs;
 
-use Exception;
 use ilCronJob;
 use ilHub2Plugin;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
-use srag\Plugins\Hub2\Log\OriginLog;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
+use Throwable;
 
 /**
  * Class RunSync
@@ -19,13 +20,19 @@ use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
  * @package srag\Plugins\Hub2\Jobs
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class RunSync extends AbstractJob {
+class RunSync extends ilCronJob {
+
+	use DICTrait;
+	use Hub2Trait;
+	const CRON_JOB_ID = self::class;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @return string
 	 */
 	public function getId(): string {
-		return get_class($this);
+		return self::CRON_JOB_ID;
 	}
 
 
@@ -97,11 +104,10 @@ class RunSync extends AbstractJob {
 				$originSync = $originSyncFactory->instance();
 				try {
 					$originSync->execute();
-				} catch (Exception $e) {
+				} catch (Throwable $e) {
 
 				}
-				$OriginLog = new OriginLog($originSync->getOrigin());
-				$OriginLog->write($summary->getSummaryOfOrigin($originSync));
+				self::logs()->originLog($originSync->getOrigin())->write($summary->getSummaryOfOrigin($originSync));
 
 				$summary->addOriginSync($originSync);
 			}
@@ -110,8 +116,8 @@ class RunSync extends AbstractJob {
 			$summary->sendNotifications();
 
 			return ResultFactory::ok("everything's fine.");
-		} catch (Exception $e) {
-			$global_hook->handleExceptions($e);
+		} catch (Throwable $e) {
+			$global_hook->handleExceptions([ $e ]);
 
 			return ResultFactory::error("there was an error");
 		}

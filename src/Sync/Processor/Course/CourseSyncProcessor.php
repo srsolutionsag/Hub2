@@ -14,7 +14,6 @@ use ilRepUtil;
 use ilSession;
 use ilSoapFunctions;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -76,12 +75,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
 	 * @param OriginNotifications     $originNotifications
 	 * @param ICourseActivities       $courseActivities
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications, ICourseActivities $courseActivities) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications, ICourseActivities $courseActivities) {
+		parent::__construct($origin, $implementation, $transition, $originNotifications);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 		$this->courseActivities = $courseActivities;
@@ -261,7 +259,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function sendMailNotifications(CourseDTO $dto, ilObjCourse $ilObjCourse) {
 		$mail = new ilMimeMail();
-		$sender_factory = new ilMailMimeSenderFactory($this->settings());
+		$sender_factory = new ilMailMimeSenderFactory(self::dic()->settings());
 		$sender = NULL;
 		if ($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)) {
 			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM));

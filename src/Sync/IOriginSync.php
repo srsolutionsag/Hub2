@@ -44,7 +44,7 @@ interface IOriginSync {
 	 *
 	 *  * IObject::STATUS_CREATED: Number of objects created
 	 *  * IObject::STATUS_UPDATED: Number of objects updated
-	 *  * IObject::STATUS_DELETED: Number of objects deleted
+	 *  * IObject::STATUS_OUTDATED: Number of objects deleted
 	 *  * IObject::STATUS_IGNORED: Number of objects ignored
 	 *
 	 * @param int $status

@@ -40,7 +40,7 @@ class demoSession extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData(): int {
-		$this->log()->write("This is a test-log entry");
+		self::logs()->originLog($this->origin)->write("This is a test-log entry");
 
 		for ($x = 1; $x <= 14; $x ++) {
 			if (rand(1, 14) === $x) {
