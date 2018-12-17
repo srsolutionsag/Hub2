@@ -96,6 +96,8 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 		parent::addPropertiesUpdate();
 
 		$cb = new ilCheckboxInputGUI(self::plugin()->translate('crs_prop_move'), $this->prop(CourseProperties::MOVE_COURSE));
+		$cb->setChecked($this->origin->properties()->get(CourseProperties::MOVE_COURSE));
+
 		$cb->setInfo(self::plugin()->translate('crs_prop_move_info'));
 		$this->addItem($cb);
 
