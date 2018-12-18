@@ -207,14 +207,14 @@ class DataTableGUI extends ilTable2GUI {
 		$union_query = "";
 		$columns = implode(", ",$this->getFields());
 		$columns = rtrim($columns,", ");
-
-
 		foreach (self::$classes as $class) {
 			$union_query .= "SELECT $columns FROM " .$class::TABLE_NAME.$where_query." UNION ";
 		}
-
 		$union_query = rtrim($union_query,"UNION ");
-		$query = $union_query;
+
+		$order_by_query = " ORDER BY ".$this->getOrderField(). " ".$this->getOrderDirection();
+
+		$query = $union_query.$order_by_query;
 		$result = self::dic()->database()->query($query);
 		while($row = $result->fetchRow()){
 			$data[] = $row;
@@ -227,6 +227,9 @@ class DataTableGUI extends ilTable2GUI {
 
 	/**
 	 * @param array $a_set
+	 * @throws \ReflectionException
+	 * @throws \ilTemplateException
+	 * @throws \srag\DIC\Hub2\Exception\DICException
 	 */
 	protected function fillRow($a_set) {
 		self::dic()->ctrl()->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
@@ -278,10 +281,11 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param string  $ext_id
+	 * @param $ext_id
 	 * @param IOrigin $origin
-	 *
 	 * @return string
+	 * @throws \ilTemplateException
+	 * @throws \srag\DIC\Hub2\Exception\DICException
 	 */
 	protected function renderILIASLinkForIliasId($ext_id, IOrigin $origin) {
 		if (!$origin) {
@@ -315,6 +319,8 @@ class DataTableGUI extends ilTable2GUI {
 
 	/**
 	 * @return array
+	 * @throws \ReflectionException
+	 * @throws \srag\DIC\Hub2\Exception\DICException
 	 */
 	private function getAvailableStatus() {
 		static $status;
@@ -335,6 +341,7 @@ class DataTableGUI extends ilTable2GUI {
 
 	/**
 	 * @return array
+	 * @throws \srag\DIC\Hub2\Exception\DICException
 	 */
 	private function getAvailableOrigins() {
 		static $origins;
