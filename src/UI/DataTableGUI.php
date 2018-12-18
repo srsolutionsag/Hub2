@@ -105,6 +105,8 @@ class DataTableGUI extends ilTable2GUI {
 			$this->setLimit(999);
 		}
 		$this->determineOffsetAndOrder();
+		$this->setDefaultOrderDirection("DESC");
+		$this->setDefaultOrderField("processed_date");
 		$this->initTableData();
 	}
 
