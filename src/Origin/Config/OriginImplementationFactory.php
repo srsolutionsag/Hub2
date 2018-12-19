@@ -1,24 +1,24 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Config;
+namespace srag\Plugins\Hub2\Origin\Config;
 
-use SRAG\Plugins\Hub2\Config\IHubConfig;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\MappingStrategy\Factory;
-use SRAG\Plugins\Hub2\Metadata\MetadataFactory;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Taxonomy\TaxonomyFactory;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
+use srag\Plugins\Hub2\Metadata\MetadataFactory;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Taxonomy\TaxonomyFactory;
 
 /**
  * Class OriginImplementationFactory
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
- * @package SRAG\Plugins\Hub2\Origin\Config
+ * @package srag\Plugins\Hub2\Origin\Config
  */
 class OriginImplementationFactory {
 
@@ -26,10 +26,6 @@ class OriginImplementationFactory {
 	 * @var IOrigin
 	 */
 	protected $origin;
-	/**
-	 * @var IHubConfig
-	 */
-	protected $hubConfig;
 	/**
 	 * @var ILog
 	 */
@@ -41,13 +37,11 @@ class OriginImplementationFactory {
 
 
 	/**
-	 * @param IHubConfig          $hubConfig
 	 * @param IOrigin             $origin
 	 * @param ILog                $originLog
 	 * @param OriginNotifications $originNotifications
 	 */
-	public function __construct(IHubConfig $hubConfig, IOrigin $origin, ILog $originLog, OriginNotifications $originNotifications) {
-		$this->hubConfig = $hubConfig;
+	public function __construct(IOrigin $origin, ILog $originLog, OriginNotifications $originNotifications) {
 		$this->origin = $origin;
 		$this->originLog = $originLog;
 		$this->originNotifications = $originNotifications;
@@ -59,7 +53,7 @@ class OriginImplementationFactory {
 	 * @throws HubException
 	 */
 	public function instance() {
-		$basePath = rtrim($this->hubConfig->getOriginImplementationsPath(), '/') . '/';
+		$basePath = rtrim(ArConfig::getOriginImplementationsPath(), '/') . '/';
 		$path = $basePath . $this->origin->getObjectType() . '/';
 		$className = $this->origin->getImplementationClassName();
 		$namespace = $this->origin->getImplementationNamespace();
@@ -69,7 +63,7 @@ class OriginImplementationFactory {
 		}
 		require_once $classFile;
 		$class = rtrim($namespace, "\\") . "\\" . $className;
-		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new Factory());
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory());
 
 		return $instance;
 	}

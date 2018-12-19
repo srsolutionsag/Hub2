@@ -2,16 +2,15 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Object\User\IUser;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
-use SRAG\Plugins\Hub2\Origin\Config\IUserOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Config\UserOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\UserOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\IUserSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\User\IUser;
+use srag\Plugins\Hub2\Object\User\UserDTO;
+use srag\Plugins\Hub2\Origin\Config\IUserOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\UserOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\UserOriginProperties;
+use srag\Plugins\Hub2\Sync\Processor\IUserSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
  * Class UserSyncProcessorTest
@@ -51,7 +50,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\IUserActivities');
+		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Category\IUserActivities');
 		$this->initOrigin(new UserOriginProperties(), new UserOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -87,7 +86,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\User\IUser');
+		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\User\IUser');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -154,6 +153,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldReceive('update')->once();
 		$this->originImplementation->shouldReceive('beforeUpdateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->iobject->shouldReceive('computeHashCode')->once()->andReturn('actualHashCode');
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn('previousHashCode');
 		$this->iobject->shouldReceive('setMetaData')->once();
@@ -174,6 +174,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldNotReceive('setDescription');
 		$this->originImplementation->shouldNotReceive('beforeUpdateILIASObject');
 		$this->originImplementation->shouldNotReceive('afterUpdateILIASObject');
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->iobject, $this->dto);
 	}
@@ -184,6 +185,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originProperties->setData([ UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_NONE ]);
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldNotReceive('update');
 		$this->ilObject->shouldNotReceive('delete');
 		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
@@ -196,6 +198,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originProperties->setData([ UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_INACTIVE ]);
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldReceive('setActive')->with(false)->once();
 		$this->ilObject->shouldReceive('update')->once();
 		$this->ilObject->shouldNotReceive('delete');
@@ -209,6 +212,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originProperties->setData([ UserOriginProperties::DELETE => UserOriginProperties::DELETE_MODE_DELETE ]);
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldReceive('delete');
 		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications);
 		$processor->process($this->iobject, $this->dto);
@@ -257,6 +261,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	protected function initDataExpectations() {
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setILIASId')->once()->with(self::ILIAS_ID);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());

@@ -1,11 +1,14 @@
-<?php namespace SRAG\Plugins\Hub2\MappingStrategy;
+<?php
 
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
+namespace srag\Plugins\Hub2\MappingStrategy;
+
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class MappingStrategyAwareDataTransferObject
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package srag\Plugins\Hub2\MappingStrategy
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 trait MappingStrategyAwareDataTransferObject {
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\CourseMembership;
+namespace srag\Plugins\Hub2\Object\CourseMembership;
 
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class CourseMembershipDTO
  *
- * @package SRAG\Plugins\Hub2\Object\CourseMembership
+ * @package srag\Plugins\Hub2\Object\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CourseMembershipDTO extends DataTransferObject {
@@ -20,7 +20,7 @@ class CourseMembershipDTO extends DataTransferObject {
 	 * @inheritDoc
 	 */
 	public function __construct($course_ext_id, $user_id) {
-		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$course_ext_id, $user_id]));
+		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $course_ext_id, $user_id ]));
 		$this->courseId = $course_ext_id;
 		$this->userId = $user_id;
 	}
@@ -58,7 +58,7 @@ class CourseMembershipDTO extends DataTransferObject {
 
 
 	/**
-	 * @param $courseId
+	 * @param int $courseId
 	 *
 	 * @return CourseMembershipDTO
 	 */

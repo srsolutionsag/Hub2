@@ -1,17 +1,21 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Metadata\Implementation;
+namespace srag\Plugins\Hub2\Metadata\Implementation;
 
-use SRAG\Plugins\Hub2\Metadata\IMetadata;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Metadata\IMetadata;
 
 /**
  * Class CustomMetadata
  *
- * @package SRAG\Plugins\Hub2\Metadata\Implementation
+ * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractImplementation implements IMetadataImplementation {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
 	 */
@@ -25,7 +29,7 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 	/**
 	 * UDF constructor.
 	 *
-	 * @param $metadata
+	 * @param IMetadata $metadata
 	 */
 	public function __construct(IMetadata $metadata, int $ilias_id) {
 		$this->metadata = $metadata;

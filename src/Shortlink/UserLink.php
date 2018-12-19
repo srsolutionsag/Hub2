@@ -1,4 +1,11 @@
-<?php namespace SRAG\Plugins\Hub2\Shortlink;
+<?php
+
+namespace srag\Plugins\Hub2\Shortlink;
+
+use ilAdministrationGUI;
+use ilLink;
+use ilObjUser;
+use ilObjUserGUI;
 
 /**
  * Class UserLink
@@ -15,7 +22,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 			return false;
 		}
 
-		return \ilObjUser::_exists($this->object->getILIASId(), false);
+		return ilObjUser::_exists($this->object->getILIASId(), false);
 	}
 
 
@@ -23,13 +30,12 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 	 * @inheritDoc
 	 */
 	public function isAccessGranted(): bool {
-		$userObj = new \ilObjUser($this->object->getILIASId());
+		$userObj = new ilObjUser($this->object->getILIASId());
 		if ($userObj->hasPublicProfile()) {
 			return true;
 		}
-		global $DIC;
 
-		return $DIC->access()->checkAccess('read', '', 7); // Read access to user administration
+		return self::dic()->access()->checkAccess('read', '', 7); // Read access to user administration
 	}
 
 
@@ -37,7 +43,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 	 * @inheritDoc
 	 */
 	public function getAccessGrantedExternalLink(): string {
-		return \ilLink::_getLink($this->object->getILIASId(), 'usr');
+		return ilLink::_getLink($this->object->getILIASId(), 'usr');
 	}
 
 
@@ -53,10 +59,9 @@ class UserLink extends AbstractBaseLink implements IObjectLink {
 	 * @inheritDoc
 	 */
 	public function getAccessGrantedInternalLink(): string {
-		global $DIC;
-		$DIC->ctrl()->setParameterByClass(\ilObjUserGUI::class, "ref_id", 7);
-		$DIC->ctrl()->setParameterByClass(\ilObjUserGUI::class, "obj_id", $this->object->getILIASId());
+		self::dic()->ctrl()->setParameterByClass(ilObjUserGUI::class, "ref_id", 7);
+		self::dic()->ctrl()->setParameterByClass(ilObjUserGUI::class, "obj_id", $this->object->getILIASId());
 
-		return $DIC->ctrl()->getLinkTargetByClass([\ilAdministrationGUI::class, \ilObjUserGUI::class], "view");
+		return self::dic()->ctrl()->getLinkTargetByClass([ ilAdministrationGUI::class, ilObjUserGUI::class ], "view");
 	}
 }

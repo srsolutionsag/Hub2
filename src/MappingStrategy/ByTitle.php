@@ -1,22 +1,26 @@
-<?php namespace SRAG\Plugins\Hub2\MappingStrategy;
+<?php
 
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
-use SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnit\OrgUnitDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
+namespace srag\Plugins\Hub2\MappingStrategy;
+
+use ilObject2;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\Group\GroupDTO;
+use srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
+use srag\Plugins\Hub2\Object\OrgUnit\OrgUnitDTO;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
+use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
- * Class None
+ * Class ByTitle
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package srag\Plugins\Hub2\MappingStrategy
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ByTitle implements IMappingStrategy {
+class ByTitle extends AMappingStrategy implements IMappingStrategy {
 
 	/**
 	 * @inheritDoc
@@ -36,13 +40,11 @@ class ByTitle implements IMappingStrategy {
 				if ($dto->getParentIdType() != CourseDTO::PARENT_ID_TYPE_REF_ID) {
 					return 0;
 				}
-				global $DIC;
-
 				$parent_id = $dto->getParentId();
-				if (!\ilObject2::_exists($parent_id)) {
+				if (!ilObject2::_exists($parent_id)) {
 					return 0;
 				}
-				$children = $DIC->repositoryTree()->getChildsByType($parent_id, $this->getTypeByDTO($dto));
+				$children = self::dic()->tree()->getChildsByType($parent_id, $this->getTypeByDTO($dto));
 
 				foreach ($children as $child) {
 					if ($child['title'] == $dto->getTitle()) {
@@ -56,6 +58,11 @@ class ByTitle implements IMappingStrategy {
 	}
 
 
+	/**
+	 * @param IDataTransferObject $dto
+	 *
+	 * @return string
+	 */
 	private function getTypeByDTO(IDataTransferObject $dto): string {
 		switch (true) {
 			case ($dto instanceof GroupDTO):
@@ -67,5 +74,7 @@ class ByTitle implements IMappingStrategy {
 			case ($dto instanceof CategoryDTO):
 				return "cat";
 		}
+
+		return '';
 	}
 }

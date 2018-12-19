@@ -1,22 +1,19 @@
-<?php namespace SRAG\Plugins\Hub2\MappingStrategy;
+<?php
 
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\Group\GroupDTO;
-use SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnit\OrgUnitDTO;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
-use SRAG\Plugins\Hub2\Object\User\UserDTO;
+namespace srag\Plugins\Hub2\MappingStrategy;
+
+use ilObjUser;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class ByEmail
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package srag\Plugins\Hub2\MappingStrategy
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ByEmail implements IMappingStrategy {
+class ByEmail extends AMappingStrategy implements IMappingStrategy {
 
 	/**
 	 * @inheritDoc
@@ -26,7 +23,7 @@ class ByEmail implements IMappingStrategy {
 			throw new HubException("Mapping using Email not supported for this type of DTO");
 		}
 		$login = false;
-		$user_ids_by_email = \ilObjUser::_getUserIdsByEmail($dto->getLogin());
+		$user_ids_by_email = ilObjUser::_getUserIdsByEmail($dto->getEmail());
 		if (is_array($user_ids_by_email)) {
 			$login = $user_ids_by_email[0];
 		}
@@ -35,6 +32,6 @@ class ByEmail implements IMappingStrategy {
 			return 0;
 		}
 
-		return (int)\ilObjUser::_lookupId($login);
+		return (int)ilObjUser::_lookupId($login);
 	}
 }

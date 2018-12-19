@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\User;
+namespace srag\Plugins\Hub2\Object\User;
 
-use SRAG\Plugins\Hub2\Object\ObjectRepository;
+use srag\Plugins\Hub2\Object\ObjectRepository;
 
 /**
  * Class UserRepository
  *
- * @package SRAG\Plugins\Hub2\Object\User
+ * @package srag\Plugins\Hub2\Object\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

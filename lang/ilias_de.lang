@@ -24,7 +24,7 @@ admin_origins_path#:#Pfad zu den Anbindungen
 admin_origins_path_info#:#Ort des 'origin'-Verzeichnisses
 admin_password_email_body#:#E-Mail-Body beim versenden von Passwörtern
 admin_roles#:#Rollen
-admin_roles_info#:#Rollen-IDs die HUB2 verwenden können (kommasepariert)
+admin_roles_info#:#Rollen-IDs die Hub2 verwenden können (kommasepariert)
 admin_shortlink#:#Shortlink
 admin_use_async#:#Asynchrone Synchronisation
 admin_use_async_info#:#Asynchrone Synchronisation über das GUI ermöglichen. Benötigt einen ILIAS Benutzer.
@@ -95,7 +95,7 @@ crs_prop_notification_from#:#Von
 crs_prop_send_notification#:#Benachrichtigung aktivieren
 crs_prop_send_notification_info#:#Nach dem Erstellen des Kurses sendet Hub eine E-Mail an die in CourseDTO::notificationEmails definierten Adressen
 com_prop_check_amount#:#Mengenvergleich
-com_prop_check_amount_info#:#Fehler, wenn weniger als X% der bestehenden Datensätzen geliefert werden.
+com_prop_check_amount_info#:#Fehler, wenn weniger als X%% der bestehenden Datensätzen geliefert werden.
 com_prop_check_amount_percentage#:#Prozentwert
 com_prop_force_login#:#Login erfordern
 com_prop_link_to_origin#:#Verknüpfung mit anderer Anbindung
@@ -364,16 +364,24 @@ sess_prop_delete_mode_none#:#Keine Aktion
 sess_prop_delete_mode_trash#:#In Papierkorb verschieben
 sess_prop_move#:#Sitzung verschieben
 sess_prop_move_info#:#In neuen Container verschieben
-summary_for#:#Zusammenfassung für %s: 
+summary_for#:#Zusammenfassung für %s:
 summary_delivered_data_sets#:#Gelieferte Datensätze: %s
 summary_created#:#Erstellt: %s
 summary_updated#:#Aktualisiert: %s
 summary_deleted#:#Gelöscht: %s
 summary_ignored#:#Ignoriert: %s
 summary_no_changes#:#Keine Änderungen: %s
-summary_exceptions#:#Ausnahmen: 
-summary_notification#:#HUB2: Zusammenfassung für %s
-summary_exceptions_in#:#HUB2: Ausnahmen in %s
-summary_in#:#in: 
+summary_exceptions#:#Ausnahmen:
+summary_notification#:#Hub2: Zusammenfassung für %s
+summary_exceptions_in#:#Hub2: Ausnahmen in %s
+summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.
+removeplugindataconfirm_cancel#:#Abbrechen
+removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
+removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren
+removeplugindataconfirm_data#:#%1$s-Daten
+removeplugindataconfirm_keep_data#:#%1$s-Daten behalten
+removeplugindataconfirm_msg_kept_data#:#Die %1$s-Daten wurden behalten!
+removeplugindataconfirm_msg_removed_data#:#Die %1$s-Daten wurden auch entfernt!
+removeplugindataconfirm_remove_data#:#Entferne %1$s-Daten

@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor;
+namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilObject;
-use SRAG\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 
 /**
  * Interface ITaxonomySyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ITaxonomySyncProcessor {

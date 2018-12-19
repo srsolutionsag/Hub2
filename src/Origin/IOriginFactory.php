@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 /**
  * Interface IOriginFactory
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IOriginFactory {

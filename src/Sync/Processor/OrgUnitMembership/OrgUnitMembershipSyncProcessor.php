@@ -1,37 +1,34 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
+namespace srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 
 use ilObjectFactory;
 use ilObjOrgUnit;
-use ilOrgUnitUserAssignment;
 use ilOrgUnitPosition;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Helper\DIC;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasObject;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
-
+use ilOrgUnitUserAssignment;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class OrgUnitMembershipSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership
+ * @package srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrgUnitMembershipSyncProcessor {
 
-	use DIC;
 	/**
 	 * @var IOrgUnitMembershipOriginProperties
 	 */
@@ -136,7 +133,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 				break;
 
 			case IOrgUnitMembershipDTO::POSITION_SUPERIOR:
-				$position_id =  ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_SUPERIOR);
+				$position_id = ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_SUPERIOR);
 				break;
 
 			default:
@@ -175,7 +172,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 					throw new HubException("Unable to lookup external ref-ID because there is no origin linked");
 				}
 
-				$origin_factory = new OriginFactory($this->db());
+				$origin_factory = new OriginFactory();
 				$origin = $origin_factory->getById($linkedOriginId);
 
 				$object_factory = new ObjectFactory($origin);
@@ -184,7 +181,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
 				$org_unit_id = $org_unit->getILIASId();
 
-				if ($org_unit_id === NULL) {
+				if (empty($org_unit_id)) {
 					throw new HubException("External ID {$ext_id} not found!");
 				}
 				break;
@@ -196,7 +193,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 		}
 
 		$org_unit = $this->getOrgUnitObject($org_unit_id);
-		if ($org_unit === NULL) {
+		if (empty($org_unit)) {
 			throw new HubException("Org Unit {$org_unit_id} not found!");
 		}
 
@@ -211,13 +208,13 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	 */
 	protected function getOrgUnitObject(int $obj_id) {
 		$ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
-		if (!$ref_id) {
+		if (empty($ref_id)) {
 			return NULL;
 		}
 
 		$orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
 
-		if ($orgUnit !== false && $orgUnit instanceof ilObjOrgUnit) {
+		if (!empty($orgUnit) && $orgUnit instanceof ilObjOrgUnit) {
 			return $orgUnit;
 		} else {
 			return NULL;

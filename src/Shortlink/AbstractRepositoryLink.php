@@ -1,7 +1,9 @@
-<?php namespace SRAG\Plugins\Hub2\Shortlink;
+<?php
 
-use SRAG\Plugins\Hub2\Object\ARObject;
-use SRAG\Plugins\Hub2\Object\User\ARUser;
+namespace srag\Plugins\Hub2\Shortlink;
+
+use ilLink;
+use ilObject2;
 
 /**
  * Class NullLink
@@ -18,7 +20,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 			return false;
 		}
 
-		return \ilObject2::_exists($this->object->getILIASId(), true);
+		return ilObject2::_exists($this->object->getILIASId(), true);
 	}
 
 
@@ -26,9 +28,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	 * @inheritDoc
 	 */
 	public function isAccessGranted(): bool {
-		global $DIC;
-
-		return (bool)$DIC->access()->checkAccess("read", '', $this->object->getILIASId());
+		return (bool)self::dic()->access()->checkAccess("read", '', $this->object->getILIASId());
 	}
 
 
@@ -71,16 +71,14 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
 
 	private function findReadableParent(): int {
-		global $DIC;
-
 		$ref_id = $this->object->getILIASId();
 
-		while (!$DIC->access()->checkAccess('read', '', $ref_id) AND $ref_id != 1) {
-			$ref_id = (int)$DIC->repositoryTree()->getParentId($ref_id);
+		while (!self::dic()->access()->checkAccess('read', '', $ref_id) AND $ref_id != 1) {
+			$ref_id = (int)self::dic()->tree()->getParentId($ref_id);
 		}
 
 		if ($ref_id === 1) {
-			if (!$DIC->access()->checkAccess('read', '', $ref_id)) {
+			if (!self::dic()->access()->checkAccess('read', '', $ref_id)) {
 				return 0;
 			}
 		}
@@ -90,12 +88,12 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
 
 	/**
-	 * @param $ref_id
+	 * @param int $ref_id
 	 *
 	 * @return mixed|string
 	 */
 	private function generateLink($ref_id) {
-		$link = \ilLink::_getLink($ref_id);
+		$link = ilLink::_getLink($ref_id);
 		$link = str_replace(ILIAS_HTTP_PATH, "", $link);
 
 		return $link;

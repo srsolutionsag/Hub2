@@ -1,25 +1,43 @@
 {
+  "name": "srag/plugins/hub2",
+  "description": "",
+  "version": "1.1.2",
+  "type": "library",
+  "keywords": [
+    "ILIAS",
+    "Plugin",
+    "Hub2"
+  ],
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "studer + raimann ag - Team Core 1",
+      "email": "support-core1@studer-raimann.ch",
+      "homepage": "https://studer-raimann.ch",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "support-core1@studer-raimann.ch"
+  },
+  "require": {
+    "php": ">=7.0",
+    "srag/activerecordconfig": ">=0.1.0",
+    "srag/dic": ">=0.1.0",
+    "srag/removeplugindataconfirm": ">=0.1.0"
+  },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
-    "mockery/mockery": "dev-master",
+    "mockery/mockery": "^1.1.0",
     "doctrine/instantiator": "1.0.5",
     "symfony/yaml": "v3.4.4"
   },
   "autoload": {
     "psr-4": {
-      "SRAG\\Plugins\\Hub2\\": "src/"
+      "srag\\Plugins\\Hub2\\": "src/"
     },
     "classmap": [
-      "classes",
-      "../../../../../../../Services/Container",
-      "../../../../../../../Services/ActiveRecord",
-      "../../../../../../../Services/Cron",
-      "../../../../../../../Modules/Course",
-      "../../../../../../../Modules/Category",
-      "../../../../../../../Services/User",
-      "../../../../../../../Modules/Group",
-      "../../../../../../../Services/Calendar",
-      "../../../../../../../Services/Exceptions"
+      "classes"
     ]
   }
 }

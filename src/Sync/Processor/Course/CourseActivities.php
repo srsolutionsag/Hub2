@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Course;
+namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
 use ilDB;
 use ilDBInterface;
@@ -10,7 +10,7 @@ use ilObject2;
 /**
  * Class CourseActivities
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\Course
+ * @package srag\Plugins\Hub2\Sync\Processor\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

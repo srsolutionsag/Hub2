@@ -1,19 +1,19 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 use Exception;
-use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
-use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
-use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\HookObject;
+use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
+use srag\Plugins\Hub2\Exception\ConnectionFailedException;
+use srag\Plugins\Hub2\Exception\ParseDataFailedException;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\HookObject;
 
 /**
  * Class demoCourse
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  */
 class demoCourse extends AbstractOriginImplementation {
 
@@ -57,6 +57,7 @@ class demoCourse extends AbstractOriginImplementation {
 			$this->data[] = $this->factory()->course($x)->setTitle("Title {$x} {$time}")->setDescription("Description {$x}")
 				->setActivationType(CourseDTO::ACTIVATION_OFFLINE)->setOwner(6)//  root
 				->setContactEmail("Email {$x}")->setContactName("Name {$x}")->setParentId(1)// from demoCategory, please configure in GUI accordingly
+				->setAdditionalData(new \ArrayObject(["Some_Plugin_Data"=>"Data that might trigger an update on change"])) // Additional hook to trigger change on non-core attributes
 				->setParentIdType(CourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setSyllabus("Syllabus {$x}")
 				->setDidacticTemplate(123)->setIcon('/path/to/icon/custom.svg')->addMetadata($this->metadata()// This has to be configured in ILIAS
 				->getDTOWithIliasId(1)// you find the id of the field in ILIAS GUI when editing the fields in query-parameter field_id=X

@@ -1,38 +1,40 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor;
+namespace srag\Plugins\Hub2\Sync\Processor;
 
-use SRAG\Plugins\Hub2\Helper\DIC;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseActivities;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupActivities;
-use SRAG\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\GroupMembership\GroupMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\OrgUnit\OrgUnitSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\OrgUnitMembership\OrgUnitMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Course\CourseActivities;
+use srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Group\GroupActivities;
+use srag\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\GroupMembership\GroupMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\OrgUnit\IOrgUnitSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\OrgUnit\OrgUnitSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\IOrgUnitMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\OrgUnitMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
 /**
  * Class SyncProcessorFactory
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor
+ * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SyncProcessorFactory implements ISyncProcessorFactory {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */
@@ -83,7 +85,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function course() {
-		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new CourseActivities($this->db()));
+		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new CourseActivities(self::dic()
+			->database()));
 	}
 
 
@@ -115,7 +118,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritDoc
 	 */
 	public function group() {
-		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new GroupActivities($this->db()));
+		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originLog, $this->originNotifications, new GroupActivities(self::dic()
+			->database()));
 	}
 
 

@@ -1,30 +1,30 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Category;
+namespace srag\Plugins\Hub2\Sync\Processor\Category;
 
 use ilObjCategory;
 use ilObjectServiceSettingsGUI;
 use ilRepUtil;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class CategorySyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\Category
+ * @package srag\Plugins\Hub2\Sync\Processor\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -103,7 +103,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		$ilObjCategory->update();
 
 		$ilObjCategory->removeTranslations();
-		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $this->lng()->getDefaultLanguage(), true);
+		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), self::dic()->language()->getDefaultLanguage(), true);
 
 		return $ilObjCategory;
 	}
@@ -131,7 +131,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		}
 		if ($this->props->updateDTOProperty('title')) {
 			$ilObjCategory->removeTranslations();
-			$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), $this->lng()->getDefaultLanguage(), true);
+			$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), self::dic()->language()->getDefaultLanguage(), true);
 		}
 		if ($this->props->updateDTOProperty('showNews')) {
 			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
@@ -180,12 +180,12 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 */
 	protected function determineParentRefId(CategoryDTO $category) {
 		if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($category->getParentId())) {
+			if (self::dic()->tree()->isInTree($category->getParentId())) {
 				return $category->getParentId();
 			}
 			// The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
 			$parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-			if (!$this->tree()->isInTree($parentRefId)) {
+			if (!self::dic()->tree()->isInTree($parentRefId)) {
 				throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
 			}
 
@@ -229,20 +229,20 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	/**
 	 * Move the category to a new parent.
 	 *
-	 * @param             $ilObjCategory
-	 * @param CategoryDTO $category
+	 * @param ilObjCategory $ilObjCategory
+	 * @param CategoryDTO   $category
 	 */
 	protected function moveCategory(ilObjCategory $ilObjCategory, CategoryDTO $category) {
 		$parentRefId = $this->determineParentRefId($category);
-		if ($this->tree()->isDeleted($ilObjCategory->getRefId())) {
+		if (self::dic()->tree()->isDeleted($ilObjCategory->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parentRefId, [ $ilObjCategory->getRefId() ]);
 		}
-		$oldParentRefId = $this->tree()->getParentId($ilObjCategory->getRefId());
+		$oldParentRefId = self::dic()->tree()->getParentId($ilObjCategory->getRefId());
 		if ($oldParentRefId == $parentRefId) {
 			return;
 		}
-		$this->tree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
-		$this->rbac()->admin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
+		self::dic()->tree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
+		self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
 	}
 }

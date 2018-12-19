@@ -1,31 +1,27 @@
-<?php namespace SRAG\Plugins\Hub2\Shortlink;
+<?php
 
-use ilLink;
-use RESTController\libs\ilInitialisation;
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Config\HubConfig;
-use SRAG\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
-use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Exception\ShortlinkException;
-use SRAG\Plugins\Hub2\Exception\ShortLinkNotFoundException;
-use SRAG\Plugins\Hub2\Helper\DIC;
-use SRAG\Plugins\Hub2\Object\ARObject;
-use SRAG\Plugins\Hub2\Object\Category\ARCategory;
-use SRAG\Plugins\Hub2\Object\Course\ARCourse;
-use SRAG\Plugins\Hub2\Object\Group\ARGroup;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\Session\ARSession;
-use SRAG\Plugins\Hub2\Origin\OriginFactory;
+namespace srag\Plugins\Hub2\Shortlink;
+
+use ilContext;
+use ilDBInterface;
+use ilHub2Plugin;
+use ilUtil;
+use ilInitialisation;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Exception\ShortlinkException;
+use srag\Plugins\Hub2\Exception\ShortLinkNotFoundException;
 
 /**
  * Class Handler
  *
- * @package SRAG\Plugins\Hub2\Handler
+ * @package srag\Plugins\Hub2\Handler
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Handler {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 	/**
 	 * @var bool
@@ -35,10 +31,6 @@ class Handler {
 	 * @var ObjectLinkFactory
 	 */
 	protected $object_link_factory;
-	/**
-	 * @var HubConfig
-	 */
-	protected $config;
 	/**
 	 * @var string
 	 */
@@ -53,7 +45,6 @@ class Handler {
 	public function __construct(string $ext_id) {
 		$this->init = false;
 		$this->ext_id = $ext_id;
-		$this->config = new HubConfig();
 	}
 
 
@@ -66,25 +57,24 @@ class Handler {
 	 * @throws ShortlinkException
 	 */
 	public function process() {
-		global $DIC;
-		if (!$this->init || !$DIC->database() instanceof \ilDBInterface) {
+		if (!$this->init || !self::dic()->database() instanceof ilDBInterface) {
 			throw new ShortlinkException("ILIAS not initialized, aborting...");
 		}
 
-		$object_link_factory = new ObjectLinkFactory($DIC->database());
+		$object_link_factory = new ObjectLinkFactory();
 
 		$link = $object_link_factory->findByExtId($this->ext_id);
 
 		if (!$link->doesObjectExist()) {
-			$this->sendMessage((string)$this->config->getShortLinkObjectNotFound());
+			$this->sendMessage(ArConfig::getShortLinkObjectNotFound());
 			$this->doRedirect($link->getNonExistingLink());
 		}
 
 		if (!$link->isAccessGranted()) {
-			$this->sendMessage((string)$this->config->getShortLinkObjectNotAccessible());
+			$this->sendMessage(ArConfig::getShortLinkObjectNotAccessible());
 			$this->doRedirect($link->getAccessDeniedLink());
 		}
-		$this->sendMessage((string)$this->config->getShortlinkSuccess());
+		$this->sendMessage(ArConfig::getShortlinkSuccess());
 		$this->doRedirect($link->getAccessGrantedExternalLink());
 	}
 
@@ -94,7 +84,7 @@ class Handler {
 	 */
 	protected function doRedirect(string $link) {
 		$link = $this->sanitizeLink($link);
-		$this->ctrl()->redirectToURL($link);
+		self::dic()->ctrl()->redirectToURL($link);
 	}
 
 
@@ -103,7 +93,7 @@ class Handler {
 	 */
 	protected function sendMessage(string $message) {
 		if ($message !== '') {
-			\ilUtil::sendInfo($message, true);
+			ilUtil::sendInfo($message, true);
 		}
 	}
 
@@ -121,21 +111,17 @@ class Handler {
 	public function tryILIASInitPublic() {
 		$this->prepareILIASInit();
 
-		global $DIC;
 		include_once './Services/Context/classes/class.ilContext.php';
-		\ilContext::init(\ilContext::CONTEXT_WAC);
+		ilContext::init(ilContext::CONTEXT_WAC);
 		require_once("Services/Init/classes/class.ilInitialisation.php");
-		\ilInitialisation::initILIAS();
-		/**
-		 * @var $ilAuthSession \ilAuthSession
-		 */
-		$ilAuthSession = $DIC['ilAuthSession'];
+		ilInitialisation::initILIAS();
+		$ilAuthSession = self::dic()->authSession();
 		$ilAuthSession->init();
 		$ilAuthSession->regenerateId();
 		$a_id = (int)ANONYMOUS_USER_ID;
 		$ilAuthSession->setUserId($a_id);
 		$ilAuthSession->setAuthenticated(false, $a_id);
-		$DIC->user()->setId($a_id);
+		self::dic()->user()->setId($a_id);
 
 		$this->init = true;
 	}

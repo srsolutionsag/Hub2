@@ -1,22 +1,27 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 use ActiveRecord;
+use ilHub2Plugin;
 use InvalidArgumentException;
-use SRAG\Plugins\Hub2\Origin\Config\IOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\ActiveRecordConfig\ActiveRecordConfig;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AROrigin extends ActiveRecord implements IOrigin {
 
+	use DICTrait;
 	const TABLE_NAME = 'sr_hub2_origin';
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var array
 	 */
@@ -44,6 +49,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 
 	/**
 	 * @return string
+	 *
 	 * @deprecated
 	 */
 	public static function returnDbTableName() {
@@ -168,7 +174,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 *
 	 */
 	public function create() {
-		$this->created_at = date('Y-m-d H:i:s');
+		$this->created_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
 		$this->setObjectType($this->parseObjectType());
 		parent::create();
 	}
@@ -178,7 +184,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 *
 	 */
 	public function update() {
-		$this->updated_at = date('Y-m-d H:i:s');
+		$this->updated_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
 		parent::update();
 	}
 
@@ -399,7 +405,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	//	 * @inheritdoc
 	//	 */
 	//	public function implementation() {
-	//		$factory = new OriginImplementationFactory(new HubConfig(), $this);
+	//		$factory = new OriginImplementationFactory($this);
 	//		return $factory->instance();
 	//	}
 

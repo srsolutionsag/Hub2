@@ -1,30 +1,30 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\SessionMembership;
+namespace srag\Plugins\Hub2\Sync\Processor\SessionMembership;
 
 use ilObject2;
 use ilObjSession;
 use ilObjUser;
 use ilSessionParticipants;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
-use SRAG\Plugins\Hub2\Origin\Config\SessionMembershipOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
-use SRAG\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
+use srag\Plugins\Hub2\Origin\Config\SessionMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginRepository;
+use srag\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class SessionMembershipSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\SessionMembership
+ * @package srag\Plugins\Hub2\Sync\Processor\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISessionMembershipSyncProcessor {
@@ -110,7 +110,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 
 
 	/**
-	 * @param $ilias_id
+	 * @param int $ilias_id
 	 *
 	 * @return ilObjSession
 	 * @throws HubException
@@ -132,7 +132,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 */
 	protected function buildParentRefId(SessionMembershipDTO $dto) {
 		if ($dto->getSessionIdType() == SessionMembershipDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($dto->getSessionId())) {
+			if (self::dic()->tree()->isInTree($dto->getSessionId())) {
 				return (int)$dto->getSessionId();
 			}
 			throw new HubException("Could not find the ref-ID of the parent session in the tree: '{$dto->getGroupId()}'");
@@ -159,7 +159,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 			if (!$session->getILIASId()) {
 				throw new HubException("The linked session does not (yet) exist in ILIAS");
 			}
-			if (!$this->tree()->isInTree($session->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($session->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent session in the tree: '{$session->getILIASId()}'");
 			}
 
@@ -193,7 +193,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 
 	/**
 	 * @param ilObjSession $ilObjSession
-	 * @param    int       $user_id
+	 * @param int          $user_id
 	 *
 	 * @throws HubException
 	 */

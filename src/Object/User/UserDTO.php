@@ -1,19 +1,20 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\User;
+namespace srag\Plugins\Hub2\Object\User;
 
 use DateTime;
 use InvalidArgumentException;
-use SRAG\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use SRAG\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use srag\ActiveRecordConfig\ActiveRecordConfig;
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 
 /**
  * Class UserDTO
  *
- * @package SRAG\Plugins\Hub2\Object\User
+ * @package srag\Plugins\Hub2\Object\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -30,21 +31,19 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	/**
 	 * @var array
 	 */
-	private static $genders
-		= [
-			self::GENDER_MALE,
-			self::GENDER_FEMALE,
-		];
+	private static $genders = [
+		self::GENDER_MALE,
+		self::GENDER_FEMALE,
+	];
 	/**
 	 * @var array
 	 */
-	private static $auth_modes
-		= [
-			self::AUTH_MODE_ILIAS,
-			self::AUTH_MODE_SHIB,
-			self::AUTH_MODE_LDAP,
-			self::AUTH_MODE_RADIUS,
-		];
+	private static $auth_modes = [
+		self::AUTH_MODE_ILIAS,
+		self::AUTH_MODE_SHIB,
+		self::AUTH_MODE_LDAP,
+		self::AUTH_MODE_RADIUS,
+	];
 	/**
 	 * @var string
 	 */
@@ -597,7 +596,7 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	 * @return UserDTO
 	 */
 	public function setTimeLimitFrom(DateTime $timeLimitFrom) {
-		$this->timeLimitFrom = $timeLimitFrom->format('Y-m-d H:i:s');
+		$this->timeLimitFrom = $timeLimitFrom->format(ActiveRecordConfig::SQL_DATE_FORMAT);
 
 		return $this;
 	}
@@ -617,7 +616,7 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	 * @return UserDTO
 	 */
 	public function setTimeLimitUntil(DateTime $timeLimitUntil) {
-		$this->timeLimitUntil = $timeLimitUntil->format('Y-m-d H:i:s');
+		$this->timeLimitUntil = $timeLimitUntil->format(ActiveRecordConfig::SQL_DATE_FORMAT);
 
 		return $this;
 	}
@@ -657,7 +656,7 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 	 * @return UserDTO
 	 */
 	public function setBirthday(DateTime $birthday) {
-		$this->birthday = $birthday->format('Y-m-d H:i:s');
+		$this->birthday = $birthday->format(ActiveRecordConfig::SQL_DATE_FORMAT);
 
 		return $this;
 	}
@@ -725,14 +724,12 @@ class UserDTO extends DataTransferObject implements IMetadataAwareDataTransferOb
 
 
 	function __toString() {
-		return implode(
-			', ', [
+		return implode(', ', [
 			"ext_id: " . $this->getExtId(),
 			"period: " . $this->getPeriod(),
 			"firstname: " . $this->getFirstname(),
 			"lastname: " . $this->getLastname(),
 			"email: " . $this->getEmail(),
-		]
-		);
+		]);
 	}
 }

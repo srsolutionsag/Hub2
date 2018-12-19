@@ -1,15 +1,15 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\Course;
+namespace srag\Plugins\Hub2\Object\Course;
 
-use SRAG\Plugins\Hub2\Object\ARMetadataAwareObject;
-use SRAG\Plugins\Hub2\Object\ARObject;
-use SRAG\Plugins\Hub2\Object\ARTaxonomyAwareObject;
+use srag\Plugins\Hub2\Object\ARMetadataAwareObject;
+use srag\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 
 /**
  * Class ARCourse
  *
- * @package SRAG\Plugins\Hub2\Object\Course
+ * @package srag\Plugins\Hub2\Object\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

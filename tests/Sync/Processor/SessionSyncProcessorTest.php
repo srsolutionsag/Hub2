@@ -2,14 +2,13 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Object\Session\ISession;
-use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
-use SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\Session\ISession;
+use srag\Plugins\Hub2\Object\Session\SessionDTO;
+use srag\Plugins\Hub2\Origin\Config\SessionOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
+use srag\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
 
 /**
  * Class SessionSyncProcessorTest
@@ -56,9 +55,9 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 */
 	protected function setUp() {
 		$arr = [
-			'update_dto_title' => true,
+			'update_dto_title'       => true,
 			'update_dto_description' => true,
-			'update_dto_location' => true,
+			'update_dto_location'    => true,
 		];
 		$this->initOrigin(new SessionOriginProperties($arr), new SessionOriginConfig([]));
 		$this->setupGeneralDependencies();
@@ -83,7 +82,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$session_appointment_mock->shouldReceive("setSessionId")->with(self::REF_ID);
 		$session_appointment_mock->shouldReceive("create");
 		$session_appointment_mock->shouldReceive("update");
-		$this->appointments = [ $session_appointment_mock ];
+		$this->appointments = [$session_appointment_mock];
 
 		$this->ilObject->shouldReceive('setTitle')->once()->with($this->dto->getTitle());
 		$this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getDescription());
@@ -99,7 +98,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Session\ISession');
+		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Session\ISession');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -110,10 +109,12 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
-			self::REF_ID,
-			true,
-		])->andReturn(true);
+		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs(
+			[
+				self::REF_ID,
+				true,
+			]
+		)->andReturn(true);
 
 		$this->ilObject = Mockery::mock('overload:\ilObjSession', '\ilObject');
 		$this->ilObject->shouldReceive('getId')->andReturn(self::REF_ID);
@@ -138,7 +139,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfSession');
 		$this->ilObject->shouldReceive('create')->once();
 		$this->ilObject->shouldReceive('createReference')->once();
@@ -172,6 +173,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->originImplementation->shouldReceive('beforeUpdateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 
 		$this->ilObject->shouldReceive('update')->once();
 		$this->ilObject->shouldNotReceive('createReference');

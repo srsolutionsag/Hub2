@@ -1,19 +1,23 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
+use ilHub2Plugin;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Class ObjectRepository
  *
- * @package SRAG\Plugins\Hub2\Object
+ * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class ObjectRepository implements IObjectRepository {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
 	 */
@@ -110,7 +114,7 @@ abstract class ObjectRepository implements IObjectRepository {
 		}
 
 		$ucfirst = ucfirst($object_type);
-		self::$classmap[$object_type] = "SRAG\\Plugins\\Hub2\\Object\\" . $ucfirst . "\\AR" . $ucfirst;
+		self::$classmap[$object_type] = "srag\\Plugins\\Hub2\\Object\\" . $ucfirst . "\\AR" . $ucfirst;
 
 		return self::$classmap[$object_type];
 	}

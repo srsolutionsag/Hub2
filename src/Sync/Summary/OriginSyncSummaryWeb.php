@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Summary;
+namespace srag\Plugins\Hub2\Sync\Summary;
 
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Sync\IOriginSync;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Sync\IOriginSync;
 
 /**
  * Class OriginSyncSummary
  *
- * @package SRAG\Plugins\Hub2\Sync\Summary
+ * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncSummary {
@@ -33,13 +33,13 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 	 */
 	private function renderOneSync(IOriginSync $originSync) {
 		// Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
-		$msg = sprintf($this->pl->txt("summary_for"), $originSync->getOrigin()->getTitle()) . "\n**********\n";
-		$msg .= sprintf($this->pl->txt("summary_delivered_data_sets"), $originSync->getCountDelivered()) . "\n";
-		$msg .= sprintf($this->pl->txt("summary_created"), $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)) . "\n";
-		$msg .= sprintf($this->pl->txt("summary_updated"), $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)) . "\n";
-		$msg .= sprintf($this->pl->txt("summary_deleted"), $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED)) . "\n";
-		$msg .= sprintf($this->pl->txt("summary_ignored"), $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)) . "\n";
-		$msg .= sprintf($this->pl->txt("summary_no_changes"), $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE)) . "\n\n";
+		$msg = self::plugin()->translate("summary_for", "", [ $originSync->getOrigin()->getTitle() ]) . "\n**********\n";
+		$msg .= self::plugin()->translate("summary_delivered_data_sets", "", [ $originSync->getCountDelivered() ]) . "\n";
+		$msg .= self::plugin()->translate("summary_created", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_updated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_deleted", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_DELETED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_ignored", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) ]) . "\n";
+		$msg .= self::plugin()->translate("summary_no_changes", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_NOTHING_TO_UPDATE) ]) . "\n\n";
 		foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
 			$msg .= "$context: \n**********\n";
 			foreach ($messages as $message) {
@@ -48,7 +48,7 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 			$msg .= "\n";
 		}
 		foreach ($originSync->getExceptions() as $exception) {
-			$msg .= $this->pl->txt("summary_exceptions") . "\n**********\n";
+			$msg .= self::plugin()->translate("summary_exceptions") . "\n**********\n";
 			$msg .= $exception->getMessage() . "\n\n";
 		}
 		$msg = rtrim($msg, "\n");

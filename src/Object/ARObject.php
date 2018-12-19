@@ -1,29 +1,34 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
 use DateTime;
 use Exception;
+use ilHub2Plugin;
 use InvalidArgumentException;
-use SRAG\Plugins\Hub2\Metadata\Metadata;
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
-use SRAG\Plugins\Hub2\Taxonomy\Node\Node;
-use SRAG\Plugins\Hub2\Taxonomy\Taxonomy;
+use srag\ActiveRecordConfig\ActiveRecordConfig;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Metadata\Metadata;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Taxonomy\Node\Node;
+use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 
 /**
  * Class ARObject
  *
- * @package SRAG\Plugins\Hub2\Object
+ * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class ARObject extends ActiveRecord implements IObject {
 
+	use DICTrait;
 	/**
 	 * @abstract
 	 */
 	const TABLE_NAME = '';
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
 	/**
@@ -36,6 +41,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 
 	/**
 	 * @return string
+	 *
 	 * @deprecated
 	 */
 	public static function returnDbTableName() {
@@ -199,7 +205,12 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	public function wakeUp($field_name, $field_value) {
 		switch ($field_name) {
 			case 'data':
-				return json_decode($field_value, true);
+				$data = json_decode($field_value, true);
+				if (!is_array($data)) {
+					$data = [];
+				}
+
+				return $data;
 			case 'meta_data':
 				if (is_null($field_value)) {
 					return [];
@@ -305,7 +316,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function setDeliveryDate($unix_timestamp) {
-		$this->delivery_date = date('Y-m-d H:i:s', $unix_timestamp);
+		$this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
 
@@ -313,7 +324,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	 * @inheritdoc
 	 */
 	public function setProcessedDate($unix_timestamp) {
-		$this->processed_date = date('Y-m-d H:i:s', $unix_timestamp);
+		$this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
 

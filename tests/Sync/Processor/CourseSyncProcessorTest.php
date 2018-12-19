@@ -2,15 +2,14 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\Course\ICourse;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Origin\Config\CourseOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\Course\ICourse;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities;
 
 /**
  * Class CourseSyncProcessorTest
@@ -52,14 +51,14 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->dto = new CourseDTO('extIdOfCourse');
 		$this->dto->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->setParentId(1)->setDescription("Description")->setTitle("Title")
 			->setContactEmail("contact@email.com")->setContactResponsibility("Responsibility")->setImportantInformation("Important Information")
-			->setNotificationEmails([ "notification@email.com" ])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
+			->setNotificationEmails(["notification@email.com"])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
 			->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setContactName("Contact Name")->setSyllabus('Syllabus')
 			->setContactConsultation('1 2 3 4 5 6')->setContactPhone('+41 123 456 789');
 	}
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Course\ICourse');
+		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Course\ICourse');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -77,7 +76,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
+		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
 
 		$this->initOrigin(new CourseOriginProperties(), new CourseOriginConfig([]));
 		$this->setupGeneralDependencies();
@@ -102,7 +101,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfCourse');
 		$this->ilObject->shouldReceive('create')->once();
 		$this->ilObject->shouldReceive('createReference')->once();

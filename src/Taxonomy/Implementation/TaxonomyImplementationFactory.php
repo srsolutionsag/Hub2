@@ -1,17 +1,23 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
+namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
+use ilHub2Plugin;
 use ilObject;
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**
  * Class ITaxonomyImplementationFactory
  *
- * @package SRAG\Plugins\Hub2\Taxonomy\Implementation
+ * @package srag\Plugins\Hub2\Taxonomy\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory {
+
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
 
 	/**
 	 * @inheritdoc
@@ -23,5 +29,7 @@ class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory {
 			case ITaxonomy::MODE_SELECT:
 				return new TaxonomySelect($Taxonomy, (int)$ilias_object->getRefId());
 		}
+
+		return NULL;
 	}
 }

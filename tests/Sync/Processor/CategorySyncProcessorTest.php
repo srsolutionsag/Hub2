@@ -2,15 +2,14 @@
 
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
-use Mockery;
 use Mockery\MockInterface;
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\Category\ICategory;
-use SRAG\Plugins\Hub2\Object\IObject;
-use SRAG\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
-use SRAG\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Category\ICategory;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
+use srag\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
 
 /**
  * Class CategorySyncProcessorTest
@@ -51,7 +50,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\SRAG\Plugins\Hub2\Sync\Processor\Category\ICategoryActivities');
+		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Category\ICategoryActivities');
 		$this->initOrigin(new CategoryOriginProperties(), new CategoryOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -76,6 +75,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
+		$this->originImplementation->shouldReceive('overrideStatus')->once();
 
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfCategory');
 		$this->ilObject->shouldReceive('create')->once();
@@ -135,7 +135,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\SRAG\Plugins\Hub2\Object\Category\ICategory');
+		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Category\ICategory');
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();

@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
+namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilContainer;
 use ilObject2;
@@ -8,14 +8,14 @@ use ilObjectServiceSettingsGUI;
 use ilObjTaxonomy;
 use ilTaxNodeAssignment;
 use ilTaxonomyException;
-use SRAG\Plugins\Hub2\Exception\TaxonomyNodeNotFoundException;
-use SRAG\Plugins\Hub2\Exception\TaxonomyNotFoundException;
-use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Exception\TaxonomyNodeNotFoundException;
+use srag\Plugins\Hub2\Exception\TaxonomyNotFoundException;
+use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Class TaxonomySelect
  *
- * @package SRAG\Plugins\Hub2\Taxonomy\Implementation
+ * @package srag\Plugins\Hub2\Taxonomy\Implementation
  */
 class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation {
 
@@ -105,7 +105,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 	 */
 	private function initSelectableTaxonomies() {
 		$res = array();
-		foreach ($this->tree()->getPathFull((int)$this->getILIASParentId()) as $node) {
+		foreach (self::dic()->tree()->getPathFull((int)$this->getILIASParentId()) as $node) {
 			if ($node["ref_id"] != (int)$this->getILIASParentId()) {
 				if ($node["type"] == "cat") {
 					if (ilContainer::_lookupContainerSetting($node["obj_id"], ilObjectServiceSettingsGUI::TAXONOMIES, false)) {

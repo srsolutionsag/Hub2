@@ -1,22 +1,24 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Taxonomy\Implementation;
+namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
+use ilHub2Plugin;
 use ilObjTaxonomy;
 use ilTaxonomyTree;
-use SRAG\Plugins\Hub2\Helper\DIC;
-use SRAG\Plugins\Hub2\Taxonomy\ITaxonomy;
-use SRAG\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
+use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Class AbstractTaxonomy
  *
- * @package SRAG\Plugins\Hub2\Taxonomy\Implementation
+ * @package srag\Plugins\Hub2\Taxonomy\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
-	use DIC;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
 	 */
@@ -58,7 +60,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 	 * @return bool
 	 */
 	protected function taxonomyExists(): bool {
-		$childsByType = $this->tree()->getChildsByType($this->getILIASParentId(), 'tax');
+		$childsByType = self::dic()->tree()->getChildsByType($this->getILIASParentId(), 'tax');
 		if (!count($childsByType)) {
 			return false;
 		}
@@ -85,7 +87,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 
 	/**
-	 * @param $parent_id
+	 * @param int $parent_id
 	 */
 	protected function setChildrenByParentId($parent_id) {
 		foreach ($this->tree->getChildsByTypeFilter($parent_id, array( "taxn" )) as $item) {

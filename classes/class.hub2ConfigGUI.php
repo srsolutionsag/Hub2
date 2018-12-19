@@ -1,9 +1,7 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use SRAG\Plugins\Hub2\Config\ArConfig;
-use SRAG\Plugins\Hub2\Config\HubConfig;
-use SRAG\Plugins\Hub2\UI\ConfigFormGUI;
+use srag\Plugins\Hub2\UI\ConfigFormGUI;
 
 /**
  * Class hub2ConfigGUI
@@ -18,38 +16,46 @@ class hub2ConfigGUI extends hub2MainGUI {
 
 
 	/**
-	 *
+	 * @return ConfigFormGUI
 	 */
-	protected function index() {
-		$form = new ConfigFormGUI($this, new HubConfig());
-		$this->tpl()->setContent($form->getHTML());
+	protected function getConfigForm(): ConfigFormGUI {
+		$form = new ConfigFormGUI($this);
+
+		return $form;
 	}
 
 
 	/**
 	 *
 	 */
-	protected function saveConfig() {
-		$form = new ConfigFormGUI($this, new HubConfig());
+	protected function index()/*: void*/ {
+		$form = $this->getConfigForm();
+
+		self::plugin()->output($form);
+	}
+
+
+	/**
+	 *
+	 */
+	protected function saveConfig()/*: void*/ {
+		$form = $this->getConfigForm();
+
 		if ($form->checkInput()) {
-			foreach ($form->getInputItemsRecursive() as $item) {
-				/** @var ilFormPropertyGUI $item */
-				$config = ARConfig::getInstanceByKey($item->getPostVar());
-				$config->setValue($form->getInput($item->getPostVar()));
-				$config->save();
-			}
-			ilUtil::sendSuccess($this->pl->txt('msg_successfully_saved'), true);
-			$this->ctrl()->redirect($this);
+			$form->updateConfig();
+			ilUtil::sendSuccess(self::plugin()->translate('msg_successfully_saved'), true);
+			self::dic()->ctrl()->redirect($this);
 		}
 		$form->setValuesByPost();
-		$this->tpl()->setContent($form->getHTML());
+
+		self::plugin()->output($form);
 	}
 
 
 	/**
 	 *
 	 */
-	protected function initTabs() {
-		$this->tabs()->activateTab(self::TAB_PLUGIN_CONFIG);
+	protected function initTabs()/*: void*/ {
+		self::dic()->tabs()->activateTab(self::TAB_PLUGIN_CONFIG);
 	}
 }

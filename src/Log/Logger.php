@@ -1,9 +1,12 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Log;
+namespace srag\Plugins\Hub2\Log;
 
-use ILIAS\Filesystem\Stream\Streams;
+use ilHub2Plugin;
+use ILIAS\Filesystem\Exception\IOException;
 use ILIAS\Filesystem\Stream\Stream;
+use ILIAS\Filesystem\Stream\Streams;
+use srag\DIC\DICTrait;
 
 /**
  * Class Logger
@@ -14,6 +17,8 @@ use ILIAS\Filesystem\Stream\Stream;
  */
 class Logger {
 
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var string
 	 */
@@ -29,14 +34,12 @@ class Logger {
 	 *
 	 * @param string $path
 	 *
-	 * @throws \ILIAS\Filesystem\Exception\IOException
+	 * @throws IOException
 	 */
 	public function __construct(string $path) {
-		global $DIC;
-
 		$this->path = $path;
-		if (!$DIC->filesystem()->storage()->has($this->path)) {
-			$DIC->filesystem()->storage()->put($this->path, "");
+		if (!self::dic()->filesystem()->storage()->has($this->path)) {
+			self::dic()->filesystem()->storage()->put($this->path, "");
 		}
 
 		$resource = fopen(CLIENT_DATA_DIR . '/' . $this->path, 'w');
@@ -45,7 +48,7 @@ class Logger {
 
 
 	/**
-	 * @param $string
+	 * @param string $string
 	 */
 	public function write($string) {
 		$this->stream->seek($this->stream->getSize());

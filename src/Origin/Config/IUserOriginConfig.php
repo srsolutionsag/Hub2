@@ -1,11 +1,11 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin\Config;
+namespace srag\Plugins\Hub2\Origin\Config;
 
 /**
  * Interface IUserOriginConfig
  *
- * @package SRAG\Plugins\Hub2\Origin\Config
+ * @package srag\Plugins\Hub2\Origin\Config
  */
 interface IUserOriginConfig extends IOriginConfig {
 

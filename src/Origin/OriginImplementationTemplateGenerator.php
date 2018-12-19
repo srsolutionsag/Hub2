@@ -1,33 +1,31 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
+use ilHub2Plugin;
 use ilUtil;
-use SRAG\Plugins\Hub2\Config\IHubConfig;
-use SRAG\Plugins\Hub2\Exception\HubException;
+use srag\DIC\DICTrait;
+use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Exception\HubException;
 
 /**
  * Class OriginImplementationTemplateGenerator
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginImplementationTemplateGenerator {
 
-	/**
-	 * @var IHubConfig
-	 */
-	private $hubConfig;
+	use DICTrait;
+	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
 	/**
 	 * OriginImplementationTemplateGenerator constructor.
-	 *
-	 * @param IHubConfig $hubConfig
 	 */
-	public function __construct(IHubConfig $hubConfig) {
-		$this->hubConfig = $hubConfig;
+	public function __construct() {
+
 	}
 
 
@@ -94,7 +92,7 @@ class OriginImplementationTemplateGenerator {
 	 * @return string
 	 */
 	protected function getPath(IOrigin $origin) {
-		$basePath = rtrim($this->hubConfig->getOriginImplementationsPath(), '/') . '/';
+		$basePath = rtrim(ArConfig::getOriginImplementationsPath(), '/') . '/';
 		$path = $basePath . $origin->getObjectType() . '/';
 
 		return $path;

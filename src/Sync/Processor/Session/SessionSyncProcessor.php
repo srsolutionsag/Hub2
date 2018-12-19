@@ -1,32 +1,32 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\Session;
+namespace srag\Plugins\Hub2\Sync\Processor\Session;
 
 use ilDateTime;
 use ilObject2;
 use ilObjSession;
 use ilSessionAppointment;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\Session\SessionDTO;
-use SRAG\Plugins\Hub2\Origin\Config\SessionOriginConfig;
-use SRAG\Plugins\Hub2\Origin\Course\ARCourseOrigin;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
-use SRAG\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
-use SRAG\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\Session\SessionDTO;
+use srag\Plugins\Hub2\Origin\Config\SessionOriginConfig;
+use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginRepository;
+use srag\Plugins\Hub2\Origin\Properties\SessionOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class SessionSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\Session
+ * @package srag\Plugins\Hub2\Sync\Processor\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncProcessor {
@@ -165,7 +165,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				$ilObjSession->delete();
 				break;
 			case SessionOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
-				$this->tree()->moveToTrash($ilObjSession->getRefId(), true);
+				self::dic()->tree()->moveToTrash($ilObjSession->getRefId(), true);
 				break;
 		}
 
@@ -195,7 +195,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	 */
 	protected function buildParentRefId(SessionDTO $session) {
 		if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($session->getParentId())) {
+			if (self::dic()->tree()->isInTree($session->getParentId())) {
 				return (int)$session->getParentId();
 			}
 		}
@@ -228,7 +228,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 			if (!$parent->getILIASId()) {
 				throw new HubException("The linked course or group does not (yet) exist in ILIAS");
 			}
-			if (!$this->tree()->isInTree($parent->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($parent->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent course or group in the tree: '{$parent->getILIASId()}'");
 			}
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\SessionMembership;
+namespace srag\Plugins\Hub2\Object\SessionMembership;
 
-use SRAG\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class ARSessionMembership
  *
- * @package SRAG\Plugins\Hub2\Object\SessionMembership
+ * @package srag\Plugins\Hub2\Object\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ARSessionMembership extends ARObject implements ISessionMembership {

@@ -1,28 +1,28 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\GroupMembership;
+namespace srag\Plugins\Hub2\Sync\Processor\GroupMembership;
 
 use ilObject2;
 use ilObjGroup;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Origin\Config\GroupOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OriginRepository;
-use SRAG\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Origin\Config\GroupOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginRepository;
+use srag\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class GroupMembershipSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\GroupMembership
+ * @package srag\Plugins\Hub2\Sync\Processor\GroupMembership
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -137,7 +137,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 	 */
 	protected function buildParentRefId(GroupMembershipDTO $dto) {
 		if ($dto->getGroupIdType() == GroupMembershipDTO::PARENT_ID_TYPE_REF_ID) {
-			if ($this->tree()->isInTree($dto->getGroupId())) {
+			if (self::dic()->tree()->isInTree($dto->getGroupId())) {
 				return (int)$dto->getGroupId();
 			}
 			throw new HubException("Could not find the ref-ID of the parent group in the tree: '{$dto->getGroupId()}'");
@@ -164,7 +164,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 			if (!$group->getILIASId()) {
 				throw new HubException("The linked group does not (yet) exist in ILIAS");
 			}
-			if (!$this->tree()->isInTree($group->getILIASId())) {
+			if (!self::dic()->tree()->isInTree($group->getILIASId())) {
 				throw new HubException("Could not find the ref-ID of the parent group in the tree: '{$group->getILIASId()}'");
 			}
 
@@ -176,7 +176,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
 
 	/**
-	 * @param $object GroupMembershipDTO
+	 * @param GroupMembershipDTO $object
 	 *
 	 * @return int
 	 */

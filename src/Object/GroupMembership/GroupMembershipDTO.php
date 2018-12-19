@@ -1,14 +1,14 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\GroupMembership;
+namespace srag\Plugins\Hub2\Object\GroupMembership;
 
-use SRAG\Plugins\Hub2\Object\DTO\DataTransferObject;
-use SRAG\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class GroupMembershipDTO
  *
- * @package SRAG\Plugins\Hub2\Object\GroupMembership
+ * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupMembershipDTO extends DataTransferObject {
@@ -43,7 +43,7 @@ class GroupMembershipDTO extends DataTransferObject {
 	 * @inheritDoc
 	 */
 	public function __construct($group_id, $user_id) {
-		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$group_id, $user_id]));
+		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $group_id, $user_id ]));
 		$this->groupId = $group_id;
 		$this->userId = $user_id;
 	}

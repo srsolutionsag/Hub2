@@ -1,21 +1,21 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Origin;
+namespace srag\Plugins\Hub2\Origin;
 
 use Exception;
-use SRAG\Plugins\Hub2\Exception\BuildObjectsFailedException;
-use SRAG\Plugins\Hub2\Exception\ConnectionFailedException;
-use SRAG\Plugins\Hub2\Exception\ParseDataFailedException;
-use SRAG\Plugins\Hub2\Object\Category\CategoryDTO;
-use SRAG\Plugins\Hub2\Object\Course\CourseDTO;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\HookObject;
-use SRAG\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
+use srag\Plugins\Hub2\Exception\ConnectionFailedException;
+use srag\Plugins\Hub2\Exception\ParseDataFailedException;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\HookObject;
+use srag\Plugins\Hub2\Object\IObject;
 
 /**
  * Class demoCategory
  *
- * @package SRAG\Plugins\Hub2\Origin
+ * @package srag\Plugins\Hub2\Origin
  */
 class demoCategory extends AbstractOriginImplementation {
 

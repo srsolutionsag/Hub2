@@ -24,7 +24,7 @@ admin_origins_path#:#Path to Origins
 admin_origins_path_info#:#Location of the 'origins' directory
 admin_password_email_body#:#E-Mail body by sending of passwords
 admin_roles#:#Roles
-admin_roles_info#:#Role-IDs which can use HUB2 (commaseparated)
+admin_roles_info#:#Role-IDs which can use Hub2 (commaseparated)
 admin_shortlink#:#Shortlink
 admin_use_async#:#Async sync
 admin_use_async_info#:#Allow async sync over the GUI. Need an ILIAS user.
@@ -95,7 +95,7 @@ crs_prop_notification_from#:#From
 crs_prop_send_notification#:#Activate notification
 crs_prop_send_notification_info#:#After creating the course, Hub will send an email to the addresses defined in CourseDTO::notificationEmails
 com_prop_check_amount#:#Amount comparison
-com_prop_check_amount_info#:#Errors when less than X% of existing records are delivered.
+com_prop_check_amount_info#:#Errors when less than X%% of existing records are delivered.
 com_prop_check_amount_percentage#:#Percentage
 com_prop_force_login#:#Force login
 com_prop_link_to_origin#:#Link to other origin
@@ -364,16 +364,24 @@ sess_prop_delete_mode_none#:#No action
 sess_prop_delete_mode_trash#:#Move to trash
 sess_prop_move#:#Move session
 sess_prop_move_info#:#Move to new container
-summary_for#:#Summary for %s: 
+summary_for#:#Summary for %s:
 summary_delivered_data_sets#:#Delivered data sets: %s
 summary_created#:#Created: %s
 summary_updated#:#Updated: %s
 summary_deleted#:#Deleted: %s
 summary_ignored#:#Ignored: %s
 summary_no_changes#:#No changes: %s
-summary_exceptions#:#Exceptions: 
-summary_notification#:#HUB2: Summary for %s
-summary_exceptions_in#:#HUB2: Exceptions in %s
-summary_in#:#in: 
+summary_exceptions#:#Exceptions:
+summary_notification#:#Hub2: Summary for %s
+summary_exceptions_in#:#Hub2: Exceptions in %s
+summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Base ref ID
 orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.
+removeplugindataconfirm_cancel#:#Cancel
+removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
+removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin
+removeplugindataconfirm_data#:#%1$s data
+removeplugindataconfirm_keep_data#:#Keep %1$s data
+removeplugindataconfirm_msg_kept_data#:#The %1$s data was kept!
+removeplugindataconfirm_msg_removed_data#:#The %1$s data was also removed!
+removeplugindataconfirm_remove_data#:#Remove %1$s data

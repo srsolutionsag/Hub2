@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Sync\Processor\OrgUnit;
+namespace srag\Plugins\Hub2\Sync\Processor\OrgUnit;
 
 use ilObject;
 use ilObjectFactory;
@@ -8,31 +8,29 @@ use ilObjOrgUnit;
 use ilOrgUnitType;
 use ilOrgUnitTypeTranslation;
 use ilRepUtil;
-use SRAG\Plugins\Hub2\Exception\HubException;
-use SRAG\Plugins\Hub2\Helper\DIC;
-use SRAG\Plugins\Hub2\Log\ILog;
-use SRAG\Plugins\Hub2\Notification\OriginNotifications;
-use SRAG\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use SRAG\Plugins\Hub2\Object\ObjectFactory;
-use SRAG\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
-use SRAG\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
-use SRAG\Plugins\Hub2\Origin\IOrigin;
-use SRAG\Plugins\Hub2\Origin\IOriginImplementation;
-use SRAG\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
-use SRAG\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
-use SRAG\Plugins\Hub2\Sync\IDataTransferObjectSort;
-use SRAG\Plugins\Hub2\Sync\IObjectStatusTransition;
-use SRAG\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
+use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
+use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
+use srag\Plugins\Hub2\Origin\Config\IOrgUnitOriginConfig;
+use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OrgUnit\IOrgUnitOrigin;
+use srag\Plugins\Hub2\Origin\Properties\IOrgUnitOriginProperties;
+use srag\Plugins\Hub2\Sync\IDataTransferObjectSort;
+use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
+use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class OrgUnitSyncProcessor
  *
- * @package SRAG\Plugins\Hub2\Sync\Processor\OrgUnit
+ * @package srag\Plugins\Hub2\Sync\Processor\OrgUnit
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncProcessor {
 
-	use DIC;
 	/**
 	 * @var IOrgUnitOriginProperties
 	 */
@@ -179,7 +177,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		$org_unit = $this->getOrgUnitObject($ilias_id);
-		if ($org_unit === NULL) {
+		if (empty($org_unit)) {
 			return NULL;
 		}
 
@@ -214,11 +212,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function handleDelete($ilias_id) {
 		$org_unit = $this->getOrgUnitObject($ilias_id);
-		if ($org_unit === NULL) {
+		if (empty($org_unit)) {
 			return NULL;
 		}
 
-		$this->tree()->moveToTrash($org_unit->getRefId(), true);
+		self::dic()->tree()->moveToTrash($org_unit->getRefId(), true);
 
 		return $org_unit;
 	}
@@ -231,13 +229,13 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function getOrgUnitObject(int $obj_id) {
 		$ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
-		if (!$ref_id) {
+		if (empty($ref_id)) {
 			return NULL;
 		}
 
 		$orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
 
-		if ($orgUnit !== false && $orgUnit instanceof ilObjOrgUnit) {
+		if (!empty($orgUnit) && $orgUnit instanceof ilObjOrgUnit) {
 			return $orgUnit;
 		} else {
 			return NULL;
@@ -287,7 +285,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 					$parent_id = $parent_org_unit->getILIASId();
 
-					if ($parent_id === NULL || $this->getOrgUnitObject($parent_id) === NULL) {
+					if (empty($parent_id) || empty($this->getOrgUnitObject($parent_id))) {
 						throw new HubException("External ID {$ext_id} not found!");
 					}
 
@@ -311,6 +309,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		return $parent_id;
 	}
 
+
 	/**
 	 * @param ilObjOrgUnit $org_unit
 	 * @param IOrgUnitDTO  $dto
@@ -319,15 +318,15 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 */
 	protected function moveOrgUnit(ilObjOrgUnit $org_unit, IOrgUnitDTO $dto) {
 		$parent_ref_id = $this->getParentId($dto);
-		if ($this->tree()->isDeleted($org_unit->getRefId())) {
+		if (self::dic()->tree()->isDeleted($org_unit->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
 			$ilRepUtil->restoreObjects($parent_ref_id, [ $org_unit->getRefId() ]);
 		}
-		$old_parent_id = intval($this->tree()->getParentId($org_unit->getRefId()));
+		$old_parent_id = intval(self::dic()->tree()->getParentId($org_unit->getRefId()));
 		if ($old_parent_id == $parent_ref_id) {
 			return;
 		}
-		$this->tree()->moveTree($org_unit->getRefId(), $parent_ref_id);
-		$this->rbac()->admin()->adjustMovedObjectPermissions($org_unit->getRefId(), $old_parent_id);
+		self::dic()->tree()->moveTree($org_unit->getRefId(), $parent_ref_id);
+		self::dic()->rbacadmin()->adjustMovedObjectPermissions($org_unit->getRefId(), $old_parent_id);
 	}
 }
