@@ -1,6 +1,7 @@
 <?php
 
 namespace srag\Plugins\Hub2\Object\DTO;
+use Serializable;
 
 /**
  * Data Transfer Objects holding all data of objects in the hub context, e.g.
@@ -69,4 +70,20 @@ interface IDataTransferObject {
 	 * @return static
 	 */
 	public function setShouldDeleted(bool $should_deleted);
+
+	/**
+	 * Get the additional data stored on the dto persistently
+	 *
+	 * @return Serializable
+	 */
+	public function getAdditionalData(): Serializable;
+
+	/**
+	 * Add some additional data to store persistently in the DB along with the data of the
+	 * dto.
+	 *
+	 * @param Serializable $additionalData
+	 * @return mixed
+	 */
+	public function withAdditionalData(Serializable $additionalData);
 }
