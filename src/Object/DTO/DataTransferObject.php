@@ -5,6 +5,7 @@ namespace srag\Plugins\Hub2\Object\DTO;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use Serializable;
 
 /**
  * Class ObjectDTO
@@ -31,6 +32,10 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 */
 	private $should_deleted = false;
 
+	/**
+	 * @var Serializable
+	 */
+	protected $additionalData;
 
 	/**
 	 * @param string $ext_id
@@ -128,6 +133,22 @@ abstract class DataTransferObject implements IDataTransferObject {
 	public function setShouldDeleted(bool $should_deleted) {
 		$this->should_deleted = $should_deleted;
 
+		return $this;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getAdditionalData(): Serializable {
+		return unserialize($this->additionalData);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withAdditionalData(Serializable $additionalData) {
+		$this->additionalData = serialize($additionalData);
 		return $this;
 	}
 }
