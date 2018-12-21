@@ -142,7 +142,7 @@ abstract class DataTransferObject implements IDataTransferObject {
 	public function getAdditionalData(): Serializable {
 		$object = unserialize($this->additionalData);
 		if(!$object){
-			unserialize(serialize(""));
+			return unserialize(serialize(""));
 		}
 		return $object;
 	}
