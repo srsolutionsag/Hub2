@@ -9,6 +9,7 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 use srag\Plugins\Hub2\Origin\Config\User\IUserOriginConfig;
 use srag\Plugins\Hub2\Origin\Config\User\UserOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
+use srag\Plugins\Hub2\Sync\Processor\User\IUserActivities;
 use srag\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 
@@ -50,7 +51,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Category\IUserActivities');
+		$this->activities = Mockery::mock(IUserActivities::class);
 		$this->initOrigin(new UserProperties(), new UserOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
@@ -86,7 +87,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\User\IUser');
+		$this->iobject = Mockery::mock(IUser::class);
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -95,7 +96,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = Mockery::mock('overload:\ilObjUser', '\ilObject');
+		$this->ilObject = Mockery::mock('overload:' . ilObjUser::class, ilObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::ILIAS_ID);
 	}
 

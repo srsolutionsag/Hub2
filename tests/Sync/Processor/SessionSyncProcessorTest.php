@@ -73,7 +73,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initDataExpectations() {
-		$session_appointment_mock = Mockery::mock('overload:\ilSessionAppointment', '\ilDatePeriod');
+		$session_appointment_mock = Mockery::mock('overload:' . ilSessionAppointment::class, ilDatePeriod::class);
 		$session_appointment_mock->shouldReceive("setStart");
 		$session_appointment_mock->shouldReceive("setStartingTime");
 		$session_appointment_mock->shouldReceive("setEnd");
@@ -91,14 +91,14 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldReceive("getFirstAppointment")->andReturn($this->appointments[0]);
 		$this->ilObject->shouldReceive("setAppointments")->with($this->appointments);
 
-		$this->participants = Mockery::mock('overload:\ilSessionParticipants', '\ilParticipants');
+		$this->participants = Mockery::mock('overload:' . ilSessionParticipants::class, ilParticipants::class);
 
 		$this->ilObject->shouldReceive("getMembersObject")->andReturn($this->participants);
 	}
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Session\ISession');
+		$this->iobject = Mockery::mock(ISession::class);
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -109,12 +109,12 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		Mockery::mock('alias:\ilObject2')->shouldReceive("_exists")->withArgs([
+		Mockery::mock('alias:' . ilObject2::class)->shouldReceive("_exists")->withArgs([
 			self::REF_ID,
 			true,
 		])->andReturn(true);
 
-		$this->ilObject = Mockery::mock('overload:\ilObjSession', '\ilObject');
+		$this->ilObject = Mockery::mock('overload:' . ilObjSession::class, ilObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::REF_ID);
 		$this->ilObject->shouldReceive('addTranslation');
 	}

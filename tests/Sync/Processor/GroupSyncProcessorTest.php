@@ -60,7 +60,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Group\IGroup');
+		$this->iobject = Mockery::mock(IGroup::class);
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -69,7 +69,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = Mockery::mock('overload:\ilObjGroup', 'ilObject');
+		$this->ilObject = Mockery::mock('overload:' . ilObjGroup::class, ilObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::ILIAS_USER_ID);
 	}
 
@@ -78,7 +78,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Group\IGroupActivities');
+		$this->activities = Mockery::mock(IGroupActivities::class);
 
 		$this->initOrigin(new GroupProperties(), new GroupOriginConfig([]));
 		$this->setupGeneralDependencies();
