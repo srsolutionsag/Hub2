@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Object\Course;
 
 use InvalidArgumentException;
-use Serializable;
 use srag\Plugins\Hub2\Exception\LanguageCodeException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
@@ -284,11 +283,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 * @var string
 	 */
 	protected $icon;
-	/**
-	 * @var Serializable
-	 */
-	protected $additionalData;
-
 
 	/**
 	 * @return string
@@ -762,23 +756,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 		return $this;
 	}
-
-
-	/**
-	 * @return Serializable
-	 */
-	public function getAdditionalData(): Serializable {
-		return unserialize($this->additionalData);
-	}
-
-
-	/**
-	 * @param Serializable $additionalData
-	 */
-	public function setAdditionalData(Serializable $additionalData) {
-		$this->additionalData = serialize($additionalData);
-	}
-
 
 	/**
 	 * @param string $languageCode
