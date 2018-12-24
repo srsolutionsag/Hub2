@@ -16,11 +16,11 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	 * @inheritdoc
 	 */
 	public function doesObjectExist(): bool {
-		if (!$this->object->getILIASId()) {
+		if (!$this->getILIASId()) {
 			return false;
 		}
 
-		return ilObject2::_exists($this->object->getILIASId(), true);
+		return ilObject2::_exists($this->getILIASId(), true);
 	}
 
 
@@ -28,7 +28,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	 * @inheritdoc
 	 */
 	public function isAccessGranted(): bool {
-		return (bool)self::dic()->access()->checkAccess("read", '', $this->object->getILIASId());
+		return (bool)self::dic()->access()->checkAccess("read", '', $this->getILIASId());
 	}
 
 
@@ -48,7 +48,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	 * @inheritdoc
 	 */
 	public function getAccessGrantedExternalLink(): string {
-		$ref_id = $this->object->getILIASId();
+		$ref_id = $this->getILIASId();
 		$link = $this->generateLink($ref_id);
 
 		return $link;
@@ -69,9 +69,12 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 		return $link;
 	}
 
+	protected function getILIASId(){
+		return $this->object->getILIASId();
+	}
 
 	private function findReadableParent(): int {
-		$ref_id = $this->object->getILIASId();
+		$ref_id = $this->getILIASId();
 
 		while ($ref_id AND !self::dic()->access()->checkAccess('read', '', $ref_id) AND $ref_id != 1) {
 			$ref_id = (int)self::dic()->tree()->getParentId($ref_id);

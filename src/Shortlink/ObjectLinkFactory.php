@@ -3,6 +3,9 @@
 namespace srag\Plugins\Hub2\Shortlink;
 
 use srag\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\Group\ARGroup;
@@ -52,6 +55,9 @@ class ObjectLinkFactory {
 			$f = new ObjectFactory($origin);
 			$object = $f->undefined($ext_id);
 			switch (true) {
+				case ($object instanceof ARCourseMembership):
+				case ($object instanceof ARGroupMembership):
+				case ($object instanceof ARSessionMembership):
 				case ($object instanceof ARSession):
 				case ($object instanceof ARCategory):
 				case ($object instanceof ARCourse):
@@ -82,6 +88,9 @@ class ObjectLinkFactory {
 		$f = new ObjectFactory($origin);
 		$object = $f->undefined($ext_id);
 		switch (true) {
+			case ($object instanceof ARCourseMembership):
+			case ($object instanceof ARGroupMembership):
+			case ($object instanceof ARSessionMembership):
 			case ($object instanceof ARSession):
 			case ($object instanceof ARCategory):
 			case ($object instanceof ARCourse):
@@ -109,6 +118,12 @@ class ObjectLinkFactory {
 	 */
 	public function findByObject(ARObject $object): IObjectLink {
 		switch (true) {
+			case ($object instanceof ARCourseMembership):
+				return new CourseMembershipLink($object);
+			case ($object instanceof ARGroupMembership):
+				return new GroupMembershipLink($object);
+			case ($object instanceof ARSessionMembership):
+				return new SessionMembershipLink($object);
 			case ($object instanceof ARSession):
 				return new SessionLink($object);
 			case ($object instanceof ARCategory):
