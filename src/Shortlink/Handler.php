@@ -2,6 +2,9 @@
 
 namespace srag\Plugins\Hub2\Shortlink;
 
+require_once __DIR__ . "/../../vendor/autoload.php";
+
+
 use ilContext;
 use ilDBInterface;
 use ilHub2Plugin;
