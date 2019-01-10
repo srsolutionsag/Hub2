@@ -296,9 +296,11 @@ class DataTableGUI extends ilTable2GUI {
 		}
 
 		$link = $this->originLinkfactory->findByExtIdAndOrigin($ext_id, $origin);
-		$button_factory = self::dic()->ui()->factory()->button();
+		$link_factory = self::dic()->ui()->factory()->link();
 
-		return self::output()->getHTML($button_factory->shy($ext_id, $link->getAccessGrantedInternalLink()));
+		return self::output()->getHTML($link_factory->standard(
+			$ext_id, $link->getAccessGrantedInternalLink())->withOpenInNewViewport(true)
+		);
 	}
 
 
