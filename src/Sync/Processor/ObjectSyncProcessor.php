@@ -93,7 +93,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$object->store();
 			} elseif ($ilias_id < 0) {
 				$object->setStatus(IObject::STATUS_IGNORED);
-				$object->save();
+				$object->store();
 			}
 		}
 
