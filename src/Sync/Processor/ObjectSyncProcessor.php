@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor;
 
-use Error;
 use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
@@ -23,7 +22,6 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
-use Throwable;
 
 /**
  * Class ObjectProcessor
@@ -93,7 +91,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$object->setStatus(IObject::STATUS_TO_UPDATE);
 				$object->setILIASId($ilias_id);
 			} elseif ($ilias_id < 0) {
-				$this->failed($object, new Error("Mapping strategy " . get_class($m)));
+				throw new HubException("Mapping strategy " . get_class($m) . " returns negative value");
 			}
 			$object->store();
 		}
@@ -260,18 +258,4 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @return ilObject
 	 */
 	abstract protected function handleDelete($iliasId);
-
-
-	/**
-	 * @param IObject        $object
-	 * @param Throwable|null $ex
-	 */
-	public function failed(IObject $object, Throwable $ex = NULL) {
-		$object->setStatus(IObject::STATUS_FAILED);
-
-		$this->originNotifications->addMessage(self::plugin()->translate("synch_failed_text", "", [
-			$object->getExtId(),
-			$ex
-		]));
-	}
 }

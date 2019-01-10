@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Sync;
 
-use Error;
 use Exception;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
@@ -116,9 +115,13 @@ class OriginSync implements IOriginSync {
 		// as the sync of this origin cannot continue.
 		try {
 			$this->implementation->beforeSync();
+
 			$this->implementation->connect();
+
 			$count = $this->implementation->parseData();
+
 			$this->countDelivered = $count;
+
 			// Check if the origin aborts its sync if the amount of delivered data is not enough
 			if ($this->origin->config()->getCheckAmountData()) {
 				$threshold = $this->origin->config()->getCheckAmountDataPercentage();
@@ -132,13 +135,9 @@ class OriginSync implements IOriginSync {
 				}
 			}
 			$this->dtoObjects = $this->implementation->buildObjects();
-		} catch (HubException $e) {
-			$this->exceptions[] = $e;
-			throw $e;
 		} catch (Throwable $e) {
-			// Note: Should not happen in the stages above, as only exceptions of type HubException should be raised.
-			// Throwable collects any exceptions AND Errors from PHP 7
 			$this->exceptions[] = $e;
+
 			throw $e;
 		}
 
@@ -277,38 +276,48 @@ class OriginSync implements IOriginSync {
 	 * @param IObject             $object
 	 * @param IDataTransferObject $dto
 	 *
-	 * @throws AbortOriginSyncException
-	 * @throws HubException
+	 * @throws Throwable
 	 */
 	protected function processObject(IObject $object, IDataTransferObject $dto) {
 		try {
 			$this->processor->process($object, $dto, $this->origin->isUpdateForced());
+
 			$this->incrementProcessed($object->getStatus());
-		} catch (AbortSyncException $e) {
+		} catch (AbortSyncException $ex) {
 			// Any exceptions aborting the global or current sync are forwarded to global sync
-			$this->exceptions[] = $e;
+			$this->exceptions[] = $ex;
+
 			$object->store();
-			throw $e;
-		} catch (AbortOriginSyncOfCurrentTypeException $e) {
-			$this->exceptions[] = $e;
+
+			throw $ex;
+		} catch (AbortOriginSyncOfCurrentTypeException $ex) {
+			$this->exceptions[] = $ex;
+
 			$object->store();
-			throw $e;
-		} catch (AbortOriginSyncException $e) {
-			$this->exceptions[] = $e;
+
+			throw $ex;
+		} catch (AbortOriginSyncException $ex) {
+			$this->exceptions[] = $ex;
+
 			$object->store();
-			throw $e;
-		} catch (Exception $e) {
-			// TODO: May add exceptions $this->processor->failed (Set status FAILED and add a notification
-			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
-			// which decides how to proceed, e.g. continue or abort
-			$this->exceptions[] = $e;
+
+			throw $ex;
+		} catch (Throwable $ex) {
+			$object->setStatus(IObject::STATUS_FAILED);
+			$this->incrementProcessed($object->getStatus());
+
+			$this->notifications->addMessage(self::plugin()->translate("process_object_failed", "", [
+				$object->getExtId(),
+				$ex->getMessage()
+			]));
+
+			$this->exceptions[] = $ex;
+
 			$object->store();
-			$this->implementation->handleException($e);
-		} catch (Error $e) {
-			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
-			$this->exceptions[] = $e;
-			$object->store();
-			throw new AbortOriginSyncException($e->getMessage());
+
+			$this->implementation->handleException($ex);
+
+			throw $ex;
 		}
 	}
 

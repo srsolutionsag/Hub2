@@ -407,7 +407,7 @@ origin_form_field_adhoc_parent_scope#:#Setze Parent als Scope
 origin_form_field_adhoc_parent_scope_info#:#Es werden nur die Daten geliefert, die in Container gehören, die geändert wurden
 origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
-synch_failed_text#:#Objekt mit Ext-Id %s ist fehlgeschlagen. Fehler: %s
+process_object_failed#:#Objekt mit Ext-Id %s ist fehlgeschlagen. Fehler: %s
 table_md#:#MD
 table_tax#:#TAX
 logs_additional_data#:#Zusätzliche Daten
