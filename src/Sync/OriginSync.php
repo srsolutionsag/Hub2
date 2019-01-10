@@ -77,7 +77,8 @@ class OriginSync implements IOriginSync {
 		IObject::STATUS_CREATED => 0,
 		IObject::STATUS_UPDATED => 0,
 		IObject::STATUS_OUTDATED => 0,
-		IObject::STATUS_IGNORED => 0
+		IObject::STATUS_IGNORED => 0,
+		IObject::STATUS_FAILED => 0
 	];
 	/**
 	 * @var OriginNotifications
@@ -297,6 +298,7 @@ class OriginSync implements IOriginSync {
 			$object->store();
 			throw $e;
 		} catch (Exception $e) {
+			// TODO: May add exceptions $this->processor->failed (Set status FAILED and add a notification
 			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
 			// which decides how to proceed, e.g. continue or abort
 			$this->exceptions[] = $e;

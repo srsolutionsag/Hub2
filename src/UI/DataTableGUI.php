@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\UI;
 
-use ActiveRecordList;
 use hub2DataGUI;
 use ilCheckboxInputGUI;
 use ilFormPropertyGUI;
@@ -181,7 +180,7 @@ class DataTableGUI extends ilTable2GUI {
 	protected function initTableData() {
 		$data = [];
 
-		$where_query = " WHERE true = true";
+		$where_query = " WHERE true = true"; // TODO: ???
 		foreach ($this->filtered as $postvar => $value) {
 			if (!$postvar || !$value) {
 				continue;
@@ -190,36 +189,36 @@ class DataTableGUI extends ilTable2GUI {
 			switch ($postvar) {
 				case 'data':
 				case 'ext_id':
-					$where_query .= $postvar ." LIKE '%".$value."%'";
+					$where_query .= $postvar . " LIKE '%" . $value . "%'";
 					break;
 				case "status":
 					if (!empty($value) && $value[0] === "!") {
 						$value = substr($value, 1);
-						$where_query .= $postvar ." != ".$value;
+						$where_query .= $postvar . " != " . $value;
 					} else {
-						$where_query .= $postvar ." = ".$value;
+						$where_query .= $postvar . " = " . $value;
 					}
 					break;
 				default:
-					$where_query .= $postvar ." = ".$value;
+					$where_query .= $postvar . " = " . $value;
 					break;
 			}
 		}
 
 		$union_query = "";
-		$columns = implode(", ",$this->getFields());
-		$columns = rtrim($columns,", ");
+		$columns = implode(", ", $this->getFields());
+		$columns = rtrim($columns, ", ");
 		foreach (self::$classes as $class) {
-			$union_query .= "SELECT $columns FROM " .$class::TABLE_NAME.$where_query." UNION ";
+			$union_query .= "SELECT $columns FROM " . $class::TABLE_NAME . $where_query . " UNION ";
 		}
-		$union_query = rtrim($union_query,"UNION ");
+		$union_query = rtrim($union_query, "UNION ");
 
-		$order_field = $this->getOrderField() ? $this->getOrderField():$this->getDefaultOrderField();
-		$order_by_query = " ORDER BY ".$order_field. " ".$this->getOrderDirection();
+		$order_field = $this->getOrderField() ? $this->getOrderField() : $this->getDefaultOrderField();
+		$order_by_query = " ORDER BY " . $order_field . " " . $this->getOrderDirection();
 
-		$query = $union_query.$order_by_query;
+		$query = $union_query . $order_by_query;
 		$result = self::dic()->database()->query($query);
-		while($row = $result->fetchRow()){
+		while ($row = $result->fetchRow()) {
 			$data[] = $row;
 		}
 		$this->setMaxCount(count($data));
@@ -230,6 +229,7 @@ class DataTableGUI extends ilTable2GUI {
 
 	/**
 	 * @param array $a_set
+	 *
 	 * @throws \ReflectionException
 	 * @throws \ilTemplateException
 	 * @throws \srag\DIC\Hub2\Exception\DICException
@@ -284,8 +284,9 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param $ext_id
+	 * @param         $ext_id
 	 * @param IOrigin $origin
+	 *
 	 * @return string
 	 * @throws \ilTemplateException
 	 * @throws \srag\DIC\Hub2\Exception\DICException
@@ -298,9 +299,7 @@ class DataTableGUI extends ilTable2GUI {
 		$link = $this->originLinkfactory->findByExtIdAndOrigin($ext_id, $origin);
 		$link_factory = self::dic()->ui()->factory()->link();
 
-		return self::output()->getHTML($link_factory->standard(
-			$ext_id, $link->getAccessGrantedInternalLink())->withOpenInNewViewport(true)
-		);
+		return self::output()->getHTML($link_factory->standard($ext_id, $link->getAccessGrantedInternalLink())->withOpenInNewViewport(true));
 	}
 
 

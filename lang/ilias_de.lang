@@ -383,6 +383,7 @@ summary_created#:#Erstellt: %s
 summary_updated#:#Aktualisiert: %s
 summary_outdated#:#Veraltet: %s
 summary_ignored#:#Ignoriert: %s
+summary_failed#:#Fehlgeschlagen: %s
 summary_exceptions#:#Ausnahmen:
 summary_notification#:#Hub2: Zusammenfassung für %s
 summary_exceptions_in#:#Hub2: Ausnahmen in %s
@@ -399,12 +400,14 @@ data_table_status_outdated#:#Veraltet
 data_table_status_to_restore#:#Zum Wiederherstellen
 data_table_status_ignored#:#Ignoriert
 data_table_status_not_ignored#:#Nicht ignoriert
+data_table_status_failed#:#Fehlgeschlagen
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Es werden nur die Daten geliefert, die geändert wurden
 origin_form_field_adhoc_parent_scope#:#Setze Parent als Scope
 origin_form_field_adhoc_parent_scope_info#:#Es werden nur die Daten geliefert, die in Container gehören, die geändert wurden
 origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
+synch_failed_text#:#Objekt mit Ext-Id %s ist fehlgeschlagen. Fehler: %s
 table_md#:#MD
 table_tax#:#TAX
 logs_additional_data#:#Zusätzliche Daten

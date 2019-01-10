@@ -6,6 +6,7 @@ use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
+use SAML2\Exception\Throwable;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
@@ -90,11 +91,10 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			if ($ilias_id > 0) {
 				$object->setStatus(IObject::STATUS_TO_UPDATE);
 				$object->setILIASId($ilias_id);
-				$object->store();
 			} elseif ($ilias_id < 0) {
-				$object->setStatus(IObject::STATUS_IGNORED);
-				$object->store();
+				$this->failed($object);
 			}
+			$object->store();
 		}
 
 		if ($object->getStatus() !== IObject::STATUS_TO_OUTDATED) {
@@ -180,6 +180,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				break;
 
 			case IObject::STATUS_IGNORED:
+			case IObject::STATUS_FAILED:
 				// Nothing to do here, object is ignored
 				break;
 
@@ -258,4 +259,18 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @return ilObject
 	 */
 	abstract protected function handleDelete($iliasId);
+
+
+	/**
+	 * @param IObject        $object
+	 * @param Throwable|null $ex
+	 */
+	public function failed(IObject $object, Throwable $ex = NULL) {
+		$object->setStatus(IObject::STATUS_FAILED);
+
+		$this->originNotifications->addMessage(self::plugin()->translate("synch_failed_text", "", [
+			$object->getExtId(),
+			$ex
+		]));
+	}
 }

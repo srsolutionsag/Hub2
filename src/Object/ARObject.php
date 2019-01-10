@@ -64,6 +64,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 		IObject::STATUS_OUTDATED,
 		IObject::STATUS_TO_RESTORE,
 		IObject::STATUS_IGNORED,
+		IObject::STATUS_FAILED
 	];
 	/**
 	 * The primary ID is a composition of the origin-ID and ext_id

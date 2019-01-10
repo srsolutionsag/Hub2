@@ -73,6 +73,7 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 				return IObject::STATUS_TO_RESTORE;
 
 			case IObject::STATUS_IGNORED:
+			case IObject::STATUS_FAILED:
 				// Either create or update the ILIAS object
 				return ($object->getILIASId()) ? IObject::STATUS_TO_UPDATE : IObject::STATUS_TO_CREATE;
 

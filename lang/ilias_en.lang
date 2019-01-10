@@ -384,6 +384,7 @@ summary_created#:#Created: %s
 summary_updated#:#Updated: %s
 summary_outdated#:#Outdated: %s
 summary_ignored#:#Ignored: %s
+summary_failed#:#Failed: %s
 summary_exceptions#:#Exceptions:
 summary_notification#:#Hub2: Summary for %s
 summary_exceptions_in#:#Hub2: Exceptions in %s
@@ -400,12 +401,14 @@ data_table_status_outdated#:#Outdated
 data_table_status_to_restore#:#To restore
 data_table_status_ignored#:#Ignored
 data_table_status_not_ignored#:#Not ignored
+data_table_status_failed#:#Failed
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
 origin_form_field_adhoc_parent_scope#:#Set Scope to Parent
 origin_form_field_adhoc_parent_scope_info#:#Only the data of containers which have been changed will be delivered
 origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
+synch_failed_text#:#Object with ext id %s is failed:. Error: %s
 table_md#:#MD
 table_tax#:#TAX
 logs_additional_data#:#Additional data
