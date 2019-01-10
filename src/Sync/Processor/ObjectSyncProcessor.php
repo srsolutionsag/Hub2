@@ -91,6 +91,9 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$object->setStatus(IObject::STATUS_TO_UPDATE);
 				$object->setILIASId($ilias_id);
 				$object->store();
+			} elseif ($ilias_id < 0) {
+				$object->setStatus(IObject::STATUS_IGNORED);
+				$object->store();
 			}
 		}
 

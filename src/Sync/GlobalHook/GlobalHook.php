@@ -63,7 +63,7 @@ final class GlobalHook implements IGlobalHook {
 			return $this->global_hook->beforeSync($active_orgins);
 		}
 
-		return false;
+		return true;
 	}
 
 
@@ -75,7 +75,7 @@ final class GlobalHook implements IGlobalHook {
 			return $this->global_hook->afterSync($active_orgins);
 		}
 
-		return false;
+		return true;
 	}
 
 
@@ -87,6 +87,6 @@ final class GlobalHook implements IGlobalHook {
 			return $this->global_hook->handleExceptions($exceptions);
 		}
 
-		return false;
+		return true;
 	}
 }
