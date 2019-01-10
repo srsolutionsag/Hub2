@@ -2,10 +2,11 @@
 
 namespace srag\Plugins\Hub2\Object\DTO;
 
+use ArrayObject;
 use ilHub2Plugin;
+use Serializable;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
-use Serializable;
 
 /**
  * Class ObjectDTO
@@ -31,11 +32,11 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 * @var bool
 	 */
 	private $should_deleted = false;
-
 	/**
 	 * @var Serializable
 	 */
 	protected $additionalData;
+
 
 	/**
 	 * @param string $ext_id
@@ -136,11 +137,17 @@ abstract class DataTransferObject implements IDataTransferObject {
 		return $this;
 	}
 
+
 	/**
 	 * @inheritdoc
 	 */
 	public function getAdditionalData(): Serializable {
-		return unserialize($this->additionalData);
+		$object = unserialize($this->additionalData);
+		if (!$object) {
+			return unserialize(serialize(new ArrayObject()));
+		}
+
+		return $object;
 	}
 
 
@@ -149,6 +156,7 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 */
 	public function withAdditionalData(Serializable $additionalData) {
 		$this->additionalData = serialize($additionalData);
+
 		return $this;
 	}
 }
