@@ -2,11 +2,11 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor;
 
+use Error;
 use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
-use SAML2\Exception\Throwable;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
@@ -23,6 +23,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use Throwable;
 
 /**
  * Class ObjectProcessor
@@ -92,7 +93,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				$object->setStatus(IObject::STATUS_TO_UPDATE);
 				$object->setILIASId($ilias_id);
 			} elseif ($ilias_id < 0) {
-				$this->failed($object);
+				$this->failed($object, new Error("Mapping strategy " . get_class($m)));
 			}
 			$object->store();
 		}
