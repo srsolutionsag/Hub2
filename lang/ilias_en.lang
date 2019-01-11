@@ -408,7 +408,6 @@ origin_form_field_adhoc_parent_scope#:#Set Scope to Parent
 origin_form_field_adhoc_parent_scope_info#:#Only the data of containers which have been changed will be delivered
 origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
-process_object_failed#:#Object with ext id %s is failed:. Error: %s
 table_md#:#MD
 table_tax#:#TAX
 crs_membership_prop_delete_mode_delete#:#Terminate membership
