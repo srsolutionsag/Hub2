@@ -166,12 +166,12 @@ final class Logs {
 	/**
 	 * @return ILog
 	 */
-	public function exception(Throwable $throwable): ILog {
+	public function exception(Throwable $ex): ILog {
 		$log = $this->log();
 
 		$log->withOriginObjectType(ILog::LOG_TYPE_EXCEPTION);
 
-		$log->withMessage($throwable->getMessage());
+		$log->withMessage($ex->getMessage());
 
 		return $log;
 	}
