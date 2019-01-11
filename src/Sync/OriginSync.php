@@ -308,11 +308,6 @@ class OriginSync implements IOriginSync {
 
 			self::logs()->exception($ex)->store();
 
-			$this->notifications->addMessage(self::plugin()->translate("process_object_failed", "", [
-				$object->getExtId(),
-				$ex->getMessage()
-			]));
-
 			$this->exceptions[] = $ex;
 
 			$object->store();
