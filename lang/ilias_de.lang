@@ -423,8 +423,9 @@ logs_level_200#:#Info
 logs_level_300#:#Warnung
 logs_level_500#:#Kritisch
 logs_log_type#:#Typ
-logs_log_type_1#:#Hub2
+logs_log_type_1#:#Allgemein
 logs_log_type_2#:#Origin
+logs_log_type_3#:#Exception
 logs_logs#:#Logs
 logs_message#:#Nachricht
 logs_no_additional_data#:#Keine zusätzlichen Daten
