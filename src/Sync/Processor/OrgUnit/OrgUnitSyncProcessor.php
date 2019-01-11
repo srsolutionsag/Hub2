@@ -319,7 +319,21 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		$parent_ref_id = $this->getParentId($dto);
 		if (self::dic()->tree()->isDeleted($org_unit->getRefId())) {
 			$ilRepUtil = new ilRepUtil();
-			$ilRepUtil->restoreObjects($parent_ref_id, [ $org_unit->getRefId() ]);
+			$node_data = self::dic()->tree()->getNodeTreeData($org_unit->getRefId());
+			$deleted_ref_id = (int)- $node_data['tree'];
+
+			// if a parent node of the org unit was deleted, we first have to recover this parent
+			if ($deleted_ref_id != $org_unit->getRefId()) {
+				$node_data_deleted_parent = self::dic()->tree()->getNodeTreeData($deleted_ref_id);
+				$ilRepUtil->restoreObjects($node_data_deleted_parent['parent'], [ $deleted_ref_id ]);
+				// then move the actual orgunit
+				self::dic()->tree()->moveTree($org_unit->getRefId(), $parent_ref_id);
+				// then delete the parent again
+				self::dic()->tree()->moveToTrash($deleted_ref_id);
+			} else {
+				// recover and move the actual org unit
+				$ilRepUtil->restoreObjects($parent_ref_id, [ $org_unit->getRefId() ]);
+			}
 		}
 		$old_parent_id = intval(self::dic()->tree()->getParentId($org_unit->getRefId()));
 		if ($old_parent_id == $parent_ref_id) {
