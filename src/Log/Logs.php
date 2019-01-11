@@ -171,7 +171,7 @@ final class Logs {
 
 		$log->withOriginObjectType(ILog::LOG_TYPE_EXCEPTION);
 
-		$log->withMessage($throwable);
+		$log->withMessage($throwable->getMessage());
 
 		return $log;
 	}
