@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
@@ -94,6 +95,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function factory() {
 		return $this->factory;
+	}
+
+
+	/**
+	 * @return ILog
+	 */
+	protected final function log(): ILog {
+		return self::logs()->originLog($this->origin);
 	}
 
 

@@ -40,7 +40,7 @@ class demoUser extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData(): int {
-		self::logs()->originLog($this->origin)->write("This is a test-log entry");
+		$this->log()->write("This is a test-log entry");
 
 		for ($x = 1; $x <= 10; $x ++) {
 			$t = "";

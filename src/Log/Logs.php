@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
+use Throwable;
 
 /**
  * Class Logs
@@ -159,6 +160,20 @@ final class Logs {
 		$logs = array_merge($logs, Log::where([ "date" => $keep_old_logs_time_date->get(IL_CAL_DATETIME) ], "<")->get());
 
 		return $logs;
+	}
+
+
+	/**
+	 * @return ILog
+	 */
+	public function exception(Throwable $throwable): ILog {
+		$log = $this->log();
+
+		$log->withOriginObjectType(ILog::LOG_TYPE_EXCEPTION);
+
+		$log->withMessage($throwable);
+
+		return $log;
 	}
 
 

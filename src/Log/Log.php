@@ -47,8 +47,9 @@ class Log extends ActiveRecord implements ILog {
 	 * @var array
 	 */
 	public static $log_types = [
-		self::LOG_TYPE_HUB2 => self::LOG_TYPE_HUB2,
-		self::LOG_TYPE_ORIGIN => self::LOG_TYPE_ORIGIN
+		self::LOG_TYPE_GENERAL => self::LOG_TYPE_GENERAL,
+		self::LOG_TYPE_ORIGIN => self::LOG_TYPE_ORIGIN,
+		self::LOG_TYPE_EXCEPTION => self::LOG_TYPE_EXCEPTION
 	];
 	/**
 	 * @var array
@@ -77,7 +78,7 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_length       2
 	 * @con_is_notnull   true
 	 */
-	protected $log_type = self::LOG_TYPE_HUB2;
+	protected $log_type = self::LOG_TYPE_GENERAL;
 	/**
 	 * @var string
 	 *

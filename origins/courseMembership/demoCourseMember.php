@@ -40,7 +40,7 @@ class demoCourseMember extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData(): int {
-		self::logs()->originLog($this->origin)->write("This is a test-log entry");
+		$this->log()->write("This is a test-log entry");
 
 		$this->data[] = $this->factory()->courseMembership(1, 6)->setCourseId(1)->setRole(CourseMembershipDTO::ROLE_TUTOR)->setUserId(6)
 			->setCourseIdType(CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID);

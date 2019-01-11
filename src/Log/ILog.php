@@ -15,11 +15,37 @@ use stdClass;
 interface ILog {
 
 	// @see ilLogLevel
+
+	/**
+	 * @var int
+	 */
 	const LEVEL_INFO = 200;
+	/**
+	 * @var int
+	 */
 	const LEVEL_WARNING = 300;
+	/**
+	 * @var int
+	 */
 	const LEVEL_CRITICAL = 500;
-	const LOG_TYPE_HUB2 = 1;
+	/**
+	 * General log
+	 *
+	 * @var int
+	 */
+	const LOG_TYPE_GENERAL = 1;
+	/**
+	 * Log from origin
+	 *
+	 * @var int
+	 */
 	const LOG_TYPE_ORIGIN = 2;
+	/**
+	 * Exception occurred
+	 *
+	 * @var int
+	 */
+	const LOG_TYPE_EXCEPTION = 3;
 
 
 	/**
