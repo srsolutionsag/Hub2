@@ -411,6 +411,7 @@ origin_deleted#:#Origin deleted
 process_object_failed#:#Object with ext id %s is failed:. Error: %s
 table_md#:#MD
 table_tax#:#TAX
+crs_membership_prop_delete_mode_delete#:#Terminate membership
 logs_additional_data#:#Additional data
 logs_cron#:#Delete old logs
 logs_cron_description#:#After the specified config time, old logs will be deleted automatically

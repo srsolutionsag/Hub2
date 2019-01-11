@@ -410,6 +410,7 @@ origin_deleted#:#Anbindung gelöscht
 process_object_failed#:#Objekt mit Ext-Id %s ist fehlgeschlagen. Fehler: %s
 table_md#:#MD
 table_tax#:#TAX
+crs_membership_prop_delete_mode_delete#:#Mitgliedschaft beenden
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
 logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht
