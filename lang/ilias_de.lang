@@ -385,6 +385,7 @@ summary_outdated#:#Veraltet: %s
 summary_ignored#:#Ignoriert: %s
 summary_failed#:#Fehlgeschlagen: %s
 summary_exceptions#:#Ausnahmen:
+summary_exceptions_more#:# + %s weitere ...
 summary_notification#:#Hub2: Zusammenfassung für %s
 summary_exceptions_in#:#Hub2: Ausnahmen in %s
 summary_in#:#in:
