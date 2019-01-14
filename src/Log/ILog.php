@@ -156,6 +156,38 @@ interface ILog {
 
 
 	/**
+	 * @return string|null
+	 */
+	public function getObjectExtId()/*: ?string*/
+	;
+
+
+	/**
+	 * @param string|null $object_ext_id
+	 *
+	 * @return self
+	 */
+	public function withObjectExtId(/*?*/
+		string $object_ext_id = NULL): self;
+
+
+	/**
+	 * @return int|null
+	 */
+	public function getObjectIliasId()/*: ?int*/
+	;
+
+
+	/**
+	 * @param int|null $object_ilias_id
+	 *
+	 * @return int
+	 */
+	public function withObjectIliasId(/*?*/
+		int $object_ilias_id = NULL): self;
+
+
+	/**
 	 *
 	 */
 	public function delete()/*: void*/

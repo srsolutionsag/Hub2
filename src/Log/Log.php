@@ -121,6 +121,24 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_is_notnull   true
 	 */
 	protected $origin_object_type = "";
+	/**
+	 * @var string|null
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       8
+	 * @con_is_notnull   false
+	 */
+	protected $object_ext_id = NULL;
+	/**
+	 * @var int|null
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       8
+	 * @con_is_notnull   false
+	 */
+	protected $object_ilias_id = NULL;
 
 
 	/**
@@ -170,6 +188,7 @@ class Log extends ActiveRecord implements ILog {
 		switch ($field_name) {
 			case "log_id":
 			case "level":
+			case "origin_id":
 				return intval($field_value);
 
 			case "date":
@@ -178,8 +197,12 @@ class Log extends ActiveRecord implements ILog {
 			case "additional_data":
 				return json_decode($field_value);
 
-			case "origin_id":
-				return intval($field_value);
+			case "object_ilias_id":
+				if ($field_value !== NULL) {
+					return intval($field_value);
+				} else {
+					return NULL;
+				}
 
 			default:
 				return NULL;
@@ -348,6 +371,44 @@ class Log extends ActiveRecord implements ILog {
 	 */
 	public function withOriginObjectType(string $origin_object_type): ILog {
 		$this->origin_object_type = $origin_object_type;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getObjectExtId()/*: ?string*/ {
+		return $this->object_ext_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withObjectExtId(/*?*/
+		string $object_ext_id = NULL): ILog {
+		$this->object_ext_id = $object_ext_id;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getObjectIliasId()/*: ?int*/ {
+		return $this->object_ilias_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withObjectIliasId(/*?*/
+		int $object_ilias_id = NULL): ILog {
+		$this->object_ilias_id = $object_ilias_id;
 
 		return $this;
 	}

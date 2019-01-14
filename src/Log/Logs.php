@@ -7,6 +7,7 @@ use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Log\Log;
+use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
@@ -69,11 +70,13 @@ final class Logs {
 	 * @param int|null        $level
 	 * @param int|null        $origin_id
 	 * @param string|null     $origin_object_type
+	 * @param string|null     $object_ext_id
+	 * @param int|null        $object_ilias_id
 	 * @param string|null     $additional_data
 	 *
 	 * @return array
 	 */
-	public function getLogs(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $additional_data = NULL): array {
+	public function getLogs(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): array {
 
 		$logs = [];
 
@@ -99,6 +102,12 @@ final class Logs {
 		}
 		if (!empty($origin_object_type)) {
 			$where = $where->where([ "origin_object_type" => $origin_object_type ]);
+		}
+		if (!empty($object_ext_id)) {
+			$where = $where->where([ "object_ext_id" => $object_ext_id ]);
+		}
+		if (!empty($object_ilias_id)) {
+			$where = $where->where([ "object_ilias_id" => $object_ilias_id ]);
 		}
 		if (!empty($additional_data)) {
 			$where = $where->where([ "additional_data" => '%' . $additional_data . '%' ], "LIKE");
@@ -168,18 +177,31 @@ final class Logs {
 
 
 	/**
+	 * @param IOrigin      $orgin
+	 * @param IObject|null $object
+	 *
 	 * @return ILog
 	 */
-	public function originLog(IOrigin $orgin): ILog {
-		return $this->log()->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
+	public function originLog(IOrigin $orgin, IObject $object = NULL): ILog {
+		$log = $this->log()->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
+
+		if ($object !== NULL) {
+			return $log->withObjectExtId($object->getExtId())->withObjectIliasId($object->getILIASId());
+		} else {
+			return $log;
+		}
 	}
 
 
 	/**
+	 * @param Throwable $ex
+	 * @param IOrigin   $orgin
+	 * @param IObject   $object
+	 *
 	 * @return ILog
 	 */
-	public function exception(IOrigin $orgin, Throwable $ex): ILog {
-		$log = $this->originLog($orgin);
+	public function exception(Throwable $ex, IOrigin $orgin, IObject $object): ILog {
+		$log = $this->originLog($orgin, $object);
 
 		$log->withLevel(ILog::LEVEL_EXCEPTION);
 

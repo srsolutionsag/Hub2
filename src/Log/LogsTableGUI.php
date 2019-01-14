@@ -84,6 +84,8 @@ class LogsTableGUI extends TableGUI {
 			"level" => "level",
 			"origin_id" => "origin_id",
 			"origin_object_type" => "origin_object_type",
+			"object_ext_id" => "object_ext_id",
+			"object_ilias_id" => "object_ilias_id",
 			"additional_data" => "additional_data"
 		];
 
@@ -154,13 +156,20 @@ class LogsTableGUI extends TableGUI {
 			$origin_id = NULL;
 		}
 		$origin_object_type = $filter["origin_object_type"];
+		$object_ext_id = $filter["object_ext_id"];
+		$object_ilias_id = $filter["object_ilias_id"];
+		if (!empty($object_ilias_id)) {
+			$object_ilias_id = intval($object_ilias_id);
+		} else {
+			$object_ilias_id = NULL;
+		}
 		$additional_data = $filter["additional_data"];
 
 		// Fix stupid ilTable2GUI !!! ...
 		$this->determineOffsetAndOrder();
 
 		$logs = self::logs()
-			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $additional_data);
+			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data);
 
 		$this->setData($logs);
 
@@ -204,6 +213,13 @@ class LogsTableGUI extends TableGUI {
 					] + array_map(function (string $origin_object_type): string {
 						return self::plugin()->translate("origin_object_type_" . $origin_object_type);
 					}, AROrigin::$object_types)
+			],
+			"object_ext_id" => [
+				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
+			],
+			"object_ilias_id" => [
+				PropertyFormGUI::PROPERTY_CLASS => NumberInputGUI::class,
+				"setMinValue" => 0
 			],
 			"additional_data" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class

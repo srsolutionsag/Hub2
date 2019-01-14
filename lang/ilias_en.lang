@@ -428,6 +428,8 @@ logs_level_500#:#Critical
 logs_logs#:#Logs
 logs_message#:#Message
 logs_no_additional_data#:#No additional data
+logs_object_ext_id#:#External ID
+logs_object_ilias_id#:#ILIAS ID
 logs_origin_id#:#Origin ID
 logs_origin_object_type#:#Origin object type
 logs_title#:#Title
