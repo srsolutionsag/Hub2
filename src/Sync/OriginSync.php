@@ -306,7 +306,7 @@ class OriginSync implements IOriginSync {
 			$object->setStatus(IObject::STATUS_FAILED);
 			$this->incrementProcessed($object->getStatus());
 
-			self::logs()->exception($ex)->store();
+			self::logs()->exception($this->origin, $ex)->store();
 
 			$this->exceptions[] = $ex;
 
