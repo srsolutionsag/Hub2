@@ -185,23 +185,15 @@ class LogsTableGUI extends TableGUI {
 		self::dic()->language()->loadLanguageModule("form");
 
 		$this->filter_fields = [
+			"date" => [
+				PropertyFormGUI::PROPERTY_CLASS => DateDurationInputGUI::class,
+				"setShowTime" => true
+			],
 			"title" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
 			],
 			"message" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
-			],
-			"date" => [
-				PropertyFormGUI::PROPERTY_CLASS => DateDurationInputGUI::class,
-				"setShowTime" => true
-			],
-			"level" => [
-				PropertyFormGUI::PROPERTY_CLASS => ilSelectInputGUI::class,
-				PropertyFormGUI::PROPERTY_OPTIONS => [
-						"" => "",
-					] + array_map(function (int $level): string {
-						return $this->txt("level_" . $level);
-					}, Log::$levels)
 			],
 			"origin_id" => [
 				PropertyFormGUI::PROPERTY_CLASS => NumberInputGUI::class,
@@ -221,6 +213,14 @@ class LogsTableGUI extends TableGUI {
 			"object_ilias_id" => [
 				PropertyFormGUI::PROPERTY_CLASS => NumberInputGUI::class,
 				"setMinValue" => 0
+			],
+			"level" => [
+				PropertyFormGUI::PROPERTY_CLASS => ilSelectInputGUI::class,
+				PropertyFormGUI::PROPERTY_OPTIONS => [
+						"" => "",
+					] + array_map(function (int $level): string {
+						return $this->txt("level_" . $level);
+					}, Log::$levels)
 			],
 			"additional_data" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
