@@ -49,7 +49,8 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 		}
 		$msg .= self::plugin()->translate("summary_exceptions") . "\n**********\n";
 		if (count($originSync->getExceptions()) > 0) {
-			$exception = current($originSync);
+			// Only output one exception on web because it's to large for Session (ilUtil::sendInfo)
+			$exception = reset($originSync);
 			$msg .= $exception->getMessage() . "\n";
 
 			if (count($originSync->getExceptions()) > 1) {
