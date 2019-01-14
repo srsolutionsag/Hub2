@@ -106,12 +106,6 @@ class LogsTableGUI extends TableGUI {
 	 */
 	protected function initColumns()/*: void*/ {
 		parent::initColumns();
-
-		$this->setDefaultOrderField("date");
-		$this->setDefaultOrderDirection("desc");
-
-		$this->setExternalSorting(true);
-		$this->setExternalSegmentation(true);
 	}
 
 
@@ -127,6 +121,16 @@ class LogsTableGUI extends TableGUI {
 	 * @inheritdoc
 	 */
 	protected function initData()/*: void*/ {
+		$this->setExternalSegmentation(true);
+		$this->setExternalSorting(true);
+
+		$this->setDefaultOrderField("date");
+		$this->setDefaultOrderDirection("desc");
+
+		// Fix stupid ilTable2GUI !!! ...
+		$this->determineLimit();
+		$this->determineOffsetAndOrder();
+
 		$filter = $this->getFilterValues();
 
 		$title = $filter["title"];
@@ -164,9 +168,6 @@ class LogsTableGUI extends TableGUI {
 			$object_ilias_id = NULL;
 		}
 		$additional_data = $filter["additional_data"];
-
-		// Fix stupid ilTable2GUI !!! ...
-		$this->determineOffsetAndOrder();
 
 		$logs = self::logs()
 			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data);
