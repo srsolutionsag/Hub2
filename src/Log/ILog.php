@@ -27,25 +27,11 @@ interface ILog {
 	/**
 	 * @var int
 	 */
+	const LEVEL_EXCEPTION = 400;
+	/**
+	 * @var int
+	 */
 	const LEVEL_CRITICAL = 500;
-	/**
-	 * General log
-	 *
-	 * @var int
-	 */
-	const LOG_TYPE_GENERAL = 1;
-	/**
-	 * Log from origin
-	 *
-	 * @var int
-	 */
-	const LOG_TYPE_ORIGIN = 2;
-	/**
-	 * Exception occurred
-	 *
-	 * @var int
-	 */
-	const LOG_TYPE_EXCEPTION = 3;
 
 
 	/**
@@ -60,20 +46,6 @@ interface ILog {
 	 * @return self
 	 */
 	public function withLogId(int $log_id): self;
-
-
-	/**
-	 * @return int
-	 */
-	public function getLogType(): int;
-
-
-	/**
-	 * @param int $log_type
-	 *
-	 * @return self
-	 */
-	public function withLogType(int $log_type): self;
 
 
 	/**

@@ -46,17 +46,10 @@ class Log extends ActiveRecord implements ILog {
 	/**
 	 * @var array
 	 */
-	public static $log_types = [
-		self::LOG_TYPE_GENERAL => self::LOG_TYPE_GENERAL,
-		self::LOG_TYPE_ORIGIN => self::LOG_TYPE_ORIGIN,
-		self::LOG_TYPE_EXCEPTION => self::LOG_TYPE_EXCEPTION
-	];
-	/**
-	 * @var array
-	 */
 	public static $levels = [
 		self::LEVEL_INFO => self::LEVEL_INFO,
 		self::LEVEL_WARNING => self::LEVEL_WARNING,
+		self::LEVEL_EXCEPTION => self::LEVEL_EXCEPTION,
 		self::LEVEL_CRITICAL => self::LEVEL_CRITICAL
 	];
 	/**
@@ -70,15 +63,6 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_sequence     true
 	 */
 	protected $log_id = NULL;
-	/**
-	 * @var int
-	 *
-	 * @con_has_field    true
-	 * @con_fieldtype    integer
-	 * @con_length       2
-	 * @con_is_notnull   true
-	 */
-	protected $log_type = self::LOG_TYPE_GENERAL;
 	/**
 	 * @var string
 	 *
@@ -185,7 +169,6 @@ class Log extends ActiveRecord implements ILog {
 		$field_name, $field_value) {
 		switch ($field_name) {
 			case "log_id":
-			case "log_type":
 			case "level":
 				return intval($field_value);
 
@@ -229,26 +212,6 @@ class Log extends ActiveRecord implements ILog {
 	 */
 	public function withLogId(int $log_id): ILog {
 		$this->log_id = $log_id;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return int
-	 */
-	public function getLogType(): int {
-		return $this->log_type;
-	}
-
-
-	/**
-	 * @param int $log_type
-	 *
-	 * @return self
-	 */
-	public function withLogType(int $log_type): ILog {
-		$this->log_type = $log_type;
 
 		return $this;
 	}

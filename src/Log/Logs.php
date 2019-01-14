@@ -62,7 +62,6 @@ final class Logs {
 	 * @param string|null     $sort_by_direction
 	 * @param int|null        $limit_start
 	 * @param int|null        $limit_end
-	 * @param int|null        $log_type
 	 * @param string|null     $title
 	 * @param string|null     $message
 	 * @param ilDateTime|null $date_start
@@ -74,15 +73,12 @@ final class Logs {
 	 *
 	 * @return array
 	 */
-	public function getLogs(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, int $log_type = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $additional_data = NULL): array {
+	public function getLogs(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $additional_data = NULL): array {
 
 		$logs = [];
 
 		$where = Log::where([]);
 
-		if (!empty($log_type)) {
-			$where = $where->where([ "log_type" => $log_type ]);
-		}
 		if (!empty($title)) {
 			$where = $where->where([ "title" => '%' . $title . '%' ], "LIKE");
 		}
@@ -166,26 +162,8 @@ final class Logs {
 	/**
 	 * @return ILog
 	 */
-	public function exception(IOrigin $orgin, Throwable $ex): ILog {
-		$log = $this->originLog($orgin);
-
-		$log->withLogType(ILog::LOG_TYPE_EXCEPTION);
-
-		$log->withMessage($ex->getMessage());
-
-		return $log;
-	}
-
-
-	/**
-	 * @return ILog
-	 */
 	public function log(): ILog {
-		$log = new Log();
-
-		$log = $log->withAdditionalData(clone $this->getGlobalAdditionalData());
-
-		return $log;
+		return (new Log())->withAdditionalData(clone $this->getGlobalAdditionalData());
 	}
 
 
@@ -193,11 +171,19 @@ final class Logs {
 	 * @return ILog
 	 */
 	public function originLog(IOrigin $orgin): ILog {
-		$log = $this->log();
+		return $this->log()->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
+	}
 
-		$log->withLogType(ILog::LOG_TYPE_ORIGIN);
 
-		$log = $log->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
+	/**
+	 * @return ILog
+	 */
+	public function exception(IOrigin $orgin, Throwable $ex): ILog {
+		$log = $this->originLog($orgin);
+
+		$log->withLevel(ILog::LEVEL_EXCEPTION);
+
+		$log->withMessage($ex->getMessage());
 
 		return $log;
 	}

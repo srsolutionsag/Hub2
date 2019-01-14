@@ -37,10 +37,6 @@ class LogsTableGUI extends TableGUI {
 		$row, /*bool*/
 		$raw_export = false): string {
 		switch ($column) {
-			case "log_type":
-				$column = $this->txt("log_type_" . $row[$column]);
-				break;
-
 			case "level":
 				$column = $this->txt("level_" . $row[$column]);
 				break;
@@ -82,7 +78,6 @@ class LogsTableGUI extends TableGUI {
 	 */
 	public function getSelectableColumns2(): array {
 		$columns = [
-			"log_type" => "log_type",
 			"title" => "title",
 			"message" => "message",
 			"date" => "date",
@@ -132,12 +127,6 @@ class LogsTableGUI extends TableGUI {
 	protected function initData()/*: void*/ {
 		$filter = $this->getFilterValues();
 
-		$log_type = $filter["log_type"];
-		if (!empty($log_type)) {
-			$log_type = intval($log_type);
-		} else {
-			$log_type = NULL;
-		}
 		$title = $filter["title"];
 		$message = $filter["message"];
 		$date_start = $filter["date"]["start"];
@@ -171,7 +160,7 @@ class LogsTableGUI extends TableGUI {
 		$this->determineOffsetAndOrder();
 
 		$logs = self::logs()
-			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $log_type, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $additional_data);
+			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $additional_data);
 
 		$this->setData($logs);
 
@@ -186,14 +175,6 @@ class LogsTableGUI extends TableGUI {
 		self::dic()->language()->loadLanguageModule("form");
 
 		$this->filter_fields = [
-			"log_type" => [
-				PropertyFormGUI::PROPERTY_CLASS => ilSelectInputGUI::class,
-				PropertyFormGUI::PROPERTY_OPTIONS => [
-						"" => "",
-					] + array_map(function (int $log_type): string {
-						return $this->txt("log_type_" . $log_type);
-					}, Log::$log_types)
-			],
 			"title" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
 			],
