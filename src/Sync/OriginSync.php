@@ -312,9 +312,10 @@ class OriginSync implements IOriginSync {
 
 			$object->store();
 
-			$this->implementation->handleException($ex);
-
-			throw $ex;
+			if ($ex instanceof Exception) {
+				// TODO: Change handleException to Throwable parameter (But all origins need to adjusted ...)
+				$this->implementation->handleException($ex);
+			}
 		}
 	}
 
