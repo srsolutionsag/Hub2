@@ -202,7 +202,7 @@ interface ILog {
 
 
 	/**
-	 * Syntactic sugar for $log->withMessage()->store();
+	 * Syntactic sugar for $log->withMessage()->withLevel()->store();
 	 *
 	 * @param string $message
 	 * @param int    $level
