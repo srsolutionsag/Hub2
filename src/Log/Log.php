@@ -417,7 +417,7 @@ class Log extends ActiveRecord implements ILog {
 	/**
 	 * @inheritdoc
 	 */
-	public function write(string $message)/*: void*/ {
-		$this->withMessage($message)->store();
+	public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/ {
+		$this->withMessage($message)->withLevel($level)->store();
 	}
 }

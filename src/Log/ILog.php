@@ -205,7 +205,8 @@ interface ILog {
 	 * Syntactic sugar for $log->withMessage()->store();
 	 *
 	 * @param string $message
+	 * @param int    $level
 	 */
-	public function write(string $message)/*: void*/
+	public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/
 	;
 }
