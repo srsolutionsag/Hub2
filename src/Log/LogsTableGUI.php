@@ -189,12 +189,6 @@ class LogsTableGUI extends TableGUI {
 				PropertyFormGUI::PROPERTY_CLASS => DateDurationInputGUI::class,
 				"setShowTime" => true
 			],
-			"title" => [
-				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
-			],
-			"message" => [
-				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
-			],
 			"origin_id" => [
 				PropertyFormGUI::PROPERTY_CLASS => NumberInputGUI::class,
 				"setMinValue" => 0
@@ -213,6 +207,12 @@ class LogsTableGUI extends TableGUI {
 			"object_ilias_id" => [
 				PropertyFormGUI::PROPERTY_CLASS => NumberInputGUI::class,
 				"setMinValue" => 0
+			],
+			"title" => [
+				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
+			],
+			"message" => [
+				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
 			],
 			"level" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilSelectInputGUI::class,
