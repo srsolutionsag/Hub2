@@ -7,7 +7,9 @@ use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Log\Log;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\User\IUserDTO;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
@@ -177,31 +179,55 @@ final class Logs {
 
 
 	/**
-	 * @param IOrigin      $orgin
-	 * @param IObject|null $object
+	 * @param IOrigin                  $orgin
+	 * @param IObject|null             $object
+	 * @param IDataTransferObject|null $dto
 	 *
 	 * @return ILog
 	 */
-	public function originLog(IOrigin $orgin, IObject $object = NULL): ILog {
+	public function originLog(IOrigin $orgin, IObject $object = NULL, IDataTransferObject $dto = NULL): ILog {
 		$log = $this->log()->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
 
 		if ($object !== NULL) {
-			return $log->withObjectExtId($object->getExtId())->withObjectIliasId($object->getILIASId());
-		} else {
-			return $log;
+			$log->withObjectExtId($object->getExtId())->withObjectIliasId($object->getILIASId());
+
+			if ($dto !== NULL) {
+				if (method_exists($dto, "getTitle")) {
+					if (!empty($dto->getTitle())) {
+						$log = $log->withTitle($dto->getTitle());
+
+						return $log;
+					}
+				}
+				if ($dto instanceof IUserDTO) {
+					if (!empty($dto->getLogin())) {
+						$log = $log->withTitle($dto->getLogin());
+
+						return $log;
+					}
+					if (!empty($dto->getEmail())) {
+						$log = $log->withTitle($dto->getEmail());
+
+						return $log;
+					}
+				}
+			}
 		}
+
+		return $log;
 	}
 
 
 	/**
-	 * @param Throwable $ex
-	 * @param IOrigin   $orgin
-	 * @param IObject   $object
+	 * @param Throwable                $ex
+	 * @param IOrigin                  $orgin
+	 * @param IObject                  $object
+	 * @param IDataTransferObject|null $dto
 	 *
 	 * @return ILog
 	 */
-	public function exception(Throwable $ex, IOrigin $orgin, IObject $object): ILog {
-		$log = $this->originLog($orgin, $object);
+	public function exception(Throwable $ex, IOrigin $orgin, IObject $object, IDataTransferObject $dto = NULL): ILog {
+		$log = $this->originLog($orgin, $object, $dto);
 
 		$log->withLevel(ILog::LEVEL_EXCEPTION);
 
