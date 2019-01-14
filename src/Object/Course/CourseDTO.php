@@ -20,37 +20,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	use TaxonomyAndMetadataAwareDataTransferObject;
 	use MappingStrategyAwareDataTransferObject;
 
-	// @see ilCourseConstants
-	const SUBSCRIPTION_TYPE_DEACTIVATED = 1;
-	const SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP = 2;
-	const SUBSCRIPTION_TYPE_DIRECTLY = 3;
-	const SUBSCRIPTION_TYPE_PASSWORD = 4;
-
-	const VIEW_MODE_SESSIONS = \ilContainer::VIEW_SESSIONS;
-	const VIEW_MODE_OBJECTIVES = \ilContainer::VIEW_OBJECTIVE;
-	const VIEW_MODE_TIMING = \ilContainer::VIEW_TIMING;
-	const VIEW_MODE_SIMPLE = \ilContainer::VIEW_SIMPLE;
-	const VIEW_MODE_BY_TYPE = \ilContainer::VIEW_BY_TYPE;
-	const VIEW_MODE_INHERIT = \ilContainer::VIEW_INHERIT;
-
-	const PARENT_ID_TYPE_REF_ID = 1;
-	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
-	const ACTIVATION_OFFLINE = 0;
-	const ACTIVATION_UNLIMITED = 1;
-	const ACTIVATION_LIMITED = 2;
-
-
-	const VIEW_DEFAULT = self::VIEW_MODE_BY_TYPE;
-
-
-	const SORT_TITLE = \ilContainer::SORT_TITLE;
-	const SORT_MANUAL = \ilContainer::SORT_MANUAL;
-	const SORT_ACTIVATION = \ilContainer::SORT_ACTIVATION;
-	const SORT_INHERIT = \ilContainer::SORT_INHERIT;
-	const SORT_CREATION = \ilContainer::SORT_CREATION;
-
-	const SORT_DIRECTION_ASC = \ilContainer::SORT_DIRECTION_ASC;
-	const SORT_DIRECTION_DESC = \ilContainer::SORT_DIRECTION_DESC;
 
 	/**
 	 * @var array
