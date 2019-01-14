@@ -78,21 +78,21 @@ class LogsTableGUI extends TableGUI {
 	 */
 	public function getSelectableColumns2(): array {
 		$columns = [
-			"title" => "title",
-			"message" => "message",
 			"date" => "date",
-			"level" => "level",
 			"origin_id" => "origin_id",
 			"origin_object_type" => "origin_object_type",
 			"object_ext_id" => "object_ext_id",
 			"object_ilias_id" => "object_ilias_id",
+			"title" => "title",
+			"message" => "message",
+			"level" => "level",
 			"additional_data" => "additional_data"
 		];
 
 		$columns = array_map(function (string $key): array {
 			return [
 				"id" => $key,
-				"default" => ($key !== "additional_data"),
+				"default" => true,
 				"sort" => ($key !== "additional_data")
 			];
 		}, $columns);
