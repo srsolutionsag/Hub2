@@ -53,7 +53,7 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 			$msg .= $exception->getMessage() . "\n";
 
 			if (count($originSync->getExceptions()) > 1) {
-				$msg .= self::plugin()->translate("summary_exceptions_more", "", [ (count($originSync->getExceptions() - 1)) ]) . "\n";
+				$msg .= self::plugin()->translate("summary_exceptions_more", "", [ (count($originSync->getExceptions()) - 1) ]) . "\n";
 			}
 		}
 		$msg = rtrim($msg, "\n");
