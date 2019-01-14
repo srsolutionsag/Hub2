@@ -303,9 +303,19 @@ class OriginSync implements IOriginSync {
 
 			throw $ex;
 		} catch (Throwable $ex) {
+			$object->setStatus(IObject::STATUS_FAILED);
 			$this->incrementProcessed($object->getStatus());
 
+			self::logs()->exception($ex, $this->origin, $object, $dto)->store();
+
 			$this->exceptions[] = $ex;
+
+			$object->store();
+
+			if ($ex instanceof Exception) {
+				// TODO: Change handleException to Throwable parameter (But all origins need to adjusted ...)
+				$this->implementation->handleException($ex);
+			}
 		}
 	}
 
