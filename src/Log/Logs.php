@@ -169,7 +169,7 @@ final class Logs {
 	public function exception(Throwable $ex): ILog {
 		$log = $this->log();
 
-		$log->withOriginObjectType(ILog::LOG_TYPE_EXCEPTION);
+		$log->withLogType(ILog::LOG_TYPE_EXCEPTION);
 
 		$log->withMessage($ex->getMessage());
 
@@ -195,7 +195,7 @@ final class Logs {
 	public function originLog(IOrigin $orgin): ILog {
 		$log = $this->log();
 
-		$log->withOriginObjectType(ILog::LOG_TYPE_ORIGIN);
+		$log->withLogType(ILog::LOG_TYPE_ORIGIN);
 
 		$log = $log->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
 
