@@ -8,6 +8,7 @@ use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
 use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -99,10 +100,12 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 
 	/**
+	 * @param IDataTransferObject $dto
+	 *
 	 * @return ILog
 	 */
-	protected final function log(): ILog {
-		return self::logs()->originLog($this->origin);
+	protected final function log(IDataTransferObject $dto = NULL): ILog {
+		return self::logs()->originLog($this->origin, NULL, $dto);
 	}
 
 

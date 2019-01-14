@@ -181,26 +181,30 @@ final class Logs {
 
 		if ($object !== NULL) {
 			$log->withObjectExtId($object->getExtId())->withObjectIliasId($object->getILIASId());
+		}
 
-			if ($dto !== NULL) {
-				if (method_exists($dto, "getTitle")) {
-					if (!empty($dto->getTitle())) {
-						$log = $log->withTitle($dto->getTitle());
+		if ($dto !== NULL) {
+			if (empty($log->getObjectExtId())) {
+				$log->withObjectExtId($dto->getExtId());
+			}
 
-						return $log;
-					}
+			if (method_exists($dto, "getTitle")) {
+				if (!empty($dto->getTitle())) {
+					$log = $log->withTitle($dto->getTitle());
+
+					return $log;
 				}
-				if ($dto instanceof IUserDTO) {
-					if (!empty($dto->getLogin())) {
-						$log = $log->withTitle($dto->getLogin());
+			}
+			if ($dto instanceof IUserDTO) {
+				if (!empty($dto->getLogin())) {
+					$log = $log->withTitle($dto->getLogin());
 
-						return $log;
-					}
-					if (!empty($dto->getEmail())) {
-						$log = $log->withTitle($dto->getEmail());
+					return $log;
+				}
+				if (!empty($dto->getEmail())) {
+					$log = $log->withTitle($dto->getEmail());
 
-						return $log;
-					}
+					return $log;
 				}
 			}
 		}
