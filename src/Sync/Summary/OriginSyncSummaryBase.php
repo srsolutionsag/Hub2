@@ -76,9 +76,9 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 			}
 			$msg .= "\n";
 		}
+		$msg .= self::plugin()->translate("summary_exceptions") . "\n**********\n";
 		foreach ($originSync->getExceptions() as $exception) {
-			$msg .= self::plugin()->translate("summary_exceptions") . "\n**********\n";
-			$msg .= $exception->getMessage() . "\n\n";
+			$msg .= $exception->getMessage() . "\n";
 		}
 		$msg = rtrim($msg, "\n");
 
