@@ -221,7 +221,7 @@ final class Logs {
 	 *
 	 * @return ILog
 	 */
-	public function exception(Throwable $ex, IOrigin $orgin, IObject $object, IDataTransferObject $dto = NULL): ILog {
+	public function exceptionLog(Throwable $ex, IOrigin $orgin, IObject $object, IDataTransferObject $dto = NULL): ILog {
 		$log = $this->originLog($orgin, $object, $dto);
 
 		$log->withLevel(ILog::LEVEL_EXCEPTION);
