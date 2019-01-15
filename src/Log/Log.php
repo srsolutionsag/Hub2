@@ -68,7 +68,6 @@ class Log extends ActiveRecord implements ILog {
 	 *
 	 * @con_has_field    true
 	 * @con_fieldtype    text
-	 * @con_length       255
 	 * @con_is_notnull   true
 	 */
 	protected $title = "";
@@ -77,7 +76,6 @@ class Log extends ActiveRecord implements ILog {
 	 *
 	 * @con_has_field    true
 	 * @con_fieldtype    text
-	 * @con_length       255
 	 * @con_is_notnull   true
 	 */
 	protected $message = "";
@@ -103,7 +101,6 @@ class Log extends ActiveRecord implements ILog {
 	 *
 	 * @con_has_field    true
 	 * @con_fieldtype    text
-	 * @con_length       255
 	 * @con_is_notnull   true
 	 */
 	protected $additional_data;
