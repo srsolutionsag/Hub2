@@ -11,9 +11,9 @@ namespace srag\Plugins\Hub2\Metadata;
 interface IMetadataFactory {
 
 	/**
-	 * @param int $id
-	 *
+	 * @param int $ilas_id
+	 * @param int $record_id
 	 * @return IMetadata
 	 */
-	public function getDTOWithIliasId(int $id): IMetadata;
+	public function getDTOWithIliasId(int $ilas_id, int $record_id = 1): IMetadata;
 }
