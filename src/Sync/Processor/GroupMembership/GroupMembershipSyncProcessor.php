@@ -79,7 +79,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 		 */
 		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-		$ilias_group_ref_id = $dto->getIliasGroupRefId();
+		$ilias_group_ref_id = $this->buildParentRefId($dto);
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
 			return new FakeIliasMembershipObject($ilias_group_ref_id, $user_id);
