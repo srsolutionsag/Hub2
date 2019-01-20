@@ -26,13 +26,4 @@ class MetadataFactory implements IMetadataFactory {
 		return new Metadata($ilas_id,$record_id);
 	}
 
-
-	/**
-	 * @param int $id
-	 *
-	 * @return IMetadata
-	 */
-	public function getDTOWithIliasId(int $id): IMetadata {
-		return new Metadata($id);
-	}
 }
