@@ -131,7 +131,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== NULL) {
+			if ($dto->$getter() !== NULL && $setter !== "setActivationType") {
 				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
@@ -143,7 +143,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		if ($this->props->get(CourseProperties::SET_ONLINE)) {
 			$ilObjCourse->setOfflineStatus(false);
-			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
+			//Does not exist in 5.4
+			//$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 
 		if ($this->props->get(CourseProperties::CREATE_ICON)) {
@@ -360,7 +361,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== NULL) {
+			if ($dto->$getter() !== NULL && $setter !== "setActivationType") {
 				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
@@ -385,16 +386,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		if ($this->props->get(CourseProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
-			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
+            //Does not exist in 5.4
+            //$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
 			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 		}
-		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
-			$ilObjCourse->setOfflineStatus(false);
-			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
-		}
+
 		if ($this->props->get(CourseProperties::MOVE_COURSE)) {
 			$this->moveCourse($ilObjCourse, $dto);
 		}
