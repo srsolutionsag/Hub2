@@ -40,8 +40,8 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 	 */
 	public function __construct($group_id, $user_id) {
 		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $group_id, $user_id ]));
-		$this->groupId = $group_id;
-		$this->userId = $user_id;
+		$this->setGroupId($group_id);
+		$this->setUserId($user_id);
 	}
 
 
