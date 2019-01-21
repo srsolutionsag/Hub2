@@ -13,7 +13,7 @@
 - Fix: Add correct namespace for new origins
 - Fix: Not delete data on origin delete
 - Fix: Recreate deleted users
-- Fix: OrgUnit restory from trash
+- Fix: OrgUnit restore from trash
 - Refactoring, using new libraries
 - PHP version checker
 - Some other fixes and improvements
