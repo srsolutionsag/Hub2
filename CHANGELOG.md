@@ -9,6 +9,7 @@
 - More meaningful GUI for force update synch: Buttons. Also implement this for a single origin synch
 - New origin synch status model
 - New FAILED status, all exceptions will set the object to this status
+- MappingStrategy ByImportId
 - Fix: Add correct namespace for new origins
 - Fix: Not delete data on origin delete
 - Fix: Recreate deleted users
