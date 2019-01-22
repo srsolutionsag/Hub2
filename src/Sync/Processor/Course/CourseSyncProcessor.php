@@ -511,7 +511,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			&& $object->getThirdDependenceCategory() !== NULL) {
 			$parentRefId = $this->buildDependenceCategory($object->getThirdDependenceCategory(), $parentRefId, 3);
 		}
-
+		if ($object->getFirstDependenceCategory() !== NULL
+			&& $object->getSecondDependenceCategory() !== NULL
+			&& $object->getThirdDependenceCategory() !== NULL
+			&& $object->getFourthDependenceCategory() !== NULL) {
+			$parentRefId = $this->buildDependenceCategory($object->getFourthDependenceCategory(), $parentRefId, 4);
+		}
 		return $parentRefId;
 	}
 

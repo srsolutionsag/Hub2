@@ -237,6 +237,10 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 */
 	private $thirdDependenceCategory;
 	/**
+	 * @var string
+	 */
+	private $fourthDependenceCategory;
+	/**
 	 * @var int
 	 */
 	private $template_id = 0;
@@ -475,6 +479,25 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	public function setThirdDependenceCategory($thirdDependenceCategory) {
 		$this->thirdDependenceCategory = $thirdDependenceCategory;
 
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFourthDependenceCategory(): string
+	{
+		return $this->fourthDependenceCategory;
+	}
+
+	/**
+	 * @param string $fourthDependenceCategory
+	 *
+	 * @return CourseDTO
+	 */
+	public function setFourthDependenceCategory(string $fourthDependenceCategory)
+	{
+		$this->fourthDependenceCategory = $fourthDependenceCategory;
 		return $this;
 	}
 
