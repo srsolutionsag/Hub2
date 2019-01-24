@@ -408,8 +408,6 @@ origin_form_field_adhoc_parent_scope#:#Setze Parent als Scope
 origin_form_field_adhoc_parent_scope_info#:#Es werden nur die Daten geliefert, die in Container gehören, die geändert wurden
 origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
-table_md#:#MD
-table_tax#:#TAX
 crs_membership_prop_delete_mode_delete#:#Mitgliedschaft beenden
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
