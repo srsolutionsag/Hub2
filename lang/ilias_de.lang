@@ -344,7 +344,7 @@ data_table_header_ilias_id#:#ILIAS-ID
 data_table_header_status#:#Status
 data_table_header_period#:#Periode
 data_table_header_actions#:#Aktionen
-data_table_header_view#:#Anzeigen
+data_table_header_view#:#Gelieferte Daten
 data_table_header_data#:#Daten
 data_table_header_origin#:#Anbindung
 data_table_hash#:#Hash: %s

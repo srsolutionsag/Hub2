@@ -123,7 +123,8 @@ class hub2DataGUI extends hub2MainGUI {
 
 		$renderer = self::dic()->ui()->renderer();
 
-		$modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_hash", "", [ $object->getHashCode() ]), $data_table);
+		$modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_hash", "", [ $object->getHashCode() ]), $data_table)
+			->withCancelButtonLabel("close");
 
 		echo $renderer->renderAsync($modal);
 		exit;
