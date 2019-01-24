@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\UI;
 
 use hub2DataGUI;
+use ilAdvancedSelectionListGUI;
 use ilCheckboxInputGUI;
 use ilFormPropertyGUI;
 use ilHub2Plugin;
@@ -267,15 +268,27 @@ class DataTableGUI extends ilTable2GUI {
 			$this->tpl->parseCurrentBlock();
 		}
 
-		// Adds view Glyph
-		$factory = self::dic()->ui()->factory();
-		$modal = $factory->modal()->roundtrip($a_set[self::F_EXT_ID], $factory->legacy(''))->withAsyncRenderUrl(self::dic()->ctrl()
-			->getLinkTarget($this->parent_obj, 'renderData', '', true));
+		$modal = self::dic()->ui()->factory()->modal()->roundtrip($a_set[self::F_EXT_ID], self::dic()->ui()->factory()->legacy(''))
+			->withAsyncRenderUrl(self::dic()->ctrl()->getLinkTarget($this->parent_obj, 'renderData', '', true));
 
-		$button = $factory->button()->shy(self::plugin()->translate("data_table_header_view"), "#")->withOnClick($modal->getShowSignal());
+		$actions = new ilAdvancedSelectionListGUI();
+		$actions->setListTitle(self::plugin()->translate("data_table_header_actions"));
+		$actions->addItem(self::plugin()->translate("data_table_header_view"), "view");
+		$actions_html = self::output()->getHTML($actions);
+
+		// Use a fake button to use clickable open modal on selection list. Replace the id with the button id
+		$button = self::dic()->ui()->factory()->button()->shy("", "#")->withOnClick($modal->getShowSignal());
+		$button_html = self::output()->getHTML($button);
+		$button_id = [];
+		preg_match('/id="([a-z0-9_]+)"/', $button_html, $button_id);
+		if (is_array($button_id) && count($button_id) > 1) {
+			$button_id = $button_id[1];
+
+			$actions_html = str_replace('id="asl_view"', 'id="' . $button_id . '"', $actions_html);
+		}
 
 		$this->tpl->setCurrentBlock('cell');
-		$this->tpl->setVariable('VALUE', self::output()->getHTML([ $button, $modal ]));
+		$this->tpl->setVariable('VALUE', self::output()->getHTML([ $actions_html, $modal ]));
 		$this->tpl->parseCurrentBlock();
 
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
