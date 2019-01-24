@@ -410,12 +410,12 @@ origin_deleted#:#Anbindung gelöscht
 crs_membership_prop_delete_mode_delete#:#Mitgliedschaft beenden
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
-logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung wird immer behalten
+logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten
 logs_date#:#Datum / Zeit
 logs_days#:#Tage
 logs_deleted_status#:#%s Log(s) gelöscht
 logs_keep_old_logs_time#:#Alte Logs maximal behalten für
-logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung wird immer behalten
+logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten
 logs_level#:#Level
 logs_level_200#:#Info
 logs_level_300#:#Warnung
@@ -426,8 +426,8 @@ logs_message#:#Nachricht
 logs_no_additional_data#:#Keine zusätzlichen Daten
 logs_object_ext_id#:#Externe-ID
 logs_object_ilias_id#:#ILIAS-ID
-logs_origin_id#:#Origin-ID
-logs_origin_object_type#:#Origin-Objekt-Typ
+logs_origin_id#:#Anbindung-ID
+logs_origin_object_type#:#Anbindung-Objekt-Typ
 logs_show_logs#:#Logs anzeigen
 logs_title#:#Titel
 removeplugindataconfirm_cancel#:#Abbrechen
