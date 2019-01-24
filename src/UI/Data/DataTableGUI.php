@@ -11,7 +11,6 @@ use ilHub2Plugin;
 use ilSelectInputGUI;
 use ilTable2GUI;
 use ilTextInputGUI;
-use ReflectionClass;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
@@ -124,7 +123,9 @@ class DataTableGUI extends ilTable2GUI {
 
 		// Status
 		$status = new ilSelectInputGUI(self::plugin()->translate('data_table_header_status'), 'status');
-		$status->setOptions($this->getAvailableStatus() + [
+		$status->setOptions(array_map(function (string $txt): string {
+				return self::plugin()->translate("data_table_status_" . $txt);
+			}, ARObject::$available_status) + [
 				"!" . IObject::STATUS_IGNORED => self::plugin()->translate("data_table_status_not_ignored")
 			]);
 		$status->setValue("!" . IObject::STATUS_IGNORED);
@@ -249,7 +250,7 @@ class DataTableGUI extends ilTable2GUI {
 			$this->tpl->setCurrentBlock('cell');
 			switch ($key) {
 				case 'status':
-					$this->tpl->setVariable('VALUE', $this->getAvailableStatus()[$value]);
+					$this->tpl->setVariable('VALUE', self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]));
 					break;
 				case self::F_EXT_ID:
 					$this->tpl->setVariable('VALUE', $value);
@@ -339,28 +340,6 @@ class DataTableGUI extends ilTable2GUI {
 		];
 
 		return $fields;
-	}
-
-
-	/**
-	 * @return array
-	 * @throws \ReflectionException
-	 * @throws \srag\DIC\Hub2\Exception\DICException
-	 */
-	private function getAvailableStatus() {
-		static $status;
-		if (is_array($status)) {
-			return $status;
-		}
-		$r = new ReflectionClass(IObject::class);
-		$status = [ 0 => self::plugin()->translate("data_table_all") ];
-		foreach ($r->getConstants() as $name => $value) {
-			if (strpos($name, "STATUS_") === 0) {
-				$status[$value] = self::plugin()->translate("data_table_" . strtolower($name));
-			}
-		}
-
-		return $status;
 	}
 
 
