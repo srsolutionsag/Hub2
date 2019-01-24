@@ -8,7 +8,7 @@ use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
 /**
  * Class OrgUnitMembershipOriginConfigFormGUI
  *
- * @package srag\Plugins\Hub2\UI\OrgUnit
+ * @package srag\Plugins\Hub2\UI\OrgUnitMembership
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
