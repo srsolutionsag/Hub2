@@ -79,23 +79,24 @@ class hub2DataGUI extends hub2MainGUI {
 
 		$factory = self::dic()->ui()->factory();
 
-		$properties = array_merge([
+		/*$properties = array_merge([
 			"period" => $object->getPeriod(),
 			"delivery_date" => $object->getDeliveryDate()->format(DATE_ATOM),
 			"processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
 			"ilias_id" => $object->getILIASId(),
 			"status" => $object->getStatus(),
-		], $object->getData());
+		], $object->getData());*/
+		$properties = $object->getData(); // Only dto properties
 
 		if ($object instanceof IMetadataAwareObject) {
 			foreach ($object->getMetaData() as $metadata) {
-				$properties[self::plugin()->translate("table_md", "", [ $metadata->getIdentifier() ])] = $metadata->getValue();
+				$properties["metadata." . $metadata->getIdentifier()] = $metadata->getValue();
 			}
 		}
 
 		if ($object instanceof ITaxonomyAwareObject) {
 			foreach ($object->getTaxonomies() as $taxonomy) {
-				$properties[self::plugin()->translate("table_tax", "", [ $taxonomy->getTitle() ])] = implode(", ", $taxonomy->getNodeTitlesAsArray());
+				$properties["taxonomy." . $taxonomy->getTitle()] = $taxonomy->getNodeTitlesAsArray();
 			}
 		}
 
@@ -121,12 +122,9 @@ class hub2DataGUI extends hub2MainGUI {
 
 		$data_table = $factory->listing()->descriptive($filtered);
 
-		$renderer = self::dic()->ui()->renderer();
+		$modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_header_view") . "<br>" . self::plugin()
+				->translate("data_table_hash", "", [ $object->getHashCode() ]), $data_table)->withCancelButtonLabel("close");
 
-		$modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_hash", "", [ $object->getHashCode() ]), $data_table)
-			->withCancelButtonLabel("close");
-
-		echo $renderer->renderAsync($modal);
-		exit;
+		self::output()->output(self::dic()->ui()->renderer()->renderAsync($modal));
 	}
 }
