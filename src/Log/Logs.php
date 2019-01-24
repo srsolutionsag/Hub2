@@ -141,25 +141,7 @@ final class Logs {
 
 		return $log;
 	}
-
-
-	/**
-	 * @param int $keep_old_logs_time
-	 *
-	 * @return ILog[]
-	 */
-	public function getOldLogs(int $keep_old_logs_time): array {
-		$logs = [];
-
-		$time = time();
-		$keep_old_logs_time_timestamp = ($time - ($keep_old_logs_time * 24 * 60 * 60));
-		$keep_old_logs_time_date = new ilDateTime($keep_old_logs_time_timestamp, IL_CAL_UNIX);
-
-		$logs = array_merge($logs, Log::where([ "date" => $keep_old_logs_time_date->get(IL_CAL_DATETIME) ], "<")->get());
-
-		return $logs;
-	}
-
+	
 
 	/**
 	 * @return ILog

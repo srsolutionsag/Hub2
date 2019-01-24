@@ -410,12 +410,12 @@ origin_deleted#:#Anbindung gelöscht
 crs_membership_prop_delete_mode_delete#:#Mitgliedschaft beenden
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
-logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht
+logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung wird immer behalten
 logs_date#:#Datum / Zeit
 logs_days#:#Tage
 logs_deleted_status#:#%s Log(s) gelöscht
 logs_keep_old_logs_time#:#Alte Logs maximal behalten für
-logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht
+logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung wird immer behalten
 logs_level#:#Level
 logs_level_200#:#Info
 logs_level_300#:#Warnung
