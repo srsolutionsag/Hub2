@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI\OrgUnit;
+namespace srag\Plugins\Hub2\UI\OrgUnitMembership;
 
 use srag\Plugins\Hub2\Origin\OrgUnitMembership\AROrgUnitMembershipOrigin;
 use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
