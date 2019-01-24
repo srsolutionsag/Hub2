@@ -106,7 +106,7 @@ class DeleteOldLogsJob extends ilCronJob {
 		$keep_old_logs_time_date = new ilDateTime($keep_old_logs_time_timestamp, IL_CAL_UNIX);
 
 		$keep_log_ids = [];
-		$result = self::dic()->database()->query("SELECT log_id FROM " . Log::TABLE_NAME . " GROUP BY (origin_id,object_ext_id) ORDER BY date DESC");
+		$result = self::dic()->database()->query("SELECT MAX(log_id) AS log_id FROM " . Log::TABLE_NAME . " GROUP BY origin_id,object_ext_id");
 		while (($row = $result->fetchAssoc()) !== false) {
 			$keep_log_ids[] = intval($row["log_id"]);
 		}
