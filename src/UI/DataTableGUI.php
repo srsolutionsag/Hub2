@@ -247,11 +247,10 @@ class DataTableGUI extends ilTable2GUI {
 					$this->tpl->setVariable('VALUE', $this->getAvailableStatus()[$value]);
 					break;
 				case self::F_EXT_ID:
-					if ($origin) {
-						$this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $origin));
-					} else {
-						$this->tpl->setVariable('VALUE', $value);
-					}
+					$this->tpl->setVariable('VALUE', $value);
+					break;
+				case "ilias_id":
+					$this->tpl->setVariable('VALUE', $this->renderILIASLinkForIliasId($value, $a_set[self::F_EXT_ID], $origin));
 					break;
 				case self::F_ORIGIN_ID:
 					if (!$origin) {
@@ -284,22 +283,25 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param         $ext_id
+	 * @param int     $ilias_id
+	 * @param string  $ext_id
 	 * @param IOrigin $origin
 	 *
 	 * @return string
-	 * @throws \ilTemplateException
-	 * @throws \srag\DIC\Hub2\Exception\DICException
 	 */
-	protected function renderILIASLinkForIliasId($ext_id, IOrigin $origin) {
+	protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin): string {
 		if (!$origin) {
-			return $ext_id;
+			return strval($ilias_id);
 		}
 
 		$link = $this->originLinkfactory->findByExtIdAndOrigin($ext_id, $origin);
-		$link_factory = self::dic()->ui()->factory()->link();
+		if ($link->doesObjectExist()) {
+			$link_factory = self::dic()->ui()->factory()->link();
 
-		return self::output()->getHTML($link_factory->standard($ext_id, $link->getAccessGrantedInternalLink())->withOpenInNewViewport(true));
+			return self::output()->getHTML($link_factory->standard($ilias_id, $link->getAccessGrantedInternalLink())->withOpenInNewViewport(true));
+		} else {
+			return strval($ilias_id);
+		}
 	}
 
 
