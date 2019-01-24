@@ -12,17 +12,31 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Notification
+ *
+ * @deprecated
  */
 class OriginNotifications {
 
 	use DICTrait;
 	use Hub2Trait;
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const CONTEXT_COMMON = 'common';
 	/**
 	 * Holds all messages of all contexts
 	 *
 	 * @var array
+	 *
+	 * @deprecated
 	 */
 	protected $messages = [];
 
@@ -34,6 +48,8 @@ class OriginNotifications {
 	 * @param string $context
 	 *
 	 * @return $this
+	 *
+	 * @deprecated
 	 */
 	public function addMessage($message, $context = '') {
 		$context = ($context) ? $context : self::CONTEXT_COMMON;
@@ -53,6 +69,8 @@ class OriginNotifications {
 	 * @param string $context
 	 *
 	 * @return array
+	 *
+	 * @deprecated
 	 */
 	public function getMessages($context = '') {
 		return ($context

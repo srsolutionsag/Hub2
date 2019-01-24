@@ -53,6 +53,12 @@ final class Logs {
 
 
 	/**
+	 * @var ILog[]
+	 */
+	protected $current_logs = [];
+
+
+	/**
 	 * Logs constructor
 	 */
 	private function __construct() {
@@ -141,25 +147,29 @@ final class Logs {
 
 		return $log;
 	}
-	
+
 
 	/**
 	 * @return ILog
 	 */
 	public function log(): ILog {
-		return (new Log())->withAdditionalData(clone $this->getGlobalAdditionalData());
+		$log = (new Log())->withAdditionalData(clone $this->getGlobalAdditionalData());
+
+		$this->current_logs[] = $log;
+
+		return $log;
 	}
 
 
 	/**
-	 * @param IOrigin                  $orgin
+	 * @param IOrigin|null             $origin
 	 * @param IObject|null             $object
 	 * @param IDataTransferObject|null $dto
 	 *
 	 * @return ILog
 	 */
-	public function originLog(IOrigin $orgin, IObject $object = NULL, IDataTransferObject $dto = NULL): ILog {
-		$log = $this->log()->withOriginId($orgin->getId())->withOriginObjectType($orgin->getObjectType());
+	public function originLog(IOrigin $origin = NULL, IObject $object = NULL, IDataTransferObject $dto = NULL): ILog {
+		$log = $this->log()->withOriginId($origin->getId())->withOriginObjectType($origin->getObjectType());
 
 		if ($object !== NULL) {
 			$log->withObjectExtId($object->getExtId())->withObjectIliasId($object->getILIASId());
@@ -197,14 +207,14 @@ final class Logs {
 
 	/**
 	 * @param Throwable                $ex
-	 * @param IOrigin                  $orgin
-	 * @param IObject                  $object
+	 * @param IOrigin|null             $origin
+	 * @param IObject|null             $object
 	 * @param IDataTransferObject|null $dto
 	 *
 	 * @return ILog
 	 */
-	public function exceptionLog(Throwable $ex, IOrigin $orgin, IObject $object, IDataTransferObject $dto = NULL): ILog {
-		$log = $this->originLog($orgin, $object, $dto);
+	public function exceptionLog(Throwable $ex, IOrigin $origin = NULL, IObject $object = NULL, IDataTransferObject $dto = NULL): ILog {
+		$log = $this->originLog($origin, $object, $dto);
 
 		$log->withLevel(ILog::LEVEL_EXCEPTION);
 
@@ -231,5 +241,13 @@ final class Logs {
 		$this->global_additional_data = $global_additional_data;
 
 		return $this;
+	}
+
+
+	/**
+	 * @return ILog[]
+	 */
+	public function getCurrentLogs(): array {
+		return $this->current_logs;
 	}
 }

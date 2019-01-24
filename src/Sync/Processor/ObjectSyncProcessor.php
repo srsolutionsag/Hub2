@@ -46,6 +46,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	protected $transition;
 	/**
 	 * @var OriginNotifications
+	 *
+	 * @deprecated
 	 */
 	protected $originNotifications;
 	/**

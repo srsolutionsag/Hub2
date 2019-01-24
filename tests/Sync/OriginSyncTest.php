@@ -87,7 +87,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$originSync = new OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$this->expectException(ConnectionFailedException::class);
 		$originSync->execute();
-		$this->assertInstanceOf(ConnectionFailedException::class, array_pop($originSync->getExceptions()));
+		$this->assertInstanceOf(ConnectionFailedException::class, array_pop($originSync->getLogs()));
 	}
 
 
@@ -97,7 +97,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$originSync = new OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$this->expectException(ParseDataFailedException::class);
 		$originSync->execute();
-		$this->assertInstanceOf(ParseDataFailedException::class, array_pop($originSync->getExceptions()));
+		$this->assertInstanceOf(ParseDataFailedException::class, array_pop($originSync->getLogs()));
 	}
 
 
@@ -114,7 +114,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$originSync = new OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$this->expectException(AbortOriginSyncException::class);
 		$originSync->execute();
-		$this->assertInstanceOf(AbortOriginSyncException::class, array_pop($originSync->getExceptions()));
+		$this->assertInstanceOf(AbortOriginSyncException::class, array_pop($originSync->getLogs()));
 	}
 
 
@@ -138,7 +138,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$originSync->execute();
 		$this->assertEquals(100, $originSync->getCountDelivered());
 		$this->assertEquals(0, $originSync->getCountProcessedTotal());
-		$this->assertEquals([], $originSync->getExceptions());
+		$this->assertEquals([], $originSync->getLogs());
 	}
 
 
@@ -184,7 +184,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED));
 		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED));
 		$this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED));
-		$this->assertEquals([], $originSync->getExceptions());
+		$this->assertEquals([], $originSync->getLogs());
 	}
 
 
@@ -212,7 +212,7 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->origin->shouldReceive('update')->once();
 		$originSync = new OriginSync($this->origin, $this->repository, $this->factory, $this->processor, $this->statusTransition, $this->originImplementation, $this->originNotification);
 		$originSync->execute();
-		$this->assertEquals($exception, array_pop($originSync->getExceptions()));
+		$this->assertEquals($exception, array_pop($originSync->getLogs()));
 		$this->assertEquals(0, $originSync->getCountProcessedTotal());
 		$this->assertEquals(1, $originSync->getCountDelivered());
 	}

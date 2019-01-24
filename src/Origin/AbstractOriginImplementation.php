@@ -51,6 +51,8 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	private $factory;
 	/**
 	 * @var OriginNotifications
+	 *
+	 * @deprecated
 	 */
 	private $originNotifications;
 	/**

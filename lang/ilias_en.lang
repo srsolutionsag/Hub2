@@ -213,7 +213,7 @@ origin_form_field_description#:#Description
 origin_form_field_exec_time#:#Timr of the sync
 origin_form_field_exec_time_info#:#Format: HH:MM \nIf not empty, the origin will only be executed at this specific time\n(if the cron job is running at this time) and ignored otherwise.
 origin_form_field_id#:#ID
-origin_form_field_notification_email#:#Notification on error
+origin_form_field_notification_email#:#Notification for extraordinary log entries (<> Info)
 origin_form_field_summary_email#:#E-mail addresses for summary
 origin_from_field_active_period#:#Active period
 origin_from_field_active_period_info#:#The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED.
@@ -384,10 +384,10 @@ summary_updated#:#Updated: %s
 summary_outdated#:#Outdated: %s
 summary_ignored#:#Ignored: %s
 summary_failed#:#Failed: %s
-summary_exceptions#:#Exceptions:
-summary_exceptions_more#:# + %s more ...
+summary_logs#:#Logs:
+summary_logs_more#:# + %s more ...
 summary_notification#:#Hub2: Summary for %s
-summary_exceptions_in#:#Hub2: Exceptions in %s
+summary_logs_in#:#Hub2: Exceptions in %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Base ref ID
 orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.

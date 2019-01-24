@@ -16,12 +16,4 @@ interface ISync {
 	 * @return mixed
 	 */
 	public function execute();
-
-
-	/**
-	 * Collects the exceptions from all syncs over all origins
-	 *
-	 * @return array
-	 */
-	public function getExceptions();
 }

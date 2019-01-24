@@ -34,6 +34,8 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected $origin;
 	/**
 	 * @var OriginNotifications
+	 *
+	 * @deprecated
 	 */
 	protected $originNotifications;
 	/**

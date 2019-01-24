@@ -27,6 +27,8 @@ class OriginImplementationFactory {
 	protected $origin;
 	/**
 	 * @var OriginNotifications
+	 *
+	 * @deprecated
 	 */
 	protected $originNotifications;
 

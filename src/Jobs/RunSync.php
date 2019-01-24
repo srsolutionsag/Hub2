@@ -98,7 +98,7 @@ class RunSync extends ilCronJob {
 				return ResultFactory::error("there was an error");
 			}
 
-			$summary = $OriginSyncSummaryFactory->cron();
+			$summary = $OriginSyncSummaryFactory->mail();
 			foreach ($OriginFactory->getAllActive() as $origin) {
 				$originSyncFactory = new OriginSyncFactory($origin);
 				$originSync = $originSyncFactory->instance();
@@ -107,7 +107,6 @@ class RunSync extends ilCronJob {
 				} catch (Throwable $e) {
 
 				}
-				self::logs()->originLog($originSync->getOrigin())->write($summary->getSummaryOfOrigin($originSync));
 
 				$summary->addOriginSync($originSync);
 			}

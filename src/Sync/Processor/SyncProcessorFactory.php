@@ -46,6 +46,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	protected $statusTransition;
 	/**
 	 * @var OriginNotifications
+	 *
+	 * @deprecated
 	 */
 	protected $originNotifications;
 	/**

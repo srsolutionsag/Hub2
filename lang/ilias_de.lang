@@ -212,7 +212,7 @@ origin_form_field_description#:#Beschreibung
 origin_form_field_exec_time#:#Zeitpunkt der Synchronisation
 origin_form_field_exec_time_info#:#Format: HH:MM \nFalls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit \n ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert.
 origin_form_field_id#:#ID
-origin_form_field_notification_email#:#Benachrichtigung bei Fehler
+origin_form_field_notification_email#:#Benachrichtigung bei ausserordentlichen Logeinträgen (<> Info)
 origin_form_field_summary_email#:#E-Mailadressen für Zusammenfassung
 origin_from_field_active_period#:#Aktive Periode
 origin_from_field_active_period_info#:#Die Synchronisation verarbeitet nur Objekte, die zu der hier definierten aktuellen Periode gehören. Objekte, die nicht zu diesem Zeitraum gehören, werden auf IGNORIERT gesetzt.
@@ -383,10 +383,10 @@ summary_updated#:#Aktualisiert: %s
 summary_outdated#:#Veraltet: %s
 summary_ignored#:#Ignoriert: %s
 summary_failed#:#Fehlgeschlagen: %s
-summary_exceptions#:#Ausnahmen:
-summary_exceptions_more#:# + %s weitere ...
+summary_logs#:#Logs:
+summary_logs_more#:# + %s weitere ...
 summary_notification#:#Hub2: Zusammenfassung für %s
-summary_exceptions_in#:#Hub2: Ausnahmen in %s
+summary_logs_in#:#Hub2: Ausnahmen in %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.

@@ -29,10 +29,6 @@ class Sync implements ISync {
 	 */
 	protected $origins = [];
 	/**
-	 * @var Exception[] array
-	 */
-	protected $exceptions = [];
-	/**
 	 * @var OriginSync[] array
 	 */
 	protected $originSyncs = [];
@@ -59,12 +55,12 @@ class Sync implements ISync {
 		try {
 			$global_hook = new GlobalHook();
 			if (!$global_hook->beforeSync($this->origins)) {
-				$global_hook->handleExceptions($this->exceptions);
-
 				return;
 			}
 		} catch (Throwable $e) {
-			$this->exceptions[] = $e;
+			self::logs()->exceptionLog($e)->store();
+
+			$global_hook->handleExceptions([ $e ]);
 		}
 
 		foreach ($this->origins as $origin) {
@@ -77,33 +73,21 @@ class Sync implements ISync {
 				$originSync->execute();
 			} catch (AbortSyncException $e) {
 				// This must abort the global sync, none following origin syncs are executed
-				$this->exceptions = array_merge($this->exceptions, $originSync->getExceptions());
 				break;
 			} catch (AbortOriginSyncOfCurrentTypeException $e) {
 				// This must abort all following origin syncs of the same object type
 				$skip_object_type = $origin->getObjectType();
-			} catch (Exception $e) {
-				// Any other exception means that we abort the current origin sync and continue with the next origin
-				$this->exceptions[] = $e;
 			} catch (Throwable $e) {
 				// Any other exception means that we abort the current origin sync and continue with the next origin
-				$this->exceptions[] = $e;
+				self::logs()->exceptionLog($e, $origin)->store();
 			}
-			$this->exceptions = array_merge($this->exceptions, $originSync->getExceptions());
 		}
 		try {
 			$global_hook->afterSync($this->origins);
 		} catch (Exception $e) {
-			$this->exceptions[] = $e;
+			self::logs()->exceptionLog($e)->store();
+
+			$global_hook->handleExceptions([ $e ]);
 		}
-		$global_hook->handleExceptions($this->exceptions);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getExceptions() {
-		return $this->exceptions;
 	}
 }

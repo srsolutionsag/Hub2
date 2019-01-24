@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Sync\Summary;
 use ilHub2Plugin;
 use ilMimeMail;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IOriginSync;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -27,7 +26,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 *
+	 *OriginSyncSummaryCron constructor
 	 */
 	public function __construct() {
 
@@ -56,45 +55,6 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 
 
 	/**
-	 * @param IOriginSync $originSync
-	 *
-	 * @return string
-	 */
-	private function renderOneSync(IOriginSync $originSync) {
-		// Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
-		$msg = self::plugin()->translate("summary_for", "", [ $originSync->getOrigin()->getTitle() ]) . "\n**********\n";
-		$msg .= self::plugin()->translate("summary_delivered_data_sets", "", [ $originSync->getCountDelivered() ]) . "\n";
-		$msg .= self::plugin()->translate("summary_failed", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_FAILED) ]) . "\n";
-		$msg .= self::plugin()->translate("summary_created", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED) ]) . "\n";
-		$msg .= self::plugin()->translate("summary_updated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED) ]) . "\n";
-		$msg .= self::plugin()->translate("summary_outdated", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED) ]) . "\n";
-		$msg .= self::plugin()->translate("summary_ignored", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) ]) . "\n";
-		foreach ($originSync->getNotifications()->getMessages() as $context => $messages) {
-			$msg .= "$context: \n**********\n";
-			foreach ($messages as $message) {
-				$msg .= "$message\n";
-			}
-			$msg .= "\n";
-		}
-		$msg .= self::plugin()->translate("summary_exceptions") . "\n**********\n";
-		foreach ($originSync->getExceptions() as $exception) {
-			$msg .= $exception->getMessage() . "\n";
-		}
-		$msg = rtrim($msg, "\n");
-
-		return $msg;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getSummaryOfOrigin(IOriginSync $originSync) {
-		return $this->renderOneSync($originSync);
-	}
-
-
-	/**
 	 * @inheritdoc
 	 */
 	public function sendNotifications() {
@@ -111,11 +71,11 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 				$mail->Body($this->renderOneSync($originSync));
 				$mail->Send();
 			}
-			if ($error_email && $originSync->getExceptions()) {
+			if ($error_email && $originSync->getLogs()) {
 				$mail->To($error_email);
-				$mail->Subject(self::plugin()->translate("summary_exceptions_in", "", [ $title ]));
-				$msg = self::plugin()->translate("summary_exceptions");
-				foreach ($originSync->getExceptions() as $exception) {
+				$mail->Subject(self::plugin()->translate("summary_logs_in", "", [ $title ]));
+				$msg = self::plugin()->translate("summary_logs");
+				foreach ($originSync->getLogs() as $exception) {
 					$msg .= "{$exception->getMessage()}\n";
 					$msg .= self::plugin()->translate("summary_in", "", [ $exception->getFile() ]) . "\n";
 				}
@@ -126,4 +86,12 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 			}
 		}
 	}
+
+
+	/**
+	 * @param IOriginSync $originSync
+	 *
+	 * @return string
+	 */
+	protected abstract function renderOneSync(IOriginSync $originSync): string;
 }

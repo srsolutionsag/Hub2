@@ -50,10 +50,6 @@ class OriginSync implements IOriginSync {
 	 */
 	protected $dtoObjects = [];
 	/**
-	 * @var Exception[] array
-	 */
-	protected $exceptions = [];
-	/**
 	 * @var IObjectSyncProcessor
 	 */
 	protected $processor;
@@ -81,6 +77,8 @@ class OriginSync implements IOriginSync {
 	];
 	/**
 	 * @var OriginNotifications
+	 *
+	 * @deprecated
 	 */
 	protected $notifications;
 
@@ -113,33 +111,27 @@ class OriginSync implements IOriginSync {
 	public function execute() {
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
 		// as the sync of this origin cannot continue.
-		try {
-			$this->implementation->beforeSync();
+		$this->implementation->beforeSync();
 
-			$this->implementation->connect();
+		$this->implementation->connect();
 
-			$count = $this->implementation->parseData();
+		$count = $this->implementation->parseData();
 
-			$this->countDelivered = $count;
+		$this->countDelivered = $count;
 
-			// Check if the origin aborts its sync if the amount of delivered data is not enough
-			if ($this->origin->config()->getCheckAmountData()) {
-				$threshold = $this->origin->config()->getCheckAmountDataPercentage();
-				$total = $this->repository->count();
-				$percentage = ($total > 0 && $count > 0) ? (100 / $total * $count) : 0;
-				if ($total > 0 && ($percentage < $threshold)) {
-					$msg = "Amount of delivered data not sufficient: Got {$count} datasets, 
+		// Check if the origin aborts its sync if the amount of delivered data is not enough
+		if ($this->origin->config()->getCheckAmountData()) {
+			$threshold = $this->origin->config()->getCheckAmountDataPercentage();
+			$total = $this->repository->count();
+			$percentage = ($total > 0 && $count > 0) ? (100 / $total * $count) : 0;
+			if ($total > 0 && ($percentage < $threshold)) {
+				$msg = "Amount of delivered data not sufficient: Got {$count} datasets, 
 					which is " . number_format($percentage, 2) . "% of the existing data in hub, 
 					need at least {$threshold}% according to origin config";
-					throw new AbortOriginSyncException($msg);
-				}
+				throw new AbortOriginSyncException($msg);
 			}
-			$this->dtoObjects = $this->implementation->buildObjects();
-		} catch (Throwable $e) {
-			$this->exceptions[] = $e;
-
-			throw $e;
 		}
+		$this->dtoObjects = $this->implementation->buildObjects();
 
 		$type = $this->origin->getObjectType();
 
@@ -192,12 +184,8 @@ class OriginSync implements IOriginSync {
 			$this->processObject($object, $nullDTO);
 		}
 
-		try {
-			$this->implementation->afterSync();
-		} catch (Throwable $e) {
-			$this->exceptions[] = $e;
-			throw $e;
-		}
+		$this->implementation->afterSync();
+
 		$this->getOrigin()->setLastRun(date(DATE_ATOM));
 
 		$this->getOrigin()->update();
@@ -229,14 +217,6 @@ class OriginSync implements IOriginSync {
 		}
 
 		return $dtos;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getExceptions() {
-		return $this->exceptions;
 	}
 
 
@@ -285,30 +265,23 @@ class OriginSync implements IOriginSync {
 			$this->incrementProcessed($object->getStatus());
 		} catch (AbortSyncException $ex) {
 			// Any exceptions aborting the global or current sync are forwarded to global sync
-			$this->exceptions[] = $ex;
-
 			$object->store();
 
 			throw $ex;
 		} catch (AbortOriginSyncOfCurrentTypeException $ex) {
-			$this->exceptions[] = $ex;
-
 			$object->store();
 
 			throw $ex;
 		} catch (AbortOriginSyncException $ex) {
-			$this->exceptions[] = $ex;
-
 			$object->store();
 
 			throw $ex;
 		} catch (Throwable $ex) {
 			$object->setStatus(IObject::STATUS_FAILED);
+
 			$this->incrementProcessed($object->getStatus());
 
 			self::logs()->exceptionLog($ex, $this->origin, $object, $dto)->store();
-
-			$this->exceptions[] = $ex;
 
 			$object->store();
 
