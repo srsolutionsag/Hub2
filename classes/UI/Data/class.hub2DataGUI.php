@@ -122,7 +122,7 @@ class hub2DataGUI extends hub2MainGUI {
 
 		$data_table = $factory->listing()->descriptive($filtered);
 
-		$modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_header_view") . "<br>" . self::plugin()
+		$modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_header_data") . "<br>" . self::plugin()
 				->translate("data_table_hash", "", [ $object->getHashCode() ]), $data_table)->withCancelButtonLabel("close");
 
 		self::output()->output(self::dic()->ui()->renderer()->renderAsync($modal));

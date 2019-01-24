@@ -2,8 +2,8 @@
 
 require_once __DIR__ . "/../../../vendor/autoload.php";
 
-use srag\Plugins\Hub2\Log\LogsTableGUI;
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
+use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
 
 /**
  * Class hub2LogsGUI

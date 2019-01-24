@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\Log;
+namespace srag\Plugins\Hub2\Jobs\Log;
 
 use hub2LogsGUI;
 use ilCronJob;
@@ -14,7 +14,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class RunSync
  *
- * @package srag\Plugins\Hub2\Log
+ * @package srag\Plugins\Hub2\Jobs\Log
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */

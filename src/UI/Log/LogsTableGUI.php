@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\Log;
+namespace srag\Plugins\Hub2\UI\Log;
 
 use hub2LogsGUI;
 use ilDateTime;
@@ -11,6 +11,7 @@ use srag\CustomInputGUIs\Hub2\DateDurationInputGUI\DateDurationInputGUI;
 use srag\CustomInputGUIs\Hub2\NumberInputGUI\NumberInputGUI;
 use srag\CustomInputGUIs\Hub2\PropertyFormGUI\PropertyFormGUI;
 use srag\CustomInputGUIs\Hub2\TableGUI\TableGUI;
+use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
@@ -18,7 +19,7 @@ use stdClass;
 /**
  * Class LogsTableGUI
  *
- * @package srag\Plugins\Hub2\Log
+ * @package srag\Plugins\Hub2\UI\Log
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
@@ -174,7 +175,7 @@ class LogsTableGUI extends TableGUI {
 
 		$this->setData($logs);
 
-		$this->setMaxCount(count(self::logs()->getLogs())); // TODO: Avoid to queries
+		$this->setMaxCount(count(self::logs()->getLogs())); // TODO: Avoid two queries
 	}
 
 

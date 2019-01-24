@@ -93,7 +93,7 @@ class DataTableGUI extends ilTable2GUI {
 		$this->originLinkfactory = new ObjectLinkFactory();
 		$this->setPrefix('hub2_');
 		$this->setId('origins');
-		$this->setTitle(self::plugin()->translate('hub_origins'));
+		$this->setTitle(self::plugin()->translate('subtab_data'));
 		parent::__construct($a_parent_obj, $a_parent_cmd);
 		$this->setFormAction(self::dic()->ctrl()->getFormAction($a_parent_obj));
 		$this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
@@ -277,7 +277,7 @@ class DataTableGUI extends ilTable2GUI {
 
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle(self::plugin()->translate("data_table_header_actions"));
-		$actions->addItem(self::plugin()->translate("data_table_header_view"), "view");
+		$actions->addItem(self::plugin()->translate("data_table_header_data"), "view");
 		$actions->addItem(self::plugin()->translate("show_logs", hub2LogsGUI::LANG_MODULE_LOGS), "", self::dic()->ctrl()
 			->getLinkTargetByClass([ hub2LogsGUI::class, ], hub2LogsGUI::CMD_SHOW_LOGS_OF_EXT_ID));
 		$actions_html = self::output()->getHTML($actions);

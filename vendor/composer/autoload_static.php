@@ -14,12 +14,12 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
-            'srag\\RemovePluginDataConfirm\\' => 29,
+            'srag\\RemovePluginDataConfirm\\Hub2\\' => 34,
             'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
-            'srag\\DIC\\' => 9,
-            'srag\\CustomInputGUIs\\' => 21,
-            'srag\\ActiveRecordConfig\\' => 24,
+            'srag\\DIC\\Hub2\\' => 14,
+            'srag\\CustomInputGUIs\\Hub2\\' => 26,
+            'srag\\ActiveRecordConfig\\Hub2\\' => 29,
         ),
         'p' => 
         array (
@@ -42,7 +42,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
     );
 
     public static $prefixDirsPsr4 = array (
-        'srag\\RemovePluginDataConfirm\\' => 
+        'srag\\RemovePluginDataConfirm\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/removeplugindataconfirm/src',
         ),
@@ -54,15 +54,15 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         array (
             0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
-        'srag\\DIC\\' => 
+        'srag\\DIC\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
-        'srag\\CustomInputGUIs\\' => 
+        'srag\\CustomInputGUIs\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/custominputguis/src',
         ),
-        'srag\\ActiveRecordConfig\\' => 
+        'srag\\ActiveRecordConfig\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/activerecordconfig/src',
         ),
@@ -1012,15 +1012,14 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Exception\\ShortlinkException' => __DIR__ . '/../..' . '/src/Exception/ShortlinkException.php',
         'srag\\Plugins\\Hub2\\Exception\\TaxonomyNodeNotFoundException' => __DIR__ . '/../..' . '/src/Exception/TaxonomyNodeNotFoundException.php',
         'srag\\Plugins\\Hub2\\Exception\\TaxonomyNotFoundException' => __DIR__ . '/../..' . '/src/Exception/TaxonomyNotFoundException.php',
+        'srag\\Plugins\\Hub2\\Jobs\\Log\\DeleteOldLogsJob' => __DIR__ . '/../..' . '/src/Jobs/Log/DeleteOldLogsJob.php',
         'srag\\Plugins\\Hub2\\Jobs\\Result\\AbstractResult' => __DIR__ . '/../..' . '/src/Jobs/Result/AbstractResult.php',
         'srag\\Plugins\\Hub2\\Jobs\\Result\\Error' => __DIR__ . '/../..' . '/src/Jobs/Result/Error.php',
         'srag\\Plugins\\Hub2\\Jobs\\Result\\OK' => __DIR__ . '/../..' . '/src/Jobs/Result/OK.php',
         'srag\\Plugins\\Hub2\\Jobs\\Result\\ResultFactory' => __DIR__ . '/../..' . '/src/Jobs/Result/ResultFactory.php',
         'srag\\Plugins\\Hub2\\Jobs\\RunSync' => __DIR__ . '/../..' . '/src/Jobs/RunSync.php',
-        'srag\\Plugins\\Hub2\\Log\\DeleteOldLogsJob' => __DIR__ . '/../..' . '/src/Log/DeleteOldLogsJob.php',
         'srag\\Plugins\\Hub2\\Log\\ILog' => __DIR__ . '/../..' . '/src/Log/ILog.php',
         'srag\\Plugins\\Hub2\\Log\\Log' => __DIR__ . '/../..' . '/src/Log/Log.php',
-        'srag\\Plugins\\Hub2\\Log\\LogsTableGUI' => __DIR__ . '/../..' . '/src/Log/LogsTableGUI.php',
         'srag\\Plugins\\Hub2\\Logs\\Logs' => __DIR__ . '/../..' . '/src/Log/Logs.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\AMappingStrategy' => __DIR__ . '/../..' . '/src/MappingStrategy/AMappingStrategy.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\ByEmail' => __DIR__ . '/../..' . '/src/MappingStrategy/ByEmail.php',
@@ -1295,6 +1294,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\UI\\Data\\DataTableGUI' => __DIR__ . '/../..' . '/src/UI/Data/DataTableGUI.php',
         'srag\\Plugins\\Hub2\\UI\\GroupMembership\\GroupMembershipOriginConfigFormGUI' => __DIR__ . '/../..' . '/src/UI/GroupMembership/GroupMembershipOriginConfigFormGUI.php',
         'srag\\Plugins\\Hub2\\UI\\Group\\GroupOriginConfigFormGUI' => __DIR__ . '/../..' . '/src/UI/Group/GroupOriginConfigFormGUI.php',
+        'srag\\Plugins\\Hub2\\UI\\Log\\LogsTableGUI' => __DIR__ . '/../..' . '/src/UI/Log/LogsTableGUI.php',
         'srag\\Plugins\\Hub2\\UI\\OrgUnitMembership\\OrgUnitMembershipOriginConfigFormGUI' => __DIR__ . '/../..' . '/src/UI/OrgUnitMembership/OrgUnitMembershipOriginConfigFormGUI.php',
         'srag\\Plugins\\Hub2\\UI\\OrgUnit\\OrgUnitOriginConfigFormGUI' => __DIR__ . '/../..' . '/src/UI/OrgUnit/OrgUnitOriginConfigFormGUI.php',
         'srag\\Plugins\\Hub2\\UI\\OriginConfigFormGUI' => __DIR__ . '/../..' . '/src/UI/OriginConfigFormGUI.php',
