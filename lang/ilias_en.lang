@@ -358,7 +358,7 @@ status_16#:#Updated
 status_2#:#To create
 status_32#:#To delete
 subtab_origins#:#Overview
-subtab_data#:#History
+subtab_data#:#Status
 grp_prop_activate#:#Activate
 grp_prop_delete_mode#:#Delete behavior
 grp_prop_delete_mode_close#:#Make group a "closed group"

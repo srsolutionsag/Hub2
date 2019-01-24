@@ -357,7 +357,7 @@ status_16#:#Aktualisiert
 status_2#:#Zu erstellen
 status_32#:#Zu löschen
 subtab_origins#:#Übersicht
-subtab_data#:#Verlauf
+subtab_data#:#Status
 grp_prop_activate#:#Aktivieren
 grp_prop_delete_mode#:#Löschverhalten
 grp_prop_delete_mode_close#:#Gruppe zu "geschlossene Gruppe" umwandeln
