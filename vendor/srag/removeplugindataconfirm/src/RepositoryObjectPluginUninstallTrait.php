@@ -2,6 +2,8 @@
 
 namespace srag\RemovePluginDataConfirm\Hub2;
 
+use srag\RemovePluginDataConfirm\Hub2\Exception\RemovePluginDataConfirmException;
+
 /**
  * Trait RepositoryObjectPluginUninstallTrait
  *
