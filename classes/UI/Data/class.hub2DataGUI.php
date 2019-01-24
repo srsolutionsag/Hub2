@@ -1,12 +1,12 @@
 <?php
 
-require_once __DIR__ . "/../../vendor/autoload.php";
+require_once __DIR__ . "/../../../vendor/autoload.php";
 
 use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
-use srag\Plugins\Hub2\UI\DataTableGUI;
+use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 
 /**
  * Class hub2DataGUI

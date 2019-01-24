@@ -1,8 +1,9 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\Data;
 
 use hub2DataGUI;
+use hub2LogsGUI;
 use ilAdvancedSelectionListGUI;
 use ilCheckboxInputGUI;
 use ilFormPropertyGUI;
@@ -33,7 +34,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class OriginsTableGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\Data
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class DataTableGUI extends ilTable2GUI {
@@ -239,6 +240,9 @@ class DataTableGUI extends ilTable2GUI {
 		self::dic()->ctrl()->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
 		self::dic()->ctrl()->setParameter($this->parent_obj, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
 
+		self::dic()->ctrl()->setParameterByClass(hub2LogsGUI::class, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
+		self::dic()->ctrl()->setParameterByClass(hub2LogsGUI::class, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
+
 		$origin = $this->originFactory->getById($a_set[self::F_ORIGIN_ID]);
 
 		foreach ($a_set as $key => $value) {
@@ -274,6 +278,8 @@ class DataTableGUI extends ilTable2GUI {
 		$actions = new ilAdvancedSelectionListGUI();
 		$actions->setListTitle(self::plugin()->translate("data_table_header_actions"));
 		$actions->addItem(self::plugin()->translate("data_table_header_view"), "view");
+		$actions->addItem(self::plugin()->translate("show_logs", hub2LogsGUI::LANG_MODULE_LOGS), "", self::dic()->ctrl()
+			->getLinkTargetByClass([ hub2LogsGUI::class, ], hub2LogsGUI::CMD_SHOW_LOGS_OF_EXT_ID));
 		$actions_html = self::output()->getHTML($actions);
 
 		// Use a fake button to use clickable open modal on selection list. Replace the id with the button id

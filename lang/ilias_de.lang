@@ -429,6 +429,7 @@ logs_object_ext_id#:#Externe-ID
 logs_object_ilias_id#:#ILIAS-ID
 logs_origin_id#:#Origin-ID
 logs_origin_object_type#:#Origin-Objekt-Typ
+logs_show_logs#:#Logs anzeigen
 logs_title#:#Titel
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
