@@ -170,7 +170,7 @@ class DataTableGUI extends ilTable2GUI {
 		foreach ($this->getFields() as $field) {
 			$this->addColumn(self::plugin()->translate('data_table_header_' . $field), $field);
 		}
-		$this->addColumn(self::plugin()->translate('data_table_header_view'));
+		$this->addColumn(self::plugin()->translate('data_table_header_actions'));
 	}
 
 
