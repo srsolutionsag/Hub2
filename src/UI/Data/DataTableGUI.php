@@ -91,7 +91,7 @@ class DataTableGUI extends ilTable2GUI {
 		$this->originFactory = new OriginFactory();
 		$this->originLinkfactory = new ObjectLinkFactory();
 		$this->setPrefix('hub2_');
-		$this->setId('status');
+		$this->setId('data');
 		$this->setTitle(self::plugin()->translate('subtab_data'));
 		parent::__construct($a_parent_obj, $a_parent_cmd);
 		$this->setFormAction(self::dic()->ctrl()->getFormAction($a_parent_obj));
