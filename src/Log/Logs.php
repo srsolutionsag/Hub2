@@ -140,7 +140,7 @@ final class Logs {
 		}
 
 		if ($limit_start !== NULL && $limit_end !== NULL) {
-			$sql .= ' LIMIT ' . $limit_start . ',' . $limit_end;
+			$sql .= ' LIMIT ' . self::dic()->database()->quote($limit_start, "integer") . ',' . self::dic()->database()->quote($limit_end, "integer");
 		}
 
 		$result = self::dic()->database()->query($sql);
