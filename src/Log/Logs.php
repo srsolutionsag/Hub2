@@ -87,48 +87,69 @@ final class Logs {
 	 */
 	public function getLogs(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): array {
 
-		$where = Log::where([]);
+		$sql = 'SELECT * FROM ' . Log::TABLE_NAME;
+
+		$wheres = [];
 
 		if (!empty($title)) {
-			$where = $where->where([ "title" => '%' . $title . '%' ], "LIKE");
+			$wheres[] = self::dic()->database()->like("title", "text", '%' . $title . '%');
 		}
+
 		if (!empty($message)) {
-			$where = $where->where([ "message" => '%' . $message . '%' ], "LIKE");
+			$wheres[] = self::dic()->database()->like("message", "text", '%' . $message . '%');
 		}
+
 		if (!empty($date_start)) {
-			$where = $where->where([ "date" => $date_start->get(IL_CAL_DATETIME) ], ">=");
+			$wheres[] = 'date>=' . self::dic()->database()->quote($date_start->get(IL_CAL_DATETIME), "text");
 		}
+
 		if (!empty($date_end)) {
-			$where = $where->where([ "date" => $date_end->get(IL_CAL_DATETIME) ], "<=");
+			$wheres[] = 'date<=' . self::dic()->database()->quote($date_start->get(IL_CAL_DATETIME), "text");
 		}
+
 		if (!empty($level)) {
-			$where = $where->where([ "level" => $level ]);
+			$wheres[] = 'level=' . self::dic()->database()->quote($level, "integer");
 		}
+
 		if (!empty($origin_id)) {
-			$where = $where->where([ "origin_id" => $origin_id ]);
+			$wheres[] = 'origin_id=' . self::dic()->database()->quote($origin_id, "integer");
 		}
+
 		if (!empty($origin_object_type)) {
-			$where = $where->where([ "origin_object_type" => $origin_object_type ]);
+			$wheres[] = 'origin_object_type=' . self::dic()->database()->quote($origin_object_type, "integer");
 		}
+
 		if (!empty($object_ext_id)) {
-			$where = $where->where([ "object_ext_id" => $object_ext_id ]);
+			$wheres[] = 'object_ext_id=' . self::dic()->database()->quote($object_ext_id, "integer");
 		}
+
 		if (!empty($object_ilias_id)) {
-			$where = $where->where([ "object_ilias_id" => $object_ilias_id ]);
+			$wheres[] = 'object_ilias_id=' . self::dic()->database()->quote($object_ilias_id, "integer");
 		}
+
 		if (!empty($additional_data)) {
-			$where = $where->where([ "additional_data" => '%' . $additional_data . '%' ], "LIKE");
+			$wheres[] = self::dic()->database()->like("additional_data", "text", '%' . $additional_data . '%');
+		}
+
+		if (count($wheres) > 0) {
+			$sql .= ' ' . implode(" AND ", $wheres);
 		}
 
 		if ($sort_by !== NULL && $sort_by_direction !== NULL) {
-			$where = $where->orderBy($sort_by, $sort_by_direction);
+			$sql .= ' ORDER BY ' . $sort_by . ' ' . $sort_by_direction;
 		}
 
 		if ($limit_start !== NULL && $limit_end !== NULL) {
-			$where = $where->limit($limit_start, $limit_end);
+			$sql .= ' LIMIT ' . $limit_start . ',' . $limit_end;
 		}
 
-		$logs = $where->getArray();
+		$result = self::dic()->database()->query($sql);
+
+		$logs = [];
+
+		while (($row = $result->fetchAssoc()) !== false) {
+			$logs[$row["log_id"]] = $row;
+		}
 
 		return $logs;
 	}
