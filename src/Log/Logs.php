@@ -254,7 +254,7 @@ final class Logs {
 			$this->kept_logs[$log->getOriginId()][$log->getLevel()] = [];
 		}
 
-		$this->kept_logs[$log->getLevel()][] = $log;
+		$this->kept_logs[$log->getOriginId()][$log->getLevel()][] = $log;
 	}
 
 
