@@ -123,7 +123,7 @@ class RunSync extends ilCronJob {
 		try {
 			$skip_object_type = '';
 
-			$global_hook = new GlobalHook();
+			$global_hook = GlobalHook::getInstance();
 
 			if (empty($this->origins)) {
 				$this->origins = (new OriginFactory())->getAllActive();

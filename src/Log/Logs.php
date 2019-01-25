@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\User\IUserDTO;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
 use Throwable;
@@ -255,6 +256,8 @@ final class Logs {
 		}
 
 		$this->kept_logs[$log->getOriginId()][$log->getLevel()][] = $log;
+
+		GlobalHook::getInstance()->handleLog($log);
 	}
 
 
