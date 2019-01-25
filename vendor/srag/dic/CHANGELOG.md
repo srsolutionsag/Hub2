@@ -1,5 +1,69 @@
 # Changelog
 
+## [0.14.11]
+- Fixes
+
+## [0.14.10]
+- Fix stupid broken ilTable2GUI (render has only header without rows)
+
+## [0.14.9]
+- Output getHTML change order check
+
+## [0.14.8]
+- Remove @deprecated from getPluginObject
+
+## [0.14.7]
+- Output ...
+
+## [0.14.6]
+- Output ...
+
+## [0.14.5]
+- Output $exit_after=true default
+
+## [0.14.4]
+- Output $exit_after
+- DICException::CODE_X
+
+## [0.14.3]
+- Fix ILIAS 5.2
+
+## [0.14.2]
+- PHPVersionChecker fix cache
+
+## [0.14.1]
+- PHPVersionChecker cache
+
+## [0.14.0]
+- PHPVersionChecker
+
+## [0.13.5]
+- DICStatic::clearCache
+
+## [0.13.4]
+- New getHTML
+
+## [0.13.3]
+- New getHTML
+
+## [0.13.2]
+- Supports output ilAdvancedSelectionListGUI
+
+## [0.13.1]
+- Supports output ilModalGUI
+
+## [0.13.0]
+- getHTML in OutputInterface
+
+## [0.12.0]
+- Supports output Component
+- Supports new ILIAS 5.4 DIC services
+- Separate DIC implementation for ILIAS versions
+- New methods an constants in VersionInterface
+
+## [0.11.0]
+- New OutputInterface
+
 ## [0.10.3]
 - Fix Pluginable interface
 

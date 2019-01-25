@@ -4,7 +4,9 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\ArConfigOld;
+use srag\Plugins\Hub2\Jobs\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Jobs\RunSync;
+use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -16,18 +18,19 @@ use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
-use srag\RemovePluginDataConfirm\PluginUninstallTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
 
 /**
  * Class ilHub2Plugin
  *
- * @package
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ilHub2Plugin extends ilCronHookPlugin {
 
 	use PluginUninstallTrait;
+	use Hub2Trait;
 	const PLUGIN_ID = 'hub2';
 	const PLUGIN_NAME = 'Hub2';
 	const PLUGIN_CLASS_NAME = self::class;
@@ -62,7 +65,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 * @return ilCronJob[]
 	 */
 	public function getCronJobInstances(): array {
-		return [ new RunSync() ];
+		return [ new RunSync(), new DeleteOldLogsJob() ];
 	}
 
 
@@ -71,8 +74,18 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	 *
 	 * @return ilCronJob
 	 */
-	public function getCronJobInstance($a_job_id): ilCronJob {
-		return new $a_job_id();
+	public function getCronJobInstance(/*string*/
+		$a_job_id)/*: ?ilCronJob*/ {
+		switch ($a_job_id) {
+			case RunSync::CRON_JOB_ID:
+				return new RunSync();
+
+			case DeleteOldLogsJob::CRON_JOB_ID:
+				return new DeleteOldLogsJob();
+
+			default:
+				return NULL;
+		}
 	}
 
 
@@ -93,6 +106,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		self::dic()->database()->dropTable(ArConfigOld::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+		self::dic()->database()->dropTable(Log::TABLE_NAME, false);
 
 		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 	}

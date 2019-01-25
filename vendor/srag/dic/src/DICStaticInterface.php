@@ -1,20 +1,28 @@
 <?php
 
-namespace srag\DIC;
+namespace srag\DIC\Hub2;
 
-use srag\DIC\DIC\DICInterface;
-use srag\DIC\Exception\DICException;
-use srag\DIC\Plugin\PluginInterface;
-use srag\DIC\Version\VersionInterface;
+use srag\DIC\Hub2\DIC\DICInterface;
+use srag\DIC\Hub2\Exception\DICException;
+use srag\DIC\Hub2\Output\OutputInterface;
+use srag\DIC\Hub2\Plugin\PluginInterface;
+use srag\DIC\Hub2\Version\VersionInterface;
 
 /**
  * Interface DICStaticInterface
  *
- * @package srag\DIC
+ * @package srag\DIC\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface DICStaticInterface {
+
+	/**
+	 * Clear cache. Needed for instance in unit tests
+	 */
+	public static function clearCache()/*: void*/
+	;
+
 
 	/**
 	 * Get DIC interface
@@ -22,6 +30,15 @@ interface DICStaticInterface {
 	 * @return DICInterface DIC interface
 	 */
 	public static function dic()/*: DICInterface*/
+	;
+
+
+	/**
+	 * Get output interface
+	 *
+	 * @return OutputInterface Output interface
+	 */
+	public static function output()/*: OutputInterface*/
 	;
 
 

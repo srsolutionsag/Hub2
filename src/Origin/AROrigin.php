@@ -5,10 +5,11 @@ namespace srag\Plugins\Hub2\Origin;
 use ActiveRecord;
 use ilHub2Plugin;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
-use srag\DIC\DICTrait;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
@@ -20,22 +21,23 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 abstract class AROrigin extends ActiveRecord implements IOrigin {
 
 	use DICTrait;
+	use Hub2Trait;
 	const TABLE_NAME = 'sr_hub2_origin';
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var array
 	 */
 	static $object_types = [
-		IOrigin::OBJECT_TYPE_USER,
-		IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP,
-		IOrigin::OBJECT_TYPE_COURSE,
-		IOrigin::OBJECT_TYPE_CATEGORY,
-		IOrigin::OBJECT_TYPE_GROUP,
-		IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
-		IOrigin::OBJECT_TYPE_SESSION,
-		IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
-		IOrigin::OBJECT_TYPE_ORGNUNIT,
-		IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP
+		IOrigin::OBJECT_TYPE_USER => IOrigin::OBJECT_TYPE_USER,
+		IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP,
+		IOrigin::OBJECT_TYPE_COURSE => IOrigin::OBJECT_TYPE_COURSE,
+		IOrigin::OBJECT_TYPE_CATEGORY => IOrigin::OBJECT_TYPE_CATEGORY,
+		IOrigin::OBJECT_TYPE_GROUP => IOrigin::OBJECT_TYPE_GROUP,
+		IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
+		IOrigin::OBJECT_TYPE_SESSION => IOrigin::OBJECT_TYPE_SESSION,
+		IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
+		IOrigin::OBJECT_TYPE_ORGNUNIT => IOrigin::OBJECT_TYPE_ORGNUNIT,
+		IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP
 	];
 
 
@@ -168,6 +170,33 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 * @var bool
 	 */
 	protected $force_update = false;
+	/**
+	 * @var bool
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       1
+	 * @con_is_notnull   true
+	 */
+	protected $adhoc = false;
+	/**
+	 * @var bool
+	 *
+	 * @con_has_field  true
+	 * @con_fieldtype  integer
+	 * @con_length     1
+	 * @con_is_notnull true
+	 */
+	protected $adhoc_parent_scope = false;
+	/**
+	 * @var int
+	 *
+	 * @db_has_field  true
+	 * @db_fieldtype  integer
+	 * @db_length     8
+	 * @db_is_notnull true
+	 */
+	protected $sort = 0;
 
 
 	/**
@@ -176,6 +205,14 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	public function create() {
 		$this->created_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
 		$this->setObjectType($this->parseObjectType());
+
+		if (empty($this->sort)) {
+			$origins = (new OriginFactory())->getAll();
+			if (count($origins) > 0) {
+				$this->sort = (end($origins)->getSort() + 1);
+			}
+		}
+
 		parent::create();
 	}
 
@@ -193,6 +230,8 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 * @inheritdoc
 	 */
 	public function sleep($field_name) {
+		$field_value = $this->{$field_name};
+
 		switch ($field_name) {
 			case 'config':
 				if ($this->_config === NULL) {
@@ -202,6 +241,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 				} else {
 					return json_encode($this->config()->getData());
 				}
+
 			case 'properties':
 				if ($this->_properties === NULL) {
 					$properties = $this->getOriginProperties([]);
@@ -210,9 +250,14 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 				} else {
 					return json_encode($this->properties()->getData());
 				}
-		}
 
-		return parent::sleep($field_name);
+			case "adhoc":
+			case "adhoc_parent_scope":
+				return ($field_value ? 1 : 0);
+
+			default:
+				return NULL;
+		}
 	}
 
 
@@ -224,9 +269,17 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 			case 'config':
 			case 'properties':
 				return json_decode($field_value, true);
-		}
 
-		return parent::wakeUp($field_name, $field_value);
+			case "adhoc":
+			case "adhoc_parent_scope":
+				return boolval($field_value);
+
+			case "sort":
+				return intval($field_value);
+
+			default:
+				return NULL;
+		}
 	}
 
 
@@ -469,5 +522,53 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 */
 	public function isUpdateForced(): bool {
 		return $this->force_update;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function isAdHoc(): bool {
+		return $this->adhoc;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setAdHoc(bool $adhoc)/*: void*/ {
+		$this->adhoc = $adhoc;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function isAdhocParentScope(): bool {
+		return $this->adhoc_parent_scope;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/ {
+		$this->adhoc_parent_scope = $adhoc_parent_scope;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getSort(): int {
+		return $this->sort;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setSort(int $sort)/*: void*/ {
+		$this->sort = $sort;
 	}
 }

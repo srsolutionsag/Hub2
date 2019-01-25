@@ -8,7 +8,8 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  * Interface IOrgUnitRepository
  *
  * @package srag\Plugins\Hub2\Object\OrgUnit
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface IOrgUnitRepository extends IObjectRepository {
 

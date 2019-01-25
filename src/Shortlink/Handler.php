@@ -5,12 +5,12 @@ namespace srag\Plugins\Hub2\Shortlink;
 use ilContext;
 use ilDBInterface;
 use ilHub2Plugin;
-use ilUtil;
 use ilInitialisation;
-use srag\DIC\DICTrait;
+use ilUtil;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
-use srag\Plugins\Hub2\Exception\ShortLinkNotFoundException;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Handler
@@ -21,6 +21,7 @@ use srag\Plugins\Hub2\Exception\ShortLinkNotFoundException;
 class Handler {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 	/**
@@ -38,7 +39,7 @@ class Handler {
 
 
 	/**
-	 * Handler constructor.
+	 * Handler constructor
 	 *
 	 * @param string $ext_id
 	 */
@@ -66,15 +67,15 @@ class Handler {
 		$link = $object_link_factory->findByExtId($this->ext_id);
 
 		if (!$link->doesObjectExist()) {
-			$this->sendMessage(ArConfig::getShortLinkObjectNotFound());
+			$this->sendMessage(ArConfig::getField(ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND));
 			$this->doRedirect($link->getNonExistingLink());
 		}
 
 		if (!$link->isAccessGranted()) {
-			$this->sendMessage(ArConfig::getShortLinkObjectNotAccessible());
+			$this->sendMessage(ArConfig::getField(ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE));
 			$this->doRedirect($link->getAccessDeniedLink());
 		}
-		$this->sendMessage(ArConfig::getShortlinkSuccess());
+		$this->sendMessage(ArConfig::getField(ArConfig::KEY_SHORTLINK_SUCCESS));
 		$this->doRedirect($link->getAccessGrantedExternalLink());
 	}
 

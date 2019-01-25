@@ -1,16 +1,17 @@
 <?php
 
-namespace srag\DIC;
+namespace srag\DIC\Hub2;
 
-use srag\DIC\DIC\DICInterface;
-use srag\DIC\Exception\DICException;
-use srag\DIC\Plugin\PluginInterface;
-use srag\DIC\Version\VersionInterface;
+use srag\DIC\Hub2\DIC\DICInterface;
+use srag\DIC\Hub2\Exception\DICException;
+use srag\DIC\Hub2\Output\OutputInterface;
+use srag\DIC\Hub2\Plugin\PluginInterface;
+use srag\DIC\Hub2\Version\VersionInterface;
 
 /**
  * Trait DICTrait
  *
- * @package srag\DIC
+ * @package srag\DIC\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
@@ -32,6 +33,16 @@ trait DICTrait {
 	 */
 	protected static final function dic()/*: DICInterface*/ {
 		return DICStatic::dic();
+	}
+
+
+	/**
+	 * Get output interface
+	 *
+	 * @return OutputInterface Output interface
+	 */
+	protected static final function output()/*: OutputInterface*/ {
+		return DICStatic::output();
 	}
 
 
@@ -66,7 +77,7 @@ trait DICTrait {
 	 */
 	private static final function checkPluginClassNameConst()/*: void*/ {
 		if (!defined("static::PLUGIN_CLASS_NAME") || empty(static::PLUGIN_CLASS_NAME)) {
-			throw new DICException("Your class needs to implement the PLUGIN_CLASS_NAME constant!");
+			throw new DICException("Your class needs to implement the PLUGIN_CLASS_NAME constant!", DICException::CODE_MISSING_CONST_PLUGIN_CLASS_NAME);
 		}
 	}
 }

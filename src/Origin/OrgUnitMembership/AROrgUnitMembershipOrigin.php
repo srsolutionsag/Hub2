@@ -3,16 +3,17 @@
 namespace srag\Plugins\Hub2\Origin\OrgUnitMembership;
 
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
-use srag\Plugins\Hub2\Origin\Config\OrgUnitMembershipOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
-use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\OrgUnitMembership\IOrgUnitMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\OrgUnitMembership\OrgUnitMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\IOrgUnitMembershipProperties;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\OrgUnitMembershipProperties;
 
 /**
  * Class AROrgUnitMembershipOrigin
  *
  * @package srag\Plugins\Hub2\Origin\OrgUnitMembership
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOrigin {
 
@@ -27,8 +28,8 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
 	/**
 	 * @inheritdoc
 	 */
-	protected function getOriginProperties(array $data): IOrgUnitMembershipOriginProperties {
-		return new OrgUnitMembershipOriginProperties($data);
+	protected function getOriginProperties(array $data): IOrgUnitMembershipProperties {
+		return new OrgUnitMembershipProperties($data);
 	}
 
 
@@ -43,7 +44,7 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
 	/**
 	 * @inheritdoc
 	 */
-	public function properties(): IOrgUnitMembershipOriginProperties {
+	public function properties(): IOrgUnitMembershipProperties {
 		return parent::properties();
 	}
 }

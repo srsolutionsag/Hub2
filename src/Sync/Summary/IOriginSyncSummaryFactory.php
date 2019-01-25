@@ -13,17 +13,11 @@ interface IOriginSyncSummaryFactory {
 	/**
 	 * @return IOriginSyncSummary
 	 */
-	public function common();
+	public function web(): IOriginSyncSummary;
 
 
 	/**
 	 * @return IOriginSyncSummary
 	 */
-	public function web();
-
-
-	/**
-	 * @return IOriginSyncSummary
-	 */
-	public function cron();
+	public function mail(): IOriginSyncSummary;
 }

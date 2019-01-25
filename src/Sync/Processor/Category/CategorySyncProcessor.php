@@ -6,16 +6,14 @@ use ilObjCategory;
 use ilObjectServiceSettingsGUI;
 use ilRepUtil;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
-use srag\Plugins\Hub2\Origin\Config\CategoryOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\Category\CategoryOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
-use srag\Plugins\Hub2\Origin\Properties\CategoryOriginProperties;
-use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
+use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -33,7 +31,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	use MetadataSyncProcessor;
 	use TaxonomySyncProcessor;
 	/**
-	 * @var CategoryOriginProperties
+	 * @var CategoryProperties
 	 */
 	protected $props;
 	/**
@@ -55,11 +53,9 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
@@ -94,10 +90,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 				$ilObjCategory->$setter($dto->$getter());
 			}
 		}
-		if ($this->props->get(CategoryOriginProperties::SHOW_NEWS)) {
+		if ($this->props->get(CategoryProperties::SHOW_NEWS)) {
 			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
 		}
-		if ($this->props->get(CategoryOriginProperties::SHOW_INFO_TAB)) {
+		if ($this->props->get(CategoryProperties::SHOW_INFO_TAB)) {
 			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
 		}
 		$ilObjCategory->update();
@@ -139,7 +135,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		if ($this->props->updateDTOProperty('showInfoPage')) {
 			ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
 		}
-		if ($this->props->get(CategoryOriginProperties::MOVE_CATEGORY)) {
+		if ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
 			$this->moveCategory($ilObjCategory, $dto);
 		}
 
@@ -155,15 +151,15 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		if ($ilObjCategory === NULL) {
 			return NULL;
 		}
-		if ($this->props->get(CategoryOriginProperties::DELETE_MODE) == CategoryOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CategoryProperties::DELETE_MODE) == CategoryProperties::DELETE_MODE_NONE) {
 			return $ilObjCategory;
 		}
-		switch ($this->props->get(CategoryOriginProperties::DELETE_MODE)) {
-			case CategoryOriginProperties::DELETE_MODE_MARK:
-				$ilObjCategory->setTitle($ilObjCategory->getTitle() . ' ' . $this->props->get(CategoryOriginProperties::DELETE_MODE_MARK_TEXT));
+		switch ($this->props->get(CategoryProperties::DELETE_MODE)) {
+			case CategoryProperties::DELETE_MODE_MARK:
+				$ilObjCategory->setTitle($ilObjCategory->getTitle() . ' ' . $this->props->get(CategoryProperties::DELETE_MODE_MARK_TEXT));
 				$ilObjCategory->update();
 				break;
-			case CourseOriginProperties::DELETE_MODE_DELETE:
+			case CourseProperties::DELETE_MODE_DELETE:
 				$ilObjCategory->delete();
 				break;
 		}

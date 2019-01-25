@@ -5,6 +5,7 @@ namespace srag\Plugins\Hub2\Sync\Processor;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IDataTransferObjectSort;
+use Throwable;
 
 /**
  * Interface ObjectProcessor
@@ -28,6 +29,8 @@ interface IObjectSyncProcessor {
 	 * @param IObject             $object
 	 * @param IDataTransferObject $dto
 	 * @param bool                $force Update all Objects without Hash comparison
+	 *
+	 * @throws Throwable
 	 */
 	public function process(IObject $object, IDataTransferObject $dto, bool $force = false);
 

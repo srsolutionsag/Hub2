@@ -7,6 +7,7 @@ use ilCSVReader;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
+use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
@@ -157,9 +158,9 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param Exception $e
+	 * @param ILog $log
 	 */
-	public function handleException(Exception $e) { }
+	public function handleLog(ILog $log) { }
 
 
 	/**

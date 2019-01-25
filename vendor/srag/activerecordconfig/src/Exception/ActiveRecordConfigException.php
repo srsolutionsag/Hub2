@@ -1,17 +1,31 @@
 <?php
 
-namespace srag\ActiveRecordConfig\Exception;
+namespace srag\ActiveRecordConfig\Hub2\Exception;
 
 use ilException;
 
 /**
  * Class ActiveRecordConfigException
  *
- * @package srag\ActiveRecordConfig\Exception
+ * @package srag\ActiveRecordConfig\Hub2\Exception
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 final class ActiveRecordConfigException extends ilException {
+
+	/**
+	 * @var int
+	 */
+	const CODE_INVALID_FIELD = 1;
+	/**
+	 * @var int
+	 */
+	const CODE_UNKOWN_COMMAND = 2;
+	/**
+	 * @var int
+	 */
+	const CODE_INVALID_CONFIG_GUI_CLASS = 3;
+
 
 	/**
 	 * ActiveRecordConfigException constructor
@@ -19,11 +33,11 @@ final class ActiveRecordConfigException extends ilException {
 	 * @param string $message
 	 * @param int    $code
 	 *
-	 * @access namespace
+	 * @internal
 	 */
 	public function __construct(/*string*/
 		$message, /*int*/
-		$code = 0) {
+		$code) {
 		parent::__construct($message, $code);
 	}
 }

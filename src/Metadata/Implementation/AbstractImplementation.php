@@ -3,8 +3,9 @@
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Metadata\IMetadata;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class CustomMetadata
@@ -15,6 +16,7 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
 abstract class AbstractImplementation implements IMetadataImplementation {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
@@ -27,7 +29,7 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * UDF constructor.
+	 * UDF constructor
 	 *
 	 * @param IMetadata $metadata
 	 */
@@ -38,19 +40,19 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	abstract public function write();
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	abstract public function read();
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getMetadata(): IMetadata {
 		return $this->metadata;
@@ -58,7 +60,7 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getIliasId(): int {
 		return $this->ilias_id;

@@ -3,10 +3,10 @@
 namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
-use srag\Plugins\Hub2\Exception\HubException;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectStatusTransition
@@ -14,29 +14,31 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  * @package srag\Plugins\Hub2\Sync
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @deprecated
  */
 class ObjectStatusTransition implements IObjectStatusTransition {
 
 	use DICTrait;
+	use Hub2Trait;
+	/**
+	 * @var string
+	 *
+	 * @deprecated
+	 */
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
-	 * @var array
-	 */
-	protected static $final = [
-		IObject::STATUS_NEW,
-		IObject::STATUS_CREATED,
-		IObject::STATUS_UPDATED,
-		IObject::STATUS_DELETED,
-		IObject::STATUS_IGNORED,
-	];
-	/**
 	 * @var IOriginConfig
+	 *
+	 * @deprecated
 	 */
 	protected $config;
 
 
 	/**
 	 * @param IOriginConfig $config
+	 *
+	 * @deprecated
 	 */
 	public function __construct(IOriginConfig $config) {
 		$this->config = $config;
@@ -45,11 +47,10 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
-	public function finalToIntermediate(IObject $object) {
-		if (!$this->isFinal($object->getStatus())) {
-			return $object->getStatus();
-		}
+	public function finalToIntermediate(IObject $object): int {
 		// If the config has defined an active period and the period of the object does not match,
 		// we set the status to IGNORED. The sync won't process this object anymore.
 		// If at any time there is no active period defined OR the object matches the period again,
@@ -58,50 +59,26 @@ class ObjectStatusTransition implements IObjectStatusTransition {
 		if ($active_period && ($object->getPeriod() != $active_period)) {
 			return IObject::STATUS_IGNORED;
 		}
+
 		switch ($object->getStatus()) {
 			case IObject::STATUS_NEW:
 				return IObject::STATUS_TO_CREATE;
+
 			case IObject::STATUS_CREATED:
 			case IObject::STATUS_UPDATED:
 				return IObject::STATUS_TO_UPDATE;
-			case IObject::STATUS_DELETED:
-				return IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED;
+
+			case IObject::STATUS_TO_OUTDATED:
+			case IObject::STATUS_OUTDATED:
+				return IObject::STATUS_TO_RESTORE;
+
 			case IObject::STATUS_IGNORED:
+			case IObject::STATUS_FAILED:
 				// Either create or update the ILIAS object
 				return ($object->getILIASId()) ? IObject::STATUS_TO_UPDATE : IObject::STATUS_TO_CREATE;
+
+			default:
+				return $object->getStatus();
 		}
-		throw new HubException(sprintf("Could not transition to intermediate state from state %s", $object->getStatus()));
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function intermediateToFinal(IObject $object) {
-		if ($this->isFinal($object->getStatus())) {
-			return $object->getStatus();
-		}
-		switch ($object->getStatus()) {
-			case IObject::STATUS_TO_CREATE:
-				return IObject::STATUS_CREATED;
-			case IObject::STATUS_TO_UPDATE:
-			case IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED:
-				return IObject::STATUS_UPDATED;
-			case IObject::STATUS_TO_DELETE:
-				return IObject::STATUS_DELETED;
-			case IObject::STATUS_NOTHING_TO_UPDATE:
-				return IObject::STATUS_IGNORED;
-		}
-		throw new HubException(sprintf("Could not transition to final state from state %s", $object->getStatus()));
-	}
-
-
-	/**
-	 * @param int $status
-	 *
-	 * @return bool
-	 */
-	protected function isFinal($status) {
-		return in_array($status, self::$final);
 	}
 }

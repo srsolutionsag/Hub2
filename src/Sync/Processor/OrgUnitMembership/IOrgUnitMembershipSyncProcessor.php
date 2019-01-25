@@ -8,7 +8,8 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  * Interface IOrgUnitMembershipSyncProcessor
  *
  * @package srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface IOrgUnitMembershipSyncProcessor extends IObjectSyncProcessor {
 

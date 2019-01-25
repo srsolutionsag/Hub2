@@ -8,7 +8,8 @@ use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
  * Class OrgUnitDTO
  *
  * @package srag\Plugins\Hub2\Object\OrgUnit
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
@@ -43,7 +44,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function __construct(string $ext_id) {
 		parent::__construct($ext_id);

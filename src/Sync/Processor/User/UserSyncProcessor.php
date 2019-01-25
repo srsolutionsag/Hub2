@@ -5,15 +5,13 @@ namespace srag\Plugins\Hub2\Sync\Processor\User;
 use ilMimeMail;
 use ilObjUser;
 use ilUtil;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\User\UserDTO;
-use srag\Plugins\Hub2\Origin\Config\IUserOriginConfig;
-use srag\Plugins\Hub2\Origin\Config\UserOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\User\IUserOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\User\UserOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
-use srag\Plugins\Hub2\Origin\Properties\UserOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -29,7 +27,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
 	use MetadataSyncProcessor;
 	/**
-	 * @var UserOriginProperties
+	 * @var UserProperties
 	 */
 	private $props;
 	/**
@@ -70,11 +68,9 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
@@ -97,14 +93,14 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$ilObjUser->setLogin($this->buildLogin($dto, $ilObjUser));
 		$ilObjUser->setUTitle($dto->getTitle());
 		$ilObjUser->create();
-		if ($this->props->get(UserOriginProperties::ACTIVATE_ACCOUNT)) {
+		if ($this->props->get(UserProperties::ACTIVATE_ACCOUNT)) {
 			$ilObjUser->setActive(true);
 			$ilObjUser->setProfileIncomplete(false);
 		} else {
 			$ilObjUser->setActive(false);
 			$ilObjUser->setProfileIncomplete(true);
 		}
-		if ($this->props->get(UserOriginProperties::CREATE_PASSWORD)) {
+		if ($this->props->get(UserProperties::CREATE_PASSWORD)) {
 			$password = $this->generatePassword();
 			$ilObjUser->setPasswd($password);
 		} else {
@@ -118,7 +114,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			}
 		}
 
-		if ($this->props->get(UserOriginProperties::CREATE_PASSWORD)) {
+		if ($this->props->get(UserProperties::CREATE_PASSWORD)) {
 			$password = $this->generatePassword();
 			$dto->setPasswd($password);
 			$ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
@@ -142,7 +138,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		/** @var UserDTO $dto */
 		$ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === NULL) {
-			return NULL;
+			// Recreate deleted users
+			return $this->handleCreate($dto);
 		}
 		$ilObjUser->setImportId($this->getImportId($dto));
 		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
@@ -156,7 +153,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$ilObjUser->setUTitle($dto->getTitle());
 		}
 		// Reactivate account?
-		if ($this->props->get(UserOriginProperties::REACTIVATE_ACCOUNT)) {
+		if ($this->props->get(UserProperties::REACTIVATE_ACCOUNT)) {
 			$ilObjUser->setActive(true);
 		}
 		// Set all properties if they should be updated depending on the origin config
@@ -175,7 +172,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$this->assignILIASRoles($dto, $ilObjUser);
 		}
 
-		if ($this->props->get(UserOriginProperties::RE_SEND_PASSWORD)) {
+		if ($this->props->get(UserProperties::RE_SEND_PASSWORD)) {
 			$password = $this->generatePassword();
 			$dto->setPasswd($password);
 			$ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
@@ -196,13 +193,13 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$mail = new ilMimeMail();
 			$mail->From(self::dic()->mailMimeSenderFactory()->system());
 			$mail->To($dto->getEmail());
-			$body = $this->props->get(UserOriginProperties::PASSWORD_MAIL_BODY);
+			$body = $this->props->get(UserProperties::PASSWORD_MAIL_BODY);
 
 			$body = strtr($body, array(
 				'[PASSWORD]' => $dto->getPasswd(),
 				'[LOGIN]' => $dto->getLogin()
 			));
-			$mail->Subject($this->props->get(UserOriginProperties::PASSWORD_MAIL_SUBJECT)); // TODO: Also replace placeholders
+			$mail->Subject($this->props->get(UserProperties::PASSWORD_MAIL_SUBJECT)); // TODO: Also replace placeholders
 			$mail->Body($body);
 			$mail->Send();
 		}
@@ -217,15 +214,15 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		if ($ilObjUser === NULL) {
 			return NULL;
 		}
-		if ($this->props->get(UserOriginProperties::DELETE) == UserOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(UserProperties::DELETE) == UserProperties::DELETE_MODE_NONE) {
 			return $ilObjUser;
 		}
-		switch ($this->props->get(UserOriginProperties::DELETE)) {
-			case UserOriginProperties::DELETE_MODE_INACTIVE:
+		switch ($this->props->get(UserProperties::DELETE)) {
+			case UserProperties::DELETE_MODE_INACTIVE:
 				$ilObjUser->setActive(false);
 				$ilObjUser->update();
 				break;
-			case UserOriginProperties::DELETE_MODE_DELETE:
+			case UserProperties::DELETE_MODE_DELETE:
 				$ilObjUser->delete();
 				break;
 		}
@@ -285,6 +282,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 			$login = $_login . $appendix;
 			$appendix ++;
 		}
+
+		$user->setLogin($login);
 
 		return $login;
 	}

@@ -2,15 +2,11 @@
 
 namespace srag\Plugins\Hub2\Sync;
 
-use Error;
-use Exception;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
-use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\NullDTO;
 use srag\Plugins\Hub2\Object\IObject;
@@ -19,6 +15,7 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 
 /**
@@ -31,6 +28,7 @@ use Throwable;
 class OriginSync implements IOriginSync {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
@@ -48,10 +46,6 @@ class OriginSync implements IOriginSync {
 	 * @var IDataTransferObject[]
 	 */
 	protected $dtoObjects = [];
-	/**
-	 * @var Exception[] array
-	 */
-	protected $exceptions = [];
 	/**
 	 * @var IObjectSyncProcessor
 	 */
@@ -74,14 +68,10 @@ class OriginSync implements IOriginSync {
 	protected $countProcessed = [
 		IObject::STATUS_CREATED => 0,
 		IObject::STATUS_UPDATED => 0,
-		IObject::STATUS_DELETED => 0,
+		IObject::STATUS_OUTDATED => 0,
 		IObject::STATUS_IGNORED => 0,
-		IObject::STATUS_NOTHING_TO_UPDATE => 0
+		IObject::STATUS_FAILED => 0
 	];
-	/**
-	 * @var OriginNotifications
-	 */
-	protected $notifications;
 
 
 	/**
@@ -91,54 +81,46 @@ class OriginSync implements IOriginSync {
 	 * @param IObjectSyncProcessor    $processor
 	 * @param IObjectStatusTransition $transition
 	 * @param IOriginImplementation   $implementation
-	 * @param OriginNotifications     $notifications
 	 */
-	public function __construct(IOrigin $origin, IObjectRepository $repository, IObjectFactory $factory, IObjectSyncProcessor $processor, IObjectStatusTransition $transition, IOriginImplementation $implementation, OriginNotifications $notifications) {
+	public function __construct(IOrigin $origin, IObjectRepository $repository, IObjectFactory $factory, IObjectSyncProcessor $processor, IObjectStatusTransition $transition, IOriginImplementation $implementation) {
 		$this->origin = $origin;
 		$this->repository = $repository;
 		$this->factory = $factory;
 		$this->processor = $processor;
 		$this->statusTransition = $transition;
 		$this->implementation = $implementation;
-		$this->notifications = $notifications;
 	}
 
 
 	/**
-	 * @throws AbortOriginSyncException
-	 * @throws HubException
-	 * @throws Throwable
+	 * @inheritdoc
 	 */
 	public function execute() {
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
 		// as the sync of this origin cannot continue.
-		try {
-			$this->implementation->beforeSync();
-			$this->implementation->connect();
-			$count = $this->implementation->parseData();
-			$this->countDelivered = $count;
-			// Check if the origin aborts its sync if the amount of delivered data is not enough
-			if ($this->origin->config()->getCheckAmountData()) {
-				$threshold = $this->origin->config()->getCheckAmountDataPercentage();
-				$total = $this->repository->count();
-				$percentage = ($total > 0 && $count > 0) ? (100 / $total * $count) : 0;
-				if ($total > 0 && ($percentage < $threshold)) {
-					$msg = "Amount of delivered data not sufficient: Got {$count} datasets, 
+		$this->implementation->beforeSync();
+
+		$this->implementation->connect();
+
+		$count = $this->implementation->parseData();
+
+		$this->countDelivered = $count;
+
+		// Check if the origin aborts its sync if the amount of delivered data is not enough
+		if ($this->origin->config()->getCheckAmountData()) {
+			$threshold = $this->origin->config()->getCheckAmountDataPercentage();
+			$total = $this->repository->count();
+			$percentage = ($total > 0 && $count > 0) ? (100 / $total * $count) : 0;
+			if ($total > 0 && ($percentage < $threshold)) {
+				$msg = "Amount of delivered data not sufficient: Got {$count} datasets, 
 					which is " . number_format($percentage, 2) . "% of the existing data in hub, 
 					need at least {$threshold}% according to origin config";
-					throw new AbortOriginSyncException($msg);
-				}
+				throw new AbortOriginSyncException($msg);
 			}
-			$this->dtoObjects = $this->implementation->buildObjects();
-		} catch (HubException $e) {
-			$this->exceptions[] = $e;
-			throw $e;
-		} catch (Throwable $e) {
-			// Note: Should not happen in the stages above, as only exceptions of type HubException should be raised.
-			// Throwable collects any exceptions AND Errors from PHP 7
-			$this->exceptions[] = $e;
-			throw $e;
 		}
+		$this->dtoObjects = $this->implementation->buildObjects();
+
+		$type = $this->origin->getObjectType();
 
 		// Sort dto objects
 		$this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
@@ -148,36 +130,49 @@ class OriginSync implements IOriginSync {
 		// 1. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
 		// 2. Let the processor process the corresponding ILIAS object
 
+		$objects_to_outdated = [];
+
 		$ext_ids_delivered = [];
-		$type = $this->origin->getObjectType();
 		foreach ($this->dtoObjects as $dto) {
 			$ext_ids_delivered[] = $dto->getExtId();
 			/** @var IObject $object */
 			$object = $this->factory->$type($dto->getExtId());
+
 			$object->setDeliveryDate(time());
-			// We merge the existing data with the new data
-			$data = array_merge($object->getData(), $dto->getData());
-			$dto->setData($data);
-			// Set the intermediate status before processing the ILIAS object
-			$object->setStatus($this->statusTransition->finalToIntermediate($object));
-			$this->processObject($object, $dto);
+
+			if (!$dto->shouldDeleted()) {
+				// We merge the existing data with the new data
+				$data = array_merge($object->getData(), $dto->getData());
+				$dto->setData($data);
+				// Set the intermediate status before processing the ILIAS object
+				$object->setStatus($this->statusTransition->finalToIntermediate($object));
+				$this->processObject($object, $dto);
+			} else {
+				$objects_to_outdated[] = $object;
+			}
 		}
 
 		// Start SYNC of objects not being delivered --> DELETE
 		// ======================================================================================================
 
-		foreach ($this->repository->getToDelete($ext_ids_delivered) as $object) {
+		if (!$this->origin->isAdHoc()) {
+			$objects_to_outdated = array_unique(array_merge($objects_to_outdated, $this->repository->getToDelete($ext_ids_delivered)));
+		} else {
+			if ($this->origin->isAdHoc() && $this->origin->isAdhocParentScope()) {
+				$adhoc_parent_ids = $this->implementation->getAdHocParentScopesAsExtIds();
+				$objects_in_parent_scope_not_delivered = $this->repository->getToDeleteByParentScope($ext_ids_delivered, $adhoc_parent_ids);
+				$objects_to_outdated = array_unique(array_merge($objects_to_outdated, $objects_in_parent_scope_not_delivered));
+			}
+		}
+
+		foreach ($objects_to_outdated as $object) {
 			$nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
-			$object->setStatus(IObject::STATUS_TO_DELETE);
+			$object->setStatus(IObject::STATUS_TO_OUTDATED);
 			$this->processObject($object, $nullDTO);
 		}
 
-		try {
-			$this->implementation->afterSync();
-		} catch (Throwable $e) {
-			$this->exceptions[] = $e;
-			throw $e;
-		}
+		$this->implementation->afterSync();
+
 		$this->getOrigin()->setLastRun(date(DATE_ATOM));
 
 		$this->getOrigin()->update();
@@ -215,14 +210,6 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @inheritdoc
 	 */
-	public function getExceptions() {
-		return $this->exceptions;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
 	public function getCountProcessedByStatus($status) {
 		return $this->countProcessed[$status];
 	}
@@ -245,48 +232,38 @@ class OriginSync implements IOriginSync {
 
 
 	/**
-	 * @inheritdoc
-	 */
-	public function getNotifications() {
-		return $this->notifications;
-	}
-
-
-	/**
 	 * @param IObject             $object
 	 * @param IDataTransferObject $dto
 	 *
-	 * @throws AbortOriginSyncException
-	 * @throws HubException
+	 * @throws Throwable
 	 */
 	protected function processObject(IObject $object, IDataTransferObject $dto) {
 		try {
 			$this->processor->process($object, $dto, $this->origin->isUpdateForced());
+
 			$this->incrementProcessed($object->getStatus());
-		} catch (AbortSyncException $e) {
+		} catch (AbortSyncException $ex) {
 			// Any exceptions aborting the global or current sync are forwarded to global sync
-			$this->exceptions[] = $e;
-			$object->save();
-			throw $e;
-		} catch (AbortOriginSyncOfCurrentTypeException $e) {
-			$this->exceptions[] = $e;
-			$object->save();
-			throw $e;
-		} catch (AbortOriginSyncException $e) {
-			$this->exceptions[] = $e;
-			$object->save();
-			throw $e;
-		} catch (Exception $e) {
-			// General exceptions during processing the ILIAS objects are forwarded to the origin implementation,
-			// which decides how to proceed, e.g. continue or abort
-			$this->exceptions[] = $e;
-			$object->save();
-			$this->implementation->handleException($e);
-		} catch (Error $e) {
-			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
-			$this->exceptions[] = $e;
-			$object->save();
-			throw new AbortOriginSyncException($e->getMessage());
+			$object->store();
+
+			throw $ex;
+		} catch (AbortOriginSyncOfCurrentTypeException $ex) {
+			$object->store();
+
+			throw $ex;
+		} catch (AbortOriginSyncException $ex) {
+			$object->store();
+
+			throw $ex;
+		} catch (Throwable $ex) {
+			$object->setStatus(IObject::STATUS_FAILED);
+			$this->incrementProcessed($object->getStatus());
+			$object->store();
+
+			$log = self::logs()->exceptionLog($ex, $this->origin, $object, $dto);
+			$log->store();
+
+			$this->implementation->handleLog($log);
 		}
 	}
 
@@ -294,13 +271,13 @@ class OriginSync implements IOriginSync {
 	/**
 	 * @param int $status
 	 */
-	protected function incrementProcessed($status) {
+	protected function incrementProcessed(int $status) {
 		$this->countProcessed[$status] ++;
 	}
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getOrigin() {
 		return $this->origin;

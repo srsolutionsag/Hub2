@@ -2,10 +2,11 @@
 
 require_once __DIR__ . "/AbstractHub2Tests.php";
 
+use ILIAS\DI\Container;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
+use Pimple\Container as PimpleContainer;
+use srag\DIC\Hub2\DICStatic;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
@@ -31,17 +32,9 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	 */
 	protected $origin;
 	/**
-	 * @var OriginNotifications
-	 */
-	protected $originNotifications;
-	/**
 	 * @var ObjectStatusTransition
 	 */
 	protected $statusTransition;
-	/**
-	 * @var MockInterface|ILog
-	 */
-	protected $originLog;
 	/**
 	 * @var IDataTransferObject
 	 */
@@ -69,25 +62,13 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected $originImplementation;
 
 
-	protected function initLog() {
-		$this->originLog = Mockery::mock("srag\Plugins\Hub2\Log\OriginLog");
-	}
-
-
-	protected function initNotifications() {
-		$this->originNotifications = new OriginNotifications();
-	}
-
-
 	protected function initStatusTransitions() {
-		$this->statusTransition = new ObjectStatusTransition(Mockery::mock("srag\Plugins\Hub2\Origin\Config\IOriginConfig"));
+		$this->statusTransition = new ObjectStatusTransition(Mockery::mock(IOriginConfig::class));
 	}
 
 
 	protected function setupGeneralDependencies() {
 		$this->initStatusTransitions();
-		$this->initNotifications();
-		$this->initLog();
 		$this->initDIC();
 	}
 
@@ -99,26 +80,28 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected function initOrigin(IOriginProperties $properties, IOriginConfig $config) {
 		$this->originProperties = $properties;
 		$this->originConfig = $config;
-		$this->origin = Mockery::mock("srag\Plugins\Hub2\Origin\IOrigin");
+		$this->origin = Mockery::mock(IOrigin::class);
 		$this->origin->shouldReceive('properties')->andReturn($properties);
 		$this->origin->shouldReceive('getId');
 		$this->origin->shouldReceive('config')->andReturn($config);
-		$this->originImplementation = Mockery::mock('\srag\Plugins\Hub2\Origin\IOriginImplementation');
+		$this->originImplementation = Mockery::mock(IOriginImplementation::class);
 	}
 
 
 	protected function initDIC() {
 		global $DIC;
 
-		$DIC = Mockery::mock('overload:\ILIAS\DI\Container', "Pimple\Container");
-		$tree_mock = Mockery::mock('overload:\ilTree');
+		$DIC = Mockery::mock('overload:' . Container::class, PimpleContainer::class);
+		$tree_mock = Mockery::mock('overload:' . ilTree::class);
 		$tree_mock->shouldReceive('isInTree')->with(1)->once()->andReturn(true);
 		$this->tree = $tree_mock;
 		$DIC->shouldReceive('repositoryTree')->once()->andReturn($tree_mock);
 
-		$language_mock = Mockery::mock('overload:\ilLanguage', "ilObject");
+		$language_mock = Mockery::mock('overload:' . ilLanguage::class, ilObject::class);
 		$language_mock->shouldReceive('getDefaultLanguage')->andReturn('en');
 		$DIC->shouldReceive('language')->once()->andReturn($language_mock);
+
+		DICStatic::clearCache();
 	}
 
 

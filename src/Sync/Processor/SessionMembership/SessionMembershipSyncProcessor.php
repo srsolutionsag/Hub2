@@ -7,16 +7,14 @@ use ilObjSession;
 use ilObjUser;
 use ilSessionParticipants;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
-use srag\Plugins\Hub2\Origin\Config\SessionMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\SessionMembership\SessionMembershipOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\SessionMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -30,7 +28,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISessionMembershipSyncProcessor {
 
 	/**
-	 * @var SessionMembershipOriginProperties
+	 * @var SessionMembershipProperties
 	 */
 	private $props;
 	/**
@@ -47,11 +45,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}

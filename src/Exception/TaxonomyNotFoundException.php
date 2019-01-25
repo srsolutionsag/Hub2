@@ -19,7 +19,7 @@ class TaxonomyNotFoundException extends HubException {
 
 
 	/**
-	 * TaxonomyNotFoundException constructor.
+	 * TaxonomyNotFoundException constructor
 	 *
 	 * @param ITaxonomy $ta
 	 */

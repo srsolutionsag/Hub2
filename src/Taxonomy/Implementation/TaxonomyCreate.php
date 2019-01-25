@@ -15,7 +15,7 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function write() {
 		if (!$this->taxonomyExists()) {

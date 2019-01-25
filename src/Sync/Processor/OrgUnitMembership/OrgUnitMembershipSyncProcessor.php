@@ -7,16 +7,14 @@ use ilObjOrgUnit;
 use ilOrgUnitPosition;
 use ilOrgUnitUserAssignment;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
-use srag\Plugins\Hub2\Origin\Config\IOrgUnitMembershipOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\OrgUnitMembership\IOrgUnitMembershipOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginFactory;
-use srag\Plugins\Hub2\Origin\Properties\IOrgUnitMembershipOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\IOrgUnitMembershipProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -25,12 +23,13 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  * Class OrgUnitMembershipSyncProcessor
  *
  * @package srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrgUnitMembershipSyncProcessor {
 
 	/**
-	 * @var IOrgUnitMembershipOriginProperties
+	 * @var IOrgUnitMembershipProperties
 	 */
 	private $props;
 	/**
@@ -47,11 +46,9 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
@@ -84,10 +81,10 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	 * @throws HubException
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id): FakeIliasObject {
-		if ($this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_ORG_UNIT_ID)
-			|| $this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_ORG_UNIT_ID_TYPE)
-			|| $this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_USER_ID)
-			|| $this->props->updateDTOProperty(IOrgUnitMembershipOriginProperties::PROP_POSITION)) {
+		if ($this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_ORG_UNIT_ID)
+			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_ORG_UNIT_ID_TYPE)
+			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_USER_ID)
+			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_POSITION)) {
 			$this->handleDelete($ilias_id);
 
 			return $this->handleCreate($dto);

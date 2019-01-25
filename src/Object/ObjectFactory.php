@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Object;
 
 use ilHub2Plugin;
 use LogicException;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -18,6 +18,7 @@ use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectFactory
@@ -29,6 +30,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 class ObjectFactory implements IObjectFactory {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
@@ -181,7 +183,7 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sessionMembership($ext_id) {
 		$session_membership = ARSessionMembership::find($this->getId($ext_id));
@@ -196,7 +198,7 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnit(string $ext_id): IOrgUnit {
 		$org_unit = AROrgUnit::find($this->getId($ext_id));
@@ -211,7 +213,7 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnitMembership(string $ext_id): IOrgUnitMembership {
 		$org_unit_membership = AROrgUnitMembership::find($this->getId($ext_id));
@@ -226,14 +228,89 @@ class ObjectFactory implements IObjectFactory {
 
 
 	/**
-	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
-	 * concatenation of the origins ID with the external-ID, see IObject::create()
-	 *
-	 * @param string $ext_id
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
-	protected function getId($ext_id) {
+	public function getId($ext_id) {
 		return $this->origin->getId() . $ext_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function users(): array {
+		return ARUser::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function courses(): array {
+		return ARCourse::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function categories(): array {
+		return ARCategory::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function groups(): array {
+		return ARGroup::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function sessions(): array {
+		return ARSession::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function courseMemberships(): array {
+		return ARCourseMembership::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function groupMemberships(): array {
+		return ARGroupMembership::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function sessionMemberships(): array {
+		return ARSessionMembership::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function orgUnits(): array {
+		return AROrgUnit::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function orgUnitMemberships(): array {
+		return AROrgUnitMembership::get();
 	}
 }

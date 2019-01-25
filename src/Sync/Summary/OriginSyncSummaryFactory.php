@@ -11,33 +11,17 @@ namespace srag\Plugins\Hub2\Sync\Summary;
 class OriginSyncSummaryFactory implements IOriginSyncSummaryFactory {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
-	public function common() {
-		return $this->web();
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function web() {
+	public function web(): IOriginSyncSummary {
 		return new OriginSyncSummaryWeb();
 	}
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
-	public function cron() {
-		return new OriginSyncSummaryCron();
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function mail() {
-		return new OriginSyncSummaryCron();
+	public function mail(): IOriginSyncSummary {
+		return new OriginSyncSummaryMail();
 	}
 }

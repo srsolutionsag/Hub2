@@ -6,8 +6,8 @@ use Mockery\MockInterface;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\Course\ICourse;
 use srag\Plugins\Hub2\Object\IObject;
-use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 use srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities;
 
@@ -51,14 +51,14 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->dto = new CourseDTO('extIdOfCourse');
 		$this->dto->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->setParentId(1)->setDescription("Description")->setTitle("Title")
 			->setContactEmail("contact@email.com")->setContactResponsibility("Responsibility")->setImportantInformation("Important Information")
-			->setNotificationEmails(["notification@email.com"])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
+			->setNotificationEmails([ "notification@email.com" ])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
 			->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setContactName("Contact Name")->setSyllabus('Syllabus')
 			->setContactConsultation('1 2 3 4 5 6')->setContactPhone('+41 123 456 789');
 	}
 
 
 	protected function initHubObject() {
-		$this->iobject = Mockery::mock('\srag\Plugins\Hub2\Object\Course\ICourse');
+		$this->iobject = Mockery::mock(ICourse::class);
 		$this->iobject->shouldReceive('setProcessedDate')->once();
 		// Note: We don't care about the correct status here since this is tested in ObjectStatusTransitionTest
 		$this->iobject->shouldReceive('setStatus')->once();
@@ -67,7 +67,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	protected function initILIASObject() {
-		$this->ilObject = Mockery::mock('overload:\ilObjCourse', 'ilObject');
+		$this->ilObject = Mockery::mock('overload:' . ilObjCourse::class, ilObject::class);
 		$this->ilObject->shouldReceive('getId')->andReturn(self::ILIAS_USER_ID);
 	}
 
@@ -76,9 +76,9 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Setup default mocks
 	 */
 	protected function setUp() {
-		$this->activities = Mockery::mock('\srag\Plugins\Hub2\Sync\Processor\Course\ICourseActivities');
+		$this->activities = Mockery::mock(ICourseActivities::class);
 
-		$this->initOrigin(new CourseOriginProperties(), new CourseOriginConfig([]));
+		$this->initOrigin(new CourseProperties(), new CourseOriginConfig([]));
 		$this->setupGeneralDependencies();
 		$this->initHubObject();
 		$this->initILIASObject();
@@ -95,13 +95,13 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create Course
 	 */
 	public function test_create_course_with_default_properties() {
-		$processor = new CourseSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications, $this->activities);
+		$processor = new CourseSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->activities);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
 		$this->originImplementation->shouldReceive('beforeCreateILIASObject')->once();
 		$this->originImplementation->shouldReceive('afterCreateILIASObject')->once();
-		$this->originImplementation->shouldReceive('overrideStatus')->once();
+
 		$this->ilObject->shouldReceive('setImportId')->once()->with('srhub__extIdOfCourse');
 		$this->ilObject->shouldReceive('create')->once();
 		$this->ilObject->shouldReceive('createReference')->once();
@@ -120,9 +120,9 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function test_update_course_with_default_properties() {
-		$processor = new CourseSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originLog, $this->originNotifications, $this->activities);
+		$processor = new CourseSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->activities);
 
-		$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
+		//$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());

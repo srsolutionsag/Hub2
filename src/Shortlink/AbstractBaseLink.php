@@ -3,8 +3,9 @@
 namespace srag\Plugins\Hub2\Shortlink;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class NullLink
@@ -14,6 +15,7 @@ use srag\Plugins\Hub2\Object\ARObject;
 abstract class AbstractBaseLink implements IObjectLink {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var ARObject
@@ -22,7 +24,7 @@ abstract class AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * AbstractBaseLink constructor.
+	 * AbstractBaseLink constructor
 	 *
 	 * @param ARObject $object
 	 */
@@ -30,7 +32,7 @@ abstract class AbstractBaseLink implements IObjectLink {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getNonExistingLink(): string {
 		return "index.php";

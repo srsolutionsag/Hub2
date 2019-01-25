@@ -10,6 +10,6 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  * @package srag\Plugins\Hub2\Object\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionRepository extends ObjectRepository {
+class SessionRepository extends ObjectRepository implements ISessionRepository {
 
 }

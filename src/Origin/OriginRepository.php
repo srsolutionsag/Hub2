@@ -3,7 +3,7 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
@@ -13,6 +13,7 @@ use srag\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
 use srag\Plugins\Hub2\Origin\Session\ARSessionOrigin;
 use srag\Plugins\Hub2\Origin\SessionMembership\ARSessionMembershipOrigin;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginRepository
@@ -24,6 +25,7 @@ use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 class OriginRepository implements IOriginRepository {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
@@ -103,7 +105,7 @@ class OriginRepository implements IOriginRepository {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function sessionsMemberships() {
 		return ARSessionMembershipOrigin::where([ 'object_type' => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP ])->get();
@@ -111,7 +113,7 @@ class OriginRepository implements IOriginRepository {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnits(): array {
 		return AROrgUnitOrigin::where([ "object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT ])->get();
@@ -119,7 +121,7 @@ class OriginRepository implements IOriginRepository {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function orgUnitMemberships(): array {
 		return AROrgUnitOrigin::where([ "object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP ])->get();

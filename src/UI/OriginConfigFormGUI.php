@@ -8,13 +8,14 @@ use ilFormSectionHeaderGUI;
 use ilHiddenInputGUI;
 use ilHub2Plugin;
 use ilNonEditableValueGUI;
+use ilNumberInputGUI;
 use ilPropertyFormGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilSelectInputGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -22,6 +23,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\DTOPropertyParser;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginConfigFormGUI
@@ -33,7 +35,10 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 class OriginConfigFormGUI extends ilPropertyFormGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+	const POST_VAR_ADHOC = "adhoc";
+	const POST_VAR_SORT = "sort";
 	protected $parent_gui;
 	/**
 	 * @var IOrigin
@@ -216,7 +221,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		$this->addItem($h);
 
 		$te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_class_name'), 'implementation_class_name');
-		$te->setInfo(self::plugin()->translate('origin_form_field_class_name_info', "", [ ArConfig::getOriginImplementationsPath() ]));
+		$te->setInfo(nl2br(self::plugin()
+			->translate('origin_form_field_class_name_info', "", [ ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH) ]), false));
 		$te->setValue($this->origin->getImplementationClassName());
 		$te->setRequired(true);
 		$this->addItem($te);
@@ -274,11 +280,15 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 	protected function addGeneral() {
 		if ($this->origin->getId()) {
 			$item = new ilNonEditableValueGUI();
-			$item->setTitle('ID');
+			$item->setTitle(self::plugin()->translate("origin_id"));
 			$item->setValue($this->origin->getId());
 			$this->addItem($item);
 			$item = new ilHiddenInputGUI('origin_id');
 			$item->setValue($this->origin->getId());
+			$this->addItem($item);
+
+			$item = new ilNumberInputGUI(self::plugin()->translate("origin_sort"), self::POST_VAR_SORT);
+			$item->setValue($this->origin->getSort());
 			$this->addItem($item);
 		}
 		$item = new ilTextInputGUI(self::plugin()->translate('origin_title'), 'title');
@@ -292,7 +302,11 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		if ($this->origin->getId()) {
 			$item = new ilNonEditableValueGUI();
 			$item->setTitle(self::plugin()->translate('origin_form_field_usage_type'));
-			$item->setValue($this->origin->getObjectType()); // TODO: Translate object type
+			$item->setValue(self::plugin()->translate("origin_object_type_" . $this->origin->getObjectType()));
+			$this->addItem($item);
+			$item = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc"), self::POST_VAR_ADHOC);
+			$item->setChecked($this->origin->isAdHoc());
+			$item->setInfo(self::plugin()->translate("origin_form_field_adhoc_info"));
 			$this->addItem($item);
 			$item = new ilCheckboxInputGUI(self::plugin()->translate('origin_form_field_active'), 'active');
 			$item->setChecked($this->origin->isActive());

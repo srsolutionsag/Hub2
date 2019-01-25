@@ -6,17 +6,15 @@ use ilDate;
 use ilObjGroup;
 use ilRepUtil;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
 use srag\Plugins\Hub2\Object\ObjectFactory;
-use srag\Plugins\Hub2\Origin\Config\GroupOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\Group\GroupOriginConfig;
 use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\GroupOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -33,7 +31,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	use TaxonomySyncProcessor;
 	use MetadataSyncProcessor;
 	/**
-	 * @var GroupOriginProperties
+	 * @var GroupProperties
 	 */
 	protected $props;
 	/**
@@ -86,12 +84,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
-	 * @param OriginNotifications     $originNotifications
 	 * @param IGroupActivities        $groupActivities
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications, IGroupActivities $groupActivities) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, IGroupActivities $groupActivities) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 		$this->groupActivities = $groupActivities;
@@ -209,7 +205,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			$ilObjGroup->enableUnlimitedRegistration($dto->getRegisterMode());
 		}
 
-		if ($this->props->get(GroupOriginProperties::MOVE_GROUP)) {
+		if ($this->props->get(GroupProperties::MOVE_GROUP)) {
 			$this->moveGroup($ilObjGroup, $dto);
 		}
 		$ilObjGroup->update();
@@ -226,21 +222,21 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		if ($ilObjGroup === NULL) {
 			return NULL;
 		}
-		if ($this->props->get(GroupOriginProperties::DELETE_MODE) == GroupOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(GroupProperties::DELETE_MODE) == GroupProperties::DELETE_MODE_NONE) {
 			return $ilObjGroup;
 		}
-		switch ($this->props->get(GroupOriginProperties::DELETE_MODE)) {
-			case GroupOriginProperties::DELETE_MODE_CLOSED:
+		switch ($this->props->get(GroupProperties::DELETE_MODE)) {
+			case GroupProperties::DELETE_MODE_CLOSED:
 				$ilObjGroup->setGroupStatus(2);
 				$ilObjGroup->update();
 				break;
-			case GroupOriginProperties::DELETE_MODE_DELETE:
+			case GroupProperties::DELETE_MODE_DELETE:
 				$ilObjGroup->delete();
 				break;
-			case GroupOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
+			case GroupProperties::DELETE_MODE_MOVE_TO_TRASH:
 				self::dic()->tree()->moveToTrash($ilObjGroup->getRefId(), true);
 				break;
-			case GroupOriginProperties::DELETE_MODE_DELETE_OR_CLOSE:
+			case GroupProperties::DELETE_MODE_DELETE_OR_CLOSE:
 				if ($this->groupActivities->hasActivities($ilObjGroup)) {
 					$ilObjGroup->setGroupStatus(2);
 					$ilObjGroup->update();

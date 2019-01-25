@@ -4,10 +4,8 @@ namespace srag\Plugins\Hub2\Origin\Config;
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\MetadataFactory;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
@@ -26,25 +24,13 @@ class OriginImplementationFactory {
 	 * @var IOrigin
 	 */
 	protected $origin;
-	/**
-	 * @var ILog
-	 */
-	protected $originLog;
-	/**
-	 * @var OriginNotifications
-	 */
-	protected $originNotifications;
 
 
 	/**
-	 * @param IOrigin             $origin
-	 * @param ILog                $originLog
-	 * @param OriginNotifications $originNotifications
+	 * @param IOrigin $origin
 	 */
-	public function __construct(IOrigin $origin, ILog $originLog, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin) {
 		$this->origin = $origin;
-		$this->originLog = $originLog;
-		$this->originNotifications = $originNotifications;
 	}
 
 
@@ -53,7 +39,7 @@ class OriginImplementationFactory {
 	 * @throws HubException
 	 */
 	public function instance() {
-		$basePath = rtrim(ArConfig::getOriginImplementationsPath(), '/') . '/';
+		$basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
 		$path = $basePath . $this->origin->getObjectType() . '/';
 		$className = $this->origin->getImplementationClassName();
 		$namespace = $this->origin->getImplementationNamespace();
@@ -63,7 +49,7 @@ class OriginImplementationFactory {
 		}
 		require_once $classFile;
 		$class = rtrim($namespace, "\\") . "\\" . $className;
-		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originLog, $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory());
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
 
 		return $instance;
 	}

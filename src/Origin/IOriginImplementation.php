@@ -2,12 +2,12 @@
 
 namespace srag\Plugins\Hub2\Origin;
 
-use Exception;
 use InvalidArgumentException;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
+use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
 
@@ -78,9 +78,9 @@ interface IOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param Exception $e
+	 * @param ILog $log
 	 */
-	public function handleException(Exception $e);
+	public function handleLog(ILog $log);
 
 
 	/**
@@ -136,8 +136,8 @@ interface IOriginImplementation {
 	 * Valid Status are:
 	 * - IObject::STATUS_TO_CREATE
 	 * - IObject::STATUS_TO_UPDATE
-	 * - IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED
-	 * - IObject::STATUS_TO_DELETE
+	 * - IObject::STATUS_TO_OUTDATED
+	 * - IObject::STATUS_TO_RESTORE
 	 * - IObject::STATUS_IGNORED
 	 *
 	 * E.G. $object->overrideStatus(IObject::STATUS_TO_UPDATE);
@@ -150,4 +150,22 @@ interface IOriginImplementation {
 	 * @return void
 	 */
 	public function overrideStatus(HookObject $hook);
+
+
+	/**
+	 * Returns an array of ext ids of parent containers to
+	 * be used if adhoc sync with parent scope is used.
+	 *
+	 * This can be useful if e.g. courses with members are delivered
+	 * by the foreign systems API and if e.g. a course member is removed
+	 * the complete course with the new member list would be delivered (and
+	 * not the message, that this exact member is removed from the course).
+	 *
+	 * Children (e.g. memberships) of such containers will be considered when
+	 * generating the list of items to be deleted.
+	 *
+	 * @return array ext_ids of parent containers, who's children will be considered
+	 * when determining dto's to be deleted.
+	 */
+	public function getAdHocParentScopesAsExtIds(): array;
 }

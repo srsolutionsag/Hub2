@@ -15,7 +15,7 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 class ByExternalAccount extends AMappingStrategy implements IMappingStrategy {
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function map(IDataTransferObject $dto): int {
 		if (!$dto instanceof UserDTO) {

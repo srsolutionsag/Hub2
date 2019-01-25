@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor;
 
+use srag\Plugins\Hub2\Object\IObjectRepository;
+
 /**
  * Class FakeIliasMembershipObject
  *
@@ -10,7 +12,7 @@ namespace srag\Plugins\Hub2\Sync\Processor;
  */
 class FakeIliasMembershipObject extends FakeIliasObject {
 
-	const GLUE = "|||";
+	const GLUE = IObjectRepository::GLUE;
 	/**
 	 * @var int
 	 */
@@ -22,7 +24,7 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 
 
 	/**
-	 * FakeIliasMembershipObject constructor.
+	 * FakeIliasMembershipObject constructor
 	 *
 	 * @param int $container_id_ilias
 	 * @param int $user_id_ilias
@@ -48,7 +50,7 @@ class FakeIliasMembershipObject extends FakeIliasObject {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getId(): string {
 		return $this->id;

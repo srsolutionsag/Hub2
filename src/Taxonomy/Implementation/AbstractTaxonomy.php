@@ -5,9 +5,10 @@ namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 use ilHub2Plugin;
 use ilObjTaxonomy;
 use ilTaxonomyTree;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractTaxonomy
@@ -18,6 +19,7 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
@@ -46,7 +48,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 
 	/**
-	 * Taxonomy constructor.
+	 * Taxonomy constructor
 	 *
 	 * @param ITaxonomy $taxonomy
 	 */
@@ -108,13 +110,13 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	abstract public function write();
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getTaxonomy(): ITaxonomy {
 		return $this->taxonomy;
@@ -122,7 +124,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function getILIASParentId(): int {
 		return $this->ilias_parent_id;

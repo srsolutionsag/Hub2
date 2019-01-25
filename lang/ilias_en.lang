@@ -17,7 +17,7 @@ admin_membership_activate_info#:#Enable notification by email on a new course me
 admin_membership_mail_subject#:#Subject of notification mail
 admin_membership_mail_subject_info#:#The placeholders of the message (below) can also be used here.
 admin_membership_mail_msg#:#Body of notification mail
-admin_membership_mail_msg_info#:#The following placeholders can be used: <br>[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]
+admin_membership_mail_msg_info#:#The following placeholders can be used: \n[FIRSTNAME][LASTNAME][LOGIN][COURSE_LINK][COURSE_TITLE][VALIDITY_START][VALIDITY_END]
 admin_msg_shortlink_not_found#:#Not-found-message
 admin_msg_shortlink_not_found_info#:#Is shown if a shortlink to an object is used which does not exist.
 admin_origins_path#:#Path to Origins
@@ -38,6 +38,20 @@ admin_msg_shortlink_no_access#:#"No Access" Message
 admin_msg_shortlink_no_access_info#:#Message is display to users which use a Shortlink to an object without read-access.
 admin_msg_shortlink_success#:#Message for successful redirects
 admin_msg_shortlink_success_info#:#Message is shwon whenever a sucessful redirect via Shortlink happened.
+admin_msg_shortlink_success_info
+admin_msg_key_custom_views_active#:#Activate Custom Views
+admin_msg_key_custom_views_path#:#Custom View Class Path
+admin_msg_key_custom_views_path_info#:#Path to class controlling the custom views.
+admin_msg_key_custom_views_class#:#Custom View Class
+admin_msg_key_custom_views_class_info#:#Name or namespace of the class controlling the custom views.
+admin_tab_custom_views#:#Custom Views
+admin_custom_view_class_not_found_1#:#There was a problem with the class defined in
+admin_custom_view_class_not_found_2#:# Error Message:
+admin_msg_key_global_hock_active#:#Activate a Global Hook
+admin_msg_key_global_hock_path#:#Global Hook Class Path
+admin_msg_key_global_hock_path_info#:#Path to the class of the Global Hook.
+admin_msg_key_global_hock_class#:#Global Hook Class
+admin_msg_key_global_hock_class_info#:#Name or namespace of the class enabling to customize global before and after sync methods.
 cat_prop_base_node_external#:#External base node
 cat_prop_base_node_external_info#:#Fallback external ID of a category (of this origin) used as parent, only if the given parent could not be found via external ID.
 cat_prop_base_node_ilias#:#ILIAS base node
@@ -180,7 +194,7 @@ origin_form_title_add#:#Create origin
 origin_form_title_edit#:#Edit origin
 origin_form_field_active#:#Sync active
 origin_form_field_class_name#:#PHP class name
-origin_form_field_class_name_info#:#Class file must exist in '%s'.<br>After saving, Hub will try to automatically create a template for you at this location.
+origin_form_field_class_name_info#:#Class file must exist in '%s'.\nAfter saving, Hub will try to automatically create a template for you at this location.
 origin_form_field_conf_type#:#Origin type
 origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Database
@@ -197,9 +211,9 @@ origin_form_field_conf_type_file_info#:#Data is read from a file.
 origin_form_field_conf_type_file_path#:#Paht to file
 origin_form_field_description#:#Description
 origin_form_field_exec_time#:#Timr of the sync
-origin_form_field_exec_time_info#:#Format: HH:MM <br>If not empty, the origin will only be executed at this specific time<br>(if the cron job is running at this time) and ignored otherwise.
+origin_form_field_exec_time_info#:#Format: HH:MM \nIf not empty, the origin will only be executed at this specific time\n(if the cron job is running at this time) and ignored otherwise.
 origin_form_field_id#:#ID
-origin_form_field_notification_email#:#Notification on error
+origin_form_field_notification_email#:#Notification for extraordinary log entries (<> Info)
 origin_form_field_summary_email#:#E-mail addresses for summary
 origin_from_field_active_period#:#Active period
 origin_from_field_active_period_info#:#The synchronization only processes objects belonging to the current period defined here. Objects not belonging to this period are set to IGNORED.
@@ -241,7 +255,6 @@ origin_object_type_session#:#Session
 origin_object_type_sessionMembership#:#Session Membership
 origin_form_field_namespace#:#PHP namespace
 origin_form_field_namespace_info#:#PHP namespace
-origin_table_button_force#:#Force update
 origin_object_type_orgUnit#:#Organisational units
 origin_object_type_orgUnitMembership#:#Organisational unit memberships
 object_type_user#:#User
@@ -308,6 +321,7 @@ view_field_status#:#Status
 view_field_title#:#Title
 view_field_user_name#:#User name
 view_field_view_mode#:#View Mode
+views#:#Views
 icon_form_title_dep_1#:#Icons for first categorie
 icon_form_title_dep_2#:#Icons for second categorie
 icon_form_title_dep_3#:#Icons for third categorie
@@ -331,11 +345,10 @@ data_table_header_ilias_id#:#ILIAS ID
 data_table_header_status#:#Status
 data_table_header_period#:#Period
 data_table_header_actions#:#Actions
-data_table_header_view#:#View
-data_table_header_data#:#Data
+data_table_header_data#:#Delivered data
 data_table_header_origin#:#Origin
 data_table_hash#:#Hash: %s
-data_table_all#:#ALL
+data_table_all#:#All
 data_table_ext_id#:#Ext ID: %s
 data_table_ext_md#:#MD: %s
 data_table_ext_tax#:#TAX: %s
@@ -344,7 +357,7 @@ status_16#:#Updated
 status_2#:#To create
 status_32#:#To delete
 subtab_origins#:#Overview
-subtab_data#:#Verlauf
+subtab_data#:#Status
 grp_prop_activate#:#Activate
 grp_prop_delete_mode#:#Delete behavior
 grp_prop_delete_mode_close#:#Make group a "closed group"
@@ -368,20 +381,64 @@ summary_for#:#Summary for %s:
 summary_delivered_data_sets#:#Delivered data sets: %s
 summary_created#:#Created: %s
 summary_updated#:#Updated: %s
-summary_deleted#:#Deleted: %s
+summary_outdated#:#Outdated: %s
 summary_ignored#:#Ignored: %s
-summary_no_changes#:#No changes: %s
-summary_exceptions#:#Exceptions:
+summary_failed#:#Failed: %s
 summary_notification#:#Hub2: Summary for %s
-summary_exceptions_in#:#Hub2: Exceptions in %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Base ref ID
 orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.
+data_table_status_new#:#New
+data_table_status_to_create#:#To create
+data_table_status_created#:#Created
+data_table_status_to_update#:#To update
+data_table_status_updated#:#Updated
+data_table_status_to_outdated#:#To outdated
+data_table_status_outdated#:#Outdated
+data_table_status_to_restore#:#To restore
+data_table_status_ignored#:#Ignored
+data_table_status_not_ignored#:#Not ignored
+data_table_status_failed#:#Failed
+origin_form_field_adhoc#:#AdHoc
+origin_form_field_adhoc_info#:#Only the data that has been changed will be delivered
+origin_form_field_adhoc_parent_scope#:#Set Scope to Parent
+origin_form_field_adhoc_parent_scope_info#:#Only the data of containers which have been changed will be delivered
+origin_table_button_run_force_update#:#Sync (Force update)
+origin_deleted#:#Origin deleted
+crs_membership_prop_delete_mode_delete#:#Terminate membership
+origin_id#:#ID
+origin_sort#:#Sort
+origin_table_header_id#:#ID
+origin_table_header_sort#:#Sort
+logs_additional_data#:#Additional data
+logs_cron#:#Delete old logs
+logs_cron_description#:#After the specified config time, old logs will be deleted automatically. The newest log per origin id and ext id will always be kept
+logs_date#:#Date / Time
+logs_days#:#Days
+logs_deleted_status#:#Deleted %s log(s)
+logs_keep_old_logs_time#:#Keyp old logs maximal for
+logs_keep_old_logs_time_info#:#After the specified time, old logs will be deleted automatically. The newest log per origin id and ext id will always be kept
+logs_level#:#Level
+logs_level_200#:#Info
+logs_level_300#:#Warning
+logs_level_400#:#Exception
+logs_level_500#:#Critical
+logs_logs#:#Logs
+logs_message#:#Message
+logs_no_additional_data#:#No additional data
+logs_object_ext_id#:#External ID
+logs_object_ilias_id#:#ILIAS ID
+logs_origin_id#:#Origin ID
+logs_origin_object_type#:#Origin object type
+logs_show_logs#:#Show logs
+logs_summary#:#Logs:
+logs_summary_logs_in#:#Hub2: Logs in %s
+logs_title#:#Title
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
 removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin
 removeplugindataconfirm_data#:#%1$s data
 removeplugindataconfirm_keep_data#:#Keep %1$s data
-removeplugindataconfirm_msg_kept_data#:#The %1$s data was kept!
-removeplugindataconfirm_msg_removed_data#:#The %1$s data was also removed!
+removeplugindataconfirm_msg_kept_data#:#The %1$s data was kept
+removeplugindataconfirm_msg_removed_data#:#The %1$s data was also removed
 removeplugindataconfirm_remove_data#:#Remove %1$s data

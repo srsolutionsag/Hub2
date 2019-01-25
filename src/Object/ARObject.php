@@ -7,12 +7,14 @@ use DateTime;
 use Exception;
 use ilHub2Plugin;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
-use srag\DIC\DICTrait;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Metadata\Metadata;
+use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\Node;
 use srag\Plugins\Hub2\Taxonomy\Taxonomy;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ARObject
@@ -24,6 +26,7 @@ use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 abstract class ARObject extends ActiveRecord implements IObject {
 
 	use DICTrait;
+	use Hub2Trait;
 	/**
 	 * @abstract
 	 */
@@ -52,23 +55,17 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @var array
 	 */
-	protected static $status_allowed_to_update_to = [
-		IObject::STATUS_NOTHING_TO_UPDATE,
-	];
-	/**
-	 * @var array
-	 */
-	protected static $available_status = [
-		IObject::STATUS_NEW,
-		IObject::STATUS_TO_CREATE,
-		IObject::STATUS_CREATED,
-		IObject::STATUS_UPDATED,
-		IObject::STATUS_TO_UPDATE,
-		IObject::STATUS_TO_DELETE,
-		IObject::STATUS_DELETED,
-		IObject::STATUS_TO_UPDATE_NEWLY_DELIVERED,
-		IObject::STATUS_IGNORED,
-		IObject::STATUS_NOTHING_TO_UPDATE,
+	public static $available_status = [
+		IObject::STATUS_NEW => "new",
+		IObject::STATUS_TO_CREATE => "to_create",
+		IObject::STATUS_CREATED => "created",
+		IObject::STATUS_UPDATED => "updated",
+		IObject::STATUS_TO_UPDATE => "to_update",
+		IObject::STATUS_TO_OUTDATED => "to_outdated",
+		IObject::STATUS_OUTDATED => "outdated",
+		IObject::STATUS_TO_RESTORE => "to_restore",
+		IObject::STATUS_IGNORED => "ignored",
+		IObject::STATUS_FAILED => "failed"
 	];
 	/**
 	 * The primary ID is a composition of the origin-ID and ext_id
@@ -299,7 +296,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function getDeliveryDate() {
+	public function getDeliveryDate(): DateTime {
 		return new DateTime($this->delivery_date);
 	}
 
@@ -307,7 +304,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function getProcessedDate() {
+	public function getProcessedDate(): DateTime {
 		return new DateTime($this->processed_date);
 	}
 
@@ -315,7 +312,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function setDeliveryDate($unix_timestamp) {
+	public function setDeliveryDate(int $unix_timestamp) {
 		$this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
@@ -323,7 +320,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function setProcessedDate($unix_timestamp) {
+	public function setProcessedDate(int $unix_timestamp) {
 		$this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
 	}
 
@@ -349,7 +346,7 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function getStatus() {
+	public function getStatus(): int {
 		return $this->status;
 	}
 
@@ -357,23 +354,14 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @inheritdoc
 	 */
-	public function setStatus($status) {
-		if (!in_array($status, self::$available_status)) {
+	public function setStatus(int $status) {
+		if (!isset(self::$available_status[$status])) {
 			throw new InvalidArgumentException("'{$status}' is not a valid status");
 		}
-		$this->status = $status;
 
-		return $this;
-	}
+		self::logs()->originLog((new OriginFactory())->getById($this->origin_id), $this)->write("Changed status from "
+			. self::$available_status[$this->status] . " to " . self::$available_status[$status]);
 
-
-	/**
-	 * @inheritDoc
-	 */
-	public function updateStatus($status) {
-		if (!in_array($status, self::$status_allowed_to_update_to)) {
-			throw new InvalidArgumentException("'{$status}' is not valid to switch to");
-		}
 		$this->status = $status;
 
 		return $this;

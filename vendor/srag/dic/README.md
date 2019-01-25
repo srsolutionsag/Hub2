@@ -13,13 +13,15 @@ And run a `composer install`.
 
 If you deliver your plugin, the plugin has it's own copy of this library and the user doesn't need to install the library.
 
-Hint: Because of multiple autoloaders of plugins, it could be, that different versions of this library exists and suddenly your plugin use an old version of an other plugin! So you should keep up to date your plugin with `composer update`.
+Tip: Because of multiple autoloaders of plugins, it could be, that different versions of this library exists and suddenly your plugin use an older or a newer version of an other plugin!
+
+So I recommand to use [srag/librariesnamespacechanger](https://packagist.org/packages/srag/librariesnamespacechanger) in your plugin.
 
 #### Use trait
 Declare your class like follow:
 ```php
 //...
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 //...
 class x {
 	//...
@@ -74,17 +76,44 @@ For plugin dir use:
 self::plugin()->directory()/*: string*/;
 ```
 
-For output html, gui or json use:
+For output HTML or GUI use:
 ```php
 /**
- * Output HTML, GUI or JSON
+ * Output HTML or GUI
  * 
- * @param string|ilTemplate|ilConfirmationGUI|ilPropertyFormGUI|ilTable2GUI|int|double|bool|array|stdClass|JsonSerializable $html HTML code or some gui instance
- * @param bool                                                                                                                   $main Display main skin?
+ * @param string|object $html          HTML code or some GUI instance
+ * @param bool          $show          Show main template?
+ * @param bool          $main_template Display main skin?
  *
  * @throws DICException
  */
-self::plugin()->output($value, $main = true)/*: void*/;
+self::output()->output($value, $show = false, $main_template = true)/*: void*/;
+```
+
+For output JSON:
+```php
+/**
+ * Output JSON
+ * 
+ * @param string|int|double|bool|array|stdClass|null|JsonSerializable $value JSON value
+ *
+ * @throws DICException
+ */
+self::output()->outputJSON($value)/*: void*/;
+```
+
+For get HTML of GUI:
+```php
+/**
+ * Get HTML of GUI
+ * 
+ * @param string|object $html HTML code or some GUI instance
+ *
+ * @return string HTML
+ *
+ * @throws DICException
+ */
+self::output()->getHTML($value)/*: string*/;
 ```
 
 For get a template use:
@@ -131,9 +160,9 @@ If you really need the ILIAS plugin object use but avoid this:
 /**
  * Get ILIAS plugin object instance
  *
- * @return ilPlugin ILIAS plugin object instance
+ * Please avoid to use ILIAS plugin object instance and instead use methods in this class!
  *
- * @deprecated Please avoid to use ILIAS plugin object instance and instead use methods in this class!
+ * @return ilPlugin ILIAS plugin object instance
  */
 self::plugin()->getPluginObject()/*: ilPlugin*/;
 ```
@@ -178,7 +207,7 @@ If you want development in this library you should install this library like fol
 
 Start at your ILIAS root directory
 ```bash
-mkdir -p Customizing/global/plugins/Libraries
-cd Customizing/global/plugins/Libraries
+mkdir -p Customizing/global/libraries
+cd Customizing/global/libraries
 git clone -b develop git@git.studer-raimann.ch:ILIAS/Plugins/DIC.git DIC
 ```

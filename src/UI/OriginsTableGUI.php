@@ -6,9 +6,10 @@ use hub2ConfigOriginsGUI;
 use ilAdvancedSelectionListGUI;
 use ilHub2Plugin;
 use ilTable2GUI;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginsTableGUI
@@ -20,6 +21,7 @@ use srag\Plugins\Hub2\Origin\IOriginRepository;
 class OriginsTableGUI extends ilTable2GUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var int
@@ -58,7 +60,8 @@ class OriginsTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initColumns() {
-		$this->addColumn('ID', 'id');
+		$this->addColumn(self::plugin()->translate('origin_table_header_id'), 'id');
+		$this->addColumn(self::plugin()->translate('origin_table_header_sort'), 'sort');
 		$this->addColumn(self::plugin()->translate('origin_table_header_active'), 'active');
 		$this->addColumn(self::plugin()->translate('origin_table_header_title'), 'title');
 		$this->addColumn(self::plugin()->translate('origin_table_header_description'), 'description');
@@ -80,15 +83,18 @@ class OriginsTableGUI extends ilTable2GUI {
 			$objectRepository = new $class($origin);
 			$row = [];
 			$row['id'] = $origin->getId();
+			$row['sort'] = $origin->getSort();
 			$row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
 			$row['title'] = $origin->getTitle();
 			$row['description'] = $origin->getDescription();
-			$row['object_type'] = $origin->getObjectType(); // TODO: Translate object type
+			$row['object_type'] = self::plugin()->translate("origin_object_type_" . $origin->getObjectType());
 			$row['last_sync'] = $origin->getLastRun();
 			$row['n_objects'] = $objectRepository->count();
 			$data[] = $row;
 		}
 		$this->setData($data);
+		$this->setDefaultOrderField("sort");
+		$this->setDefaultOrderDirection("asc");
 	}
 
 
@@ -111,9 +117,11 @@ class OriginsTableGUI extends ilTable2GUI {
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE));
 		$actions->addItem(self::plugin()->translate('origin_table_button_run'), 'runOriginSync', self::dic()->ctrl()
 			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
+		$actions->addItem(self::plugin()->translate('origin_table_button_run_force_update'), 'runOriginSyncForceUpdate', self::dic()->ctrl()
+			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE));
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
 		$this->tpl->setCurrentBlock('cell');
-		$this->tpl->setVariable('VALUE', $actions->getHTML());
+		$this->tpl->setVariable('VALUE', self::output()->getHTML($actions));
 		$this->tpl->parseCurrentBlock();
 	}
 }

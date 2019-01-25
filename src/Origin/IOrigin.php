@@ -179,4 +179,49 @@ interface IOrigin {
 	 * @return bool
 	 */
 	public function isUpdateForced(): bool;
+
+
+	/**
+	 * @return bool
+	 */
+	public function isAdHoc(): bool;
+
+
+	/**
+	 * @param bool $active
+	 */
+	public function setAdHoc(bool $adhoc)/*: void*/
+	;
+
+
+	/**
+	 * @return bool
+	 */
+	public function isAdhocParentScope(): bool;
+
+
+	/**
+	 * @param bool $adhoc_parent_scope
+	 */
+	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/
+	;
+
+
+	/**
+	 * @return int
+	 */
+	public function getSort(): int;
+
+
+	/**
+	 * @param int $sort
+	 */
+	public function setSort(int $sort)/*: void*/
+	;
+
+
+	/**
+	 *
+	 */
+	public function store();
 }

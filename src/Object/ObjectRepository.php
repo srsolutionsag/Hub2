@@ -4,8 +4,9 @@ namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectRepository
@@ -17,6 +18,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 abstract class ObjectRepository implements IObjectRepository {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin
@@ -29,7 +31,7 @@ abstract class ObjectRepository implements IObjectRepository {
 
 
 	/**
-	 * ObjectRepository constructor.
+	 * ObjectRepository constructor
 	 *
 	 * @param IOrigin $origin
 	 */
@@ -41,7 +43,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function all() {
+	public function all(): array {
 		$class = $this->getClass();
 
 		/** @var ActiveRecord $class */
@@ -52,7 +54,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function getByStatus($status) {
+	public function getByStatus(int $status): array {
 		$class = $this->getClass();
 
 		/** @var ActiveRecord $class */
@@ -66,7 +68,32 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function getToDelete(array $ext_ids) {
+	public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array {
+		$glue = self::GLUE;
+		$class = $this->getClass();
+
+		if (count($parent_ext_ids) > 0) {
+			if (count($ext_ids) > 0) {
+				$existing_ext_id_query = " AND ext_id NOT IN ('" . implode("','", $ext_ids) . "') ";
+			}
+
+			return $class::where("origin_id = " . $this->origin->getId() . " AND status IN ('" . implode("','", [
+					IObject::STATUS_CREATED,
+					IObject::STATUS_UPDATED,
+					IObject::STATUS_IGNORED
+				]) . "') " . $existing_ext_id_query . " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','", $parent_ext_ids) . "') "
+
+			)->get();
+		}
+
+		return [];
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getToDelete(array $ext_ids): array {
 		$class = $this->getClass();
 
 		if (count($ext_ids) > 0) {
@@ -74,7 +101,7 @@ abstract class ObjectRepository implements IObjectRepository {
 			return $class::where([
 				'origin_id' => $this->origin->getId(),
 				// We only can transmit from final states CREATED and UPDATED to TO_DELETE
-				// E.g. not from DELETED or IGNORED
+				// E.g. not from OUTDATED or IGNORED
 				'status' => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED ],
 				'ext_id' => $ext_ids,
 			], [ 'origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN' ])->get();
@@ -83,7 +110,7 @@ abstract class ObjectRepository implements IObjectRepository {
 			return $class::where([
 				'origin_id' => $this->origin->getId(),
 				// We only can transmit from final states CREATED and UPDATED to TO_DELETE
-				// E.g. not from DELETED or IGNORED
+				// E.g. not from OUTDATED or IGNORED
 				'status' => [ IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED ],
 			], [ 'origin_id' => '=', 'status' => 'IN' ])->get();
 		}
@@ -93,7 +120,7 @@ abstract class ObjectRepository implements IObjectRepository {
 	/**
 	 * @inheritdoc
 	 */
-	public function count() {
+	public function count(): int {
 		$class = $this->getClass();
 
 		/** @var ActiveRecord $class */

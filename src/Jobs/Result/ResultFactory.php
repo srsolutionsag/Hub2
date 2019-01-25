@@ -2,20 +2,22 @@
 
 namespace srag\Plugins\Hub2\Jobs\Result;
 
+use ilCronJobResult;
+
 /**
  * Class AbstractResult
  *
  * @package srag\Plugins\Hub2\Jobs\Result
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ResultFactory {
+final class ResultFactory {
 
 	/**
 	 * @param string $message
 	 *
-	 * @return OK
+	 * @return AbstractResult
 	 */
-	public static function ok($message) {
+	public static function ok(string $message): ilCronJobResult {
 		return new OK($message);
 	}
 
@@ -23,9 +25,17 @@ class ResultFactory {
 	/**
 	 * @param string $message
 	 *
-	 * @return Error
+	 * @return AbstractResult
 	 */
-	public static function error($message) {
+	public static function error(string $message): ilCronJobResult {
 		return new Error($message);
+	}
+
+
+	/**
+	 * ResultFactory constructor
+	 */
+	private function __construct() {
+
 	}
 }

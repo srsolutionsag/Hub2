@@ -3,15 +3,16 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractOriginImplementation
@@ -25,6 +26,7 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
 abstract class AbstractOriginImplementation implements IOriginImplementation {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IMappingStrategyFactory
@@ -47,37 +49,30 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	private $factory;
 	/**
-	 * @var ILog
-	 */
-	private $originLog;
-	/**
-	 * @var OriginNotifications
-	 */
-	private $originNotifications;
-	/**
 	 * @var array
 	 */
 	protected $data = [];
+	/**
+	 * @var IOrigin
+	 */
+	protected $origin;
 
 
 	/**
-	 * AbstractOriginImplementation constructor.
+	 * AbstractOriginImplementation constructor
 	 *
 	 * @param IOriginConfig              $config
 	 * @param IDataTransferObjectFactory $factory
-	 * @param ILog                       $originLog
-	 * @param OriginNotifications        $originNotifications
 	 * @param IMetadataFactory           $metadataFactory
 	 * @param ITaxonomyFactory           $taxonomyFactory
 	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, ILog $originLog, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy, IOrigin $origin) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
-		$this->originLog = $originLog;
-		$this->originNotifications = $originNotifications;
 		$this->metadataFactory = $metadataFactory;
 		$this->taxonomyFactory = $taxonomyFactory;
 		$this->mapping_strategy_factory = $mapping_strategy;
+		$this->origin = $origin;
 	}
 
 
@@ -94,6 +89,16 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function factory() {
 		return $this->factory;
+	}
+
+
+	/**
+	 * @param IDataTransferObject $dto
+	 *
+	 * @return ILog
+	 */
+	protected final function log(IDataTransferObject $dto = NULL): ILog {
+		return self::logs()->originLog($this->origin, NULL, $dto);
 	}
 
 
@@ -120,29 +125,21 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 		return $this->taxonomyFactory;
 	}
 
-
-	/**
-	 * @return ILog
-	 */
-	final protected function log() {
-		return $this->originLog;
-	}
-
-
-	/**
-	 * @return OriginNotifications
-	 */
-	final protected function notifications() {
-		return $this->originNotifications;
-	}
-
 	// HOOKS
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function overrideStatus(HookObject $hook) {
 		// TODO: Implement overrideStatus() method.
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getAdHocParentScopesAsExtIds(): array {
+		return [];
 	}
 }

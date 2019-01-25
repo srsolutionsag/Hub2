@@ -4,24 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e73c9a590ecff18dd9fc488b2e237707",
+    "content-hash": "d3654cc11978ecad06b75687e0dd6b5c",
     "packages": [
         {
             "name": "srag/activerecordconfig",
-            "version": "v0.7.4",
+            "version": "v0.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studer-raimann/ActiveRecordConfig.git",
-                "reference": "d12d1bfb2d241d5c30235d74ff6fc1b25817df5b"
+                "reference": "5a7bc1504982a4cad597bbb50f0c38d4e174c987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/d12d1bfb2d241d5c30235d74ff6fc1b25817df5b",
-                "reference": "d12d1bfb2d241d5c30235d74ff6fc1b25817df5b",
+                "url": "https://api.github.com/repos/studer-raimann/ActiveRecordConfig/zipball/5a7bc1504982a4cad597bbb50f0c38d4e174c987",
+                "reference": "5a7bc1504982a4cad597bbb50f0c38d4e174c987",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
+                "srag/custominputguis": ">=0.1.0",
                 "srag/dic": ">=0.1.0"
             },
             "type": "library",
@@ -49,20 +50,67 @@
                 "activerecord",
                 "config"
             ],
-            "time": "2018-10-16T12:29:31+00:00"
+            "time": "2019-01-22T09:09:53+00:00"
         },
         {
-            "name": "srag/dic",
-            "version": "v0.10.3",
+            "name": "srag/custominputguis",
+            "version": "v0.16.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/studer-raimann/DIC.git",
-                "reference": "7b4208ac5d0733e13d443099aac45dd89cf14b29"
+                "url": "https://github.com/studer-raimann/CustomInputGUIs.git",
+                "reference": "0bbfb28c801bf8b2ce59d08dea866135320c9256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/DIC/zipball/7b4208ac5d0733e13d443099aac45dd89cf14b29",
-                "reference": "7b4208ac5d0733e13d443099aac45dd89cf14b29",
+                "url": "https://api.github.com/repos/studer-raimann/CustomInputGUIs/zipball/0bbfb28c801bf8b2ce59d08dea866135320c9256",
+                "reference": "0bbfb28c801bf8b2ce59d08dea866135320c9256",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "srag/dic": ">=0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "srag\\CustomInputGUIs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "studer + raimann ag - Team Custom 1",
+                    "email": "support-custom1@studer-raimann.ch",
+                    "homepage": "https://studer-raimann.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Custom Input-GUI's",
+            "homepage": "https://github.com/studer-raimann/CustomInputGUIs",
+            "keywords": [
+                "ILIAS",
+                "PropertyForm",
+                "gui",
+                "input",
+                "table"
+            ],
+            "time": "2019-01-21T09:09:44+00:00"
+        },
+        {
+            "name": "srag/dic",
+            "version": "v0.14.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studer-raimann/DIC.git",
+                "reference": "c2ae9a82333e5b8340f4b6ef42a6931096b528e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studer-raimann/DIC/zipball/c2ae9a82333e5b8340f4b6ef42a6931096b528e3",
+                "reference": "c2ae9a82333e5b8340f4b6ef42a6931096b528e3",
                 "shasum": ""
             },
             "require": {
@@ -94,20 +142,63 @@
                 "globals",
                 "trait"
             ],
-            "time": "2018-10-15T12:09:44+00:00"
+            "time": "2019-01-22T09:14:01+00:00"
         },
         {
-            "name": "srag/removeplugindataconfirm",
-            "version": "0.2.5",
+            "name": "srag/librariesnamespacechanger",
+            "version": "v0.5.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/studer-raimann/RemovePluginDataConfirm.git",
-                "reference": "911c0ff316181c3efdf9068cf1cc2eb0e5ed6c8f"
+                "url": "https://github.com/studer-raimann/LibrariesNamespaceChanger.git",
+                "reference": "64a1728ed926f14d6d17b70caf4ebcc3d86df717"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studer-raimann/RemovePluginDataConfirm/zipball/911c0ff316181c3efdf9068cf1cc2eb0e5ed6c8f",
-                "reference": "911c0ff316181c3efdf9068cf1cc2eb0e5ed6c8f",
+                "url": "https://api.github.com/repos/studer-raimann/LibrariesNamespaceChanger/zipball/64a1728ed926f14d6d17b70caf4ebcc3d86df717",
+                "reference": "64a1728ed926f14d6d17b70caf4ebcc3d86df717",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "srag\\LibrariesNamespaceChanger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "studer + raimann ag - Team Custom 1",
+                    "email": "support-custom1@studer-raimann.ch",
+                    "homepage": "https://studer-raimann.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Change namespace of libraries to plugin namespace",
+            "homepage": "https://github.com/studer-raimann/LibrariesNamespaceChanger",
+            "keywords": [
+                "ILIAS",
+                "libraries"
+            ],
+            "time": "2019-01-22T09:19:11+00:00"
+        },
+        {
+            "name": "srag/removeplugindataconfirm",
+            "version": "v0.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studer-raimann/RemovePluginDataConfirm.git",
+                "reference": "c9bab84437a3029ca919da727d7f315c6de3c675"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studer-raimann/RemovePluginDataConfirm/zipball/c9bab84437a3029ca919da727d7f315c6de3c675",
+                "reference": "c9bab84437a3029ca919da727d7f315c6de3c675",
                 "shasum": ""
             },
             "require": {
@@ -141,7 +232,7 @@
                 "plugin",
                 "uninstall"
             ],
-            "time": "2018-09-17T09:07:15+00:00"
+            "time": "2019-01-22T09:18:04+00:00"
         }
     ],
     "packages-dev": [
@@ -1479,6 +1570,64 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/e3d826245268269cd66f8326bd8bc066687b4a19",
+                "reference": "e3d826245268269cd66f8326bd8bc066687b4a19",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                },
+                {
+                    "name": "Gert de Pagter",
+                    "email": "backendtea@gmail.com"
+                }
+            ],
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "time": "2018-08-06T14:22:27+00:00"
+        },
+        {
             "name": "symfony/yaml",
             "version": "v3.4.4",
             "source": {
@@ -1538,20 +1687,21 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "0df1908962e7a3071564e857d86874dad1ef204a"
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/0df1908962e7a3071564e857d86874dad1ef204a",
-                "reference": "0df1908962e7a3071564e857d86874dad1ef204a",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "php": "^5.3.3 || ^7.0",
+                "symfony/polyfill-ctype": "^1.8"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.6",
@@ -1584,7 +1734,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2018-01-29T19:49:41+00:00"
+            "time": "2018-12-25T11:19:39+00:00"
         }
     ],
     "aliases": [],

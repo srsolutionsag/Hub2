@@ -1,8 +1,9 @@
 <?php
 
-use srag\DIC\DICTrait;
-
 require_once __DIR__ . "/../vendor/autoload.php";
+
+use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ilHub2ConfigGUI
@@ -13,29 +14,23 @@ require_once __DIR__ . "/../vendor/autoload.php";
 class ilHub2ConfigGUI extends ilPluginConfigGUI {
 
 	use DICTrait;
+	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
-
-	/**
-	 * @inheritDoc
-	 */
-	public function executeCommand() {
-		parent::executeCommand();
-		switch (self::dic()->ctrl()->getNextClass()) {
-			case strtolower(hub2MainGUI::class):
-				$h = new hub2MainGUI();
-				self::dic()->ctrl()->forwardCommand($h);
-
-				return;
-		}
-		self::dic()->ctrl()->redirectByClass([ hub2MainGUI::class ]);
-	}
 
 
 	/**
 	 * @param string $cmd
 	 */
 	public function performCommand($cmd) {
-		// noting to to here
+		switch (self::dic()->ctrl()->getNextClass()) {
+			case strtolower(hub2MainGUI::class):
+				$h = new hub2MainGUI();
+				self::dic()->ctrl()->forwardCommand($h);
+				break;
+
+			default:
+				self::dic()->ctrl()->redirectByClass([ hub2MainGUI::class ]);
+				break;
+		}
 	}
 }

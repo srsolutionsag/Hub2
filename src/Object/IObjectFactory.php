@@ -32,6 +32,17 @@ use srag\Plugins\Hub2\Object\User\IUser;
 interface IObjectFactory {
 
 	/**
+	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
+	 * concatenation of the origins ID with the external-ID, see IObject::create()
+	 *
+	 * @param string $ext_id
+	 *
+	 * @return string
+	 */
+	public function getId($ext_id);
+
+
+	/**
 	 * @param string $ext_id
 	 *
 	 * @return ActiveRecord|ARCategory|ICategory|ARCourse|ICourse|ARCourseMembership|ICourseMembership|ARGroup|IGroup|ARGroupMembership|IGroupMembership|ARSession|ISession|ARUser|IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership
@@ -117,4 +128,64 @@ interface IObjectFactory {
 	 * @return IOrgUnitMembership
 	 */
 	public function orgUnitMembership(string $ext_id): IOrgUnitMembership;
+
+
+	/**
+	 * @return IUser[]
+	 */
+	public function users(): array;
+
+
+	/**
+	 * @return ICourse[]
+	 */
+	public function courses(): array;
+
+
+	/**
+	 * @return ICategory[]
+	 */
+	public function categories(): array;
+
+
+	/**
+	 * @return IGroup[]
+	 */
+	public function groups(): array;
+
+
+	/**
+	 * @return ISession[]
+	 */
+	public function sessions(): array;
+
+
+	/**
+	 * @return ICourseMembership[]
+	 */
+	public function courseMemberships(): array;
+
+
+	/**
+	 * @return IGroupMembership[]
+	 */
+	public function groupMemberships(): array;
+
+
+	/**
+	 * @return ISessionMembership[]
+	 */
+	public function sessionMemberships(): array;
+
+
+	/**
+	 * @return IOrgUnit[]
+	 */
+	public function orgUnits(): array;
+
+
+	/**
+	 * @return IOrgUnitMembership[]
+	 */
+	public function orgUnitMemberships(): array;
 }

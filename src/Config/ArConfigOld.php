@@ -4,7 +4,8 @@ namespace srag\Plugins\Hub2\Config;
 
 use ActiveRecord;
 use ilHub2Plugin;
-use srag\DIC\DICTrait;
+use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ArConfigOld
@@ -17,6 +18,7 @@ use srag\DIC\DICTrait;
 class ArConfigOld extends ActiveRecord {
 
 	use DICTrait;
+	use Hub2Trait;
 	/**
 	 * @var string
 	 *

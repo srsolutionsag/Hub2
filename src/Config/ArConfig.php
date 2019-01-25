@@ -2,166 +2,69 @@
 
 namespace srag\Plugins\Hub2\Config;
 
-use hub2RemoveDataConfirm;
 use ilHub2Plugin;
-use srag\ActiveRecordConfig\ActiveRecordConfig;
+use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
+use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ArConfig
  *
  * @package srag\Plugins\Hub2\Config
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ArConfig extends ActiveRecordConfig implements IArConfig {
+class ArConfig extends ActiveRecordConfig {
 
+	use Hub2Trait;
 	const TABLE_NAME = 'sr_hub2_config_n';
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+	const KEY_ORIGIN_IMPLEMENTATION_PATH = 'origin_implementation_path';
+	const KEY_SHORTLINK_OBJECT_NOT_FOUND = 'shortlink_not_found';
+	const KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE = 'shortlink_no_access';
+	const KEY_SHORTLINK_SUCCESS = 'shortlink_success';
+	const KEY_ADMINISTRATE_HUB_ROLE_IDS = 'administrate_hub_role_ids';
+	const KEY_LOCK_ORIGINS_CONFIG = 'lock_origins_config';
+	const KEY_CUSTOM_VIEWS_ACTIVE = 'key_custom_views_active';
+	const KEY_CUSTOM_VIEWS_PATH = 'key_custom_views_path';
+	const KEY_CUSTOM_VIEWS_CLASS = 'key_custom_views_class';
+	const KEY_GLOBAL_HOCK_ACTIVE = 'key_global_hock_active';
+	const KEY_GLOBAL_HOCK_PATH = 'key_global_hock_path';
+	const KEY_GLOBAL_HOCK_CLASS = 'key_global_hock_class';
+	const KEY_KEEP_OLD_LOGS_TIME = "keep_old_logs_time";
+	/**
+	 * @var array
+	 */
+	protected static $fields = [
+		self::KEY_ORIGIN_IMPLEMENTATION_PATH => self::TYPE_STRING,
+		self::KEY_SHORTLINK_OBJECT_NOT_FOUND => self::TYPE_STRING,
+		self::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE => self::TYPE_STRING,
+		self::KEY_SHORTLINK_SUCCESS => self::TYPE_STRING,
+		self::KEY_ADMINISTRATE_HUB_ROLE_IDS => [ self::TYPE_JSON, [], true ],
+		self::KEY_LOCK_ORIGINS_CONFIG => self::TYPE_BOOLEAN,
+		self::KEY_CUSTOM_VIEWS_ACTIVE => self::TYPE_BOOLEAN,
+		self::KEY_CUSTOM_VIEWS_PATH => self::TYPE_STRING,
+		self::KEY_CUSTOM_VIEWS_CLASS => self::TYPE_STRING,
+		self::KEY_GLOBAL_HOCK_ACTIVE => self::TYPE_BOOLEAN,
+		self::KEY_GLOBAL_HOCK_PATH => self::TYPE_STRING,
+		self::KEY_GLOBAL_HOCK_CLASS => self::TYPE_STRING,
+		self::KEY_KEEP_OLD_LOGS_TIME => [ self::TYPE_INTEGER, 7 ]
+	];
 
 
 	/**
 	 * @inheritdoc
-	 */
-	public static function getOriginImplementationsPath(): string {
-		return self::getStringValue(self::KEY_ORIGIN_IMPLEMENTATION_PATH, dirname(dirname(__DIR__))
-			. '/origins/'); // TODO: Use self::DEFAULT_ORIGIN_IMPLEMENTATION_PATH but there you can not use function like dirname! And not use realpath if you think to use it!
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setOriginImplementationsPath(string $origin_implementations_path)/*: void*/ {
-		self::setStringValue(self::KEY_ORIGIN_IMPLEMENTATION_PATH, $origin_implementations_path);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function getShortLinkObjectNotFound(): string {
-		return self::getStringValue(self::KEY_SHORTLINK_OBJECT_NOT_FOUND, self::DEFAULT_SHORTLINK_OBJECT_NOT_FOUND);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setShortLinkObjectNotFound(string $shortlink_object_not_found)/*: void*/ {
-		self::setStringValue(self::KEY_SHORTLINK_OBJECT_NOT_FOUND, $shortlink_object_not_found);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function getShortLinkObjectNotAccessible(): string {
-		return self::getStringValue(self::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE, self::DEFAULT_SHORTLINK_OBJECT_NOT_ACCESSIBLE);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setShortLinkObjectNotAccessible(string $shortlink_object_not_accessible)/*: void*/ {
-		self::setStringValue(self::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE, $shortlink_object_not_accessible);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function getShortlinkSuccess(): string {
-		return self::getStringValue(self::KEY_SHORTLINK_SUCCESS, self::DEFAULT_SHORTLINK_SUCCESS);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setShortlinkSuccess(string $shortlink_success)/*: void*/ {
-		self::setStringValue(self::KEY_SHORTLINK_SUCCESS, $shortlink_success);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function getAdministrationRoleIds(): array {
-		return self::getJsonValue(self::KEY_ADMINISTRATE_HUB_ROLE_IDS, true, self::DEFAULT_ADMINISTRATE_HUB_ROLE_IDS);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setAdministrationRoleIds(array $administration_role_ids)/*: void*/ {
-		self::setJsonValue(self::KEY_ADMINISTRATE_HUB_ROLE_IDS, $administration_role_ids);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function isOriginsConfigLocked(): bool {
-		return self::getBooleanValue(self::KEY_LOCK_ORIGINS_CONFIG, self::DEFAULT_LOCK_ORIGINS_CONFIG);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setOriginsConfigLocked(bool $origins_config_locked)/*: void*/ {
-		self::setBooleanValue(self::KEY_LOCK_ORIGINS_CONFIG, $origins_config_locked);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function getUninstallRemovesData()/*: ?bool*/ {
-		return self::getXValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, hub2RemoveDataConfirm::DEFAULT_UNINSTALL_REMOVES_DATA);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function setUninstallRemovesData(bool $uninstall_removes_data)/*: void*/ {
-		self::setBooleanValue(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA, $uninstall_removes_data);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public static function removeUninstallRemovesData()/*: void*/ {
-		self::removeName(hub2RemoveDataConfirm::KEY_UNINSTALL_REMOVES_DATA);
-	}
-
-
-	/**
-	 * @param string      $key
-	 * @param string|null $default_value
 	 *
-	 * @return string
-	 *
-	 * @deprecated
+	 * @deprecated TODO: Only because no functional PHP code in static array supported!
 	 */
-	public static function getValueByKey(string $key, /*?*/
-		string $default_value = NULL): string {
-		return self::getStringValue($key, $default_value);
-	}
+	protected static function getDefaultValue(/*string*/
+		$name, /*int*/
+		$type, $default_value) {
+		switch ($name) {
+			case self::KEY_ORIGIN_IMPLEMENTATION_PATH:
+				return dirname(dirname(__DIR__)) . '/origins/';
 
-
-	/**
-	 * @param string $name
-	 * @param string $value
-	 *
-	 * @deprecated
-	 */
-	public static function setValueByKey(string $name, string $value)/*: void*/ {
-		self::setStringValue($name, $value);
+			default:
+				return $default_value;
+		}
 	}
 }

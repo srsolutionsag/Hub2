@@ -16,7 +16,7 @@ class UDF extends AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function write() {
 		$user_id = $this->getIliasId();
@@ -30,7 +30,7 @@ class UDF extends AbstractImplementation implements IMetadataImplementation {
 
 
 	/**
-	 * @inheritDoc
+	 * @inheritdoc
 	 */
 	public function read() {
 		// no need for a read-Method since wo have to update them anyways due to performance-issues when reading all udfs everytime

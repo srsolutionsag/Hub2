@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
+use ilCopyWizardOptions;
 use ilLink;
 use ilMailMimeSenderFactory;
 use ilMD;
@@ -10,17 +11,17 @@ use ilMimeMail;
 use ilObjCategory;
 use ilObjCourse;
 use ilRepUtil;
+use ilSession;
+use ilSoapFunctions;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
-use srag\Plugins\Hub2\Origin\Config\CourseOriginConfig;
+use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\Properties\CourseOriginProperties;
+use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
@@ -38,7 +39,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	use TaxonomySyncProcessor;
 	use MetadataSyncProcessor;
 	/**
-	 * @var CourseOriginProperties
+	 * @var CourseProperties
 	 */
 	protected $props;
 	/**
@@ -73,12 +74,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param ILog                    $originLog
-	 * @param OriginNotifications     $originNotifications
 	 * @param ICourseActivities       $courseActivities
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ILog $originLog, OriginNotifications $originNotifications, ICourseActivities $courseActivities) {
-		parent::__construct($origin, $implementation, $transition, $originLog, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ICourseActivities $courseActivities) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 		$this->courseActivities = $courseActivities;
@@ -98,16 +97,29 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
 		/** @var CourseDTO $dto */
-		$ilObjCourse = new ilObjCourse();
-		$ilObjCourse->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
 		// Check if we should create some dependence categories
 		$parentRefId = $this->buildDependenceCategories($dto, $parentRefId);
-		$ilObjCourse->create();
-		$ilObjCourse->createReference();
-		$ilObjCourse->putInTree($parentRefId);
-		$ilObjCourse->setPermissions($parentRefId);
+
+		if ($template_id = $dto->getTemplateId()) {
+			// copy from template
+			if (!ilObjCourse::_exists($template_id, true)) {
+				throw new HubException('Creation of course with ext_id = ' . $dto->getExtId() . ' failed: template course with ref_id = '
+					. $template_id . ' does not exist in ILIAS');
+			}
+			$return = $this->cloneAllObject($parentRefId, $template_id, $this->getCloneOptions($template_id));
+			$ilObjCourse = new ilObjCourse($return);
+		} else {
+			// create new one
+			$ilObjCourse = new ilObjCourse();
+			$ilObjCourse->setImportId($this->getImportId($dto));
+			$ilObjCourse->create();
+			$ilObjCourse->createReference();
+			$ilObjCourse->putInTree($parentRefId);
+			$ilObjCourse->setPermissions($parentRefId);
+		}
+
 		// Pass properties from DTO to ilObjUser
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
@@ -122,17 +134,17 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($dto->getIcon() !== '') {
 			$ilObjCourse->saveIcons($dto->getIcon());
 		}
-		if ($this->props->get(CourseOriginProperties::SET_ONLINE)) {
+		if ($this->props->get(CourseProperties::SET_ONLINE)) {
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 
-		if ($this->props->get(CourseOriginProperties::CREATE_ICON)) {
+		if ($this->props->get(CourseProperties::CREATE_ICON)) {
 			// TODO
 			//			$this->updateIcon($this->ilias_object);
 			//			$this->ilias_object->update();
 		}
-		if ($this->props->get(CourseOriginProperties::SEND_CREATE_NOTIFICATION)) {
+		if ($this->props->get(CourseProperties::SEND_CREATE_NOTIFICATION)) {
 			$this->sendMailNotifications($dto, $ilObjCourse);
 		}
 		$this->setSubscriptionType($dto, $ilObjCourse);
@@ -142,6 +154,70 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
+	}
+
+
+	/**
+	 * @param $source_id
+	 *
+	 * @return array
+	 */
+	protected function getCloneOptions($source_id) {
+		$options = [];
+		foreach (self::dic()->tree()->getSubTree($root = self::dic()->tree()->getNodeData($source_id)) as $node) {
+			if ($node['type'] == 'rolf') {
+				continue;
+			}
+
+			if (self::dic()->objDefinition()->allowCopy($node['type'])) {
+				$options[$node['ref_id']] = [ 'type' => ilCopyWizardOptions::COPY_WIZARD_COPY ];
+			}
+			// this should be a config
+			//            else if (self::LINK_IF_COPY_NOT_POSSIBLE && self::dic()->objDefinition()->allowLink($node['type'])) {
+			//                $options[$node['ref_id']] = ['type' => ilCopyWizardOptions::COPY_WIZARD_LINK];
+			//            }
+
+		}
+
+		return $options;
+	}
+
+
+	/**
+	 * This is a leaner version of ilContainer::cloneAllObject, which doens't use soap
+	 *
+	 * @param int   $parent_ref_id
+	 * @param int   $clone_source
+	 * @param array $options
+	 *
+	 * @return int $ref_id
+	 */
+	public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options): int {
+		// Save wizard options
+		$copy_id = ilCopyWizardOptions::_allocateCopyId();
+		$wizard_options = ilCopyWizardOptions::_getInstance($copy_id);
+		$wizard_options->saveOwner(self::dic()->user()->getId());
+		$wizard_options->saveRoot($clone_source);
+
+		// add entry for source container
+		$wizard_options->initContainer($clone_source, $parent_ref_id);
+
+		foreach ($options as $source_id => $option) {
+			$wizard_options->addEntry($source_id, $option);
+		}
+		$wizard_options->read();
+		$wizard_options->storeTree($clone_source);
+
+		// Duplicate session to avoid logout problems with backgrounded SOAP calls
+		$new_session_id = ilSession::_duplicate($_COOKIE['PHPSESSID']);
+
+		$wizard_options->disableSOAP();
+		$wizard_options->read();
+
+		include_once('./webservice/soap/include/inc.soap_functions.php');
+		$parent_ref_id = ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
+
+		return $parent_ref_id;
 	}
 
 
@@ -181,23 +257,23 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function sendMailNotifications(CourseDTO $dto, ilObjCourse $ilObjCourse) {
 		$mail = new ilMimeMail();
-		$sender_factory = new ilMailMimeSenderFactory($this->settings());
+		$sender_factory = new ilMailMimeSenderFactory(self::dic()->settings());
 		$sender = NULL;
-		if ($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM)) {
-			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_FROM));
+		if ($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)) {
+			$sender = $sender_factory->userByEmailAddress($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM));
 		} else {
 			$sender = $sender_factory->system();
 		}
 		$mail->From($sender);
 		$mail->To($dto->getNotificationEmails());
-		$mail->Subject($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_SUBJECT));
-		$mail->Body($this->replaceBodyTextForMail($this->props->get(CourseOriginProperties::CREATE_NOTIFICATION_BODY), $ilObjCourse));
+		$mail->Subject($this->props->get(CourseProperties::CREATE_NOTIFICATION_SUBJECT));
+		$mail->Body($this->replaceBodyTextForMail($this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY), $ilObjCourse));
 		$mail->Send();
 	}
 
 
 	protected function replaceBodyTextForMail($body, ilObjCourse $ilObjCourse) {
-		foreach (CourseOriginProperties::$mail_notification_placeholder as $ph) {
+		foreach (CourseProperties::$mail_notification_placeholder as $ph) {
 			$replacement = '[' . $ph . ']';
 
 			switch ($ph) {
@@ -263,11 +339,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->updateDTOProperty("languageCode")) {
 			$this->setLanguage($dto, $ilObjCourse);
 		}
-		if ($this->props->get(CourseOriginProperties::SET_ONLINE_AGAIN)) {
+		if ($this->props->get(CourseProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
 			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
-		if ($this->props->get(CourseOriginProperties::MOVE_COURSE)) {
+		if ($this->props->get(CourseProperties::MOVE_COURSE)) {
 			$this->moveCourse($ilObjCourse, $dto);
 		}
 		$ilObjCourse->update();
@@ -284,21 +360,21 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($ilObjCourse === NULL) {
 			return NULL;
 		}
-		if ($this->props->get(CourseOriginProperties::DELETE_MODE) == CourseOriginProperties::DELETE_MODE_NONE) {
+		if ($this->props->get(CourseProperties::DELETE_MODE) == CourseProperties::DELETE_MODE_NONE) {
 			return $ilObjCourse;
 		}
-		switch ($this->props->get(CourseOriginProperties::DELETE_MODE)) {
-			case CourseOriginProperties::DELETE_MODE_OFFLINE:
+		switch ($this->props->get(CourseProperties::DELETE_MODE)) {
+			case CourseProperties::DELETE_MODE_OFFLINE:
 				$ilObjCourse->setOfflineStatus(true);
 				$ilObjCourse->update();
 				break;
-			case CourseOriginProperties::DELETE_MODE_DELETE:
+			case CourseProperties::DELETE_MODE_DELETE:
 				$ilObjCourse->delete();
 				break;
-			case CourseOriginProperties::DELETE_MODE_MOVE_TO_TRASH:
+			case CourseProperties::DELETE_MODE_MOVE_TO_TRASH:
 				self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
 				break;
-			case CourseOriginProperties::DELETE_MODE_DELETE_OR_OFFLINE:
+			case CourseProperties::DELETE_MODE_DELETE_OR_OFFLINE:
 				if ($this->courseActivities->hasActivities($ilObjCourse)) {
 					$ilObjCourse->setOfflineStatus(true);
 					$ilObjCourse->update();
@@ -473,7 +549,5 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		self::dic()->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
 		self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
-		//			hubLog::getInstance()->write($str);
-		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}
 }

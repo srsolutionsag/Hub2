@@ -1,24 +1,22 @@
 <?php
 
-namespace srag\ActiveRecordConfig;
+namespace srag\ActiveRecordConfig\Hub2;
 
-use ilPropertyFormGUI;
-use srag\DIC\DICTrait;
+use srag\CustomInputGUIs\Hub2\PropertyFormGUI\ConfigPropertyFormGUI;
 
 /**
  * Class ActiveRecordConfigFormGUI
  *
- * @package srag\ActiveRecordConfig
+ * @package srag\ActiveRecordConfig\Hub2
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-abstract class ActiveRecordConfigFormGUI extends ilPropertyFormGUI {
+abstract class ActiveRecordConfigFormGUI extends ConfigPropertyFormGUI {
 
-	use DICTrait;
 	/**
-	 * @var ActiveRecordConfigGUI
+	 * @var string
 	 */
-	protected $parent;
+	const LANG_MODULE = ActiveRecordConfigGUI::LANG_MODULE_CONFIG;
 	/**
 	 * @var string
 	 */
@@ -33,41 +31,32 @@ abstract class ActiveRecordConfigFormGUI extends ilPropertyFormGUI {
 	 */
 	public function __construct(ActiveRecordConfigGUI $parent, /*string*/
 		$tab_id) {
-		parent::__construct();
-
-		$this->parent = $parent;
 		$this->tab_id = $tab_id;
 
-		$this->initForm();
+		parent::__construct($parent);
 	}
 
 
 	/**
-	 *
+	 * @inheritdoc
 	 */
-	protected function initForm()/*: void*/ {
-		$this->setFormAction(self::dic()->ctrl()->getFormAction($this->parent));
-
-		$this->setTitle($this->txt($this->tab_id));
-
+	protected function initCommands()/*: void*/ {
 		$this->addCommandButton(ActiveRecordConfigGUI::CMD_UPDATE_CONFIGURE . "_" . $this->tab_id, $this->txt("save"));
 	}
 
 
 	/**
-	 *
+	 * @inheritdoc
 	 */
-	public abstract function updateConfig()/*: void*/
-	;
+	protected function initId()/*: void*/ {
+
+	}
 
 
 	/**
-	 * @param string $key
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
-	protected final function txt(/*string*/
-		$key)/*: string*/ {
-		return self::plugin()->translate($key, ActiveRecordConfigGUI::LANG_MODULE_CONFIG);
+	protected function initTitle()/*: void*/ {
+		$this->setTitle($this->txt($this->tab_id));
 	}
 }
