@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../vendor/autoload.php";
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Jobs\RunSync;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
@@ -11,8 +12,6 @@ use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
-use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
-use srag\Plugins\Hub2\Sync\OriginSyncFactory;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
@@ -263,54 +262,25 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	/**
+	 * @param IOrigin $origins
+	 * @param bool    $force_update
+	 */
+	protected function execute(array $origins, bool $force_update = false) {
+		$summary = $this->summaryFactory->web();
+
+		(new RunSync($origins, $summary, $force_update))->run();
+
+		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
+
+		self::dic()->ctrl()->redirect($this);
+	}
+
+
+	/**
 	 * @param bool $force_update
 	 */
 	protected function run(bool $force_update = false)/*: void*/ {
-		$summary = $this->summaryFactory->web();
-		try {
-			$global_hook = new GlobalHook();
-			if (!$global_hook->beforeSync($this->originFactory->getAllActive())) {
-				self::dic()->ctrl()->redirect($this);
-			}
-		} catch (Throwable $e) {
-			if ($global_hook) {
-				$global_hook->handleExceptions([ $e ]);
-			}
-			ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
-		}
-		foreach ($this->originFactory->getAllActive() as $origin) {
-			/**
-			 * @var IOrigin $origin
-			 */
-			if ($force_update) {
-				$origin->forceUpdate();
-			}
-			$originSyncFactory = new OriginSyncFactory($origin);
-			$originSync = $originSyncFactory->instance();
-			try {
-				$originSync->execute();
-			} catch (Throwable $e) {
-				if ($global_hook) {
-					$global_hook->handleExceptions([ $e ]);
-				}
-				// Any exception being forwarded to here means that we failed to execute the sync at some point
-				ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
-			}
-
-			$summary->addOriginSync($originSync);
-		}
-		$summary->sendEmail();
-		try {
-			$global_hook->afterSync($this->originFactory->getAllActive());
-		} catch (Throwable $e) {
-			if ($global_hook) {
-				$global_hook->handleExceptions([ $e ]);
-			}
-			ilUtil::sendFailure("{$e->getMessage()} in file: {$e->getFile()} line: {$e->getLine()}<pre>{$e->getTraceAsString()}</pre>", true);
-		}
-
-		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
-		self::dic()->ctrl()->redirect($this);
+		$this->execute($this->originFactory->getAllActive());
 	}
 
 
@@ -328,35 +298,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function runOriginSync(bool $force_update = false)/*: void*/ {
 		$origin = $this->getOrigin(intval(filter_input(INPUT_GET, self::ORIGIN_ID)));
 
-		$summary = $this->summaryFactory->web();
-		try {
-			$global_hook = new GlobalHook();
-			if (!$global_hook->beforeSync([ $origin ])) {
-				self::dic()->ctrl()->redirect($this);
-			}
-		} catch (Throwable $e) {
-			$global_hook->handleExceptions([ $e ]);
-		}
-
-		if ($force_update) {
-			$origin->forceUpdate();
-		}
-		$originSyncFactory = new OriginSyncFactory($origin);
-		$originSync = $originSyncFactory->instance();
-		try {
-			$originSync->execute();
-		} catch (Throwable $e) {
-			// Any exception being forwarded to here means that we failed to execute the sync at some point
-			$global_hook->handleExceptions([ $e ]);
-
-			ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
-		}
-		$summary->addOriginSync($originSync);
-		$summary->sendEmail();
-		$global_hook->afterSync([ $origin ]);
-
-		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
-		self::dic()->ctrl()->redirect($this);
+		$this->execute([ $origin ]);
 	}
 
 
