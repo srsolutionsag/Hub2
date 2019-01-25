@@ -11,6 +11,9 @@
 - New FAILED status, all exceptions will set the object to this status
 - MappingStrategy ByImportId
 - Clean up status modal DTO
+- Exceptions are converted in logs
+- Logs are send in email
+- Removed notifications which replaced with logs
 - Fix: Add correct namespace for new origins
 - Fix: Not delete data on origin delete
 - Fix: Recreate deleted users
