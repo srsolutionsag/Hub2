@@ -182,6 +182,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		$form = $this->getForm($origin);
 		if ($form->checkInput()) {
 			$origin->setTitle($form->getInput('title'));
+			$origin->setSort($form->getInput(OriginConfigFormGUI::POST_VAR_SORT));
 			$origin->setDescription($form->getInput('description'));
 			$origin->setAdHoc($form->getInput(OriginConfigFormGUI::POST_VAR_ADHOC));
 			$origin->setAdhocParentScope($form->getInput("adhoc_parent_scope") ? 1 : 0);

@@ -73,8 +73,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function course() {
-		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new CourseActivities(self::dic()
-			->database()));
+		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new CourseActivities(self::dic()->database()));
 	}
 
 
@@ -106,8 +105,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function group() {
-		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new GroupActivities(self::dic()
-			->database()));
+		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new GroupActivities(self::dic()->database()));
 	}
 
 

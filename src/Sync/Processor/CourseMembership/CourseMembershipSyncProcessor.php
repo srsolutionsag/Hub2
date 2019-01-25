@@ -200,7 +200,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 			$objectFactory = new ObjectFactory($origin);
 			$course = $objectFactory->course($course_membership->getCourseId());
 			if (!$course->getILIASId()) {
-				throw new HubException("The linked course does not (yet) exist in ILIAS. Membership Ext-Id: ".$course_membership->getExtId());
+				throw new HubException("The linked course does not (yet) exist in ILIAS. Membership Ext-Id: " . $course_membership->getExtId());
 			}
 
 			return $course->getILIASId();

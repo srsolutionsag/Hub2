@@ -10,8 +10,10 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  * @author Timon Amstutz <timon.amstutz@ilub.unibe.ch>
  */
 abstract class AbstractRepositoryMembershipLink extends AbstractRepositoryLink implements IObjectLink {
-	protected function getILIASId(){
+
+	protected function getILIASId() {
 		list($container_id) = explode(IObjectRepository::GLUE, $this->object->getILIASId());
+
 		return $container_id;
 	}
 }

@@ -284,6 +284,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 */
 	protected $icon;
 
+
 	/**
 	 * @return string
 	 */
@@ -756,6 +757,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 		return $this;
 	}
+
 
 	/**
 	 * @param string $languageCode

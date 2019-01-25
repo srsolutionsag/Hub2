@@ -69,9 +69,11 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 		return $link;
 	}
 
-	protected function getILIASId(){
+
+	protected function getILIASId() {
 		return $this->object->getILIASId();
 	}
+
 
 	private function findReadableParent(): int {
 		$ref_id = $this->getILIASId();

@@ -10,6 +10,7 @@
 - New origin sync status model
 - New FAILED status, all exceptions will set the object to this status
 - MappingStrategy ByImportId
+- Sort origins feature
 - Clean up status modal DTO
 - Exceptions are converted in logs
 - Logs are send in email

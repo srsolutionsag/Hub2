@@ -60,7 +60,8 @@ class OriginsTableGUI extends ilTable2GUI {
 	 *
 	 */
 	protected function initColumns() {
-		$this->addColumn('ID', 'id');
+		$this->addColumn(self::plugin()->translate('origin_table_header_id'), 'id');
+		$this->addColumn(self::plugin()->translate('origin_table_header_sort'), 'sort');
 		$this->addColumn(self::plugin()->translate('origin_table_header_active'), 'active');
 		$this->addColumn(self::plugin()->translate('origin_table_header_title'), 'title');
 		$this->addColumn(self::plugin()->translate('origin_table_header_description'), 'description');
@@ -82,6 +83,7 @@ class OriginsTableGUI extends ilTable2GUI {
 			$objectRepository = new $class($origin);
 			$row = [];
 			$row['id'] = $origin->getId();
+			$row['sort'] = $origin->getSort();
 			$row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
 			$row['title'] = $origin->getTitle();
 			$row['description'] = $origin->getDescription();
@@ -91,6 +93,8 @@ class OriginsTableGUI extends ilTable2GUI {
 			$data[] = $row;
 		}
 		$this->setData($data);
+		$this->setDefaultOrderField("sort");
+		$this->setDefaultOrderDirection("asc");
 	}
 
 

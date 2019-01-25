@@ -405,6 +405,10 @@ origin_form_field_adhoc_parent_scope_info#:#Es werden nur die Daten geliefert, d
 origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
 crs_membership_prop_delete_mode_delete#:#Mitgliedschaft beenden
+origin_id#:#ID
+origin_sort#:#Sortierung
+origin_table_header_id#:#ID
+origin_table_header_sort#:#Sortierung
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
 logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten

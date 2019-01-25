@@ -1,6 +1,7 @@
 <?php
 
 namespace srag\Plugins\Hub2\Object\DTO;
+
 use Serializable;
 
 /**
@@ -71,6 +72,7 @@ interface IDataTransferObject {
 	 */
 	public function setShouldDeleted(bool $should_deleted);
 
+
 	/**
 	 * Get the additional data stored on the dto persistently
 	 *
@@ -78,11 +80,13 @@ interface IDataTransferObject {
 	 */
 	public function getAdditionalData(): Serializable;
 
+
 	/**
 	 * Add some additional data to store persistently in the DB along with the data of the
 	 * dto.
 	 *
 	 * @param Serializable $additionalData
+	 *
 	 * @return mixed
 	 */
 	public function withAdditionalData(Serializable $additionalData);

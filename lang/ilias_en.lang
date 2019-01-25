@@ -406,6 +406,10 @@ origin_form_field_adhoc_parent_scope_info#:#Only the data of containers which ha
 origin_table_button_run_force_update#:#Sync (Force update)
 origin_deleted#:#Origin deleted
 crs_membership_prop_delete_mode_delete#:#Terminate membership
+origin_id#:#ID
+origin_sort#:#Sort
+origin_table_header_id#:#ID
+origin_table_header_sort#:#Sort
 logs_additional_data#:#Additional data
 logs_cron#:#Delete old logs
 logs_cron_description#:#After the specified config time, old logs will be deleted automatically. The newest log per origin id and ext id will always be kept

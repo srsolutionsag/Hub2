@@ -208,6 +208,19 @@ interface IOrigin {
 
 
 	/**
+	 * @return int
+	 */
+	public function getSort(): int;
+
+
+	/**
+	 * @param int $sort
+	 */
+	public function setSort(int $sort)/*: void*/
+	;
+
+
+	/**
 	 *
 	 */
 	public function store();

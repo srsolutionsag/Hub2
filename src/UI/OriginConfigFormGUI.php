@@ -8,6 +8,7 @@ use ilFormSectionHeaderGUI;
 use ilHiddenInputGUI;
 use ilHub2Plugin;
 use ilNonEditableValueGUI;
+use ilNumberInputGUI;
 use ilPropertyFormGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
@@ -37,6 +38,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	const POST_VAR_ADHOC = "adhoc";
+	const POST_VAR_SORT = "sort";
 	protected $parent_gui;
 	/**
 	 * @var IOrigin
@@ -278,11 +280,15 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 	protected function addGeneral() {
 		if ($this->origin->getId()) {
 			$item = new ilNonEditableValueGUI();
-			$item->setTitle('ID');
+			$item->setTitle(self::plugin()->translate("origin_id"));
 			$item->setValue($this->origin->getId());
 			$this->addItem($item);
 			$item = new ilHiddenInputGUI('origin_id');
 			$item->setValue($this->origin->getId());
+			$this->addItem($item);
+
+			$item = new ilNumberInputGUI(self::plugin()->translate("origin_sort"), self::POST_VAR_SORT);
+			$item->setValue($this->origin->getSort());
 			$this->addItem($item);
 		}
 		$item = new ilTextInputGUI(self::plugin()->translate('origin_title'), 'title');
