@@ -170,13 +170,13 @@ class LogsTableGUI extends TableGUI {
 		}
 		$additional_data = $filter["additional_data"];
 
-		$logs = self::logs()
-			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data);
+		$columns = array_keys($this->getSelectedColumns());
 
-		$this->setData($logs);
+		$this->setData(self::logs()
+			->getLogs($columns, $this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
 
-		$this->setMaxCount(count(self::logs()
-			->getLogs($this->getOrderField(), $this->getOrderDirection(), NULL, NULL, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data)));
+		$this->setMaxCount(self::logs()
+			->getLogsCount($this->getOrderField(), $this->getOrderDirection(), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
 	}
 
 

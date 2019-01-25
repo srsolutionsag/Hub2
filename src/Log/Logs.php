@@ -68,6 +68,7 @@ final class Logs {
 
 
 	/**
+	 * @param array           $fields
 	 * @param string|null     $sort_by
 	 * @param string|null     $sort_by_direction
 	 * @param int|null        $limit_start
@@ -85,9 +86,83 @@ final class Logs {
 	 *
 	 * @return array
 	 */
-	public function getLogs(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): array {
+	public function getLogs(array $fields = [], string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): array {
 
-		$sql = 'SELECT * FROM ' . Log::TABLE_NAME;
+		if (!in_array("log_id", $fields)) {
+			array_unshift($fields, "log_id");
+		}
+
+		$sql = 'SELECT ' . implode(",", array_map(function (string $field): string {
+				return self::dic()->database()->quoteIdentifier($field);
+			}, $fields));
+
+		$sql .= $this->getLogsQuery($sort_by, $sort_by_direction, $limit_start, $limit_end, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data);
+
+		$result = self::dic()->database()->query($sql);
+
+		$logs = [];
+
+		while (($row = $result->fetchAssoc()) !== false) {
+			$logs[$row["log_id"]] = $row;
+		}
+
+		return $logs;
+	}
+
+
+	/**
+	 * @param string|null     $sort_by
+	 * @param string|null     $sort_by_direction
+	 * @param string|null     $title
+	 * @param string|null     $message
+	 * @param ilDateTime|null $date_start
+	 * @param ilDateTime|null $date_end
+	 * @param int|null        $level
+	 * @param int|null        $origin_id
+	 * @param string|null     $origin_object_type
+	 * @param string|null     $object_ext_id
+	 * @param int|null        $object_ilias_id
+	 * @param string|null     $additional_data
+	 *
+	 * @return int
+	 */
+	public function getLogsCount(string $sort_by = NULL, string $sort_by_direction = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): int {
+
+		$sql = 'SELECT COUNT(log_id) AS count';
+
+		$sql .= $this->getLogsQuery($sort_by, $sort_by_direction, NULL, NULL, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data);
+
+		$result = self::dic()->database()->query($sql);
+
+		if (($row = $result->fetchAssoc()) !== false) {
+			return intval($row["count"]);
+		}
+
+		return 0;
+	}
+
+
+	/**
+	 * @param string|null     $sort_by
+	 * @param string|null     $sort_by_direction
+	 * @param int|null        $limit_start
+	 * @param int|null        $limit_end
+	 * @param string|null     $title
+	 * @param string|null     $message
+	 * @param ilDateTime|null $date_start
+	 * @param ilDateTime|null $date_end
+	 * @param int|null        $level
+	 * @param int|null        $origin_id
+	 * @param string|null     $origin_object_type
+	 * @param string|null     $object_ext_id
+	 * @param int|null        $object_ilias_id
+	 * @param string|null     $additional_data
+	 *
+	 * @return array|int
+	 */
+	private function getLogsQuery(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL) {
+
+		$sql = ' FROM ' . Log::TABLE_NAME;
 
 		$wheres = [];
 
@@ -136,22 +211,14 @@ final class Logs {
 		}
 
 		if ($sort_by !== NULL && $sort_by_direction !== NULL) {
-			$sql .= ' ORDER BY ' . $sort_by . ' ' . $sort_by_direction;
+			$sql .= ' ORDER BY ' . self::dic()->database()->quoteIdentifier($sort_by) . ' ' . $sort_by_direction;
 		}
 
 		if ($limit_start !== NULL && $limit_end !== NULL) {
 			$sql .= ' LIMIT ' . self::dic()->database()->quote($limit_start, "integer") . ',' . self::dic()->database()->quote($limit_end, "integer");
 		}
 
-		$result = self::dic()->database()->query($sql);
-
-		$logs = [];
-
-		while (($row = $result->fetchAssoc()) !== false) {
-			$logs[$row["log_id"]] = $row;
-		}
-
-		return $logs;
+		return $sql;
 	}
 
 
