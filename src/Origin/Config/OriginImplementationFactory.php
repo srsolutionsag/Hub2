@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\MetadataFactory;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
@@ -25,21 +24,13 @@ class OriginImplementationFactory {
 	 * @var IOrigin
 	 */
 	protected $origin;
-	/**
-	 * @var OriginNotifications
-	 *
-	 * @deprecated
-	 */
-	protected $originNotifications;
 
 
 	/**
-	 * @param IOrigin             $origin
-	 * @param OriginNotifications $originNotifications
+	 * @param IOrigin $origin
 	 */
-	public function __construct(IOrigin $origin, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin) {
 		$this->origin = $origin;
-		$this->originNotifications = $originNotifications;
 	}
 
 
@@ -58,7 +49,7 @@ class OriginImplementationFactory {
 		}
 		require_once $classFile;
 		$class = rtrim($namespace, "\\") . "\\" . $className;
-		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), $this->originNotifications, new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
+		$instance = new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
 
 		return $instance;
 	}

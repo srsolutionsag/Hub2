@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
@@ -45,12 +44,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	protected $statusTransition;
 	/**
-	 * @var OriginNotifications
-	 *
-	 * @deprecated
-	 */
-	protected $originNotifications;
-	/**
 	 * @var IOriginImplementation
 	 */
 	protected $implementation;
@@ -60,12 +53,10 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $statusTransition
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition) {
 		$this->origin = $origin;
 		$this->statusTransition = $statusTransition;
-		$this->originNotifications = $originNotifications;
 		$this->implementation = $implementation;
 	}
 
@@ -74,7 +65,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function user() {
-		return new UserSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new UserSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 
 
@@ -82,7 +73,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function course() {
-		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications, new CourseActivities(self::dic()
+		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new CourseActivities(self::dic()
 			->database()));
 	}
 
@@ -91,7 +82,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function category() {
-		return new CategorySyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new CategorySyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 
 
@@ -99,7 +90,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function session() {
-		return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 
 
@@ -107,7 +98,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function courseMembership() {
-		return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 
 
@@ -115,7 +106,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function group() {
-		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications, new GroupActivities(self::dic()
+		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new GroupActivities(self::dic()
 			->database()));
 	}
 
@@ -124,7 +115,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function groupMembership() {
-		return new GroupMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new GroupMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 
 
@@ -132,7 +123,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function sessionMembership() {
-		return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 
 
@@ -140,7 +131,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function orgUnit(): IOrgUnitSyncProcessor {
-		return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 
 
@@ -148,6 +139,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 * @inheritdoc
 	 */
 	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor {
-		return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition, $this->originNotifications);
+		return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 }

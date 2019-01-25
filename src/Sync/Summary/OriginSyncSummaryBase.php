@@ -60,7 +60,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 	/**
 	 * @inheritdoc
 	 */
-	public function sendNotifications() {
+	public function sendEmail() {
 		$mail = new ilMimeMail();
 		$mail->From(self::dic()->mailMimeSenderFactory()->system());
 

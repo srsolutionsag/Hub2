@@ -7,7 +7,6 @@ use Mockery\MockInterface;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\IObjectFactory;
@@ -73,7 +72,6 @@ class OriginSyncTest extends AbstractHub2Tests {
 		$this->processor = Mockery::mock(IObjectSyncProcessor::class);
 		$this->originConfig = Mockery::mock(IOriginConfig::class);
 		$this->statusTransition = Mockery::mock(IObjectStatusTransition::class);
-		$this->originNotification = new OriginNotifications();
 	}
 
 

@@ -7,7 +7,6 @@ use srag\Plugins\Hub2\Exception\AbortSyncException;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
@@ -59,16 +58,6 @@ interface IOriginSync {
 	 * @return int
 	 */
 	public function getCountDelivered();
-
-
-	/**
-	 * Get the notifications
-	 *
-	 * @return OriginNotifications
-	 *
-	 * @deprecated
-	 */
-	public function getNotifications();
 
 
 	/**

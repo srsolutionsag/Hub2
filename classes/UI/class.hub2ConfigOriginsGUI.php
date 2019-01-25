@@ -299,7 +299,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 			$summary->addOriginSync($originSync);
 		}
-		$summary->sendNotifications();
+		$summary->sendEmail();
 		try {
 			$global_hook->afterSync($this->originFactory->getAllActive());
 		} catch (Throwable $e) {
@@ -352,7 +352,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 			ilUtil::sendFailure("{$e->getMessage()} <pre>{$e->getTraceAsString()}</pre>", true);
 		}
 		$summary->addOriginSync($originSync);
-		$summary->sendNotifications();
+		$summary->sendEmail();
 		$global_hook->afterSync([ $origin ]);
 
 		ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);

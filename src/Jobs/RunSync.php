@@ -112,7 +112,7 @@ class RunSync extends ilCronJob {
 			}
 			$global_hook->afterSync($OriginFactory->getAllActive());
 
-			$summary->sendNotifications();
+			$summary->sendEmail();
 
 			return ResultFactory::ok("everything's fine.");
 		} catch (Throwable $e) {

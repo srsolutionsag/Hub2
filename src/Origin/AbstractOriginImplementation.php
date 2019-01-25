@@ -7,7 +7,6 @@ use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\HookObject;
@@ -50,12 +49,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	private $factory;
 	/**
-	 * @var OriginNotifications
-	 *
-	 * @deprecated
-	 */
-	private $originNotifications;
-	/**
 	 * @var array
 	 */
 	protected $data = [];
@@ -70,14 +63,12 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 *
 	 * @param IOriginConfig              $config
 	 * @param IDataTransferObjectFactory $factory
-	 * @param OriginNotifications        $originNotifications
 	 * @param IMetadataFactory           $metadataFactory
 	 * @param ITaxonomyFactory           $taxonomyFactory
 	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, OriginNotifications $originNotifications, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy, IOrigin $origin) {
+	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy, IOrigin $origin) {
 		$this->originConfig = $config;
 		$this->factory = $factory;
-		$this->originNotifications = $originNotifications;
 		$this->metadataFactory = $metadataFactory;
 		$this->taxonomyFactory = $taxonomyFactory;
 		$this->mapping_strategy_factory = $mapping_strategy;
@@ -132,14 +123,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation {
 	 */
 	final protected function taxonomy() {
 		return $this->taxonomyFactory;
-	}
-
-
-	/**
-	 * @return OriginNotifications
-	 */
-	final protected function notifications() {
-		return $this->originNotifications;
 	}
 
 	// HOOKS

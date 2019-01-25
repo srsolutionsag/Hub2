@@ -9,7 +9,6 @@ use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\NullDTO;
 use srag\Plugins\Hub2\Object\IObject;
@@ -75,12 +74,6 @@ class OriginSync implements IOriginSync {
 		IObject::STATUS_IGNORED => 0,
 		IObject::STATUS_FAILED => 0
 	];
-	/**
-	 * @var OriginNotifications
-	 *
-	 * @deprecated
-	 */
-	protected $notifications;
 
 
 	/**
@@ -90,16 +83,14 @@ class OriginSync implements IOriginSync {
 	 * @param IObjectSyncProcessor    $processor
 	 * @param IObjectStatusTransition $transition
 	 * @param IOriginImplementation   $implementation
-	 * @param OriginNotifications     $notifications
 	 */
-	public function __construct(IOrigin $origin, IObjectRepository $repository, IObjectFactory $factory, IObjectSyncProcessor $processor, IObjectStatusTransition $transition, IOriginImplementation $implementation, OriginNotifications $notifications) {
+	public function __construct(IOrigin $origin, IObjectRepository $repository, IObjectFactory $factory, IObjectSyncProcessor $processor, IObjectStatusTransition $transition, IOriginImplementation $implementation) {
 		$this->origin = $origin;
 		$this->repository = $repository;
 		$this->factory = $factory;
 		$this->processor = $processor;
 		$this->statusTransition = $transition;
 		$this->implementation = $implementation;
-		$this->notifications = $notifications;
 	}
 
 
@@ -241,16 +232,6 @@ class OriginSync implements IOriginSync {
 	 */
 	public function getCountDelivered() {
 		return $this->countDelivered;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 *
-	 * @deprecated
-	 */
-	public function getNotifications() {
-		return $this->notifications;
 	}
 
 

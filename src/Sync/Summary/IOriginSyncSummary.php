@@ -27,5 +27,5 @@ interface IOriginSyncSummary {
 	/**
 	 * @return void
 	 */
-	public function sendNotifications();
+	public function sendEmail();
 }

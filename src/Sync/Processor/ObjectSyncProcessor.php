@@ -10,7 +10,6 @@ use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
@@ -45,12 +44,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 */
 	protected $transition;
 	/**
-	 * @var OriginNotifications
-	 *
-	 * @deprecated
-	 */
-	protected $originNotifications;
-	/**
 	 * @var IOriginImplementation
 	 */
 	protected $implementation;
@@ -60,12 +53,10 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications) {
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
 		$this->origin = $origin;
 		$this->transition = $transition;
-		$this->originNotifications = $originNotifications;
 		$this->implementation = $implementation;
 	}
 

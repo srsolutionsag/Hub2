@@ -97,7 +97,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create Group
 	 */
 	public function test_create_group_with_default_properties() {
-		$processor = new GroupSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications, $this->activities);
+		$processor = new GroupSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->activities);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -120,7 +120,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function test_update_group_with_default_properties() {
-		$processor = new GroupSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications, $this->activities);
+		$processor = new GroupSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->activities);
 
 		//$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
 

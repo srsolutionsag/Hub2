@@ -131,7 +131,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create Category
 	 */
 	public function test_create_session_with_default_properties() {
-		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -157,7 +157,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create Category
 	 */
 	public function test_update_session_with_default_properties() {
-		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 
 		$this->dto->setTitle("Changed Title");
 

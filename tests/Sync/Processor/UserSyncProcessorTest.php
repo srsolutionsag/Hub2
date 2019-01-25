@@ -105,7 +105,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create ILIAS User
 	 */
 	public function test_create_user_with_default_properties() {
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$this->initDataExpectations();
 		$this->ilObject->shouldReceive('setLogin')->once()->with('j.doe');
 		$processor->process($this->iobject, $this->dto);
@@ -123,7 +123,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 	public function test_create_user_with_different_login_name_modes($mode, $expectedLoginName) {
 		$this->originConfig->setData([ IUserOriginConfig::LOGIN_FIELD => $mode ]);
 		$this->initDataExpectations();
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$this->ilObject->shouldReceive('setLogin')->once()->with($expectedLoginName);
 		$processor->process($this->iobject, $this->dto);
 	}
@@ -137,7 +137,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->initDataExpectations();
 		$this->ilObject->shouldReceive('setActive')->once()->with(false);
 		$this->ilObject->shouldReceive('setProfileIncomplete')->once()->with(true);
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$processor->process($this->iobject, $this->dto);
 	}
 
@@ -158,7 +158,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->iobject->shouldReceive('getHashCode')->once()->andReturn('previousHashCode');
 		$this->iobject->shouldReceive('setMetaData')->once();
 		$this->iobject->shouldReceive('setILIASId')->once()->with(self::ILIAS_ID);
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$processor->process($this->iobject, $this->dto);
 	}
 
@@ -174,7 +174,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldNotReceive('setDescription');
 		$this->originImplementation->shouldNotReceive('beforeUpdateILIASObject');
 		$this->originImplementation->shouldNotReceive('afterUpdateILIASObject');
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$processor->process($this->iobject, $this->dto);
 	}
 
@@ -186,7 +186,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
 		$this->ilObject->shouldNotReceive('update');
 		$this->ilObject->shouldNotReceive('delete');
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$processor->process($this->iobject, $this->dto);
 	}
 
@@ -199,7 +199,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->ilObject->shouldReceive('setActive')->with(false)->once();
 		$this->ilObject->shouldReceive('update')->once();
 		$this->ilObject->shouldNotReceive('delete');
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$processor->process($this->iobject, $this->dto);
 	}
 
@@ -210,7 +210,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests {
 		$this->originImplementation->shouldReceive('beforeDeleteILIASObject');
 		$this->originImplementation->shouldReceive('afterDeleteILIASObject');
 		$this->ilObject->shouldReceive('delete');
-		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 		$processor->process($this->iobject, $this->dto);
 	}
 
