@@ -65,6 +65,8 @@ interface IOriginSync {
 	 * Get the notifications
 	 *
 	 * @return OriginNotifications
+	 *
+	 * @deprecated
 	 */
 	public function getNotifications();
 

@@ -31,13 +31,6 @@ final class Logs {
 	 * @var self
 	 */
 	protected static $instance = NULL;
-	/**
-	 * Additional data which should appear in all logs. E.g. something like
-	 * ID of datajunk of delivering system etc.
-	 *
-	 * @var stdClass
-	 */
-	protected $global_additional_data;
 
 
 	/**
@@ -53,9 +46,16 @@ final class Logs {
 
 
 	/**
-	 * @var ILog[]
+	 * Additional data which should appear in all logs. E.g. something like
+	 * ID of datajunk of delivering system etc.
+	 *
+	 * @var stdClass
 	 */
-	protected $current_logs = [];
+	protected $global_additional_data;
+	/**
+	 * @var ILog[][]
+	 */
+	protected $kept_logs = [];
 
 
 	/**
@@ -155,8 +155,6 @@ final class Logs {
 	public function log(): ILog {
 		$log = (new Log())->withAdditionalData(clone $this->getGlobalAdditionalData());
 
-		$this->current_logs[] = $log;
-
 		return $log;
 	}
 
@@ -245,9 +243,30 @@ final class Logs {
 
 
 	/**
+	 * @param ILog $log
+	 */
+	public function keepLog(ILog $log)/*:void*/ {
+		if (!isset($this->kept_logs[$log->getLevel()])) {
+			$this->kept_logs[$log->getLevel()] = [];
+		}
+
+		$this->kept_logs[$log->getLevel()][] = $log;
+	}
+
+
+	/**
+	 * @param int|null $level
+	 *
 	 * @return ILog[]
 	 */
-	public function getCurrentLogs(): array {
-		return $this->current_logs;
+	public function getKeptLogs(/*?*/
+		int $level = NULL): array {
+		if ($level === NULL) {
+			return array_reduce($this->kept_logs, function (array $logs1, array $logs2): array {
+				return array_merge($logs1, $logs2);
+			}, []);
+		}
+
+		return $this->kept_logs[$level];
 	}
 }

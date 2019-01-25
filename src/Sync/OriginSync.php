@@ -246,6 +246,8 @@ class OriginSync implements IOriginSync {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @deprecated
 	 */
 	public function getNotifications() {
 		return $this->notifications;
@@ -278,12 +280,10 @@ class OriginSync implements IOriginSync {
 			throw $ex;
 		} catch (Throwable $ex) {
 			$object->setStatus(IObject::STATUS_FAILED);
-
 			$this->incrementProcessed($object->getStatus());
+			$object->store();
 
 			self::logs()->exceptionLog($ex, $this->origin, $object, $dto)->store();
-
-			$object->store();
 
 			if ($ex instanceof Exception) {
 				// TODO: Change handleException to Throwable parameter (But all origins need to adjusted ...)

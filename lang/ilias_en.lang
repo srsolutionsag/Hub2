@@ -384,10 +384,8 @@ summary_updated#:#Updated: %s
 summary_outdated#:#Outdated: %s
 summary_ignored#:#Ignored: %s
 summary_failed#:#Failed: %s
-summary_logs#:#Logs:
-summary_logs_more#:# + %s more ...
 summary_notification#:#Hub2: Summary for %s
-summary_logs_in#:#Hub2: Exceptions in %s
+summary_logs_in#:#Hub2: Logs in %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Base ref ID
 orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.
@@ -430,6 +428,8 @@ logs_object_ilias_id#:#ILIAS ID
 logs_origin_id#:#Origin ID
 logs_origin_object_type#:#Origin object type
 logs_show_logs#:#Show logs
+logs_summary#:#Logs:
+logs_summary_more#:# + %s more ...
 logs_title#:#Title
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
