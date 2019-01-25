@@ -81,7 +81,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 			}
 
 			if ($error_email) {
-				if (count(self::logs()->getKeptLogs()) > 0) {
+				if (count(self::logs()->getKeptLogs($originSync->getOrigin())) > 0) {
 					$mail->To($error_email);
 
 					$mail->Subject(self::plugin()->translate("summary_logs_in", hub2LogsGUI::LANG_MODULE_LOGS, [ $title ]));
@@ -115,16 +115,16 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 			$msg .= self::plugin()->translate("summary_ignored", "", [ $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED) ]);
 		}
 
-		if (count(self::logs()->getKeptLogs()) > 0) {
-			$msg .= "\n" . self::plugin()->translate("summary", hub2LogsGUI::LANG_MODULE_LOGS) . "\n**********\n";
+		if (count(self::logs()->getKeptLogs($originSync->getOrigin())) > 0) {
+			$msg .= "\n" . self::plugin()->translate("summary", hub2LogsGUI::LANG_MODULE_LOGS) . "\n";
 
-			$msg .= implode("\n", array_map(function (int $level) use ($output_message): string {
-				$logs = self::logs()->getKeptLogs($level);
+			$msg .= implode("\n", array_map(function (int $level) use ($output_message, $originSync): string {
+				$logs = self::logs()->getKeptLogs($originSync->getOrigin(), $level);
 
 				return self::plugin()->translate("level_" . $level, hub2LogsGUI::LANG_MODULE_LOGS) . ": " . count($logs) . ($output_message ? " - "
 						. current($logs)->getMessage() : "");
-			}, array_filter(Log::$levels, function (int $level): bool {
-				return (count(self::logs()->getKeptLogs($level)) > 0);
+			}, array_filter(Log::$levels, function (int $level) use ($originSync): bool {
+				return (count(self::logs()->getKeptLogs($originSync->getOrigin(), $level)) > 0);
 			})));
 		}
 

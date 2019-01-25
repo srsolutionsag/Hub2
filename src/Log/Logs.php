@@ -53,7 +53,7 @@ final class Logs {
 	 */
 	protected $global_additional_data;
 	/**
-	 * @var ILog[][]
+	 * @var ILog[][][]
 	 */
 	protected $kept_logs = [];
 
@@ -246,8 +246,12 @@ final class Logs {
 	 * @param ILog $log
 	 */
 	public function keepLog(ILog $log)/*:void*/ {
-		if (!isset($this->kept_logs[$log->getLevel()])) {
-			$this->kept_logs[$log->getLevel()] = [];
+		if (!isset($this->kept_logs[$log->getOriginId()])) {
+			$this->kept_logs[$log->getOriginId()] = [];
+		}
+
+		if (!isset($this->kept_logs[$log->getOriginId()][$log->getLevel()])) {
+			$this->kept_logs[$log->getOriginId()][$log->getLevel()] = [];
 		}
 
 		$this->kept_logs[$log->getLevel()][] = $log;
@@ -255,20 +259,25 @@ final class Logs {
 
 
 	/**
+	 * @param IOrigin  $origin
 	 * @param int|null $level
 	 *
 	 * @return ILog[]
 	 */
-	public function getKeptLogs(/*?*/
+	public function getKeptLogs(IOrigin $origin,/*?*/
 		int $level = NULL): array {
+		if (!isset($this->kept_logs[$origin->getId()])) {
+			return [];
+		}
+
 		if ($level === NULL) {
-			return array_reduce($this->kept_logs, function (array $logs1, array $logs2): array {
+			return array_reduce($this->kept_logs[$origin->getId()], function (array $logs1, array $logs2): array {
 				return array_merge($logs1, $logs2);
 			}, []);
 		}
 
-		if (isset($this->kept_logs[$level])) {
-			return $this->kept_logs[$level];
+		if (isset($this->kept_logs[$origin->getId()][$level])) {
+			return $this->kept_logs[$origin->getId()][$level];
 		} else {
 			return [];
 		}
