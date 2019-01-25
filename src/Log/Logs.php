@@ -267,6 +267,10 @@ final class Logs {
 			}, []);
 		}
 
-		return $this->kept_logs[$level];
+		if (isset($this->kept_logs[$level])) {
+			return $this->kept_logs[$level];
+		} else {
+			return [];
+		}
 	}
 }
