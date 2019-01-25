@@ -158,9 +158,9 @@ final class Logs {
 	 * @param int|null        $object_ilias_id
 	 * @param string|null     $additional_data
 	 *
-	 * @return array|int
+	 * @return string
 	 */
-	private function getLogsQuery(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL) {
+	private function getLogsQuery(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): string {
 
 		$sql = ' FROM ' . Log::TABLE_NAME;
 
