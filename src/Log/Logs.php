@@ -132,7 +132,7 @@ final class Logs {
 		}
 
 		if (count($wheres) > 0) {
-			$sql .= ' ' . implode(" AND ", $wheres);
+			$sql .= ' WHERE ' . implode(" AND ", $wheres);
 		}
 
 		if ($sort_by !== NULL && $sort_by_direction !== NULL) {
