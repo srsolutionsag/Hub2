@@ -13,6 +13,7 @@
 - Clean up status modal DTO
 - Exceptions are converted in logs
 - Logs are send in email
+- handleExceptions is now handleLog
 - Removed notifications which replaced with logs
 - Fix: Add correct namespace for new origins
 - Fix: Not delete data on origin delete

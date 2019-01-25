@@ -2,13 +2,11 @@
 
 namespace srag\Plugins\Hub2\Sync;
 
-use Exception;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
-use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\NullDTO;
 use srag\Plugins\Hub2\Object\IObject;
@@ -95,9 +93,7 @@ class OriginSync implements IOriginSync {
 
 
 	/**
-	 * @throws AbortOriginSyncException
-	 * @throws HubException
-	 * @throws Throwable
+	 * @inheritdoc
 	 */
 	public function execute() {
 		// Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
@@ -264,12 +260,10 @@ class OriginSync implements IOriginSync {
 			$this->incrementProcessed($object->getStatus());
 			$object->store();
 
-			self::logs()->exceptionLog($ex, $this->origin, $object, $dto)->store();
+			$log = self::logs()->exceptionLog($ex, $this->origin, $object, $dto);
+			$log->store();
 
-			if ($ex instanceof Exception) {
-				// TODO: Change handleException to Throwable parameter (But all origins need to adjusted ...)
-				$this->implementation->handleException($ex);
-			}
+			$this->implementation->handleLog($log);
 		}
 	}
 

@@ -5,6 +5,9 @@ namespace srag\Plugins\Hub2\Jobs;
 use ilCronJob;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
+use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
+use srag\Plugins\Hub2\Exception\AbortSyncException;
 use srag\Plugins\Hub2\Jobs\Result\AbstractResult;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
 use srag\Plugins\Hub2\Origin\IOrigin;
@@ -118,6 +121,8 @@ class RunSync extends ilCronJob {
 	 */
 	public function run(): AbstractResult {
 		try {
+			$skip_object_type = '';
+
 			$global_hook = new GlobalHook();
 
 			if (empty($this->origins)) {
@@ -133,6 +138,10 @@ class RunSync extends ilCronJob {
 			}
 
 			foreach ($this->origins as $origin) {
+				if ($origin->getObjectType() == $skip_object_type) {
+					continue;
+				}
+
 				if ($this->force_update) {
 					$origin->forceUpdate();
 				}
@@ -143,10 +152,15 @@ class RunSync extends ilCronJob {
 
 				try {
 					$originSync->execute();
+				} catch (AbortSyncException $e) {
+					throw $e;
+				} catch (AbortOriginSyncException $ex) {
+					break;
+				} catch (AbortOriginSyncOfCurrentTypeException $e) {
+					$skip_object_type = $origin->getObjectType();
+					continue;
 				} catch (Throwable $e) {
-					if ($global_hook) {
-						$global_hook->handleExceptions([ $e ]);
-					}
+					self::logs()->exceptionLog($e, $origin)->store();
 				}
 
 				$this->summary->addOriginSync($originSync);
@@ -154,14 +168,12 @@ class RunSync extends ilCronJob {
 
 			$this->summary->sendEmail();
 
-			$global_hook->afterSync($this->origins);
+			if (!$global_hook->afterSync($this->origins)) {
+				return ResultFactory::error("there was an error");
+			}
 
 			return ResultFactory::ok("everything's fine.");
 		} catch (Throwable $e) {
-			if ($global_hook) {
-				$global_hook->handleExceptions([ $e ]);
-			}
-
 			return ResultFactory::error("there was an error");
 		}
 	}

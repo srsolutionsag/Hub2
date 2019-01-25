@@ -2,15 +2,11 @@
 
 namespace srag\Plugins\Hub2\Sync;
 
-use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
-use srag\Plugins\Hub2\Exception\AbortSyncException;
-use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
-use srag\Plugins\Hub2\Exception\ConnectionFailedException;
-use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use Throwable;
 
 /**
- * Interface ISync
+ * Interface IOriginSync
  *
  * @package srag\Plugins\Hub2\Sync
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -20,11 +16,7 @@ interface IOriginSync {
 	/**
 	 * Execute the synchronization for the origin
 	 *
-	 * @throws ConnectionFailedException
-	 * @throws ParseDataFailedException
-	 * @throws BuildObjectsFailedException
-	 * @throws AbortOriginSyncException
-	 * @throws AbortSyncException
+	 * @throws Throwable
 	 */
 	public function execute();
 
