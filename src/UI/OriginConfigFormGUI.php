@@ -19,6 +19,11 @@ use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Origin\Group\IGroupOrigin;
+use srag\Plugins\Hub2\Origin\GroupMembership\IGroupMembershipOrigin;
+use srag\Plugins\Hub2\Origin\CourseMembership\ICourseMembershipOrigin;
+use srag\Plugins\Hub2\Origin\Session\ISessionOrigin;
+use srag\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\DTOPropertyParser;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -301,7 +306,15 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 			$item = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc"), self::POST_VAR_ADHOC);
 			$item->setChecked($this->origin->isAdHoc());
 			$item->setInfo(self::plugin()->translate("origin_form_field_adhoc_info"));
-			$this->addItem($item);
+
+			if($this->hasOriginAdHocParentScope()){
+                $subitem = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc_parent_scope"), "adhoc_parent_scope");
+                $subitem->setChecked($this->origin->isAdhocParentScope());
+                $subitem->setInfo(self::plugin()->translate("origin_form_field_adhoc_parent_scope_info"));
+                $item->addSubItem($subitem);
+            }
+
+            $this->addItem($item);
 			$item = new ilCheckboxInputGUI(self::plugin()->translate('origin_form_field_active'), 'active');
 			$item->setChecked($this->origin->isActive());
 			$this->addItem($item);
@@ -316,6 +329,22 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 			$this->addItem($item);
 		}
 	}
+
+    /**
+     * @return bool
+     */
+	protected function hasOriginAdHocParentScope(){
+	    switch (true){
+            case $this->origin instanceof ICourseMembershipOrigin:
+            case $this->origin instanceof IGroupOrigin:
+            case $this->origin instanceof IGroupMembershipOrigin:
+            case $this->origin instanceof ISessionOrigin:
+            case $this->origin instanceof ISessionMembershipOrigin:
+                return true;
+            default:
+                return false;
+        }
+    }
 
 
 	/**
