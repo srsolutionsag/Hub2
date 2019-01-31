@@ -45,6 +45,11 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
 	 */
 	protected $role = self::ROLE_MEMBER;
 
+	/**
+	 * @var bool
+	 */
+	protected $isContact = false;
+
 
 	/**
 	 * @return int
@@ -122,6 +127,24 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
 	public function setCourseIdType(int $courseIdType): CourseMembershipDTO {
 		$this->courseIdType = $courseIdType;
 
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isContact(): bool
+	{
+		return $this->isContact;
+	}
+
+	/**
+	 * @param bool $isContact
+	 * @return $this
+	 */
+	public function setIsContact(bool $isContact)
+	{
+		$this->isContact = $isContact;
 		return $this;
 	}
 }

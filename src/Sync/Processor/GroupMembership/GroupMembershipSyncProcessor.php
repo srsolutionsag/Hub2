@@ -63,8 +63,11 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 		if (!$group) {
 			return NULL;
 		}
+
 		$user_id = $dto->getUserId();
-		$group->getMembersObject()->add($user_id, $this->mapRole($dto));
+		$membership_obj = $group->getMembersObject();
+		$membership_obj->add($user_id, $this->mapRole($dto));
+		$membership_obj->updateContact($user_id,$dto->isContact());
 
 		return new FakeIliasMembershipObject($ilias_group_ref_id, $user_id);
 	}
@@ -90,7 +93,11 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 			return NULL;
 		}
 
-		$group->getMembersObject()->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $group) ]);
+		$membership_obj = $group->getMembersObject();
+		$membership_obj->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $group) ]);
+		if ($this->props->updateDTOProperty("isContact")) {
+			$membership_obj->updateContact($user_id, $dto->isContact());
+		}
 
 		$obj->setUserIdIlias($dto->getUserId());
 		$obj->setContainerIdIlias($group->getRefId());
