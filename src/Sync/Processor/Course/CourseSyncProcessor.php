@@ -164,15 +164,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 		$this->handleOrdering($dto, $ilObjCourse);
 
-		if($dto->getAppointementsColor()){
-			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjCourse->getId());
-			/**
-			 * @var $cal_cat \ilCalendarCategory
-			 */
-			$cal_cat = \ilCalendarCategory::_getInstanceByObjId($ilObjCourse->getId());
-			$cal_cat->setColor($dto->getAppointementsColor());
-			$cal_cat->update();
-		}
+		$this->handleAppointementsColor($ilObjCourse,$dto);
+
 		return $ilObjCourse;
 	}
 
@@ -397,11 +390,34 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($this->props->get(CourseProperties::MOVE_COURSE)) {
 			$this->moveCourse($ilObjCourse, $dto);
 		}
+
+
+		if ($this->props->updateDTOProperty("appointementsColor")){
+			$this->handleAppointementsColor($ilObjCourse,$dto);
+		}
+
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
 	}
 
+	/**
+	 * @param ilObjCourse $ilObjCourse
+	 * @param CourseDTO $dto
+	 */
+	protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto){
+		global $DIC;
+
+		if($dto->getAppointementsColor()){
+			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjCourse->getId());
+			/**
+			 * @var $cal_cat \ilCalendarCategory
+			 */
+			$cal_cat = \ilCalendarCategory::_getInstanceByObjId($ilObjCourse->getId());
+			$cal_cat->setColor($dto->getAppointementsColor());
+			$cal_cat->update();
+		}
+	}
 
 	/**
 	 * @inheritdoc
