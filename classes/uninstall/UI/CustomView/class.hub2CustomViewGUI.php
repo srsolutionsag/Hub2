@@ -1,25 +1,20 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI\CustomView;
+//namespace srag\Plugins\Hub2\UI\CustomView;
 
-use Exception;
-use ilHub2Plugin;
-use ilUtil;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
-use Throwable;
 
 /**
  * Class CustomViewGUI
  *
- * @package      srag\Plugins\Hub2\UI\CustomView
+ * @package srag\Plugins\Hub2\UI\CustomView
  *
- * @author       Timon Amstutz
- *
- * @ilCtrl_calls srag\Plugins\Hub2\UI\MainGUI: srag\Plugins\Hub2\UI\CustomView\CustomViewGUI
+ * @author  Timon Amstutz
  */
-class CustomViewGUI {
+class hub2CustomViewGUI {
 
 	use DICTrait;
 	use Hub2Trait;
@@ -27,7 +22,7 @@ class CustomViewGUI {
 
 
 	/**
-	 * CustomViewGUI constructor
+	 * hub2CustomViewGUI constructor
 	 */
 	public function __construct() {
 

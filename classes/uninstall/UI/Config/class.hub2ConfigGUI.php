@@ -1,20 +1,17 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI\Config;
+//namespace srag\Plugins\Hub2\UI\Config;
 
-use ilUtil;
-use srag\Plugins\Hub2\UI\MainGUI;
+use srag\Plugins\Hub2\UI\Config\ConfigFormGUI;
 
 /**
  * Class ConfigGUI
  *
- * @package           srag\Plugins\Hub2\UI\Config
+ * @package srag\Plugins\Hub2\UI\Config
  *
- * @author            Fabian Schmid <fs@studer-raimann.ch>
- *
- * @ilCtrl_calls      srag\Plugins\Hub2\UI\MainGUI: srag\Plugins\Hub2\UI\Config\ConfigGUI
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ConfigGUI extends MainGUI {
+class hub2ConfigGUI extends hub2MainGUI {
 
 	const CMD_SAVE_CONFIG = 'saveConfig';
 	const CMD_CANCEL = 'cancel';

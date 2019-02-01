@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Jobs\Log;
 
+use hub2LogsGUI;
 use ilCronJob;
 use ilCronJobResult;
 use ilDateTime;
@@ -10,7 +11,6 @@ use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
 use srag\Plugins\Hub2\Log\Log;
-use srag\Plugins\Hub2\UI\Log\LogsGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -42,7 +42,7 @@ class DeleteOldLogsJob extends ilCronJob {
 	 * @return string
 	 */
 	public function getTitle(): string {
-		return ilHub2Plugin::PLUGIN_NAME . ": " . self::plugin()->translate("cron", LogsGUI::LANG_MODULE_LOGS);
+		return ilHub2Plugin::PLUGIN_NAME . ": " . self::plugin()->translate("cron", hub2LogsGUI::LANG_MODULE_LOGS);
 	}
 
 
@@ -50,7 +50,7 @@ class DeleteOldLogsJob extends ilCronJob {
 	 * @return string
 	 */
 	public function getDescription(): string {
-		return self::plugin()->translate("cron_description", LogsGUI::LANG_MODULE_LOGS);
+		return self::plugin()->translate("cron_description", hub2LogsGUI::LANG_MODULE_LOGS);
 	}
 
 
@@ -114,6 +114,6 @@ class DeleteOldLogsJob extends ilCronJob {
 		$count = self::dic()->database()->manipulateF("DELETE FROM " . Log::TABLE_NAME . " WHERE date<%s AND " . self::dic()->database()
 				->in("log_id", $keep_log_ids, true, "integer"), [ "text" ], [ $keep_old_logs_time_date->get(IL_CAL_DATETIME) ]);
 
-		return ResultFactory::ok(self::plugin()->translate("deleted_status", LogsGUI::LANG_MODULE_LOGS, [ $count ]));
+		return ResultFactory::ok(self::plugin()->translate("deleted_status", hub2LogsGUI::LANG_MODULE_LOGS, [ $count ]));
 	}
 }

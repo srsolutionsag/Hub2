@@ -1,12 +1,7 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI\OriginConfig;
+//namespace srag\Plugins\Hub2\UI\OriginConfig;
 
-use ilConfirmationGUI;
-use ilException;
-use ilPersonalDesktopGUI;
-use ilSubmitButton;
-use ilUtil;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Jobs\RunSync;
@@ -18,9 +13,8 @@ use srag\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
-use srag\Plugins\Hub2\UI\Data\DataGUI;
-use srag\Plugins\Hub2\UI\Log\LogsGUI;
-use srag\Plugins\Hub2\UI\MainGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginsTableGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
 
 /**
@@ -31,9 +25,10 @@ use srag\Plugins\Hub2\UI\OriginFormFactory;
  * @author       Stefan Wanzenried <sw@studer-raimann.ch>
  * @author       Fabian Schmid <fs@studer-raimann.ch>
  *
- * @ilCtrl_calls srag\Plugins\Hub2\UI\MainGUI: srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI
+ * @ilCtrl_calls hub2ConfigOriginsGUI: hub2DataGUI
+ * @ilCtrl_calls hub2ConfigOriginsGUI: hub2LogsGUI
  */
-class ConfigOriginsGUI extends MainGUI {
+class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 	const CMD_DELETE = 'delete';
 	const ORIGIN_ID = 'origin_id';
@@ -84,11 +79,11 @@ class ConfigOriginsGUI extends MainGUI {
 		parent::executeCommand();
 		// require_once "./Customizing/global/plugins/Services/Cron/CronHook/Hub2/sql/dbupdate.php";
 		switch (self::dic()->ctrl()->getNextClass()) {
-			case strtolower(DataGUI::class):
-				self::dic()->ctrl()->forwardCommand(new DataGUI());
+			case strtolower(hub2DataGUI::class):
+				self::dic()->ctrl()->forwardCommand(new hub2DataGUI());
 				break;
-			case strtolower(LogsGUI::class):
-				self::dic()->ctrl()->forwardCommand(new LogsGUI());
+			case strtolower(hub2LogsGUI::class):
+				self::dic()->ctrl()->forwardCommand(new hub2LogsGUI());
 				break;
 		}
 	}
@@ -102,10 +97,10 @@ class ConfigOriginsGUI extends MainGUI {
 			->getLinkTarget($this, self::CMD_INDEX));
 
 		self::dic()->tabs()->addSubTab(self::SUBTAB_DATA, self::plugin()->translate(self::SUBTAB_DATA), self::dic()->ctrl()
-			->getLinkTargetByClass(DataGUI::class, DataGUI::CMD_INDEX));
+			->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
 
-		self::dic()->tabs()->addSubTab(LogsGUI::SUBTAB_LOGS, self::plugin()->translate("logs", LogsGUI::LANG_MODULE_LOGS), self::dic()->ctrl()
-			->getLinkTargetByClass(LogsGUI::class, LogsGUI::CMD_INDEX));
+		self::dic()->tabs()->addSubTab(hub2LogsGUI::SUBTAB_LOGS, self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS), self::dic()->ctrl()
+			->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX));
 
 		self::dic()->tabs()->activateTab(self::TAB_ORIGINS);
 		self::dic()->tabs()->activateSubTab(self::SUBTAB_ORIGINS);

@@ -19,7 +19,7 @@ abstract class BaseCustomViewGUI {
 	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
-	 * @var CustomViewGUI
+	 * @var hub2CustomViewGUI
 	 */
 	protected $parent_gui;
 
@@ -27,9 +27,9 @@ abstract class BaseCustomViewGUI {
 	/**
 	 * BaseCustomViewGUI constructor
 	 *
-	 * @param CustomViewGUI $parent_gui
+	 * @param hub2CustomViewGUI $parent_gui
 	 */
-	public function __construct(CustomViewGUI $parent_gui) {
+	public function __construct(hub2CustomViewGUI $parent_gui) {
 		$this->parent_gui = $parent_gui;
 	}
 

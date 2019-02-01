@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\UI\Config;
 
+use hub2ConfigGUI;
+use hub2LogsGUI;
 use ilCheckboxInputGUI;
 use ilFormPropertyGUI;
 use ilFormSectionHeaderGUI;
@@ -13,7 +15,6 @@ use ilTextAreaInputGUI;
 use ilTextInputGUI;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\UI\Log\LogsGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -38,9 +39,9 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 	/**
 	 * ConfigFormGUI constructor
 	 *
-	 * @param ConfigGUI $parent_gui
+	 * @param hub2ConfigGUI $parent_gui
 	 */
-	public function __construct(ConfigGUI $parent_gui) {
+	public function __construct(hub2ConfigGUI $parent_gui) {
 		parent::__construct();
 
 		$this->parent_gui = $parent_gui;
@@ -55,8 +56,8 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 	protected function initForm()/*: void*/ {
 		$this->setFormAction(self::dic()->ctrl()->getFormAction($this->parent_gui));
 
-		$this->addCommandButton(ConfigGUI::CMD_SAVE_CONFIG, self::plugin()->translate('button_save'));
-		$this->addCommandButton(ConfigGUI::CMD_CANCEL, self::plugin()->translate('button_cancel'));
+		$this->addCommandButton(hub2ConfigGUI::CMD_SAVE_CONFIG, self::plugin()->translate('button_save'));
+		$this->addCommandButton(hub2ConfigGUI::CMD_CANCEL, self::plugin()->translate('button_cancel'));
 
 		$this->setTitle(self::plugin()->translate('admin_form_title'));
 
@@ -82,13 +83,13 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 		$this->addItem($cb);
 
 		$item = new ilFormSectionHeaderGUI();
-		$item->setTitle(self::plugin()->translate("logs", LogsGUI::LANG_MODULE_LOGS));
+		$item->setTitle(self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS));
 		$this->addItem($item);
 
 		$item = new ilNumberInputGUI(self::plugin()
-			->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME, LogsGUI::LANG_MODULE_LOGS), ArConfig::KEY_KEEP_OLD_LOGS_TIME);
-		$item->setSuffix(self::plugin()->translate("days", LogsGUI::LANG_MODULE_LOGS));
-		$item->setInfo(self::plugin()->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME . "_info", LogsGUI::LANG_MODULE_LOGS));
+			->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME, hub2LogsGUI::LANG_MODULE_LOGS), ArConfig::KEY_KEEP_OLD_LOGS_TIME);
+		$item->setSuffix(self::plugin()->translate("days", hub2LogsGUI::LANG_MODULE_LOGS));
+		$item->setInfo(self::plugin()->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME . "_info", hub2LogsGUI::LANG_MODULE_LOGS));
 		$item->setMinValue(0);
 		$item->setValue(ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME));
 		$this->addItem($item);

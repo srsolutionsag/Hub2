@@ -1,20 +1,18 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI\Log;
+//namespace srag\Plugins\Hub2\UI\Log;
 
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
-use srag\Plugins\Hub2\UI\MainGUI;
+use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
 
 /**
  * Class LogsGUI
  *
- * @package      srag\Plugins\Hub2\UI\Log
+ * @package srag\Plugins\Hub2\UI\Log
  *
- * @author       studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
- *
- * @ilCtrl_calls srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI: srag\Plugins\Hub2\UI\Log\LogsGUI
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class LogsGUI extends MainGUI {
+class hub2LogsGUI extends hub2MainGUI {
 
 	const CMD_APPLY_FILTER = "applyFilter";
 	const CMD_RESET_FILTER = "resetFilter";

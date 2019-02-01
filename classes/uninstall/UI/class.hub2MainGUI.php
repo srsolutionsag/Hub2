@@ -1,15 +1,9 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+//namespace srag\Plugins\Hub2\UI;
 
-use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\UI\Config\ConfigGUI;
-use srag\Plugins\Hub2\UI\CustomView\CustomViewGUI;
-use srag\Plugins\Hub2\UI\Data\DataGUI;
-use srag\Plugins\Hub2\UI\Log\LogsGUI;
-use srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -19,9 +13,12 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  *
  * @author            Fabian Schmid <fs@studer-raimann.ch>
  *
- * @ilCtrl_IsCalledBy srag\Plugins\Hub2\UI\MainGUI: ilHub2ConfigGUI
+ * @ilCtrl_IsCalledBy hub2MainGUI: ilHub2ConfigGUI
+ * @ilCtrl_calls      hub2MainGUI: hub2ConfigOriginsGUI
+ * @ilCtrl_calls      hub2MainGUI: hub2ConfigGUI
+ * @ilCtrl_calls      hub2MainGUI: hub2CustomViewGUI
  */
-class MainGUI {
+class hub2MainGUI {
 
 	use DICTrait;
 	use Hub2Trait;
@@ -48,18 +45,18 @@ class MainGUI {
 		$nextClass = self::dic()->ctrl()->getNextClass();
 
 		switch ($nextClass) {
-			case strtolower(ConfigGUI::class):
-				self::dic()->ctrl()->forwardCommand(new ConfigGUI());
+			case strtolower(hub2ConfigGUI::class):
+				self::dic()->ctrl()->forwardCommand(new hub2ConfigGUI());
 				break;
-			case strtolower(ConfigOriginsGUI::class):
-				self::dic()->ctrl()->forwardCommand(new ConfigOriginsGUI());
+			case strtolower(hub2ConfigOriginsGUI::class):
+				self::dic()->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
 				break;
-			case strtolower(CustomViewGUI::class):
+			case strtolower(hub2CustomViewGUI::class):
 				self::dic()->tabs()->activateTab(self::TAB_CUSTOM_VIEWS);
-				self::dic()->ctrl()->forwardCommand(new CustomViewGUI());
+				self::dic()->ctrl()->forwardCommand(new hub2CustomViewGUI());
 				break;
-			case strtolower(DataGUI::class):
-			case strtolower(LogsGUI::class):
+			case strtolower(hub2DataGUI::class):
+			case strtolower(hub2LogsGUI::class):
 				break;
 			default:
 				$cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
@@ -72,7 +69,7 @@ class MainGUI {
 	 *
 	 */
 	protected function index()/*: void*/ {
-		self::dic()->ctrl()->redirectByClass(ConfigGUI::class);
+		self::dic()->ctrl()->redirectByClass(hub2ConfigGUI::class);
 	}
 
 
@@ -81,14 +78,14 @@ class MainGUI {
 	 */
 	protected function initTabs()/*: void*/ {
 		self::dic()->tabs()->addTab(self::TAB_PLUGIN_CONFIG, self::plugin()->translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
-			->getLinkTargetByClass(ConfigGUI::class));
+			->getLinkTargetByClass(hub2ConfigGUI::class));
 
 		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
-			->getLinkTargetByClass(ConfigOriginsGUI::class));
+			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
 
 		if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
 			self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
-				->getLinkTargetByClass(CustomViewGUI::class));
+				->getLinkTargetByClass(hub2CustomViewGUI::class));
 		}
 	}
 

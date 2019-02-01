@@ -1,24 +1,21 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI\Data;
+//namespace srag\Plugins\Hub2\UI\Data;
 
 use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
-use srag\Plugins\Hub2\UI\MainGUI;
-use srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI;
+use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 
 /**
  * Class DataGUI
  *
- * @package      srag\Plugins\Hub2\UI\Data
+ * @package srag\Plugins\Hub2\UI\Data
  *
- * @author       Fabian Schmid <fs@studer-raimann.ch>
- *
- * @ilCtrl_calls srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI: srag\Plugins\Hub2\UI\Data\DataGUI
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class DataGUI extends MainGUI {
+class hub2DataGUI extends hub2MainGUI {
 
 	/**
 	 *
@@ -65,7 +62,7 @@ class DataGUI extends MainGUI {
 	 *
 	 */
 	protected function initTabs() {
-		self::dic()->tabs()->activateSubTab(ConfigOriginsGUI::SUBTAB_DATA);
+		self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
 	}
 
 

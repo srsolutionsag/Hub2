@@ -2,13 +2,13 @@
 
 namespace srag\Plugins\Hub2\Sync\Summary;
 
+use hub2LogsGUI;
 use ilHub2Plugin;
 use ilMimeMail;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IOriginSync;
-use srag\Plugins\Hub2\UI\Log\LogsGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -84,7 +84,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 				if (count(self::logs()->getKeptLogs($originSync->getOrigin())) > 0) {
 					$mail->To($error_email);
 
-					$mail->Subject(self::plugin()->translate("summary_logs_in", LogsGUI::LANG_MODULE_LOGS, [ $title ]));
+					$mail->Subject(self::plugin()->translate("summary_logs_in", hub2LogsGUI::LANG_MODULE_LOGS, [ $title ]));
 
 					$mail->Body($this->renderOneSync($originSync, true));
 
@@ -116,12 +116,12 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 		}
 
 		if (count(self::logs()->getKeptLogs($originSync->getOrigin())) > 0) {
-			$msg .= "\n" . self::plugin()->translate("summary", LogsGUI::LANG_MODULE_LOGS) . "\n";
+			$msg .= "\n" . self::plugin()->translate("summary", hub2LogsGUI::LANG_MODULE_LOGS) . "\n";
 
 			$msg .= implode("\n", array_map(function (int $level) use ($output_message, $originSync): string {
 				$logs = self::logs()->getKeptLogs($originSync->getOrigin(), $level);
 
-				return self::plugin()->translate("level_" . $level, LogsGUI::LANG_MODULE_LOGS) . ": " . count($logs) . ($output_message ? " - "
+				return self::plugin()->translate("level_" . $level, hub2LogsGUI::LANG_MODULE_LOGS) . ": " . count($logs) . ($output_message ? " - "
 						. current($logs)->getMessage() : "");
 			}, array_filter(Log::$levels, function (int $level) use ($originSync): bool {
 				return (count(self::logs()->getKeptLogs($originSync->getOrigin(), $level)) > 0);
