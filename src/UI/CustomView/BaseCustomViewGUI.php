@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\UI\CustomView;
 
-use hub2CustomViewGUI;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
@@ -11,6 +10,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * Class BaseCustomViewGUI
  *
  * @package srag\Plugins\Hub2\UI\CustomView
+ *
  * @author  Timon Amstutz
  */
 abstract class BaseCustomViewGUI {
@@ -19,7 +19,7 @@ abstract class BaseCustomViewGUI {
 	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
-	 * @var hub2CustomViewGUI
+	 * @var CustomViewGUI
 	 */
 	protected $parent_gui;
 
@@ -27,9 +27,9 @@ abstract class BaseCustomViewGUI {
 	/**
 	 * BaseCustomViewGUI constructor
 	 *
-	 * @param hub2CustomViewGUI $parent_gui
+	 * @param CustomViewGUI $parent_gui
 	 */
-	public function __construct(hub2CustomViewGUI $parent_gui) {
+	public function __construct(CustomViewGUI $parent_gui) {
 		$this->parent_gui = $parent_gui;
 	}
 

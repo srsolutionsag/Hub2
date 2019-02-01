@@ -1,20 +1,25 @@
 <?php
 
-require_once __DIR__ . "/../../../vendor/autoload.php";
+namespace srag\Plugins\Hub2\UI\Log;
 
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
-use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
+use srag\Plugins\Hub2\UI\MainGUI;
 
 /**
- * Class hub2LogsGUI
+ * Class LogsGUI
  *
- * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
+ * @package      srag\Plugins\Hub2\UI\Log
+ *
+ * @author       studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
+ *
+ * @ilCtrl_calls srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI: srag\Plugins\Hub2\UI\Log\LogsGUI
  */
-class hub2LogsGUI extends hub2MainGUI {
+class LogsGUI extends MainGUI {
 
 	const CMD_APPLY_FILTER = "applyFilter";
 	const CMD_RESET_FILTER = "resetFilter";
 	const CMD_SHOW_LOGS_OF_EXT_ID = "showLogsOfExtID";
+	const SUBTAB_LOGS = "subtab_logs";
 	const LANG_MODULE_LOGS = "logs";
 
 
@@ -44,7 +49,7 @@ class hub2LogsGUI extends hub2MainGUI {
 	 * @inheritdoc
 	 */
 	protected function initTabs()/*: void*/ {
-		self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_LOGS);
+		self::dic()->tabs()->activateSubTab(self::SUBTAB_LOGS);
 	}
 
 

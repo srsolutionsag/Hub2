@@ -1,16 +1,20 @@
 <?php
 
-require_once __DIR__ . "/../../vendor/autoload.php";
+namespace srag\Plugins\Hub2\UI\Config;
 
-use srag\Plugins\Hub2\UI\ConfigFormGUI;
+use ilUtil;
+use srag\Plugins\Hub2\UI\MainGUI;
 
 /**
- * Class hub2ConfigGUI
+ * Class ConfigGUI
  *
- * @package
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @package           srag\Plugins\Hub2\UI\Config
+ *
+ * @author            Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @ilCtrl_calls      srag\Plugins\Hub2\UI\MainGUI: srag\Plugins\Hub2\UI\Config\ConfigGUI
  */
-class hub2ConfigGUI extends hub2MainGUI {
+class ConfigGUI extends MainGUI {
 
 	const CMD_SAVE_CONFIG = 'saveConfig';
 	const CMD_CANCEL = 'cancel';

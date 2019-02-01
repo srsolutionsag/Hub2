@@ -1,20 +1,24 @@
 <?php
 
-require_once __DIR__ . "/../../../vendor/autoload.php";
+namespace srag\Plugins\Hub2\UI\Data;
 
 use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
-use srag\Plugins\Hub2\UI\Data\DataTableGUI;
+use srag\Plugins\Hub2\UI\MainGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI;
 
 /**
- * Class hub2DataGUI
+ * Class DataGUI
  *
- * @package
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @package      srag\Plugins\Hub2\UI\Data
+ *
+ * @author       Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @ilCtrl_calls srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI: srag\Plugins\Hub2\UI\Data\DataGUI
  */
-class hub2DataGUI extends hub2MainGUI {
+class DataGUI extends MainGUI {
 
 	/**
 	 *
@@ -61,7 +65,7 @@ class hub2DataGUI extends hub2MainGUI {
 	 *
 	 */
 	protected function initTabs() {
-		self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
+		self::dic()->tabs()->activateSubTab(ConfigOriginsGUI::SUBTAB_DATA);
 	}
 
 

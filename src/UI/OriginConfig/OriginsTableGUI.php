@@ -1,8 +1,7 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\OriginConfig;
 
-use hub2ConfigOriginsGUI;
 use ilAdvancedSelectionListGUI;
 use ilHub2Plugin;
 use ilTable2GUI;
@@ -14,7 +13,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class OriginsTableGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\OriginConfig
+ *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -34,11 +34,12 @@ class OriginsTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param hub2ConfigOriginsGUI $a_parent_obj
-	 * @param string               $a_parent_cmd
-	 * @param IOriginRepository    $originRepository
+	 * @param ConfigOriginsGUI  $a_parent_obj
+	 * @param string            $a_parent_cmd
+	 * @param IOriginRepository $originRepository
 	 *
 	 * @internal param
+	 * @throws \srag\DIC\Hub2\Exception\DICException
 	 */
 	public function __construct($a_parent_obj, $a_parent_cmd, IOriginRepository $originRepository) {
 		$this->originRepository = $originRepository;
@@ -51,8 +52,8 @@ class OriginsTableGUI extends ilTable2GUI {
 		$this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
 		$this->initColumns();
 		$this->initTableData();
-		$this->addCommandButton(hub2ConfigOriginsGUI::CMD_DEACTIVATE_ALL, self::plugin()->translate('origin_table_button_deactivate_all'));
-		$this->addCommandButton(hub2ConfigOriginsGUI::CMD_ACTIVATE_ALL, self::plugin()->translate('origin_table_button_activate_all'));
+		$this->addCommandButton(ConfigOriginsGUI::CMD_DEACTIVATE_ALL, self::plugin()->translate('origin_table_button_deactivate_all'));
+		$this->addCommandButton(ConfigOriginsGUI::CMD_ACTIVATE_ALL, self::plugin()->translate('origin_table_button_activate_all'));
 	}
 
 
@@ -112,13 +113,13 @@ class OriginsTableGUI extends ilTable2GUI {
 		$actions->setListTitle(self::plugin()->translate('common_actions'));
 		self::dic()->ctrl()->setParameter($this->parent_obj, 'origin_id', $a_set['id']);
 		$actions->addItem(self::plugin()->translate('common_edit'), 'edit', self::dic()->ctrl()
-			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_EDIT_ORGIN));
+			->getLinkTarget($this->parent_obj, ConfigOriginsGUI::CMD_EDIT_ORGIN));
 		$actions->addItem(self::plugin()->translate('common_delete'), 'delete', self::dic()->ctrl()
-			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE));
+			->getLinkTarget($this->parent_obj, ConfigOriginsGUI::CMD_CONFIRM_DELETE));
 		$actions->addItem(self::plugin()->translate('origin_table_button_run'), 'runOriginSync', self::dic()->ctrl()
-			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
+			->getLinkTarget($this->parent_obj, ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
 		$actions->addItem(self::plugin()->translate('origin_table_button_run_force_update'), 'runOriginSyncForceUpdate', self::dic()->ctrl()
-			->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE));
+			->getLinkTarget($this->parent_obj, ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE));
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
 		$this->tpl->setCurrentBlock('cell');
 		$this->tpl->setVariable('VALUE', self::output()->getHTML($actions));

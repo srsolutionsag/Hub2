@@ -1,8 +1,7 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\OriginConfig;
 
-use hub2ConfigOriginsGUI;
 use ilCheckboxInputGUI;
 use ilFormSectionHeaderGUI;
 use ilHiddenInputGUI;
@@ -28,7 +27,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class OriginConfigFormGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\OriginConfig
+ *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -51,9 +51,9 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 
 
 	/**
-	 * @param hub2ConfigOriginsGUI $parent_gui
-	 * @param IOriginRepository    $originRepository
-	 * @param IOrigin              $origin
+	 * @param ConfigOriginsGUI  $parent_gui
+	 * @param IOriginRepository $originRepository
+	 * @param IOrigin           $origin
 	 */
 	public function __construct($parent_gui, IOriginRepository $originRepository, IOrigin $origin) {
 		$this->parent_gui = $parent_gui;
@@ -62,13 +62,13 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		$this->setFormAction(self::dic()->ctrl()->getFormAction($this->parent_gui));
 		$this->initForm();
 		if (!$origin->getId()) {
-			$this->addCommandButton(hub2ConfigOriginsGUI::CMD_CREATE_ORIGIN, self::plugin()->translate('button_save'));
+			$this->addCommandButton(ConfigOriginsGUI::CMD_CREATE_ORIGIN, self::plugin()->translate('button_save'));
 			$this->setTitle(self::plugin()->translate('origin_form_title_add'));
 		} else {
-			$this->addCommandButton(hub2ConfigOriginsGUI::CMD_SAVE_ORIGIN, self::plugin()->translate('button_save'));
+			$this->addCommandButton(ConfigOriginsGUI::CMD_SAVE_ORIGIN, self::plugin()->translate('button_save'));
 			$this->setTitle(self::plugin()->translate('origin_form_title_edit'));
 		}
-		$this->addCommandButton(hub2ConfigOriginsGUI::CMD_CANCEL, self::plugin()->translate('button_cancel'));
+		$this->addCommandButton(ConfigOriginsGUI::CMD_CANCEL, self::plugin()->translate('button_cancel'));
 		parent::__construct();
 	}
 

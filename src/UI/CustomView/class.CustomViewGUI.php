@@ -1,18 +1,25 @@
 <?php
 
-require_once __DIR__ . "/../../../vendor/autoload.php";
+namespace srag\Plugins\Hub2\UI\CustomView;
 
+use Exception;
+use ilHub2Plugin;
+use ilUtil;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use Throwable;
 
 /**
- * Class hub2CustomViewGUI
+ * Class CustomViewGUI
  *
- * @author  Timon Amstutz
+ * @package      srag\Plugins\Hub2\UI\CustomView
+ *
+ * @author       Timon Amstutz
+ *
+ * @ilCtrl_calls srag\Plugins\Hub2\UI\MainGUI: srag\Plugins\Hub2\UI\CustomView\CustomViewGUI
  */
-class hub2CustomViewGUI {
+class CustomViewGUI {
 
 	use DICTrait;
 	use Hub2Trait;
@@ -20,7 +27,7 @@ class hub2CustomViewGUI {
 
 
 	/**
-	 * hub2CustomViewGUI constructor
+	 * CustomViewGUI constructor
 	 */
 	public function __construct() {
 

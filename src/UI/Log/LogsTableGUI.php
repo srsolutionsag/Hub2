@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\UI\Log;
 
-use hub2LogsGUI;
 use ilDateTime;
 use ilHub2Plugin;
 use ilSelectInputGUI;
@@ -27,7 +26,7 @@ class LogsTableGUI extends TableGUI {
 
 	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	const LANG_MODULE = hub2LogsGUI::LANG_MODULE_LOGS;
+	const LANG_MODULE = LogsGUI::LANG_MODULE_LOGS;
 
 
 	/**
@@ -61,7 +60,7 @@ class LogsTableGUI extends TableGUI {
 				}, array_keys($column), $column));
 
 				if (empty($column)) {
-					$column = self::plugin()->translate("no_additional_data", hub2LogsGUI::LANG_MODULE_LOGS);
+					$column = self::plugin()->translate("no_additional_data", LogsGUI::LANG_MODULE_LOGS);
 				}
 				break;
 

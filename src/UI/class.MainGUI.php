@@ -1,23 +1,27 @@
 <?php
 
-require_once __DIR__ . "/../../vendor/autoload.php";
+namespace srag\Plugins\Hub2\UI;
 
+use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\UI\Config\ConfigGUI;
+use srag\Plugins\Hub2\UI\CustomView\CustomViewGUI;
+use srag\Plugins\Hub2\UI\Data\DataGUI;
+use srag\Plugins\Hub2\UI\Log\LogsGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\ConfigOriginsGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
- * Class hub2MainGUI
+ * Class MainGUI
  *
- * @package
+ * @package           srag\Plugins\Hub2\UI
+ *
  * @author            Fabian Schmid <fs@studer-raimann.ch>
  *
- * @ilCtrl_IsCalledBy hub2MainGUI: ilHub2ConfigGUI
- * @ilCtrl_calls      hub2MainGUI: hub2ConfigOriginsGUI
- * @ilCtrl_calls      hub2MainGUI: hub2ConfigGUI
- * @ilCtrl_calls      hub2MainGUI: hub2CustomViewGUI
+ * @ilCtrl_IsCalledBy srag\Plugins\Hub2\UI\MainGUI: ilHub2ConfigGUI
  */
-class hub2MainGUI {
+class MainGUI {
 
 	use DICTrait;
 	use Hub2Trait;
@@ -29,7 +33,7 @@ class hub2MainGUI {
 
 
 	/**
-	 * hub2MainGUI constructor
+	 * MainGUI constructor
 	 */
 	public function __construct() {
 
@@ -44,18 +48,18 @@ class hub2MainGUI {
 		$nextClass = self::dic()->ctrl()->getNextClass();
 
 		switch ($nextClass) {
-			case strtolower(hub2ConfigGUI::class):
-				self::dic()->ctrl()->forwardCommand(new hub2ConfigGUI());
+			case strtolower(ConfigGUI::class):
+				self::dic()->ctrl()->forwardCommand(new ConfigGUI());
 				break;
-			case strtolower(hub2ConfigOriginsGUI::class):
-				self::dic()->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
+			case strtolower(ConfigOriginsGUI::class):
+				self::dic()->ctrl()->forwardCommand(new ConfigOriginsGUI());
 				break;
-			case strtolower(hub2CustomViewGUI::class):
+			case strtolower(CustomViewGUI::class):
 				self::dic()->tabs()->activateTab(self::TAB_CUSTOM_VIEWS);
-				self::dic()->ctrl()->forwardCommand(new hub2CustomViewGUI());
+				self::dic()->ctrl()->forwardCommand(new CustomViewGUI());
 				break;
-			case strtolower(hub2DataGUI::class):
-			case strtolower(hub2LogsGUI::class):
+			case strtolower(DataGUI::class):
+			case strtolower(LogsGUI::class):
 				break;
 			default:
 				$cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
@@ -68,7 +72,7 @@ class hub2MainGUI {
 	 *
 	 */
 	protected function index()/*: void*/ {
-		self::dic()->ctrl()->redirectByClass(hub2ConfigGUI::class);
+		self::dic()->ctrl()->redirectByClass(ConfigGUI::class);
 	}
 
 
@@ -77,14 +81,14 @@ class hub2MainGUI {
 	 */
 	protected function initTabs()/*: void*/ {
 		self::dic()->tabs()->addTab(self::TAB_PLUGIN_CONFIG, self::plugin()->translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
-			->getLinkTargetByClass(hub2ConfigGUI::class));
+			->getLinkTargetByClass(ConfigGUI::class));
 
 		self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
-			->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
+			->getLinkTargetByClass(ConfigOriginsGUI::class));
 
 		if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
 			self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
-				->getLinkTargetByClass(hub2CustomViewGUI::class));
+				->getLinkTargetByClass(CustomViewGUI::class));
 		}
 	}
 

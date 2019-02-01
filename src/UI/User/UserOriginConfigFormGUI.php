@@ -12,7 +12,7 @@ use srag\Plugins\Hub2\Origin\Config\User\IUserOriginConfig;
 use srag\Plugins\Hub2\Origin\Config\User\UserOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class UserOriginConfigFormGUI

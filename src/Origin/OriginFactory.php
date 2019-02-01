@@ -63,6 +63,7 @@ class OriginFactory implements IOriginFactory {
 	public function getAllActive(): array {
 		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s ORDER BY sort';
 		$set = self::dic()->database()->queryF($sql, [ 'integer' ], [ 1 ]);
+		$origins = [];
 		while ($data = self::dic()->database()->fetchObject($set)) {
 			$origins[] = $this->getById($data->id);
 		}
