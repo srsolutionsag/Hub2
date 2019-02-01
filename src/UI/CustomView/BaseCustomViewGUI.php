@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\UI\CustomView;
 
+use hub2CustomViewGUI;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
