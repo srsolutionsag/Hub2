@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\UI\GroupMembership;
 
 use ilCheckboxInputGUI;
 use srag\Plugins\Hub2\Origin\GroupMembership\ARGroupMembershipOrigin;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class GroupMembershipOriginConfigFormGUI

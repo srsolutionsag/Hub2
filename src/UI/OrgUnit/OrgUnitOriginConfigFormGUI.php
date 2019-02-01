@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\UI\OrgUnit;
 use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\OrgUnit\IOrgUnitOriginConfig;
 use srag\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class OrgUnitOriginConfigFormGUI

@@ -35,6 +35,7 @@ use ilExcel;
  * Class OriginsTableGUI
  *
  * @package srag\Plugins\Hub2\UI\Data
+ *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class DataTableGUI extends ilTable2GUI {

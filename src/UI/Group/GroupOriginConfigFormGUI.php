@@ -9,7 +9,7 @@ use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\Course\ICourseOriginConfig;
 use srag\Plugins\Hub2\Origin\Group\ARGroupOrigin;
 use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class GroupOriginConfigFormGUI

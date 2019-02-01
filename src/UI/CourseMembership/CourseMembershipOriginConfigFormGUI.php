@@ -7,7 +7,7 @@ use ilRadioGroupInputGUI;
 use ilRadioOption;
 use srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
 use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipProperties;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class CourseMembershipOriginConfigFormGUI

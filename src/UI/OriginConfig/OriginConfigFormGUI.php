@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\OriginConfig;
 
 use hub2ConfigOriginsGUI;
 use ilCheckboxInputGUI;
@@ -28,7 +28,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class OriginConfigFormGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\OriginConfig
+ *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

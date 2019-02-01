@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\Config;
 
 use hub2ConfigGUI;
 use hub2LogsGUI;
@@ -18,9 +18,9 @@ use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
- * Class ConfigFOrmGUI
+ * Class ConfigFormGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\Config
  *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -37,6 +37,8 @@ class ConfigFormGUI extends ilPropertyFormGUI {
 
 
 	/**
+	 * ConfigFormGUI constructor
+	 *
 	 * @param hub2ConfigGUI $parent_gui
 	 */
 	public function __construct(hub2ConfigGUI $parent_gui) {

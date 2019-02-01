@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../../vendor/autoload.php";
+//namespace srag\Plugins\Hub2\UI\CustomView;
 
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
@@ -8,7 +8,9 @@ use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
- * Class hub2CustomViewGUI
+ * Class CustomViewGUI
+ *
+ * @package srag\Plugins\Hub2\UI\CustomView
  *
  * @author  Timon Amstutz
  */

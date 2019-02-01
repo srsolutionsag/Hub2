@@ -1,6 +1,6 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\OriginConfig;
 
 use hub2ConfigOriginsGUI;
 use ilAdvancedSelectionListGUI;
@@ -14,7 +14,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class OriginsTableGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\OriginConfig
+ *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -39,6 +40,7 @@ class OriginsTableGUI extends ilTable2GUI {
 	 * @param IOriginRepository    $originRepository
 	 *
 	 * @internal param
+	 * @throws \srag\DIC\Hub2\Exception\DICException
 	 */
 	public function __construct($a_parent_obj, $a_parent_cmd, IOriginRepository $originRepository) {
 		$this->originRepository = $originRepository;
