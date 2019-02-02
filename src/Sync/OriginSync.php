@@ -306,7 +306,7 @@ class OriginSync implements IOriginSync {
 			// PHP 7: Throwable of type Error always lead to abort of the sync of current origin
 			$this->exceptions[] = $e;
 			$object->store();
-			throw new AbortOriginSyncException($e->getMessage());
+			throw new AbortOriginSyncException($e->getMessage().", in file: ".$e->getFile()." line: ".$e->getLine());
 		}
 	}
 
