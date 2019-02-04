@@ -6,6 +6,7 @@ use hub2DataGUI;
 use hub2LogsGUI;
 use ilAdvancedSelectionListGUI;
 use ilCheckboxInputGUI;
+use ilExcel;
 use ilFormPropertyGUI;
 use ilHub2Plugin;
 use ilSelectInputGUI;
@@ -101,6 +102,8 @@ class DataTableGUI extends ilTable2GUI {
 		$this->initColumns();
 		$this->setExternalSegmentation(true);
 		$this->setExternalSorting(true);
+		$this->setExportFormats([ self::EXPORT_EXCEL ]);
+
 		$this->determineLimit();
 		if ($this->getLimit() > 999) {
 			$this->setLimit(999);
@@ -124,11 +127,14 @@ class DataTableGUI extends ilTable2GUI {
 
 		// Status
 		$status = new ilSelectInputGUI(self::plugin()->translate('data_table_header_status'), 'status');
-		$status->setOptions(array_map(function (string $txt): string {
+
+		$options = [ "" => "" ] + array_map(function (string $txt): string {
 				return self::plugin()->translate("data_table_status_" . $txt);
 			}, ARObject::$available_status) + [
 				"!" . IObject::STATUS_IGNORED => self::plugin()->translate("data_table_status_not_ignored")
-			]);
+			];
+
+		$status->setOptions($options);
 		$status->setValue("!" . IObject::STATUS_IGNORED);
 		$this->addAndReadFilterItem($status);
 
@@ -300,6 +306,30 @@ class DataTableGUI extends ilTable2GUI {
 		$this->tpl->parseCurrentBlock();
 
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
+	}
+
+
+	/**
+	 * @param ilExcel $excel
+	 * @param int     $row
+	 * @param array   $result
+	 */
+	protected function fillRowExcel(ilExcel $excel, /*int*/
+		&$row, /*array*/
+		$result)/*: void*/ {
+
+		$col = 0;
+		foreach ($result as $key => $value) {
+			switch ($key) {
+				case 'status':
+					$excel->setCell($row, $col, self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]));
+					break;
+				default:
+					$excel->setCell($row, $col, $value);
+					break;
+			}
+			$col ++;
+		}
 	}
 
 

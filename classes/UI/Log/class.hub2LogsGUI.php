@@ -104,7 +104,7 @@ class hub2LogsGUI extends hub2MainGUI {
 	 */
 	protected function showLogsOfExtID()/*: void*/ {
 		$origin_id = intval(filter_input(INPUT_GET, DataTableGUI::F_ORIGIN_ID));
-		$ext_id = intval(filter_input(INPUT_GET, DataTableGUI::F_EXT_ID));
+		$ext_id = filter_input(INPUT_GET, DataTableGUI::F_EXT_ID);
 
 		$table = $this->getLogsTable(self::CMD_RESET_FILTER);
 		$table->resetFilter();

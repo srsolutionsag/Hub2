@@ -281,7 +281,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 * @param bool $force_update
 	 */
 	protected function run(bool $force_update = false)/*: void*/ {
-		$this->execute($this->originFactory->getAllActive());
+		$this->execute($this->originFactory->getAllActive(), $force_update);
 	}
 
 
