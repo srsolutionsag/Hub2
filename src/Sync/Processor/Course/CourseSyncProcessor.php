@@ -2,6 +2,9 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
+use ilCalendarCategory;
+use ilContainer;
+use ilContainerSortingSettings;
 use ilCopyWizardOptions;
 use ilLink;
 use ilMailMimeSenderFactory;
@@ -171,17 +174,17 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	/**
 	 * @param IDataTransferObject $dto
 	 */
-	protected function handleOrdering(IDataTransferObject $dto, \ilObjCourse $ilObjCourse) {
-		$settings = new \ilContainerSortingSettings($ilObjCourse->getId());
+	protected function handleOrdering(IDataTransferObject $dto, ilObjCourse $ilObjCourse) {
+		$settings = new ilContainerSortingSettings($ilObjCourse->getId());
 		$settings->setSortMode($dto->getOrderType());
 
 		switch ($dto->getOrderType()) {
-			case \ilContainer::SORT_TITLE:
-			case \ilContainer::SORT_ACTIVATION:
-			case \ilContainer::SORT_CREATION:
+			case ilContainer::SORT_TITLE:
+			case ilContainer::SORT_ACTIVATION:
+			case ilContainer::SORT_CREATION:
 				$settings->setSortDirection($dto->getOrderDirection());
 				break;
-			case \ilContainer::SORT_MANUAL:
+			case ilContainer::SORT_MANUAL:
 				/**
 				 * @Todo set order direction for manual sorting
 				 */
@@ -408,9 +411,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		if ($dto->getAppointementsColor()) {
 			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjCourse->getId());
 			/**
-			 * @var $cal_cat \ilCalendarCategory
+			 * @var $cal_cat ilCalendarCategory
 			 */
-			$cal_cat = \ilCalendarCategory::_getInstanceByObjId($ilObjCourse->getId());
+			$cal_cat = ilCalendarCategory::_getInstanceByObjId($ilObjCourse->getId());
 			$cal_cat->setColor($dto->getAppointementsColor());
 			$cal_cat->update();
 		}

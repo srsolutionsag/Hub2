@@ -1,6 +1,6 @@
 <?php
 
-namespace SRAG\Plugins\Hub2\Object\Group;
+namespace srag\Plugins\Hub2\Object\Group;
 
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
@@ -11,7 +11,9 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 /**
  * Class GroupDTO
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package srag\Plugins\Hub2\Object\Group
+ *
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject {
 
@@ -145,7 +147,7 @@ class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferO
 	 */
 	protected $parentIdType = self::PARENT_ID_TYPE_REF_ID;
 	/**
-	 * @var null
+	 * @var string
 	 */
 	protected $appointementsColor = NULL;
 
@@ -691,19 +693,17 @@ class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferO
 
 
 	/**
-	 * @return null
+	 * @return string
 	 */
-	public function getAppointementsColor() {
+	public function getAppointementsColor(): string {
 		return $this->appointementsColor;
 	}
 
 
 	/**
-	 * @param $appointementsColor
-	 *
-	 * @return $this
+	 * @param string $appointementsColor
 	 */
-	public function setAppointementsColor($appointementsColor) {
+	public function setAppointementsColor(string $appointementsColor) {
 		$this->appointementsColor = $appointementsColor;
 
 		return $this;

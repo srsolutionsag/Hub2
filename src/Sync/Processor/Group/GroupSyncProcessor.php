@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Group;
 
+use ilCalendarCategory;
 use ilDate;
 use ilObjGroup;
 use ilRepUtil;
@@ -232,9 +233,9 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		if ($dto->getAppointementsColor()) {
 			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjGroup->getId());
 			/**
-			 * @var $cal_cat \ilCalendarCategory
+			 * @var $cal_cat ilCalendarCategory
 			 */
-			$cal_cat = \ilCalendarCategory::_getInstanceByObjId($ilObjGroup->getId());
+			$cal_cat = ilCalendarCategory::_getInstanceByObjId($ilObjGroup->getId());
 			$cal_cat->setColor($dto->getAppointementsColor());
 			$cal_cat->update();
 		}

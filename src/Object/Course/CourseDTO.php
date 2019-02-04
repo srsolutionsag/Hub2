@@ -309,7 +309,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 */
 	protected $orderDirection = self::SORT_DIRECTION_ASC;
 	/**
-	 * @var null
+	 * @var string
 	 */
 	protected $appointementsColor = NULL;
 
@@ -819,17 +819,17 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
-	public function isSessionLimitEnabled() {
+	public function isSessionLimitEnabled(): bool {
 		return $this->sessionLimitEnabled;
 	}
 
 
 	/**
-	 * @param boolean $sessionLimitEnabled
+	 * @param bool $sessionLimitEnabled
 	 */
-	public function enableSessionLimit($sessionLimitEnabled) {
+	public function enableSessionLimit(bool $sessionLimitEnabled) {
 		$this->sessionLimitEnabled = $sessionLimitEnabled;
 	}
 
@@ -837,7 +837,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @return int
 	 */
-	public function getNumberOfPreviousSessions() {
+	public function getNumberOfPreviousSessions(): int {
 		return $this->numberOfPreviousSessions;
 	}
 
@@ -845,7 +845,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @param int $numberOfPreviousSessions
 	 */
-	public function setNumberOfPreviousSessions($numberOfPreviousSessions) {
+	public function setNumberOfPreviousSessions(int $numberOfPreviousSessions) {
 		$this->numberOfPreviousSessions = $numberOfPreviousSessions;
 	}
 
@@ -853,7 +853,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @return int
 	 */
-	public function getNumberOfNextSessions() {
+	public function getNumberOfNextSessions(): int {
 		return $this->numberOfNextSessions;
 	}
 
@@ -861,7 +861,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @param int $numberOfNextSessions
 	 */
-	public function setNumberOfNextSessions($numberOfNextSessions) {
+	public function setNumberOfNextSessions(int $numberOfNextSessions) {
 		$this->numberOfNextSessions = $numberOfNextSessions;
 	}
 
@@ -869,7 +869,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @return int
 	 */
-	public function getOrderType() {
+	public function getOrderType(): int {
 		return $this->orderType;
 	}
 
@@ -877,7 +877,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @param int $orderType
 	 */
-	public function setOrderType($orderType) {
+	public function setOrderType(int $orderType) {
 		$this->orderType = $orderType;
 	}
 
@@ -885,7 +885,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @return int
 	 */
-	public function getOrderDirection() {
+	public function getOrderDirection(): int {
 		return $this->orderDirection;
 	}
 
@@ -893,25 +893,23 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @param int $orderDirection
 	 */
-	public function setOrderDirection($orderDirection) {
+	public function setOrderDirection(int $orderDirection) {
 		$this->orderDirection = $orderDirection;
 	}
 
 
 	/**
-	 * @return null
+	 * @return string
 	 */
-	public function getAppointementsColor() {
+	public function getAppointementsColor(): string {
 		return $this->appointementsColor;
 	}
 
 
 	/**
-	 * @param $appointementsColor
-	 *
-	 * @return $this
+	 * @param string $appointementsColor
 	 */
-	public function setAppointementsColor($appointementsColor) {
+	public function setAppointementsColor(string $appointementsColor) {
 		$this->appointementsColor = $appointementsColor;
 
 		return $this;
