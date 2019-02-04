@@ -29,7 +29,7 @@ class RunSync extends ilCronJob {
 
 	use DICTrait;
 	use Hub2Trait;
-	const CRON_JOB_ID = self::class;
+	const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 	/**
 	 * @var IOrigin[]
