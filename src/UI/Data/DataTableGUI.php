@@ -6,6 +6,7 @@ use hub2DataGUI;
 use hub2LogsGUI;
 use ilAdvancedSelectionListGUI;
 use ilCheckboxInputGUI;
+use ilExcel;
 use ilFormPropertyGUI;
 use ilHub2Plugin;
 use ilSelectInputGUI;
@@ -303,13 +304,38 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param int     $ilias_id
-	 * @param string  $ext_id
-	 * @param IOrigin $origin
+	 * @param ilExcel $excel
+	 * @param int     $row
+	 * @param array   $result
+	 */
+	protected function fillRowExcel(ilExcel $excel, /*int*/
+		&$row, /*array*/
+		$result)/*: void*/ {
+
+		$col = 0;
+		foreach ($result as $key => $value) {
+			switch ($key) {
+				case 'status':
+					$excel->setCell($row, $col, self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]));
+					break;
+				default:
+					$excel->setCell($row, $col, $value);
+					break;
+			}
+			$col ++;
+		}
+	}
+
+
+	/**
+	 * @param int          $ilias_id
+	 * @param string       $ext_id
+	 * @param IOrigin|null $origin
+>>>>>>> fb71c3e... Fix
 	 *
 	 * @return string
 	 */
-	protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin): string {
+	protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin = NULL): string {
 		if (!$origin) {
 			return strval($ilias_id);
 		}
