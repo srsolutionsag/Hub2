@@ -6,6 +6,7 @@ use hub2DataGUI;
 use hub2LogsGUI;
 use ilAdvancedSelectionListGUI;
 use ilCheckboxInputGUI;
+use ilExcel;
 use ilFormPropertyGUI;
 use ilHub2Plugin;
 use ilSelectInputGUI;
@@ -29,7 +30,6 @@ use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
-use ilExcel;
 
 /**
  * Class OriginsTableGUI
@@ -102,9 +102,7 @@ class DataTableGUI extends ilTable2GUI {
 		$this->initColumns();
 		$this->setExternalSegmentation(true);
 		$this->setExternalSorting(true);
-		$this->setExportFormats([self::EXPORT_EXCEL]);
-
-
+		$this->setExportFormats([ self::EXPORT_EXCEL ]);
 
 		$this->determineLimit();
 		if ($this->getLimit() > 999) {
@@ -130,7 +128,7 @@ class DataTableGUI extends ilTable2GUI {
 		// Status
 		$status = new ilSelectInputGUI(self::plugin()->translate('data_table_header_status'), 'status');
 
-		$options = ["" => ""] + array_map(function (string $txt): string {
+		$options = [ "" => "" ] + array_map(function (string $txt): string {
 				return self::plugin()->translate("data_table_status_" . $txt);
 			}, ARObject::$available_status) + [
 				"!" . IObject::STATUS_IGNORED => self::plugin()->translate("data_table_status_not_ignored")
@@ -310,6 +308,7 @@ class DataTableGUI extends ilTable2GUI {
 		self::dic()->ctrl()->clearParameters($this->parent_obj);
 	}
 
+
 	/**
 	 * @param ilExcel $excel
 	 * @param int     $row
@@ -321,7 +320,7 @@ class DataTableGUI extends ilTable2GUI {
 
 		$col = 0;
 		foreach ($result as $key => $value) {
-			switch($key) {
+			switch ($key) {
 				case 'status':
 					$excel->setCell($row, $col, self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]));
 					break;
