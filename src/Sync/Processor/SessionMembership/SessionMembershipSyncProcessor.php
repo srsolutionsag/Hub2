@@ -7,7 +7,6 @@ use ilObjSession;
 use ilObjUser;
 use ilSessionParticipants;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
@@ -46,10 +45,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
@@ -193,6 +191,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		$ilSessionParticipants->register((int)$user_id);
 	}
 
+
 	/**
 	 * @param ilObjSession         $ilObjSession
 	 * @param SessionMembershipDTO $dto
@@ -225,12 +224,11 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		 * $ilSessionParticipants->getEventParticipants()->updateUser();
 		 */
 		$event_id = $ilSessionParticipants->getEventParticipants()->getEventId();
-		$query = "UPDATE event_participants ".
-			"SET contact = ".$DIC->database()->quote($dto->isContact() ,'integer')." ".
-			"WHERE event_id = ".$DIC->database()->quote($event_id ,'integer')." ".
-			"AND usr_id = ".$DIC->database()->quote($user_id ,'integer')." ";
+		$query = "UPDATE event_participants " . "SET contact = " . $DIC->database()->quote($dto->isContact(), 'integer') . " " . "WHERE event_id = "
+			. $DIC->database()->quote($event_id, 'integer') . " " . "AND usr_id = " . $DIC->database()->quote($user_id, 'integer') . " ";
 		$DIC->database()->manipulate($query);
 	}
+
 
 	/**
 	 * @param ilObjSession $ilObjSession

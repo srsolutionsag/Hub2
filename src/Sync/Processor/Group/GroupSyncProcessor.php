@@ -6,7 +6,6 @@ use ilDate;
 use ilObjGroup;
 use ilRepUtil;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -85,11 +84,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param OriginNotifications     $originNotifications
 	 * @param IGroupActivities        $groupActivities
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications, IGroupActivities $groupActivities) {
-		parent::__construct($origin, $implementation, $transition, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, IGroupActivities $groupActivities) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 		$this->groupActivities = $groupActivities;
@@ -151,7 +149,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->putInTree($parentRefId);
 		$ilObjGroup->setPermissions($parentRefId);
 
-		$this->handleAppointementsColor($ilObjGroup,$dto);
+		$this->handleAppointementsColor($ilObjGroup, $dto);
 
 		return $ilObjGroup;
 	}
@@ -211,8 +209,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			$ilObjGroup->enableUnlimitedRegistration($dto->getRegisterMode());
 		}
 
-		if ($this->props->updateDTOProperty("appointementsColor")){
-			$this->handleAppointementsColor($ilObjGroup,$dto);
+		if ($this->props->updateDTOProperty("appointementsColor")) {
+			$this->handleAppointementsColor($ilObjGroup, $dto);
 		}
 
 		if ($this->props->get(GroupProperties::MOVE_GROUP)) {
@@ -223,14 +221,15 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		return $ilObjGroup;
 	}
 
+
 	/**
 	 * @param ilObjGroup $ilObjGroup
-	 * @param GroupDTO $dto
+	 * @param GroupDTO   $dto
 	 */
-	protected function handleAppointementsColor(ilObjGroup $ilObjGroup, GroupDTO $dto){
+	protected function handleAppointementsColor(ilObjGroup $ilObjGroup, GroupDTO $dto) {
 		global $DIC;
 
-		if($dto->getAppointementsColor()){
+		if ($dto->getAppointementsColor()) {
 			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjGroup->getId());
 			/**
 			 * @var $cal_cat \ilCalendarCategory

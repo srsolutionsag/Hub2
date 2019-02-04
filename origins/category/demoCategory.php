@@ -6,6 +6,7 @@ use Exception;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
+use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
@@ -46,7 +47,7 @@ class demoCategory extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData(): int {
-		self::logs()->originLog($this->origin)->write("This is a test-log entry");
+		$this->log()->write("This is a test-log entry");
 
 		$time = time();
 		for ($x = 1; $x <= 10; $x ++) {
@@ -115,9 +116,9 @@ class demoCategory extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param Exception $e
+	 * @param ILog $log
 	 */
-	public function handleException(Exception $e) { }
+	public function handleLog(ILog $log) { }
 
 
 	/**

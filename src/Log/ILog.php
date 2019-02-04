@@ -15,11 +15,23 @@ use stdClass;
 interface ILog {
 
 	// @see ilLogLevel
+
+	/**
+	 * @var int
+	 */
 	const LEVEL_INFO = 200;
+	/**
+	 * @var int
+	 */
 	const LEVEL_WARNING = 300;
+	/**
+	 * @var int
+	 */
+	const LEVEL_EXCEPTION = 400;
+	/**
+	 * @var int
+	 */
 	const LEVEL_CRITICAL = 500;
-	const LOG_TYPE_HUB2 = 1;
-	const LOG_TYPE_ORIGIN = 2;
 
 
 	/**
@@ -34,20 +46,6 @@ interface ILog {
 	 * @return self
 	 */
 	public function withLogId(int $log_id): self;
-
-
-	/**
-	 * @return int
-	 */
-	public function getLogType(): int;
-
-
-	/**
-	 * @param int $log_type
-	 *
-	 * @return self
-	 */
-	public function withLogType(int $log_type): self;
 
 
 	/**
@@ -158,6 +156,38 @@ interface ILog {
 
 
 	/**
+	 * @return string|null
+	 */
+	public function getObjectExtId()/*: ?string*/
+	;
+
+
+	/**
+	 * @param string|null $object_ext_id
+	 *
+	 * @return self
+	 */
+	public function withObjectExtId(/*?*/
+		string $object_ext_id = NULL): self;
+
+
+	/**
+	 * @return int|null
+	 */
+	public function getObjectIliasId()/*: ?int*/
+	;
+
+
+	/**
+	 * @param int|null $object_ilias_id
+	 *
+	 * @return int
+	 */
+	public function withObjectIliasId(/*?*/
+		int $object_ilias_id = NULL): self;
+
+
+	/**
 	 *
 	 */
 	public function delete()/*: void*/
@@ -172,10 +202,11 @@ interface ILog {
 
 
 	/**
-	 * Syntactic sugar for $log->withMessage()->store();
+	 * Syntactic sugar for $log->withMessage()->withLevel()->store();
 	 *
 	 * @param string $message
+	 * @param int    $level
 	 */
-	public function write(string $message)/*: void*/
+	public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/
 	;
 }

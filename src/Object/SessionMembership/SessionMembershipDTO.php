@@ -29,11 +29,11 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
 	 * @var int
 	 */
 	protected $userId;
-
 	/**
 	 * @var bool
 	 */
 	protected $isContact = false;
+
 
 	/**
 	 * @inheritdoc
@@ -124,21 +124,23 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
 		return $this;
 	}
 
+
 	/**
 	 * @return bool
 	 */
-	public function isContact(): bool
-	{
+	public function isContact(): bool {
 		return $this->isContact;
 	}
 
+
 	/**
 	 * @param bool $isContact
+	 *
 	 * @return $this
 	 */
-	public function setIsContact(bool $isContact)
-	{
+	public function setIsContact(bool $isContact) {
 		$this->isContact = $isContact;
+
 		return $this;
 	}
 }

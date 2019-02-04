@@ -69,7 +69,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 	 * Create Category
 	 */
 	public function test_create_category_with_default_properties() {
-		$processor = new CategorySyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications); // , $this->activities
+		$processor = new CategorySyncProcessor($this->origin, $this->originImplementation, $this->statusTransition); // , $this->activities
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -95,7 +95,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests {
 
 	//
 	//	public function test_update_course_with_default_properties() {
-	//		$processor = new CourseSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications, $this->activities);
+	//		$processor = new CourseSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->activities);
 	//
 	//		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 	//		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());

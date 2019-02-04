@@ -19,8 +19,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 	use TaxonomyAndMetadataAwareDataTransferObject;
 	use MappingStrategyAwareDataTransferObject;
-
-
 	/**
 	 * @var array
 	 */
@@ -41,8 +39,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		self::VIEW_MODE_BY_TYPE,
 		self::VIEW_MODE_INHERIT
 	];
-
-
 	/**
 	 * Copied from ilMDLanguageItem::_getPossibleLanguageCodes
 	 *
@@ -292,36 +288,31 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 * @var string
 	 */
 	protected $icon;
-
 	/**
 	 * @var bool
 	 */
 	protected $sessionLimitEnabled = false;
-
 	/**
 	 * @var int
 	 */
-	protected $numberOfPreviousSessions = -1;
-
+	protected $numberOfPreviousSessions = - 1;
 	/**
 	 * @var int
 	 */
-	protected $numberOfNextSessions = -1;
-
+	protected $numberOfNextSessions = - 1;
 	/**
 	 * @var int
 	 */
 	protected $orderType = self::SORT_TITLE;
-
 	/**
 	 * @var int
 	 */
 	protected $orderDirection = self::SORT_DIRECTION_ASC;
-
 	/**
 	 * @var null
 	 */
-	protected $appointementsColor = null;
+	protected $appointementsColor = NULL;
+
 
 	/**
 	 * @return string
@@ -482,22 +473,23 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		return $this;
 	}
 
+
 	/**
 	 * @return string
 	 */
-	public function getFourthDependenceCategory(): string
-	{
+	public function getFourthDependenceCategory(): string {
 		return $this->fourthDependenceCategory;
 	}
+
 
 	/**
 	 * @param string $fourthDependenceCategory
 	 *
 	 * @return CourseDTO
 	 */
-	public function setFourthDependenceCategory(string $fourthDependenceCategory)
-	{
+	public function setFourthDependenceCategory(string $fourthDependenceCategory) {
 		$this->fourthDependenceCategory = $fourthDependenceCategory;
+
 		return $this;
 	}
 
@@ -815,6 +807,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		return $this;
 	}
 
+
 	/**
 	 * @param string $languageCode
 	 *
@@ -824,101 +817,103 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		return in_array($languageCode, self::$available_languages);
 	}
 
+
 	/**
 	 * @return boolean
 	 */
-	public function isSessionLimitEnabled()
-	{
+	public function isSessionLimitEnabled() {
 		return $this->sessionLimitEnabled;
 	}
+
 
 	/**
 	 * @param boolean $sessionLimitEnabled
 	 */
-	public function enableSessionLimit($sessionLimitEnabled)
-	{
+	public function enableSessionLimit($sessionLimitEnabled) {
 		$this->sessionLimitEnabled = $sessionLimitEnabled;
 	}
+
 
 	/**
 	 * @return int
 	 */
-	public function getNumberOfPreviousSessions()
-	{
+	public function getNumberOfPreviousSessions() {
 		return $this->numberOfPreviousSessions;
 	}
+
 
 	/**
 	 * @param int $numberOfPreviousSessions
 	 */
-	public function setNumberOfPreviousSessions($numberOfPreviousSessions)
-	{
+	public function setNumberOfPreviousSessions($numberOfPreviousSessions) {
 		$this->numberOfPreviousSessions = $numberOfPreviousSessions;
 	}
+
 
 	/**
 	 * @return int
 	 */
-	public function getNumberOfNextSessions()
-	{
+	public function getNumberOfNextSessions() {
 		return $this->numberOfNextSessions;
 	}
+
 
 	/**
 	 * @param int $numberOfNextSessions
 	 */
-	public function setNumberOfNextSessions($numberOfNextSessions)
-	{
+	public function setNumberOfNextSessions($numberOfNextSessions) {
 		$this->numberOfNextSessions = $numberOfNextSessions;
 	}
+
 
 	/**
 	 * @return int
 	 */
-	public function getOrderType()
-	{
+	public function getOrderType() {
 		return $this->orderType;
 	}
+
 
 	/**
 	 * @param int $orderType
 	 */
-	public function setOrderType($orderType)
-	{
+	public function setOrderType($orderType) {
 		$this->orderType = $orderType;
 	}
+
 
 	/**
 	 * @return int
 	 */
-	public function getOrderDirection()
-	{
+	public function getOrderDirection() {
 		return $this->orderDirection;
 	}
+
 
 	/**
 	 * @param int $orderDirection
 	 */
-	public function setOrderDirection($orderDirection)
-	{
+	public function setOrderDirection($orderDirection) {
 		$this->orderDirection = $orderDirection;
 	}
+
 
 	/**
 	 * @return null
 	 */
-	public function getAppointementsColor()
-	{
+	public function getAppointementsColor() {
 		return $this->appointementsColor;
 	}
 
+
 	/**
 	 * @param $appointementsColor
+	 *
 	 * @return $this
 	 */
-	public function setAppointementsColor($appointementsColor)
-	{
+	public function setAppointementsColor($appointementsColor) {
 		$this->appointementsColor = $appointementsColor;
+
 		return $this;
 	}
 }

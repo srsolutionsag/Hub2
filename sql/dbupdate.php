@@ -1,5 +1,6 @@
 <#1>
 <?php
+
 \srag\Plugins\Hub2\Origin\User\ARUserOrigin::updateDB();
 \srag\Plugins\Hub2\Object\User\ARUser::updateDB();
 \srag\Plugins\Hub2\Object\Course\ARCourse::updateDB();
@@ -100,4 +101,34 @@ if (strpos($administration_role_ids, "[") === false) {
 <#11>
 <?php
 \srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin::updateDB();
+?>
+<#12>
+<?php
+\srag\Plugins\Hub2\Log\Log::updateDB();
+?>
+<#13>
+<?php
+\srag\Plugins\Hub2\Origin\User\ARUserOrigin::updateDB();
+?>
+<#14>
+<?php
+$i = 1;
+foreach ((new \srag\Plugins\Hub2\Origin\OriginFactory())->getAllActive() as $origin) {
+	/**
+	 * @var \srag\Plugins\Hub2\Origin\IOrigin $origin
+	 */
+	$origin->setSort($i);
+
+	$origin->store();
+
+	$i ++;
+}
+?>
+<#15>
+<?php
+\srag\DIC\Hub2\DICStatic::dic()->database()->modifyTableColumn(\srag\Plugins\Hub2\Log\Log::TABLE_NAME, "object_ext_id", [
+	"type" => "text",
+	"length" => 255,
+	"is_notnull" => false
+]);
 ?>

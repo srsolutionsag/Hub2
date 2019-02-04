@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Sync\Processor\CourseMembership;
 use ilObjCourse;
 use ilObject2;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -42,10 +41,9 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param OriginNotifications     $originNotifications
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications) {
-		parent::__construct($origin, $implementation, $transition, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 	}
@@ -68,7 +66,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		$user_id = $dto->getUserId();
 		$membership_obj = $course->getMembersObject();
 		$membership_obj->add($user_id, $this->mapRole($dto));
-		$membership_obj->updateContact($user_id,$dto->isContact());
+		$membership_obj->updateContact($user_id, $dto->isContact());
 
 		return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 	}
@@ -210,7 +208,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 			$objectFactory = new ObjectFactory($origin);
 			$course = $objectFactory->course($course_membership->getCourseId());
 			if (!$course->getILIASId()) {
-				throw new HubException("The linked course does not (yet) exist in ILIAS. Membership Ext-Id: ".$course_membership->getExtId());
+				throw new HubException("The linked course does not (yet) exist in ILIAS. Membership Ext-Id: " . $course_membership->getExtId());
 			}
 
 			return $course->getILIASId();

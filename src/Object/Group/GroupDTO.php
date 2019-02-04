@@ -139,16 +139,16 @@ class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferO
 	/**
 	 * @var string
 	 */
-    protected $parentId;
+	protected $parentId;
 	/**
 	 * @var int
 	 */
-    protected $parentIdType = self::PARENT_ID_TYPE_REF_ID;
-
+	protected $parentIdType = self::PARENT_ID_TYPE_REF_ID;
 	/**
 	 * @var null
 	 */
-	protected $appointementsColor = null;
+	protected $appointementsColor = NULL;
+
 
 	/**
 	 * @return string
@@ -689,21 +689,23 @@ class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferO
 		return $this;
 	}
 
+
 	/**
 	 * @return null
 	 */
-	public function getAppointementsColor()
-	{
+	public function getAppointementsColor() {
 		return $this->appointementsColor;
 	}
 
+
 	/**
 	 * @param $appointementsColor
+	 *
 	 * @return $this
 	 */
-	public function setAppointementsColor($appointementsColor)
-	{
+	public function setAppointementsColor($appointementsColor) {
 		$this->appointementsColor = $appointementsColor;
+
 		return $this;
 	}
 }

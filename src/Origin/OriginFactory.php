@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Origin;
 use ActiveRecord;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\UI\DataTableGUI;
+use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -61,10 +61,9 @@ class OriginFactory implements IOriginFactory {
 	 * @inheritdoc
 	 */
 	public function getAllActive(): array {
-		$origins = [];
-
-		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s ORDER BY id ASC';
+		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s ORDER BY sort';
 		$set = self::dic()->database()->queryF($sql, [ 'integer' ], [ 1 ]);
+		$origins = [];
 		while ($data = self::dic()->database()->fetchObject($set)) {
 			$origins[] = $this->getById($data->id);
 		}
@@ -79,7 +78,7 @@ class OriginFactory implements IOriginFactory {
 	public function getAll(): array {
 		$origins = [];
 
-		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME;
+		$sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' ORDER BY sort';
 		$set = self::dic()->database()->query($sql);
 		while ($data = self::dic()->database()->fetchObject($set)) {
 			$origins[] = $this->getById($data->id);

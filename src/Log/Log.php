@@ -46,16 +46,10 @@ class Log extends ActiveRecord implements ILog {
 	/**
 	 * @var array
 	 */
-	public static $log_types = [
-		self::LOG_TYPE_HUB2 => self::LOG_TYPE_HUB2,
-		self::LOG_TYPE_ORIGIN => self::LOG_TYPE_ORIGIN
-	];
-	/**
-	 * @var array
-	 */
 	public static $levels = [
 		self::LEVEL_INFO => self::LEVEL_INFO,
 		self::LEVEL_WARNING => self::LEVEL_WARNING,
+		self::LEVEL_EXCEPTION => self::LEVEL_EXCEPTION,
 		self::LEVEL_CRITICAL => self::LEVEL_CRITICAL
 	];
 	/**
@@ -69,15 +63,6 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_sequence     true
 	 */
 	protected $log_id = NULL;
-	/**
-	 * @var int
-	 *
-	 * @con_has_field    true
-	 * @con_fieldtype    integer
-	 * @con_length       2
-	 * @con_is_notnull   true
-	 */
-	protected $log_type = self::LOG_TYPE_HUB2;
 	/**
 	 * @var string
 	 *
@@ -136,6 +121,24 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_is_notnull   true
 	 */
 	protected $origin_object_type = "";
+	/**
+	 * @var string|null
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    text
+	 * @con_length       255
+	 * @con_is_notnull   false
+	 */
+	protected $object_ext_id = NULL;
+	/**
+	 * @var int|null
+	 *
+	 * @con_has_field    true
+	 * @con_fieldtype    integer
+	 * @con_length       8
+	 * @con_is_notnull   false
+	 */
+	protected $object_ilias_id = NULL;
 
 
 	/**
@@ -184,8 +187,8 @@ class Log extends ActiveRecord implements ILog {
 		$field_name, $field_value) {
 		switch ($field_name) {
 			case "log_id":
-			case "log_type":
 			case "level":
+			case "origin_id":
 				return intval($field_value);
 
 			case "date":
@@ -194,8 +197,12 @@ class Log extends ActiveRecord implements ILog {
 			case "additional_data":
 				return json_decode($field_value);
 
-			case "origin_id":
-				return intval($field_value);
+			case "object_ilias_id":
+				if ($field_value !== NULL) {
+					return intval($field_value);
+				} else {
+					return NULL;
+				}
 
 			default:
 				return NULL;
@@ -228,26 +235,6 @@ class Log extends ActiveRecord implements ILog {
 	 */
 	public function withLogId(int $log_id): ILog {
 		$this->log_id = $log_id;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return int
-	 */
-	public function getLogType(): int {
-		return $this->log_type;
-	}
-
-
-	/**
-	 * @param int $log_type
-	 *
-	 * @return self
-	 */
-	public function withLogType(int $log_type): ILog {
-		$this->log_type = $log_type;
 
 		return $this;
 	}
@@ -392,7 +379,55 @@ class Log extends ActiveRecord implements ILog {
 	/**
 	 * @inheritdoc
 	 */
-	public function write(string $message)/*: void*/ {
-		$this->withMessage($message)->store();
+	public function getObjectExtId()/*: ?string*/ {
+		return $this->object_ext_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withObjectExtId(/*?*/
+		string $object_ext_id = NULL): ILog {
+		$this->object_ext_id = $object_ext_id;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getObjectIliasId()/*: ?int*/ {
+		return $this->object_ilias_id;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function withObjectIliasId(/*?*/
+		int $object_ilias_id = NULL): ILog {
+		$this->object_ilias_id = $object_ilias_id;
+
+		return $this;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/ {
+		$this->withMessage($message)->withLevel($level)->store();
+	}
+
+
+	/**
+	 *
+	 */
+	public function store()/*: void*/ {
+		self::logs()->keepLog($this);
+
+		parent::store();
 	}
 }

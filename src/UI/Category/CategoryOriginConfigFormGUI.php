@@ -9,7 +9,7 @@ use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use srag\Plugins\Hub2\Origin\Config\Category\ICategoryOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class CategoryOriginConfigFormGUI

@@ -25,8 +25,10 @@ trait MetadataSyncProcessor {
 	 */
 	public function handleMetadata(IMetadataAwareDataTransferObject $dto, ilObject $object) {
 		if (count($dto->getMetaData()) > 0) {
+
 			ilContainer::_writeContainerSetting($object->getId(), ilObjectServiceSettingsGUI::CUSTOM_METADATA, 1);
 			$f = new MetadataImplementationFactory();
+
 			foreach ($dto->getMetaData() as $metaDatum) {
 				$f->getImplementationForDTO($dto, $metaDatum, (int)$object->getId())->write();
 			}

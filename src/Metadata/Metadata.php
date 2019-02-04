@@ -73,14 +73,13 @@ class Metadata implements IMetadata {
 		return $this->identifier;
 	}
 
+
 	/**
 	 * @return int
 	 */
-	public function getRecordId()
-	{
+	public function getRecordId() {
 		return $this->record_id;
 	}
-
 
 
 	/**

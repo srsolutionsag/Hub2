@@ -37,5 +37,11 @@ interface IMappingStrategyFactory {
 	/**
 	 * @return IMappingStrategy
 	 */
+	public function byImportId(): IMappingStrategy;
+
+
+	/**
+	 * @return IMappingStrategy
+	 */
 	public function none(): IMappingStrategy;
 }

@@ -104,7 +104,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function test_create_course_membership() {
-		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -123,7 +123,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests {
 
 
 	public function test_update_course_membership() {
-		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition, $this->originNotifications);
+		$processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 
 		$this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
 		$this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());

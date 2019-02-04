@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Sync\GlobalHook;
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Log\ILog;
 
 /**
  * Class GlobalHook
@@ -12,6 +13,24 @@ use srag\Plugins\Hub2\Exception\HubException;
  * @author  Timon Amstutz
  */
 final class GlobalHook implements IGlobalHook {
+
+	/**
+	 * @var self
+	 */
+	protected static $instance = NULL;
+
+
+	/**
+	 * @return self
+	 */
+	public static function getInstance(): self {
+		if (self::$instance === NULL) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
 
 	/**
 	 * @var IGlobalHook
@@ -24,7 +43,7 @@ final class GlobalHook implements IGlobalHook {
 	 *
 	 * @throws HubException
 	 */
-	public function __construct() {
+	private function __construct() {
 		if (ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_ACTIVE)) {
 			$this->global_hook = $this->instantiateGlobalHook();
 		}
@@ -63,7 +82,7 @@ final class GlobalHook implements IGlobalHook {
 			return $this->global_hook->beforeSync($active_orgins);
 		}
 
-		return false;
+		return true;
 	}
 
 
@@ -75,18 +94,16 @@ final class GlobalHook implements IGlobalHook {
 			return $this->global_hook->afterSync($active_orgins);
 		}
 
-		return false;
+		return true;
 	}
 
 
 	/**
 	 * @inheritdoc
 	 */
-	public function handleExceptions(array $exceptions): bool {
+	public function handleLog(ILog $log) {
 		if ($this->global_hook) {
-			return $this->global_hook->handleExceptions($exceptions);
+			$this->global_hook->handleLog($log);
 		}
-
-		return false;
 	}
 }

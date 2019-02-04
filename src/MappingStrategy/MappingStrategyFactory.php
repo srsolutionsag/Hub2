@@ -54,6 +54,14 @@ class MappingStrategyFactory implements IMappingStrategyFactory {
 	/**
 	 * @inheritdoc
 	 */
+	public function byImportId(): IMappingStrategy {
+		return new ByImportId();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
 	public function none(): IMappingStrategy {
 		return new None();
 	}

@@ -182,12 +182,21 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	/**
 	 * @var bool
 	 *
-	 * @con_has_field    true
-	 * @con_fieldtype    integer
-	 * @con_length       1
-	 * @con_is_notnull   true
+	 * @con_has_field  true
+	 * @con_fieldtype  integer
+	 * @con_length     1
+	 * @con_is_notnull true
 	 */
 	protected $adhoc_parent_scope = false;
+	/**
+	 * @var int
+	 *
+	 * @db_has_field  true
+	 * @db_fieldtype  integer
+	 * @db_length     8
+	 * @db_is_notnull true
+	 */
+	protected $sort = 0;
 
 
 	/**
@@ -196,6 +205,14 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	public function create() {
 		$this->created_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
 		$this->setObjectType($this->parseObjectType());
+
+		if (empty($this->sort)) {
+			$origins = (new OriginFactory())->getAll();
+			if (count($origins) > 0) {
+				$this->sort = (end($origins)->getSort() + 1);
+			}
+		}
+
 		parent::create();
 	}
 
@@ -256,6 +273,9 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 			case "adhoc":
 			case "adhoc_parent_scope":
 				return boolval($field_value);
+
+			case "sort":
+				return intval($field_value);
 
 			default:
 				return NULL;
@@ -534,5 +554,21 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 	 */
 	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/ {
 		$this->adhoc_parent_scope = $adhoc_parent_scope;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getSort(): int {
+		return $this->sort;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function setSort(int $sort)/*: void*/ {
+		$this->sort = $sort;
 	}
 }

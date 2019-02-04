@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\GlobalHook;
 
+use srag\Plugins\Hub2\Log\ILog;
+
 /**
  * Interface IGlobalHook
  *
@@ -33,9 +35,7 @@ interface IGlobalHook {
 	/**
 	 * This is executed after afterSync and allows the custom processing of exceptions fired during the sync.
 	 *
-	 * @param array $exceptions
-	 *
-	 * @return bool
+	 * @param ILog $log
 	 */
-	public function handleExceptions(array $exceptions): bool;
+	public function handleLog(ILog $log);
 }

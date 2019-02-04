@@ -46,6 +46,10 @@ interface IObject {
 	 */
 	const STATUS_TO_RESTORE = 128;
 	/**
+	 * Something on ILIAS side by processing the object goes wrong
+	 */
+	const STATUS_FAILED = 256;
+	/**
 	 * Final status indicating that the object is ignored and not processed by the sync,
 	 * e.g. the period of the object does not match the actual period defined by the origin.
 	 */

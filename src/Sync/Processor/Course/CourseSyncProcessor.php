@@ -14,7 +14,6 @@ use ilRepUtil;
 use ilSession;
 use ilSoapFunctions;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Notification\OriginNotifications;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -78,11 +77,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @param IOrigin                 $origin
 	 * @param IOriginImplementation   $implementation
 	 * @param IObjectStatusTransition $transition
-	 * @param OriginNotifications     $originNotifications
 	 * @param ICourseActivities       $courseActivities
 	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, OriginNotifications $originNotifications, ICourseActivities $courseActivities) {
-		parent::__construct($origin, $implementation, $transition, $originNotifications);
+	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ICourseActivities $courseActivities) {
+		parent::__construct($origin, $implementation, $transition);
 		$this->props = $origin->properties();
 		$this->config = $origin->config();
 		$this->courseActivities = $courseActivities;
@@ -164,21 +162,20 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 		$this->handleOrdering($dto, $ilObjCourse);
 
-		$this->handleAppointementsColor($ilObjCourse,$dto);
+		$this->handleAppointementsColor($ilObjCourse, $dto);
 
 		return $ilObjCourse;
 	}
 
+
 	/**
 	 * @param IDataTransferObject $dto
 	 */
-	protected function handleOrdering(IDataTransferObject $dto, \ilObjCourse $ilObjCourse)
-	{
+	protected function handleOrdering(IDataTransferObject $dto, \ilObjCourse $ilObjCourse) {
 		$settings = new \ilContainerSortingSettings($ilObjCourse->getId());
 		$settings->setSortMode($dto->getOrderType());
 
-		switch($dto->getOrderType())
-		{
+		switch ($dto->getOrderType()) {
 			case \ilContainer::SORT_TITLE:
 			case \ilContainer::SORT_ACTIVATION:
 			case \ilContainer::SORT_CREATION:
@@ -379,8 +376,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		if ($this->props->get(CourseProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
-            //Does not exist in 5.4
-            //$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
+			//Does not exist in 5.4
+			//$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 
 		if ($this->props->updateDTOProperty("enableSessionLimit")) {
@@ -391,9 +388,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$this->moveCourse($ilObjCourse, $dto);
 		}
 
-
-		if ($this->props->updateDTOProperty("appointementsColor")){
-			$this->handleAppointementsColor($ilObjCourse,$dto);
+		if ($this->props->updateDTOProperty("appointementsColor")) {
+			$this->handleAppointementsColor($ilObjCourse, $dto);
 		}
 
 		$ilObjCourse->update();
@@ -401,14 +397,15 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		return $ilObjCourse;
 	}
 
+
 	/**
 	 * @param ilObjCourse $ilObjCourse
-	 * @param CourseDTO $dto
+	 * @param CourseDTO   $dto
 	 */
-	protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto){
+	protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto) {
 		global $DIC;
 
-		if($dto->getAppointementsColor()){
+		if ($dto->getAppointementsColor()) {
 			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjCourse->getId());
 			/**
 			 * @var $cal_cat \ilCalendarCategory
@@ -418,6 +415,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$cal_cat->update();
 		}
 	}
+
 
 	/**
 	 * @inheritdoc
@@ -533,6 +531,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			&& $object->getFourthDependenceCategory() !== NULL) {
 			$parentRefId = $this->buildDependenceCategory($object->getFourthDependenceCategory(), $parentRefId, 4);
 		}
+
 		return $parentRefId;
 	}
 
@@ -621,7 +620,5 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		self::dic()->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
 		self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
-		//			hubLog::getInstance()->write($str);
-		//			hubOriginNotification::addMessage($this->getSrHubOriginId(), $str, 'Moved:');
 	}
 }

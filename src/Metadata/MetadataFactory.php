@@ -17,13 +17,14 @@ class MetadataFactory implements IMetadataFactory {
 	use DICTrait;
 	use Hub2Trait;
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
+
 	/**
 	 * @param int $id
 	 *
 	 * @return \SRAG\Plugins\Hub2\Metadata\IMetadata
 	 */
 	public function getDTOWithIliasId(int $ilas_id, int $record_id = 1): IMetadata {
-		return new Metadata($ilas_id,$record_id);
+		return new Metadata($ilas_id, $record_id);
 	}
-
 }

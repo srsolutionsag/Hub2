@@ -212,7 +212,7 @@ origin_form_field_description#:#Beschreibung
 origin_form_field_exec_time#:#Zeitpunkt der Synchronisation
 origin_form_field_exec_time_info#:#Format: HH:MM \nFalls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit \n ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert.
 origin_form_field_id#:#ID
-origin_form_field_notification_email#:#Benachrichtigung bei Fehler
+origin_form_field_notification_email#:#Benachrichtigung bei ausserordentlichen Logeinträgen (<> Info)
 origin_form_field_summary_email#:#E-Mailadressen für Zusammenfassung
 origin_from_field_active_period#:#Aktive Periode
 origin_from_field_active_period_info#:#Die Synchronisation verarbeitet nur Objekte, die zu der hier definierten aktuellen Periode gehören. Objekte, die nicht zu diesem Zeitraum gehören, werden auf IGNORIERT gesetzt.
@@ -344,8 +344,7 @@ data_table_header_ilias_id#:#ILIAS-ID
 data_table_header_status#:#Status
 data_table_header_period#:#Periode
 data_table_header_actions#:#Aktionen
-data_table_header_view#:#Anzeigen
-data_table_header_data#:#Daten
+data_table_header_data#:#Gelieferte Daten
 data_table_header_origin#:#Anbindung
 data_table_hash#:#Hash: %s
 data_table_all#:#Alle
@@ -357,7 +356,7 @@ status_16#:#Aktualisiert
 status_2#:#Zu erstellen
 status_32#:#Zu löschen
 subtab_origins#:#Übersicht
-subtab_data#:#Verlauf
+subtab_data#:#Status
 grp_prop_activate#:#Aktivieren
 grp_prop_delete_mode#:#Löschverhalten
 grp_prop_delete_mode_close#:#Gruppe zu "geschlossene Gruppe" umwandeln
@@ -383,9 +382,8 @@ summary_created#:#Erstellt: %s
 summary_updated#:#Aktualisiert: %s
 summary_outdated#:#Veraltet: %s
 summary_ignored#:#Ignoriert: %s
-summary_exceptions#:#Ausnahmen:
+summary_failed#:#Fehlgeschlagen: %s
 summary_notification#:#Hub2: Zusammenfassung für %s
-summary_exceptions_in#:#Hub2: Ausnahmen in %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.
@@ -399,34 +397,41 @@ data_table_status_outdated#:#Veraltet
 data_table_status_to_restore#:#Zum Wiederherstellen
 data_table_status_ignored#:#Ignoriert
 data_table_status_not_ignored#:#Nicht ignoriert
+data_table_status_failed#:#Fehlgeschlagen
 origin_form_field_adhoc#:#AdHoc
 origin_form_field_adhoc_info#:#Es werden nur die Daten geliefert, die geändert wurden
 origin_form_field_adhoc_parent_scope#:#Setze Parent als Scope
 origin_form_field_adhoc_parent_scope_info#:#Es werden nur die Daten geliefert, die in Container gehören, die geändert wurden
 origin_table_button_run_force_update#:#Sychronisieren (Aktualisieren erzwingen)
 origin_deleted#:#Anbindung gelöscht
-table_md#:#MD
-table_tax#:#TAX
+crs_membership_prop_delete_mode_delete#:#Mitgliedschaft beenden
+origin_id#:#ID
+origin_sort#:#Sortierung
+origin_table_header_id#:#ID
+origin_table_header_sort#:#Sortierung
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
-logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht
+logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten
 logs_date#:#Datum / Zeit
 logs_days#:#Tage
 logs_deleted_status#:#%s Log(s) gelöscht
 logs_keep_old_logs_time#:#Alte Logs maximal behalten für
-logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht
+logs_keep_old_logs_time_info#:#Nach den angegebenen Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten
 logs_level#:#Level
 logs_level_200#:#Info
 logs_level_300#:#Warnung
+logs_level_400#:#Ausnahme
 logs_level_500#:#Kritisch
-logs_log_type#:#Typ
-logs_log_type_1#:#Hub2
-logs_log_type_2#:#Origin
 logs_logs#:#Logs
 logs_message#:#Nachricht
 logs_no_additional_data#:#Keine zusätzlichen Daten
-logs_origin_id#:#Origin-ID
-logs_origin_object_type#:#Origin-Objekt-Typ
+logs_object_ext_id#:#Externe-ID
+logs_object_ilias_id#:#ILIAS-ID
+logs_origin_id#:#Anbindung-ID
+logs_origin_object_type#:#Anbindung-Objekt-Typ
+logs_show_logs#:#Logs anzeigen
+logs_summary#:#Logs:
+logs_summary_logs_in#:#Hub2: Logs in %s
 logs_title#:#Titel
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?

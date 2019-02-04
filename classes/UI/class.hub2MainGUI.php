@@ -1,15 +1,16 @@
 <?php
 
-require_once __DIR__ . "/../../vendor/autoload.php";
+//namespace srag\Plugins\Hub2\UI;
 
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
- * Class hub2MainGUI
+ * Class MainGUI
  *
- * @package
+ * @package           srag\Plugins\Hub2\UI
+ *
  * @author            Fabian Schmid <fs@studer-raimann.ch>
  *
  * @ilCtrl_IsCalledBy hub2MainGUI: ilHub2ConfigGUI
@@ -29,7 +30,7 @@ class hub2MainGUI {
 
 
 	/**
-	 * hub2MainGUI constructor
+	 * MainGUI constructor
 	 */
 	public function __construct() {
 

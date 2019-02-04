@@ -38,6 +38,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 	 */
 	protected $isContact = false;
 
+
 	/**
 	 * @inheritdoc
 	 */
@@ -127,21 +128,23 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 		return $this;
 	}
 
+
 	/**
 	 * @return bool
 	 */
-	public function isContact(): bool
-	{
+	public function isContact(): bool {
 		return $this->isContact;
 	}
 
+
 	/**
 	 * @param bool $isContact
+	 *
 	 * @return $this
 	 */
-	public function setIsContact(bool $isContact)
-	{
+	public function setIsContact(bool $isContact) {
 		$this->isContact = $isContact;
+
 		return $this;
 	}
 }

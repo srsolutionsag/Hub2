@@ -4,8 +4,8 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\ArConfigOld;
+use srag\Plugins\Hub2\Jobs\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Jobs\RunSync;
-use srag\Plugins\Hub2\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -24,7 +24,6 @@ use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
 /**
  * Class ilHub2Plugin
  *
- * @package
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

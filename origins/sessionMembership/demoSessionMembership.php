@@ -6,6 +6,7 @@ use Exception;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
+use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
@@ -40,7 +41,7 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	 * @return int
 	 */
 	public function parseData(): int {
-		self::logs()->originLog($this->origin)->write("This is a test-log entry");
+		$this->log()->write("This is a test-log entry");
 
 		$this->data[] = $this->factory()->sessionMembership(1, 6)->setSessionIdType(SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
 			->setSessionId(rand(1, 10))->setRole(SessionMembershipDTO::ROLE_MEMBER);
@@ -88,9 +89,9 @@ class demoSessionMembership extends AbstractOriginImplementation {
 	 *
 	 * Note that if you do not throw any of the exceptions above, the sync will continue.
 	 *
-	 * @param Exception $e
+	 * @param ILog $log
 	 */
-	public function handleException(Exception $e) { }
+	public function handleLog(ILog $log) { }
 
 
 	/**
