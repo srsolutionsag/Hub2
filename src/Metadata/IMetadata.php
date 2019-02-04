@@ -39,9 +39,9 @@ interface IMetadata {
 
 
 	/**
-	 * @return mixed
+	 * @return int
 	 */
-	public function getRecordId();
+	public function getRecordId(): int;
 
 
 	/**
