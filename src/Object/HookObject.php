@@ -7,7 +7,6 @@ use ilObject;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\NullDTO;
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -72,9 +71,6 @@ class HookObject {
 	 * @throws HubException
 	 */
 	public function overrideStatus(int $status) {
-		if ($this->getDTO() instanceof NullDTO) {
-			throw new HubException("Overriding status for NullDTOs is not supported!");
-		}
 		$this->object->setStatus($status);
 	}
 

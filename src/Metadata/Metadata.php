@@ -25,6 +25,10 @@ class Metadata implements IMetadata {
 	 * @var mixed
 	 */
 	protected $value;
+	/**
+	 * @var int
+	 */
+	protected $record_id;
 
 
 	/**
@@ -32,8 +36,9 @@ class Metadata implements IMetadata {
 	 *
 	 * @param int $identifier
 	 */
-	public function __construct($identifier) {
+	public function __construct($identifier, int $record_id = self::DEFAULT_RECORD_ID) {
 		$this->identifier = $identifier;
+		$this->record_id = $record_id;
 	}
 
 
@@ -70,6 +75,14 @@ class Metadata implements IMetadata {
 	 */
 	public function getIdentifier() {
 		return $this->identifier;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getRecordId(): int {
+		return $this->record_id;
 	}
 
 

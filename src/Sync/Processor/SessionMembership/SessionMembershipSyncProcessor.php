@@ -70,6 +70,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		$session_ref_id = $this->buildParentRefId($dto);
 		$ilObjSession = $this->findILIASObject($session_ref_id);
 		$this->handleMembership($ilObjSession, $dto);
+		$this->handleContact($ilObjSession, $dto);
 
 		return new FakeIliasMembershipObject($session_ref_id, $dto->getUserId());
 	}
@@ -88,6 +89,10 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		$obj->setUserIdIlias($dto->getUserId());
 		$obj->setContainerIdIlias($ilObjSession->getRefId());
 		$obj->initId();
+
+		if ($this->props->updateDTOProperty("isContact")) {
+			$this->handleContact($ilObjSession, $dto);
+		}
 
 		return $obj;
 	}
@@ -184,6 +189,44 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		}
 
 		$ilSessionParticipants->register((int)$user_id);
+	}
+
+
+	/**
+	 * @param ilObjSession         $ilObjSession
+	 * @param SessionMembershipDTO $dto
+	 *
+	 * @throws HubException
+	 */
+	protected function handleContact(ilObjSession $ilObjSession, SessionMembershipDTO $dto) {
+		global $DIC;
+
+		/**
+		 * @var ilSessionParticipants $ilSessionParticipants
+		 */
+		$ilSessionParticipants = $ilObjSession->getMembersObject();
+
+		$user_id = $dto->getUserId();
+		if (!ilObjUser::_exists($user_id)) {
+			throw new HubException("user with id {$user_id} does not exist");
+		}
+
+		/**
+		 * Note to who ever might be concerned, No I was not drunken while writting the next
+		 * few lines. After some investigation, it seemed the simplest way to set a single
+		 * user as participant of a session. See the gem ilSessionParticipants
+		 *
+		 * This Option would also be possible, but is nast as well an very slow:
+		 * $ilSessionParticipants->getEventParticipants()->__read();
+		 * $user = $ilSessionParticipants->getEventParticipants()->getUser((int)$user_id);
+		 * $ilSessionParticipants->getEventParticipants()->setContact($dto->isContact());
+		 * ... //manuall set all other properties from the user array
+		 * $ilSessionParticipants->getEventParticipants()->updateUser();
+		 */
+		$event_id = $ilSessionParticipants->getEventParticipants()->getEventId();
+		$query = "UPDATE event_participants " . "SET contact = " . $DIC->database()->quote($dto->isContact(), 'integer') . " " . "WHERE event_id = "
+			. $DIC->database()->quote($event_id, 'integer') . " " . "AND usr_id = " . $DIC->database()->quote($user_id, 'integer') . " ";
+		$DIC->database()->manipulate($query);
 	}
 
 

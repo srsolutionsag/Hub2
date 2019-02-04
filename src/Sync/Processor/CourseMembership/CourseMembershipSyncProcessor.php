@@ -62,8 +62,11 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		if (!$course) {
 			return NULL;
 		}
+
 		$user_id = $dto->getUserId();
-		$course->getMembersObject()->add($user_id, $this->mapRole($dto));
+		$membership_obj = $course->getMembersObject();
+		$membership_obj->add($user_id, $this->mapRole($dto));
+		$membership_obj->updateContact($user_id, $dto->isContact());
 
 		return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 	}
@@ -88,7 +91,12 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 			return NULL;
 		}
 
-		$course->getMembersObject()->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
+		$membership_obj = $course->getMembersObject();
+		$membership_obj->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
+
+		if ($this->props->updateDTOProperty("isContact")) {
+			$membership_obj->updateContact($user_id, $dto->isContact());
+		}
 
 		$obj->setUserIdIlias($dto->getUserId());
 		$obj->setContainerIdIlias($course->getRefId());

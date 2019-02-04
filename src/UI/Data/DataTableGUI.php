@@ -11,8 +11,11 @@ use ilFormPropertyGUI;
 use ilHub2Plugin;
 use ilSelectInputGUI;
 use ilTable2GUI;
+use ilTemplateException;
 use ilTextInputGUI;
+use ReflectionException;
 use srag\DIC\Hub2\DICTrait;
+use srag\DIC\Hub2\Exception\DICException;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -240,9 +243,9 @@ class DataTableGUI extends ilTable2GUI {
 	/**
 	 * @param array $a_set
 	 *
-	 * @throws \ReflectionException
-	 * @throws \ilTemplateException
-	 * @throws \srag\DIC\Hub2\Exception\DICException
+	 * @throws ReflectionException
+	 * @throws ilTemplateException
+	 * @throws DICException
 	 */
 	protected function fillRow($a_set) {
 		self::dic()->ctrl()->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
@@ -376,7 +379,7 @@ class DataTableGUI extends ilTable2GUI {
 
 	/**
 	 * @return array
-	 * @throws \srag\DIC\Hub2\Exception\DICException
+	 * @throws DICException
 	 */
 	private function getAvailableOrigins() {
 		static $origins;

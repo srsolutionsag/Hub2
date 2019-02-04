@@ -22,7 +22,8 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 	 */
 	public function write() {
 		$id = $this->getMetadata()->getIdentifier();
-		$ilAdvancedMDValues = new ilAdvancedMDValues(2, $this->getIliasId(), NULL, "-");
+
+		$ilAdvancedMDValues = new ilAdvancedMDValues($this->getMetadata()->getRecordId(), $this->getIliasId(), NULL, "-");
 
 		$ilAdvancedMDValues->read();
 		$ilADTGroup = $ilAdvancedMDValues->getADTGroup();

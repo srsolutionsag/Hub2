@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\UI\CourseMembership;
 
-use ilCheckboxInputGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
 use srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
@@ -28,12 +27,6 @@ class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI {
 	 */
 	protected function addSyncConfig() {
 		parent::addSyncConfig();
-		$item = $this->getItemByPostVar(self::POST_VAR_ADHOC);
-
-		$subitem = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc_parent_scope"), "adhoc_parent_scope");
-		$subitem->setChecked($this->origin->isAdhocParentScope());
-		$subitem->setInfo(self::plugin()->translate("origin_form_field_adhoc_parent_scope_info"));
-		$item->addSubItem($subitem);
 	}
 
 

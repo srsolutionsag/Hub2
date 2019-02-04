@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Group;
 
+use ilCalendarCategory;
 use ilDate;
 use ilObjGroup;
 use ilRepUtil;
@@ -106,6 +107,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
+		global $DIC;
+
 		/** @var GroupDTO $dto */
 		$ilObjGroup = new ilObjGroup();
 		$ilObjGroup->setImportId($this->getImportId($dto));
@@ -146,6 +149,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->createReference();
 		$ilObjGroup->putInTree($parentRefId);
 		$ilObjGroup->setPermissions($parentRefId);
+
+		$this->handleAppointementsColor($ilObjGroup, $dto);
 
 		return $ilObjGroup;
 	}
@@ -205,12 +210,35 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			$ilObjGroup->enableUnlimitedRegistration($dto->getRegisterMode());
 		}
 
+		if ($this->props->updateDTOProperty("appointementsColor")) {
+			$this->handleAppointementsColor($ilObjGroup, $dto);
+		}
+
 		if ($this->props->get(GroupProperties::MOVE_GROUP)) {
 			$this->moveGroup($ilObjGroup, $dto);
 		}
 		$ilObjGroup->update();
 
 		return $ilObjGroup;
+	}
+
+
+	/**
+	 * @param ilObjGroup $ilObjGroup
+	 * @param GroupDTO   $dto
+	 */
+	protected function handleAppointementsColor(ilObjGroup $ilObjGroup, GroupDTO $dto) {
+		global $DIC;
+
+		if ($dto->getAppointementsColor()) {
+			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjGroup->getId());
+			/**
+			 * @var $cal_cat ilCalendarCategory
+			 */
+			$cal_cat = ilCalendarCategory::_getInstanceByObjId($ilObjGroup->getId());
+			$cal_cat->setColor($dto->getAppointementsColor());
+			$cal_cat->update();
+		}
 	}
 
 

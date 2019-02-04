@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Object;
 use ActiveRecord;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Object\Group\GroupRepository;
+use srag\Plugins\Hub2\Object\Session\SessionRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -76,12 +78,22 @@ abstract class ObjectRepository implements IObjectRepository {
 			if (count($ext_ids) > 0) {
 				$existing_ext_id_query = " AND ext_id NOT IN ('" . implode("','", $ext_ids) . "') ";
 			}
+			if ($this instanceof GroupRepository || $this instanceof SessionRepository) {
+				$parent_scope_query = " AND (";
+				foreach ($parent_ext_ids as $parent_ext_id) {
+					$parent_scope_query .= " data LIKE '%\"parentId\":\"$parent_ext_id\"%' OR";
+				}
+				$parent_scope_query = rtrim($parent_scope_query, "OR");
+				$parent_scope_query .= ")";
+			} else {
+				$parent_scope_query = " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','", $parent_ext_ids) . "') ";
+			}
 
 			return $class::where("origin_id = " . $this->origin->getId() . " AND status IN ('" . implode("','", [
 					IObject::STATUS_CREATED,
 					IObject::STATUS_UPDATED,
 					IObject::STATUS_IGNORED
-				]) . "') " . $existing_ext_id_query . " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','", $parent_ext_ids) . "') "
+				]) . "') " . $existing_ext_id_query . $parent_scope_query
 
 			)->get();
 		}
