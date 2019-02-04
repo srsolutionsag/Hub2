@@ -337,13 +337,13 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
-	 * @param int     $ilias_id
-	 * @param string  $ext_id
-	 * @param IOrigin $origin
+	 * @param int          $ilias_id
+	 * @param string       $ext_id
+	 * @param IOrigin|null $origin
 	 *
 	 * @return string
 	 */
-	protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin): string {
+	protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin = NULL): string {
 		if (!$origin) {
 			return strval($ilias_id);
 		}
