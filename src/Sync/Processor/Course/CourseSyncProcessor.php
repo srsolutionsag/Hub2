@@ -2,6 +2,9 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
+use ilCalendarCategory;
+use ilContainer;
+use ilContainerSortingSettings;
 use ilCopyWizardOptions;
 use ilLink;
 use ilMailMimeSenderFactory;
@@ -67,6 +70,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		'contactConsultation',
 		'contactPhone',
 		'activationType',
+		'numberOfPreviousSessions',
+		'numberOfNextSessions',
+		'orderType'
 	];
 
 
@@ -96,6 +102,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
+		global $DIC;
+
 		/** @var CourseDTO $dto */
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
@@ -124,7 +132,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== NULL) {
+			if ($dto->$getter() !== NULL && $setter !== "setActivationType") {
 				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
@@ -136,7 +144,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		if ($this->props->get(CourseProperties::SET_ONLINE)) {
 			$ilObjCourse->setOfflineStatus(false);
-			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
+			//Does not exist in 5.4
+			//$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
 
 		if ($this->props->get(CourseProperties::CREATE_ICON)) {
@@ -150,10 +159,39 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$this->setSubscriptionType($dto, $ilObjCourse);
 
 		$this->setLanguage($dto, $ilObjCourse);
+		$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 
 		$ilObjCourse->update();
 
+		$this->handleOrdering($dto, $ilObjCourse);
+
+		$this->handleAppointementsColor($ilObjCourse, $dto);
+
 		return $ilObjCourse;
+	}
+
+
+	/**
+	 * @param IDataTransferObject $dto
+	 */
+	protected function handleOrdering(IDataTransferObject $dto, ilObjCourse $ilObjCourse) {
+		$settings = new ilContainerSortingSettings($ilObjCourse->getId());
+		$settings->setSortMode($dto->getOrderType());
+
+		switch ($dto->getOrderType()) {
+			case ilContainer::SORT_TITLE:
+			case ilContainer::SORT_ACTIVATION:
+			case ilContainer::SORT_CREATION:
+				$settings->setSortDirection($dto->getOrderDirection());
+				break;
+			case ilContainer::SORT_MANUAL:
+				/**
+				 * @Todo set order direction for manual sorting
+				 */
+				break;
+		}
+
+		$settings->update();
 	}
 
 
@@ -316,7 +354,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			}
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
-			if ($dto->$getter() !== NULL) {
+			if ($dto->$getter() !== NULL && $setter !== "setActivationType") {
 				$ilObjCourse->$setter($dto->$getter());
 			}
 		}
@@ -341,14 +379,44 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 		if ($this->props->get(CourseProperties::SET_ONLINE_AGAIN)) {
 			$ilObjCourse->setOfflineStatus(false);
-			$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
+			//Does not exist in 5.4
+			//$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		}
+
+		if ($this->props->updateDTOProperty("enableSessionLimit")) {
+			$ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
+		}
+
 		if ($this->props->get(CourseProperties::MOVE_COURSE)) {
 			$this->moveCourse($ilObjCourse, $dto);
 		}
+
+		if ($this->props->updateDTOProperty("appointementsColor")) {
+			$this->handleAppointementsColor($ilObjCourse, $dto);
+		}
+
 		$ilObjCourse->update();
 
 		return $ilObjCourse;
+	}
+
+
+	/**
+	 * @param ilObjCourse $ilObjCourse
+	 * @param CourseDTO   $dto
+	 */
+	protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto) {
+		global $DIC;
+
+		if ($dto->getAppointementsColor()) {
+			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjCourse->getId());
+			/**
+			 * @var $cal_cat ilCalendarCategory
+			 */
+			$cal_cat = ilCalendarCategory::_getInstanceByObjId($ilObjCourse->getId());
+			$cal_cat->setColor($dto->getAppointementsColor());
+			$cal_cat->update();
+		}
 	}
 
 
@@ -459,6 +527,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			&& $object->getSecondDependenceCategory() !== NULL
 			&& $object->getThirdDependenceCategory() !== NULL) {
 			$parentRefId = $this->buildDependenceCategory($object->getThirdDependenceCategory(), $parentRefId, 3);
+		}
+		if ($object->getFirstDependenceCategory() !== NULL
+			&& $object->getSecondDependenceCategory() !== NULL
+			&& $object->getThirdDependenceCategory() !== NULL
+			&& $object->getFourthDependenceCategory() !== NULL) {
+			$parentRefId = $this->buildDependenceCategory($object->getFourthDependenceCategory(), $parentRefId, 4);
 		}
 
 		return $parentRefId;

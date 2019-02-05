@@ -124,3 +124,10 @@ foreach ((new \srag\Plugins\Hub2\Origin\OriginFactory())->getAllActive() as $ori
 	$i ++;
 }
 ?>
+<#15>
+<?php
+\srag\DIC\Hub2\DICStatic::dic()->database()->modifyTableColumn(\srag\Plugins\Hub2\Log\Log::TABLE_NAME, "object_ext_id", [
+	"type" => "text",
+	"length" => 255
+]);
+?>

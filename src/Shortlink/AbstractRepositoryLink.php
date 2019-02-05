@@ -6,9 +6,10 @@ use ilLink;
 use ilObject2;
 
 /**
- * Class NullLink
+ * Class AbstractRepositoryLink
  *
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @package srag\Plugins\Hub2\Shortlink
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjectLink {
 
@@ -70,11 +71,17 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 	}
 
 
+	/**
+	 * @return int
+	 */
 	protected function getILIASId() {
 		return $this->object->getILIASId();
 	}
 
 
+	/**
+	 * @return int
+	 */
 	private function findReadableParent(): int {
 		$ref_id = $this->getILIASId();
 

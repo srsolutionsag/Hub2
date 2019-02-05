@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * Class BaseCustomViewGUI
  *
  * @package srag\Plugins\Hub2\UI\CustomView
+ *
  * @author  Timon Amstutz
  */
 abstract class BaseCustomViewGUI {

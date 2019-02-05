@@ -16,11 +16,11 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 	/**
 	 * @var int
 	 */
-	private $ilias_group_ref_id;
+	protected $ilias_group_ref_id;
 	/**
 	 * @var int
 	 */
-	private $user_id;
+	protected $user_id;
 	/**
 	 * @var
 	 */
@@ -33,6 +33,10 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 	 * @var int
 	 */
 	protected $groupIdType;
+	/**
+	 * @var bool
+	 */
+	protected $isContact = false;
 
 
 	/**
@@ -40,8 +44,8 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 	 */
 	public function __construct($group_id, $user_id) {
 		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $group_id, $user_id ]));
-		$this->groupId = $group_id;
-		$this->userId = $user_id;
+		$this->setGroupId($group_id);
+		$this->setUserId($user_id);
 	}
 
 
@@ -120,6 +124,26 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 	 */
 	public function setRole($role) {
 		$this->role = $role;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isContact(): bool {
+		return $this->isContact;
+	}
+
+
+	/**
+	 * @param bool $isContact
+	 *
+	 * @return $this
+	 */
+	public function setIsContact(bool $isContact) {
+		$this->isContact = $isContact;
 
 		return $this;
 	}

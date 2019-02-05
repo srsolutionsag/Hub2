@@ -1,12 +1,13 @@
 <?php
 
-namespace srag\Plugins\Hub2\UI;
+namespace srag\Plugins\Hub2\UI\OriginConfig;
 
 use hub2ConfigOriginsGUI;
 use ilAdvancedSelectionListGUI;
 use ilHub2Plugin;
 use ilTable2GUI;
 use srag\DIC\Hub2\DICTrait;
+use srag\DIC\Hub2\Exception\DICException;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
@@ -14,7 +15,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class OriginsTableGUI
  *
- * @package srag\Plugins\Hub2\UI
+ * @package srag\Plugins\Hub2\UI\OriginConfig
+ *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -39,6 +41,7 @@ class OriginsTableGUI extends ilTable2GUI {
 	 * @param IOriginRepository    $originRepository
 	 *
 	 * @internal param
+	 * @throws DICException
 	 */
 	public function __construct($a_parent_obj, $a_parent_cmd, IOriginRepository $originRepository) {
 		$this->originRepository = $originRepository;

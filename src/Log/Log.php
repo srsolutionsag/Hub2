@@ -125,8 +125,8 @@ class Log extends ActiveRecord implements ILog {
 	 * @var string|null
 	 *
 	 * @con_has_field    true
-	 * @con_fieldtype    integer
-	 * @con_length       8
+	 * @con_fieldtype    text
+	 * @con_length       255
 	 * @con_is_notnull   false
 	 */
 	protected $object_ext_id = NULL;

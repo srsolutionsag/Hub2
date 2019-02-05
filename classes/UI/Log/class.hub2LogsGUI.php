@@ -1,12 +1,14 @@
 <?php
 
-require_once __DIR__ . "/../../../vendor/autoload.php";
+//namespace srag\Plugins\Hub2\UI\Log;
 
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
 
 /**
- * Class hub2LogsGUI
+ * Class LogsGUI
+ *
+ * @package srag\Plugins\Hub2\UI\Log
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
@@ -15,6 +17,7 @@ class hub2LogsGUI extends hub2MainGUI {
 	const CMD_APPLY_FILTER = "applyFilter";
 	const CMD_RESET_FILTER = "resetFilter";
 	const CMD_SHOW_LOGS_OF_EXT_ID = "showLogsOfExtID";
+	const SUBTAB_LOGS = "subtab_logs";
 	const LANG_MODULE_LOGS = "logs";
 
 
@@ -44,7 +47,7 @@ class hub2LogsGUI extends hub2MainGUI {
 	 * @inheritdoc
 	 */
 	protected function initTabs()/*: void*/ {
-		self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_LOGS);
+		self::dic()->tabs()->activateSubTab(self::SUBTAB_LOGS);
 	}
 
 
@@ -101,7 +104,7 @@ class hub2LogsGUI extends hub2MainGUI {
 	 */
 	protected function showLogsOfExtID()/*: void*/ {
 		$origin_id = intval(filter_input(INPUT_GET, DataTableGUI::F_ORIGIN_ID));
-		$ext_id = intval(filter_input(INPUT_GET, DataTableGUI::F_EXT_ID));
+		$ext_id = filter_input(INPUT_GET, DataTableGUI::F_EXT_ID);
 
 		$table = $this->getLogsTable(self::CMD_RESET_FILTER);
 		$table->resetFilter();

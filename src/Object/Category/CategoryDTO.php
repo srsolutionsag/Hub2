@@ -54,11 +54,11 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO {
 	/**
 	 * @var string
 	 */
-	private $parentId;
+	protected $parentId;
 	/**
 	 * @var int
 	 */
-	private $parentIdType = self::PARENT_ID_TYPE_REF_ID;
+	protected $parentIdType = self::PARENT_ID_TYPE_REF_ID;
 	/**
 	 * @var bool
 	 */

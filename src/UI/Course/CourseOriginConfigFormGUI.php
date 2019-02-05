@@ -11,7 +11,7 @@ use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\Course\ICourseOriginConfig;
 use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class CourseOriginConfigFormGUI

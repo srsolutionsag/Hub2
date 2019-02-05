@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../vendor/autoload.php";
+//namespace srag\Plugins\Hub2\UI\OriginConfig;
 
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
@@ -13,14 +13,15 @@ use srag\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
-use srag\Plugins\Hub2\UI\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginsTableGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
-use srag\Plugins\Hub2\UI\OriginsTableGUI;
 
 /**
- * Class hub2ConfigOriginsGUI
+ * Class ConfigOriginsGUI
  *
- * @package
+ * @package      srag\Plugins\Hub2\UI\OriginConfig
+ *
  * @author       Stefan Wanzenried <sw@studer-raimann.ch>
  * @author       Fabian Schmid <fs@studer-raimann.ch>
  *
@@ -33,7 +34,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	const ORIGIN_ID = 'origin_id';
 	const SUBTAB_ORIGINS = 'subtab_origins';
 	const SUBTAB_DATA = 'subtab_data';
-	const SUBTAB_LOGS = "subtab_logs";
 	const CMD_RUN = 'run';
 	const CMD_RUN_FORCE_UPDATE = 'runForceUpdate';
 	const CMD_ADD_ORIGIN = 'addOrigin';
@@ -61,7 +61,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 
 
 	/**
-	 *
+	 * ConfigOriginsGUI constructor
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -99,7 +99,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 		self::dic()->tabs()->addSubTab(self::SUBTAB_DATA, self::plugin()->translate(self::SUBTAB_DATA), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
 
-		self::dic()->tabs()->addSubTab(self::SUBTAB_LOGS, self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS), self::dic()->ctrl()
+		self::dic()->tabs()->addSubTab(hub2LogsGUI::SUBTAB_LOGS, self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS), self::dic()->ctrl()
 			->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX));
 
 		self::dic()->tabs()->activateTab(self::TAB_ORIGINS);
@@ -281,7 +281,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	 * @param bool $force_update
 	 */
 	protected function run(bool $force_update = false)/*: void*/ {
-		$this->execute($this->originFactory->getAllActive());
+		$this->execute($this->originFactory->getAllActive(), $force_update);
 	}
 
 
