@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Shortlink;
 
+use ilObjOrgUnit;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -9,6 +10,8 @@ use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use srag\Plugins\Hub2\Object\Group\ARGroup;
 use srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
 use srag\Plugins\Hub2\Object\ObjectFactory;
+use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnit;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembership;
 use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
@@ -54,24 +57,10 @@ class ObjectLinkFactory {
 		foreach ($this->origin_factory->getAllActive() as $origin) {
 			$f = new ObjectFactory($origin);
 			$object = $f->undefined($ext_id);
-			switch (true) {
-				case ($object instanceof ARCourseMembership):
-				case ($object instanceof ARGroupMembership):
-				case ($object instanceof ARSessionMembership):
-				case ($object instanceof ARSession):
-				case ($object instanceof ARCategory):
-				case ($object instanceof ARCourse):
-				case ($object instanceof ARGroup):
-				case ($object instanceof ARUser):
-					if ($object->getILIASId()) {
-						break 2;
-					} else {
-						$object = NULL;
-					}
+
+			if ($object->getILIASId()) {
+				return $this->findByObject($object);
 			}
-		}
-		if ($object instanceof ARObject) {
-			return $this->findByObject($object);
 		}
 
 		return new NullLink();
@@ -134,6 +123,10 @@ class ObjectLinkFactory {
 				return new GroupLink($object);
 			case ($object instanceof ARUser):
 				return new UserLink($object);
+			case ($object instanceof IOrgUnit):
+				return new AbstractRepositoryLink($object);
+			case ($object instanceof IOrgUnitMembership):
+				return new AbstractRepositoryLink($object);
 			default:
 				return new NullLink();
 		}

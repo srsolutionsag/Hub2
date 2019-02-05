@@ -6,7 +6,7 @@ use ilLink;
 use ilObject2;
 
 /**
- * Class NullLink
+ * Class AbstractRepositoryLink
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */

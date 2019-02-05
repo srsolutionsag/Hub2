@@ -8,7 +8,7 @@ use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
- * Class NullLink
+ * Class AbstractBaseLink
  *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
