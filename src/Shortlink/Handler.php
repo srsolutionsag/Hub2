@@ -15,7 +15,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class Handler
  *
- * @package srag\Plugins\Hub2\Handler
+ * @package srag\Plugins\Hub2\Shortlink
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class Handler {

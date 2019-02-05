@@ -1,15 +1,19 @@
 <?php
 
-namespace srag\Plugins\Hub2\Shortlink;
+namespace srag\Plugins\Hub2\Shortlink\User;
 
 use ilAdministrationGUI;
 use ilLink;
 use ilObjUser;
 use ilObjUserGUI;
+use srag\Plugins\Hub2\Shortlink\AbstractBaseLink;
+use srag\Plugins\Hub2\Shortlink\IObjectLink;
 
 /**
  * Class UserLink
  *
+ *
+ * @package srag\Plugins\Hub2\Shortlink\User
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
 class UserLink extends AbstractBaseLink implements IObjectLink {

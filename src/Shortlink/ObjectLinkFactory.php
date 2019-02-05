@@ -16,10 +16,21 @@ use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Shortlink\Category\CategoryLink;
+use srag\Plugins\Hub2\Shortlink\Course\CourseLink;
+use srag\Plugins\Hub2\Shortlink\CourseMembership\CourseMembershipLink;
+use srag\Plugins\Hub2\Shortlink\Group\GroupLink;
+use srag\Plugins\Hub2\Shortlink\GroupMembership\GroupMembershipLink;
+use srag\Plugins\Hub2\Shortlink\OrgUnit\OrgUnitLink;
+use srag\Plugins\Hub2\Shortlink\OrgUnitMembership\OrgUnitMembershipLink;
+use srag\Plugins\Hub2\Shortlink\Session\SessionLink;
+use srag\Plugins\Hub2\Shortlink\SessionMembership\SessionMembershipLink;
+use srag\Plugins\Hub2\Shortlink\User\UserLink;
 
 /**
  * Interface ObjectLinkFactory
  *
+ * @package srag\Plugins\Hub2\Shortlink
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
 class ObjectLinkFactory {
@@ -123,9 +134,9 @@ class ObjectLinkFactory {
 			case ($object instanceof ARUser):
 				return new UserLink($object);
 			case ($object instanceof IOrgUnit):
-				return new AbstractRepositoryLink($object);
+				return new OrgUnitLink($object);
 			case ($object instanceof IOrgUnitMembership):
-				return new AbstractRepositoryLink($object);
+				return new OrgUnitMembershipLink($object);
 			default:
 				return new NullLink();
 		}
