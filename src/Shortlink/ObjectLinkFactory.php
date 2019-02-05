@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Shortlink;
 
-use ilObjOrgUnit;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
