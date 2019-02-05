@@ -31,15 +31,15 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
 	/**
 	 * @var int
 	 */
-	private $courseIdType = self::COURSE_ID_TYPE_REF_ID;
+	protected $courseIdType = self::COURSE_ID_TYPE_REF_ID;
 	/**
 	 * @var int
 	 */
-	private $courseId;
+	protected $courseId;
 	/**
 	 * @var int
 	 */
-	private $userId;
+	protected $userId;
 	/**
 	 * @var int
 	 */

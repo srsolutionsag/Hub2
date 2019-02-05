@@ -16,11 +16,11 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
 	/**
 	 * @var int
 	 */
-	private $ilias_group_ref_id;
+	protected $ilias_group_ref_id;
 	/**
 	 * @var int
 	 */
-	private $user_id;
+	protected $user_id;
 	/**
 	 * @var
 	 */

@@ -223,27 +223,27 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @var string
 	 */
-	private $firstDependenceCategory;
+	protected $firstDependenceCategory;
 	/**
 	 * @var string
 	 */
-	private $secondDependenceCategory;
+	protected $secondDependenceCategory;
 	/**
 	 * @var string
 	 */
-	private $thirdDependenceCategory;
+	protected $thirdDependenceCategory;
 	/**
 	 * @var string
 	 */
-	private $fourthDependenceCategory;
+	protected $fourthDependenceCategory;
 	/**
 	 * @var int
 	 */
-	private $template_id = 0;
+	protected $template_id = 0;
 	/**
 	 * @var array
 	 */
-	private $notificationEmails = [];
+	protected $notificationEmails = [];
 	/**
 	 * @var int
 	 */
