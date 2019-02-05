@@ -49,6 +49,9 @@ class Handler {
 	}
 
 
+	/**
+	 *
+	 */
 	public function storeQuery() {
 		$return = setcookie('xhub_query', $this->ext_id, time() + 10);
 	}
@@ -99,16 +102,22 @@ class Handler {
 	}
 
 
+	/**
+	 *
+	 */
 	public function tryILIASInit() {
 		$this->prepareILIASInit();
 
 		require_once("Services/Init/classes/class.ilInitialisation.php");
-		\ilInitialisation::initILIAS();
+		ilInitialisation::initILIAS();
 
 		$this->init = true;
 	}
 
 
+	/**
+	 *
+	 */
 	public function tryILIASInitPublic() {
 		$this->prepareILIASInit();
 
@@ -142,6 +151,9 @@ class Handler {
 	}
 
 
+	/**
+	 *
+	 */
 	protected function prepareILIASInit() {
 		$GLOBALS['COOKIE_PATH'] = '/';
 		$_GET["client_id"] = $_COOKIE['ilClientId'];
