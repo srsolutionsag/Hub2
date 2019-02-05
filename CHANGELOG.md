@@ -1,5 +1,8 @@
 # Changelog
 
+## [2.1.0]
+- Some improvments and fixes
+
 ## [2.0.0]
 - Ask for removing data
 - AdHoc feature
