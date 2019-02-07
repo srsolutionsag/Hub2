@@ -96,7 +96,13 @@ class OriginConfig implements IOriginConfig {
 			throw new ConnectionFailedException("Please set connection type to path to use getPath");
 		}
 
-		return $this->get(self::PATH);
+		$path = $this->get(self::PATH);
+
+		if (empty($path)) {
+			throw new ConnectionFailedException("Please set a path to use getPath");
+		}
+
+		return $path;
 	}
 
 
