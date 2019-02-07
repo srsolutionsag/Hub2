@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Origin\Config;
 
+use srag\Plugins\Hub2\Exception\ConnectionFailedException;
+
 /**
  * Interface IOriginConfig
  *
@@ -17,7 +19,7 @@ interface IOriginConfig {
 	const NOTIFICATION_ERRORS = 'notification_errors';
 	const NOTIFICATION_SUMMARY = 'notification_summary';
 	const CONNECTION_TYPE = 'connection_type';
-	const FILE_PATH = 'file_path';
+	const PATH = 'file_path';
 	const SERVER_HOST = 'server_host';
 	const SERVER_PORT = 'server_port';
 	const SERVER_USERNAME = 'server_username';
@@ -26,109 +28,37 @@ interface IOriginConfig {
 	const SERVER_SEARCH_BASE = 'server_search_base';
 	const ACTIVE_PERIOD = 'active_period';
 	const LINKED_ORIGIN_ID = 'linked_origin_id';
-	const CONNECTION_TYPE_FILE = 1;
+	const CONNECTION_TYPE_PATH = 1;
 	const CONNECTION_TYPE_SERVER = 2;
 	const CONNECTION_TYPE_EXTERNAL = 3;
+	const CONNECTION_TYPE_ILIAS_FILE = 4;
 	// Prefix for keys that storing custom config values
 	const CUSTOM_PREFIX = 'custom_';
+	const ILIAS_FILE_REF_ID = "ilias_file_id";
 
 
 	/**
-	 * @return bool
-	 */
-	public function getCheckAmountData();
-
-
-	/**
-	 * @return int
-	 */
-	public function getCheckAmountDataPercentage();
-
-
-	/**
-	 * @return bool
-	 */
-	public function useShortLink();
-
-
-	/**
-	 * @return bool
-	 */
-	public function useShortLinkForcedLogin();
-
-
-	/**
-	 * @return array
-	 */
-	public function getNotificationsErrors();
-
-
-	/**
-	 * @return array
-	 */
-	public function getNotificationsSummary();
-
-
-	/**
-	 * @return int
-	 */
-	public function getConnectionType();
-
-
-	/**
-	 * @return string
-	 */
-	public function getServerHost();
-
-
-	/**
-	 * @return int
-	 */
-	public function getServerPort();
-
-
-	/**
-	 * @return string
-	 */
-	public function getServerUsername();
-
-
-	/**
-	 * @return string
-	 */
-	public function getServerPassword();
-
-
-	/**
-	 * @return string
-	 */
-	public function getServerDatabase();
-
-
-	/**
-	 * @return string
-	 */
-	public function getServerSearchBase();
-
-
-	/**
-	 * @return string
-	 */
-	public function getFilePath();
-
-
-	/**
-	 * @return string
-	 */
-	public function getActivePeriod();
-
-
-	/**
-	 * Get the ID of another origin which has been selected over the configuration GUI
+	 * Returns all the config data as associative array
 	 *
-	 * @return int
+	 * @return array
 	 */
-	public function getLinkedOriginId();
+	public function getData(): array;
+
+
+	/**
+	 * @param array $data
+	 *
+	 * @return $this
+	 */
+	public function setData(array $data);
+
+
+	/**
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
+	public function get(string $key);
 
 
 	/**
@@ -138,21 +68,135 @@ interface IOriginConfig {
 	 *
 	 * @return mixed
 	 */
-	public function getCustom($key);
+	public function getCustom(string $key);
 
 
 	/**
-	 * Returns all the config data as associative array
+	 * @return int
 	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getConnectionType(): int;
+
+
+	/**
+	 * @return string
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getPath(): string;
+
+
+	/**
+	 * @return string
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getServerHost(): string;
+
+
+	/**
+	 * @return int
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getServerPort(): int;
+
+
+	/**
+	 * @return string
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getServerUsername(): string;
+
+
+	/**
+	 * @return string
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getServerPassword(): string;
+
+
+	/**
+	 * @return string
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getServerDatabase(): string;
+
+
+	/**
+	 * @return string
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getServerSearchBase(): string;
+
+
+	/**
+	 * @return int
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getIliasFileRefId(): int;
+
+
+	/**
+	 * @return string
+	 *
+	 * @throws ConnectionFailedException
+	 */
+	public function getIliasFilePath(): string;
+
+
+	/**
+	 * @return string
+	 */
+	public function getActivePeriod(): string;
+
+
+	/**
+	 * @return bool
+	 */
+	public function getCheckAmountData(): bool;
+
+
+	/**
+	 * @return int
+	 */
+	public function getCheckAmountDataPercentage(): int;
+
+
+	/**
+	 * @return bool
+	 */
+	public function useShortLink(): bool;
+
+
+	/**
+	 * @return bool
+	 */
+	public function useShortLinkForcedLogin(): bool;
+
+
+	/**
+	 * Get the ID of another origin which has been selected over the configuration GUI
+	 *
+	 * @return int
+	 */
+	public function getLinkedOriginId(): int;
+
+
+	/**
 	 * @return array
 	 */
-	public function getData();
+	public function getNotificationsSummary(): array;
 
 
 	/**
-	 * @param array $data
-	 *
-	 * @return $this
+	 * @return array
 	 */
-	public function setData(array $data);
+	public function getNotificationsErrors(): array;
 }

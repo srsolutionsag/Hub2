@@ -195,7 +195,7 @@ origin_form_title_edit#:#Edit origin
 origin_form_field_active#:#Sync active
 origin_form_field_class_name#:#PHP class name
 origin_form_field_class_name_info#:#Class file must exist in '%s'.\nAfter saving, Hub will try to automatically create a template for you at this location.
-origin_form_field_conf_type#:#Data source type
+origin_form_field_conf_type#:#Connection type
 origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Database
 origin_form_field_conf_type_db_host#:#Host
@@ -206,9 +206,11 @@ origin_form_field_conf_type_db_search_base#:#Search base
 origin_form_field_conf_type_db_username#:#Login name
 origin_form_field_conf_type_external#:#External
 origin_form_field_conf_type_external_info#:#Fill the hub table with foreign systems.
-origin_form_field_conf_type_file#:#File or directory
-origin_form_field_conf_type_file_info#:#Data is read from a path.
-origin_form_field_conf_type_file_path#:#Paht to file
+origin_form_field_conf_type_path#:#Path
+origin_form_field_conf_type_path_info#:#Data is read from a path.
+origin_form_field_conf_type_path_path#:#Path to a file or a folder
+origin_form_field_conf_type_ilias_file#:#ILIAS file
+origin_form_field_conf_type_ilias_file_info#:#Use the latest file version
 origin_form_field_description#:#Description
 origin_form_field_exec_time#:#Timr of the sync
 origin_form_field_exec_time_info#:#Format: HH:MM \nIf not empty, the origin will only be executed at this specific time\n(if the cron job is running at this time) and ignored otherwise.

@@ -194,7 +194,7 @@ origin_form_title_edit#:#Anbindung bearbeiten
 origin_form_field_active#:#Synchronisation aktiv
 origin_form_field_class_name#:#PHP-Klassenname
 origin_form_field_class_name_info#:#Die Klassendatei muss in '%s' vorhanden sein.\nNach dem Speichern versucht Hub, automatisch eine Vorlage für Sie an diesem Ort zu erstellen.
-origin_form_field_conf_type#:#Datenquelle-Typ
+origin_form_field_conf_type#:#Verbindungs-Typ
 origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Datenbank
 origin_form_field_conf_type_db_host#:#Host
@@ -205,9 +205,11 @@ origin_form_field_conf_type_db_search_base#:#Such-Base
 origin_form_field_conf_type_db_username#:#Login-Name
 origin_form_field_conf_type_external#:#Extern
 origin_form_field_conf_type_external_info#:#Füllen der Hub-Tabelle durch Fremdsystem.
-origin_form_field_conf_type_file#:#Datei oder Verzeichnis
-origin_form_field_conf_type_file_info#:#Daten werden aus einem Pfad gelesen.
-origin_form_field_conf_type_file_path#:#Pfad zur Datei
+origin_form_field_conf_type_path#:#Pfad
+origin_form_field_conf_type_path_info#:#Daten werden aus einem Pfad gelesen.
+origin_form_field_conf_type_path_path#:#Pfad zu einer Datei oder einem Ordner
+origin_form_field_conf_type_ilias_file#:#ILIAS-Datei
+origin_form_field_conf_type_ilias_file_info#:#Verwendet die neuste Datei-Version
 origin_form_field_description#:#Beschreibung
 origin_form_field_exec_time#:#Zeitpunkt der Synchronisation
 origin_form_field_exec_time_info#:#Format: HH:MM \nFalls nicht leer, wird die Anbindung nur zu dieser bestimmten Zeit \n ausgeführt (wenn der Cronjob zu dieser Zeit durchläuft) und ansonsten ignoriert.

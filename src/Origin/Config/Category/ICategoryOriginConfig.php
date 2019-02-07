@@ -23,7 +23,7 @@ interface ICategoryOriginConfig extends IOriginConfig {
 	 *
 	 * @return int
 	 */
-	public function getParentRefIdIfNoParentIdFound();
+	public function getParentRefIdIfNoParentIdFound(): int;
 
 
 	/**
@@ -32,7 +32,7 @@ interface ICategoryOriginConfig extends IOriginConfig {
 	 * there is no "fallback category" found with the ext-ID returned here, the category
 	 * will be created directly in the repository (refId = 1)
 	 *
-	 * @return mixed
+	 * @return int
 	 */
-	public function getExternalParentIdIfNoParentIdFound();
+	public function getExternalParentIdIfNoParentIdFound(): int;
 }

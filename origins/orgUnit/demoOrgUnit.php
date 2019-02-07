@@ -30,9 +30,9 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	 * @return bool
 	 */
 	public function connect(): bool {
-		$csv_file = $this->config()->getFilePath();
+		$csv_file = $this->config()->getPath();
 
-		if ($this->config()->getConnectionType() != IOriginConfig::CONNECTION_TYPE_FILE || !file_exists($csv_file)) {
+		if ($this->config()->getConnectionType() != IOriginConfig::CONNECTION_TYPE_PATH || !file_exists($csv_file)) {
 			// CSV file not found!
 			throw new ConnectionFailedException("The csv file $csv_file does not exists!");
 		}
@@ -53,7 +53,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	 */
 	public function parseData(): int {
 		// Parse csv file
-		$csv_file = $this->config()->getFilePath();
+		$csv_file = $this->config()->getPath();
 
 		$csv = new ilCSVReader();
 		$csv->setSeparator(",");

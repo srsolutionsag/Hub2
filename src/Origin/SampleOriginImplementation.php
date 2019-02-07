@@ -25,7 +25,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation {
 	 * @return bool
 	 */
 	public function connect(): bool {
-		//		$file = $this->config()->getFilePath();
+		//		$file = $this->config()->getPath();
 		//		if (!is_file($file)) {
 		//			throw new ConnectionFailedException("Data file does not exist");
 		//		}
