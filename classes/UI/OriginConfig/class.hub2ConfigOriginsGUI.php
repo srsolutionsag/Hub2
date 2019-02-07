@@ -299,7 +299,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI {
 	protected function runOriginSync(bool $force_update = false)/*: void*/ {
 		$origin = $this->getOrigin(intval(filter_input(INPUT_GET, self::ORIGIN_ID)));
 
-		$this->execute([ $origin ]);
+		$this->execute([ $origin ], $force_update);
 	}
 
 
