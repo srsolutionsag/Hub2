@@ -190,7 +190,7 @@ class OriginConfig implements IOriginConfig {
 			throw new ConnectionFailedException("Please set connection type to ILIAS file to use getIliasFileRefId");
 		}
 
-		$ilias_file_ref_id = intval($this->getIliasFileRefId());
+		$ilias_file_ref_id = intval($this->get(self::ILIAS_FILE_REF_ID));
 
 		if (empty($ilias_file_ref_id)) {
 			throw new ConnectionFailedException("Please select an ILIAS file to use getIliasFileRefId");
