@@ -102,6 +102,10 @@ class OriginConfig implements IOriginConfig {
 			throw new ConnectionFailedException("Please set a path to use getPath");
 		}
 
+		if (!file_exists($path)) {
+			throw new ConnectionFailedException("Please set an exists path to use getPath");
+		}
+
 		return $path;
 	}
 
