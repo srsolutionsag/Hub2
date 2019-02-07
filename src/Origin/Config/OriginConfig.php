@@ -103,7 +103,7 @@ class OriginConfig implements IOriginConfig {
 		}
 
 		if (!file_exists($path)) {
-			throw new ConnectionFailedException("Please set an exists path to use getPath");
+			throw new ConnectionFailedException("The path $path does not exists!");
 		}
 
 		return $path;
@@ -187,10 +187,16 @@ class OriginConfig implements IOriginConfig {
 	 */
 	public function getIliasFileRefId(): int {
 		if ($this->getConnectionType() !== self::CONNECTION_TYPE_ILIAS_FILE) {
-			throw new ConnectionFailedException("Please set connection type to ilias file to use getIliasFileRefId");
+			throw new ConnectionFailedException("Please set connection type to ILIAS file to use getIliasFileRefId");
 		}
 
-		return intval($this->get(self::ILIAS_FILE_REF_ID));
+		$ilias_file_ref_id = intval($this->getIliasFileRefId());
+
+		if (empty($ilias_file_ref_id)) {
+			throw new ConnectionFailedException("Please select an ILIAS file to use getIliasFileRefId");
+		}
+
+		return $ilias_file_ref_id;
 	}
 
 
@@ -200,13 +206,15 @@ class OriginConfig implements IOriginConfig {
 	public function getIliasFilePath(): string {
 		$ilias_file_ref_id = $this->getIliasFileRefId();
 
-		if (empty($ilias_file_ref_id)) {
-			throw new ConnectionFailedException("Please select an ilias file to use getIliasFilePath");
+		$ilias_file = new ilObjFile($ilias_file_ref_id, true);
+
+		$path = $ilias_file->getFile();
+
+		if (!file_exists($path)) {
+			throw new ConnectionFailedException("The ILIAS file $path does not exists!");
 		}
 
-		$ilias_file = new ilObjFile($ilias_file_ref_id);
-
-		return $ilias_file->getFile();
+		return $path;
 	}
 
 
