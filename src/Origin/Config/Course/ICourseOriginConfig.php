@@ -22,5 +22,5 @@ interface ICourseOriginConfig extends IOriginConfig {
 	 *
 	 * @return int
 	 */
-	public function getParentRefIdIfNoParentIdFound();
+	public function getParentRefIdIfNoParentIdFound(): int;
 }

@@ -17,6 +17,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @ilCtrl_calls      hub2MainGUI: hub2ConfigOriginsGUI
  * @ilCtrl_calls      hub2MainGUI: hub2ConfigGUI
  * @ilCtrl_calls      hub2MainGUI: hub2CustomViewGUI
+ * @ilCtrl_Calls      hub2MainGUI: ilPropertyFormGUI
  */
 class hub2MainGUI {
 

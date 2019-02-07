@@ -33,6 +33,6 @@ class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getRefIdIfNoParentId(): int {
-		return intval($this->data[self::REF_ID_IF_NO_PARENT_ID]);
+		return intval($this->get(self::REF_ID_IF_NO_PARENT_ID));
 	}
 }

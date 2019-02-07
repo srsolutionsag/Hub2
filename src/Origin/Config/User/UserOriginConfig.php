@@ -29,15 +29,15 @@ class UserOriginConfig extends OriginConfig implements IUserOriginConfig {
 	//	/**
 	//	 * @inheritdoc
 	//	 */
-	//	public function getSyncField() {
-	//		return $this->data['sync_field'];
+	//	public function getSyncField():int {
+	//		return intval($this->get(IUserOriginConfig::SYNC_FIELD_NONE));
 	//	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function getILIASLoginField() {
-		return $this->data[self::LOGIN_FIELD];
+	public function getILIASLoginField(): int {
+		return intval($this->get(self::LOGIN_FIELD));
 	}
 
 

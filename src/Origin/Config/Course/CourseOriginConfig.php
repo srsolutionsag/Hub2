@@ -29,7 +29,7 @@ class CourseOriginConfig extends OriginConfig implements ICourseOriginConfig {
 	/**
 	 * @inheritdoc
 	 */
-	public function getParentRefIdIfNoParentIdFound() {
-		return $this->data[self::REF_ID_NO_PARENT_ID_FOUND];
+	public function getParentRefIdIfNoParentIdFound(): int {
+		return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
 	}
 }

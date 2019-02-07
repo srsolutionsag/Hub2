@@ -25,12 +25,12 @@ interface IUserOriginConfig extends IOriginConfig {
 	/**
 	 * @return int
 	 */
-	//	public function getSyncField();
+	//	public function getSyncField():int;
 
 	/**
 	 * @return int
 	 */
-	public function getILIASLoginField();
+	public function getILIASLoginField(): int;
 
 
 	/**

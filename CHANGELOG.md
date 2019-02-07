@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.2.0]
+- Add ILIAS file as a origin connection type
+- Improves config getters
+
 ## [2.1.0]
 - Some improvments and fixes
 

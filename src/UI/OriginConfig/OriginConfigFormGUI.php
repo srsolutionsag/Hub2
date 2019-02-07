@@ -12,6 +12,7 @@ use ilNumberInputGUI;
 use ilPropertyFormGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
+use ilRepositorySelector2InputGUI;
 use ilSelectInputGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
@@ -33,10 +34,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 /**
  * Class OriginConfigFormGUI
  *
- * @package srag\Plugins\Hub2\UI\OriginConfig
+ * @package      srag\Plugins\Hub2\UI\OriginConfig
  *
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @author       Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author       Fabian Schmid <fs@studer-raimann.ch>
  */
 class OriginConfigFormGUI extends ilPropertyFormGUI {
 
@@ -173,11 +174,11 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 		$ro = new ilRadioGroupInputGUI(self::plugin()->translate('origin_form_field_conf_type'), $this->conf(IOriginConfig::CONNECTION_TYPE));
 		$ro->setValue($this->origin->config()->getConnectionType());
 		{
-			$db = new ilRadioOption(self::plugin()->translate('origin_form_field_conf_type_file'), IOriginConfig::CONNECTION_TYPE_FILE, self::plugin()
-				->translate('origin_form_field_conf_type_file_info'));
+			$db = new ilRadioOption(self::plugin()->translate('origin_form_field_conf_type_path'), IOriginConfig::CONNECTION_TYPE_PATH, self::plugin()
+				->translate('origin_form_field_conf_type_path_info'));
 			{
-				$te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_file_path'), $this->conf(IOriginConfig::FILE_PATH));
-				$te->setValue($this->origin->config()->getFilePath());
+				$te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_path_path'), $this->conf(IOriginConfig::PATH));
+				$te->setValue($this->origin->config()->get(IOriginConfig::PATH));
 				$db->addSubItem($te);
 			}
 			$ro->addOption($db);
@@ -186,26 +187,26 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 				->translate('origin_form_field_conf_type_db_info'));
 			{
 				$te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_db_host'), $this->conf(IOriginConfig::SERVER_HOST));
-				$te->setValue($this->origin->config()->getServerHost());
+				$te->setValue($this->origin->config()->get(IOriginConfig::SERVER_HOST));
 				$file->addSubItem($te);
 				$te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_db_port'), $this->conf(IOriginConfig::SERVER_PORT));
-				$te->setValue($this->origin->config()->getServerPort());
+				$te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PORT));
 				$file->addSubItem($te);
 				$te = new ilTextInputGUI(self::plugin()
 					->translate('origin_form_field_conf_type_db_username'), $this->conf(IOriginConfig::SERVER_USERNAME));
-				$te->setValue($this->origin->config()->getServerUsername());
+				$te->setValue($this->origin->config()->get(IOriginConfig::SERVER_USERNAME));
 				$file->addSubItem($te);
 				$te = new ilTextInputGUI(self::plugin()
 					->translate('origin_form_field_conf_type_db_password'), $this->conf(IOriginConfig::SERVER_PASSWORD));
-				$te->setValue($this->origin->config()->getServerPassword());
+				$te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
 				$file->addSubItem($te);
 				$te = new ilTextInputGUI(self::plugin()
 					->translate('origin_form_field_conf_type_db_database'), $this->conf(IOriginConfig::SERVER_DATABASE));
-				$te->setValue($this->origin->config()->getServerDatabase());
+				$te->setValue($this->origin->config()->get(IOriginConfig::SERVER_DATABASE));
 				$file->addSubItem($te);
 				$te = new ilTextInputGUI(self::plugin()
 					->translate('origin_form_field_conf_type_db_search_base'), $this->conf(IOriginConfig::SERVER_SEARCH_BASE));
-				$te->setValue($this->origin->config()->getServerSearchBase());
+				$te->setValue($this->origin->config()->get(IOriginConfig::SERVER_SEARCH_BASE));
 				$file->addSubItem($te);
 			}
 			$ro->addOption($file);
@@ -213,6 +214,16 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 				->translate('origin_form_field_conf_type_external'), IOriginConfig::CONNECTION_TYPE_EXTERNAL, self::plugin()
 				->translate('origin_form_field_conf_type_external_info'));
 			$ro->addOption($external);
+
+			$ilias_file = new ilRadioOption(self::plugin()
+				->translate('origin_form_field_conf_type_ilias_file'), IOriginConfig::CONNECTION_TYPE_ILIAS_FILE, self::plugin()
+				->translate('origin_form_field_conf_type_ilias_file_info'));
+			$ilias_file_selector = new ilRepositorySelector2InputGUI(self::plugin()
+				->translate("origin_form_field_conf_type_ilias_file"), $this->conf(IOriginConfig::ILIAS_FILE_REF_ID));
+			$ilias_file_selector->getExplorerGUI()->setSelectableTypes([ "file" ]);
+			$ilias_file_selector->setValue($this->origin->config()->get(IOriginConfig::ILIAS_FILE_REF_ID));
+			$ilias_file->addSubItem($ilias_file_selector);
+			$ro->addOption($ilias_file);
 		}
 		$this->addItem($ro);
 	}
