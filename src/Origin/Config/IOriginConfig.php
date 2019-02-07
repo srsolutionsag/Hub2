@@ -34,7 +34,7 @@ interface IOriginConfig {
 	const CONNECTION_TYPE_ILIAS_FILE = 4;
 	// Prefix for keys that storing custom config values
 	const CUSTOM_PREFIX = 'custom_';
-	const ILIAS_FILE_REF_ID = "ilias_file_id";
+	const ILIAS_FILE_REF_ID = "ilias_file_ref_id";
 
 
 	/**
