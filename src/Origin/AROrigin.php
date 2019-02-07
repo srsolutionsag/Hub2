@@ -210,6 +210,8 @@ abstract class AROrigin extends ActiveRecord implements IOrigin {
 			$origins = (new OriginFactory())->getAll();
 			if (count($origins) > 0) {
 				$this->sort = (end($origins)->getSort() + 1);
+			} else {
+				$this->sort = 1;
 			}
 		}
 
