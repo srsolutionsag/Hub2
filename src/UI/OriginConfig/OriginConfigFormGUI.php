@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\UI\OriginConfig;
 
 use hub2ConfigOriginsGUI;
+use hub2MainGUI;
 use ilCheckboxInputGUI;
 use ilFormSectionHeaderGUI;
 use ilHiddenInputGUI;
@@ -218,14 +219,27 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 			$ilias_file = new ilRadioOption(self::plugin()
 				->translate('origin_form_field_conf_type_ilias_file'), IOriginConfig::CONNECTION_TYPE_ILIAS_FILE, self::plugin()
 				->translate('origin_form_field_conf_type_ilias_file_info'));
-			$ilias_file_selector = new ilRepositorySelector2InputGUI(self::plugin()
-				->translate("origin_form_field_conf_type_ilias_file"), $this->conf(IOriginConfig::ILIAS_FILE_REF_ID));
-			$ilias_file_selector->getExplorerGUI()->setSelectableTypes([ "file" ]);
-			$ilias_file_selector->setValue($this->origin->config()->get(IOriginConfig::ILIAS_FILE_REF_ID));
-			$ilias_file->addSubItem($ilias_file_selector);
+			$ilias_file->addSubItem($this->getILIASFileRepositorySelector());
 			$ro->addOption($ilias_file);
 		}
 		$this->addItem($ro);
+	}
+
+
+	/**
+	 * @return ilRepositorySelector2InputGUI
+	 */
+	public function getILIASFileRepositorySelector(): ilRepositorySelector2InputGUI {
+		self::dic()->ctrl()->setParameterByClass(hub2MainGUI::class,hub2ConfigOriginsGUI::ORIGIN_ID,$this->origin->getId());
+		
+		$ilias_file_selector = new ilRepositorySelector2InputGUI(self::plugin()
+			->translate("origin_form_field_conf_type_ilias_file"), $this->conf(IOriginConfig::ILIAS_FILE_REF_ID));
+
+		$ilias_file_selector->getExplorerGUI()->setSelectableTypes([ "file" ]);
+
+		$ilias_file_selector->setValue($this->origin->config()->get(IOriginConfig::ILIAS_FILE_REF_ID));
+
+		return $ilias_file_selector;
 	}
 
 

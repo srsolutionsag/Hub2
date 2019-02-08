@@ -4,6 +4,9 @@
 
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
+use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Origin\OriginRepository;
+use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -96,5 +99,14 @@ class hub2MainGUI {
 	 */
 	protected function cancel()/*: void*/ {
 		$this->index();
+	}
+
+
+	/**
+	 *
+	 */
+	protected function handleExplorerCommand()/*: void*/ {
+		(new OriginConfigFormGUI(new hub2ConfigOriginsGUI(), new OriginRepository(), (new OriginFactory())->getById(intval(filter_input(INPUT_GET, hub2ConfigOriginsGUI::ORIGIN_ID)))))->getILIASFileRepositorySelector()
+			->handleExplorerCommand();
 	}
 }
