@@ -311,7 +311,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @var string
 	 */
-	protected $appointementsColor = NULL;
+	protected $appointementsColor = '';
 
 
 	/**
