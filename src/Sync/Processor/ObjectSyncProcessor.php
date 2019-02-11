@@ -49,7 +49,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 */
 	protected $implementation;
 	/**
-	 * @var ilObject|null
+	 * @var ilObject|FakeIliasObject|null
 	 */
 	protected $current_ilias_object = NULL;
 
@@ -247,9 +247,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 *
 	 * @param IDataTransferObject $dto
 	 *
-	 * @return ilObject
+	 * @return void
+	 *
+	 * @throws HubException
 	 */
-	protected abstract function handleCreate(IDataTransferObject $dto);
+	protected abstract function handleCreate(IDataTransferObject $dto)/*: void*/
+	;
 
 
 	/**
@@ -260,18 +263,24 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @param IDataTransferObject $dto
 	 * @param int                 $iliasId
 	 *
-	 * @return ilObject
+	 * @return void
+	 *
+	 * @throws HubException
 	 */
-	protected abstract function handleUpdate(IDataTransferObject $dto, $iliasId);
+	protected abstract function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
+	;
 
 
 	/**
 	 * Delete the corresponding ILIAS object.
 	 * Return the deleted ILIAS object or null if the object was not found in ILIAS.
 	 *
-	 * @param int $iliasId
+	 * @param int $ilias_id
 	 *
-	 * @return ilObject
+	 * @return void
+	 *
+	 * @throws HubException
 	 */
-	protected abstract function handleDelete($iliasId);
+	protected abstract function handleDelete($ilias_id)/*: void*/
+	;
 }

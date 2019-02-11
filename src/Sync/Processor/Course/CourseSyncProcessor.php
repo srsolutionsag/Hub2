@@ -100,9 +100,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CourseDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var CourseDTO $dto */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
 		// Check if we should create some dependence categories
@@ -248,7 +249,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$wizard_options->disableSOAP();
 		$wizard_options->read();
 
-		require_once './webservice/soap/include/inc.soap_functions.php';
+		require_once 'webservice/soap/include/inc.soap_functions.php';
 		$parent_ref_id = ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
 
 		return $parent_ref_id;
@@ -336,9 +337,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CourseDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var CourseDTO $dto */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
 		if ($ilObjCourse === NULL) {
 			return;
@@ -415,7 +417,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
+	protected function handleDelete($ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
 		if ($ilObjCourse === NULL) {
 			return;

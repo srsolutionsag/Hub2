@@ -105,9 +105,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var GroupDTO $dto */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		$this->current_ilias_object = $ilObjGroup = new ilObjGroup();
 		$ilObjGroup->setImportId($this->getImportId($dto));
 		// Find the refId under which this group should be created
@@ -154,9 +155,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var GroupDTO $dto */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
 		if ($ilObjGroup === NULL) {
 			return;
@@ -237,7 +239,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
+	protected function handleDelete($ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
 		if ($ilObjGroup === NULL) {
 			return;

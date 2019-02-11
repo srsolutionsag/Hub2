@@ -78,8 +78,12 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	}
 
 
-	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var SessionDTO $dto */
+	/**
+	 * @inheritdoc
+	 *
+	 * @param SessionDTO $dto
+	 */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		$this->current_ilias_object = $ilObjSession = new ilObjSession();
 		$ilObjSession->setImportId($this->getImportId($dto));
 
@@ -110,16 +114,15 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		 */
 		$ilObjSession->getFirstAppointment()->setSessionId($ilObjSession->getId());
 		$ilObjSession->getFirstAppointment()->create();
-
-		return $ilObjSession;
 	}
 
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param SessionDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var SessionDTO $dto */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
 		if ($ilObjSession === NULL) {
 			return;
@@ -145,14 +148,14 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
-		$ilObjSession = $this->findILIASObject($ilias_id);
+	protected function handleDelete($ilias_id)/*: void*/ {
+		$this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
 		if ($ilObjSession === NULL) {
-			return NULL;
+			return;
 		}
 
 		if ($this->props->get(SessionProperties::DELETE_MODE) == SessionProperties::DELETE_MODE_NONE) {
-			return $ilObjSession;
+			return;
 		}
 		switch ($this->props->get(SessionProperties::DELETE_MODE)) {
 			case SessionProperties::DELETE_MODE_DELETE:
@@ -162,8 +165,6 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 				self::dic()->tree()->moveToTrash($ilObjSession->getRefId(), true);
 				break;
 		}
-
-		return $ilObjSession;
 	}
 
 

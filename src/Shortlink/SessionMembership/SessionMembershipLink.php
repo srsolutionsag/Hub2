@@ -10,7 +10,7 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  *
  *
  * @package srag\Plugins\Hub2\Shortlink\SessionMembership
- * @author Timon Amstutz <timon.amstutz@ilub.unibe.ch>
+ * @author  Timon Amstutz <timon.amstutz@ilub.unibe.ch>
  */
 class SessionMembershipLink extends AbstractRepositoryMembershipLink implements IObjectLink {
 

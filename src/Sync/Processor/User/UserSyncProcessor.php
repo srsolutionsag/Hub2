@@ -84,8 +84,12 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	}
 
 
-	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var UserDTO $dto */
+	/**
+	 * @inheritdoc
+	 *
+	 * @param UserDTO $dto
+	 */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		$this->current_ilias_object = $ilObjUser = new ilObjUser();
 		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
 		$ilObjUser->setDescription($dto->getEmail());
@@ -131,13 +135,16 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param UserDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var UserDTO $dto */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === NULL) {
 			// Recreate deleted users
 			$this->handleCreate($dto);
+
+			return;
 		}
 		$ilObjUser->setImportId($this->getImportId($dto));
 		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
@@ -205,7 +212,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
+	protected function handleDelete($ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === NULL) {
 			return;

@@ -230,8 +230,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI {
 	 * @return ilRepositorySelector2InputGUI
 	 */
 	public function getILIASFileRepositorySelector(): ilRepositorySelector2InputGUI {
-		self::dic()->ctrl()->setParameterByClass(hub2MainGUI::class,hub2ConfigOriginsGUI::ORIGIN_ID,$this->origin->getId());
-		
+		self::dic()->ctrl()->setParameterByClass(hub2MainGUI::class, hub2ConfigOriginsGUI::ORIGIN_ID, $this->origin->getId());
+
 		$ilias_file_selector = new ilRepositorySelector2InputGUI(self::plugin()
 			->translate("origin_form_field_conf_type_ilias_file"), $this->conf(IOriginConfig::ILIAS_FILE_REF_ID));
 

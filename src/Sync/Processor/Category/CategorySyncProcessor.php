@@ -71,9 +71,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CategoryDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var CategoryDTO $dto */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		$this->current_ilias_object = $ilObjCategory = new ilObjCategory();
 		$ilObjCategory->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
@@ -105,9 +106,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CategoryDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var CategoryDTO $dto */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === NULL) {
 			return;
@@ -142,7 +144,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
+	protected function handleDelete($ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === NULL) {
 			return;

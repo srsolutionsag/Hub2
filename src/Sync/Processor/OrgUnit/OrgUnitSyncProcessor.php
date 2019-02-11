@@ -138,11 +138,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 
 	/**
-	 * @param IOrgUnitDTO $dto
+	 * @inheritdoc
 	 *
-	 * @throws HubException
+	 * @param IOrgUnitDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		$this->current_ilias_object = new ilObjOrgUnit();
 
 		$this->current_ilias_object->setTitle($dto->getTitle());
@@ -166,12 +166,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 
 	/**
-	 * @param IOrgUnitDTO $dto
-	 * @param int         $ilias_id
+	 * @inheritdoc
 	 *
-	 * @throws HubException
+	 * @param IOrgUnitDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
 
 		if (empty($this->current_ilias_object)) {
@@ -204,9 +203,9 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 
 	/**
-	 * @param int $ilias_id
+	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
+	protected function handleDelete($ilias_id)/*: void*/ {
 		$this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
 
 		if (empty($this->current_ilias_object)) {

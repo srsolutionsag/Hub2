@@ -51,11 +51,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CourseMembershipDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
-		/**
-		 * @var CourseMembershipDTO $dto
-		 */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		$ilias_course_ref_id = $this->determineCourseRefId($dto);
 		$dto->getCourseId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
@@ -74,11 +73,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CourseMembershipDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/**
-		 * @var CourseMembershipDTO $dto
-		 */
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 		$ilias_course_ref_id = $obj->getContainerIdIlias();
 		$user_id = $dto->getUserId();
@@ -109,7 +107,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
+	protected function handleDelete($ilias_id)/*: void*/ {
 		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		if ($this->props->get(CourseMembershipProperties::DELETE_MODE) == CourseMembershipProperties::DELETE_MODE_NONE) {
