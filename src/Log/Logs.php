@@ -191,7 +191,7 @@ final class Logs {
 		}
 
 		if (!empty($origin_object_type)) {
-			$wheres[] = 'origin_object_type=' . self::dic()->database()->quote($origin_object_type, "integer");
+			$wheres[] = 'origin_object_type=' . self::dic()->database()->quote($origin_object_type, "string");
 		}
 
 		if (!empty($object_ext_id)) {

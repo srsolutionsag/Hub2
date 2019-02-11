@@ -226,7 +226,7 @@ class LogsTableGUI extends TableGUI {
 			],
 			"additional_data" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
-			],
+			]
 		];
 	}
 
