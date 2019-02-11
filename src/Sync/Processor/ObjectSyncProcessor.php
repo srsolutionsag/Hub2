@@ -206,11 +206,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	/**
 	 * @param ilObject|FakeIliasObject|null $object
 	 *
-	 * @return int|string
+	 * @return int|null
 	 */
 	protected function getILIASId($object) {
 		if ($object === NULL) {
-			return "";
+			return NULL;
 		}
 
 		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
