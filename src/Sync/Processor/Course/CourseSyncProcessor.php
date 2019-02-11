@@ -408,7 +408,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto) {
 		global $DIC;
 
-		if ($dto->getAppointementsColor()) {
+		if (!empty($dto->getAppointementsColor())) {
 			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjCourse->getId());
 			/**
 			 * @var $cal_cat ilCalendarCategory
