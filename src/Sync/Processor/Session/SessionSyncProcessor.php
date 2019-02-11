@@ -80,7 +80,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 	protected function handleCreate(IDataTransferObject $dto) {
 		/** @var SessionDTO $dto */
-		$ilObjSession = new ilObjSession();
+		$this->current_ilias_object = $ilObjSession = new ilObjSession();
 		$ilObjSession->setImportId($this->getImportId($dto));
 
 		// Properties
@@ -120,9 +120,9 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/** @var SessionDTO $dto */
-		$ilObjSession = $this->findILIASObject($ilias_id);
+		$this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
 		if ($ilObjSession === NULL) {
-			return NULL;
+			return;
 		}
 
 		foreach (self::getProperties() as $property) {
@@ -139,8 +139,6 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession, true);
 		$ilObjSession->update();
 		$ilObjSession->getFirstAppointment()->update();
-
-		return $ilObjSession;
 	}
 
 

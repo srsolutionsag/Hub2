@@ -121,9 +121,9 @@ class Handler {
 	public function tryILIASInitPublic() {
 		$this->prepareILIASInit();
 
-		include_once './Services/Context/classes/class.ilContext.php';
+		require_once 'Services/Context/classes/class.ilContext.php';
 		ilContext::init(ilContext::CONTEXT_WAC);
-		require_once("Services/Init/classes/class.ilInitialisation.php");
+		require_once "Services/Init/classes/class.ilInitialisation.php";
 		ilInitialisation::initILIAS();
 		$ilAuthSession = self::dic()->authSession();
 		$ilAuthSession->init();

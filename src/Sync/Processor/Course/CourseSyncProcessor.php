@@ -102,8 +102,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @inheritdoc
 	 */
 	protected function handleCreate(IDataTransferObject $dto) {
-		global $DIC;
-
 		/** @var CourseDTO $dto */
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
@@ -117,10 +115,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 					. $template_id . ' does not exist in ILIAS');
 			}
 			$return = $this->cloneAllObject($parentRefId, $template_id, $this->getCloneOptions($template_id));
-			$ilObjCourse = new ilObjCourse($return);
+			$this->current_ilias_object = $ilObjCourse = new ilObjCourse($return);
 		} else {
 			// create new one
-			$ilObjCourse = new ilObjCourse();
+			$this->current_ilias_object = $ilObjCourse = new ilObjCourse();
 			$ilObjCourse->setImportId($this->getImportId($dto));
 			$ilObjCourse->create();
 			$ilObjCourse->createReference();
@@ -166,8 +164,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$this->handleOrdering($dto, $ilObjCourse);
 
 		$this->handleAppointementsColor($ilObjCourse, $dto);
-
-		return $ilObjCourse;
 	}
 
 
@@ -186,7 +182,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 				break;
 			case ilContainer::SORT_MANUAL:
 				/**
-				 * @Todo set order direction for manual sorting
+				 * TODO: set order direction for manual sorting
 				 */
 				break;
 		}
@@ -252,7 +248,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$wizard_options->disableSOAP();
 		$wizard_options->read();
 
-		include_once('./webservice/soap/include/inc.soap_functions.php');
+		require_once './webservice/soap/include/inc.soap_functions.php';
 		$parent_ref_id = ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
 
 		return $parent_ref_id;
@@ -343,9 +339,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/** @var CourseDTO $dto */
-		$ilObjCourse = $this->findILIASCourse($ilias_id);
+		$this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
 		if ($ilObjCourse === NULL) {
-			return NULL;
+			return;
 		}
 		// Update some properties if they should be updated depending on the origin config
 		foreach (self::getProperties() as $property) {
@@ -396,8 +392,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		}
 
 		$ilObjCourse->update();
-
-		return $ilObjCourse;
 	}
 
 
@@ -406,10 +400,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @param CourseDTO   $dto
 	 */
 	protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto) {
-		global $DIC;
-
 		if (!empty($dto->getAppointementsColor())) {
-			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjCourse->getId());
+			self::dic()->objDataCache()->deleteCachedEntry($ilObjCourse->getId());
 			/**
 			 * @var $cal_cat ilCalendarCategory
 			 */
@@ -424,12 +416,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id) {
-		$ilObjCourse = $this->findILIASCourse($ilias_id);
+		$this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
 		if ($ilObjCourse === NULL) {
-			return NULL;
+			return;
 		}
 		if ($this->props->get(CourseProperties::DELETE_MODE) == CourseProperties::DELETE_MODE_NONE) {
-			return $ilObjCourse;
+			return;
 		}
 		switch ($this->props->get(CourseProperties::DELETE_MODE)) {
 			case CourseProperties::DELETE_MODE_OFFLINE:
@@ -451,8 +443,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 				}
 				break;
 		}
-
-		return $ilObjCourse;
 	}
 
 

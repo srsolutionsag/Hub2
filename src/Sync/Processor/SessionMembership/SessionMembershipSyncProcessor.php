@@ -72,7 +72,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		$this->handleMembership($ilObjSession, $dto);
 		$this->handleContact($ilObjSession, $dto);
 
-		return new FakeIliasMembershipObject($session_ref_id, $dto->getUserId());
+		$this->current_ilias_object = new FakeIliasMembershipObject($session_ref_id, $dto->getUserId());
 	}
 
 
@@ -81,7 +81,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
 		/** @var SessionMembershipDTO $dto */
-		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		$ilObjSession = $this->findILIASObject($obj->getContainerIdIlias());
 		$this->handleMembership($ilObjSession, $dto);
@@ -93,8 +93,6 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		if ($this->props->updateDTOProperty("isContact")) {
 			$this->handleContact($ilObjSession, $dto);
 		}
-
-		return $obj;
 	}
 
 
@@ -102,11 +100,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id) {
-		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 		$ilObjSession = $this->findILIASObject($obj->getContainerIdIlias());
 		$this->removeMembership($ilObjSession, $obj->getUserIdIlias());
-
-		return $obj;
 	}
 
 
@@ -199,8 +195,6 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 	 * @throws HubException
 	 */
 	protected function handleContact(ilObjSession $ilObjSession, SessionMembershipDTO $dto) {
-		global $DIC;
-
 		/**
 		 * @var ilSessionParticipants $ilSessionParticipants
 		 */
@@ -224,9 +218,10 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 		 * $ilSessionParticipants->getEventParticipants()->updateUser();
 		 */
 		$event_id = $ilSessionParticipants->getEventParticipants()->getEventId();
-		$query = "UPDATE event_participants " . "SET contact = " . $DIC->database()->quote($dto->isContact(), 'integer') . " " . "WHERE event_id = "
-			. $DIC->database()->quote($event_id, 'integer') . " " . "AND usr_id = " . $DIC->database()->quote($user_id, 'integer') . " ";
-		$DIC->database()->manipulate($query);
+		$query = "UPDATE event_participants " . "SET contact = " . self::dic()->database()->quote($dto->isContact(), 'integer') . " "
+			. "WHERE event_id = " . self::dic()->database()->quote($event_id, 'integer') . " " . "AND usr_id = " . self::dic()->database()
+				->quote($user_id, 'integer') . " ";
+		self::dic()->database()->manipulate($query);
 	}
 
 

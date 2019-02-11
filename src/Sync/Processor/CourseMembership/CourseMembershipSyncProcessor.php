@@ -60,7 +60,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		$dto->getCourseId();
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
-			return NULL;
+			return;
 		}
 
 		$user_id = $dto->getUserId();
@@ -68,7 +68,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		$membership_obj->add($user_id, $this->mapRole($dto));
 		$membership_obj->updateContact($user_id, $dto->isContact());
 
-		return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
+		$this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 	}
 
 
@@ -79,16 +79,18 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		/**
 		 * @var CourseMembershipDTO $dto
 		 */
-		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 		$ilias_course_ref_id = $obj->getContainerIdIlias();
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
-			return new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
+			$this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
+
+			return;
 		}
 
 		$course = $this->findILIASCourse($ilias_course_ref_id);
 		if (!$course) {
-			return NULL;
+			return;
 		}
 
 		$membership_obj = $course->getMembersObject();
@@ -101,8 +103,6 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		$obj->setUserIdIlias($dto->getUserId());
 		$obj->setContainerIdIlias($course->getRefId());
 		$obj->initId();
-
-		return $obj;
 	}
 
 
@@ -110,16 +110,14 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id) {
-		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		if ($this->props->get(CourseMembershipProperties::DELETE_MODE) == CourseMembershipProperties::DELETE_MODE_NONE) {
-			return $obj;
+			return;
 		}
 
 		$course = $this->findILIASCourse($obj->getContainerIdIlias());
 		$course->getMembersObject()->delete($obj->getUserIdIlias());
-
-		return $obj;
 	}
 
 
