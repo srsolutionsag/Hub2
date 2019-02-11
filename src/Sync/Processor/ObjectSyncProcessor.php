@@ -117,6 +117,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				try {
 					$this->handleCreate($dto);
 				} catch (Throwable $ex) {
+					// Store new possible ilias id on exception
 					$object->setILIASId($this->getILIASId($this->current_ilias_object));
 
 					throw $ex;
@@ -147,6 +148,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 					try {
 						$this->handleUpdate($dto, $object->getILIASId());
 					} catch (Throwable $ex) {
+						// Store new possible ilias id on exception
 						$object->setILIASId($this->getILIASId($this->current_ilias_object));
 
 						throw $ex;
