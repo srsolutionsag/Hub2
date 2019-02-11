@@ -52,6 +52,8 @@ class OriginSync implements IOriginSync {
 	protected $processor;
 	/**
 	 * @var IObjectStatusTransition
+	 *
+	 * @deprecated
 	 */
 	protected $statusTransition;
 	/**
@@ -78,17 +80,13 @@ class OriginSync implements IOriginSync {
 	 * @param IOrigin                 $origin
 	 * @param IObjectRepository       $repository
 	 * @param IObjectFactory          $factory
-	 * @param IObjectSyncProcessor    $processor
 	 * @param IObjectStatusTransition $transition
-	 * @param IOriginImplementation   $implementation
 	 */
-	public function __construct(IOrigin $origin, IObjectRepository $repository, IObjectFactory $factory, IObjectSyncProcessor $processor, IObjectStatusTransition $transition, IOriginImplementation $implementation) {
+	public function __construct(IOrigin $origin, IObjectRepository $repository, IObjectFactory $factory, IObjectStatusTransition $transition) {
 		$this->origin = $origin;
 		$this->repository = $repository;
 		$this->factory = $factory;
-		$this->processor = $processor;
 		$this->statusTransition = $transition;
-		$this->implementation = $implementation;
 	}
 
 
@@ -280,5 +278,97 @@ class OriginSync implements IOriginSync {
 	 */
 	public function getOrigin() {
 		return $this->origin;
+	}
+
+
+	/**
+	 * @param IOrigin $origin
+	 */
+	public function setOrigin(IOrigin $origin) {
+		$this->origin = $origin;
+	}
+
+
+	/**
+	 * @return IObjectRepository
+	 */
+	public function getRepository(): IObjectRepository {
+		return $this->repository;
+	}
+
+
+	/**
+	 * @param IObjectRepository $repository
+	 */
+	public function setRepository(IObjectRepository $repository) {
+		$this->repository = $repository;
+	}
+
+
+	/**
+	 * @return IObjectFactory
+	 */
+	public function getFactory(): IObjectFactory {
+		return $this->factory;
+	}
+
+
+	/**
+	 * @param IObjectFactory $factory
+	 */
+	public function setFactory(IObjectFactory $factory) {
+		$this->factory = $factory;
+	}
+
+
+	/**
+	 * @return IObjectSyncProcessor
+	 */
+	public function getProcessor(): IObjectSyncProcessor {
+		return $this->processor;
+	}
+
+
+	/**
+	 * @param IObjectSyncProcessor $processor
+	 */
+	public function setProcessor(IObjectSyncProcessor $processor) {
+		$this->processor = $processor;
+	}
+
+
+	/**
+	 * @return IObjectStatusTransition
+	 *
+	 * @deprecated
+	 */
+	public function getStatusTransition(): IObjectStatusTransition {
+		return $this->statusTransition;
+	}
+
+
+	/**
+	 * @param IObjectStatusTransition $statusTransition
+	 *
+	 * @deprecated
+	 */
+	public function setStatusTransition(IObjectStatusTransition $statusTransition) {
+		$this->statusTransition = $statusTransition;
+	}
+
+
+	/**
+	 * @return IOriginImplementation
+	 */
+	public function getImplementation(): IOriginImplementation {
+		return $this->implementation;
+	}
+
+
+	/**
+	 * @param IOriginImplementation $implementation
+	 */
+	public function setImplementation(IOriginImplementation $implementation) {
+		$this->implementation = $implementation;
 	}
 }
