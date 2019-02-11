@@ -9,17 +9,6 @@ cd Customizing/global/plugins/Services/Cron/CronHook
 git clone https://github.com/studer-raimann/Hub2.git
 ```
 
-### Install dependencies via composer
-```bash
-cd Hub2
-composer install
-```
-
-If you run composer from vagrant box, remember to run it as user `www-data`.
-```bash
-sudo -u www-data composer install
-```
-
 ### Dependencies
 * ILIAS 5.3
 * PHP >=7.0
