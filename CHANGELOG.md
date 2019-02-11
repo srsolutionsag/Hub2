@@ -5,7 +5,7 @@
 - Fix getAppointmentColor is NULL
 - Logs invalid origin implementation namespace\\class
 - Fix log table origin type filter
-- Store new possible ilias id on exception
+- Store new possible ilias id on exception (`handleCreate`|`handleUpdate`|`handleDelete` returns now nothing anymore, but it will store the ilias object on `$this->current_ilias_object`, so it can read the ilias id also on exception)
 
 ## [2.2.2]
 - Fix ILIAS file selector
