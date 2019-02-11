@@ -71,10 +71,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CategoryDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var CategoryDTO $dto */
-		$ilObjCategory = new ilObjCategory();
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
+		$this->current_ilias_object = $ilObjCategory = new ilObjCategory();
 		$ilObjCategory->setImportId($this->getImportId($dto));
 		// Find the refId under which this course should be created
 		$parentRefId = $this->determineParentRefId($dto);
@@ -100,19 +101,18 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
 		$ilObjCategory->removeTranslations();
 		$ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), self::dic()->language()->getDefaultLanguage(), true);
-
-		return $ilObjCategory;
 	}
 
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CategoryDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var CategoryDTO $dto */
-		$ilObjCategory = $this->findILIASCategory($ilias_id);
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
+		$this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === NULL) {
-			return NULL;
+			return;
 		}
 		// Update some properties if they should be updated depending on the origin config
 		foreach (self::getProperties() as $property) {
@@ -138,21 +138,19 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		if ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
 			$this->moveCategory($ilObjCategory, $dto);
 		}
-
-		return $ilObjCategory;
 	}
 
 
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
-		$ilObjCategory = $this->findILIASCategory($ilias_id);
+	protected function handleDelete($ilias_id)/*: void*/ {
+		$this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === NULL) {
-			return NULL;
+			return;
 		}
 		if ($this->props->get(CategoryProperties::DELETE_MODE) == CategoryProperties::DELETE_MODE_NONE) {
-			return $ilObjCategory;
+			return;
 		}
 		switch ($this->props->get(CategoryProperties::DELETE_MODE)) {
 			case CategoryProperties::DELETE_MODE_MARK:
@@ -163,8 +161,6 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 				$ilObjCategory->delete();
 				break;
 		}
-
-		return $ilObjCategory;
 	}
 
 

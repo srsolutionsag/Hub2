@@ -55,6 +55,8 @@ class OriginSyncTest extends AbstractHub2Tests {
 	protected $processor;
 	/**
 	 * @var MockInterface
+	 *
+	 * @deprecated
 	 */
 	protected $statusTransition;
 	/**

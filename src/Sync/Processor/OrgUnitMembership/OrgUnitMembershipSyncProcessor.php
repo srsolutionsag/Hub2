@@ -40,6 +40,10 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	 * @var array
 	 */
 	protected static $properties = [];
+	/**
+	 * @var FakeOrgUnitMembershipObject|null
+	 */
+	protected $current_ilias_object = NULL;
 
 
 	/**
@@ -63,31 +67,28 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
 
 	/**
-	 * @param IOrgUnitMembershipDTO $dto
+	 * @inheritdoc
 	 *
-	 * @return FakeIliasObject
-	 * @throws HubException
+	 * @param IOrgUnitMembershipDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto): FakeIliasObject {
-		return $this->getFakeIliasObject($this->assignToOrgUnit($dto));
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
+		$this->current_ilias_object = $this->getFakeIliasObject($this->assignToOrgUnit($dto));
 	}
 
 
 	/**
-	 * @param IOrgUnitMembershipDTO $dto
-	 * @param int                   $ilias_id
+	 * @inheritdoc
 	 *
-	 * @return FakeIliasObject
-	 * @throws HubException
+	 * @param IOrgUnitMembershipDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id): FakeIliasObject {
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		if ($this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_ORG_UNIT_ID)
 			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_ORG_UNIT_ID_TYPE)
 			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_USER_ID)
 			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_POSITION)) {
 			$this->handleDelete($ilias_id);
 
-			return $this->handleCreate($dto);
+			$this->handleCreate($dto);
 		} else {
 			throw new HubException("{$ilias_id} should not be updated!");
 		}
@@ -95,25 +96,20 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
 
 	/**
-	 * @param int $ilias_id
-	 *
-	 * @return FakeIliasObject
-	 * @throws HubException
+	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id): FakeIliasObject {
-		$ilias_object = FakeOrgUnitMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+	protected function handleDelete($ilias_id)/*: void*/ {
+		$this->current_ilias_object = FakeOrgUnitMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		$assignment = ilOrgUnitUserAssignment::where([
-			"orgu_id" => $ilias_object->getContainerIdIlias(),
-			"user_id" => $ilias_object->getUserIdIlias(),
-			"position_id" => $ilias_object->getPositionId()
+			"orgu_id" => $this->current_ilias_object->getContainerIdIlias(),
+			"user_id" => $this->current_ilias_object->getUserIdIlias(),
+			"position_id" => $this->current_ilias_object->getPositionId()
 		])->first();
 
 		if ($assignment !== NULL) {
 			$assignment->delete();
 		}
-
-		return $ilias_object;
 	}
 
 

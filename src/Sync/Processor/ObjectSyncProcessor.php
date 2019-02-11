@@ -21,6 +21,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use Throwable;
 
 /**
  * Class ObjectProcessor
@@ -47,6 +48,10 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @var IOriginImplementation
 	 */
 	protected $implementation;
+	/**
+	 * @var ilObject|FakeIliasObject|null
+	 */
+	protected $current_ilias_object = NULL;
 
 
 	/**
@@ -64,7 +69,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	/**
 	 * @inheritdoc
 	 */
-	final public function process(IObject $object, IDataTransferObject $dto, bool $force = false) {
+	public final function process(IObject $object, IDataTransferObject $dto, bool $force = false) {
 		// The HookObject is filled with the object (known Data in HUB) and the DTO delivered with
 		// your origin. Additionally, if available, the HookObject is filled with the given
 		// ILIAS-Object, too.
@@ -103,23 +108,31 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 		$time = time();
 
+		$this->current_ilias_object = NULL;
+
 		switch ($object->getStatus()) {
 			case IObject::STATUS_TO_CREATE:
 				$this->implementation->beforeCreateILIASObject($hook);
 
-				$ilias_object = $this->handleCreate($dto);
+				try {
+					$this->handleCreate($dto);
+				} catch (Throwable $ex) {
+					$object->setILIASId($this->getILIASId($this->current_ilias_object));
+
+					throw $ex;
+				}
 
 				if ($this instanceof IMetadataSyncProcessor) {
-					$this->handleMetadata($dto, $ilias_object);
+					$this->handleMetadata($dto, $this->current_ilias_object);
 				}
 
 				if ($this instanceof ITaxonomySyncProcessor) {
-					$this->handleTaxonomies($dto, $ilias_object);
+					$this->handleTaxonomies($dto, $this->current_ilias_object);
 				}
 
-				$object->setILIASId($this->getILIASId($ilias_object));
+				$object->setILIASId($this->getILIASId($this->current_ilias_object));
 
-				$this->implementation->afterCreateILIASObject($hook->withILIASObject($ilias_object));
+				$this->implementation->afterCreateILIASObject($hook->withILIASObject($this->current_ilias_object));
 
 				$object->setStatus(IObject::STATUS_CREATED);
 				$object->setProcessedDate($time);
@@ -131,23 +144,29 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				if (($object->computeHashCode() != $object->getHashCode()) || $force || $object->getStatus() === iObject::STATUS_TO_RESTORE) {
 					$this->implementation->beforeUpdateILIASObject($hook);
 
-					$ilias_object = $this->handleUpdate($dto, $object->getILIASId());
+					try {
+						$this->handleUpdate($dto, $object->getILIASId());
+					} catch (Throwable $ex) {
+						$object->setILIASId($this->getILIASId($this->current_ilias_object));
 
-					if ($ilias_object === NULL) {
+						throw $ex;
+					}
+
+					if ($this->current_ilias_object === NULL) {
 						throw new ILIASObjectNotFoundException($object);
 					}
 
 					if ($this instanceof IMetadataSyncProcessor) {
-						$this->handleMetadata($dto, $ilias_object);
+						$this->handleMetadata($dto, $this->current_ilias_object);
 					}
 
 					if ($this instanceof ITaxonomySyncProcessor) {
-						$this->handleTaxonomies($dto, $ilias_object);
+						$this->handleTaxonomies($dto, $this->current_ilias_object);
 					}
 
-					$object->setILIASId($this->getILIASId($ilias_object));
+					$object->setILIASId($this->getILIASId($this->current_ilias_object));
 
-					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($ilias_object));
+					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($this->current_ilias_object));
 
 					$object->setStatus(IObject::STATUS_UPDATED);
 					$object->setProcessedDate($time);
@@ -159,13 +178,13 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			case IObject::STATUS_TO_OUTDATED:
 				$this->implementation->beforeDeleteILIASObject($hook);
 
-				$ilias_object = $this->handleDelete($object->getILIASId());
+				$this->handleDelete($object->getILIASId());
 
-				if ($ilias_object === NULL) {
+				if ($this->current_ilias_object === NULL) {
 					throw new ILIASObjectNotFoundException($object);
 				}
 
-				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($ilias_object));
+				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($this->current_ilias_object));
 
 				$object->setStatus(IObject::STATUS_OUTDATED);
 				$object->setProcessedDate($time);
@@ -185,11 +204,15 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 
 
 	/**
-	 * @param ilObject|FakeIliasObject $object
+	 * @param ilObject|FakeIliasObject|null $object
 	 *
-	 * @return int
+	 * @return int|null
 	 */
 	protected function getILIASId($object) {
+		if ($object === NULL) {
+			return NULL;
+		}
+
 		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
 			|| $object instanceof FakeIliasMembershipObject) {
 			return $object->getId();
@@ -224,9 +247,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 *
 	 * @param IDataTransferObject $dto
 	 *
-	 * @return ilObject
+	 * @return void
+	 *
+	 * @throws HubException
 	 */
-	abstract protected function handleCreate(IDataTransferObject $dto);
+	protected abstract function handleCreate(IDataTransferObject $dto)/*: void*/
+	;
 
 
 	/**
@@ -237,18 +263,24 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * @param IDataTransferObject $dto
 	 * @param int                 $iliasId
 	 *
-	 * @return ilObject
+	 * @return void
+	 *
+	 * @throws HubException
 	 */
-	abstract protected function handleUpdate(IDataTransferObject $dto, $iliasId);
+	protected abstract function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
+	;
 
 
 	/**
 	 * Delete the corresponding ILIAS object.
 	 * Return the deleted ILIAS object or null if the object was not found in ILIAS.
 	 *
-	 * @param int $iliasId
+	 * @param int $ilias_id
 	 *
-	 * @return ilObject
+	 * @return void
+	 *
+	 * @throws HubException
 	 */
-	abstract protected function handleDelete($iliasId);
+	protected abstract function handleDelete($ilias_id)/*: void*/
+	;
 }

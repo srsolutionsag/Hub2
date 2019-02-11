@@ -10,7 +10,7 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  *
  *
  * @package srag\Plugins\Hub2\Shortlink\Group
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupLink extends AbstractRepositoryLink implements IObjectLink {
 

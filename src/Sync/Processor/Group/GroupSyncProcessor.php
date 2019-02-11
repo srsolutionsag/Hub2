@@ -105,12 +105,11 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
-		global $DIC;
-
-		/** @var GroupDTO $dto */
-		$ilObjGroup = new ilObjGroup();
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
+		$this->current_ilias_object = $ilObjGroup = new ilObjGroup();
 		$ilObjGroup->setImportId($this->getImportId($dto));
 		// Find the refId under which this group should be created
 		$parentRefId = $this->determineParentRefId($dto);
@@ -151,19 +150,18 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->setPermissions($parentRefId);
 
 		$this->handleAppointementsColor($ilObjGroup, $dto);
-
-		return $ilObjGroup;
 	}
 
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var GroupDTO $dto */
-		$ilObjGroup = $this->findILIASGroup($ilias_id);
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
+		$this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
 		if ($ilObjGroup === NULL) {
-			return NULL;
+			return;
 		}
 		// Update some properties if they should be updated depending on the origin config
 		foreach (self::getProperties() as $property) {
@@ -218,8 +216,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 			$this->moveGroup($ilObjGroup, $dto);
 		}
 		$ilObjGroup->update();
-
-		return $ilObjGroup;
 	}
 
 
@@ -228,10 +224,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	 * @param GroupDTO   $dto
 	 */
 	protected function handleAppointementsColor(ilObjGroup $ilObjGroup, GroupDTO $dto) {
-		global $DIC;
-
 		if ($dto->getAppointementsColor()) {
-			$DIC["ilObjDataCache"]->deleteCachedEntry($ilObjGroup->getId());
+			self::dic()->objDataCache()->deleteCachedEntry($ilObjGroup->getId());
 			/**
 			 * @var $cal_cat ilCalendarCategory
 			 */
@@ -245,13 +239,13 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
-		$ilObjGroup = $this->findILIASGroup($ilias_id);
+	protected function handleDelete($ilias_id)/*: void*/ {
+		$this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
 		if ($ilObjGroup === NULL) {
-			return NULL;
+			return;
 		}
 		if ($this->props->get(GroupProperties::DELETE_MODE) == GroupProperties::DELETE_MODE_NONE) {
-			return $ilObjGroup;
+			return;
 		}
 		switch ($this->props->get(GroupProperties::DELETE_MODE)) {
 			case GroupProperties::DELETE_MODE_CLOSED:
@@ -273,8 +267,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 				}
 				break;
 		}
-
-		return $ilObjGroup;
 	}
 
 

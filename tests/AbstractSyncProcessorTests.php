@@ -33,6 +33,8 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected $origin;
 	/**
 	 * @var ObjectStatusTransition
+	 *
+	 * @deprecated
 	 */
 	protected $statusTransition;
 	/**

@@ -84,9 +84,13 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	}
 
 
-	protected function handleCreate(IDataTransferObject $dto) {
-		/** @var UserDTO $dto */
-		$ilObjUser = new ilObjUser();
+	/**
+	 * @inheritdoc
+	 *
+	 * @param UserDTO $dto
+	 */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
+		$this->current_ilias_object = $ilObjUser = new ilObjUser();
 		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
 		$ilObjUser->setDescription($dto->getEmail());
 		$ilObjUser->setImportId($this->getImportId($dto));
@@ -126,20 +130,21 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		$ilObjUser->saveAsNew();
 		$ilObjUser->writePrefs();
 		$this->assignILIASRoles($dto, $ilObjUser);
-
-		return $ilObjUser;
 	}
 
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param UserDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/** @var UserDTO $dto */
-		$ilObjUser = $this->findILIASUser($ilias_id);
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
+		$this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === NULL) {
 			// Recreate deleted users
-			return $this->handleCreate($dto);
+			$this->handleCreate($dto);
+
+			return;
 		}
 		$ilObjUser->setImportId($this->getImportId($dto));
 		$ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
@@ -180,8 +185,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		}
 
 		$ilObjUser->update();
-
-		return $ilObjUser;
 	}
 
 
@@ -209,13 +212,13 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
-		$ilObjUser = $this->findILIASUser($ilias_id);
+	protected function handleDelete($ilias_id)/*: void*/ {
+		$this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === NULL) {
-			return NULL;
+			return;
 		}
 		if ($this->props->get(UserProperties::DELETE) == UserProperties::DELETE_MODE_NONE) {
-			return $ilObjUser;
+			return;
 		}
 		switch ($this->props->get(UserProperties::DELETE)) {
 			case UserProperties::DELETE_MODE_INACTIVE:
@@ -226,8 +229,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 				$ilObjUser->delete();
 				break;
 		}
-
-		return $ilObjUser;
 	}
 
 

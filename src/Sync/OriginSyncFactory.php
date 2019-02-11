@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\Config\OriginImplementationFactory;
@@ -41,14 +42,31 @@ class OriginSyncFactory {
 
 	/**
 	 * @return OriginSync
+	 *
+	 * @throws HubException
 	 */
-	public function instance() {
+	public function instance(): OriginSync {
 		$statusTransition = new ObjectStatusTransition($this->origin->config());
-		$implementationFactory = new OriginImplementationFactory($this->origin);
-		$originImplementation = $implementationFactory->instance();
-		$originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $this->getSyncProcessor($this->origin, $originImplementation, $statusTransition), $statusTransition, $originImplementation);
+
+		$originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $statusTransition);
 
 		return $originSync;
+	}
+
+
+	/**
+	 * @param OriginSync $originSync
+	 *
+	 * @throws HubException
+	 */
+	public function initImplementation(OriginSync $originSync) {
+		$implementationFactory = new OriginImplementationFactory($this->origin);
+
+		$originImplementation = $implementationFactory->instance();
+
+		$originSync->setProcessor($this->getSyncProcessor($this->origin, $originImplementation, $originSync->getStatusTransition()));
+
+		$originSync->setImplementation($originImplementation);
 	}
 
 

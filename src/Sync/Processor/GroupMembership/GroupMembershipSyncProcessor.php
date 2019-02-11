@@ -50,16 +50,15 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupMembershipDTO $dto
 	 */
-	protected function handleCreate(IDataTransferObject $dto) {
-		/**
-		 * @var GroupMembershipDTO $dto
-		 */
+	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
 		$ilias_group_ref_id = $this->buildParentRefId($dto);
 
 		$group = $this->findILIASGroup($ilias_group_ref_id);
 		if (!$group) {
-			return NULL;
+			return;
 		}
 
 		$user_id = $dto->getUserId();
@@ -67,28 +66,29 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 		$membership_obj->add($user_id, $this->mapRole($dto));
 		$membership_obj->updateContact($user_id, $dto->isContact());
 
-		return new FakeIliasMembershipObject($ilias_group_ref_id, $user_id);
+		$this->current_ilias_object = new FakeIliasMembershipObject($ilias_group_ref_id, $user_id);
 	}
 
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupMembershipDTO $dto
 	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id) {
-		/**
-		 * @var GroupMembershipDTO $dto
-		 */
-		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
+		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		$ilias_group_ref_id = $this->buildParentRefId($dto);
 		$user_id = $dto->getUserId();
 		if (!$this->props->updateDTOProperty('role')) {
-			return new FakeIliasMembershipObject($ilias_group_ref_id, $user_id);
+			$this->current_ilias_object = new FakeIliasMembershipObject($ilias_group_ref_id, $user_id);
+
+			return;
 		}
 
 		$group = $this->findILIASGroup($ilias_group_ref_id);
 		if (!$group) {
-			return NULL;
+			return;
 		}
 
 		$membership_obj = $group->getMembersObject();
@@ -100,21 +100,17 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 		$obj->setUserIdIlias($dto->getUserId());
 		$obj->setContainerIdIlias($group->getRefId());
 		$obj->initId();
-
-		return $obj;
 	}
 
 
 	/**
 	 * @inheritdoc
 	 */
-	protected function handleDelete($ilias_id) {
-		$obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+	protected function handleDelete($ilias_id)/*: void*/ {
+		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		$group = $this->findILIASGroup($obj->getContainerIdIlias());
 		$group->getMembersObject()->delete($obj->getUserIdIlias());
-
-		return $obj;
 	}
 
 

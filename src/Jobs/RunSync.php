@@ -151,6 +151,8 @@ class RunSync extends ilCronJob {
 				$originSync = $originSyncFactory->instance();
 
 				try {
+					$originSyncFactory->initImplementation($originSync);
+
 					$originSync->execute();
 				} catch (AbortSyncException $e) {
 					throw $e;

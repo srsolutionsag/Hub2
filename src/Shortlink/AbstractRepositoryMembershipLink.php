@@ -8,7 +8,7 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  * Class AbstractRepositoryMembershipLink
  *
  * @package srag\Plugins\Hub2\Shortlink
- * @author Timon Amstutz <timon.amstutz@ilub.unibe.ch>
+ * @author  Timon Amstutz <timon.amstutz@ilub.unibe.ch>
  */
 abstract class AbstractRepositoryMembershipLink extends AbstractRepositoryLink implements IObjectLink {
 

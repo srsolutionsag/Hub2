@@ -149,7 +149,7 @@ class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferO
 	/**
 	 * @var string
 	 */
-	protected $appointementsColor = NULL;
+	protected $appointementsColor = '';
 
 
 	/**

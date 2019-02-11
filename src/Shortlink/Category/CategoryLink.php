@@ -9,7 +9,7 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  * Class CategoryLink
  *
  * @package srag\Plugins\Hub2\Shortlink\Category
- * @author Fabian Schmid <fs@studer-raimann.ch>
+ * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class CategoryLink extends AbstractRepositoryLink implements IObjectLink {
 

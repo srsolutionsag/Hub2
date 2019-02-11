@@ -92,7 +92,7 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getPath(): string {
-		if ($this->getConnectionType() !== self::PATH) {
+		if ($this->getConnectionType() !== self::CONNECTION_TYPE_PATH) {
 			throw new ConnectionFailedException("Please set connection type to path to use getPath");
 		}
 
