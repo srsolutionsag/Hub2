@@ -1,5 +1,8 @@
 # Changelog
 
+## [2.2.4]
+- Fix log table ext id filter
+
 ## [2.2.3]
 - Fix connection getPath validation
 - Fix getAppointmentColor is NULL
