@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.17.5]
+- Fix TableGUI Export Header
+
+## [0.17.4]
+- Fix TableGUI Export Header
+
+## [0.17.3]
+- ViewControlModeGUI
+
+## [0.17.2]
+- ViewControlModeGUI
+
+## [0.17.1]
+- ViewControlModeGUI
+
+## [0.17.0]
+- ViewControlModeGUI
+
+## [0.16.10]
+- Fixes
+
 ## [0.16.9]
 - Fix use native ProgressMeterFactory on ILIAS 5.4
 

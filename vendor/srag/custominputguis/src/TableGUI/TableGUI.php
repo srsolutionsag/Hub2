@@ -246,7 +246,9 @@ abstract class TableGUI extends ilTable2GUI {
 	protected function fillHeaderCSV(/*ilCSVWriter*/
 		$csv)/*: void*/ {
 		foreach ($this->getSelectableColumns() as $column) {
-			$csv->addColumn($column["txt"]);
+			if ($this->isColumnSelected($column["id"])) {
+				$csv->addColumn($column["txt"]);
+			}
 		}
 
 		$csv->addRow();
@@ -279,11 +281,15 @@ abstract class TableGUI extends ilTable2GUI {
 		$col = 0;
 
 		foreach ($this->getSelectableColumns() as $column) {
-			$excel->setCell($row, $col, $column["txt"]);
-			$col ++;
+			if ($this->isColumnSelected($column["id"])) {
+				$excel->setCell($row, $col, $column["txt"]);
+				$col ++;
+			}
 		}
 
-		$excel->setBold("A" . $row . ":" . $excel->getColumnCoord($col - 1) . $row);
+		if ($col > 0) {
+			$excel->setBold("A" . $row . ":" . $excel->getColumnCoord($col - 1) . $row);
+		}
 	}
 
 

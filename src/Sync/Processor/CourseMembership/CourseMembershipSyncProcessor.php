@@ -92,6 +92,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 		}
 
 		$membership_obj = $course->getMembersObject();
+		$membership_obj->add($user_id, $this->mapRole($dto));
 		$membership_obj->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
 
 		if ($this->props->updateDTOProperty("isContact")) {

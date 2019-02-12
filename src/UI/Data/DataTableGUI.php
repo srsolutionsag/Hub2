@@ -313,6 +313,22 @@ class DataTableGUI extends ilTable2GUI {
 
 
 	/**
+	 * @param ilExcel $a_excel
+	 * @param int     $a_row
+	 */
+	protected function fillHeaderExcel(ilExcel $a_excel, &$a_row) {
+		$col = 0;
+
+		foreach ($this->getFields() as $column) {
+			$a_excel->setCell($a_row, $col, self::plugin()->translate('data_table_header_' . $column));
+			$col ++;
+		}
+
+		$a_excel->setBold("A" . $a_row . ":" . $a_excel->getColumnCoord($col - 1) . $a_row);
+	}
+
+
+	/**
 	 * @param ilExcel $excel
 	 * @param int     $row
 	 * @param array   $result

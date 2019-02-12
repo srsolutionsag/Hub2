@@ -183,6 +183,14 @@ class LogsTableGUI extends TableGUI {
 	/**
 	 * @inheritdoc
 	 */
+	protected function initExport()/*: void*/ {
+		$this->setExportFormats([ self::EXPORT_CSV, self::EXPORT_EXCEL ]);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
 	protected function initFilterFields()/*: void*/ {
 		self::dic()->language()->loadLanguageModule("form");
 
