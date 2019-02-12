@@ -870,6 +870,7 @@ return array(
     'srag\\CustomInputGUIs\\Hub2\\Template\\Template' => $vendorDir . '/srag/custominputguis/src/Template/Template.php',
     'srag\\CustomInputGUIs\\Hub2\\TextAreaInputGUI\\TextAreaInputGUI' => $vendorDir . '/srag/custominputguis/src/TextAreaInputGUI/TextAreaInputGUI.php',
     'srag\\CustomInputGUIs\\Hub2\\TextInputGUI\\TextInputGUI' => $vendorDir . '/srag/custominputguis/src/TextInputGUI/TextInputGUI.php',
+    'srag\\CustomInputGUIs\\Hub2\\ViewControlModeGUI\\ViewControlModeGUI' => $vendorDir . '/srag/custominputguis/src/ViewControlModeGUI/ViewControlModeGUI.php',
     'srag\\CustomInputGUIs\\Hub2\\Waiter\\Waiter' => $vendorDir . '/srag/custominputguis/src/Waiter/Waiter.php',
     'srag\\DIC\\Hub2\\DICStatic' => $vendorDir . '/srag/dic/src/DICStatic.php',
     'srag\\DIC\\Hub2\\DICStaticInterface' => $vendorDir . '/srag/dic/src/DICStaticInterface.php',

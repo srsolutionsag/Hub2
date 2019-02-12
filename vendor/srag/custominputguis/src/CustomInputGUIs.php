@@ -4,6 +4,7 @@ namespace srag\CustomInputGUIs\Hub2;
 
 use ILIAS\UI\Implementation\Component\Chart\ProgressMeter\Factory as ProgressMeterFactoryCore;
 use srag\CustomInputGUIs\Hub2\ProgressMeter\Implementation\Factory as ProgressMeterFactory;
+use srag\CustomInputGUIs\Hub2\ViewControlModeGUI\ViewControlModeGUI;
 use srag\DIC\Hub2\DICTrait;
 
 /**
@@ -47,5 +48,13 @@ final class CustomInputGUIs {
 		} else {
 			return new ProgressMeterFactory();
 		}
+	}
+
+
+	/**
+	 * @return ViewControlModeGUI
+	 */
+	public function viewControlModeGUI() {
+		return new ViewControlModeGUI();
 	}
 }

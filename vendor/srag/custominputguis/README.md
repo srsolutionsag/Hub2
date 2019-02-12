@@ -35,6 +35,7 @@ So I recommand to use [srag/librariesnamespacechanger](https://packagist.org/pac
 * [Template](./src/Template/doc/Template.md)
 * [TextAreaInputGUI](./src/TextAreaInputGUI/doc/TextAreaInputGUI.md)
 * [TextInputGUI](./src/TextInputGUI/doc/TextInputGUI.md)
+* [ViewControlModeGUI](./src/ViewControlModeGUI/doc/ViewControlModeGUI.md)
 * [Waiter](./src/Waiter/doc/Waiter.md)
 
 ### Dependencies
