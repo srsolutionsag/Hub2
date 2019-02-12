@@ -4,6 +4,7 @@
 - Fix log table ext id filter
 - Fix status table export contains Actions columns
 - Logs table can now exported too
+- Fix course membership readd on update
 
 ## [2.2.3]
 - Fix connection getPath validation
