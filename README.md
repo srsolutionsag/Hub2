@@ -21,7 +21,7 @@ git clone https://github.com/studer-raimann/Hub2.git
 Please use it for further development!
 
 ### Adjustment suggestions
-* Adjustment suggestions by pull requests on https://git.studer-raimann.ch/ILIAS/Plugins/Hub2/tree/develop
+* Adjustment suggestions by pull requests
 * Adjustment suggestions which are not yet worked out in detail by Jira tasks under https://jira.studer-raimann.ch/projects/PLHUB2
 * Bug reports under https://jira.studer-raimann.ch/projects/PLHUB2
 * For external users you can report it at https://plugins.studer-raimann.ch/goto.php?target=uihk_srsu_PLHUB2
