@@ -114,7 +114,7 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getServerHost(): string {
-		if ($this->getConnectionType() !== self::SERVER_DATABASE) {
+		if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
 			throw new ConnectionFailedException("Please set connection type to server to use getServerHost");
 		}
 
@@ -126,7 +126,7 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getServerPort(): int {
-		if ($this->getConnectionType() !== self::SERVER_DATABASE) {
+		if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
 			throw new ConnectionFailedException("Please set connection type to server to use getServerPort");
 		}
 
@@ -138,7 +138,7 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getServerUsername(): string {
-		if ($this->getConnectionType() !== self::SERVER_DATABASE) {
+		if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
 			throw new ConnectionFailedException("Please set connection type to server to use getServerUsername");
 		}
 
@@ -150,7 +150,7 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getServerPassword(): string {
-		if ($this->getConnectionType() !== self::SERVER_DATABASE) {
+		if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
 			throw new ConnectionFailedException("Please set connection type to server to use getServerPassword");
 		}
 
@@ -162,7 +162,7 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getServerDatabase(): string {
-		if ($this->getConnectionType() !== self::SERVER_DATABASE) {
+		if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
 			throw new ConnectionFailedException("Please set connection type to server to use getServerDatabase");
 		}
 
@@ -174,7 +174,7 @@ class OriginConfig implements IOriginConfig {
 	 * @inheritdoc
 	 */
 	public function getServerSearchBase(): string {
-		if ($this->getConnectionType() !== self::SERVER_DATABASE) {
+		if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
 			throw new ConnectionFailedException("Please set connection type to server to use getServerSearchBase");
 		}
 
