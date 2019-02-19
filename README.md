@@ -6,7 +6,7 @@ Start at your ILIAS root directory
 ```bash
 mkdir -p Customizing/global/plugins/Services/Cron/CronHook
 cd Customizing/global/plugins/Services/Cron/CronHook
-git clone https://github.com/studer-raimann/Hub2.git
+git clone https://github.com/studer-raimann/Hub2.git Hub2
 ```
 
 ### Some screenshots
