@@ -9,6 +9,9 @@ cd Customizing/global/plugins/Services/Cron/CronHook
 git clone https://github.com/studer-raimann/Hub2.git
 ```
 
+### Some screenshots
+TODO
+
 ### Dependencies
 * ILIAS 5.3
 * PHP >=7.0
