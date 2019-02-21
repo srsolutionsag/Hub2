@@ -46,6 +46,9 @@ if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\Hub2\
 		 * @var \srag\Plugins\Hub2\Config\ArConfigOld $config
 		 */
 		switch ($config->getKey()) {
+            case 0:
+                // some installations seem to have an empty record with the key 0
+                break;
 			default:
 				\srag\Plugins\Hub2\Config\ArConfig::setField(strval($config->getKey()), $config->getValue());
 				break;
