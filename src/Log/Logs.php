@@ -31,14 +31,14 @@ final class Logs {
 	/**
 	 * @var self
 	 */
-	protected static $instance = NULL;
+	protected static $instance = null;
 
 
 	/**
 	 * @return self
 	 */
 	public static function getInstance(): self {
-		if (self::$instance === NULL) {
+		if (self::$instance === null) {
 			self::$instance = new self();
 		}
 
@@ -86,7 +86,7 @@ final class Logs {
 	 *
 	 * @return array
 	 */
-	public function getLogs(array $fields = [], string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): array {
+	public function getLogs(array $fields = [], string $sort_by = null, string $sort_by_direction = null, int $limit_start = null, int $limit_end = null, string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null): array {
 
 		if (!in_array("log_id", $fields)) {
 			array_unshift($fields, "log_id");
@@ -111,8 +111,6 @@ final class Logs {
 
 
 	/**
-	 * @param string|null     $sort_by
-	 * @param string|null     $sort_by_direction
 	 * @param string|null     $title
 	 * @param string|null     $message
 	 * @param ilDateTime|null $date_start
@@ -126,11 +124,11 @@ final class Logs {
 	 *
 	 * @return int
 	 */
-	public function getLogsCount(string $sort_by = NULL, string $sort_by_direction = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): int {
+	public function getLogsCount(string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null): int {
 
 		$sql = 'SELECT COUNT(log_id) AS count';
 
-		$sql .= $this->getLogsQuery($sort_by, $sort_by_direction, NULL, NULL, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data);
+		$sql .= $this->getLogsQuery(null, null, null, null, $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data);
 
 		$result = self::dic()->database()->query($sql);
 
@@ -160,7 +158,7 @@ final class Logs {
 	 *
 	 * @return string
 	 */
-	private function getLogsQuery(string $sort_by = NULL, string $sort_by_direction = NULL, int $limit_start = NULL, int $limit_end = NULL, string $title = NULL, string $message = NULL, ilDateTime $date_start = NULL, ilDateTime $date_end = NULL, int $level = NULL, int $origin_id = NULL, string $origin_object_type = NULL, string $object_ext_id = NULL, int $object_ilias_id = NULL, string $additional_data = NULL): string {
+	private function getLogsQuery(string $sort_by = null, string $sort_by_direction = null, int $limit_start = null, int $limit_end = null, string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null): string {
 
 		$sql = ' FROM ' . Log::TABLE_NAME;
 
@@ -210,11 +208,11 @@ final class Logs {
 			$sql .= ' WHERE ' . implode(" AND ", $wheres);
 		}
 
-		if ($sort_by !== NULL && $sort_by_direction !== NULL) {
+		if ($sort_by !== null && $sort_by_direction !== null) {
 			$sql .= ' ORDER BY ' . self::dic()->database()->quoteIdentifier($sort_by) . ' ' . $sort_by_direction;
 		}
 
-		if ($limit_start !== NULL && $limit_end !== NULL) {
+		if ($limit_start !== null && $limit_end !== null) {
 			$sql .= ' LIMIT ' . self::dic()->database()->quote($limit_start, "integer") . ',' . self::dic()->database()->quote($limit_end, "integer");
 		}
 
@@ -255,14 +253,14 @@ final class Logs {
 	 *
 	 * @return ILog
 	 */
-	public function originLog(IOrigin $origin = NULL, IObject $object = NULL, IDataTransferObject $dto = NULL): ILog {
+	public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog {
 		$log = $this->log()->withOriginId($origin->getId())->withOriginObjectType($origin->getObjectType());
 
-		if ($object !== NULL) {
+		if ($object !== null) {
 			$log->withObjectExtId($object->getExtId())->withObjectIliasId($object->getILIASId());
 		}
 
-		if ($dto !== NULL) {
+		if ($dto !== null) {
 			if (empty($log->getObjectExtId())) {
 				$log->withObjectExtId($dto->getExtId());
 			}
@@ -300,7 +298,7 @@ final class Logs {
 	 *
 	 * @return ILog
 	 */
-	public function exceptionLog(Throwable $ex, IOrigin $origin = NULL, IObject $object = NULL, IDataTransferObject $dto = NULL): ILog {
+	public function exceptionLog(Throwable $ex, IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog {
 		$log = $this->originLog($origin, $object, $dto);
 
 		$log->withLevel(ILog::LEVEL_EXCEPTION);
@@ -356,12 +354,12 @@ final class Logs {
 	 * @return ILog[]
 	 */
 	public function getKeptLogs(IOrigin $origin,/*?*/
-		int $level = NULL): array {
+		int $level = null): array {
 		if (!isset($this->kept_logs[$origin->getId()])) {
 			return [];
 		}
 
-		if ($level === NULL) {
+		if ($level === null) {
 			return array_reduce($this->kept_logs[$origin->getId()], function (array $logs1, array $logs2): array {
 				return array_merge($logs1, $logs2);
 			}, []);
