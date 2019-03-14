@@ -1,5 +1,8 @@
 # Changelog
 
+## [2.2.5]
+- Optimized log table
+
 ## [2.2.4]
 - Fix log table ext id filter
 - Fix status table export contains Actions columns

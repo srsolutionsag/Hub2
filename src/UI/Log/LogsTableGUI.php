@@ -140,25 +140,25 @@ class LogsTableGUI extends TableGUI {
 		if (!empty($date_start)) {
 			$date_start = new ilDateTime(intval($date_start), IL_CAL_UNIX);
 		} else {
-			$date_start = NULL;
+			$date_start = null;
 		}
 		$date_end = $filter["date"]["end"];
 		if (!empty($date_end)) {
 			$date_end = new ilDateTime(intval($date_end), IL_CAL_UNIX);
 		} else {
-			$date_end = NULL;
+			$date_end = null;
 		}
 		$level = $filter["level"];
 		if (!empty($level)) {
 			$level = intval($level);
 		} else {
-			$level = NULL;
+			$level = null;
 		}
 		$origin_id = $filter["origin_id"];
 		if (!empty($origin_id)) {
 			$origin_id = intval($origin_id);
 		} else {
-			$origin_id = NULL;
+			$origin_id = null;
 		}
 		$origin_object_type = $filter["origin_object_type"];
 		$object_ext_id = $filter["object_ext_id"];
@@ -166,7 +166,7 @@ class LogsTableGUI extends TableGUI {
 		if (!empty($object_ilias_id)) {
 			$object_ilias_id = intval($object_ilias_id);
 		} else {
-			$object_ilias_id = NULL;
+			$object_ilias_id = null;
 		}
 		$additional_data = $filter["additional_data"];
 
@@ -176,7 +176,7 @@ class LogsTableGUI extends TableGUI {
 			->getLogs($columns, $this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
 
 		$this->setMaxCount(self::logs()
-			->getLogsCount($this->getOrderField(), $this->getOrderDirection(), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
+			->getLogsCount($title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
 	}
 
 
