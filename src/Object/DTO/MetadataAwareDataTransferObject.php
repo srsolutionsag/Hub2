@@ -29,7 +29,7 @@ trait MetadataAwareDataTransferObject {
 
 
 	/**
-	 * @inheritdoc
+	 * @return IMetadata[]
 	 */
 	public function getMetaData(): array {
 		$IMetadata = is_array($this->_meta_data) ? $this->_meta_data : array();
