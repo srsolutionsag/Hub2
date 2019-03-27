@@ -23,7 +23,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 	public function write() {
 		$id = $this->getMetadata()->getIdentifier();
 
-		$ilAdvancedMDValues = new ilAdvancedMDValues($this->getMetadata()->getRecordId(), $this->getIliasId(), NULL, "-");
+		$ilAdvancedMDValues = new ilAdvancedMDValues($this->getMetadata()->getRecordId(), $this->getIliasId(), null, "-");
 
 		$ilAdvancedMDValues->read();
 		$ilADTGroup = $ilAdvancedMDValues->getADTGroup();
@@ -47,13 +47,5 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
 		}
 
 		$ilAdvancedMDValues->write();
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function read() {
-		// no need for a read-Method since wo have to update them anyways due to performance-issues when reading all metadata everytime
 	}
 }

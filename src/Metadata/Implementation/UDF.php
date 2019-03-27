@@ -27,12 +27,4 @@ class UDF extends AbstractImplementation implements IMetadataImplementation {
 		$ilUserDefinedData->set($field_id, $value);
 		$ilUserDefinedData->update();
 	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function read() {
-		// no need for a read-Method since wo have to update them anyways due to performance-issues when reading all udfs everytime
-	}
 }
