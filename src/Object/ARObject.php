@@ -9,7 +9,6 @@ use ilHub2Plugin;
 use InvalidArgumentException;
 use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 use srag\DIC\Hub2\DICTrait;
-use srag\Plugins\Hub2\Metadata\IMetadata;
 use srag\Plugins\Hub2\Metadata\Metadata;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
