@@ -69,127 +69,117 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	/**
 	 * @inheritdoc
 	 */
-	public final function process(IObject $object, IDataTransferObject $dto, bool $force = false) {
+	public final function process(IObject $hub_object, IDataTransferObject $dto, bool $force = false) {
 		// The HookObject is filled with the object (known Data in HUB) and the DTO delivered with
 		// your origin. Additionally, if available, the HookObject is filled with the given
 		// ILIAS-Object, too.
-		$hook = new HookObject($object, $dto);
+		$hook_object = new HookObject($hub_object, $dto);
 
 		// We pass the HookObject to the OriginImplementaion which could override the status
-		$this->implementation->overrideStatus($hook);
+		$this->implementation->overrideStatus($hook_object);
 
 		// We keep the old data if the object is getting deleted, as there is no "real" DTO available, because
 		// the data has not been delivered...
 
 		// We check if there is another mapping strategy than "None" and check for existing objects in ILIAS
-		if ($object->getStatus() === IObject::STATUS_TO_CREATE && $dto instanceof IMappingStrategyAwareDataTransferObject) {
+		if ($hub_object->getStatus() === IObject::STATUS_TO_CREATE && $dto instanceof IMappingStrategyAwareDataTransferObject) {
 			$m = $dto->getMappingStrategy();
 			$ilias_id = $m->map($dto);
 			if ($ilias_id > 0) {
-				$object->setStatus(IObject::STATUS_TO_UPDATE);
-				$object->setILIASId($ilias_id);
+				$hub_object->setStatus(IObject::STATUS_TO_UPDATE);
+				$hub_object->setILIASId($ilias_id);
 			} elseif ($ilias_id < 0) {
 				throw new HubException("Mapping strategy " . get_class($m) . " returns negative value");
 			}
-			$object->store();
+			$hub_object->store();
 		}
 
-		if ($object->getStatus() !== IObject::STATUS_TO_OUTDATED) {
-			$object->setData($dto->getData());
-			if ($dto instanceof IMetadataAwareDataTransferObject
-				&& $object instanceof IMetadataAwareObject) {
-				$object->setMetaData($dto->getMetaData());
-			}
-			if ($dto instanceof ITaxonomyAwareDataTransferObject
-				&& $object instanceof ITaxonomyAwareObject) {
-				$object->setTaxonomies($dto->getTaxonomies());
-			}
-		}
+
 
 		$time = time();
 
 		$this->current_ilias_object = NULL;
 
-		switch ($object->getStatus()) {
+		switch ($hub_object->getStatus()) {
 			case IObject::STATUS_TO_CREATE:
-				$this->implementation->beforeCreateILIASObject($hook);
+				$this->implementation->beforeCreateILIASObject($hook_object);
 
 				try {
 					$this->handleCreate($dto);
 				} catch (Throwable $ex) {
 					// Store new possible ilias id on exception
-					$object->setILIASId($this->getILIASId($this->current_ilias_object));
+					$hub_object->setILIASId($this->getILIASId($this->current_ilias_object));
 
 					throw $ex;
 				}
 
-				if ($this instanceof IMetadataSyncProcessor) {
-					$this->handleMetadata($dto, $this->current_ilias_object);
+				if ($this instanceof IMetadataSyncProcessor && $hub_object instanceof IMetadataAwareObject && $dto instanceof IMetadataAwareDataTransferObject) {
+					$this->handleMetadata($dto, $hub_object, $this->current_ilias_object);
 				}
 
-				if ($this instanceof ITaxonomySyncProcessor) {
-					$this->handleTaxonomies($dto, $this->current_ilias_object);
+				if ($this instanceof ITaxonomySyncProcessor && $hub_object instanceof ITaxonomyAwareObject && $dto instanceof ITaxonomyAwareDataTransferObject) {
+					$this->handleTaxonomies($dto, $hub_object, $this->current_ilias_object);
 				}
 
-				$object->setILIASId($this->getILIASId($this->current_ilias_object));
+				$hub_object->setILIASId($this->getILIASId($this->current_ilias_object));
 
-				$this->implementation->afterCreateILIASObject($hook->withILIASObject($this->current_ilias_object));
+				$this->implementation->afterCreateILIASObject($hook_object->withILIASObject($this->current_ilias_object));
 
-				$object->setStatus(IObject::STATUS_CREATED);
-				$object->setProcessedDate($time);
+				$hub_object->setStatus(IObject::STATUS_CREATED);
+				$hub_object->setProcessedDate($time);
 				break;
 
 			case IObject::STATUS_TO_UPDATE:
 			case IObject::STATUS_TO_RESTORE:
 				// Updating the ILIAS object is only needed if some properties were changed
-				if (($object->computeHashCode() != $object->getHashCode()) || $force || $object->getStatus() === iObject::STATUS_TO_RESTORE) {
-					$this->implementation->beforeUpdateILIASObject($hook);
+				if (($dto->computeHashCode() != $hub_object->getHashCode()) || $force || $hub_object->getStatus() === iObject::STATUS_TO_RESTORE) {
+					$this->implementation->beforeUpdateILIASObject($hook_object);
 
 					try {
-						$this->handleUpdate($dto, $object->getILIASId());
+						$this->handleUpdate($dto, $hub_object->getILIASId());
 					} catch (Throwable $ex) {
 						// Store new possible ilias id on exception
-						$object->setILIASId($this->getILIASId($this->current_ilias_object));
+						$hub_object->setILIASId($this->getILIASId($this->current_ilias_object));
 
 						throw $ex;
 					}
 
 					if ($this->current_ilias_object === NULL) {
-						throw new ILIASObjectNotFoundException($object);
+						throw new ILIASObjectNotFoundException($hub_object);
 					}
 
-					if ($this instanceof IMetadataSyncProcessor) {
-						$this->handleMetadata($dto, $this->current_ilias_object);
+					if ($this instanceof IMetadataSyncProcessor && $hub_object instanceof IMetadataAwareObject && $dto instanceof IMetadataAwareDataTransferObject) {
+						$this->handleMetadata($dto, $hub_object, $this->current_ilias_object);
 					}
 
-					if ($this instanceof ITaxonomySyncProcessor) {
-						$this->handleTaxonomies($dto, $this->current_ilias_object);
+					if ($this instanceof ITaxonomySyncProcessor && $hub_object instanceof ITaxonomyAwareObject && $dto instanceof ITaxonomyAwareDataTransferObject) {
+						$this->handleTaxonomies($dto, $hub_object, $this->current_ilias_object);
 					}
 
-					$object->setILIASId($this->getILIASId($this->current_ilias_object));
+					$hub_object->setILIASId($this->getILIASId($this->current_ilias_object));
 
-					$this->implementation->afterUpdateILIASObject($hook->withILIASObject($this->current_ilias_object));
+					$this->implementation->afterUpdateILIASObject($hook_object->withILIASObject($this->current_ilias_object));
 
-					$object->setStatus(IObject::STATUS_UPDATED);
-					$object->setProcessedDate($time);
+					$hub_object->setStatus(IObject::STATUS_UPDATED);
+					$hub_object->setProcessedDate($time);
 				} else {
-					$object->setStatus(IObject::STATUS_IGNORED);
+					$hub_object->setStatus(IObject::STATUS_IGNORED);
 				}
 				break;
 
 			case IObject::STATUS_TO_OUTDATED:
-				$this->implementation->beforeDeleteILIASObject($hook);
+				$this->implementation->beforeDeleteILIASObject($hook_object);
 
-				$this->handleDelete($object->getILIASId());
+				$this->handleDelete($hub_object->getILIASId());
 
 				if ($this->current_ilias_object === NULL) {
-					throw new ILIASObjectNotFoundException($object);
+					throw new ILIASObjectNotFoundException($hub_object);
 				}
 
-				$this->implementation->afterDeleteILIASObject($hook->withILIASObject($this->current_ilias_object));
+				$this->implementation->afterDeleteILIASObject($hook_object->withILIASObject($this->current_ilias_object));
 
-				$object->setStatus(IObject::STATUS_OUTDATED);
-				$object->setProcessedDate($time);
+				$hub_object->setStatus(IObject::STATUS_OUTDATED);
+				$hub_object->setProcessedDate($time);
 				break;
 
 			case IObject::STATUS_IGNORED:
@@ -198,10 +188,22 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 				break;
 
 			default:
-				throw new HubException("Unrecognized intermediate status '{$object->getStatus()}' while processing {$object}");
+				throw new HubException("Unrecognized intermediate status '{$hub_object->getStatus()}' while processing {$hub_object}");
 		}
 
-		$object->store();
+		if ($hub_object->getStatus() !== IObject::STATUS_TO_OUTDATED) {
+			$hub_object->setData($dto->getData());
+			if ($dto instanceof IMetadataAwareDataTransferObject
+				&& $hub_object instanceof IMetadataAwareObject) {
+				$hub_object->setMetaData($dto->getMetaData());
+			}
+			if ($dto instanceof ITaxonomyAwareDataTransferObject
+				&& $hub_object instanceof ITaxonomyAwareObject) {
+				$hub_object->setTaxonomies($dto->getTaxonomies());
+			}
+		}
+
+		$hub_object->store();
 	}
 
 

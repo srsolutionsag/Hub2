@@ -9,6 +9,7 @@ use ilHub2Plugin;
 use InvalidArgumentException;
 use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Metadata\IMetadata;
 use srag\Plugins\Hub2\Metadata\Metadata;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
@@ -55,18 +56,19 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @var array
 	 */
-	public static $available_status = [
-		IObject::STATUS_NEW => "new",
-		IObject::STATUS_TO_CREATE => "to_create",
-		IObject::STATUS_CREATED => "created",
-		IObject::STATUS_UPDATED => "updated",
-		IObject::STATUS_TO_UPDATE => "to_update",
-		IObject::STATUS_TO_OUTDATED => "to_outdated",
-		IObject::STATUS_OUTDATED => "outdated",
-		IObject::STATUS_TO_RESTORE => "to_restore",
-		IObject::STATUS_IGNORED => "ignored",
-		IObject::STATUS_FAILED => "failed"
-	];
+	public static $available_status
+		= [
+			IObject::STATUS_NEW         => "new",
+			IObject::STATUS_TO_CREATE   => "to_create",
+			IObject::STATUS_CREATED     => "created",
+			IObject::STATUS_UPDATED     => "updated",
+			IObject::STATUS_TO_UPDATE   => "to_update",
+			IObject::STATUS_TO_OUTDATED => "to_outdated",
+			IObject::STATUS_OUTDATED    => "outdated",
+			IObject::STATUS_TO_RESTORE  => "to_restore",
+			IObject::STATUS_IGNORED     => "ignored",
+			IObject::STATUS_FAILED      => "failed",
+		];
 	/**
 	 * The primary ID is a composition of the origin-ID and ext_id
 	 *
@@ -359,8 +361,10 @@ abstract class ARObject extends ActiveRecord implements IObject {
 			throw new InvalidArgumentException("'{$status}' is not a valid status");
 		}
 
-		self::logs()->originLog((new OriginFactory())->getById($this->origin_id), $this)->write("Changed status from "
-			. self::$available_status[$this->status] . " to " . self::$available_status[$status]);
+		self::logs()->originLog((new OriginFactory())->getById($this->origin_id), $this)->write(
+			"Changed status from "
+			. self::$available_status[$this->status] . " to " . self::$available_status[$status]
+		);
 
 		$this->status = $status;
 
@@ -454,12 +458,14 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	 * @return string
 	 */
 	function __toString() {
-		return implode(', ', [
+		return implode(
+			', ', [
 			"origin_id: " . $this->origin_id,
 			"type: " . get_class($this),
 			"ext_id: " . $this->getExtId(),
 			"ilias_id: " . $this->getILIASId(),
 			"status: " . $this->getStatus(),
-		]);
+		]
+		);
 	}
 }

@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilObject;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 
 /**
  * Interface IMetadataSyncProcessor
@@ -15,9 +16,10 @@ interface IMetadataSyncProcessor {
 
 	/**
 	 * @param IMetadataAwareDataTransferObject $dto
-	 * @param ilObject                         $object
+	 * @param IMetadataAwareObject             $iobject
+	 * @param ilObject                         $ilias_object
 	 *
-	 * @return mixed
+	 * @return void
 	 */
-	public function handleMetadata(IMetadataAwareDataTransferObject $dto, ilObject $object);
+	public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object);
 }
