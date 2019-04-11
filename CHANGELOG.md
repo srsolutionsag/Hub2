@@ -1,5 +1,8 @@
 # Changelog
 
+## [x]
+- Fix reset offset
+
 ## [2.2.5]
 - Optimized log table
 
