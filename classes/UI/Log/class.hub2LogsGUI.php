@@ -81,7 +81,10 @@ class hub2LogsGUI extends hub2MainGUI {
 
 		$table->writeFilterToSession();
 
-		self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		$table->resetOffset();
+
+		//self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		$this->index(); // Fix reset offset
 	}
 
 
@@ -95,7 +98,8 @@ class hub2LogsGUI extends hub2MainGUI {
 
 		$table->resetOffset();
 
-		self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		//self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		$this->index(); // Fix reset offset
 	}
 
 
