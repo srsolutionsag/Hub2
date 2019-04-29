@@ -2,6 +2,7 @@
 
 ## [x]
 - Fix reset offset
+- Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
 
 ## [2.2.5]
 - Optimized log table
