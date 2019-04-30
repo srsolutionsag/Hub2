@@ -102,8 +102,6 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 		$language_mock = Mockery::mock('overload:' . ilLanguage::class, ilObject::class);
 		$language_mock->shouldReceive('getDefaultLanguage')->andReturn('en');
 		$DIC->shouldReceive('language')->once()->andReturn($language_mock);
-
-		DICStatic::clearCache();
 	}
 
 
