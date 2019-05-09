@@ -181,7 +181,7 @@ interface ILog {
 	/**
 	 * @param int|null $object_ilias_id
 	 *
-	 * @return int
+	 * @return self
 	 */
 	public function withObjectIliasId(/*?*/
 		int $object_ilias_id = NULL): self;
