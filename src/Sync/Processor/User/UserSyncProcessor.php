@@ -61,6 +61,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		'matriculation',
 		'gender',
 		'birthday',
+		'language',
 	);
 
 
