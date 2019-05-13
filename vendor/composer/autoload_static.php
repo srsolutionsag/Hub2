@@ -18,7 +18,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
             'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
             'srag\\DIC\\Hub2\\' => 14,
-            'srag\\CustomInputGUIs\\' => 21,
+            'srag\\CustomInputGUIs\\Hub2\\' => 26,
             'srag\\ActiveRecordConfig\\Hub2\\' => 29,
         ),
         'p' => 
@@ -58,7 +58,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
-        'srag\\CustomInputGUIs\\' => 
+        'srag\\CustomInputGUIs\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/custominputguis/src',
         ),
@@ -1095,6 +1095,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Object\\IObjectFactory' => __DIR__ . '/../..' . '/src/Object/IObjectFactory.php',
         'srag\\Plugins\\Hub2\\Object\\IObjectRepository' => __DIR__ . '/../..' . '/src/Object/IObjectRepository.php',
         'srag\\Plugins\\Hub2\\Object\\ITaxonomyAwareObject' => __DIR__ . '/../..' . '/src/Object/ITaxonomyAwareObject.php',
+        'srag\\Plugins\\Hub2\\Object\\LanguageCheck' => __DIR__ . '/../..' . '/src/Object/LanguageCheck.php',
         'srag\\Plugins\\Hub2\\Object\\ObjectFactory' => __DIR__ . '/../..' . '/src/Object/ObjectFactory.php',
         'srag\\Plugins\\Hub2\\Object\\ObjectRepository' => __DIR__ . '/../..' . '/src/Object/ObjectRepository.php',
         'srag\\Plugins\\Hub2\\Object\\OrgUnitMembership\\AROrgUnitMembership' => __DIR__ . '/../..' . '/src/Object/OrgUnitMembership/AROrgUnitMembership.php',

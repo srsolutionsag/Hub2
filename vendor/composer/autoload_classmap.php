@@ -989,6 +989,7 @@ return array(
     'srag\\Plugins\\Hub2\\Object\\IObjectFactory' => $baseDir . '/src/Object/IObjectFactory.php',
     'srag\\Plugins\\Hub2\\Object\\IObjectRepository' => $baseDir . '/src/Object/IObjectRepository.php',
     'srag\\Plugins\\Hub2\\Object\\ITaxonomyAwareObject' => $baseDir . '/src/Object/ITaxonomyAwareObject.php',
+    'srag\\Plugins\\Hub2\\Object\\LanguageCheck' => $baseDir . '/src/Object/LanguageCheck.php',
     'srag\\Plugins\\Hub2\\Object\\ObjectFactory' => $baseDir . '/src/Object/ObjectFactory.php',
     'srag\\Plugins\\Hub2\\Object\\ObjectRepository' => $baseDir . '/src/Object/ObjectRepository.php',
     'srag\\Plugins\\Hub2\\Object\\OrgUnitMembership\\AROrgUnitMembership' => $baseDir . '/src/Object/OrgUnitMembership/AROrgUnitMembership.php',
