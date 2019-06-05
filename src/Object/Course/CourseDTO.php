@@ -7,6 +7,7 @@ use srag\Plugins\Hub2\Exception\LanguageCodeException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\LanguageCheck;
 
 /**
  * Class CourseDTO
@@ -19,6 +20,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 	use TaxonomyAndMetadataAwareDataTransferObject;
 	use MappingStrategyAwareDataTransferObject;
+	use LanguageCheck;
 	/**
 	 * @var array
 	 */
@@ -39,152 +41,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		self::VIEW_MODE_BY_TYPE,
 		self::VIEW_MODE_INHERIT
 	];
-	/**
-	 * Copied from ilMDLanguageItem::_getPossibleLanguageCodes
-	 *
-	 * @var string[]
-	 */
-	private static $available_languages = [
-		"aa",
-		"ab",
-		"af",
-		"am",
-		"ar",
-		"as",
-		"ay",
-		"az",
-		"ba",
-		"be",
-		"bg",
-		"bh",
-		"bi",
-		"bn",
-		"bo",
-		"br",
-		"ca",
-		"co",
-		"cs",
-		"cy",
-		"da",
-		"de",
-		"dz",
-		"el",
-		"en",
-		"eo",
-		"es",
-		"et",
-		"eu",
-		"fa",
-		"fi",
-		"fj",
-		"fo",
-		"fr",
-		"fy",
-		"ga",
-		"gd",
-		"gl",
-		"gn",
-		"gu",
-		"ha",
-		"he",
-		"hi",
-		"hr",
-		"hu",
-		"hy",
-		"ia",
-		"ie",
-		"ik",
-		"id",
-		"is",
-		"it",
-		"iu",
-		"ja",
-		"jv",
-		"ka",
-		"kk",
-		"kl",
-		"km",
-		"kn",
-		"ko",
-		"ks",
-		"ku",
-		"ky",
-		"la",
-		"ln",
-		"lo",
-		"lt",
-		"lv",
-		"mg",
-		"mi",
-		"mk",
-		"ml",
-		"mn",
-		"mo",
-		"mr",
-		"ms",
-		"mt",
-		"my",
-		"na",
-		"ne",
-		"nl",
-		"no",
-		"oc",
-		"om",
-		"or",
-		"pa",
-		"pl",
-		"ps",
-		"pt",
-		"qu",
-		"rm",
-		"rn",
-		"ro",
-		"ru",
-		"rw",
-		"sa",
-		"sd",
-		"sg",
-		"sh",
-		"si",
-		"sk",
-		"sl",
-		"sm",
-		"sn",
-		"so",
-		"sq",
-		"sr",
-		"ss",
-		"st",
-		"su",
-		"sv",
-		"sw",
-		"ta",
-		"te",
-		"tg",
-		"th",
-		"ti",
-		"tk",
-		"tl",
-		"tn",
-		"to",
-		"tr",
-		"ts",
-		"tt",
-		"tw",
-		"ug",
-		"uk",
-		"ur",
-		"uz",
-		"vi",
-		"vo",
-		"wo",
-		"xh",
-		"yi",
-		"yo",
-		"za",
-		"zh",
-		"zu"
-	];
+
 	/**
 	 * @var array
 	 */
@@ -752,15 +609,15 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 
 	/**
-	 * @param string $languageCode
+	 * @param $languageCode
 	 *
 	 * @return CourseDTO
-	 * @throws LanguageCodeException
+	 *
+	 * @throws LanguageCodeException if the passed $language is not a valid
+	 * ILIAS language code
 	 */
 	public function setLanguageCode($languageCode): CourseDTO {
-		if (!self::isLanguageCode($languageCode)) {
-			throw new LanguageCodeException($languageCode);
-		}
+		self::checkLanguageCode($languageCode);
 
 		$this->languageCode = $languageCode;
 
@@ -805,16 +662,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 		$this->icon = $icon;
 
 		return $this;
-	}
-
-
-	/**
-	 * @param string $languageCode
-	 *
-	 * @return bool
-	 */
-	public static function isLanguageCode($languageCode): bool {
-		return in_array($languageCode, self::$available_languages);
 	}
 
 

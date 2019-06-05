@@ -61,6 +61,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		'matriculation',
 		'gender',
 		'birthday',
+		'language',
 	);
 
 
@@ -137,6 +138,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 	 * @inheritdoc
 	 *
 	 * @param UserDTO $dto
+	 *
+	 * @throws \ilUserException
 	 */
 	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
