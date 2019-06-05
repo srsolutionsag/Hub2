@@ -5,9 +5,11 @@ namespace srag\Plugins\Hub2\Object\User;
 use DateTime;
 use InvalidArgumentException;
 use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
+use srag\Plugins\Hub2\Exception\LanguageCodeException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\LanguageCheck;
 
 /**
  * Class UserDTO
@@ -20,6 +22,7 @@ class UserDTO extends DataTransferObject implements IUserDTO {
 
 	use MetadataAwareDataTransferObject;
 	use MappingStrategyAwareDataTransferObject;
+	use LanguageCheck;
 	/**
 	 * @var array
 	 */
@@ -145,6 +148,10 @@ class UserDTO extends DataTransferObject implements IUserDTO {
 	 * @var string
 	 */
 	protected $birthday;
+	/**
+	 * @var string
+	 */
+	protected $language = "";
 	/**
 	 * @var array
 	 * @description usr_prop_ilias_roles_info
@@ -711,6 +718,31 @@ class UserDTO extends DataTransferObject implements IUserDTO {
 	 */
 	public function setExternalAccount($externalAccount) {
 		$this->externalAccount = $externalAccount;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getLanguage() {
+		return $this->language;
+	}
+
+
+	/**
+	 * @param $language (de, en, ...)
+	 *
+	 * @return UserDTO
+	 *
+	 * @throws LanguageCodeException if the passed $language is not a valid
+	 * ILIAS language code
+	 */
+	public function setLanguage($language) {
+		self::checkLanguageCode($language);
+
+		$this->language = $language;
 
 		return $this;
 	}
