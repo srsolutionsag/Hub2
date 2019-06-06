@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Origin\Properties\Course;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
- * Interface IOrgUnitMembershipOriginProperties
+ * Interface ICourseProperties
  *
  * @package srag\Plugins\Hub2\Origin\Properties\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
