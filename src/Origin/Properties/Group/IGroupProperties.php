@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Origin\Properties\Group;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
- * Interface IOrgUnitMembershipOriginProperties
+ * Interface IGroupProperties
  *
  * @package srag\Plugins\Hub2\Origin\Properties\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
