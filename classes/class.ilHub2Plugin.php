@@ -2,11 +2,13 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
+use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvider;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\ArConfigOld;
 use srag\Plugins\Hub2\Jobs\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Jobs\RunSync;
 use srag\Plugins\Hub2\Log\Log;
+use srag\Plugins\Hub2\Menu\Menu;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -86,6 +88,14 @@ class ilHub2Plugin extends ilCronHookPlugin {
 			default:
 				return NULL;
 		}
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider {
+		return new Menu(self::dic()->dic(), $this);
 	}
 
 
