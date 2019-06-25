@@ -1,6 +1,7 @@
 # Changelog
 
 ## [x]
+- Support ILIAS 5.4
 - Fix reset offset
 - Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
 
