@@ -2,11 +2,14 @@
 
 namespace srag\CustomInputGUIs\Hub2\PropertyFormGUI;
 
+use Closure;
 use ilFormPropertyGUI;
 use ilFormSectionHeaderGUI;
 use ilPropertyFormGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
+use ilSubEnabledFormPropertyGUI;
+use srag\CustomInputGUIs\Hub2\MultiLineInputGUI\MultiLineInputGUI;
 use srag\CustomInputGUIs\Hub2\PropertyFormGUI\Exception\PropertyFormGUIException;
 use srag\CustomInputGUIs\Hub2\PropertyFormGUI\Items\Items;
 use srag\DIC\Hub2\DICTrait;
@@ -120,9 +123,11 @@ abstract class PropertyFormGUI extends ilPropertyFormGUI {
 
 			if ($item instanceof ilFormPropertyGUI) {
 				if (!isset($field[self::PROPERTY_VALUE])) {
-					$value = $this->getValue($key);
+					if (!($parent_item instanceof MultiLineInputGUI)) {
+						$value = $this->getValue($key);
 
-					Items::setValueToItem($item, $value);
+						Items::setValueToItem($item, $value);
+					}
 				}
 			}
 
@@ -130,13 +135,24 @@ abstract class PropertyFormGUI extends ilPropertyFormGUI {
 				$this->getFields($field[self::PROPERTY_SUBITEMS], $item);
 			}
 
-			if ($parent_item instanceof ilRadioGroupInputGUI) {
-				$parent_item->addOption($item);
+			if ($parent_item instanceof MultiLineInputGUI) {
+				$parent_item->addInput($item);
 			} else {
-				if ($parent_item instanceof ilPropertyFormGUI) {
-					$parent_item->addItem($item);
+				if ($parent_item instanceof ilRadioGroupInputGUI) {
+					$parent_item->addOption($item);
 				} else {
-					$parent_item->addSubItem($item);
+					if ($parent_item instanceof ilPropertyFormGUI) {
+						$parent_item->addItem($item);
+					} else {
+						if ($item instanceof ilFormSectionHeaderGUI) {
+							// Fix 'Call to undefined method ilFormSectionHeaderGUI::setParent()'
+							Closure::bind(function (ilFormSectionHeaderGUI $item)/*:void*/ {
+								$this->sub_items[] = $item; // https://github.com/ILIAS-eLearning/ILIAS/blob/b8a2a3a203d8fb5bab988849ab43616be7379551/Services/Form/classes/class.ilSubEnabledFormPropertyGUI.php#L45
+							}, $parent_item, ilSubEnabledFormPropertyGUI::class)($item);
+						} else {
+							$parent_item->addSubItem($item);
+						}
+					}
 				}
 			}
 		}
@@ -173,6 +189,8 @@ abstract class PropertyFormGUI extends ilPropertyFormGUI {
 	protected final function storeFormCheck()/*: bool*/ {
 		$this->setValuesByPost();
 
+		$this->check_input_called = false; // Fix 'Error: ilPropertyFormGUI->checkInput() called twice.'
+
 		if (!$this->checkInput()) {
 			return false;
 		}
@@ -196,7 +214,9 @@ abstract class PropertyFormGUI extends ilPropertyFormGUI {
 				}
 
 				if (is_array($field[self::PROPERTY_SUBITEMS])) {
-					$this->storeFormItems($field[self::PROPERTY_SUBITEMS]);
+					if (!($item instanceof MultiLineInputGUI)) {
+						$this->storeFormItems($field[self::PROPERTY_SUBITEMS]);
+					}
 				}
 			}
 		}
@@ -209,10 +229,8 @@ abstract class PropertyFormGUI extends ilPropertyFormGUI {
 	 *
 	 * @return string
 	 */
-	public final function txt(/*string*/
-		$key,/*?string*/
-		$default = NULL)/*: string*/ {
-		if ($default !== NULL) {
+	public function txt(/*string*/ $key,/*?string*/ $default = null)/*: string*/ {
+		if ($default !== null) {
 			return self::plugin()->translate($key, static::LANG_MODULE, [], true, "", $default);
 		} else {
 			return self::plugin()->translate($key, static::LANG_MODULE);
@@ -255,43 +273,36 @@ abstract class PropertyFormGUI extends ilPropertyFormGUI {
 	 *
 	 * @return mixed
 	 */
-	protected abstract function getValue(/*string*/
-		$key);
+	protected abstract function getValue(/*string*/ $key);
 
 
 	/**
 	 *
 	 */
-	protected abstract function initCommands()/*: void*/
-	;
+	protected abstract function initCommands()/*: void*/ ;
 
 
 	/**
 	 *
 	 */
-	protected abstract function initFields()/*: void*/
-	;
+	protected abstract function initFields()/*: void*/ ;
 
 
 	/**
 	 *
 	 */
-	protected abstract function initId()/*: void*/
-	;
+	protected abstract function initId()/*: void*/ ;
 
 
 	/**
 	 *
 	 */
-	protected abstract function initTitle()/*: void*/
-	;
+	protected abstract function initTitle()/*: void*/ ;
 
 
 	/**
 	 * @param string $key
 	 * @param mixed  $value
 	 */
-	protected abstract function storeValue(/*string*/
-		$key, $value)/*: void*/
-	;
+	protected abstract function storeValue(/*string*/ $key, $value)/*: void*/ ;
 }

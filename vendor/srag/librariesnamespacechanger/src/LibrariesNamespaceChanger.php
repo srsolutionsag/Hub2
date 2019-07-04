@@ -18,28 +18,19 @@ final class LibrariesNamespaceChanger {
 	/**
 	 * @var self
 	 */
-	private static $instance = NULL;
+	private static $instance = null;
 	/**
 	 * @var array
 	 */
-	private static $libraries = [
-		"ActiveRecordConfig" => "ActiveRecordConfig",
-		"BexioCurl" => "BexioCurl",
-		"CustomInputGUIs" => "CustomInputGUIs",
-		"DclExtension" => "DclExtension",
-		"DIC" => "DIC",
-		"GitCurl" => "GitCurl",
-		"JasperReport" => "JasperReport",
-		"JiraCurl" => "JiraCurl",
-		"RemovePluginDataConfirm" => "RemovePluginDataConfirm"
-	];
+	private static $libraries = Libraries::LIBRARIES;
 	/**
 	 * @var array
 	 */
 	private static $exts = [
 		"json",
 		"md",
-		"php"
+		"php",
+		"xml"
 	];
 	/**
 	 * @var string
@@ -61,7 +52,7 @@ final class LibrariesNamespaceChanger {
 	 * @return self
 	 */
 	private static function getInstance(Event $event)/*: self*/ {
-		if (self::$instance === NULL) {
+		if (self::$instance === null) {
 			self::$instance = new self($event);
 		}
 
@@ -74,7 +65,7 @@ final class LibrariesNamespaceChanger {
 	 *
 	 * @internal
 	 */
-	public static function rewriteLibrariesNamespaces(Event $event) {
+	public static function rewriteLibrariesNamespaces(Event $event)/*: void*/ {
 		self::getInstance($event)->doRewriteLibrariesNamespaces();
 	}
 
@@ -103,8 +94,7 @@ final class LibrariesNamespaceChanger {
 
 		if (!empty($plugin_name)) {
 
-			$libraries = array_map(function (/*string*/
-				$library)/*: string*/ {
+			$libraries = array_map(function (/*string*/ $library)/*: string*/ {
 				return __DIR__ . "/../../" . strtolower($library);
 			}, self::$libraries);
 
@@ -162,8 +152,7 @@ final class LibrariesNamespaceChanger {
 	 * @param string $folder
 	 * @param array  $files
 	 */
-	private function getFiles(/*string*/
-		$folder, array &$files = [])/*: void*/ {
+	private function getFiles(/*string*/ $folder, array &$files = [])/*: void*/ {
 		$paths = scandir($folder);
 
 		foreach ($paths as $file) {

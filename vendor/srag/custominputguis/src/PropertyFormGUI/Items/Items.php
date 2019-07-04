@@ -7,9 +7,11 @@ use ilFormSectionHeaderGUI;
 use ilNumberInputGUI;
 use ilPropertyFormGUI;
 use ilRadioOption;
+use srag\CustomInputGUIs\Hub2\MultiLineInputGUI\MultiLineInputGUI;
 use srag\CustomInputGUIs\Hub2\PropertyFormGUI\Exception\PropertyFormGUIException;
 use srag\CustomInputGUIs\Hub2\PropertyFormGUI\PropertyFormGUI;
 use srag\CustomInputGUIs\Hub2\TableGUI\TableGUI;
+use TypeError;
 
 /**
  * Class Items
@@ -85,6 +87,11 @@ final class Items {
 	 * @return mixed
 	 */
 	public static function getValueFromItem($item) {
+		if ($item instanceof MultiLineInputGUI) {
+			//return filter_input(INPUT_POST,$item->getPostVar()); // Not work because MultiLineInputGUI modify $_POST
+			return $_POST[$item->getPostVar()];
+		}
+
 		if (method_exists($item, "getChecked")) {
 			return boolval($item->getChecked());
 		}
@@ -115,7 +122,7 @@ final class Items {
 			}
 		}
 
-		return NULL;
+		return null;
 	}
 
 
@@ -172,6 +179,14 @@ final class Items {
 	 * @param mixed                                                  $value
 	 */
 	public static function setValueToItem($item, $value)/*: void*/ {
+		if ($item instanceof MultiLineInputGUI) {
+			$item->setValueByArray([
+				$item->getPostVar() => $value
+			]);
+
+			return;
+		}
+
 		if (method_exists($item, "setChecked")) {
 			$item->setChecked($value);
 
@@ -193,6 +208,55 @@ final class Items {
 		if (method_exists($item, "setValue") && !($item instanceof ilRadioOption)) {
 			$item->setValue($value);
 		}
+	}
+
+
+	/**
+	 * @param object $object
+	 * @param string $property
+	 *
+	 * @return mixed
+	 */
+	public static function getter(/*object*/ $object,/*string*/ $property) {
+		if (method_exists($object, $method = "get" . self::strToCamelCase($property))) {
+			return $object->{$method}();
+		}
+
+		if (method_exists($object, $method = "is" . self::strToCamelCase($property))) {
+			return $object->{$method}();
+		}
+
+		return null;
+	}
+
+
+	/**
+	 * @param object $object
+	 * @param string $property
+	 * @param mixed  $value
+	 */
+	public static function setter(/*object*/ $object,/*string*/ $property, $value)/*: void*/ {
+		if (method_exists($object, $method = "set" . self::strToCamelCase($property))) {
+			try {
+				$object->{$method}($value);
+			} catch (TypeError $ex) {
+				try {
+					$object->{$method}(intval($value));
+				} catch (TypeError $ex) {
+					$object->{$method}(boolval($value));
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	public static function strToCamelCase($string) {
+		return str_replace("_", "", ucwords($string, "_"));
 	}
 
 
