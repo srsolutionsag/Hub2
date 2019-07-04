@@ -188,21 +188,7 @@ interface ILog {
 
 
 	/**
-	 *
-	 */
-	public function delete()/*: void*/
-	;
-
-
-	/**
-	 *
-	 */
-	public function store()/*: void*/
-	;
-
-
-	/**
-	 * Syntactic sugar for $log->withMessage()->withLevel()->store();
+	 * Syntactic sugar for self::logs()->storeLog($log->withMessage()->withLevel());
 	 *
 	 * @param string $message
 	 * @param int    $level
