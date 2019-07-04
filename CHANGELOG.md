@@ -2,8 +2,10 @@
 
 ## [x]
 - Support ILIAS 5.4
+- Refoctoring/Performance logs: Use native MySQL AutoIncrement and reset it after remove logs
 - Fix reset offset
 - Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
+- Delete behavior for org units and org unit memberships
 
 ## [2.2.5]
 - Optimized log table
