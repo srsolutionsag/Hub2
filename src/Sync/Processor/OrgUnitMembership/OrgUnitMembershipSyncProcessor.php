@@ -99,16 +99,24 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id)/*: void*/ {
-		$this->current_ilias_object = FakeOrgUnitMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+		switch ($this->props->get(IOrgUnitMembershipProperties::DELETE_MODE)) {
+			case IOrgUnitMembershipProperties::DELETE_MODE_DELETE:
+				$this->current_ilias_object = FakeOrgUnitMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-		$assignment = ilOrgUnitUserAssignment::where([
-			"orgu_id" => $this->current_ilias_object->getContainerIdIlias(),
-			"user_id" => $this->current_ilias_object->getUserIdIlias(),
-			"position_id" => $this->current_ilias_object->getPositionId()
-		])->first();
+				$assignment = ilOrgUnitUserAssignment::where([
+					"orgu_id" => $this->current_ilias_object->getContainerIdIlias(),
+					"user_id" => $this->current_ilias_object->getUserIdIlias(),
+					"position_id" => $this->current_ilias_object->getPositionId()
+				])->first();
 
-		if ($assignment !== NULL) {
-			$assignment->delete();
+				if ($assignment !== null) {
+					$assignment->delete();
+				}
+				break;
+
+			case IOrgUnitMembershipProperties::DELETE_MODE_NONE:
+			default:
+				break;
 		}
 	}
 

@@ -392,6 +392,9 @@ orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (W
 orgunit_delete_mode#:#Löschverhalten
 orgunit_delete_mode_none#:#Keine Aktion
 orgunit_delete_mode_delete#:#Löschen
+orgunitmembership_delete_mode#:#Löschverhalten
+orgunitmembership_delete_mode_none#:#Keine Aktion
+orgunitmembership_delete_mode_delete#:#Löschen
 data_table_status_new#:#Neu
 data_table_status_to_create#:#Zu erstellen
 data_table_status_created#:#Erstellt
