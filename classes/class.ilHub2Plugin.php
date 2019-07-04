@@ -107,6 +107,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
 		self::dic()->database()->dropTable(Log::TABLE_NAME, false);
+		self::dic()->database()->dropAutoIncrementTable(Log::TABLE_NAME);
 
 		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 	}

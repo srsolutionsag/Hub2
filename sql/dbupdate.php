@@ -134,3 +134,11 @@ foreach ((new \srag\Plugins\Hub2\Origin\OriginFactory())->getAllActive() as $ori
 	"length" => 255
 ]);
 ?>
+<#16>
+<?php
+if (\srag\DIC\Hub2\DICStatic::dic()->database()->sequenceExists(\srag\Plugins\Hub2\Log\Log::TABLE_NAME)) {
+	\srag\DIC\Hub2\DICStatic::dic()->database()->dropSequence(\srag\Plugins\Hub2\Log\Log::TABLE_NAME);
+}
+
+\srag\DIC\Hub2\DICStatic::dic()->database()->createAutoIncrement(\srag\Plugins\Hub2\Log\Log::TABLE_NAME, "log_id"); // Using MySQL native autoincrement for performance
+?>

@@ -9,8 +9,10 @@ use ilSelectInputGUI;
 use ilTextInputGUI;
 use srag\CustomInputGUIs\Hub2\DateDurationInputGUI\DateDurationInputGUI;
 use srag\CustomInputGUIs\Hub2\NumberInputGUI\NumberInputGUI;
+use srag\CustomInputGUIs\Hub2\PropertyFormGUI\Items\Items;
 use srag\CustomInputGUIs\Hub2\PropertyFormGUI\PropertyFormGUI;
 use srag\CustomInputGUIs\Hub2\TableGUI\TableGUI;
+use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
@@ -32,45 +34,47 @@ class LogsTableGUI extends TableGUI {
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param ILog $row
 	 */
 	protected function getColumnValue(/*string*/
-		$column, /*array*/
+		$column, /*ILog*/
 		$row, /*bool*/
 		$raw_export = false): string {
+		$value = Items::getter($row, $column);
+
 		switch ($column) {
 			case "level":
-				$column = $this->txt("level_" . $row[$column]);
+				$value = $this->txt("level_" . $value);
 				break;
 
 			case "origin_object_type":
-				$column = self::plugin()->translate("origin_object_type_" . $row[$column]);
+				$value = self::plugin()->translate("origin_object_type_" . $value);
 				break;
 
 			case "additional_data":
-				$column = $row[$column];
-				if (!is_object($column)) {
-					$column = json_decode($column);
+				if (!is_object($value)) {
+					$value = json_decode($value);
 				}
-				if (!is_object($column)) {
-					$column = new stdClass();
+				if (!is_object($value)) {
+					$value = new stdClass();
 				}
-				$column = get_object_vars($column);
+				$value = get_object_vars($value);
 
-				$column = implode("<br>", array_map(function (string $key, $value): string {
+				$value = implode("<br>", array_map(function (string $key, $value): string {
 					return "$key: $value";
-				}, array_keys($column), $column));
+				}, array_keys($value), $value));
 
-				if (empty($column)) {
-					$column = self::plugin()->translate("no_additional_data", hub2LogsGUI::LANG_MODULE_LOGS);
+				if (empty($value)) {
+					$value = self::plugin()->translate("no_additional_data", hub2LogsGUI::LANG_MODULE_LOGS);
 				}
 				break;
 
 			default:
-				$column = $row[$column];
 				break;
 		}
 
-		return strval($column);
+		return strval($value);
 	}
 
 
@@ -170,10 +174,8 @@ class LogsTableGUI extends TableGUI {
 		}
 		$additional_data = $filter["additional_data"];
 
-		$columns = array_keys($this->getSelectedColumns());
-
 		$this->setData(self::logs()
-			->getLogs($columns, $this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
+			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
 
 		$this->setMaxCount(self::logs()
 			->getLogsCount($title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
