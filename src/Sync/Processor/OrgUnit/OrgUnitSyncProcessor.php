@@ -44,7 +44,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	/**
 	 * @var ilObjOrgUnit|null
 	 */
-	protected $current_ilias_object = NULL;
+	protected $current_ilias_object = null;
 
 
 	/**
@@ -195,9 +195,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 		$this->current_ilias_object->update();
 
-		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
-			|| $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)) {
-			$this->moveOrgUnit($dto);
+		if ($this->props->get(IOrgUnitProperties::MOVE)) {
+			if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
+				|| $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)) {
+				$this->moveOrgUnit($dto);
+			}
 		}
 	}
 
@@ -232,7 +234,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	protected function getOrgUnitObject(int $obj_id) {
 		$ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
 		if (empty($ref_id)) {
-			return NULL;
+			return null;
 		}
 
 		$orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
@@ -240,7 +242,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		if (!empty($orgUnit) && $orgUnit instanceof ilObjOrgUnit) {
 			return $orgUnit;
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 

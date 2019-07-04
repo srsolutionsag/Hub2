@@ -16,6 +16,10 @@ interface IOrgUnitProperties extends IOriginProperties {
 	/**
 	 * @var string
 	 */
+	const MOVE = "move";
+	/**
+	 * @var string
+	 */
 	const DELETE_MODE = "delete_mode";
 	/**
 	 * @var int

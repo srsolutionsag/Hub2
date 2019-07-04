@@ -392,6 +392,7 @@ orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (W
 orgunit_delete_mode#:#Löschverhalten
 orgunit_delete_mode_none#:#Keine Aktion
 orgunit_delete_mode_delete#:#Löschen
+orgunit_move#:#Verschieben
 orgunitmembership_delete_mode#:#Löschverhalten
 orgunitmembership_delete_mode_none#:#Keine Aktion
 orgunitmembership_delete_mode_delete#:#Löschen

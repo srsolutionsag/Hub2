@@ -393,6 +393,7 @@ orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent I
 orgunit_delete_mode#:#Delete behavior
 orgunit_delete_mode_none#:#No action
 orgunit_delete_mode_delete#:#Delete
+orgunit_move#:#Move
 orgunitmembership_delete_mode#:#Delete behavior
 orgunitmembership_delete_mode_none#:#No action
 orgunitmembership_delete_mode_delete#:#Delete
