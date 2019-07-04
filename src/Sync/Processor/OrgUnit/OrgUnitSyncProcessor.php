@@ -44,7 +44,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	/**
 	 * @var ilObjOrgUnit|null
 	 */
-	protected $current_ilias_object = null;
+	protected $current_ilias_object = NULL;
 
 
 	/**
