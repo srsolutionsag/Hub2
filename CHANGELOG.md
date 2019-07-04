@@ -3,6 +3,7 @@
 ## [x]
 - Fix reset offset
 - Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
+- Delete behavior for org units and org unit memberships
 
 ## [2.2.5]
 - Optimized log table
