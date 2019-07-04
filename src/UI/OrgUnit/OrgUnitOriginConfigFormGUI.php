@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\UI\OrgUnit;
 
+use ilCheckboxInputGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilTextInputGUI;
@@ -52,6 +53,10 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI {
 	 */
 	protected function addPropertiesUpdate() {
 		parent::addPropertiesUpdate();
+
+		$cb = new ilCheckboxInputGUI(self::plugin()->translate("orgunit_move"), $this->prop(IOrgUnitProperties::MOVE));
+		$cb->setChecked($this->origin->properties()->get(IOrgUnitProperties::MOVE));
+		$this->addItem($cb);
 	}
 
 

@@ -195,9 +195,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 		$this->current_ilias_object->update();
 
-		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
-			|| $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)) {
-			$this->moveOrgUnit($dto);
+		if ($this->props->get(IOrgUnitProperties::MOVE)) {
+			if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
+				|| $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)) {
+				$this->moveOrgUnit($dto);
+			}
 		}
 	}
 
