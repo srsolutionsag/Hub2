@@ -389,6 +389,9 @@ summary_notification#:#Hub2: Zusammenfassung für %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.
+orgunit_delete_mode#:#Löschverhalten
+orgunit_delete_mode_none#:#Keine Aktion
+orgunit_delete_mode_delete#:#Löschen
 data_table_status_new#:#Neu
 data_table_status_to_create#:#Zu erstellen
 data_table_status_created#:#Erstellt

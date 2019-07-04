@@ -206,13 +206,24 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 * @inheritdoc
 	 */
 	protected function handleDelete($ilias_id)/*: void*/ {
-		$this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
+		switch ($this->props->get(IOrgUnitProperties::DELETE_MODE)) {
+			case IOrgUnitProperties::DELETE_MODE_DELETE:
+				if ($this->props->get(GroupProperties::DELETE_MODE) == GroupProperties::DELETE_MODE_NONE) {
+					return;
+				}
+				$this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
 
-		if (empty($this->current_ilias_object)) {
-			return;
+				if (empty($this->current_ilias_object)) {
+					return;
+				}
+
+				self::dic()->tree()->moveToTrash($this->current_ilias_object->getRefId(), true);
+				break;
+
+			case IOrgUnitProperties::DELETE_MODE_NONE:
+			default:
+				break;
 		}
-
-		self::dic()->tree()->moveToTrash($this->current_ilias_object->getRefId(), true);
 	}
 
 
