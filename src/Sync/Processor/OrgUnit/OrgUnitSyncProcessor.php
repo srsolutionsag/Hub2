@@ -234,7 +234,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	protected function getOrgUnitObject(int $obj_id) {
 		$ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
 		if (empty($ref_id)) {
-			return null;
+			return NULL;
 		}
 
 		$orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
@@ -242,7 +242,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		if (!empty($orgUnit) && $orgUnit instanceof ilObjOrgUnit) {
 			return $orgUnit;
 		} else {
-			return null;
+			return NULL;
 		}
 	}
 
