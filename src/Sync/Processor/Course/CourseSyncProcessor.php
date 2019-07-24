@@ -416,8 +416,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CourseDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
+
 		$this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
 		if ($ilObjCourse === NULL) {
 			return;

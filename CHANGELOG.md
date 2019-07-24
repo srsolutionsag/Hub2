@@ -2,6 +2,7 @@
 
 ## [2.3.0]
 - Support ILIAS 5.4
+- Pass also the dto object to `handleDelete`
 - Refoctoring/Performance logs: Use native MySQL AutoIncrement and reset it after remove logs
 - Fix reset offset
 - Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
