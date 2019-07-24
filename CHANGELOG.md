@@ -2,6 +2,7 @@
 
 ## [2.3.0]
 - Support ILIAS 5.4
+- Fix missing `srag\Plugins\Hub2\Origin\AbstractOriginImplementation` import in origin class template
 - Refoctoring/Performance logs: Use native MySQL AutoIncrement and reset it after remove logs
 - Fix reset offset
 - Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
