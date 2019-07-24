@@ -32,9 +32,9 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	/**
 	 * @param string $title
 	 *
-	 * @return IOrgUnitDTO
+	 * @return self
 	 */
-	public function setTitle(string $title): IOrgUnitDTO;
+	public function setTitle(string $title): self;
 
 
 	/**
@@ -46,9 +46,9 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	/**
 	 * @param string $description
 	 *
-	 * @return IOrgUnitDTO
+	 * @return self
 	 */
-	public function setDescription(string $description): IOrgUnitDTO;
+	public function setDescription(string $description): self;
 
 
 	/**
@@ -60,23 +60,23 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	/**
 	 * @param int $owner
 	 *
-	 * @return IOrgUnitDTO
+	 * @return self
 	 */
-	public function setOwner(int $owner): IOrgUnitDTO;
+	public function setOwner(int $owner): self;
 
 
 	/**
-	 * @return int|string|null
+	 * @return string
 	 */
-	public function getParentId();
+	public function getParentId(): string;
 
 
 	/**
-	 * @param int|string|null $parent_id
+	 * @param string $parent_id
 	 *
-	 * @return IOrgUnitDTO
+	 * @return self
 	 */
-	public function setParentId($parent_id): IOrgUnitDTO;
+	public function setParentId(string $parent_id): self;
 
 
 	/**
@@ -88,9 +88,9 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	/**
 	 * @param int $parent_id_type
 	 *
-	 * @return IOrgUnitDTO
+	 * @return self
 	 */
-	public function setParentIdType(int $parent_id_type): IOrgUnitDTO;
+	public function setParentIdType(int $parent_id_type): self;
 
 
 	/**
@@ -102,9 +102,9 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	/**
 	 * @param string $org_unit_type
 	 *
-	 * @return IOrgUnitDTO
+	 * @return self
 	 */
-	public function setOrgUnitType(string $org_unit_type): IOrgUnitDTO;
+	public function setOrgUnitType(string $org_unit_type): self;
 
 
 	/**
@@ -116,7 +116,7 @@ interface IOrgUnitDTO extends IDataTransferObject {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return IOrgUnitDTO
+	 * @return self
 	 */
-	public function setExtId(string $ext_id): IOrgUnitDTO;
+	public function setExtId(string $ext_id): self;
 }
