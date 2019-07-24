@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Origin;
 
-use Exception;
 use ilCSVReader;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
