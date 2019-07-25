@@ -7,6 +7,7 @@ use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Object\HookObject;
+use srag\Plugins\Hub2\Origin\AbstractOriginImplementation;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use stdClass;
