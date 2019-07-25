@@ -202,21 +202,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	/**
 	 * Executed before the synchronization of the origin is executed.
 	 */
-	public function beforeSync() {
-		/*AROrgUnit::truncateDB();
-
-		$result = self::dic()->database()->queryF("SELECT obj_id FROM object_data WHERE type=%s AND title!=%s", [ "string", "string" ], [
-			"orgu",
-			"__OrgUnitAdministration"
-		]);
-		while ($r = $result->fetchAssoc()) {
-			/**
-			 * @var ilObjOrgUnit $orgUnit
-			 * /
-			$orgUnit = ilObjectFactory::getInstanceByObjId($r["obj_id"]);
-			$orgUnit->delete();
-		}*/
-	}
+	public function beforeSync() { }
 
 
 	/**

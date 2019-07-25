@@ -195,9 +195,7 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 	/**
 	 * Executed before the synchronization of the origin is executed.
 	 */
-	public function beforeSync() {
-		//AROrgUnitMembership::truncateDB();
-	}
+	public function beforeSync() { }
 
 
 	/**
