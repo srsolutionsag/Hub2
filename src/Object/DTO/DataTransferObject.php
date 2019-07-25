@@ -190,4 +190,3 @@ abstract class DataTransferObject implements IDataTransferObject {
 		}
 	}
 }
-
