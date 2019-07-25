@@ -147,8 +147,10 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param SessionDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
 		if ($ilObjSession === NULL) {
 			return;

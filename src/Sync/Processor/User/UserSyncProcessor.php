@@ -214,8 +214,10 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param UserDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
 		if ($ilObjUser === NULL) {
 			return;
