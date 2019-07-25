@@ -180,7 +180,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			case IObject::STATUS_TO_OUTDATED:
 				$this->implementation->beforeDeleteILIASObject($hook);
 
-				$this->handleDelete($object->getILIASId());
+				$this->handleDelete($dto, $object->getILIASId());
 
 				if ($this->current_ilias_object === NULL) {
 					throw new ILIASObjectNotFoundException($object);
@@ -277,12 +277,13 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 * Delete the corresponding ILIAS object.
 	 * Return the deleted ILIAS object or null if the object was not found in ILIAS.
 	 *
+	 * @param IDataTransferObject $dto
 	 * @param int $ilias_id
 	 *
 	 * @return void
 	 *
 	 * @throws HubException
 	 */
-	protected abstract function handleDelete($ilias_id)/*: void*/
+	protected abstract function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
 	;
 }
