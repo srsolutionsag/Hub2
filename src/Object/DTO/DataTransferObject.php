@@ -77,8 +77,8 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 */
 	public function getData() {
 		$data = [];
-		foreach ($this->getProperties() as $var) {
-			$data[$var] = $this->{$var};
+		foreach ($this->getProperties() as $key) {
+			$this->sleepValue($data, $key);
 		}
 
 		return $data;
@@ -89,9 +89,9 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 * @inheritdoc
 	 */
 	public function setData(array $data) {
-		foreach ($data as $key => $value) {
+		foreach (array_keys($data) as $key) {
 			if ($key !== "should_deleted") {
-				$this->{$key} = $value;
+				$this->wakeUpValue($data, $key);
 			}
 		}
 
@@ -158,5 +158,29 @@ abstract class DataTransferObject implements IDataTransferObject {
 		$this->additionalData = serialize($additionalData);
 
 		return $this;
+	}
+
+
+	/**
+	 * @param array  $data
+	 * @param string $key
+	 */
+	protected function sleepValue(array &$data, string $key) {
+		switch ($key) {
+			default:
+				$data[$key] = $this->{$key};
+		}
+	}
+
+
+	/**
+	 * @param array  $data
+	 * @param string $key
+	 */
+	protected function wakeUpValue(array $data, string $key) {
+		switch ($key) {
+			default:
+				$this->{$key} = $data[$key];
+		}
 	}
 }
