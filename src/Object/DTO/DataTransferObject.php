@@ -89,7 +89,7 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 * @inheritdoc
 	 */
 	public function setData(array $data) {
-		foreach ($data as $key => $value) {
+		foreach (array_values($data) as $key) {
 			if ($key !== "should_deleted") {
 				$this->wakeUpValue($data, $key);
 			}
