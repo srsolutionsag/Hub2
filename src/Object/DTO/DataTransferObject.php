@@ -177,7 +177,7 @@ abstract class DataTransferObject implements IDataTransferObject {
 	 * @param array  $data
 	 * @param string $key
 	 */
-	protected function wakeUpValue(array &$data, string $key) {
+	protected function wakeUpValue(array $data, string $key) {
 		switch ($key) {
 			default:
 				$this->{$key} = $data[$key];
