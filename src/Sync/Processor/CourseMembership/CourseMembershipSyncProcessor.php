@@ -107,8 +107,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CourseMembershipDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		if ($this->props->get(CourseMembershipProperties::DELETE_MODE) == CourseMembershipProperties::DELETE_MODE_NONE) {

@@ -10,8 +10,8 @@ use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
 use srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO;
-use srag\Plugins\Hub2\Object\OrgUnit\OrgUnitDTO;
-use srag\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
+use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
+use srag\Plugins\Hub2\Object\OrgUnitMembership\IOrgUnitMembershipDTO;
 use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
@@ -30,12 +30,12 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy {
 			case ($dto instanceof UserDTO):
 			case ($dto instanceof CourseMembershipDTO):
 			case ($dto instanceof GroupMembershipDTO):
-			case ($dto instanceof OrgUnitMembershipDTO):
+			case ($dto instanceof IOrgUnitMembershipDTO):
 				throw new HubException("Mapping using Title not supported for this type of DTO");
 				break;
 			case ($dto instanceof GroupDTO):
 			case ($dto instanceof CourseDTO):
-			case ($dto instanceof OrgUnitDTO):
+			case ($dto instanceof IOrgUnitDTO):
 			case ($dto instanceof CategoryDTO):
 				if ($dto->getParentIdType() != CourseDTO::PARENT_ID_TYPE_REF_ID) {
 					return 0;
@@ -69,7 +69,7 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy {
 				return "grp";
 			case ($dto instanceof CourseDTO):
 				return "crs";
-			case ($dto instanceof OrgUnitDTO):
+			case ($dto instanceof IOrgUnitDTO):
 				return "orgu";
 			case ($dto instanceof CategoryDTO):
 				return "cat";

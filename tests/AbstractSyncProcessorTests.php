@@ -6,7 +6,10 @@ use ILIAS\DI\Container;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use Pimple\Container as PimpleContainer;
-use srag\DIC\Hub2\DICStatic;
+use srag\Plugins\Hub2\Log\Factory as LogFactory;
+use srag\Plugins\Hub2\Log\IFactory as ILogFactory;
+use srag\Plugins\Hub2\Log\IRepository as ILogRepository;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
@@ -72,6 +75,7 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 	protected function setupGeneralDependencies() {
 		$this->initStatusTransitions();
 		$this->initDIC();
+		$this->initLog();
 	}
 
 
@@ -102,8 +106,15 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests {
 		$language_mock = Mockery::mock('overload:' . ilLanguage::class, ilObject::class);
 		$language_mock->shouldReceive('getDefaultLanguage')->andReturn('en');
 		$DIC->shouldReceive('language')->once()->andReturn($language_mock);
+	}
 
-		DICStatic::clearCache();
+
+	/**
+	 *
+	 */
+	protected function initLog()/*: void*/ {
+		LogRepository::setInstance(Mockery::mock(ILogRepository::class));
+		LogFactory::setInstance(Mockery::mock(ILogFactory::class));
 	}
 
 

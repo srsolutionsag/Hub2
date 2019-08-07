@@ -43,7 +43,8 @@ class hub2DataGUI extends hub2MainGUI {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 		$table->writeFilterToSession();
 		$table->resetOffset();
-		self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		//self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		$this->index(); // Fix reset offset
 	}
 
 
@@ -54,7 +55,8 @@ class hub2DataGUI extends hub2MainGUI {
 		$table = new DataTableGUI($this, self::CMD_INDEX);
 		$table->resetFilter();
 		$table->resetOffset();
-		self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		//self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+		$this->index(); // Fix reset offset
 	}
 
 

@@ -17,7 +17,8 @@ use stdClass;
  * Class demoOrgUnitMembership
  *
  * @package srag\Plugins\Hub2\Origin
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class demoOrgUnitMembership extends AbstractOriginImplementation {
 
@@ -194,9 +195,7 @@ class demoOrgUnitMembership extends AbstractOriginImplementation {
 	/**
 	 * Executed before the synchronization of the origin is executed.
 	 */
-	public function beforeSync() {
-		//AROrgUnitMembership::truncateDB();
-	}
+	public function beforeSync() { }
 
 
 	/**

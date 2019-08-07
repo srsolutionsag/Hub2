@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.3.0]
+- Support ILIAS 5.4
+- Optimize `handleSort` in org unit
+- Pass also the dto object to `handleDelete`
+- Fix missing `srag\Plugins\Hub2\Origin\AbstractOriginImplementation` import in origin class template
+- Refoctoring/Performance logs: Use native MySQL AutoIncrement and reset it after remove logs
+- `wakeUpValue`/`sleepValue` for `DataTransferObject`
+- Fix reset offset
+- Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
+- Config nove behavior for org units
+- Config delete behavior for org units and org unit memberships
+
 ## [2.2.5]
 - Optimized log table
 

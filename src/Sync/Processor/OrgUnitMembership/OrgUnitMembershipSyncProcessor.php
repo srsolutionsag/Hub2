@@ -86,7 +86,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_ORG_UNIT_ID_TYPE)
 			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_USER_ID)
 			|| $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_POSITION)) {
-			$this->handleDelete($ilias_id);
+			$this->handleDelete($dto, $ilias_id);
 
 			$this->handleCreate($dto);
 		} else {
@@ -97,18 +97,28 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param IOrgUnitMembershipDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
-		$this->current_ilias_object = FakeOrgUnitMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
+		switch ($this->props->get(IOrgUnitMembershipProperties::DELETE_MODE)) {
+			case IOrgUnitMembershipProperties::DELETE_MODE_DELETE:
+				$this->current_ilias_object = FakeOrgUnitMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-		$assignment = ilOrgUnitUserAssignment::where([
-			"orgu_id" => $this->current_ilias_object->getContainerIdIlias(),
-			"user_id" => $this->current_ilias_object->getUserIdIlias(),
-			"position_id" => $this->current_ilias_object->getPositionId()
-		])->first();
+				$assignment = ilOrgUnitUserAssignment::where([
+					"orgu_id" => $this->current_ilias_object->getContainerIdIlias(),
+					"user_id" => $this->current_ilias_object->getUserIdIlias(),
+					"position_id" => $this->current_ilias_object->getPositionId()
+				])->first();
 
-		if ($assignment !== NULL) {
-			$assignment->delete();
+				if ($assignment !== null) {
+					$assignment->delete();
+				}
+				break;
+
+			case IOrgUnitMembershipProperties::DELETE_MODE_NONE:
+			default:
+				break;
 		}
 	}
 
@@ -181,7 +191,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
 			case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_OBJ_ID:
 			default:
-				$org_unit_id = $dto->getOrgUnitId();
+				$org_unit_id = intval($dto->getOrgUnitId());
 				break;
 		}
 

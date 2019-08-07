@@ -1,21 +1,21 @@
 <?php
 
-namespace srag\CustomInputGUIs\Hub2\ViewControlModeGUI;
+namespace srag\CustomInputGUIs\Hub2\ViewControlModeUI;
 
 use ilSession;
 use srag\DIC\Hub2\DICTrait;
 
 /**
- * Class ViewControlModeGUI
+ * Class ViewControlModeUI
  *
- * @package srag\CustomInputGUIs\Hub2\ViewControlModeGUI
+ * @package srag\CustomInputGUIs\Hub2\ViewControlModeUI
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ViewControlModeGUI {
+class ViewControlModeUI {
 
-	const CMD_HANDLE_BUTTONS = "ViewControlModeGUIHandleButtons";
 	use DICTrait;
+	const CMD_HANDLE_BUTTONS = "ViewControlModeUIHandleButtons";
 	/**
 	 * @var array
 	 */
@@ -35,7 +35,7 @@ class ViewControlModeGUI {
 
 
 	/**
-	 * ViewControlModeGUI constructor
+	 * ViewControlModeUI constructor
 	 */
 	public function __construct() {
 
@@ -110,7 +110,7 @@ class ViewControlModeGUI {
 	/**
 	 *
 	 */
-	public function handleButtons() {
+	public function handleButtons()/*: void*/ {
 		$active_id = filter_input(INPUT_GET, self::CMD_HANDLE_BUTTONS);
 
 		ilSession::set(self::CMD_HANDLE_BUTTONS . "_" . $this->id, $active_id);
@@ -125,7 +125,7 @@ class ViewControlModeGUI {
 	public function getActiveId(): string {
 		$active_id = ilSession::get(self::CMD_HANDLE_BUTTONS . "_" . $this->id);
 
-		if ($active_id === NULL || !isset($this->buttons[$active_id])) {
+		if ($active_id === null || !isset($this->buttons[$active_id])) {
 			return $active_id = $this->default_active_id;
 		}
 

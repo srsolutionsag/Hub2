@@ -390,6 +390,13 @@ summary_notification#:#Hub2: Summary for %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Base ref ID
 orgunit_ref_id_if_no_parent_id_info#:#Base ref ID of an org unit (If no parent ID set). If set this to 0, the root org unit will be used.
+orgunit_delete_mode#:#Delete behavior
+orgunit_delete_mode_none#:#No action
+orgunit_delete_mode_delete#:#Delete
+orgunit_move#:#Move
+orgunitmembership_delete_mode#:#Delete behavior
+orgunitmembership_delete_mode_none#:#No action
+orgunitmembership_delete_mode_delete#:#Delete
 data_table_status_new#:#New
 data_table_status_to_create#:#To create
 data_table_status_created#:#Created

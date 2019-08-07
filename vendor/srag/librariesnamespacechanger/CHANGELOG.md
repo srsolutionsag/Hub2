@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.6.6]
+- AssessmentQuestion
+
+## [0.6.5]
+- TableUI
+
+## [0.6.4]
+- IliasComponentCourse/IliasComponentUser
+
+## [0.6.3]
+- XML files
+
+## [0.6.2]
+- IliasComponent
+
+## [0.6.1]
+- PHP7Backport
+
+## [0.6.0]
+- PHP7Backport
+
+## [0.5.3]
+- Notifications4Plugin
+
+## [0.5.2]
+- CommentsUI
+
 ## [0.5.1]
 - Fixes
 

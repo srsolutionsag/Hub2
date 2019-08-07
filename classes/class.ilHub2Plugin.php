@@ -2,11 +2,13 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
+use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvider;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Config\ArConfigOld;
 use srag\Plugins\Hub2\Jobs\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Jobs\RunSync;
 use srag\Plugins\Hub2\Log\Log;
+use srag\Plugins\Hub2\Menu\Menu;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -92,6 +94,14 @@ class ilHub2Plugin extends ilCronHookPlugin {
 	/**
 	 * @inheritdoc
 	 */
+	public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider {
+		return new Menu(self::dic()->dic(), $this);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
 	protected function deleteData()/*: void*/ {
 		self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
 		self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
@@ -107,6 +117,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
 		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
 		self::dic()->database()->dropTable(Log::TABLE_NAME, false);
+		self::dic()->database()->dropAutoIncrementTable(Log::TABLE_NAME);
 
 		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 	}

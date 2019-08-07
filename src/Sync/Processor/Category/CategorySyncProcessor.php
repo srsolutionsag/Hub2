@@ -143,8 +143,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CategoryDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === NULL) {
 			return;

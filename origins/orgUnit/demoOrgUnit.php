@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Origin;
 
-use Exception;
 use ilCSVReader;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
@@ -18,7 +17,8 @@ use stdClass;
  * Class demoOrgUnit
  *
  * @package srag\Plugins\Hub2\Origin
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class demoOrgUnit extends AbstractOriginImplementation {
 
@@ -202,21 +202,7 @@ class demoOrgUnit extends AbstractOriginImplementation {
 	/**
 	 * Executed before the synchronization of the origin is executed.
 	 */
-	public function beforeSync() {
-		/*AROrgUnit::truncateDB();
-
-		$result = self::dic()->database()->queryF("SELECT obj_id FROM object_data WHERE type=%s AND title!=%s", [ "string", "string" ], [
-			"orgu",
-			"__OrgUnitAdministration"
-		]);
-		while ($r = $result->fetchAssoc()) {
-			/**
-			 * @var ilObjOrgUnit $orgUnit
-			 * /
-			$orgUnit = ilObjectFactory::getInstanceByObjId($r["obj_id"]);
-			$orgUnit->delete();
-		}*/
-	}
+	public function beforeSync() { }
 
 
 	/**

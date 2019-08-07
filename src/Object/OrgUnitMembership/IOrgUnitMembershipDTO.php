@@ -32,17 +32,17 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject {
 
 
 	/**
-	 * @return int|string
+	 * @return string
 	 */
-	public function getOrgUnitId();
+	public function getOrgUnitId(): string;
 
 
 	/**
-	 * @param int|string $org_unit_id
+	 * @param string $org_unit_id
 	 *
-	 * @return IOrgUnitMembershipDTO
+	 * @return self
 	 */
-	public function setOrgUnitId($org_unit_id): IOrgUnitMembershipDTO;
+	public function setOrgUnitId(string $org_unit_id): self;
 
 
 	/**
@@ -54,9 +54,9 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject {
 	/**
 	 * @param int $org_unit_id_type
 	 *
-	 * @return IOrgUnitMembershipDTO
+	 * @return self
 	 */
-	public function setOrgUnitIdType(int $org_unit_id_type): IOrgUnitMembershipDTO;
+	public function setOrgUnitIdType(int $org_unit_id_type): self;
 
 
 	/**
@@ -68,9 +68,9 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject {
 	/**
 	 * @param int $user_id
 	 *
-	 * @return IOrgUnitMembershipDTO
+	 * @return self
 	 */
-	public function setUserId(int $user_id): IOrgUnitMembershipDTO;
+	public function setUserId(int $user_id): self;
 
 
 	/**
@@ -82,7 +82,7 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject {
 	/**
 	 * @param int $position
 	 *
-	 * @return IOrgUnitMembershipDTO
+	 * @return self
 	 */
-	public function setPosition(int $position): IOrgUnitMembershipDTO;
+	public function setPosition(int $position): self;
 }
