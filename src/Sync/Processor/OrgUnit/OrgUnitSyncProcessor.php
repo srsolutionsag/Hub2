@@ -190,6 +190,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	}
 
 
+
 	/**
 	 * @inheritdoc
 	 *
@@ -204,7 +205,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 					return;
 				}
 
-				self::dic()->tree()->moveToTrash($this->current_ilias_object->getRefId(), true);
+				$this->current_ilias_object->delete();
+
 				break;
 
 			case IOrgUnitProperties::DELETE_MODE_NONE:
