@@ -1,5 +1,8 @@
 # Changelog
 
+## [x]
+- Fix install log
+
 ## [2.3.0]
 - Support ILIAS 5.4
 - Optimize `handleSort` in org unit
