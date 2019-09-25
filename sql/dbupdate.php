@@ -81,7 +81,11 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#8>
 <?php
-\srag\Plugins\Hub2\Log\Log::updateDB();
+try {
+    \srag\Plugins\Hub2\Log\Log::updateDB();
+} catch (\Throwable $ex) {
+    // Fix Call to a member function getName() on null (Because not use ILIAS sequence)
+}
 ?>
 <#9>
 <?php
@@ -99,7 +103,11 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#10>
 <?php
-\srag\Plugins\Hub2\Log\Log::updateDB();
+try {
+    \srag\Plugins\Hub2\Log\Log::updateDB();
+} catch (\Throwable $ex) {
+    // Fix Call to a member function getName() on null (Because not use ILIAS sequence)
+}
 ?>
 <#11>
 <?php
@@ -107,7 +115,11 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#12>
 <?php
-\srag\Plugins\Hub2\Log\Log::updateDB();
+try {
+    \srag\Plugins\Hub2\Log\Log::updateDB();
+} catch (\Throwable $ex) {
+    // Fix Call to a member function getName() on null (Because not use ILIAS sequence)
+}
 ?>
 <#13>
 <?php
