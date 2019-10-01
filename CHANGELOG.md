@@ -2,6 +2,7 @@
 
 ## [x]
 - Fix install log
+- Fix language keys with line break
 
 ## [2.3.0]
 - Support ILIAS 5.4
