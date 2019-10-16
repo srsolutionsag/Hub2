@@ -154,3 +154,7 @@ if (\srag\DIC\Hub2\DICStatic::dic()->database()->sequenceExists(\srag\Plugins\Hu
 
 \srag\DIC\Hub2\DICStatic::dic()->database()->createAutoIncrement(\srag\Plugins\Hub2\Log\Log::TABLE_NAME, "log_id"); // Using MySQL native autoincrement for performance
 ?>
+<#17>
+<?php
+\srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement::updateDB();
+?>

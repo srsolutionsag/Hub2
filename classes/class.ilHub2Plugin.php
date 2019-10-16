@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Jobs\RunSync;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Menu\Menu;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use srag\Plugins\Hub2\Object\Group\ARGroup;
@@ -118,6 +119,7 @@ class ilHub2Plugin extends ilCronHookPlugin {
 		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
 		self::dic()->database()->dropTable(Log::TABLE_NAME, false);
 		self::dic()->database()->dropAutoIncrementTable(Log::TABLE_NAME);
+		self::dic()->database()->dropTable(ARCompetenceManagement::TABLE_NAME, false);
 
 		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
 	}

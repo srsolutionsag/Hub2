@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Shortlink;
 
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use srag\Plugins\Hub2\Object\Group\ARGroup;
@@ -17,6 +18,7 @@ use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\Category\CategoryLink;
+use srag\Plugins\Hub2\Shortlink\CompetenceManagement\CompetenceManagementLink;
 use srag\Plugins\Hub2\Shortlink\Course\CourseLink;
 use srag\Plugins\Hub2\Shortlink\CourseMembership\CourseMembershipLink;
 use srag\Plugins\Hub2\Shortlink\Group\GroupLink;
@@ -110,6 +112,8 @@ class ObjectLinkFactory {
 					return new OrgUnitLink($object);
 				case ($object instanceof IOrgUnitMembership):
 					return new OrgUnitMembershipLink($object);
+				case ($object instanceof ICompetenceManagement):
+					return new CompetenceManagementLink($object);
 				default:
 					break;
 			}

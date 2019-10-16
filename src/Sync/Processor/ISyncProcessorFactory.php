@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use srag\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CompetenceManagement\ICompetenceManagementSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Course\ICourseSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Group\IGroupSyncProcessor;
@@ -79,4 +80,10 @@ interface ISyncProcessorFactory {
 	 * @return IOrgUnitMembershipSyncProcessor
 	 */
 	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor;
+
+
+	/**
+	 * @return ICompetenceManagementSyncProcessor
+	 */
+	public function competenceManagement(): ICompetenceManagementSyncProcessor;
 }

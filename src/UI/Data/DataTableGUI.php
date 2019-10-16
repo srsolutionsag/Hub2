@@ -18,6 +18,7 @@ use srag\DIC\Hub2\DICTrait;
 use srag\DIC\Hub2\Exception\DICException;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use srag\Plugins\Hub2\Object\Group\ARGroup;
@@ -62,6 +63,7 @@ class DataTableGUI extends ilTable2GUI {
 		ARSessionMembership::class,
 		AROrgUnit::class,
 		AROrgUnitMembership::class,
+		ARCompetenceManagement::class
 	];
 	/**
 	 * @var ObjectLinkFactory

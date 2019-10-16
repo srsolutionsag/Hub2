@@ -418,6 +418,13 @@ origin_id#:#ID
 origin_sort#:#Sortierung
 origin_table_header_id#:#ID
 origin_table_header_sort#:#Sortierung
+origin_object_type_competenceManagement#:#Kompetenzmanagement (Kategorien, Kompetenzen, Level, Profile, Zuordnungen, ...)
+competencemanagement_id_if_no_parent_id#:#Basic-ID
+competencemanagement_id_if_no_parent_id_info#:#Basic ID einer Kompetenzmanagement (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Kompetenzmanagement verwendet.
+competencemanagement_delete_mode#:#Löschverhalten
+competencemanagement_delete_mode_none#:#Keine Aktion
+competencemanagement_delete_mode_delete#:#Löschen
+competencemanagement_move#:#Verschieben
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
 logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten

@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use srag\Plugins\Hub2\Origin\Category\ICategoryOrigin;
+use srag\Plugins\Hub2\Origin\CompetenceManagement\ICompetenceManagementOrigin;
 use srag\Plugins\Hub2\Origin\Course\ICourseOrigin;
 use srag\Plugins\Hub2\Origin\CourseMembership\ICourseMembershipOrigin;
 use srag\Plugins\Hub2\Origin\Group\IGroupOrigin;
@@ -99,4 +100,10 @@ interface IOriginRepository {
 	 * @return IOrgUnitMembershipOrigin[]
 	 */
 	public function orgUnitMemberships(): array;
+
+
+	/**
+	 * @return ICompetenceManagementOrigin[]
+	 */
+	public function competenceManagements(): array;
 }
