@@ -6,6 +6,8 @@ use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
+use ilSkillProfile;
+use ilSkillTreeNode;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
@@ -215,7 +217,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			return NULL;
 		}
 
-		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
+		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof ilSkillTreeNode || $object instanceof ilSkillProfile
+			|| $object instanceof FakeIliasObject
 			|| $object instanceof FakeIliasMembershipObject) {
 			return $object->getId();
 		}
@@ -271,7 +274,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	 */
 	protected abstract function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
 	;
-
 
 	/**
 	 * Delete the corresponding ILIAS object.

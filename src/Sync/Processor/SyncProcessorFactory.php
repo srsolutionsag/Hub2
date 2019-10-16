@@ -8,6 +8,8 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CompetenceManagement\CompetenceManagementSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CompetenceManagement\ICompetenceManagementSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Course\CourseActivities;
 use srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
@@ -140,5 +142,13 @@ class SyncProcessorFactory implements ISyncProcessorFactory {
 	 */
 	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor {
 		return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function competenceManagement(): ICompetenceManagementSyncProcessor {
+		return new CompetenceManagementSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
 	}
 }
