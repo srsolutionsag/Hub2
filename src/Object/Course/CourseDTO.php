@@ -108,7 +108,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	/**
 	 * @var int
 	 */
-	protected $subscriptionLimitationType = 0;
+	protected $subscriptionLimitationType = self::SUBSCRIPTION_TYPE_DEACTIVATED;
 	/**
 	 * @var int
 	 */
