@@ -1,6 +1,7 @@
 # Changelog
 
 ## [x]
+- Fix course subscription types
 - Competence management origin type
 - Fix install log
 - Fix language keys with line break
