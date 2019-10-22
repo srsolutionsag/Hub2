@@ -1,6 +1,7 @@
 # Changelog
 
 ## [x]
+- Fix Error notification was sent without errors occuring
 - Fix course subscription types
 - Competence management origin type
 - Fix install log
