@@ -16,6 +16,6 @@ class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncS
 	 * @inheritdoc
 	 */
 	protected function renderOneSync(IOriginSync $originSync, bool $only_logs = false, bool $output_message = NULL): string {
-		return parent::renderOneSync($originSync, $only_logs, false);
+		return parent::renderOneSync($originSync, $only_logs, $output_message);
 	}
 }

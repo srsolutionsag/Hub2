@@ -81,12 +81,14 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary {
 			}
 
 			if ($error_email) {
-				if (count(self::logs()->getKeptLogs($originSync->getOrigin())) > 0) {
+				if ((count(self::logs()->getKeptLogs($originSync->getOrigin(), Log::LEVEL_EXCEPTION))
+                        + count(self::logs()->getKeptLogs($originSync->getOrigin(), Log::LEVEL_CRITICAL)))
+                    > 0) {
 					$mail->To($error_email);
 
 					$mail->Subject(self::plugin()->translate("summary_logs_in", hub2LogsGUI::LANG_MODULE_LOGS, [ $title ]));
 
-					$mail->Body($this->renderOneSync($originSync, true));
+					$mail->Body($this->renderOneSync($originSync, true, true));
 
 					$mail->Send();
 				}
