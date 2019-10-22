@@ -200,7 +200,7 @@ final class Repository implements IRepository {
 		}
 
 		if (!empty($object_ext_id)) {
-			$wheres[] = 'object_ext_id=' . self::dic()->database()->quote($object_ext_id, ilDBConstants::T_TEXT);
+			$wheres[] = 'object_ext_id LIKE ' . self::dic()->database()->quote($object_ext_id, ilDBConstants::T_TEXT);
 		}
 
 		if (!empty($object_ilias_id)) {
