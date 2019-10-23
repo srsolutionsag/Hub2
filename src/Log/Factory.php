@@ -79,7 +79,7 @@ final class Factory implements IFactory {
 			$log->withObjectExtId($object->getExtId())
                 ->withObjectIliasId($object->getILIASId())
                 ->withStatus(intval($object->getStatus()))
-                ->withAdditionalData((object) $object->getData());
+                ->withAdditionalData((object) $object->getData()['additionalData']);
 		}
 
 		if ($dto !== null) {
