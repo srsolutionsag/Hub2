@@ -76,7 +76,10 @@ final class Factory implements IFactory {
 		$log = $this->log()->withOriginId($origin->getId())->withOriginObjectType($origin->getObjectType());
 
 		if ($object !== null) {
-			$log->withObjectExtId($object->getExtId())->withObjectIliasId($object->getILIASId());
+			$log->withObjectExtId($object->getExtId())
+                ->withObjectIliasId($object->getILIASId())
+                ->withStatus(intval($object->getStatus()))
+                ->withAdditionalData((object) $object->getData());
 		}
 
 		if ($dto !== null) {
@@ -130,7 +133,8 @@ final class Factory implements IFactory {
 		$log = $this->log()->withLogId($data->log_id)->withTitle($data->title)->withMessage($data->message)
 			->withDate(new ilDateTime($data->date, IL_CAL_DATETIME))->withLevel($data->level)->withAdditionalData(json_decode($data->additional_data))
 			->withOriginId($data->origin_id)->withOriginObjectType($data->origin_object_type)->withObjectExtId($data->object_ext_id)
-			->withObjectIliasId($data->object_ilias_id);
+			->withObjectIliasId($data->object_ilias_id)
+			->withStatus(intval($data->status));
 
 		return $log;
 	}

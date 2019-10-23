@@ -78,6 +78,14 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_is_notnull   true
 	 */
 	protected $message = "";
+    /**
+     * @var int
+     *
+     * @con_has_field    true
+     * @con_fieldtype    integer
+     * @con_length       8
+     */
+	protected $status = 0;
 	/**
 	 * @var ilDateTime
 	 *
@@ -224,6 +232,27 @@ class Log extends ActiveRecord implements ILog {
 
 		return $this;
 	}
+
+    /**
+     * @return int
+     */
+    public function getStatus() : int
+    {
+        return $this->status;
+    }
+
+
+    /**
+     * @param int $status
+     *
+     * @return $this
+     */
+    public function withStatus(int $status) : ILog
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 
 
 	/**

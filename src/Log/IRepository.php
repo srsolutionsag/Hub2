@@ -35,42 +35,46 @@ interface IRepository {
 	public function factory(): IFactory;
 
 
-	/**
-	 * @param string|null     $sort_by
-	 * @param string|null     $sort_by_direction
-	 * @param int|null        $limit_start
-	 * @param int|null        $limit_end
-	 * @param string|null     $title
-	 * @param string|null     $message
-	 * @param ilDateTime|null $date_start
-	 * @param ilDateTime|null $date_end
-	 * @param int|null        $level
-	 * @param int|null        $origin_id
-	 * @param string|null     $origin_object_type
-	 * @param string|null     $object_ext_id
-	 * @param int|null        $object_ilias_id
-	 * @param string|null     $additional_data
-	 *
-	 * @return ILog[]
-	 */
-	public function getLogs(string $sort_by = null, string $sort_by_direction = null, int $limit_start = null, int $limit_end = null, string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null): array;
+    /**
+     * @param string|null     $sort_by
+     * @param string|null     $sort_by_direction
+     * @param int|null        $limit_start
+     * @param int|null        $limit_end
+     * @param string|null     $title
+     * @param string|null     $message
+     * @param ilDateTime|null $date_start
+     * @param ilDateTime|null $date_end
+     * @param int|null        $level
+     * @param int|null        $origin_id
+     * @param string|null     $origin_object_type
+     * @param string|null     $object_ext_id
+     * @param int|null        $object_ilias_id
+     * @param string|null     $additional_data
+     *
+     * @param int|null        $status
+     *
+     * @return ILog[]
+     */
+	public function getLogs(string $sort_by = null, string $sort_by_direction = null, int $limit_start = null, int $limit_end = null, string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null, int $status = null): array;
 
 
-	/**
-	 * @param string|null     $title
-	 * @param string|null     $message
-	 * @param ilDateTime|null $date_start
-	 * @param ilDateTime|null $date_end
-	 * @param int|null        $level
-	 * @param int|null        $origin_id
-	 * @param string|null     $origin_object_type
-	 * @param string|null     $object_ext_id
-	 * @param int|null        $object_ilias_id
-	 * @param string|null     $additional_data
-	 *
-	 * @return int
-	 */
-	public function getLogsCount(string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null): int;
+    /**
+     * @param string|null     $title
+     * @param string|null     $message
+     * @param ilDateTime|null $date_start
+     * @param ilDateTime|null $date_end
+     * @param int|null        $level
+     * @param int|null        $origin_id
+     * @param string|null     $origin_object_type
+     * @param string|null     $object_ext_id
+     * @param int|null        $object_ilias_id
+     * @param string|null     $additional_data
+     *
+     * @param int|null        $status
+     *
+     * @return int
+     */
+	public function getLogsCount(string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null, int $status = null): int;
 
 
 	/**

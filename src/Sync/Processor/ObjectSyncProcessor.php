@@ -21,6 +21,7 @@ use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
@@ -88,9 +89,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			$m = $dto->getMappingStrategy();
 			$ilias_id = $m->map($dto);
 			if ($ilias_id > 0) {
-				$object->setStatus(IObject::STATUS_TO_UPDATE);
-				$object->setILIASId($ilias_id);
-			} elseif ($ilias_id < 0) {
+                $object->setStatus(IObject::STATUS_TO_UPDATE);
+                $object->setILIASId($ilias_id);
+                self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin->getId()), $object)->write(
+                    "Existing object found by Mapping Strategy"
+                );
+            } elseif ($ilias_id < 0) {
 				throw new HubException("Mapping strategy " . get_class($m) . " returns negative value");
 			}
 			$object->store();
