@@ -6,6 +6,7 @@
 - Fix course subscription types
 - Competence management origin type
 - Fix install log
+- New default path to origins '/var/www/ilias/Customizing/global/origins/'
 - Fix language keys with line break
 - Fix read fallback parent ref id read
 
