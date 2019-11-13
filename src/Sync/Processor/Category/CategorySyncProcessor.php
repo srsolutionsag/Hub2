@@ -84,7 +84,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		$ilObjCategory->createReference();
 		$ilObjCategory->putInTree($parentRefId);
 		$ilObjCategory->setPermissions($parentRefId);
-		foreach (self::getProperties() as $property) {
+        $this->writeRBACLog($ilObjCategory->getRefId());
+        foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			if ($dto->$getter() !== NULL) {

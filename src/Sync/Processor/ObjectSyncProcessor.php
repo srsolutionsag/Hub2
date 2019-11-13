@@ -6,6 +6,7 @@ use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
+use ilRbacLog;
 use ilSkillProfile;
 use ilSkillTreeNode;
 use srag\DIC\Hub2\DICTrait;
@@ -237,6 +238,20 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	protected function getImportId(IDataTransferObject $object) {
 		return self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
 	}
+
+
+    /**
+     * use this every time a new repository object is created
+     *
+     * @param int $ref_id
+     */
+	protected function writeRBACLog(int $ref_id)/*: void*/
+    {
+        // rbac log
+        $rbac_log_roles = self::dic()->rbacreview()->getParentRoleIds($ref_id, false);
+        $rbac_log = ilRbacLog::gatherFaPa($ref_id, array_keys($rbac_log_roles), true);
+        ilRbacLog::add(ilRbacLog::CREATE_OBJECT, $ref_id, $rbac_log);
+    }
 
 
 	/**

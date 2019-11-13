@@ -770,6 +770,7 @@ return array(
     'hub2RemoveDataConfirm' => $baseDir . '/classes/uninstall/class.hub2RemoveDataConfirm.php',
     'ilHub2ConfigGUI' => $baseDir . '/classes/class.ilHub2ConfigGUI.php',
     'ilHub2Plugin' => $baseDir . '/classes/class.ilHub2Plugin.php',
+    'ilRbacLog' => $baseDir . '/../../../../../../../Services/AccessControl/classes/class.ilRbacLog.php',
     'phpDocumentor\\Reflection\\DocBlock' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
     'phpDocumentor\\Reflection\\DocBlockFactory' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
     'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

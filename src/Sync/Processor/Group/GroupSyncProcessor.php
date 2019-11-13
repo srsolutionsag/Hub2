@@ -148,6 +148,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->createReference();
 		$ilObjGroup->putInTree($parentRefId);
 		$ilObjGroup->setPermissions($parentRefId);
+		$this->writeRBACLog($ilObjGroup->getRefId());
 
 		$this->handleAppointementsColor($ilObjGroup, $dto);
 	}

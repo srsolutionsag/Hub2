@@ -9,6 +9,7 @@
 - New default path to origins '/var/www/ilias/Customizing/global/origins/'
 - Fix language keys with line break
 - Fix read fallback parent ref id read
+- Write rbac log when creating objects
 
 ## [2.3.0]
 - Support ILIAS 5.4
