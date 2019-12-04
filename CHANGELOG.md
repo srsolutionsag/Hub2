@@ -1,6 +1,7 @@
 # Changelog
 
 ## [x]
+- Fix: User set passwd
 - OrgUnits are now Mapping Strategy Aware
 - Improvement Log Table: allow usage of wildcard (%) for external i (%) for external id
 - Fix Error notification was sent without errors occuring
