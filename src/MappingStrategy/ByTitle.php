@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\MappingStrategy;
 
+use ilObject;
 use ilObject2;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
@@ -38,6 +39,11 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy {
 			case ($dto instanceof GroupDTO):
 			case ($dto instanceof CourseDTO):
 			case ($dto instanceof IOrgUnitDTO):
+			    $orgu_ids = ilObject2::_getIdsForTitle($dto->getTitle(),'orgu');
+			    foreach($orgu_ids as $orgu_id) {
+			        return $orgu_id;
+                }
+			    break;
 			case ($dto instanceof CategoryDTO):
 				//case ($dto instanceof ICompetenceManagementDTO):
 				if ($dto->getParentIdType() != CourseDTO::PARENT_ID_TYPE_REF_ID) {
