@@ -26,13 +26,13 @@ interface IObjectSyncProcessor {
 	 * 2. Execute other actions based on the configuration of the origin.
 	 * 3. Pass the DTO to the hooks of the origin
 	 *
-	 * @param IObject             $object
+	 * @param IObject             $hub_object
 	 * @param IDataTransferObject $dto
 	 * @param bool                $force Update all Objects without Hash comparison
 	 *
 	 * @throws Throwable
 	 */
-	public function process(IObject $object, IDataTransferObject $dto, bool $force = false);
+	public function process(IObject $hub_object, IDataTransferObject $dto, bool $force = false);
 
 
 	/**

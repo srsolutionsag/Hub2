@@ -48,12 +48,6 @@ abstract class AbstractImplementation implements IMetadataImplementation {
 	/**
 	 * @inheritdoc
 	 */
-	abstract public function read();
-
-
-	/**
-	 * @inheritdoc
-	 */
 	public function getMetadata(): IMetadata {
 		return $this->metadata;
 	}

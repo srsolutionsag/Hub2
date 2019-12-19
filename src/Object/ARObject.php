@@ -75,18 +75,19 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @var array
 	 */
-	public static $available_status = [
-		IObject::STATUS_NEW => "new",
-		IObject::STATUS_TO_CREATE => "to_create",
-		IObject::STATUS_CREATED => "created",
-		IObject::STATUS_UPDATED => "updated",
-		IObject::STATUS_TO_UPDATE => "to_update",
-		IObject::STATUS_TO_OUTDATED => "to_outdated",
-		IObject::STATUS_OUTDATED => "outdated",
-		IObject::STATUS_TO_RESTORE => "to_restore",
-		IObject::STATUS_IGNORED => "ignored",
-		IObject::STATUS_FAILED => "failed"
-	];
+    public static $available_status
+        = [
+            IObject::STATUS_NEW         => "new",
+            IObject::STATUS_TO_CREATE   => "to_create",
+            IObject::STATUS_CREATED     => "created",
+            IObject::STATUS_UPDATED     => "updated",
+            IObject::STATUS_TO_UPDATE   => "to_update",
+            IObject::STATUS_TO_OUTDATED => "to_outdated",
+            IObject::STATUS_OUTDATED    => "outdated",
+            IObject::STATUS_TO_RESTORE  => "to_restore",
+            IObject::STATUS_IGNORED     => "ignored",
+            IObject::STATUS_FAILED      => "failed",
+        ];
 
     /**
      * fields whose changes trigger the creation of a log entry
@@ -513,12 +514,14 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	 * @return string
 	 */
 	function __toString() {
-		return implode(', ', [
+		return implode(
+			', ', [
 			"origin_id: " . $this->origin_id,
 			"type: " . get_class($this),
 			"ext_id: " . $this->getExtId(),
 			"ilias_id: " . $this->getILIASId(),
 			"status: " . $this->getStatus(),
-		]);
+		]
+		);
 	}
 }
