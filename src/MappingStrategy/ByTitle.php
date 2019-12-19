@@ -35,10 +35,15 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy {
 			case ($dto instanceof ICompetenceManagementDTO):
 				throw new HubException("Mapping using Title not supported for this type of DTO");
 				break;
-			case ($dto instanceof GroupDTO):
-			case ($dto instanceof CourseDTO):
-			case ($dto instanceof IOrgUnitDTO):
-			case ($dto instanceof CategoryDTO):
+            case ($dto instanceof IOrgUnitDTO):
+			    $orgu_ids = ilObject2::_getIdsForTitle($dto->getTitle(),'orgu');
+			    foreach($orgu_ids as $orgu_id) {
+			        return $orgu_id;
+                }
+			    break;
+            case ($dto instanceof GroupDTO):
+            case ($dto instanceof CourseDTO):
+            case ($dto instanceof CategoryDTO):
 				//case ($dto instanceof ICompetenceManagementDTO):
 				if ($dto->getParentIdType() != CourseDTO::PARENT_ID_TYPE_REF_ID) {
 					return 0;
