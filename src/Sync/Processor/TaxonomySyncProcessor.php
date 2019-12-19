@@ -28,7 +28,7 @@ trait TaxonomySyncProcessor {
 	public function handleTaxonomies(ITaxonomyAwareDataTransferObject $dto, ITaxonomyAwareObject $iobject, ilObject $ilias_object) {
 		if (count($dto->getTaxonomies()) > 0) {
 
-			$this->handleDTOSpecificSettings($dto, $ilias_object);
+			$this->handleDTOSpecificTaxonomySettings($dto, $ilias_object);
 
 			$f = new TaxonomyImplementationFactory();
 			foreach ($dto->getTaxonomies() as $taxonomy) {
@@ -42,7 +42,7 @@ trait TaxonomySyncProcessor {
 	 * @param ITaxonomyAwareDataTransferObject $dto
 	 * @param ilObject                         $object
 	 */
-	private function handleDTOSpecificSettings(ITaxonomyAwareDataTransferObject $dto, ilObject $object) {
+	private function handleDTOSpecificTaxonomySettings(ITaxonomyAwareDataTransferObject $dto, ilObject $object) {
 		switch (true) {
 			case $dto instanceof CourseDTO:
 			case $dto instanceof CategoryDTO:

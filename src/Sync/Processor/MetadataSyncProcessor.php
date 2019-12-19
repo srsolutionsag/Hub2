@@ -27,7 +27,7 @@ trait MetadataSyncProcessor {
 	 */
 	public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object) {
 		if (count($dto->getMetaData()) > 0) {
-			$this->handleDTOSpecificSettings($dto, $ilias_object);
+			$this->handleDTOSpecificMetadataSettings($dto, $ilias_object);
 			$f = new MetadataImplementationFactory();
 			$flat_existing_md = [];
 			foreach ($iobject->getMetaData() as $md) {
@@ -50,7 +50,7 @@ trait MetadataSyncProcessor {
 	 * @param IMetadataAwareDataTransferObject $dto
 	 * @param ilObject                         $object
 	 */
-	private function handleDTOSpecificSettings(IMetadataAwareDataTransferObject $dto, ilObject $object) {
+	private function handleDTOSpecificMetadataSettings(IMetadataAwareDataTransferObject $dto, ilObject $object) {
 		switch (true) {
 			case $dto instanceof CourseDTO:
 			case $dto instanceof CategoryDTO:
