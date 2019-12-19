@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Object\OrgUnit;
 
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
@@ -11,7 +12,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitDTO extends IDataTransferObject {
+interface IOrgUnitDTO extends IDataTransferObject, IMappingStrategyAwareDataTransferObject {
 
 	/**
 	 * @var int

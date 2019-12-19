@@ -148,7 +148,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		$parent_id = $this->getParentId($dto);
 
 		$this->current_ilias_object->putInTree($parent_id);
-	}
+        $this->writeRBACLog($this->current_ilias_object->getRefId());
+    }
 
 
 	/**
