@@ -1,6 +1,7 @@
 # Changelog
 
 ## [x]
+- Improved Logging: log on update and only if data changed, added status to logs
 - Fix: User set passwd
 - OrgUnits are now Mapping Strategy Aware
 - Improvement Log Table: allow usage of wildcard (%) for external i (%) for external id

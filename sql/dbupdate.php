@@ -158,3 +158,7 @@ if (\srag\DIC\Hub2\DICStatic::dic()->database()->sequenceExists(\srag\Plugins\Hu
 <?php
 \srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement::updateDB();
 ?>
+<#18>
+<?php
+\srag\Plugins\Hub2\Log\Log::updateDB(); // new field 'status'
+?>

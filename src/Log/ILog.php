@@ -76,6 +76,20 @@ interface ILog {
 	public function withMessage(string $message): self;
 
 
+    /**
+     * @return int
+     */
+	public function getStatus(): int;
+
+
+    /**
+     * @param int $status
+     *
+     * @return $this
+     */
+	public function withStatus(int $status) : self;
+
+
 	/**
 	 * @return ilDateTime
 	 */

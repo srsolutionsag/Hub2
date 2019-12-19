@@ -14,7 +14,10 @@ use srag\CustomInputGUIs\Hub2\PropertyFormGUI\PropertyFormGUI;
 use srag\CustomInputGUIs\Hub2\TableGUI\TableGUI;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Log\Log;
+use srag\Plugins\Hub2\Object\ARObject;
+use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Origin\AROrigin;
+use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
 
@@ -52,6 +55,10 @@ class LogsTableGUI extends TableGUI {
 				$value = self::plugin()->translate("origin_object_type_" . $value);
 				break;
 
+            case "status":
+                $value = $value ? self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]) : '';
+                break;
+
 			case "additional_data":
 				if (!is_object($value)) {
 					$value = json_decode($value);
@@ -86,6 +93,7 @@ class LogsTableGUI extends TableGUI {
 			"date" => "date",
 			"origin_id" => "origin_id",
 			"origin_object_type" => "origin_object_type",
+            "status" => "status",
 			"object_ext_id" => "object_ext_id",
 			"object_ilias_id" => "object_ilias_id",
 			"title" => "title",
@@ -173,12 +181,13 @@ class LogsTableGUI extends TableGUI {
 			$object_ilias_id = null;
 		}
 		$additional_data = $filter["additional_data"];
+		$status = intval($filter["status"]);
 
 		$this->setData(self::logs()
-			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
+			->getLogs($this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()), intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data, $status));
 
 		$this->setMaxCount(self::logs()
-			->getLogsCount($title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data));
+			->getLogsCount($title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data, $status));
 	}
 
 
@@ -213,6 +222,12 @@ class LogsTableGUI extends TableGUI {
 						return self::plugin()->translate("origin_object_type_" . $origin_object_type);
 					}, AROrigin::$object_types)
 			],
+            "status" => [
+                PropertyFormGUI::PROPERTY_CLASS => ilSelectInputGUI::class,
+                PropertyFormGUI::PROPERTY_OPTIONS => [
+                    "" => "",
+                    ] + ARObject::$available_status
+            ],
 			"object_ext_id" => [
 				PropertyFormGUI::PROPERTY_CLASS => ilTextInputGUI::class
 			],
