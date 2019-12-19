@@ -12,7 +12,9 @@
 - New default path to origins '/var/www/ilias/Customizing/global/origins/'
 - Fix language keys with line break
 - Fix read fallback parent ref id read
-- Write rbac log when creating objects
+- Write rbac log when creating object
+- Fix: mapping byTitle for Org Units
+- Feature: User DTO with language
 
 ## [2.3.0]
 - Support ILIAS 5.4
