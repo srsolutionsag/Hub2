@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Origin\Properties\Category;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
- * Interface IOrgUnitMembershipOriginProperties
+ * Interface ICategoryProperties
  *
  * @package srag\Plugins\Hub2\Origin\Properties\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>

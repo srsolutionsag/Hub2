@@ -84,7 +84,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 		$ilObjCategory->createReference();
 		$ilObjCategory->putInTree($parentRefId);
 		$ilObjCategory->setPermissions($parentRefId);
-		foreach (self::getProperties() as $property) {
+        $this->writeRBACLog($ilObjCategory->getRefId());
+        foreach (self::getProperties() as $property) {
 			$setter = "set" . ucfirst($property);
 			$getter = "get" . ucfirst($property);
 			if ($dto->$getter() !== NULL) {
@@ -143,8 +144,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CategoryDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
 		if ($ilObjCategory === NULL) {
 			return;

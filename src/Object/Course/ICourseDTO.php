@@ -16,7 +16,7 @@ use srag\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
 interface ICourseDTO extends IDataTransferObject, ITaxonomyAndMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject {
 
 	// @see ilCourseConstants
-	const SUBSCRIPTION_TYPE_DEACTIVATED = 1;
+	const SUBSCRIPTION_TYPE_DEACTIVATED = 0;
 	const SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP = 2;
 	const SUBSCRIPTION_TYPE_DIRECTLY = 3;
 	const SUBSCRIPTION_TYPE_PASSWORD = 4;

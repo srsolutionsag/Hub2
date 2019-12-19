@@ -6,6 +6,9 @@ use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
 use ilObjUser;
+use ilRbacLog;
+use ilSkillProfile;
+use ilSkillTreeNode;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
@@ -19,6 +22,7 @@ use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
+use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
@@ -86,9 +90,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			$m = $dto->getMappingStrategy();
 			$ilias_id = $m->map($dto);
 			if ($ilias_id > 0) {
-				$object->setStatus(IObject::STATUS_TO_UPDATE);
-				$object->setILIASId($ilias_id);
-			} elseif ($ilias_id < 0) {
+                $object->setStatus(IObject::STATUS_TO_UPDATE);
+                $object->setILIASId($ilias_id);
+                self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin->getId()), $object)->write(
+                    "Existing object found by Mapping Strategy"
+                );
+            } elseif ($ilias_id < 0) {
 				throw new HubException("Mapping strategy " . get_class($m) . " returns negative value");
 			}
 			$object->store();
@@ -180,7 +187,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			case IObject::STATUS_TO_OUTDATED:
 				$this->implementation->beforeDeleteILIASObject($hook);
 
-				$this->handleDelete($object->getILIASId());
+				$this->handleDelete($dto, $object->getILIASId());
 
 				if ($this->current_ilias_object === NULL) {
 					throw new ILIASObjectNotFoundException($object);
@@ -215,7 +222,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 			return NULL;
 		}
 
-		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof FakeIliasObject
+		if ($object instanceof ilObjUser || $object instanceof ilObjOrgUnit || $object instanceof ilSkillTreeNode || $object instanceof ilSkillProfile
+			|| $object instanceof FakeIliasObject
 			|| $object instanceof FakeIliasMembershipObject) {
 			return $object->getId();
 		}
@@ -234,6 +242,20 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	protected function getImportId(IDataTransferObject $object) {
 		return self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
 	}
+
+
+    /**
+     * use this every time a new repository object is created
+     *
+     * @param int $ref_id
+     */
+	protected function writeRBACLog(int $ref_id)/*: void*/
+    {
+        // rbac log
+        $rbac_log_roles = self::dic()->rbacreview()->getParentRoleIds($ref_id, false);
+        $rbac_log = ilRbacLog::gatherFaPa($ref_id, array_keys($rbac_log_roles), true);
+        ilRbacLog::add(ilRbacLog::CREATE_OBJECT, $ref_id, $rbac_log);
+    }
 
 
 	/**
@@ -272,17 +294,17 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor {
 	protected abstract function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
 	;
 
-
 	/**
 	 * Delete the corresponding ILIAS object.
 	 * Return the deleted ILIAS object or null if the object was not found in ILIAS.
 	 *
+	 * @param IDataTransferObject $dto
 	 * @param int $ilias_id
 	 *
 	 * @return void
 	 *
 	 * @throws HubException
 	 */
-	protected abstract function handleDelete($ilias_id)/*: void*/
+	protected abstract function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
 	;
 }

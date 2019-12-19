@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Origin\Properties\User;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
- * Interface IOrgUnitMembershipOriginProperties
+ * Interface IUserProperties
  *
  * @package srag\Plugins\Hub2\Origin\Properties\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>

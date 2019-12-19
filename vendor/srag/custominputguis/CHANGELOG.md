@@ -1,5 +1,151 @@
 # Changelog
 
+## [0.23.6]
+- Make ProgressMeter run again with PHP 7.0
+
+## [0.23.5]
+- MultiLineInputGUI: fix PHP 7.2
+
+## [0.23.4]
+- TextInputGUIWithModernAutoComplete
+
+## [0.23.3]
+- TextInputGUIWithModernAutoComplete
+
+## [0.23.2]
+- TextInputGUIWithModernAutoComplete
+
+## [0.23.1]
+- TextInputGUIWithModernAutoComplete
+
+## [0.23.0]
+- TextInputGUIWithModernAutoComplete
+
+## [0.22.10]
+- Fixes
+
+## [0.22.9]
+- Improve template path
+
+## [0.22.8]
+- Allow `storeForm` multiple in `PropertyFormGUI` (`checkInput`!!!)
+
+## [0.22.7]
+- Supports `ilFormSectionHeaderGUI` as sub item in `PropertyFormGUI`
+
+## [0.22.6]
+- Some improvments
+
+## [0.22.5]
+- Fix render multiple legend entries
+
+## [0.22.4]
+- Remove `checkBoolArg` because not exists in older ILIAS versions
+
+## [0.22.3]
+- Remove PHP 7.1 return `void` syntax
+
+## [0.22.2]
+- Remove PHP 7.1 `null` syntax (`?`)
+
+## [0.22.1]
+- Remove d3 library (Not needed anymore)
+
+## [0.22.0]
+- PieChart
+- Use PieChart in LearningProgressPieUI
+
+## [0.21.0]
+- WeekdayInputGUI
+
+## [0.20.8]
+- NumberInputGUI in toolbar
+
+## [0.20.7]
+- PHPDoc
+
+## [0.20.6]
+- `strToCamelCase`
+
+## [0.20.5]
+- `strToCamelCase` in table
+
+## [0.20.4]
+- Nothing to fix ...
+
+## [0.20.3]
+- Nothing to fix ...
+
+## [0.20.2]
+- Use export format in `getColumnValue`
+
+## [0.20.1]
+- Improvments TableGUI PDF export
+
+## [0.20.0]
+- TableGUI PDF export
+- Fix TableGUI excel export
+
+## [0.19.11]
+- PropertyFormGUI supports MultiLineInputGUI
+
+## [0.19.10]
+- Make `txt` not final
+
+## [0.19.9]
+- Fixes
+
+## [0.19.8]
+- Fixes
+
+## [0.19.7]
+- Fixes
+
+## [0.19.6]
+- Fixes
+
+## [0.19.5]
+- MultiLineInputGUI: Fix date format on public page
+
+## [0.19.4]
+- UsrIdsLearningProgressPie
+
+## [0.19.3]
+- Support MultiSelectSearchInputGUI in table filter and toolbar
+
+## [0.19.2]
+- CountLearningProgressPie
+
+## [0.19.1]
+- CountLearningProgressPie
+
+## [0.19.0]
+- CountLearningProgressPie
+
+## [0.18.7]
+- Increase StaticHTMLPresentationInputGUI height
+
+## [0.18.6]
+- Improvments
+
+## [0.18.5]
+- LearningProgressPie
+
+## [0.18.4]
+- LearningProgressPie
+
+## [0.18.3]
+- LearningProgressPie
+
+## [0.18.2]
+- LearningProgressPie
+
+## [0.18.1]
+- LearningProgressPie
+
+## [0.18.0]
+- LearningProgressPie
+
 ## [0.17.5]
 - Fix TableGUI Export Header
 
@@ -7,16 +153,16 @@
 - Fix TableGUI Export Header
 
 ## [0.17.3]
-- ViewControlModeGUI
+- ViewControlModeUI
 
 ## [0.17.2]
-- ViewControlModeGUI
+- ViewControlModeUI
 
 ## [0.17.1]
-- ViewControlModeGUI
+- ViewControlModeUI
 
 ## [0.17.0]
-- ViewControlModeGUI
+- ViewControlModeUI
 
 ## [0.16.10]
 - Fixes

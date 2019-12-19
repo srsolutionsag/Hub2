@@ -33,7 +33,7 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		$te = new ilTextInputGUI(self::plugin()->translate('grp_prop_node_noparent'), $this->conf(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
 		$te->setInfo(self::plugin()->translate('grp_prop_node_noparent_info'));
-		$te->setValue($this->origin->properties()->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
+		$te->setValue($this->origin->config()->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
 		$this->addItem($te);
 	}
 

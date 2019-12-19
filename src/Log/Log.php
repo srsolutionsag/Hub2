@@ -60,9 +60,8 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_length       8
 	 * @con_is_notnull   true
 	 * @con_is_primary   true
-	 * @con_sequence     true
 	 */
-	protected $log_id = NULL;
+	protected $log_id = 0;
 	/**
 	 * @var string
 	 *
@@ -79,6 +78,14 @@ class Log extends ActiveRecord implements ILog {
 	 * @con_is_notnull   true
 	 */
 	protected $message = "";
+    /**
+     * @var int
+     *
+     * @con_has_field    true
+     * @con_fieldtype    integer
+     * @con_length       8
+     */
+	protected $status = 0;
 	/**
 	 * @var ilDateTime
 	 *
@@ -151,74 +158,7 @@ class Log extends ActiveRecord implements ILog {
 		$primary_key_value = 0, arConnector $connector = NULL) {
 		$this->additional_data = new stdClass();
 
-		parent::__construct($primary_key_value, $connector);
-	}
-
-
-	/**
-	 * @param string $field_name
-	 *
-	 * @return mixed|null
-	 */
-	public function sleep(/*string*/
-		$field_name) {
-		$field_value = $this->{$field_name};
-
-		switch ($field_name) {
-			case "date":
-				return $field_value->get(IL_CAL_DATETIME);
-
-			case "additional_data":
-				return json_encode($field_value);
-
-			default:
-				return NULL;
-		}
-	}
-
-
-	/**
-	 * @param string $field_name
-	 * @param mixed  $field_value
-	 *
-	 * @return mixed|null
-	 */
-	public function wakeUp(/*string*/
-		$field_name, $field_value) {
-		switch ($field_name) {
-			case "log_id":
-			case "level":
-			case "origin_id":
-				return intval($field_value);
-
-			case "date":
-				return new ilDateTime($field_value, IL_CAL_DATETIME);
-
-			case "additional_data":
-				return json_decode($field_value);
-
-			case "object_ilias_id":
-				if ($field_value !== NULL) {
-					return intval($field_value);
-				} else {
-					return NULL;
-				}
-
-			default:
-				return NULL;
-		}
-	}
-
-
-	/**
-	 *
-	 */
-	public function create()/*: void*/ {
-		if ($this->date === NULL) {
-			$this->date = new ilDateTime(time(), IL_CAL_UNIX);
-		}
-
-		parent::create();
+		//parent::__construct($primary_key_value, $connector);
 	}
 
 
@@ -292,6 +232,27 @@ class Log extends ActiveRecord implements ILog {
 
 		return $this;
 	}
+
+    /**
+     * @return int
+     */
+    public function getStatus() : int
+    {
+        return $this->status;
+    }
+
+
+    /**
+     * @param int $status
+     *
+     * @return $this
+     */
+    public function withStatus(int $status) : ILog
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 
 
 	/**
@@ -418,16 +379,6 @@ class Log extends ActiveRecord implements ILog {
 	 * @inheritdoc
 	 */
 	public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/ {
-		$this->withMessage($message)->withLevel($level)->store();
-	}
-
-
-	/**
-	 *
-	 */
-	public function store()/*: void*/ {
-		self::logs()->keepLog($this);
-
-		parent::store();
+		self::logs()->storeLog($this->withMessage($message)->withLevel($level));
 	}
 }

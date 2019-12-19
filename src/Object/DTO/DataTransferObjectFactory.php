@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Object\DTO;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\CompetenceManagement\CompetenceManagementDTO;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagementDTO;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
@@ -107,7 +109,15 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory {
 	/**
 	 * @inheritdoc
 	 */
-	public function orgUnitMembership($org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO {
+	public function orgUnitMembership(string $org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO {
 		return new OrgUnitMembershipDTO($org_unit_id, $user_id, $position);
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function competenceManagement(string $ext_id): ICompetenceManagementDTO {
+		return new CompetenceManagementDTO($ext_id);
 	}
 }

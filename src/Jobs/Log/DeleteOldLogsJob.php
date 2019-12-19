@@ -5,12 +5,10 @@ namespace srag\Plugins\Hub2\Jobs\Log;
 use hub2LogsGUI;
 use ilCronJob;
 use ilCronJobResult;
-use ilDateTime;
 use ilHub2Plugin;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
-use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -101,18 +99,8 @@ class DeleteOldLogsJob extends ilCronJob {
 	 */
 	public function run(): ilCronJobResult {
 		$keep_old_logs_time = ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME);
-		$time = time();
-		$keep_old_logs_time_timestamp = ($time - ($keep_old_logs_time * 24 * 60 * 60));
-		$keep_old_logs_time_date = new ilDateTime($keep_old_logs_time_timestamp, IL_CAL_UNIX);
 
-		$keep_log_ids = [];
-		$result = self::dic()->database()->query("SELECT MAX(log_id) AS log_id FROM " . Log::TABLE_NAME . " GROUP BY origin_id,object_ext_id");
-		while (($row = $result->fetchAssoc()) !== false) {
-			$keep_log_ids[] = intval($row["log_id"]);
-		}
-
-		$count = self::dic()->database()->manipulateF("DELETE FROM " . Log::TABLE_NAME . " WHERE date<%s AND " . self::dic()->database()
-				->in("log_id", $keep_log_ids, true, "integer"), [ "text" ], [ $keep_old_logs_time_date->get(IL_CAL_DATETIME) ]);
+		$count = self::logs()->deleteOldLogs($keep_old_logs_time);
 
 		return ResultFactory::ok(self::plugin()->translate("deleted_status", hub2LogsGUI::LANG_MODULE_LOGS, [ $count ]));
 	}

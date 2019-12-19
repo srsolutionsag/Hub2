@@ -74,47 +74,33 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 	 * @throws HubException
 	 */
 	public function handleSort(array $sort_dtos): bool {
-		/**
-		 * @var IOrgUnitDTO $dto
-		 * @var IOrgUnitDTO $parent_dto
-		 */
-
-		$dtos = [];
-		foreach ($sort_dtos as $sort_dto) {
+		$sort_dtos = array_filter($sort_dtos, function (IDataTransferObjectSort $sort_dto): bool {
+			/**
+			 * @var IOrgUnitDTO $dto
+			 */
 			$dto = $sort_dto->getDtoObject();
 
-			if ($dto->getParentIdType() === IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
-				$dtos[$dto->getExtId()] = $dto;
-			}
-		}
+			return ($dto->getParentIdType() === IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID && !$this->isRootId($dto));
+		});
 
-		// Calculate Level of each manager
+		$dtos = array_reduce($sort_dtos, function (array $dtos, IDataTransferObjectSort $sort_dto): array {
+			$dtos[$sort_dto->getDtoObject()->getExtId()] = $sort_dto->getDtoObject();
+
+			return $dtos;
+		}, []);
+
 		foreach ($sort_dtos as $sort_dto) {
-			$dto = $sort_dto->getDtoObject();
+			/**
+			 * @var IOrgUnitDTO $parent_dto
+			 */
+			$parent_dto = $dtos[$sort_dto->getDtoObject()->getParentId()];
 
 			$level = 1;
 
-			// OrgUnit Node -> Level 1
-			if ($this->isRootId($dto) || $dto->getParentIdType() !== IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
-				$sort_dto->setLevel($level);
+			while (!empty($parent_dto) && !$this->isRootId($parent_dto) && $level <= IDataTransferObjectSort::MAX_LEVEL) {
+				$sort_dto->setLevel(++ $level);
 
-				continue;
-			}
-
-			// If not Level 1 - calculate it for this manager!
-			$parent_dto = $dtos[$dto->getParentId()];
-
-			// Level 100 max level, prophit unlimited while!
-			while ($level <= IDataTransferObjectSort::MAX_LEVEL) {
-				$level += 1;
-
-				// Do it until OrgUnit Node
-				if ($this->isRootId($parent_dto) || $level === IDataTransferObjectSort::MAX_LEVEL) {
-					$sort_dto->setLevel($level);
-					break;
-				} else {
-					$parent_dto = $dtos[$parent_dto->getParentId()];
-				}
+				$parent_dto = $dtos[$parent_dto->getParentId()];
 			}
 		}
 
@@ -162,7 +148,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 		$parent_id = $this->getParentId($dto);
 
 		$this->current_ilias_object->putInTree($parent_id);
-	}
+        $this->writeRBACLog($this->current_ilias_object->getRefId());
+    }
 
 
 	/**
@@ -195,24 +182,38 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
 		$this->current_ilias_object->update();
 
-		if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
-			|| $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)) {
-			$this->moveOrgUnit($dto);
+		if ($this->props->get(IOrgUnitProperties::MOVE)) {
+			if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
+				|| $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)) {
+				$this->moveOrgUnit($dto);
+			}
 		}
 	}
 
 
+
 	/**
 	 * @inheritdoc
+	 *
+	 * @param IOrgUnitDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
-		$this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
+		switch ($this->props->get(IOrgUnitProperties::DELETE_MODE)) {
+			case IOrgUnitProperties::DELETE_MODE_DELETE:
+				$this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
 
-		if (empty($this->current_ilias_object)) {
-			return;
+				if (empty($this->current_ilias_object)) {
+					return;
+				}
+
+				$this->current_ilias_object->delete();
+
+				break;
+
+			case IOrgUnitProperties::DELETE_MODE_NONE:
+			default:
+				break;
 		}
-
-		self::dic()->tree()->moveToTrash($this->current_ilias_object->getRefId(), true);
 	}
 
 

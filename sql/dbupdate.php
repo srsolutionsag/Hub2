@@ -81,7 +81,11 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#8>
 <?php
-\srag\Plugins\Hub2\Log\Log::updateDB();
+try {
+    \srag\Plugins\Hub2\Log\Log::updateDB();
+} catch (\Throwable $ex) {
+    // Fix Call to a member function getName() on null (Because not use ILIAS sequence)
+}
 ?>
 <#9>
 <?php
@@ -99,7 +103,11 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#10>
 <?php
-\srag\Plugins\Hub2\Log\Log::updateDB();
+try {
+    \srag\Plugins\Hub2\Log\Log::updateDB();
+} catch (\Throwable $ex) {
+    // Fix Call to a member function getName() on null (Because not use ILIAS sequence)
+}
 ?>
 <#11>
 <?php
@@ -107,7 +115,11 @@ if (strpos($administration_role_ids, "[") === false) {
 ?>
 <#12>
 <?php
-\srag\Plugins\Hub2\Log\Log::updateDB();
+try {
+    \srag\Plugins\Hub2\Log\Log::updateDB();
+} catch (\Throwable $ex) {
+    // Fix Call to a member function getName() on null (Because not use ILIAS sequence)
+}
 ?>
 <#13>
 <?php
@@ -133,4 +145,20 @@ foreach ((new \srag\Plugins\Hub2\Origin\OriginFactory())->getAllActive() as $ori
 	"type" => "text",
 	"length" => 255
 ]);
+?>
+<#16>
+<?php
+if (\srag\DIC\Hub2\DICStatic::dic()->database()->sequenceExists(\srag\Plugins\Hub2\Log\Log::TABLE_NAME)) {
+	\srag\DIC\Hub2\DICStatic::dic()->database()->dropSequence(\srag\Plugins\Hub2\Log\Log::TABLE_NAME);
+}
+
+\srag\DIC\Hub2\DICStatic::dic()->database()->createAutoIncrement(\srag\Plugins\Hub2\Log\Log::TABLE_NAME, "log_id"); // Using MySQL native autoincrement for performance
+?>
+<#17>
+<?php
+\srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement::updateDB();
+?>
+<#18>
+<?php
+\srag\Plugins\Hub2\Log\Log::updateDB(); // new field 'status'
 ?>

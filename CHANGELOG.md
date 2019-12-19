@@ -1,5 +1,31 @@
 # Changelog
 
+## [x]
+- Improved Logging: log on update and only if data changed, added status to logs
+- Fix: User set passwd
+- OrgUnits are now Mapping Strategy Aware
+- Improvement Log Table: allow usage of wildcard (%) for external i (%) for external id
+- Fix Error notification was sent without errors occuring
+- Fix course subscription types
+- Competence management origin type
+- Fix install log
+- New default path to origins '/var/www/ilias/Customizing/global/origins/'
+- Fix language keys with line break
+- Fix read fallback parent ref id read
+- Write rbac log when creating objects
+
+## [2.3.0]
+- Support ILIAS 5.4
+- Optimize `handleSort` in org unit
+- Pass also the dto object to `handleDelete`
+- Fix missing `srag\Plugins\Hub2\Origin\AbstractOriginImplementation` import in origin class template
+- Refoctoring/Performance logs: Use native MySQL AutoIncrement and reset it after remove logs
+- `wakeUpValue`/`sleepValue` for `DataTransferObject`
+- Fix reset offset
+- Remove `DICStatic::clearCache();` because replaced by pass by reference in DICTrait
+- Config nove behavior for org units
+- Config delete behavior for org units and org unit memberships
+
 ## [2.2.5]
 - Optimized log table
 

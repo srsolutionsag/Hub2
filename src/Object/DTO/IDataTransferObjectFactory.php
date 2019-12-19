@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Object\DTO;
 
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagementDTO;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
@@ -97,11 +98,19 @@ interface IDataTransferObjectFactory {
 
 
 	/**
-	 * @param int|string $org_unit_id
-	 * @param int        $user_id
-	 * @param int        $position
+	 * @param string $org_unit_id
+	 * @param int    $user_id
+	 * @param int    $position
 	 *
 	 * @return IOrgUnitMembershipDTO
 	 */
-	public function orgUnitMembership($org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO;
+	public function orgUnitMembership(string $org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO;
+
+
+	/**
+	 * @param string $ext_id
+	 *
+	 * @return ICompetenceManagementDTO
+	 */
+	public function competenceManagement(string $ext_id): ICompetenceManagementDTO;
 }

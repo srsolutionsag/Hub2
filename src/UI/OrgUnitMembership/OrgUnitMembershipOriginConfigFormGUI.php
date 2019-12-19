@@ -2,7 +2,10 @@
 
 namespace srag\Plugins\Hub2\UI\OrgUnitMembership;
 
+use ilRadioGroupInputGUI;
+use ilRadioOption;
 use srag\Plugins\Hub2\Origin\OrgUnitMembership\AROrgUnitMembershipOrigin;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\IOrgUnitMembershipProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
@@ -49,5 +52,13 @@ class OrgUnitMembershipOriginConfigFormGUI extends OriginConfigFormGUI {
 	 */
 	protected function addPropertiesDelete() {
 		parent::addPropertiesDelete();
+
+		$delete = new ilRadioGroupInputGUI(self::plugin()->translate("orgunitmembership_delete_mode"), $this->prop(IOrgUnitMembershipProperties::DELETE_MODE));
+		$opt = new ilRadioOption(self::plugin()->translate("orgunitmembership_delete_mode_none"), IOrgUnitMembershipProperties::DELETE_MODE_NONE);
+		$delete->addOption($opt);
+		$opt = new ilRadioOption(self::plugin()->translate("orgunitmembership_delete_mode_delete"), IOrgUnitMembershipProperties::DELETE_MODE_DELETE);
+		$delete->addOption($opt);
+		$delete->setValue($this->origin->properties()->get(IOrgUnitMembershipProperties::DELETE_MODE));
+		$this->addItem($delete);
 	}
 }

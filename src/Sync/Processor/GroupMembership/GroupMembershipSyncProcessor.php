@@ -105,8 +105,10 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupMembershipDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
 		$group = $this->findILIASGroup($obj->getContainerIdIlias());

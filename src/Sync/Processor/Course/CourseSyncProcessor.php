@@ -13,6 +13,7 @@ use ilMDLanguageItem;
 use ilMimeMail;
 use ilObjCategory;
 use ilObjCourse;
+use ilRbacLog;
 use ilRepUtil;
 use ilSession;
 use ilSoapFunctions;
@@ -125,7 +126,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 			$ilObjCourse->createReference();
 			$ilObjCourse->putInTree($parentRefId);
 			$ilObjCourse->setPermissions($parentRefId);
-		}
+            $this->writeRBACLog($ilObjCourse->getRefId());
+        }
 
 		// Pass properties from DTO to ilObjUser
 		foreach (self::getProperties() as $property) {
@@ -416,8 +418,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param CourseDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
 		if ($ilObjCourse === NULL) {
 			return;
@@ -575,6 +579,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		$ilObjCategory->createReference();
 		$ilObjCategory->putInTree($parentRefId);
 		$ilObjCategory->setPermissions($parentRefId);
+		$this->writeRBACLog($ilObjCategory->getRefId());
 		$cache[$cacheKey] = $ilObjCategory->getRefId();
 
 		return $ilObjCategory->getRefId();

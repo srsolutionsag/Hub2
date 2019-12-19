@@ -148,6 +148,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 		$ilObjGroup->createReference();
 		$ilObjGroup->putInTree($parentRefId);
 		$ilObjGroup->setPermissions($parentRefId);
+		$this->writeRBACLog($ilObjGroup->getRefId());
 
 		$this->handleAppointementsColor($ilObjGroup, $dto);
 	}
@@ -238,8 +239,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
 	/**
 	 * @inheritdoc
+	 *
+	 * @param GroupDTO $dto
 	 */
-	protected function handleDelete($ilias_id)/*: void*/ {
+	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
 		$this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
 		if ($ilObjGroup === NULL) {
 			return;

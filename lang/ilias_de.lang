@@ -120,7 +120,7 @@ common_status_2#:#Geliefert
 common_status_3#:#Nicht geliefert
 common_status_4#:#In ILIAS gelöscht
 common_status_5#:#Neuer geliefert
-common_status_6#:#Breits gelöscht
+common_status_6#:#Bereits gelöscht
 common_status_7#:#im Papierkorb
 common_actions#:#Aktionen
 common_activate#:#Aktivieren
@@ -389,6 +389,13 @@ summary_notification#:#Hub2: Zusammenfassung für %s
 summary_in#:#in:
 orgunit_ref_id_if_no_parent_id#:#Basic-Ref-ID
 orgunit_ref_id_if_no_parent_id_info#:#Basic Ref-ID einer Organisationseinheit (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Organisationseinheit verwendet.
+orgunit_delete_mode#:#Löschverhalten
+orgunit_delete_mode_none#:#Keine Aktion
+orgunit_delete_mode_delete#:#Löschen
+orgunit_move#:#Verschieben
+orgunitmembership_delete_mode#:#Löschverhalten
+orgunitmembership_delete_mode_none#:#Keine Aktion
+orgunitmembership_delete_mode_delete#:#Löschen
 data_table_status_new#:#Neu
 data_table_status_to_create#:#Zu erstellen
 data_table_status_created#:#Erstellt
@@ -411,6 +418,13 @@ origin_id#:#ID
 origin_sort#:#Sortierung
 origin_table_header_id#:#ID
 origin_table_header_sort#:#Sortierung
+origin_object_type_competenceManagement#:#Kompetenzmanagement (Kategorien, Kompetenzen, Level, Profile, Zuordnungen, ...)
+competencemanagement_id_if_no_parent_id#:#Basic-ID
+competencemanagement_id_if_no_parent_id_info#:#Basic ID einer Kompetenzmanagement (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Kompetenzmanagement verwendet.
+competencemanagement_delete_mode#:#Löschverhalten
+competencemanagement_delete_mode_none#:#Keine Aktion
+competencemanagement_delete_mode_delete#:#Löschen
+competencemanagement_move#:#Verschieben
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
 logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten
@@ -435,6 +449,7 @@ logs_show_logs#:#Logs anzeigen
 logs_summary#:#Logs:
 logs_summary_logs_in#:#Hub2: Logs in %s
 logs_title#:#Titel
+logs_status#:#Status
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
 removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren

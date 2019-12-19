@@ -2,9 +2,13 @@
 
 namespace srag\Plugins\Hub2\UI\OrgUnit;
 
+use ilCheckboxInputGUI;
+use ilRadioGroupInputGUI;
+use ilRadioOption;
 use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\OrgUnit\IOrgUnitOriginConfig;
 use srag\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
+use srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
@@ -49,6 +53,10 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI {
 	 */
 	protected function addPropertiesUpdate() {
 		parent::addPropertiesUpdate();
+
+		$cb = new ilCheckboxInputGUI(self::plugin()->translate("orgunit_move"), $this->prop(IOrgUnitProperties::MOVE));
+		$cb->setChecked($this->origin->properties()->get(IOrgUnitProperties::MOVE));
+		$this->addItem($cb);
 	}
 
 
@@ -57,5 +65,13 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI {
 	 */
 	protected function addPropertiesDelete() {
 		parent::addPropertiesDelete();
+
+		$delete = new ilRadioGroupInputGUI(self::plugin()->translate("orgunit_delete_mode"), $this->prop(IOrgUnitProperties::DELETE_MODE));
+		$opt = new ilRadioOption(self::plugin()->translate("orgunit_delete_mode_none"), IOrgUnitProperties::DELETE_MODE_NONE);
+		$delete->addOption($opt);
+		$opt = new ilRadioOption(self::plugin()->translate("orgunit_delete_mode_delete"), IOrgUnitProperties::DELETE_MODE_DELETE);
+		$delete->addOption($opt);
+		$delete->setValue($this->origin->properties()->get(IOrgUnitProperties::DELETE_MODE));
+		$this->addItem($delete);
 	}
 }
