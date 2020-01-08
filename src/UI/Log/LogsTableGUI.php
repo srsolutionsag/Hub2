@@ -268,6 +268,6 @@ class LogsTableGUI extends TableGUI {
 	 * @inheritdoc
 	 */
 	protected function initTitle()/*: void*/ {
-		$this->setTitle("logs");
+		$this->setTitle($this->txt("logs"));
 	}
 }
