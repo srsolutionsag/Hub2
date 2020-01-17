@@ -291,8 +291,10 @@ usr_prop_send_password_field#:#Feld mit E-Mailadresse
 usr_prop_syncfield#:#Synchronisationsfeld
 usr_prop_syncfield_none#:#Kein Feld
 usr_prop_ilias_roles_info#:#Weist den Benutzer den angegebenen ILIAS-Rollen zu. Beachten Sie, dass diese Einstellung den Benutzer NICHT aus Rollen entfernt, die mit früheren Synchronisationen zugewiesen wurden
-usr_prop_resend_password#:#Kennwort neu setzen und senden
-usr_prop_resend_password_info#:#Kennwort neu setzen und senden
+usr_prop_resend_password#:#Kennwort erneut senden
+usr_prop_resend_password_info#:#Das Kennwort wird erneut an den Account gesendet
+usr_prop_update_password#:#Kennwort aktualisieren
+usr_prop_update_password_info#:#Ein Kennwort muss dem DTO vorliegen, es wird kein Neues generiert
 usr_prop_password_mail_date_format_info#:#Info
 view_hubcategory_index#:#Kategorien
 view_hubcourse_index#:#Kurse

@@ -15,6 +15,7 @@ interface IUserProperties extends IOriginProperties {
 
 	const ACTIVATE_ACCOUNT = 'activate_account';
 	const CREATE_PASSWORD = 'create_password';
+	const UPDATE_PASSWORD = 'update_password';
 	const SEND_PASSWORD = 'send_password';
 	const RE_SEND_PASSWORD = 'resend_password';
 	const SEND_PASSWORD_FIELD = 'send_password_field';

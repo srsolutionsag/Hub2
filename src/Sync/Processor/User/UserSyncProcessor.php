@@ -179,14 +179,17 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 		// Update ILIAS roles ?
 		if ($this->props->updateDTOProperty('iliasRoles')) {
 			$this->assignILIASRoles($dto, $ilObjUser);
-		}
+        }
 
-		if ($this->props->get(UserProperties::RE_SEND_PASSWORD)) {
-			$password = $this->generatePassword();
-			$dto->setPasswd($password);
-			$ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
-			$this->sendPasswordMail($dto);
-		}
+        // Update Password?
+        if ($this->props->get(UserProperties::UPDATE_PASSWORD) && $dto->getPasswd() !== null && $dto->getPasswd() !== '') {
+            $ilObjUser->resetPassword($dto->getPasswd(), $dto->getPasswd());
+        }
+
+        // Passwort zusenden
+        if ($this->props->get(UserProperties::RE_SEND_PASSWORD)) {
+            $this->sendPasswordMail($dto);
+        }
 
 		$ilObjUser->update();
 	}
