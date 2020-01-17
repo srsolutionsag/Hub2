@@ -6,6 +6,8 @@ use ilHub2Plugin;
 use LogicException;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use srag\Plugins\Hub2\Object\Group\ARGroup;
@@ -71,6 +73,8 @@ class ObjectFactory implements IObjectFactory {
 				return $this->orgUnit($ext_id);
 			case IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP;
 				return $this->orgUnitMembership($ext_id);
+			case IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT;
+				return $this->competenceManagement($ext_id);
 			default:
 				throw new LogicException('no object-type for this origin found');
 		}
@@ -230,6 +234,22 @@ class ObjectFactory implements IObjectFactory {
 	/**
 	 * @inheritdoc
 	 */
+	public function competenceManagement(string $ext_id): ICompetenceManagement {
+		$competence_management = ARCompetenceManagement::find($this->getId($ext_id));
+
+		if ($competence_management === null) {
+			$competence_management = new ARCompetenceManagement();
+			$competence_management->setOriginId($this->origin->getId());
+			$competence_management->setExtId($ext_id);
+		}
+
+		return $competence_management;
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
 	public function getId($ext_id) {
 		return $this->origin->getId() . $ext_id;
 	}
@@ -312,5 +332,13 @@ class ObjectFactory implements IObjectFactory {
 	 */
 	public function orgUnitMemberships(): array {
 		return AROrgUnitMembership::get();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function competenceManagements(): array {
+		return ARCompetenceManagement::get();
 	}
 }

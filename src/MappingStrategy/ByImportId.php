@@ -2,8 +2,10 @@
 
 namespace srag\Plugins\Hub2\MappingStrategy;
 
+use ilDBConstants;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Category\ICategoryDTO;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagementDTO;
 use srag\Plugins\Hub2\Object\Course\ICourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\Group\IGroupDTO;
@@ -50,13 +52,22 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy {
 				$object_type = "orgu";
 				break;
 
+			case $dto instanceof ICompetenceManagementDTO:
+				$object_type = "skmg";
+				break;
+
 			default:
 				throw new HubException("Cannot find import id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!");
 				break;
 		}
 
-		$result = self::dic()->database()->queryF('SELECT obj_id FROM object_data WHERE type=%s AND ' . self::dic()->database()
-				->like("import_id", "text", IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()), [ "text" ], [ $object_type ]);
+		if ($dto instanceof ICompetenceManagementDTO) {
+			$result = self::dic()->database()->queryF('SELECT obj_id FROM skl_tree_node WHERE ' . self::dic()->database()
+					->like("import_id", ilDBConstants::T_TEXT, IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()), [], []);
+		} else {
+			$result = self::dic()->database()->queryF('SELECT obj_id FROM object_data WHERE type=%s AND ' . self::dic()->database()
+					->like("import_id", ilDBConstants::T_TEXT, IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()), [ ilDBConstants::T_TEXT ], [ $object_type ]);
+		}
 
 		if ($result->rowCount() > 0) {
 			if ($result->rowCount() > 1) {

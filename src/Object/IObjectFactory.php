@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Object;
 use ActiveRecord;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Category\ICategory;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\Course\ICourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -45,7 +47,7 @@ interface IObjectFactory {
 	/**
 	 * @param string $ext_id
 	 *
-	 * @return ActiveRecord|ARCategory|ICategory|ARCourse|ICourse|ARCourseMembership|ICourseMembership|ARGroup|IGroup|ARGroupMembership|IGroupMembership|ARSession|ISession|ARUser|IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership
+	 * @return ActiveRecord|ARCategory|ICategory|ARCourse|ICourse|ARCourseMembership|ICourseMembership|ARGroup|IGroup|ARGroupMembership|IGroupMembership|ARSession|ISession|ARUser|IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership|ICompetenceManagement|ArCompetenceManagement
 	 */
 	public function undefined($ext_id);
 
@@ -131,6 +133,14 @@ interface IObjectFactory {
 
 
 	/**
+	 * @param string $ext_id
+	 *
+	 * @return ICompetenceManagement
+	 */
+	public function competenceManagement(string $ext_id): ICompetenceManagement;
+
+
+	/**
 	 * @return IUser[]
 	 */
 	public function users(): array;
@@ -188,4 +198,10 @@ interface IObjectFactory {
 	 * @return IOrgUnitMembership[]
 	 */
 	public function orgUnitMemberships(): array;
+
+
+	/**
+	 * @return ICompetenceManagement[]
+	 */
+	public function competenceManagements(): array;
 }

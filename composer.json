@@ -37,7 +37,8 @@
       "srag\\Plugins\\Hub2\\": "src/"
     },
     "classmap": [
-      "classes"
+      "classes",
+      "../../../../../../../Services/AccessControl/classes/class.ilRbacLog.php"
     ]
   },
   "config": {

@@ -13,14 +13,6 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
 interface IMetadataImplementation {
 
 	/**
-	 * Reads the Value from the ILIAS representative (UDF od Custom MD)
-	 *
-	 * @return void
-	 */
-	public function read();
-
-
-	/**
 	 * Writes the Value in the ILIAS representative (UDF od Custom MD)
 	 *
 	 * @return void

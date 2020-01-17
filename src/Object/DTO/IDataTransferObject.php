@@ -90,4 +90,11 @@ interface IDataTransferObject {
 	 * @return mixed
 	 */
 	public function withAdditionalData(Serializable $additionalData);
+
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function computeHashCode():string;
 }

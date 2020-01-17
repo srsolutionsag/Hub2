@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilObject2;
 use ilObjTaxonomy;
+use ilRbacLog;
 use ilTaxonomyNode;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
@@ -27,6 +28,9 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 	}
 
 
+    /**
+     *
+     */
 	private function createTaxonomy() {
 		$tax = new ilObjTaxonomy();
 		$tax->setTitle($this->getTaxonomy()->getTitle());
@@ -35,6 +39,11 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 		$tax->createReference();
 		$tax->putInTree($this->getILIASParentId());
 		$tax->setPermissions($this->getILIASParentId());
+
+        // rbac log
+        $rbac_log_roles = self::dic()->rbacreview()->getParentRoleIds($tax->getRefId(), false);
+        $rbac_log = ilRbacLog::gatherFaPa($tax->getRefId(), array_keys($rbac_log_roles), true);
+        ilRbacLog::add(ilRbacLog::CREATE_OBJECT, $tax->getRefId(), $rbac_log);
 
 		$this->ilObjTaxonomy = $tax;
 	}

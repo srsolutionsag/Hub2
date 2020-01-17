@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
+use arConnector;
 use DateTime;
 use Exception;
 use ilHub2Plugin;
@@ -15,6 +16,7 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\Node;
 use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use stdClass;
 
 /**
  * Class ARObject
@@ -33,8 +35,26 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	const TABLE_NAME = '';
 	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-
 	/**
+     * a clone of this object made before any changes happened; used to compare when persisting
+     *
+     * @var static
+     */
+	protected $clone;
+
+    /**
+     * ARObject constructor.
+     *
+     * @param int              $primary_key
+     * @param arConnector|null $connector
+     */
+    public function __construct($primary_key = 0, arConnector $connector = null) {
+        parent::__construct($primary_key, $connector);
+        $this->clone = clone $this;
+    }
+
+
+    /**
 	 * @return string
 	 */
 	public function getConnectorContainerName() {
@@ -55,18 +75,33 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	/**
 	 * @var array
 	 */
-	public static $available_status = [
-		IObject::STATUS_NEW => "new",
-		IObject::STATUS_TO_CREATE => "to_create",
-		IObject::STATUS_CREATED => "created",
-		IObject::STATUS_UPDATED => "updated",
-		IObject::STATUS_TO_UPDATE => "to_update",
-		IObject::STATUS_TO_OUTDATED => "to_outdated",
-		IObject::STATUS_OUTDATED => "outdated",
-		IObject::STATUS_TO_RESTORE => "to_restore",
-		IObject::STATUS_IGNORED => "ignored",
-		IObject::STATUS_FAILED => "failed"
-	];
+    public static $available_status
+        = [
+            IObject::STATUS_NEW         => "new",
+            IObject::STATUS_TO_CREATE   => "to_create",
+            IObject::STATUS_CREATED     => "created",
+            IObject::STATUS_UPDATED     => "updated",
+            IObject::STATUS_TO_UPDATE   => "to_update",
+            IObject::STATUS_TO_OUTDATED => "to_outdated",
+            IObject::STATUS_OUTDATED    => "outdated",
+            IObject::STATUS_TO_RESTORE  => "to_restore",
+            IObject::STATUS_IGNORED     => "ignored",
+            IObject::STATUS_FAILED      => "failed",
+        ];
+
+    /**
+     * fields whose changes trigger the creation of a log entry
+     *
+     * @var array
+     */
+	public static $observed_fields = [
+	    'External ID' => 'ext_id',
+        'ILIAS ID' => 'ilias_id',
+        'Status' => 'status',
+        'Period' => 'period',
+        'Data' => 'data'
+    ];
+
 	/**
 	 * The primary ID is a composition of the origin-ID and ext_id
 	 *
@@ -153,7 +188,15 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	protected $data = array();
 
 
-	/**
+    /**
+     *
+     */
+    public function afterObjectLoad() {
+        $this->clone = clone $this;
+    }
+
+
+    /**
 	 * @inheritdoc
 	 */
 	public function sleep($field_name) {
@@ -248,8 +291,26 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	public function update() {
 		$this->hash_code = $this->computeHashCode();
 		parent::update();
-	}
+        $this->logUpdate();
+    }
 
+
+    /**
+     *
+     */
+    protected function logUpdate()
+    {
+        $messages = [];
+        foreach (self::$observed_fields as $title => $field) {
+            if ($this->clone->$field != $this->$field) {
+                $messages[] = $title . " updated";
+            }
+        }
+        if (!empty($messages)) {
+            self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
+                ->write(implode('<br>', $messages));
+        }
+    }
 
 	/**
 	 * @inheritdoc
@@ -264,6 +325,8 @@ abstract class ARObject extends ActiveRecord implements IObject {
 		$this->id = $this->origin_id . $this->ext_id;
 		$this->hash_code = $this->computeHashCode();
 		parent::create();
+        self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
+            ->write("Created");
 	}
 
 
@@ -359,9 +422,6 @@ abstract class ARObject extends ActiveRecord implements IObject {
 			throw new InvalidArgumentException("'{$status}' is not a valid status");
 		}
 
-		self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)->write("Changed status from "
-			. self::$available_status[$this->status] . " to " . self::$available_status[$status]);
-
 		$this->status = $status;
 
 		return $this;
@@ -454,12 +514,14 @@ abstract class ARObject extends ActiveRecord implements IObject {
 	 * @return string
 	 */
 	function __toString() {
-		return implode(', ', [
+		return implode(
+			', ', [
 			"origin_id: " . $this->origin_id,
 			"type: " . get_class($this),
 			"ext_id: " . $this->getExtId(),
 			"ilias_id: " . $this->getILIASId(),
 			"status: " . $this->getStatus(),
-		]);
+		]
+		);
 	}
 }

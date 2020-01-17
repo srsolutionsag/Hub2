@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Object\OrgUnit;
 
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 
 /**
@@ -13,7 +14,9 @@ use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
  */
 class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO {
 
-	/**
+    use MappingStrategyAwareDataTransferObject;
+
+    /**
 	 * @var string
 	 */
 	protected $title = "";

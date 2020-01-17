@@ -46,7 +46,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		$te = new ilTextInputGUI(self::plugin()->translate('crs_prop_node_noparent'), $this->conf(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
 		$te->setInfo(self::plugin()->translate('crs_prop_node_noparent_info'));
-		$te->setValue($this->origin->properties()->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
+		$te->setValue($this->origin->config()->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
 		$this->addItem($te);
 	}
 
@@ -127,7 +127,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI {
 
 		$opt = new ilRadioOption(self::plugin()
 			->translate('crs_prop_delete_mode_delete_or_inactive'), CourseProperties::DELETE_MODE_DELETE_OR_OFFLINE);
-		$opt->setInfo(nl2br(self::plugin()->translate('crs_prop_delete_mode_delete_or_inactive_info'), false));
+		$opt->setInfo(nl2br(str_replace("\\n", "\n", self::plugin()->translate('crs_prop_delete_mode_delete_or_inactive_info')), false));
 		$delete->addOption($opt);
 
 		$opt = new ilRadioOption(self::plugin()->translate('crs_prop_delete_mode_trash'), CourseProperties::DELETE_MODE_MOVE_TO_TRASH);

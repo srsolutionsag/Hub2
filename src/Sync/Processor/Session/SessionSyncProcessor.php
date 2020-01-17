@@ -107,6 +107,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 		$a_parent_ref = $this->buildParentRefId($dto);
 		$ilObjSession->putInTree($a_parent_ref);
 		$ilObjSession->setPermissions($a_parent_ref);
+		$this->writeRBACLog($ilObjSession->getRefId());
 		/**
 		 * Since the id is only known after create, it has to be set again before
 		 * creation of the firs appointment, otherwise no event_appointment will be

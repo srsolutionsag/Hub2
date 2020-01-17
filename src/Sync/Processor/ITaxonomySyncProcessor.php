@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilObject;
 use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 
 /**
  * Interface ITaxonomySyncProcessor
@@ -15,9 +16,10 @@ interface ITaxonomySyncProcessor {
 
 	/**
 	 * @param ITaxonomyAwareDataTransferObject $dto
-	 * @param ilObject                         $object
+	 * @param ITaxonomyAwareObject             $iobject
+	 * @param ilObject                         $ilias_object
 	 *
-	 * @return mixed
+	 * @return void
 	 */
-	public function handleTaxonomies(ITaxonomyAwareDataTransferObject $dto, ilObject $object);
+	public function handleTaxonomies(ITaxonomyAwareDataTransferObject $dto, ITaxonomyAwareObject $iobject, ilObject $ilias_object);
 }

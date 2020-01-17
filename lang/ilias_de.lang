@@ -120,7 +120,7 @@ common_status_2#:#Geliefert
 common_status_3#:#Nicht geliefert
 common_status_4#:#In ILIAS gelöscht
 common_status_5#:#Neuer geliefert
-common_status_6#:#Breits gelöscht
+common_status_6#:#Bereits gelöscht
 common_status_7#:#im Papierkorb
 common_actions#:#Aktionen
 common_activate#:#Aktivieren
@@ -291,8 +291,10 @@ usr_prop_send_password_field#:#Feld mit E-Mailadresse
 usr_prop_syncfield#:#Synchronisationsfeld
 usr_prop_syncfield_none#:#Kein Feld
 usr_prop_ilias_roles_info#:#Weist den Benutzer den angegebenen ILIAS-Rollen zu. Beachten Sie, dass diese Einstellung den Benutzer NICHT aus Rollen entfernt, die mit früheren Synchronisationen zugewiesen wurden
-usr_prop_resend_password#:#Kennwort neu setzen und senden
-usr_prop_resend_password_info#:#Kennwort neu setzen und senden
+usr_prop_resend_password#:#Kennwort erneut senden
+usr_prop_resend_password_info#:#Das Kennwort wird erneut an den Account gesendet
+usr_prop_update_password#:#Kennwort aktualisieren
+usr_prop_update_password_info#:#Ein Kennwort muss dem DTO vorliegen, es wird kein Neues generiert
 usr_prop_password_mail_date_format_info#:#Info
 view_hubcategory_index#:#Kategorien
 view_hubcourse_index#:#Kurse
@@ -418,6 +420,13 @@ origin_id#:#ID
 origin_sort#:#Sortierung
 origin_table_header_id#:#ID
 origin_table_header_sort#:#Sortierung
+origin_object_type_competenceManagement#:#Kompetenzmanagement (Kategorien, Kompetenzen, Level, Profile, Zuordnungen, ...)
+competencemanagement_id_if_no_parent_id#:#Basic-ID
+competencemanagement_id_if_no_parent_id_info#:#Basic ID einer Kompetenzmanagement (Wenn keine Parent-ID gesetzt). Wird dies auf 0 gesetzt, wird die Root-Kompetenzmanagement verwendet.
+competencemanagement_delete_mode#:#Löschverhalten
+competencemanagement_delete_mode_none#:#Keine Aktion
+competencemanagement_delete_mode_delete#:#Löschen
+competencemanagement_move#:#Verschieben
 logs_additional_data#:#Zusätzliche Daten
 logs_cron#:#Alte Logs löschen
 logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten
@@ -442,6 +451,7 @@ logs_show_logs#:#Logs anzeigen
 logs_summary#:#Logs:
 logs_summary_logs_in#:#Hub2: Logs in %s
 logs_title#:#Titel
+logs_status#:#Status
 removeplugindataconfirm_cancel#:#Abbrechen
 removeplugindataconfirm_confirm_remove_data#:#Möchten Sie die %1$s-Daten auch entfernen? Allenfalls möchten Sie das %1$s-Plugin nur deaktivieren?
 removeplugindataconfirm_deactivate#:#%1$s-Plugin nur deaktivieren
