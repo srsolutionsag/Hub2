@@ -21,77 +21,83 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OriginSyncFactory {
+class OriginSyncFactory
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	/**
-	 * @var IOrigin
-	 */
-	protected $origin;
-
-
-	/**
-	 * @param IOrigin $origin
-	 */
-	public function __construct(IOrigin $origin) {
-		$this->origin = $origin;
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var IOrigin
+     */
+    protected $origin;
 
 
-	/**
-	 * @return OriginSync
-	 *
-	 * @throws HubException
-	 */
-	public function instance(): OriginSync {
-		$statusTransition = new ObjectStatusTransition($this->origin->config());
-
-		$originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $statusTransition);
-
-		return $originSync;
-	}
+    /**
+     * @param IOrigin $origin
+     */
+    public function __construct(IOrigin $origin)
+    {
+        $this->origin = $origin;
+    }
 
 
-	/**
-	 * @param OriginSync $originSync
-	 *
-	 * @throws HubException
-	 */
-	public function initImplementation(OriginSync $originSync) {
-		$implementationFactory = new OriginImplementationFactory($this->origin);
+    /**
+     * @return OriginSync
+     *
+     * @throws HubException
+     */
+    public function instance() : OriginSync
+    {
+        $statusTransition = new ObjectStatusTransition($this->origin->config());
 
-		$originImplementation = $implementationFactory->instance();
+        $originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $statusTransition);
 
-		$originSync->setProcessor($this->getSyncProcessor($this->origin, $originImplementation, $originSync->getStatusTransition()));
-
-		$originSync->setImplementation($originImplementation);
-	}
-
-
-	/**
-	 * @return IObjectRepository
-	 */
-	protected function getObjectRepository() {
-		$ucfirst = ucfirst($this->origin->getObjectType());
-		$class = "srag\\Plugins\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}Repository";
-
-		return new $class($this->origin);
-	}
+        return $originSync;
+    }
 
 
-	/**
-	 * @param IOrigin                 $origin
-	 * @param IOriginImplementation   $implementation
-	 * @param IObjectStatusTransition $statusTransition
-	 *
-	 * @return IObjectSyncProcessor
-	 */
-	protected function getSyncProcessor(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition) {
-		$processorFactory = new SyncProcessorFactory($origin, $implementation, $statusTransition);
-		$processor = $origin->getObjectType();
+    /**
+     * @param OriginSync $originSync
+     *
+     * @throws HubException
+     */
+    public function initImplementation(OriginSync $originSync)
+    {
+        $implementationFactory = new OriginImplementationFactory($this->origin);
 
-		return $processorFactory->$processor();
-	}
+        $originImplementation = $implementationFactory->instance();
+
+        $originSync->setProcessor($this->getSyncProcessor($this->origin, $originImplementation, $originSync->getStatusTransition()));
+
+        $originSync->setImplementation($originImplementation);
+    }
+
+
+    /**
+     * @return IObjectRepository
+     */
+    protected function getObjectRepository()
+    {
+        $ucfirst = ucfirst($this->origin->getObjectType());
+        $class = "srag\\Plugins\\Hub2\\Object\\{$ucfirst}\\{$ucfirst}Repository";
+
+        return new $class($this->origin);
+    }
+
+
+    /**
+     * @param IOrigin                 $origin
+     * @param IOriginImplementation   $implementation
+     * @param IObjectStatusTransition $statusTransition
+     *
+     * @return IObjectSyncProcessor
+     */
+    protected function getSyncProcessor(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition)
+    {
+        $processorFactory = new SyncProcessorFactory($origin, $implementation, $statusTransition);
+        $processor = $origin->getObjectType();
+
+        return $processorFactory->$processor();
+    }
 }

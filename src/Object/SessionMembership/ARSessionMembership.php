@@ -10,7 +10,8 @@ use srag\Plugins\Hub2\Object\ARObject;
  * @package srag\Plugins\Hub2\Object\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARSessionMembership extends ARObject implements ISessionMembership {
+class ARSessionMembership extends ARObject implements ISessionMembership
+{
 
-	const TABLE_NAME = 'sr_hub2_session_mem';
+    const TABLE_NAME = 'sr_hub2_session_mem';
 }

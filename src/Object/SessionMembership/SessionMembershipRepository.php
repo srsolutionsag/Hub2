@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\Session\ISessionRepository;
  * @package srag\Plugins\Hub2\Object\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionMembershipRepository extends ObjectRepository implements ISessionRepository {
+class SessionMembershipRepository extends ObjectRepository implements ISessionRepository
+{
 
 }

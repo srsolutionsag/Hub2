@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  * @package srag\Plugins\Hub2\Origin\Properties\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseMembershipProperties extends OriginProperties implements ICourseMembershipProperties {
+class CourseMembershipProperties extends OriginProperties implements ICourseMembershipProperties
+{
 
 }

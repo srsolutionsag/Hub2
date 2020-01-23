@@ -25,194 +25,203 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICourseMembershipSyncProcessor {
+class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICourseMembershipSyncProcessor
+{
 
-	/**
-	 * @var CourseProperties
-	 */
-	protected $props;
-	/**
-	 * @var CourseOriginConfig
-	 */
-	protected $config;
-
-
-	/**
-	 * @param IOrigin                 $origin
-	 * @param IOriginImplementation   $implementation
-	 * @param IObjectStatusTransition $transition
-	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition) {
-		parent::__construct($origin, $implementation, $transition);
-		$this->props = $origin->properties();
-		$this->config = $origin->config();
-	}
+    /**
+     * @var CourseProperties
+     */
+    protected $props;
+    /**
+     * @var CourseOriginConfig
+     */
+    protected $config;
 
 
-	/**
-	 * @inheritdoc
-	 *
-	 * @param CourseMembershipDTO $dto
-	 */
-	protected function handleCreate(IDataTransferObject $dto)/*: void*/ {
-		$ilias_course_ref_id = $this->determineCourseRefId($dto);
-		$dto->getCourseId();
-		$course = $this->findILIASCourse($ilias_course_ref_id);
-		if (!$course) {
-			return;
-		}
-
-		$user_id = $dto->getUserId();
-		$membership_obj = $course->getMembersObject();
-		$membership_obj->add($user_id, $this->mapRole($dto));
-		$membership_obj->updateContact($user_id, $dto->isContact());
-
-		$this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
-	}
+    /**
+     * @param IOrigin                 $origin
+     * @param IOriginImplementation   $implementation
+     * @param IObjectStatusTransition $transition
+     */
+    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
+    {
+        parent::__construct($origin, $implementation, $transition);
+        $this->props = $origin->properties();
+        $this->config = $origin->config();
+    }
 
 
-	/**
-	 * @inheritdoc
-	 *
-	 * @param CourseMembershipDTO $dto
-	 */
-	protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/ {
-		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
-		$ilias_course_ref_id = $obj->getContainerIdIlias();
-		$user_id = $dto->getUserId();
-		if (!$this->props->updateDTOProperty('role')) {
-			$this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
+    /**
+     * @inheritdoc
+     *
+     * @param CourseMembershipDTO $dto
+     */
+    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    {
+        $ilias_course_ref_id = $this->determineCourseRefId($dto);
+        $dto->getCourseId();
+        $course = $this->findILIASCourse($ilias_course_ref_id);
+        if (!$course) {
+            return;
+        }
 
-			return;
-		}
+        $user_id = $dto->getUserId();
+        $membership_obj = $course->getMembersObject();
+        $membership_obj->add($user_id, $this->mapRole($dto));
+        $membership_obj->updateContact($user_id, $dto->isContact());
 
-		$course = $this->findILIASCourse($ilias_course_ref_id);
-		if (!$course) {
-			return;
-		}
-
-		$membership_obj = $course->getMembersObject();
-		$membership_obj->add($user_id, $this->mapRole($dto));
-		$membership_obj->updateRoleAssignments($user_id, [ $this->getILIASRole($dto, $course) ]);
-
-		if ($this->props->updateDTOProperty("isContact")) {
-			$membership_obj->updateContact($user_id, $dto->isContact());
-		}
-
-		$obj->setUserIdIlias($dto->getUserId());
-		$obj->setContainerIdIlias($course->getRefId());
-		$obj->initId();
-	}
+        $this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 *
-	 * @param CourseMembershipDTO $dto
-	 */
-	protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/ {
-		$this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+    /**
+     * @inheritdoc
+     *
+     * @param CourseMembershipDTO $dto
+     */
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    {
+        $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+        $ilias_course_ref_id = $obj->getContainerIdIlias();
+        $user_id = $dto->getUserId();
+        if (!$this->props->updateDTOProperty('role')) {
+            $this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
 
-		if ($this->props->get(CourseMembershipProperties::DELETE_MODE) == CourseMembershipProperties::DELETE_MODE_NONE) {
-			return;
-		}
+            return;
+        }
 
-		$course = $this->findILIASCourse($obj->getContainerIdIlias());
-		$course->getMembersObject()->delete($obj->getUserIdIlias());
-	}
+        $course = $this->findILIASCourse($ilias_course_ref_id);
+        if (!$course) {
+            return;
+        }
 
+        $membership_obj = $course->getMembersObject();
+        $membership_obj->add($user_id, $this->mapRole($dto));
+        $membership_obj->updateRoleAssignments($user_id, [$this->getILIASRole($dto, $course)]);
 
-	/**
-	 * @param int $iliasId
-	 *
-	 * @return ilObjCourse|null
-	 */
-	protected function findILIASCourse($iliasId) {
-		if (!ilObject2::_exists($iliasId, true)) {
-			return NULL;
-		}
+        if ($this->props->updateDTOProperty("isContact")) {
+            $membership_obj->updateContact($user_id, $dto->isContact());
+        }
 
-		return new ilObjCourse($iliasId);
-	}
-
-
-	/**
-	 * @param CourseMembershipDTO $object
-	 *
-	 * @return int
-	 */
-	protected function mapRole(CourseMembershipDTO $object) {
-		switch ($object->getRole()) {
-			case CourseMembershipDTO::ROLE_ADMIN:
-				return IL_CRS_ADMIN;
-			case CourseMembershipDTO::ROLE_TUTOR:
-				return IL_CRS_TUTOR;
-			case CourseMembershipDTO::ROLE_MEMBER:
-				return IL_CRS_MEMBER;
-			default:
-				return IL_CRS_MEMBER;
-		}
-	}
+        $obj->setUserIdIlias($dto->getUserId());
+        $obj->setContainerIdIlias($course->getRefId());
+        $obj->initId();
+    }
 
 
-	/**
-	 * @param CourseMembershipDTO $object
-	 * @param ilObjCourse         $course
-	 *
-	 * @return int
-	 */
-	protected function getILIASRole(CourseMembershipDTO $object, ilObjCourse $course) {
-		switch ($object->getRole()) {
-			case CourseMembershipDTO::ROLE_ADMIN:
-				return $course->getDefaultAdminRole();
-			case CourseMembershipDTO::ROLE_TUTOR:
-				return $course->getDefaultTutorRole();
-			case CourseMembershipDTO::ROLE_MEMBER:
-				return $course->getDefaultMemberRole();
-			default:
-				return $course->getDefaultMemberRole();
-		}
-	}
+    /**
+     * @inheritdoc
+     *
+     * @param CourseMembershipDTO $dto
+     */
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    {
+        $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
+
+        if ($this->props->get(CourseMembershipProperties::DELETE_MODE) == CourseMembershipProperties::DELETE_MODE_NONE) {
+            return;
+        }
+
+        $course = $this->findILIASCourse($obj->getContainerIdIlias());
+        $course->getMembersObject()->delete($obj->getUserIdIlias());
+    }
 
 
-	/**
-	 * @param CourseMembershipDTO $course_membership
-	 *
-	 * @return int
-	 * @throws HubException
-	 */
-	protected function determineCourseRefId(CourseMembershipDTO $course_membership) {
+    /**
+     * @param int $iliasId
+     *
+     * @return ilObjCourse|null
+     */
+    protected function findILIASCourse($iliasId)
+    {
+        if (!ilObject2::_exists($iliasId, true)) {
+            return null;
+        }
 
-		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_REF_ID) {
-			return $course_membership->getCourseId();
-		}
-		if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID) {
-			// The stored course-ID is an external-ID from a course.
-			// We must search the course ref-ID from a category object synced by
-			// a linked origin. --> Get an instance of the linked origin and lookup the
-			// category by the given external ID.
-			$linkedOriginId = $this->config->getLinkedOriginId();
-			if (!$linkedOriginId) {
-				throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
-			}
-			$originRepository = new OriginRepository();
-			$origin = array_pop(array_filter($originRepository->courses(), function ($origin) use ($linkedOriginId) {
-				/** @var IOrigin $origin */
-				return $origin->getId() == $linkedOriginId;
-			}));
-			if ($origin === NULL) {
-				$msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
-				throw new HubException($msg);
-			}
-			$objectFactory = new ObjectFactory($origin);
-			$course = $objectFactory->course($course_membership->getCourseId());
-			if (!$course->getILIASId()) {
-				throw new HubException("The linked course does not (yet) exist in ILIAS. Membership Ext-Id: " . $course_membership->getExtId());
-			}
+        return new ilObjCourse($iliasId);
+    }
 
-			return $course->getILIASId();
-		}
 
-		return 0;
-	}
+    /**
+     * @param CourseMembershipDTO $object
+     *
+     * @return int
+     */
+    protected function mapRole(CourseMembershipDTO $object)
+    {
+        switch ($object->getRole()) {
+            case CourseMembershipDTO::ROLE_ADMIN:
+                return IL_CRS_ADMIN;
+            case CourseMembershipDTO::ROLE_TUTOR:
+                return IL_CRS_TUTOR;
+            case CourseMembershipDTO::ROLE_MEMBER:
+                return IL_CRS_MEMBER;
+            default:
+                return IL_CRS_MEMBER;
+        }
+    }
+
+
+    /**
+     * @param CourseMembershipDTO $object
+     * @param ilObjCourse         $course
+     *
+     * @return int
+     */
+    protected function getILIASRole(CourseMembershipDTO $object, ilObjCourse $course)
+    {
+        switch ($object->getRole()) {
+            case CourseMembershipDTO::ROLE_ADMIN:
+                return $course->getDefaultAdminRole();
+            case CourseMembershipDTO::ROLE_TUTOR:
+                return $course->getDefaultTutorRole();
+            case CourseMembershipDTO::ROLE_MEMBER:
+                return $course->getDefaultMemberRole();
+            default:
+                return $course->getDefaultMemberRole();
+        }
+    }
+
+
+    /**
+     * @param CourseMembershipDTO $course_membership
+     *
+     * @return int
+     * @throws HubException
+     */
+    protected function determineCourseRefId(CourseMembershipDTO $course_membership)
+    {
+
+        if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_REF_ID) {
+            return $course_membership->getCourseId();
+        }
+        if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_EXTERNAL_EXT_ID) {
+            // The stored course-ID is an external-ID from a course.
+            // We must search the course ref-ID from a category object synced by
+            // a linked origin. --> Get an instance of the linked origin and lookup the
+            // category by the given external ID.
+            $linkedOriginId = $this->config->getLinkedOriginId();
+            if (!$linkedOriginId) {
+                throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
+            }
+            $originRepository = new OriginRepository();
+            $origin = array_pop(array_filter($originRepository->courses(), function ($origin) use ($linkedOriginId) {
+                /** @var IOrigin $origin */
+                return $origin->getId() == $linkedOriginId;
+            }));
+            if ($origin === null) {
+                $msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
+                throw new HubException($msg);
+            }
+            $objectFactory = new ObjectFactory($origin);
+            $course = $objectFactory->course($course_membership->getCourseId());
+            if (!$course->getILIASId()) {
+                throw new HubException("The linked course does not (yet) exist in ILIAS. Membership Ext-Id: " . $course_membership->getExtId());
+            }
+
+            return $course->getILIASId();
+        }
+
+        return 0;
+    }
 }

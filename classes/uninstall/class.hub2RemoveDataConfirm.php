@@ -10,8 +10,9 @@ use srag\RemovePluginDataConfirm\Hub2\AbstractRemovePluginDataConfirm;
  *
  * @ilCtrl_isCalledBy hub2RemoveDataConfirm: ilUIPluginRouterGUI
  */
-class hub2RemoveDataConfirm extends AbstractRemovePluginDataConfirm {
+class hub2RemoveDataConfirm extends AbstractRemovePluginDataConfirm
+{
 
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 }

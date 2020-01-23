@@ -15,36 +15,41 @@ use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManageme
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ARCompetenceManagementOrigin extends AROrigin implements ICompetenceManagementOrigin {
+class ARCompetenceManagementOrigin extends AROrigin implements ICompetenceManagementOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data): ICompetenceManagementOriginConfig {
-		return new CompetenceManagementOriginConfig($data);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data): ICompetenceManagementProperties {
-		return new CompetenceManagementProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data) : ICompetenceManagementOriginConfig
+    {
+        return new CompetenceManagementOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function config(): ICompetenceManagementOriginConfig {
-		return parent::config();
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data) : ICompetenceManagementProperties
+    {
+        return new CompetenceManagementProperties($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function properties(): ICompetenceManagementProperties {
-		return parent::properties();
-	}
+    /**
+     * @inheritdoc
+     */
+    public function config() : ICompetenceManagementOriginConfig
+    {
+        return parent::config();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function properties() : ICompetenceManagementProperties
+    {
+        return parent::properties();
+    }
 }

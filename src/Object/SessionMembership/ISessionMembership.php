@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Object\IObject;
  * @package srag\Plugins\Hub2\Object\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ISessionMembership extends IObject {
+interface ISessionMembership extends IObject
+{
 
 }

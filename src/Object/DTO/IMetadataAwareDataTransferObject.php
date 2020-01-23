@@ -10,18 +10,19 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
  * @package srag\Plugins\Hub2\Object\DTO
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IMetadataAwareDataTransferObject extends IDataTransferObject {
+interface IMetadataAwareDataTransferObject extends IDataTransferObject
+{
 
-	/**
-	 * @param IMetadata $IMetadata
-	 *
-	 * @return IMetadataAwareDataTransferObject
-	 */
-	public function addMetadata(IMetadata $IMetadata): IMetadataAwareDataTransferObject;
+    /**
+     * @param IMetadata $IMetadata
+     *
+     * @return IMetadataAwareDataTransferObject
+     */
+    public function addMetadata(IMetadata $IMetadata) : IMetadataAwareDataTransferObject;
 
 
-	/**
-	 * @return IMetadata[]
-	 */
-	public function getMetaData(): array;
+    /**
+     * @return IMetadata[]
+     */
+    public function getMetaData() : array;
 }

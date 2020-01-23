@@ -8,40 +8,41 @@ namespace srag\Plugins\Hub2\Shortlink;
  * @package srag\Plugins\Hub2\Shortlink
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IObjectLink {
+interface IObjectLink
+{
 
-	/**
-	 * @return bool
-	 */
-	public function doesObjectExist(): bool;
-
-
-	/**
-	 * @return bool
-	 */
-	public function isAccessGranted(): bool;
+    /**
+     * @return bool
+     */
+    public function doesObjectExist() : bool;
 
 
-	/**
-	 * @return string
-	 */
-	public function getAccessGrantedExternalLink(): string;
+    /**
+     * @return bool
+     */
+    public function isAccessGranted() : bool;
 
 
-	/**
-	 * @return string
-	 */
-	public function getAccessDeniedLink(): string;
+    /**
+     * @return string
+     */
+    public function getAccessGrantedExternalLink() : string;
 
 
-	/**
-	 * @return string
-	 */
-	public function getNonExistingLink(): string;
+    /**
+     * @return string
+     */
+    public function getAccessDeniedLink() : string;
 
 
-	/**
-	 * @return string
-	 */
-	public function getAccessGrantedInternalLink(): string;
+    /**
+     * @return string
+     */
+    public function getNonExistingLink() : string;
+
+
+    /**
+     * @return string
+     */
+    public function getAccessGrantedInternalLink() : string;
 }

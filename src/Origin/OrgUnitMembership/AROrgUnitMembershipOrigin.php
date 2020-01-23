@@ -15,36 +15,41 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\OrgUnitMembershipPrope
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOrigin {
+class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data): IOrgUnitMembershipOriginConfig {
-		return new OrgUnitMembershipOriginConfig($data);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data): IOrgUnitMembershipProperties {
-		return new OrgUnitMembershipProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data) : IOrgUnitMembershipOriginConfig
+    {
+        return new OrgUnitMembershipOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function config(): IOrgUnitMembershipOriginConfig {
-		return parent::config();
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data) : IOrgUnitMembershipProperties
+    {
+        return new OrgUnitMembershipProperties($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function properties(): IOrgUnitMembershipProperties {
-		return parent::properties();
-	}
+    /**
+     * @inheritdoc
+     */
+    public function config() : IOrgUnitMembershipOriginConfig
+    {
+        return parent::config();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function properties() : IOrgUnitMembershipProperties
+    {
+        return parent::properties();
+    }
 }

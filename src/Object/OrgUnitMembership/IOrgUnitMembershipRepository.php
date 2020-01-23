@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitMembershipRepository extends IObjectRepository {
+interface IOrgUnitMembershipRepository extends IObjectRepository
+{
 
 }

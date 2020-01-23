@@ -13,14 +13,15 @@ use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IUserDTO extends IDataTransferObject, IMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject {
+interface IUserDTO extends IDataTransferObject, IMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject
+{
 
-	const GENDER_MALE = 'm';
-	const GENDER_FEMALE = 'f';
-	const GENDER_NONE = " ";
-	const AUTH_MODE_ILIAS = 'local';
-	const AUTH_MODE_SHIB = 'shibboleth';
-	const AUTH_MODE_LDAP = 'ldap_1';
-	const AUTH_MODE_RADIUS = 'radius';
-	const USER_DEFAULT_ROLE = 4;
+    const GENDER_MALE = 'm';
+    const GENDER_FEMALE = 'f';
+    const GENDER_NONE = " ";
+    const AUTH_MODE_ILIAS = 'local';
+    const AUTH_MODE_SHIB = 'shibboleth';
+    const AUTH_MODE_LDAP = 'ldap_1';
+    const AUTH_MODE_RADIUS = 'radius';
+    const USER_DEFAULT_ROLE = 4;
 }

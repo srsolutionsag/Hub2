@@ -10,12 +10,14 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
  * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSyncSummary {
+class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSyncSummary
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function renderOneSync(IOriginSync $originSync, bool $only_logs = false, bool $output_message = NULL): string {
-		return parent::renderOneSync($originSync, $only_logs, true);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function renderOneSync(IOriginSync $originSync, bool $only_logs = false, bool $output_message = null) : string
+    {
+        return parent::renderOneSync($originSync, $only_logs, true);
+    }
 }

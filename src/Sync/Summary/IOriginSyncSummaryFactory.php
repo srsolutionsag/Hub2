@@ -8,16 +8,17 @@ namespace srag\Plugins\Hub2\Sync\Summary;
  * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IOriginSyncSummaryFactory {
+interface IOriginSyncSummaryFactory
+{
 
-	/**
-	 * @return IOriginSyncSummary
-	 */
-	public function web(): IOriginSyncSummary;
+    /**
+     * @return IOriginSyncSummary
+     */
+    public function web() : IOriginSyncSummary;
 
 
-	/**
-	 * @return IOriginSyncSummary
-	 */
-	public function mail(): IOriginSyncSummary;
+    /**
+     * @return IOriginSyncSummary
+     */
+    public function mail() : IOriginSyncSummary;
 }

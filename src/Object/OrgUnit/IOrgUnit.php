@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\IObject;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnit extends IObject {
+interface IOrgUnit extends IObject
+{
 
 }

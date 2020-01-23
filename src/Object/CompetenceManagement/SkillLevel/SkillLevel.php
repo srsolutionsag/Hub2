@@ -9,98 +9,107 @@ namespace srag\Plugins\Hub2\Object\CompetenceManagement\SkillLevel;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class SkillLevel implements ISkillLevel {
+class SkillLevel implements ISkillLevel
+{
 
-	/**
-	 * @var string
-	 */
-	protected $ext_id = "";
-	/**
-	 * @var string
-	 */
-	protected $title = "";
-	/**
-	 * @var string
-	 */
-	protected $description = "";
-
-
-	/**
-	 * SkillLevel constructor
-	 *
-	 * @param string $ext_id
-	 * @param string $title
-	 * @param string $description
-	 */
-	public function __construct(string $ext_id, string $title = "", string $description = "") {
-		$this->ext_id = $ext_id;
-		$this->title = $title;
-		$this->description = $description;
-	}
+    /**
+     * @var string
+     */
+    protected $ext_id = "";
+    /**
+     * @var string
+     */
+    protected $title = "";
+    /**
+     * @var string
+     */
+    protected $description = "";
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getExtId(): string {
-		return $this->ext_id;
-	}
+    /**
+     * SkillLevel constructor
+     *
+     * @param string $ext_id
+     * @param string $title
+     * @param string $description
+     */
+    public function __construct(string $ext_id, string $title = "", string $description = "")
+    {
+        $this->ext_id = $ext_id;
+        $this->title = $title;
+        $this->description = $description;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function setExtId(string $ext_id): ISkillLevel {
-		$this->ext_id = $ext_id;
-
-		return $this;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getTitle(): string {
-		return $this->title;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getExtId() : string
+    {
+        return $this->ext_id;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function setTitle(string $title): ISkillLevel {
-		$this->title = $title;
+    /**
+     * @inheritdoc
+     */
+    public function setExtId(string $ext_id) : ISkillLevel
+    {
+        $this->ext_id = $ext_id;
 
-		return $this;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getDescription(): string {
-		return $this->description;
-	}
+        return $this;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function setDescription(string $description): ISkillLevel {
-		$this->description = $description;
+    /**
+     * @inheritdoc
+     */
+    public function getTitle() : string
+    {
+        return $this->title;
+    }
 
-		return $this;
-	}
+
+    /**
+     * @inheritdoc
+     */
+    public function setTitle(string $title) : ISkillLevel
+    {
+        $this->title = $title;
+
+        return $this;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function jsonSerialize(): array {
-		return [
-			"ext_id" => $this->ext_id,
-			"title" => $this->title,
-			"description" => $this->description
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getDescription() : string
+    {
+        return $this->description;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function setDescription(string $description) : ISkillLevel
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function jsonSerialize() : array
+    {
+        return [
+            "ext_id"      => $this->ext_id,
+            "title"       => $this->title,
+            "description" => $this->description
+        ];
+    }
 }

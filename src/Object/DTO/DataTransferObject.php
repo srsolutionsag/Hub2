@@ -15,174 +15,187 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class DataTransferObject implements IDataTransferObject {
+abstract class DataTransferObject implements IDataTransferObject
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	/**
-	 * @var string
-	 */
-	private $ext_id = '';
-	/**
-	 * @var string
-	 */
-	private $period = '';
-	/**
-	 * @var bool
-	 */
-	private $should_deleted = false;
-	/**
-	 * @var Serializable
-	 */
-	protected $additionalData;
-
-
-	/**
-	 * @param string $ext_id
-	 */
-	public function __construct($ext_id) {
-		$this->ext_id = $ext_id;
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var string
+     */
+    private $ext_id = '';
+    /**
+     * @var string
+     */
+    private $period = '';
+    /**
+     * @var bool
+     */
+    private $should_deleted = false;
+    /**
+     * @var Serializable
+     */
+    protected $additionalData;
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getExtId() {
-		return $this->ext_id;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getPeriod() {
-		return $this->period;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function setPeriod($period) {
-		$this->period = $period;
-
-		return $this;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getData() {
-		$data = [];
-		foreach ($this->getProperties() as $key) {
-			$this->sleepValue($data, $key);
-		}
-
-		return $data;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function setData(array $data) {
-		foreach (array_keys($data) as $key) {
-			if ($key !== "should_deleted") {
-				$this->wakeUpValue($data, $key);
-			}
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * @return array
-	 */
-	protected function getProperties() {
-		return array_filter(
-			array_keys(get_class_vars(get_class($this))), function (string $property): bool {
-			return ($property !== "should_deleted");
-		}
-		);
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function __toString() {
-		return implode(
-			', ', [
-				    "ext_id: " . $this->getExtId(),
-				    "period: " . $this->getPeriod(),
-			    ]
-		);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function shouldDeleted(): bool {
-		return $this->should_deleted;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function setShouldDeleted(bool $should_deleted) {
-		$this->should_deleted = $should_deleted;
-
-		return $this;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function getAdditionalData(): Serializable {
-		$object = unserialize($this->additionalData);
-		if (!$object) {
-			return unserialize(serialize(new ArrayObject()));
-		}
-
-		return $object;
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function withAdditionalData(Serializable $additionalData) {
-		$this->additionalData = serialize($additionalData);
-
-		return $this;
-	}
-
-
-	/**
-	 * @param array  $data
-	 * @param string $key
-	 */
-	protected function sleepValue(array &$data, string $key)
+    /**
+     * @param string $ext_id
+     */
+    public function __construct($ext_id)
     {
-		switch ($key) {
-			default:
-				$data[$key] = $this->{$key};
-		}
-	}
+        $this->ext_id = $ext_id;
+    }
 
 
-	/**
-	 * @param array  $data
-	 * @param string $key
-	 */
-	protected function wakeUpValue(array $data, string $key)
+    /**
+     * @inheritdoc
+     */
+    public function getExtId()
+    {
+        return $this->ext_id;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getPeriod()
+    {
+        return $this->period;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function setPeriod($period)
+    {
+        $this->period = $period;
+
+        return $this;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getData()
+    {
+        $data = [];
+        foreach ($this->getProperties() as $key) {
+            $this->sleepValue($data, $key);
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function setData(array $data)
+    {
+        foreach (array_keys($data) as $key) {
+            if ($key !== "should_deleted") {
+                $this->wakeUpValue($data, $key);
+            }
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return array
+     */
+    protected function getProperties()
+    {
+        return array_filter(
+            array_keys(get_class_vars(get_class($this))), function (string $property) : bool {
+            return ($property !== "should_deleted");
+        }
+        );
+    }
+
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return implode(
+            ', ', [
+                "ext_id: " . $this->getExtId(),
+                "period: " . $this->getPeriod(),
+            ]
+        );
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function shouldDeleted() : bool
+    {
+        return $this->should_deleted;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function setShouldDeleted(bool $should_deleted)
+    {
+        $this->should_deleted = $should_deleted;
+
+        return $this;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getAdditionalData() : Serializable
+    {
+        $object = unserialize($this->additionalData);
+        if (!$object) {
+            return unserialize(serialize(new ArrayObject()));
+        }
+
+        return $object;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function withAdditionalData(Serializable $additionalData)
+    {
+        $this->additionalData = serialize($additionalData);
+
+        return $this;
+    }
+
+
+    /**
+     * @param array  $data
+     * @param string $key
+     */
+    protected function sleepValue(array &$data, string $key)
+    {
+        switch ($key) {
+            default:
+                $data[$key] = $this->{$key};
+        }
+    }
+
+
+    /**
+     * @param array  $data
+     * @param string $key
+     */
+    protected function wakeUpValue(array $data, string $key)
     {
         switch ($key) {
             default:
@@ -190,27 +203,29 @@ abstract class DataTransferObject implements IDataTransferObject {
         }
     }
 
+
     /**
-	 * @inheritdoc
-	 */
-	public function computeHashCode(): string {
-		$hash = '';
-		foreach ($this->getData() as $property => $value) {
-			$hash .= (is_array($value)) ? implode('', $value) : (string)$value;
-		}
+     * @inheritdoc
+     */
+    public function computeHashCode() : string
+    {
+        $hash = '';
+        foreach ($this->getData() as $property => $value) {
+            $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
+        }
 
-		if ($this instanceof IMetadataAwareDataTransferObject) {
-			foreach ($this->getMetaData() as $property => $value) {
-				$hash .= (is_array($value)) ? implode('', $value) : (string)$value;
-			}
-		}
+        if ($this instanceof IMetadataAwareDataTransferObject) {
+            foreach ($this->getMetaData() as $property => $value) {
+                $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
+            }
+        }
 
-		if ($this instanceof ITaxonomyAwareDataTransferObject) {
-			foreach ($this->getTaxonomies() as $property => $value) {
-				$hash .= (is_array($value)) ? implode('', $value) : (string)$value;
-			}
-		}
+        if ($this instanceof ITaxonomyAwareDataTransferObject) {
+            foreach ($this->getTaxonomies() as $property => $value) {
+                $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
+            }
+        }
 
-		return md5($hash); // TODO: Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
-	}
+        return md5($hash); // TODO: Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
+    }
 }

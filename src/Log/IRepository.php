@@ -13,26 +13,27 @@ use stdClass;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IRepository {
+interface IRepository
+{
 
-	/**
-	 * @param ILog $log
-	 */
-	public function deleteLog(ILog $log)/*: void*/ ;
-
-
-	/**
-	 * @param int $keep_old_logs_time
-	 *
-	 * @return int
-	 */
-	public function deleteOldLogs(int $keep_old_logs_time): int;
+    /**
+     * @param ILog $log
+     */
+    public function deleteLog(ILog $log)/*: void*/ ;
 
 
-	/**
-	 * @return IFactory
-	 */
-	public function factory(): IFactory;
+    /**
+     * @param int $keep_old_logs_time
+     *
+     * @return int
+     */
+    public function deleteOldLogs(int $keep_old_logs_time) : int;
+
+
+    /**
+     * @return IFactory
+     */
+    public function factory() : IFactory;
 
 
     /**
@@ -55,7 +56,23 @@ interface IRepository {
      *
      * @return ILog[]
      */
-	public function getLogs(string $sort_by = null, string $sort_by_direction = null, int $limit_start = null, int $limit_end = null, string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null, int $status = null): array;
+    public function getLogs(
+        string $sort_by = null,
+        string $sort_by_direction = null,
+        int $limit_start = null,
+        int $limit_end = null,
+        string $title = null,
+        string $message = null,
+        ilDateTime $date_start = null,
+        ilDateTime $date_end = null,
+        int $level = null,
+        int $origin_id = null,
+        string $origin_object_type = null,
+        string $object_ext_id = null,
+        int $object_ilias_id = null,
+        string $additional_data = null,
+        int $status = null
+    ) : array;
 
 
     /**
@@ -74,48 +91,60 @@ interface IRepository {
      *
      * @return int
      */
-	public function getLogsCount(string $title = null, string $message = null, ilDateTime $date_start = null, ilDateTime $date_end = null, int $level = null, int $origin_id = null, string $origin_object_type = null, string $object_ext_id = null, int $object_ilias_id = null, string $additional_data = null, int $status = null): int;
+    public function getLogsCount(
+        string $title = null,
+        string $message = null,
+        ilDateTime $date_start = null,
+        ilDateTime $date_end = null,
+        int $level = null,
+        int $origin_id = null,
+        string $origin_object_type = null,
+        string $object_ext_id = null,
+        int $object_ilias_id = null,
+        string $additional_data = null,
+        int $status = null
+    ) : int;
 
 
-	/**
-	 * @param int $log_id
-	 *
-	 * @return ILog|null
-	 */
-	public function getLogById(int $log_id)/*: ?ILog*/ ;
+    /**
+     * @param int $log_id
+     *
+     * @return ILog|null
+     */
+    public function getLogById(int $log_id)/*: ?ILog*/ ;
 
 
-	/**
-	 * @return stdClass
-	 */
-	public function getGlobalAdditionalData(): stdClass;
+    /**
+     * @return stdClass
+     */
+    public function getGlobalAdditionalData() : stdClass;
 
 
-	/**
-	 * @param stdClass $global_additional_data
-	 *
-	 * @return self
-	 */
-	public function withGlobalAdditionalData(stdClass $global_additional_data): self;
+    /**
+     * @param stdClass $global_additional_data
+     *
+     * @return self
+     */
+    public function withGlobalAdditionalData(stdClass $global_additional_data) : self;
 
 
-	/**
-	 * @param ILog $log
-	 */
-	public function keepLog(ILog $log)/*:void*/ ;
+    /**
+     * @param ILog $log
+     */
+    public function keepLog(ILog $log)/*:void*/ ;
 
 
-	/**
-	 * @param IOrigin  $origin
-	 * @param int|null $level
-	 *
-	 * @return ILog[]
-	 */
-	public function getKeptLogs(IOrigin $origin,/*?*/ int $level = null): array;
+    /**
+     * @param IOrigin  $origin
+     * @param int|null $level
+     *
+     * @return ILog[]
+     */
+    public function getKeptLogs(IOrigin $origin,/*?*/ int $level = null) : array;
 
 
-	/**
-	 * @param ILog $log
-	 */
-	public function storeLog(ILog $log)/*: void*/ ;
+    /**
+     * @param ILog $log
+     */
+    public function storeLog(ILog $log)/*: void*/ ;
 }

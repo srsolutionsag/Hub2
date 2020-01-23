@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  * @package srag\Plugins\Hub2\Origin\Properties\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionMembershipProperties extends OriginProperties implements ISessionMembershipProperties {
+class SessionMembershipProperties extends OriginProperties implements ISessionMembershipProperties
+{
 
 }

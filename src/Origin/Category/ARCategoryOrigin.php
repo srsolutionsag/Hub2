@@ -13,20 +13,23 @@ use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARCategoryOrigin extends AROrigin implements ICategoryOrigin {
+class ARCategoryOrigin extends AROrigin implements ICategoryOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data) {
-		return new CategoryOriginConfig($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data)
+    {
+        return new CategoryOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data) {
-		return new CategoryProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data)
+    {
+        return new CategoryProperties($data);
+    }
 }

@@ -8,42 +8,43 @@ namespace srag\Plugins\Hub2\Origin;
  * @package srag\Plugins\Hub2\Origin
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IOriginFactory {
+interface IOriginFactory
+{
 
-	/**
-	 * Get the concrete origin by ID, e.g. returns a IUserOrigin if the given ID belongs
-	 * to a origin of object type 'user'.
-	 *
-	 * @param int $id
-	 *
-	 * @return IOrigin|null
-	 */
-	public function getById($id); //Correct return type would by : ?IOrigin, but this is PHP7.1+
-
-
-	/**
-	 * @param string $type
-	 *
-	 * @return IOrigin
-	 */
-	public function createByType(string $type): IOrigin;
+    /**
+     * Get the concrete origin by ID, e.g. returns a IUserOrigin if the given ID belongs
+     * to a origin of object type 'user'.
+     *
+     * @param int $id
+     *
+     * @return IOrigin|null
+     */
+    public function getById($id); //Correct return type would by : ?IOrigin, but this is PHP7.1+
 
 
-	/**
-	 * @return IOrigin[]
-	 */
-	public function getAllActive(): array;
+    /**
+     * @param string $type
+     *
+     * @return IOrigin
+     */
+    public function createByType(string $type) : IOrigin;
 
 
-	/**
-	 * @return IOrigin[]
-	 */
-	public function getAll(): array;
+    /**
+     * @return IOrigin[]
+     */
+    public function getAllActive() : array;
 
 
-	/**
-	 * @param int $origin_id
-	 */
-	public function delete(int $origin_id)/*: void*/
-	;
+    /**
+     * @return IOrigin[]
+     */
+    public function getAll() : array;
+
+
+    /**
+     * @param int $origin_id
+     */
+    public function delete(int $origin_id)/*: void*/
+    ;
 }

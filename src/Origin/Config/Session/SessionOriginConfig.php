@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Origin\Config\Session
  */
-class SessionOriginConfig extends OriginConfig implements ISessionOriginConfig {
+class SessionOriginConfig extends OriginConfig implements ISessionOriginConfig
+{
 
 }

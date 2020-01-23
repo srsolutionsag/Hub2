@@ -10,32 +10,36 @@ use ilCronJobResult;
  * @package srag\Plugins\Hub2\Jobs\Result
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-final class ResultFactory {
+final class ResultFactory
+{
 
-	/**
-	 * @param string $message
-	 *
-	 * @return AbstractResult
-	 */
-	public static function ok(string $message): ilCronJobResult {
-		return new OK($message);
-	}
-
-
-	/**
-	 * @param string $message
-	 *
-	 * @return AbstractResult
-	 */
-	public static function error(string $message): ilCronJobResult {
-		return new Error($message);
-	}
+    /**
+     * @param string $message
+     *
+     * @return AbstractResult
+     */
+    public static function ok(string $message) : ilCronJobResult
+    {
+        return new OK($message);
+    }
 
 
-	/**
-	 * ResultFactory constructor
-	 */
-	private function __construct() {
+    /**
+     * @param string $message
+     *
+     * @return AbstractResult
+     */
+    public static function error(string $message) : ilCronJobResult
+    {
+        return new Error($message);
+    }
 
-	}
+
+    /**
+     * ResultFactory constructor
+     */
+    private function __construct()
+    {
+
+    }
 }

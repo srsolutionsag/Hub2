@@ -15,39 +15,40 @@ use Throwable;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IFactory {
+interface IFactory
+{
 
-	/**
-	 * @return ILog
-	 */
-	public function log(): ILog;
-
-
-	/**
-	 * @param IOrigin|null             $origin
-	 * @param IObject|null             $object
-	 * @param IDataTransferObject|null $dto
-	 *
-	 * @return ILog
-	 */
-	public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog;
+    /**
+     * @return ILog
+     */
+    public function log() : ILog;
 
 
-	/**
-	 * @param Throwable                $ex
-	 * @param IOrigin|null             $origin
-	 * @param IObject|null             $object
-	 * @param IDataTransferObject|null $dto
-	 *
-	 * @return ILog
-	 */
-	public function exceptionLog(Throwable $ex, IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog;
+    /**
+     * @param IOrigin|null             $origin
+     * @param IObject|null             $object
+     * @param IDataTransferObject|null $dto
+     *
+     * @return ILog
+     */
+    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null) : ILog;
 
 
-	/**
-	 * @param stdClass $data
-	 *
-	 * @return ILog
-	 */
-	public function fromDB(stdClass $data): ILog;
+    /**
+     * @param Throwable                $ex
+     * @param IOrigin|null             $origin
+     * @param IObject|null             $object
+     * @param IDataTransferObject|null $dto
+     *
+     * @return ILog
+     */
+    public function exceptionLog(Throwable $ex, IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null) : ILog;
+
+
+    /**
+     * @param stdClass $data
+     *
+     * @return ILog
+     */
+    public function fromDB(stdClass $data) : ILog;
 }

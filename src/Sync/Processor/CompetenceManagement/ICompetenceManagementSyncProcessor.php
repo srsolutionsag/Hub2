@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface ICompetenceManagementSyncProcessor extends IObjectSyncProcessor {
+interface ICompetenceManagementSyncProcessor extends IObjectSyncProcessor
+{
 
 }

@@ -10,18 +10,19 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ITaxonomyAwareObject extends IObject {
+interface ITaxonomyAwareObject extends IObject
+{
 
-	/**
-	 * @return ITaxonomy[]
-	 */
-	public function getTaxonomies(): array;
+    /**
+     * @return ITaxonomy[]
+     */
+    public function getTaxonomies() : array;
 
 
-	/**
-	 * @param ITaxonomy[] $taxonomies
-	 *
-	 * @return void
-	 */
-	public function setTaxonomies(array $taxonomies);
+    /**
+     * @param ITaxonomy[] $taxonomies
+     *
+     * @return void
+     */
+    public function setTaxonomies(array $taxonomies);
 }

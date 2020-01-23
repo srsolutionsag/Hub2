@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  * @package srag\Plugins\Hub2\Object\Category
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICategoryRepository extends IObjectRepository {
+interface ICategoryRepository extends IObjectRepository
+{
 
 }

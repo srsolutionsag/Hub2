@@ -10,7 +10,8 @@ use srag\Plugins\Hub2\Object\ARObject;
  * @package srag\Plugins\Hub2\Object\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARCourseMembership extends ARObject implements ICourseMembership {
+class ARCourseMembership extends ARObject implements ICourseMembership
+{
 
-	const TABLE_NAME = 'sr_hub2_course_mem';
+    const TABLE_NAME = 'sr_hub2_course_mem';
 }

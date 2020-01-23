@@ -15,36 +15,41 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnit\OrgUnitProperties;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin {
+class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data): IOrgUnitOriginConfig {
-		return new OrgUnitOriginConfig($data);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data): IOrgUnitProperties {
-		return new OrgUnitProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data) : IOrgUnitOriginConfig
+    {
+        return new OrgUnitOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function config(): IOrgUnitOriginConfig {
-		return parent::config();
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data) : IOrgUnitProperties
+    {
+        return new OrgUnitProperties($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function properties(): IOrgUnitProperties {
-		return parent::properties();
-	}
+    /**
+     * @inheritdoc
+     */
+    public function config() : IOrgUnitOriginConfig
+    {
+        return parent::config();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function properties() : IOrgUnitProperties
+    {
+        return parent::properties();
+    }
 }

@@ -12,14 +12,15 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ITaxonomySyncProcessor {
+interface ITaxonomySyncProcessor
+{
 
-	/**
-	 * @param ITaxonomyAwareDataTransferObject $dto
-	 * @param ITaxonomyAwareObject             $iobject
-	 * @param ilObject                         $ilias_object
-	 *
-	 * @return void
-	 */
-	public function handleTaxonomies(ITaxonomyAwareDataTransferObject $dto, ITaxonomyAwareObject $iobject, ilObject $ilias_object);
+    /**
+     * @param ITaxonomyAwareDataTransferObject $dto
+     * @param ITaxonomyAwareObject             $iobject
+     * @param ilObject                         $ilias_object
+     *
+     * @return void
+     */
+    public function handleTaxonomies(ITaxonomyAwareDataTransferObject $dto, ITaxonomyAwareObject $iobject, ilObject $ilias_object);
 }

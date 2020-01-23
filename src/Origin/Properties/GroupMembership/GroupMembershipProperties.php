@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  * @package srag\Plugins\Hub2\Origin\Properties\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupMembershipProperties extends OriginProperties implements IGroupMembershipProperties {
+class GroupMembershipProperties extends OriginProperties implements IGroupMembershipProperties
+{
 
 }

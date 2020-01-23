@@ -11,25 +11,29 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseOriginConfig extends OriginConfig implements ICourseOriginConfig {
+class CourseOriginConfig extends OriginConfig implements ICourseOriginConfig
+{
 
-	/**
-	 * @var array
-	 */
-	protected $courseData = [
-		self::REF_ID_NO_PARENT_ID_FOUND => 1,
-	];
-
-
-	public function __construct(array $data) {
-		parent::__construct(array_merge($this->courseData, $data));
-	}
+    /**
+     * @var array
+     */
+    protected $courseData
+        = [
+            self::REF_ID_NO_PARENT_ID_FOUND => 1,
+        ];
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getParentRefIdIfNoParentIdFound(): int {
-		return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
-	}
+    public function __construct(array $data)
+    {
+        parent::__construct(array_merge($this->courseData, $data));
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getParentRefIdIfNoParentIdFound() : int
+    {
+        return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
+    }
 }
