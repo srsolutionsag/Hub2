@@ -73,7 +73,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 		'activationType',
 		'numberOfPreviousSessions',
 		'numberOfNextSessions',
-		'orderType'
+		'orderType',
+        'courseStart',
+        'courseEnd'
 	];
 
 

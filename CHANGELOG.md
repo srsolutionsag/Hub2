@@ -15,6 +15,8 @@
 - Write rbac log when creating object
 - Fix: mapping byTitle for Org Units
 - Feature: User DTO with language
+- Origins can now set course start and end date
+- Assign ILIAS default role to user per default
 
 ## [2.3.0]
 - Support ILIAS 5.4

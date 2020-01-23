@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Object\Course;
 
+use ilDate;
 use InvalidArgumentException;
 use srag\Plugins\Hub2\Exception\LanguageCodeException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
@@ -169,6 +170,15 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 	 * @var string
 	 */
 	protected $appointementsColor = '';
+    /**
+     * @var ilDate|null
+     */
+    protected $courseStart = null;
+    /**
+     * @var ilDate|null
+     */
+    protected $courseEnd = null;
+
 
 
 	/**
@@ -761,4 +771,48 @@ class CourseDTO extends DataTransferObject implements ICourseDTO {
 
 		return $this;
 	}
+
+
+    /**
+     * @return ilDate|null
+     */
+    public function getCourseStart()/*? : ilDate*/
+    {
+        return $this->courseStart;
+    }
+
+
+    /**
+     * @param ilDate|null $courseStart
+     *
+     * @return self
+     */
+    public function setCourseStart(/*?*/ ilDate $courseStart = null) : self
+    {
+        $this->courseStart = $courseStart;
+
+        return $this;
+    }
+
+
+    /**
+     * @return ilDate|null
+     */
+    public function getCourseEnd()/*? : ilDate*/
+    {
+        return $this->courseEnd;
+    }
+
+
+    /**
+     * @param ilDate|null $courseEnd
+     *
+     * @return self
+     */
+    public function setCourseEnd(/*?*/ ilDate $courseEnd = null) : self
+    {
+        $this->courseEnd = $courseEnd;
+
+        return $this;
+    }
 }
