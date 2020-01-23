@@ -22,4 +22,5 @@ interface IUserDTO extends IDataTransferObject, IMetadataAwareDataTransferObject
 	const AUTH_MODE_SHIB = 'shibboleth';
 	const AUTH_MODE_LDAP = 'ldap_1';
 	const AUTH_MODE_RADIUS = 'radius';
+	const USER_DEFAULT_ROLE = 4;
 }
