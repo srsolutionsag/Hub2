@@ -17,6 +17,7 @@
 - Feature: User DTO with language
 - Origins can now set course start and end date
 - Assign ILIAS default role to user per default
+- Mapping strategy by ext id
 
 ## [2.3.0]
 - Support ILIAS 5.4

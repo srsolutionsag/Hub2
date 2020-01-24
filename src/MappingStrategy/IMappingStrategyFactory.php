@@ -44,5 +44,11 @@ interface IMappingStrategyFactory
     /**
      * @return IMappingStrategy
      */
+    public function byExtId() : IMappingStrategy;
+
+
+    /**
+     * @return IMappingStrategy
+     */
     public function none() : IMappingStrategy;
 }

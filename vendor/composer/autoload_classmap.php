@@ -956,6 +956,7 @@ return array(
     'srag\\Plugins\\Hub2\\Log\\Repository' => $baseDir . '/src/Log/Repository.php',
     'srag\\Plugins\\Hub2\\MappingStrategy\\AMappingStrategy' => $baseDir . '/src/MappingStrategy/AMappingStrategy.php',
     'srag\\Plugins\\Hub2\\MappingStrategy\\ByEmail' => $baseDir . '/src/MappingStrategy/ByEmail.php',
+    'srag\\Plugins\\Hub2\\MappingStrategy\\ByExtId' => $baseDir . '/src/MappingStrategy/ByExtId.php',
     'srag\\Plugins\\Hub2\\MappingStrategy\\ByExternalAccount' => $baseDir . '/src/MappingStrategy/ByExternalAccount.php',
     'srag\\Plugins\\Hub2\\MappingStrategy\\ByImportId' => $baseDir . '/src/MappingStrategy/ByImportId.php',
     'srag\\Plugins\\Hub2\\MappingStrategy\\ByLogin' => $baseDir . '/src/MappingStrategy/ByLogin.php',
