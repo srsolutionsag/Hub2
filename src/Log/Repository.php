@@ -376,12 +376,13 @@ final class Repository implements IRepository
             $log->withDate($date);
         }
 
+        $json_encode = json_encode($log->getAdditionalData()) ?? '{}';
         $log->withLogId(self::dic()->database()->store(Log::TABLE_NAME, [
             "title"              => [ilDBConstants::T_TEXT, $log->getTitle()],
             "message"            => [ilDBConstants::T_TEXT, $log->getMessage()],
             "date"               => [ilDBConstants::T_TEXT, $log->getDate()->get(IL_CAL_DATETIME)],
             "level"              => [ilDBConstants::T_INTEGER, $log->getLevel()],
-            "additional_data"    => [ilDBConstants::T_TEXT, json_encode($log->getAdditionalData())],
+            "additional_data"    => [ilDBConstants::T_TEXT, $json_encode],
             "origin_id"          => [ilDBConstants::T_INTEGER, $log->getOriginId()],
             "origin_object_type" => [ilDBConstants::T_TEXT, $log->getOriginObjectType()],
             "object_ext_id"      => [ilDBConstants::T_TEXT, $log->getObjectExtId()],

@@ -126,8 +126,11 @@ final class Factory implements IFactory
         $log = $this->originLog($origin, $object, $dto);
 
         $log->withLevel(ILog::LEVEL_EXCEPTION);
-
         $log->withMessage($ex->getMessage());
+        $additional       = new stdClass();
+        $additional->file = $ex->getFile();
+        $additional->line = $ex->getLine();
+        $log->withAdditionalData($additional);
 
         return $log;
     }
@@ -139,7 +142,7 @@ final class Factory implements IFactory
     public function fromDB(stdClass $data) : ILog
     {
         $log = $this->log()->withLogId($data->log_id)->withTitle($data->title)->withMessage($data->message)
-            ->withDate(new ilDateTime($data->date, IL_CAL_DATETIME))->withLevel($data->level)->withAdditionalData(json_decode($data->additional_data))
+            ->withDate(new ilDateTime($data->date, IL_CAL_DATETIME))->withLevel($data->level)->withAdditionalData(json_decode($data->additional_data, false) ?? new stdClass())
             ->withOriginId($data->origin_id)->withOriginObjectType($data->origin_object_type)->withObjectExtId($data->object_ext_id)
             ->withObjectIliasId($data->object_ilias_id)
             ->withStatus(intval($data->status));
