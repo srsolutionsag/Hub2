@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilADTDate;
+use ilADTDateTime;
 use ilADTExternalLink;
 use ilADTInternalLink;
 use ilADTText;
@@ -37,7 +38,8 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
                 $ilADT->setText($value);
                 break;
             case ($ilADT instanceof ilADTDate):
-                $ilADT->setDate(new ilDateTime(time(), IL_CAL_UNIX));
+            case ($ilADT instanceof ilADTDateTime):
+                $ilADT->setDate(new ilDateTime(strtotime($value), IL_CAL_UNIX));
                 break;
             case ($ilADT instanceof ilADTExternalLink):
                 $ilADT->setUrl($value['url']);
