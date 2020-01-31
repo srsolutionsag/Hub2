@@ -10,6 +10,7 @@ use ilHub2Plugin;
 use InvalidArgumentException;
 use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\Metadata\IMetadata;
 use srag\Plugins\Hub2\Metadata\Metadata;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
@@ -19,7 +20,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ARObject
- *
  * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -36,15 +36,12 @@ abstract class ARObject extends ActiveRecord implements IObject
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * a clone of this object made before any changes happened; used to compare when persisting
-     *
      * @var static
      */
     protected $clone;
 
-
     /**
      * ARObject constructor.
-     *
      * @param int              $primary_key
      * @param arConnector|null $connector
      */
@@ -54,7 +51,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->clone = clone $this;
     }
 
-
     /**
      * @return string
      */
@@ -63,17 +59,14 @@ abstract class ARObject extends ActiveRecord implements IObject
         return static::TABLE_NAME;
     }
 
-
     /**
      * @return string
-     *
      * @deprecated
      */
     public static function returnDbTableName()
     {
         return static::TABLE_NAME;
     }
-
 
     /**
      * @var array
@@ -93,7 +86,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         ];
     /**
      * fields whose changes trigger the creation of a log entry
-     *
      * @var array
      */
     public static $observed_fields
@@ -106,9 +98,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         ];
     /**
      * The primary ID is a composition of the origin-ID and ext_id
-     *
      * @var string
-     *
      * @db_has_field    true
      * @db_is_primary   true
      * @db_fieldtype    text
@@ -117,7 +107,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     protected $id;
     /**
      * @var int
-     *
      * @db_has_field    true
      * @db_fieldtype    integer
      * @db_is_notnull   true
@@ -127,7 +116,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     protected $origin_id;
     /**
      * @var string
-     *
      * @db_has_field    true
      * @db_fieldtype    text
      * @db_length       255
@@ -136,21 +124,18 @@ abstract class ARObject extends ActiveRecord implements IObject
     protected $ext_id = '';
     /**
      * @var string
-     *
      * @db_has_field    true
      * @db_fieldtype    timestamp
      */
     protected $delivery_date;
     /**
      * @var string
-     *
      * @db_has_field    true
      * @db_fieldtype    timestamp
      */
     protected $processed_date;
     /**
      * @var string
-     *
      * @db_has_field    true
      * @db_fieldtype    text
      * @db_length       256
@@ -158,7 +143,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     protected $ilias_id;
     /**
      * @var int
-     *
      * @db_has_field    true
      * @db_fieldtype    integer
      * @db_length       8
@@ -167,7 +151,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     protected $status = IObject::STATUS_NEW;
     /**
      * @var string
-     *
      * @db_has_field    true
      * @db_fieldtype    text
      * @db_length       255
@@ -175,7 +158,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     protected $period = '';
     /**
      * @var string
-     *
      * @db_has_field    true
      * @db_fieldtype    text
      * @db_length       512
@@ -183,12 +165,10 @@ abstract class ARObject extends ActiveRecord implements IObject
     protected $hash_code;
     /**
      * @var array
-     *
      * @db_has_field    true
      * @db_fieldtype    clob
      */
     protected $data = array();
-
 
     /**
      *
@@ -197,7 +177,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         $this->clone = clone $this;
     }
-
 
     /**
      * @inheritdoc
@@ -210,11 +189,12 @@ abstract class ARObject extends ActiveRecord implements IObject
             case "meta_data":
                 /**
                  * @var IMetadataAwareObject $this
+                 * @var IMetadata[]          $metadata
                  */
                 $metadataObjects = [];
-                $metadata = $this->getMetaData();
+                $metadata        = $this->getMetaData();
                 foreach ($metadata as $metadatum) {
-                    $metadataObjects[$metadatum->getIdentifier()] = $metadatum->getValue();
+                    $metadataObjects[$metadatum->getRecordId()][$metadatum->getIdentifier()] = $metadatum->getValue();
                 }
 
                 $json_encode = json_encode($metadataObjects);
@@ -225,7 +205,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                  * @var ITaxonomyAwareObject $this
                  */
                 $taxonomyObjects = [];
-                $taxonomies = $this->getTaxonomies();
+                $taxonomies      = $this->getTaxonomies();
                 foreach ($taxonomies as $tax) {
                     $nodes = [];
                     foreach ($tax->getNodes() as $node) {
@@ -241,7 +221,6 @@ abstract class ARObject extends ActiveRecord implements IObject
 
         return parent::sleep($field_name);
     }
-
 
     /**
      * @inheritdoc
@@ -261,10 +240,15 @@ abstract class ARObject extends ActiveRecord implements IObject
                     return [];
                 }
                 $json_decode = json_decode($field_value, true);
-                $IMetadata = [];
+                $IMetadata   = [];
                 if (is_array($json_decode)) {
-                    foreach ($json_decode as $key => $value) {
-                        $IMetadata[] = (new Metadata($key))->setValue($value);
+                    foreach ($json_decode as $record_id => $records) {
+                        if (!is_array($records)) {
+                            continue;
+                        }
+                        foreach ($records as $mid => $record) {
+                            $IMetadata[] = (new Metadata($mid, $record_id))->setValue($records);
+                        }
                     }
                 }
 
@@ -274,7 +258,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                     return [];
                 }
                 $json_decode = json_decode($field_value, true);
-                $taxonomies = [];
+                $taxonomies  = [];
                 foreach ($json_decode as $tax_title => $nodes) {
                     $taxonomy = new Taxonomy($tax_title, ITaxonomy::MODE_CREATE);
                     foreach ($nodes as $node) {
@@ -289,7 +273,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return parent::wakeUp($field_name, $field_value);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -299,7 +282,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         parent::update();
         $this->logUpdate();
     }
-
 
     /**
      *
@@ -318,7 +300,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         }
     }
 
-
     /**
      * @inheritdoc
      */
@@ -330,13 +311,12 @@ abstract class ARObject extends ActiveRecord implements IObject
         if (!$this->ext_id) {
             throw new Exception("External-ID is missing");
         }
-        $this->id = $this->origin_id . $this->ext_id;
+        $this->id        = $this->origin_id . $this->ext_id;
         $this->hash_code = $this->computeHashCode();
         parent::create();
         self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
             ->write("Created");
     }
-
 
     /**
      * @inheritdoc
@@ -346,7 +326,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this->id;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -354,7 +333,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         return $this->ext_id;
     }
-
 
     /**
      * @inheritdoc
@@ -366,7 +344,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -374,7 +351,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         return new DateTime($this->delivery_date);
     }
-
 
     /**
      * @inheritdoc
@@ -384,7 +360,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return new DateTime($this->processed_date);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -392,7 +367,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         $this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
-
 
     /**
      * @inheritdoc
@@ -402,7 +376,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -410,7 +383,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         return $this->ilias_id;
     }
-
 
     /**
      * @inheritdoc
@@ -422,7 +394,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -430,7 +401,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         return $this->status;
     }
-
 
     /**
      * @inheritdoc
@@ -446,10 +416,8 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     /**
      * @param int $origin_id
-     *
      * @return $this
      */
     public function setOriginId($origin_id)
@@ -459,7 +427,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -467,7 +434,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         return $this->period;
     }
-
 
     /**
      * @inheritdoc
@@ -478,7 +444,6 @@ abstract class ARObject extends ActiveRecord implements IObject
 
         return $this;
     }
-
 
     /**
      * @inheritdoc
@@ -505,7 +470,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return md5($hash); // TODO: Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
     }
 
-
     /**
      * @inheritdoc
      */
@@ -514,7 +478,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this->hash_code;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -522,7 +485,6 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         return $this->data;
     }
-
 
     /**
      * @inheritdoc
@@ -534,7 +496,6 @@ abstract class ARObject extends ActiveRecord implements IObject
             $this->period = $data['period'];
         }
     }
-
 
     /**
      * @return string

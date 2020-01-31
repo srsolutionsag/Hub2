@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Metadata
- *
  * @package srag\Plugins\Hub2\Metadata
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -31,18 +30,15 @@ class Metadata implements IMetadata
      */
     protected $record_id;
 
-
     /**
      * Metadata constructor
-     *
      * @param int $identifier
      */
     public function __construct($identifier, int $record_id = self::DEFAULT_RECORD_ID)
     {
         $this->identifier = $identifier;
-        $this->record_id = $record_id;
+        $this->record_id  = $record_id;
     }
-
 
     /**
      * @inheritdoc
@@ -54,7 +50,6 @@ class Metadata implements IMetadata
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -65,7 +60,6 @@ class Metadata implements IMetadata
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -73,7 +67,6 @@ class Metadata implements IMetadata
     {
         return $this->value;
     }
-
 
     /**
      * @inheritdoc
@@ -83,22 +76,20 @@ class Metadata implements IMetadata
         return $this->identifier;
     }
 
-
     /**
      * @inheritdoc
      */
     public function getRecordId() : int
     {
-        return $this->record_id;
+        return $this->record_id ?? self::DEFAULT_RECORD_ID;
     }
-
 
     /**
      * @inheritdoc
      */
     public function __toString() : string
     {
-        $json_encode = json_encode([$this->getIdentifier() => $this->getValue()]);
+        $json_encode = json_encode([$this->getRecordId() => [$this->getIdentifier() => $this->getValue()]]);
 
         return $json_encode;
     }
