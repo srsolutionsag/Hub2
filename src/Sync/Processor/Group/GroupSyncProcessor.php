@@ -225,8 +225,14 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             $this->handleAppointementsColor($ilObjGroup, $dto);
         }
 
+        if (!self::dic()->tree()->isInTree($ilObjGroup->getRefId())) {
+            $parentRefId = $this->determineParentRefId($dto);
+
+            $ilObjGroup->putInTree($parentRefId);
+        } else {
         if ($this->props->get(GroupProperties::MOVE_GROUP)) {
             $this->moveGroup($ilObjGroup, $dto);
+        }
         }
         $ilObjGroup->update();
     }

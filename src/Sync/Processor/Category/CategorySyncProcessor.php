@@ -142,8 +142,14 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         if ($this->props->updateDTOProperty('showInfoPage')) {
             ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
         }
+        if (!self::dic()->tree()->isInTree($ilObjCategory->getRefId())) {
+            $parentRefId = $this->determineParentRefId($dto);
+
+            $ilObjCategory->putInTree($parentRefId);
+        } else {
         if ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
             $this->moveCategory($ilObjCategory, $dto);
+        }
         }
     }
 
