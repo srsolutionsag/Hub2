@@ -5,6 +5,7 @@ namespace srag\Plugins\Hub2\Sync\Processor\Session;
 use ilDateTime;
 use ilObject2;
 use ilObjSession;
+use ilRepUtil;
 use ilSessionAppointment;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -149,6 +150,16 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         $ilObjSession = $this->setDataForFirstAppointment($dto, $ilObjSession, true);
         $ilObjSession->update();
         $ilObjSession->getFirstAppointment()->update();
+
+        if (!self::dic()->tree()->isInTree($ilObjSession->getRefId())) {
+            $a_parent_ref = $this->buildParentRefId($dto);
+
+            $ilObjSession->putInTree($a_parent_ref);
+        } else {
+            if ($this->props->get(SessionProperties::MOVE_SESSION)) {
+                $this->moveSession($ilObjSession, $dto);
+            }
+        }
     }
 
 
@@ -278,5 +289,25 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         $ilObjSession->setAppointments($appointments);
 
         return $ilObjSession;
+    }
+
+
+    /**
+     * @param $ilObjSession $ilObjCourse
+     * @param SessionDTO $session
+     */
+    protected function moveSession(ilObjSession $ilObjSession, SessionDTO $session)
+    {
+        $a_parent_ref = $this->buildParentRefId($session);
+        if (self::dic()->tree()->isDeleted($ilObjSession->getRefId())) {
+            $ilRepUtil = new ilRepUtil();
+            $ilRepUtil->restoreObjects($a_parent_ref, [$ilObjSession->getRefId()]);
+        }
+        $oldParentRefId = self::dic()->tree()->getParentId($ilObjSession->getRefId());
+        if ($oldParentRefId == $a_parent_ref) {
+            return;
+        }
+        self::dic()->tree()->moveTree($ilObjSession->getRefId(), $a_parent_ref);
+        self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjSession->getRefId(), $oldParentRefId);
     }
 }
