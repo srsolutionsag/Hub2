@@ -30,97 +30,105 @@ use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ilHub2Plugin extends ilCronHookPlugin {
+class ilHub2Plugin extends ilCronHookPlugin
+{
 
-	use PluginUninstallTrait;
-	use Hub2Trait;
-	const PLUGIN_ID = 'hub2';
-	const PLUGIN_NAME = 'Hub2';
-	const PLUGIN_CLASS_NAME = self::class;
-	const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = hub2RemoveDataConfirm::class;
-	/**
-	 * @var self
-	 */
-	protected static $instance;
-
-
-	/**
-	 * @return string
-	 */
-	public function getPluginName(): string {
-		return self::PLUGIN_NAME;
-	}
+    use PluginUninstallTrait;
+    use Hub2Trait;
+    const PLUGIN_ID = 'hub2';
+    const PLUGIN_NAME = 'Hub2';
+    const PLUGIN_CLASS_NAME = self::class;
+    const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = hub2RemoveDataConfirm::class;
+    /**
+     * @var self
+     */
+    protected static $instance;
 
 
-	/**
-	 * @return self
-	 */
-	public static function getInstance(): self {
-		if (self::$instance === NULL) {
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
+    /**
+     * @return string
+     */
+    public function getPluginName() : string
+    {
+        return self::PLUGIN_NAME;
+    }
 
 
-	/**
-	 * @return ilCronJob[]
-	 */
-	public function getCronJobInstances(): array {
-		return [ new RunSync(), new DeleteOldLogsJob() ];
-	}
+    /**
+     * @return self
+     */
+    public static function getInstance() : self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
 
 
-	/**
-	 * @param string $a_job_id
-	 *
-	 * @return ilCronJob
-	 */
-	public function getCronJobInstance(/*string*/
-		$a_job_id)/*: ?ilCronJob*/ {
-		switch ($a_job_id) {
-			case RunSync::CRON_JOB_ID:
-				return new RunSync();
-
-			case DeleteOldLogsJob::CRON_JOB_ID:
-				return new DeleteOldLogsJob();
-
-			default:
-				return NULL;
-		}
-	}
+    /**
+     * @return ilCronJob[]
+     */
+    public function getCronJobInstances() : array
+    {
+        return [new RunSync(), new DeleteOldLogsJob()];
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider {
-		return new Menu(self::dic()->dic(), $this);
-	}
+    /**
+     * @param string $a_job_id
+     *
+     * @return ilCronJob
+     */
+    public function getCronJobInstance(/*string*/
+        $a_job_id
+    )/*: ?ilCronJob*/
+    {
+        switch ($a_job_id) {
+            case RunSync::CRON_JOB_ID:
+                return new RunSync();
+
+            case DeleteOldLogsJob::CRON_JOB_ID:
+                return new DeleteOldLogsJob();
+
+            default:
+                return null;
+        }
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function deleteData()/*: void*/ {
-		self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARCourseMembership::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARCategory::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARSession::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARGroup::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARGroupMembership::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ARSessionMembership::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ArConfig::TABLE_NAME, false);
-		self::dic()->database()->dropTable(ArConfigOld::TABLE_NAME, false);
-		self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
-		self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
-		self::dic()->database()->dropTable(Log::TABLE_NAME, false);
-		self::dic()->database()->dropAutoIncrementTable(Log::TABLE_NAME);
-		self::dic()->database()->dropTable(ARCompetenceManagement::TABLE_NAME, false);
+    /**
+     * @inheritdoc
+     */
+    public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
+    {
+        return new Menu(self::dic()->dic(), $this);
+    }
 
-		ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
-	}
+
+    /**
+     * @inheritdoc
+     */
+    protected function deleteData()/*: void*/
+    {
+        self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARCourseMembership::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARCategory::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARSession::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARGroup::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARGroupMembership::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ARSessionMembership::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ArConfig::TABLE_NAME, false);
+        self::dic()->database()->dropTable(ArConfigOld::TABLE_NAME, false);
+        self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
+        self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+        self::dic()->database()->dropTable(Log::TABLE_NAME, false);
+        self::dic()->database()->dropAutoIncrementTable(Log::TABLE_NAME);
+        self::dic()->database()->dropTable(ARCompetenceManagement::TABLE_NAME, false);
+
+        ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
+    }
 }

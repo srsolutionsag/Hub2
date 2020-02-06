@@ -11,51 +11,52 @@ use Throwable;
  * @package srag\Plugins\Hub2\Sync
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IOriginSync {
+interface IOriginSync
+{
 
-	/**
-	 * Execute the synchronization for the origin
-	 *
-	 * @throws Throwable
-	 */
-	public function execute();
-
-
-	/**
-	 * Get the number of objects processed by the final status, e.g.
-	 *
-	 *  * IObject::STATUS_CREATED: Number of objects created
-	 *  * IObject::STATUS_UPDATED: Number of objects updated
-	 *  * IObject::STATUS_OUTDATED: Number of objects deleted
-	 *  * IObject::STATUS_IGNORED: Number of objects ignored
-	 *
-	 * @param int $status
-	 *
-	 * @return int
-	 */
-	public function getCountProcessedByStatus($status);
+    /**
+     * Execute the synchronization for the origin
+     *
+     * @throws Throwable
+     */
+    public function execute();
 
 
-	/**
-	 * Get the number of objects processed by the sync.
-	 *
-	 * @return int
-	 */
-	public function getCountProcessedTotal();
+    /**
+     * Get the number of objects processed by the final status, e.g.
+     *
+     *  * IObject::STATUS_CREATED: Number of objects created
+     *  * IObject::STATUS_UPDATED: Number of objects updated
+     *  * IObject::STATUS_OUTDATED: Number of objects deleted
+     *  * IObject::STATUS_IGNORED: Number of objects ignored
+     *
+     * @param int $status
+     *
+     * @return int
+     */
+    public function getCountProcessedByStatus($status);
 
 
-	/**
-	 * Get the amount of delivered data (excludes non-valid data).
-	 *
-	 * @return int
-	 */
-	public function getCountDelivered();
+    /**
+     * Get the number of objects processed by the sync.
+     *
+     * @return int
+     */
+    public function getCountProcessedTotal();
 
 
-	/**
-	 * Return the current origin
-	 *
-	 * @return IOrigin
-	 */
-	public function getOrigin();
+    /**
+     * Get the amount of delivered data (excludes non-valid data).
+     *
+     * @return int
+     */
+    public function getCountDelivered();
+
+
+    /**
+     * Return the current origin
+     *
+     * @return IOrigin
+     */
+    public function getOrigin();
 }

@@ -1063,6 +1063,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Log\\Repository' => __DIR__ . '/../..' . '/src/Log/Repository.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\AMappingStrategy' => __DIR__ . '/../..' . '/src/MappingStrategy/AMappingStrategy.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\ByEmail' => __DIR__ . '/../..' . '/src/MappingStrategy/ByEmail.php',
+        'srag\\Plugins\\Hub2\\MappingStrategy\\ByExtId' => __DIR__ . '/../..' . '/src/MappingStrategy/ByExtId.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\ByExternalAccount' => __DIR__ . '/../..' . '/src/MappingStrategy/ByExternalAccount.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\ByImportId' => __DIR__ . '/../..' . '/src/MappingStrategy/ByImportId.php',
         'srag\\Plugins\\Hub2\\MappingStrategy\\ByLogin' => __DIR__ . '/../..' . '/src/MappingStrategy/ByLogin.php',

@@ -15,119 +15,126 @@ use srag\Plugins\Hub2\UI\Data\DataTableGUI;
  *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class hub2DataGUI extends hub2MainGUI {
+class hub2DataGUI extends hub2MainGUI
+{
 
-	/**
-	 *
-	 */
-	public function executeCommand() {
-		$this->initTabs();
-		$cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
-		$this->{$cmd}();
-	}
-
-
-	/**
-	 *
-	 */
-	protected function index() {
-		$table = new DataTableGUI($this, self::CMD_INDEX);
-		self::output()->output($table);
-	}
+    /**
+     *
+     */
+    public function executeCommand()
+    {
+        $this->initTabs();
+        $cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
+        $this->{$cmd}();
+    }
 
 
-	/**
-	 *
-	 */
-	protected function applyFilter() {
-		$table = new DataTableGUI($this, self::CMD_INDEX);
-		$table->writeFilterToSession();
-		$table->resetOffset();
-		//self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
-		$this->index(); // Fix reset offset
-	}
+    /**
+     *
+     */
+    protected function index()
+    {
+        $table = new DataTableGUI($this, self::CMD_INDEX);
+        self::output()->output($table);
+    }
 
 
-	/**
-	 *
-	 */
-	protected function resetFilter() {
-		$table = new DataTableGUI($this, self::CMD_INDEX);
-		$table->resetFilter();
-		$table->resetOffset();
-		//self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
-		$this->index(); // Fix reset offset
-	}
+    /**
+     *
+     */
+    protected function applyFilter()
+    {
+        $table = new DataTableGUI($this, self::CMD_INDEX);
+        $table->writeFilterToSession();
+        $table->resetOffset();
+        //self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+        $this->index(); // Fix reset offset
+    }
 
 
-	/**
-	 *
-	 */
-	protected function initTabs() {
-		self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
-	}
+    /**
+     *
+     */
+    protected function resetFilter()
+    {
+        $table = new DataTableGUI($this, self::CMD_INDEX);
+        $table->resetFilter();
+        $table->resetOffset();
+        //self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+        $this->index(); // Fix reset offset
+    }
 
 
-	/**
-	 *
-	 */
-	protected function renderData() {
-		$ext_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
-		$origin_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
+    /**
+     *
+     */
+    protected function initTabs()
+    {
+        self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
+    }
 
-		$origin_factory = new OriginFactory();
-		$object_factory = new ObjectFactory($origin_factory->getById($origin_id));
 
-		$object = $object_factory->undefined($ext_id);
+    /**
+     *
+     */
+    protected function renderData()
+    {
+        $ext_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
+        $origin_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
 
-		$factory = self::dic()->ui()->factory();
+        $origin_factory = new OriginFactory();
+        $object_factory = new ObjectFactory($origin_factory->getById($origin_id));
 
-		/*$properties = array_merge([
-			"period" => $object->getPeriod(),
-			"delivery_date" => $object->getDeliveryDate()->format(DATE_ATOM),
-			"processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
-			"ilias_id" => $object->getILIASId(),
-			"status" => $object->getStatus(),
-		], $object->getData());*/
-		$properties = $object->getData(); // Only dto properties
+        $object = $object_factory->undefined($ext_id);
 
-		if ($object instanceof IMetadataAwareObject) {
-			foreach ($object->getMetaData() as $metadata) {
-				$properties["metadata." . $metadata->getIdentifier()] = $metadata->getValue();
-			}
-		}
+        $factory = self::dic()->ui()->factory();
 
-		if ($object instanceof ITaxonomyAwareObject) {
-			foreach ($object->getTaxonomies() as $taxonomy) {
-				$properties["taxonomy." . $taxonomy->getTitle()] = $taxonomy->getNodeTitlesAsArray();
-			}
-		}
+        /*$properties = array_merge([
+            "period" => $object->getPeriod(),
+            "delivery_date" => $object->getDeliveryDate()->format(DATE_ATOM),
+            "processed_date" => $object->getProcessedDate()->format(DATE_ATOM),
+            "ilias_id" => $object->getILIASId(),
+            "status" => $object->getStatus(),
+        ], $object->getData());*/
+        $properties = $object->getData(); // Only dto properties
 
-		$filtered = [];
-		foreach ($properties as $key => $property) {
-			if (!is_null($property)) {
-				if (is_array($property)) {
-					$filtered[$key] = implode(',', $property);
-				} else {
-					$filtered[$key] = (string)$property;
-				}
-			}
-			if ($property === '') {
-				$filtered[$key] = "&nbsp;";
-			}
-		}
+        if ($object instanceof IMetadataAwareObject) {
+            foreach ($object->getMetaData() as $metadata) {
+                $properties["metadata." . $metadata->getIdentifier()] = $metadata->getValue();
+            }
+        }
 
-		ksort($filtered);
+        if ($object instanceof ITaxonomyAwareObject) {
+            foreach ($object->getTaxonomies() as $taxonomy) {
+                $properties["taxonomy." . $taxonomy->getTitle()] = $taxonomy->getNodeTitlesAsArray();
+            }
+        }
 
-		// Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-		/*$data_table = $factory->item()->standard(self::plugin()->translate("data_table_ext_id", "", [ $object->getExtId() ]))
-			->withProperties($filtered);*/
+        $filtered = [];
+        foreach ($properties as $key => $property) {
+            if (!is_null($property)) {
+                if (is_array($property)) {
+                    $filtered[$key] = implode(',', $property);
+                } else {
+                    $filtered[$key] = (string) $property;
+                }
+            }
+            if ($property === '') {
+                $filtered[$key] = "&nbsp;";
+            }
+        }
 
-		$data_table = $factory->listing()->descriptive($filtered);
+        ksort($filtered);
 
-		$modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_header_data") . "<br>" . self::plugin()
-				->translate("data_table_hash", "", [ $object->getHashCode() ]), $data_table)->withCancelButtonLabel("close");
+        // Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
+        /*$data_table = $factory->item()->standard(self::plugin()->translate("data_table_ext_id", "", [ $object->getExtId() ]))
+            ->withProperties($filtered);*/
 
-		self::output()->output(self::dic()->ui()->renderer()->renderAsync($modal));
-	}
+        $data_table = $factory->listing()->descriptive($filtered);
+
+        $modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_header_data") . "<br>" . self::plugin()
+                ->translate("data_table_hash", "", [$object->getHashCode()]), $data_table)->withCancelButtonLabel("close");
+
+        self::output()->output(self::dic()->ui()->renderer()->renderAsync($modal));
+    }
 }

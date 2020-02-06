@@ -11,7 +11,8 @@ use srag\Plugins\Hub2\Object\ARObject;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ARCompetenceManagement extends ARObject implements ICompetenceManagement {
+class ARCompetenceManagement extends ARObject implements ICompetenceManagement
+{
 
-	const TABLE_NAME = "sr_hub2_comp_man";
+    const TABLE_NAME = "sr_hub2_comp_man";
 }

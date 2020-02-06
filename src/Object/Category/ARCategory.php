@@ -13,9 +13,10 @@ use srag\Plugins\Hub2\Object\ARTaxonomyAwareObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARCategory extends ARObject implements ICategory {
+class ARCategory extends ARObject implements ICategory
+{
 
-	use ARMetadataAwareObject;
-	use ARTaxonomyAwareObject;
-	const TABLE_NAME = 'sr_hub2_category';
+    use ARMetadataAwareObject;
+    use ARTaxonomyAwareObject;
+    const TABLE_NAME = 'sr_hub2_category';
 }

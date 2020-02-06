@@ -11,14 +11,15 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitMembershipSyncProcessor extends IObjectSyncProcessor {
+interface IOrgUnitMembershipSyncProcessor extends IObjectSyncProcessor
+{
 
-	/**
-	 * @var int
-	 */
-	const IL_POSITION_EMPLOYEE = 1;
-	/**
-	 * @var int
-	 */
-	const IL_POSITION_SUPERIOR = 2;
+    /**
+     * @var int
+     */
+    const IL_POSITION_EMPLOYEE = 1;
+    /**
+     * @var int
+     */
+    const IL_POSITION_SUPERIOR = 2;
 }

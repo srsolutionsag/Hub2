@@ -18,90 +18,99 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class DeleteOldLogsJob extends ilCronJob {
+class DeleteOldLogsJob extends ilCronJob
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID . "_delete_old_logs";
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
-
-	/**
-	 * Get id
-	 *
-	 * @return string
-	 */
-	public function getId(): string {
-		return self::CRON_JOB_ID;
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID . "_delete_old_logs";
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
-	/**
-	 * @return string
-	 */
-	public function getTitle(): string {
-		return ilHub2Plugin::PLUGIN_NAME . ": " . self::plugin()->translate("cron", hub2LogsGUI::LANG_MODULE_LOGS);
-	}
+    /**
+     * Get id
+     *
+     * @return string
+     */
+    public function getId() : string
+    {
+        return self::CRON_JOB_ID;
+    }
 
 
-	/**
-	 * @return string
-	 */
-	public function getDescription(): string {
-		return self::plugin()->translate("cron_description", hub2LogsGUI::LANG_MODULE_LOGS);
-	}
+    /**
+     * @return string
+     */
+    public function getTitle() : string
+    {
+        return ilHub2Plugin::PLUGIN_NAME . ": " . self::plugin()->translate("cron", hub2LogsGUI::LANG_MODULE_LOGS);
+    }
 
 
-	/**
-	 * Is to be activated on "installation"
-	 *
-	 * @return boolean
-	 */
-	public function hasAutoActivation(): bool {
-		return true;
-	}
+    /**
+     * @return string
+     */
+    public function getDescription() : string
+    {
+        return self::plugin()->translate("cron_description", hub2LogsGUI::LANG_MODULE_LOGS);
+    }
 
 
-	/**
-	 * Can the schedule be configured?
-	 *
-	 * @return boolean
-	 */
-	public function hasFlexibleSchedule(): bool {
-		return true;
-	}
+    /**
+     * Is to be activated on "installation"
+     *
+     * @return boolean
+     */
+    public function hasAutoActivation() : bool
+    {
+        return true;
+    }
 
 
-	/**
-	 * Get schedule type
-	 *
-	 * @return int
-	 */
-	public function getDefaultScheduleType(): int {
-		return self::SCHEDULE_TYPE_DAILY;
-	}
+    /**
+     * Can the schedule be configured?
+     *
+     * @return boolean
+     */
+    public function hasFlexibleSchedule() : bool
+    {
+        return true;
+    }
 
 
-	/**
-	 * Get schedule value
-	 *
-	 * @return int|array
-	 */
-	public function getDefaultScheduleValue() {
-		return NULL;
-	}
+    /**
+     * Get schedule type
+     *
+     * @return int
+     */
+    public function getDefaultScheduleType() : int
+    {
+        return self::SCHEDULE_TYPE_DAILY;
+    }
 
 
-	/**
-	 * Run job
-	 *
-	 * @return ilCronJobResult
-	 */
-	public function run(): ilCronJobResult {
-		$keep_old_logs_time = ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME);
+    /**
+     * Get schedule value
+     *
+     * @return int|array
+     */
+    public function getDefaultScheduleValue()
+    {
+        return null;
+    }
 
-		$count = self::logs()->deleteOldLogs($keep_old_logs_time);
 
-		return ResultFactory::ok(self::plugin()->translate("deleted_status", hub2LogsGUI::LANG_MODULE_LOGS, [ $count ]));
-	}
+    /**
+     * Run job
+     *
+     * @return ilCronJobResult
+     */
+    public function run() : ilCronJobResult
+    {
+        $keep_old_logs_time = ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME);
+
+        $count = self::logs()->deleteOldLogs($keep_old_logs_time);
+
+        return ResultFactory::ok(self::plugin()->translate("deleted_status", hub2LogsGUI::LANG_MODULE_LOGS, [$count]));
+    }
 }

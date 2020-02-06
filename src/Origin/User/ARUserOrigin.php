@@ -13,20 +13,23 @@ use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARUserOrigin extends AROrigin implements IUserOrigin {
+class ARUserOrigin extends AROrigin implements IUserOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data) {
-		return new UserOriginConfig($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data)
+    {
+        return new UserOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data) {
-		return new UserProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data)
+    {
+        return new UserProperties($data);
+    }
 }

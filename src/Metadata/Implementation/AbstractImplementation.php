@@ -13,50 +13,54 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class AbstractImplementation implements IMetadataImplementation {
+abstract class AbstractImplementation implements IMetadataImplementation
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	/**
-	 * @var int
-	 */
-	private $ilias_id;
-	/**
-	 * @var IMetadata
-	 */
-	private $metadata;
-
-
-	/**
-	 * UDF constructor
-	 *
-	 * @param IMetadata $metadata
-	 */
-	public function __construct(IMetadata $metadata, int $ilias_id) {
-		$this->metadata = $metadata;
-		$this->ilias_id = $ilias_id;
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var int
+     */
+    private $ilias_id;
+    /**
+     * @var IMetadata
+     */
+    private $metadata;
 
 
-	/**
-	 * @inheritdoc
-	 */
-	abstract public function write();
+    /**
+     * UDF constructor
+     *
+     * @param IMetadata $metadata
+     */
+    public function __construct(IMetadata $metadata, int $ilias_id)
+    {
+        $this->metadata = $metadata;
+        $this->ilias_id = $ilias_id;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getMetadata(): IMetadata {
-		return $this->metadata;
-	}
+    /**
+     * @inheritdoc
+     */
+    abstract public function write();
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getIliasId(): int {
-		return $this->ilias_id;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getMetadata() : IMetadata
+    {
+        return $this->metadata;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getIliasId() : int
+    {
+        return $this->ilias_id;
+    }
 }

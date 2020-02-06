@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
  * @package srag\Plugins\Hub2\Object\Category
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICategory extends IObject, IMetadataAwareObject, ITaxonomyAwareObject {
+interface ICategory extends IObject, IMetadataAwareObject, ITaxonomyAwareObject
+{
 
 }

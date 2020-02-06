@@ -18,45 +18,48 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-trait MetadataSyncProcessor {
+trait MetadataSyncProcessor
+{
 
-	/**
-	 * @param IMetadataAwareDataTransferObject $dto
-	 * @param IMetadataAwareObject             $iobject
-	 * @param ilObject                         $ilias_object
-	 */
-	public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object) {
-		if (count($dto->getMetaData()) > 0) {
-			$this->handleDTOSpecificMetadataSettings($dto, $ilias_object);
-			$f = new MetadataImplementationFactory();
-			$flat_existing_md = [];
-			foreach ($iobject->getMetaData() as $md) {
-				$flat_existing_md[$md->getRecordId()][$md->getIdentifier()] = $md->getValue();
-			}
+    /**
+     * @param IMetadataAwareDataTransferObject $dto
+     * @param IMetadataAwareObject             $iobject
+     * @param ilObject                         $ilias_object
+     */
+    public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object)
+    {
+        if (count($dto->getMetaData()) > 0) {
+            $this->handleDTOSpecificMetadataSettings($dto, $ilias_object);
+            $f = new MetadataImplementationFactory();
+            $flat_existing_md = [];
+            foreach ($iobject->getMetaData() as $md) {
+                $flat_existing_md[$md->getRecordId()][$md->getIdentifier()] = $md->getValue();
+            }
 
-			foreach ($dto->getMetaData() as $metaDatum) {
-				if (!isset($flat_existing_md[$metaDatum->getRecordId()]) || !isset($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()])) {
-					continue;
-				}
-				if ($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()] !== $metaDatum->getValue()) {
-					$f->getImplementationForDTO($dto, $metaDatum, (int)$ilias_object->getId())->write();
-				}
-			}
-		}
-	}
+            foreach ($dto->getMetaData() as $metaDatum) {
+                if (!isset($flat_existing_md[$metaDatum->getRecordId()]) || !isset($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()])) {
+                    continue;
+                }
+                if ($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()] !== $metaDatum->getValue()) {
+                    $f->getImplementationForDTO($dto, $metaDatum, (int) $ilias_object->getId())->write();
+                }
+            }
+        }
+    }
 
 
-	/**
-	 * @param IMetadataAwareDataTransferObject $dto
-	 * @param ilObject                         $object
-	 */
-	private function handleDTOSpecificMetadataSettings(IMetadataAwareDataTransferObject $dto, ilObject $object) {
-		switch (true) {
-			case $dto instanceof CourseDTO:
-			case $dto instanceof CategoryDTO:
-			case $dto instanceof GroupDTO:
-				ilContainer::_writeContainerSetting($object->getId(), ilObjectServiceSettingsGUI::CUSTOM_METADATA, 1);
-				break;
-		}
-	}
+    /**
+     * @param IMetadataAwareDataTransferObject $dto
+     * @param ilObject                         $object
+     */
+    private function handleDTOSpecificMetadataSettings(IMetadataAwareDataTransferObject $dto, ilObject $object)
+    {
+        switch (true) {
+            case $dto instanceof CourseDTO:
+            case $dto instanceof CategoryDTO:
+            case $dto instanceof GroupDTO:
+                ilContainer::_writeContainerSetting($object->getId(), ilObjectServiceSettingsGUI::CUSTOM_METADATA, 1);
+                break;
+        }
+    }
 }

@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IUserSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor {
+interface IUserSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor
+{
 
 }

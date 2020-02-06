@@ -13,23 +13,25 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @package srag\Plugins\Hub2\UI
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OriginFormFactory {
+class OriginFormFactory
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
-	/**
-	 * @param AROrigin $origin
-	 *
-	 * @return string
-	 */
-	public function getFormClassNameByOrigin(AROrigin $origin) {
-		$type = $origin->getObjectType();
+    /**
+     * @param AROrigin $origin
+     *
+     * @return string
+     */
+    public function getFormClassNameByOrigin(AROrigin $origin)
+    {
+        $type = $origin->getObjectType();
 
-		$ucfirst = ucfirst($type);
+        $ucfirst = ucfirst($type);
 
-		return "srag\\Plugins\\Hub2\\UI\\" . $ucfirst . "\\" . $ucfirst . "OriginConfigFormGUI";
-	}
+        return "srag\\Plugins\\Hub2\\UI\\" . $ucfirst . "\\" . $ucfirst . "OriginConfigFormGUI";
+    }
 }

@@ -12,20 +12,23 @@ use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
  * @package srag\Plugins\Hub2\Origin\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARGroupOrigin extends AROrigin implements IGroupOrigin {
+class ARGroupOrigin extends AROrigin implements IGroupOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data) {
-		return new GroupOriginConfig($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data)
+    {
+        return new GroupOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data) {
-		return new GroupProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data)
+    {
+        return new GroupProperties($data);
+    }
 }

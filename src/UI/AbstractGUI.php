@@ -13,17 +13,19 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author     Fabian Schmid <fs@studer-raimann.ch>
  * @deprecated TODO: ???
  */
-abstract class AbstractGUI {
+abstract class AbstractGUI
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
-	/**
-	 * AbstractGUI constructor
-	 */
-	public function __construct() {
+    /**
+     * AbstractGUI constructor
+     */
+    public function __construct()
+    {
 
-	}
+    }
 }

@@ -12,14 +12,15 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IMetadataSyncProcessor {
+interface IMetadataSyncProcessor
+{
 
-	/**
-	 * @param IMetadataAwareDataTransferObject $dto
-	 * @param IMetadataAwareObject             $iobject
-	 * @param ilObject                         $ilias_object
-	 *
-	 * @return void
-	 */
-	public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object);
+    /**
+     * @param IMetadataAwareDataTransferObject $dto
+     * @param IMetadataAwareObject             $iobject
+     * @param ilObject                         $ilias_object
+     *
+     * @return void
+     */
+    public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object);
 }

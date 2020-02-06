@@ -10,29 +10,32 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-trait ARTaxonomyAwareObject {
+trait ARTaxonomyAwareObject
+{
 
-	/**
-	 * @var array
-	 *
-	 * @db_has_field    true
-	 * @db_fieldtype    clob
-	 */
-	protected $taxonomies = array();
-
-
-	/**
-	 * @return ITaxonomy[]
-	 */
-	public function getTaxonomies(): array {
-		return $this->taxonomies;
-	}
+    /**
+     * @var array
+     *
+     * @db_has_field    true
+     * @db_fieldtype    clob
+     */
+    protected $taxonomies = array();
 
 
-	/**
-	 * @param ITaxonomy[] $taxonomies
-	 */
-	public function setTaxonomies(array $taxonomies) {
-		$this->taxonomies = $taxonomies;
-	}
+    /**
+     * @return ITaxonomy[]
+     */
+    public function getTaxonomies() : array
+    {
+        return $this->taxonomies;
+    }
+
+
+    /**
+     * @param ITaxonomy[] $taxonomies
+     */
+    public function setTaxonomies(array $taxonomies)
+    {
+        $this->taxonomies = $taxonomies;
+    }
 }

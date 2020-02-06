@@ -9,6 +9,7 @@ namespace srag\Plugins\Hub2\Exception;
  *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ShortlinkException extends HubException {
+class ShortlinkException extends HubException
+{
 
 }

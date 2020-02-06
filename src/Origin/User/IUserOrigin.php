@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
  * @package srag\Plugins\Hub2\Origin\User
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IUserOrigin extends IOrigin {
+interface IUserOrigin extends IOrigin
+{
 
 }

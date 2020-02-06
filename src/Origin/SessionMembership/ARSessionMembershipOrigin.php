@@ -12,20 +12,23 @@ use srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipPrope
  * @package srag\Plugins\Hub2\Origin\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOrigin {
+class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data) {
-		return new SessionMembershipOriginConfig($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data)
+    {
+        return new SessionMembershipOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data) {
-		return new SessionMembershipProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data)
+    {
+        return new SessionMembershipProperties($data);
+    }
 }

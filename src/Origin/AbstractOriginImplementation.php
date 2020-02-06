@@ -23,123 +23,139 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-abstract class AbstractOriginImplementation implements IOriginImplementation {
+abstract class AbstractOriginImplementation implements IOriginImplementation
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	/**
-	 * @var IMappingStrategyFactory
-	 */
-	private $mapping_strategy_factory;
-	/**
-	 * @var ITaxonomyFactory
-	 */
-	private $taxonomyFactory;
-	/**
-	 * @var IMetadataFactory
-	 */
-	private $metadataFactory;
-	/**
-	 * @var IOriginConfig
-	 */
-	private $originConfig;
-	/**
-	 * @var IDataTransferObjectFactory
-	 */
-	private $factory;
-	/**
-	 * @var array
-	 */
-	protected $data = [];
-	/**
-	 * @var IOrigin
-	 */
-	protected $origin;
-
-
-	/**
-	 * AbstractOriginImplementation constructor
-	 *
-	 * @param IOriginConfig              $config
-	 * @param IDataTransferObjectFactory $factory
-	 * @param IMetadataFactory           $metadataFactory
-	 * @param ITaxonomyFactory           $taxonomyFactory
-	 */
-	public function __construct(IOriginConfig $config, IDataTransferObjectFactory $factory, IMetadataFactory $metadataFactory, ITaxonomyFactory $taxonomyFactory, IMappingStrategyFactory $mapping_strategy, IOrigin $origin) {
-		$this->originConfig = $config;
-		$this->factory = $factory;
-		$this->metadataFactory = $metadataFactory;
-		$this->taxonomyFactory = $taxonomyFactory;
-		$this->mapping_strategy_factory = $mapping_strategy;
-		$this->origin = $origin;
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var IMappingStrategyFactory
+     */
+    private $mapping_strategy_factory;
+    /**
+     * @var ITaxonomyFactory
+     */
+    private $taxonomyFactory;
+    /**
+     * @var IMetadataFactory
+     */
+    private $metadataFactory;
+    /**
+     * @var IOriginConfig
+     */
+    private $originConfig;
+    /**
+     * @var IDataTransferObjectFactory
+     */
+    private $factory;
+    /**
+     * @var array
+     */
+    protected $data = [];
+    /**
+     * @var IOrigin
+     */
+    protected $origin;
 
 
-	/**
-	 * @return IOriginConfig
-	 */
-	final protected function config() {
-		return $this->originConfig;
-	}
+    /**
+     * AbstractOriginImplementation constructor
+     *
+     * @param IOriginConfig $config
+     * @param IDataTransferObjectFactory $factory
+     * @param IMetadataFactory $metadataFactory
+     * @param ITaxonomyFactory $taxonomyFactory
+     */
+    public function __construct(
+        IOriginConfig $config,
+        IDataTransferObjectFactory $factory,
+        IMetadataFactory $metadataFactory,
+        ITaxonomyFactory $taxonomyFactory,
+        IMappingStrategyFactory $mapping_strategy,
+        IOrigin $origin
+    ) {
+        $this->originConfig = $config;
+        $this->factory = $factory;
+        $this->metadataFactory = $metadataFactory;
+        $this->taxonomyFactory = $taxonomyFactory;
+        $this->mapping_strategy_factory = $mapping_strategy;
+        $this->origin = $origin;
+    }
 
 
-	/**
-	 * @return IDataTransferObjectFactory
-	 */
-	final protected function factory() {
-		return $this->factory;
-	}
+    /**
+     * @return IOriginConfig
+     */
+    final protected function config()
+    {
+        return $this->originConfig;
+    }
 
 
-	/**
-	 * @param IDataTransferObject $dto
-	 *
-	 * @return ILog
-	 */
-	protected final function log(IDataTransferObject $dto = NULL): ILog {
-		return self::logs()->factory()->originLog($this->origin, NULL, $dto);
-	}
+    /**
+     * @return IDataTransferObjectFactory
+     */
+    final protected function factory()
+    {
+        return $this->factory;
+    }
 
 
-	/**
-	 * @return IMappingStrategyFactory
-	 */
-	final protected function mapping(): IMappingStrategyFactory {
-		return $this->mapping_strategy_factory;
-	}
+    /**
+     * @param IDataTransferObject $dto
+     *
+     * @return ILog
+     */
+    protected final function log(IDataTransferObject $dto = null) : ILog
+    {
+        return self::logs()->factory()->originLog($this->origin, null, $dto);
+    }
 
 
-	/**
-	 * @return IMetadataFactory
-	 */
-	final protected function metadata() {
-		return $this->metadataFactory;
-	}
+    /**
+     * @return IMappingStrategyFactory
+     */
+    final protected function mapping() : IMappingStrategyFactory
+    {
+        return $this->mapping_strategy_factory;
+    }
 
 
-	/**
-	 * @return ITaxonomyFactory
-	 */
-	final protected function taxonomy() {
-		return $this->taxonomyFactory;
-	}
-
-	// HOOKS
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function overrideStatus(HookObject $hook) {
-		// TODO: Implement overrideStatus() method.
-	}
+    /**
+     * @return IMetadataFactory
+     */
+    final protected function metadata()
+    {
+        return $this->metadataFactory;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getAdHocParentScopesAsExtIds(): array {
-		return [];
-	}
+    /**
+     * @return ITaxonomyFactory
+     */
+    final protected function taxonomy()
+    {
+        return $this->taxonomyFactory;
+    }
+
+    // HOOKS
+
+
+    /**
+     * @inheritdoc
+     */
+    public function overrideStatus(HookObject $hook)
+    {
+        // TODO: Implement overrideStatus() method.
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getAdHocParentScopesAsExtIds() : array
+    {
+        return [];
+    }
 }

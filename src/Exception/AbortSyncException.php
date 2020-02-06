@@ -12,6 +12,7 @@ namespace srag\Plugins\Hub2\Exception;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class AbortSyncException extends HubException {
+class AbortSyncException extends HubException
+{
 
 }

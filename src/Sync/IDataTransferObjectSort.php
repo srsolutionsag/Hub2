@@ -11,28 +11,29 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IDataTransferObjectSort {
+interface IDataTransferObjectSort
+{
 
-	/**
-	 * @var int
-	 */
-	const MAX_LEVEL = 100;
-
-
-	/**
-	 * @return IDataTransferObject
-	 */
-	public function getDtoObject(): IDataTransferObject;
+    /**
+     * @var int
+     */
+    const MAX_LEVEL = 100;
 
 
-	/**
-	 * @return int
-	 */
-	public function getLevel(): int;
+    /**
+     * @return IDataTransferObject
+     */
+    public function getDtoObject() : IDataTransferObject;
 
 
-	/**
-	 * @param int $level
-	 */
-	public function setLevel(int $level);
+    /**
+     * @return int
+     */
+    public function getLevel() : int;
+
+
+    /**
+     * @param int $level
+     */
+    public function setLevel(int $level);
 }

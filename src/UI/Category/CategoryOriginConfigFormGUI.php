@@ -18,87 +18,92 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CategoryOriginConfigFormGUI extends OriginConfigFormGUI {
+class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
+{
 
-	/**
-	 * @var ARCategoryOrigin
-	 */
-	protected $origin;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function addSyncConfig() {
-		parent::addSyncConfig();
-
-		$te = new ilTextInputGUI(self::plugin()
-			->translate('cat_prop_base_node_ilias'), $this->conf(ICategoryOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
-		$te->setInfo(self::plugin()->translate('cat_prop_base_node_ilias_info'));
-		$te->setValue($this->origin->config()->getParentRefIdIfNoParentIdFound());
-		$this->addItem($te);
-
-		$te = new ilTextInputGUI(self::plugin()
-			->translate('cat_prop_base_node_external'), $this->conf(ICategoryOriginConfig::EXT_ID_NO_PARENT_ID_FOUND));
-		$te->setInfo(self::plugin()->translate('cat_prop_base_node_external_info'));
-		$te->setValue($this->origin->config()->getExternalParentIdIfNoParentIdFound());
-		$this->addItem($te);
-	}
+    /**
+     * @var ARCategoryOrigin
+     */
+    protected $origin;
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function addPropertiesNew() {
-		parent::addPropertiesNew();
+    /**
+     * @inheritdoc
+     */
+    protected function addSyncConfig()
+    {
+        parent::addSyncConfig();
 
-		$cb = new ilCheckboxInputGUI(self::plugin()->translate('cat_prop_set_news'), $this->prop(CategoryProperties::SHOW_NEWS));
-		$cb->setChecked($this->origin->properties()->get(CategoryProperties::SHOW_NEWS));
-		$this->addItem($cb);
+        $te = new ilTextInputGUI(self::plugin()
+            ->translate('cat_prop_base_node_ilias'), $this->conf(ICategoryOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
+        $te->setInfo(self::plugin()->translate('cat_prop_base_node_ilias_info'));
+        $te->setValue($this->origin->config()->getParentRefIdIfNoParentIdFound());
+        $this->addItem($te);
 
-		$cb = new ilCheckboxInputGUI(self::plugin()->translate('cat_prop_set_infopage'), $this->prop(CategoryProperties::SHOW_INFO_TAB));
-		$cb->setChecked($this->origin->properties()->get(CategoryProperties::SHOW_INFO_TAB));
-		$this->addItem($cb);
-	}
-
-
-	/**
-	 * @inheritdoc
-	 */
-	protected function addPropertiesUpdate() {
-		parent::addPropertiesUpdate();
-
-		$cb = new ilCheckboxInputGUI(self::plugin()->translate('cat_prop_move'), $this->prop(CategoryProperties::MOVE_CATEGORY));
-		$cb->setChecked($this->origin->properties()->get(CategoryProperties::MOVE_CATEGORY));
-		$this->addItem($cb);
-	}
+        $te = new ilTextInputGUI(self::plugin()
+            ->translate('cat_prop_base_node_external'), $this->conf(ICategoryOriginConfig::EXT_ID_NO_PARENT_ID_FOUND));
+        $te->setInfo(self::plugin()->translate('cat_prop_base_node_external_info'));
+        $te->setValue($this->origin->config()->getExternalParentIdIfNoParentIdFound());
+        $this->addItem($te);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function addPropertiesDelete() {
-		parent::addPropertiesDelete();
+    /**
+     * @inheritdoc
+     */
+    protected function addPropertiesNew()
+    {
+        parent::addPropertiesNew();
 
-		$delete = new ilRadioGroupInputGUI(self::plugin()->translate('cat_prop_delete_mode'), $this->prop(CategoryProperties::DELETE_MODE));
-		$delete->setValue($this->origin->properties()->get(CategoryProperties::DELETE_MODE));
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('cat_prop_set_news'), $this->prop(CategoryProperties::SHOW_NEWS));
+        $cb->setChecked($this->origin->properties()->get(CategoryProperties::SHOW_NEWS));
+        $this->addItem($cb);
 
-		$opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_none'), CategoryProperties::DELETE_MODE_NONE);
-		$delete->addOption($opt);
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('cat_prop_set_infopage'), $this->prop(CategoryProperties::SHOW_INFO_TAB));
+        $cb->setChecked($this->origin->properties()->get(CategoryProperties::SHOW_INFO_TAB));
+        $this->addItem($cb);
+    }
 
-		$opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_inactive', "", [
-			self::plugin()->translate('com_prop_mark_deleted_text')
-		]), CategoryProperties::DELETE_MODE_MARK);
-		$delete->addOption($opt);
 
-		$te = new ilTextInputGUI(self::plugin()
-			->translate('cat_prop_delete_mode_inactive_text'), $this->prop(CategoryProperties::DELETE_MODE_MARK_TEXT));
-		$te->setValue($this->origin->properties()->get(CategoryProperties::DELETE_MODE_MARK_TEXT));
-		$opt->addSubItem($te);
+    /**
+     * @inheritdoc
+     */
+    protected function addPropertiesUpdate()
+    {
+        parent::addPropertiesUpdate();
 
-		$opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_delete'), CategoryProperties::DELETE_MODE_DELETE);
-		$delete->addOption($opt);
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('cat_prop_move'), $this->prop(CategoryProperties::MOVE_CATEGORY));
+        $cb->setChecked($this->origin->properties()->get(CategoryProperties::MOVE_CATEGORY));
+        $this->addItem($cb);
+    }
 
-		$this->addItem($delete);
-	}
+
+    /**
+     * @inheritdoc
+     */
+    protected function addPropertiesDelete()
+    {
+        parent::addPropertiesDelete();
+
+        $delete = new ilRadioGroupInputGUI(self::plugin()->translate('cat_prop_delete_mode'), $this->prop(CategoryProperties::DELETE_MODE));
+        $delete->setValue($this->origin->properties()->get(CategoryProperties::DELETE_MODE));
+
+        $opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_none'), CategoryProperties::DELETE_MODE_NONE);
+        $delete->addOption($opt);
+
+        $opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_inactive', "", [
+            self::plugin()->translate('com_prop_mark_deleted_text')
+        ]), CategoryProperties::DELETE_MODE_MARK);
+        $delete->addOption($opt);
+
+        $te = new ilTextInputGUI(self::plugin()
+            ->translate('cat_prop_delete_mode_inactive_text'), $this->prop(CategoryProperties::DELETE_MODE_MARK_TEXT));
+        $te->setValue($this->origin->properties()->get(CategoryProperties::DELETE_MODE_MARK_TEXT));
+        $opt->addSubItem($te);
+
+        $opt = new ilRadioOption(self::plugin()->translate('cat_prop_delete_mode_delete'), CategoryProperties::DELETE_MODE_DELETE);
+        $delete->addOption($opt);
+
+        $this->addItem($delete);
+    }
 }

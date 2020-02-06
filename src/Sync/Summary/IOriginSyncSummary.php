@@ -10,22 +10,23 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
  * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IOriginSyncSummary {
+interface IOriginSyncSummary
+{
 
-	/**
-	 * @return string The Output of all IOriginSyncs
-	 */
-	public function getOutputAsString();
-
-
-	/**
-	 * @param IOriginSync $originSync add another already ran IOriginSync
-	 */
-	public function addOriginSync(IOriginSync $originSync);
+    /**
+     * @return string The Output of all IOriginSyncs
+     */
+    public function getOutputAsString();
 
 
-	/**
-	 * @return void
-	 */
-	public function sendEmail();
+    /**
+     * @param IOriginSync $originSync add another already ran IOriginSync
+     */
+    public function addOriginSync(IOriginSync $originSync);
+
+
+    /**
+     * @return void
+     */
+    public function sendEmail();
 }

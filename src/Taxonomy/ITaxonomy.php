@@ -10,60 +10,61 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
  * @package srag\Plugins\Hub2\Taxonomy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ITaxonomy {
+interface ITaxonomy
+{
 
-	const MODE_SELECT = 1;
-	const MODE_CREATE = 2;
-
-
-	/**
-	 * @return string
-	 */
-	public function getTitle(): string;
+    const MODE_SELECT = 1;
+    const MODE_CREATE = 2;
 
 
-	/**
-	 * @return int ITaxonomy::MODE_SELECT or ITaxonomy::MODE_CREATE
-	 */
-	public function getMode(): int;
+    /**
+     * @return string
+     */
+    public function getTitle() : string;
 
 
-	/**
-	 * @return string
-	 */
-	public function getDescription();
+    /**
+     * @return int ITaxonomy::MODE_SELECT or ITaxonomy::MODE_CREATE
+     */
+    public function getMode() : int;
 
 
-	/**
-	 * @param string $description
-	 *
-	 * @return INode
-	 */
-	public function setDescription($description);
+    /**
+     * @return string
+     */
+    public function getDescription();
 
 
-	/**
-	 * @return INode[]
-	 */
-	public function getNodes(): array;
+    /**
+     * @param string $description
+     *
+     * @return INode
+     */
+    public function setDescription($description);
 
 
-	/**
-	 * @return string[]
-	 */
-	public function getNodeTitlesAsArray(): array;
+    /**
+     * @return INode[]
+     */
+    public function getNodes() : array;
 
 
-	/**
-	 * @param INode $node
-	 *
-	 * @return ITaxonomy
-	 */
-	public function attach(INode $node): ITaxonomy;
+    /**
+     * @return string[]
+     */
+    public function getNodeTitlesAsArray() : array;
 
 
-	/**
-	 * @return string
-	 */
-	public function __toString(): string;
+    /**
+     * @param INode $node
+     *
+     * @return ITaxonomy
+     */
+    public function attach(INode $node) : ITaxonomy;
+
+
+    /**
+     * @return string
+     */
+    public function __toString() : string;
 }

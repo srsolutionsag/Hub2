@@ -6,10 +6,11 @@
  * @package
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IDidacticTemplateAware {
+interface IDidacticTemplateAware
+{
 
-	/**
-	 * @param int $id
-	 */
-	public function setTemplateId($id);
+    /**
+     * @param int $id
+     */
+    public function setTemplateId($id);
 }

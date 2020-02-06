@@ -16,88 +16,94 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class OriginImplementationTemplateGenerator {
+class OriginImplementationTemplateGenerator
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
-
-	/**
-	 * OriginImplementationTemplateGenerator constructor
-	 */
-	public function __construct() {
-
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
-	/**
-	 * Create the implementation class file from a given template at the correct location
-	 * based on the hub config.
-	 *
-	 * @param IOrigin $origin
-	 *
-	 * @return bool False if file exists, true if created
-	 * @throws HubException
-	 */
-	public function create(IOrigin $origin) {
-		$classFile = $this->getClassFilePath($origin);
-		if ($this->classFileExists($origin)) {
-			return false;
-		}
-		$path = $this->getPath($origin);
-		if (!is_dir($path)) {
-			if (!ilUtil::makeDirParents($path)) {
-				throw new HubException("Could not create directory: $path");
-			};
-		}
-		$template = file_get_contents(__DIR__ . '/../../templates/OriginImplementationTemplate.tpl');
-		if ($template === false) {
-			throw new HubException("Could not load template: $template");
-		}
-		$className = $origin->getImplementationClassName();
-		$namespace = $origin->getImplementationNamespace();
-		$content = str_replace('[[CLASSNAME]]', $className, $template);
-		$content = str_replace('[[NAMESPACE]]', $namespace, $content);
-		$result = file_put_contents($classFile, $content);
-		if ($result === false) {
-			throw new HubException("Unable to create template for origin implementation");
-		}
+    /**
+     * OriginImplementationTemplateGenerator constructor
+     */
+    public function __construct()
+    {
 
-		return true;
-	}
+    }
 
 
-	public function classFileExists(IOrigin $origin) {
-		$classFile = $this->getClassFilePath($origin);
+    /**
+     * Create the implementation class file from a given template at the correct location
+     * based on the hub config.
+     *
+     * @param IOrigin $origin
+     *
+     * @return bool False if file exists, true if created
+     * @throws HubException
+     */
+    public function create(IOrigin $origin)
+    {
+        $classFile = $this->getClassFilePath($origin);
+        if ($this->classFileExists($origin)) {
+            return false;
+        }
+        $path = $this->getPath($origin);
+        if (!is_dir($path)) {
+            if (!ilUtil::makeDirParents($path)) {
+                throw new HubException("Could not create directory: $path");
+            }
+        }
+        $template = file_get_contents(__DIR__ . '/../../templates/OriginImplementationTemplate.tpl');
+        if ($template === false) {
+            throw new HubException("Could not load template: $template");
+        }
+        $className = $origin->getImplementationClassName();
+        $namespace = $origin->getImplementationNamespace();
+        $content = str_replace('[[CLASSNAME]]', $className, $template);
+        $content = str_replace('[[NAMESPACE]]', $namespace, $content);
+        $result = file_put_contents($classFile, $content);
+        if ($result === false) {
+            throw new HubException("Unable to create template for origin implementation");
+        }
 
-		return is_file($classFile);
-	}
+        return true;
+    }
 
 
-	/**
-	 * @param IOrigin $origin
-	 *
-	 * @return string
-	 */
-	public function getClassFilePath(IOrigin $origin) {
-		$path = $this->getPath($origin);
-		$className = $origin->getImplementationClassName();
-		$classFile = $path . $className . '.php';
+    public function classFileExists(IOrigin $origin)
+    {
+        $classFile = $this->getClassFilePath($origin);
 
-		return $classFile;
-	}
+        return is_file($classFile);
+    }
 
 
-	/**
-	 * @param IOrigin $origin
-	 *
-	 * @return string
-	 */
-	protected function getPath(IOrigin $origin) {
-		$basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
-		$path = $basePath . $origin->getObjectType() . '/';
+    /**
+     * @param IOrigin $origin
+     *
+     * @return string
+     */
+    public function getClassFilePath(IOrigin $origin)
+    {
+        $path = $this->getPath($origin);
+        $className = $origin->getImplementationClassName();
+        $classFile = $path . $className . '.php';
 
-		return $path;
-	}
+        return $classFile;
+    }
+
+
+    /**
+     * @param IOrigin $origin
+     *
+     * @return string
+     */
+    protected function getPath(IOrigin $origin)
+    {
+        $basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
+        $path = $basePath . $origin->getObjectType() . '/';
+
+        return $path;
+    }
 }

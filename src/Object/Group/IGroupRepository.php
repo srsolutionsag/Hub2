@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  * @package srag\Plugins\Hub2\Object\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IGroupRepository extends IObjectRepository {
+interface IGroupRepository extends IObjectRepository
+{
 
 }

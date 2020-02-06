@@ -19,41 +19,45 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class MetadataImplementationFactory implements IMetadataImplementationFactory {
+class MetadataImplementationFactory implements IMetadataImplementationFactory
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function userDefinedField(IMetadata $metadata, int $ilias_id): IMetadataImplementation {
-		return new UDF($metadata, $ilias_id);
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function customMetadata(IMetadata $metadata, int $ilias_id): IMetadataImplementation {
-		return new CustomMetadata($metadata, $ilias_id);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function userDefinedField(IMetadata $metadata, int $ilias_id) : IMetadataImplementation
+    {
+        return new UDF($metadata, $ilias_id);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getImplementationForDTO(IMetadataAwareDataTransferObject $dto, IMetadata $metadata, int $ilias_id): IMetadataImplementation {
-		switch (true) {
-			case is_a($dto, GroupDTO::class):
-			case is_a($dto, CourseDTO::class):
-			case is_a($dto, CategoryDTO::class):
-			case is_a($dto, SessionDTO::class):
-				return $this->customMetadata($metadata, $ilias_id);
-			case is_a($dto, UserDTO::class):
-				return $this->userDefinedField($metadata, $ilias_id);
-		}
-	}
+    /**
+     * @inheritdoc
+     */
+    public function customMetadata(IMetadata $metadata, int $ilias_id) : IMetadataImplementation
+    {
+        return new CustomMetadata($metadata, $ilias_id);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getImplementationForDTO(IMetadataAwareDataTransferObject $dto, IMetadata $metadata, int $ilias_id) : IMetadataImplementation
+    {
+        switch (true) {
+            case is_a($dto, GroupDTO::class):
+            case is_a($dto, CourseDTO::class):
+            case is_a($dto, CategoryDTO::class):
+            case is_a($dto, SessionDTO::class):
+                return $this->customMetadata($metadata, $ilias_id);
+            case is_a($dto, UserDTO::class):
+                return $this->userDefinedField($metadata, $ilias_id);
+        }
+    }
 }

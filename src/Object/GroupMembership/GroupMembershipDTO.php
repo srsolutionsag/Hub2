@@ -11,140 +11,152 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipDTO {
+class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipDTO
+{
 
-	/**
-	 * @var int
-	 */
-	protected $ilias_group_ref_id;
-	/**
-	 * @var int
-	 */
-	protected $user_id;
-	/**
-	 * @var
-	 */
-	protected $role = self::ROLE_MEMBER;
-	/**
-	 * @var string
-	 */
-	protected $groupId;
-	/**
-	 * @var int
-	 */
-	protected $groupIdType;
-	/**
-	 * @var bool
-	 */
-	protected $isContact = false;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function __construct($group_id, $user_id) {
-		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $group_id, $user_id ]));
-		$this->setGroupId($group_id);
-		$this->setUserId($user_id);
-	}
+    /**
+     * @var int
+     */
+    protected $ilias_group_ref_id;
+    /**
+     * @var int
+     */
+    protected $user_id;
+    /**
+     * @var
+     */
+    protected $role = self::ROLE_MEMBER;
+    /**
+     * @var string
+     */
+    protected $groupId;
+    /**
+     * @var int
+     */
+    protected $groupIdType;
+    /**
+     * @var bool
+     */
+    protected $isContact = false;
 
 
-	/**
-	 * @return string
-	 */
-	public function getGroupId(): string {
-		return $this->groupId;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function __construct($group_id, $user_id)
+    {
+        parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$group_id, $user_id]));
+        $this->setGroupId($group_id);
+        $this->setUserId($user_id);
+    }
 
 
-	/**
-	 * @param string $groupId
-	 *
-	 * @return GroupMembershipDTO
-	 */
-	public function setGroupId(string $groupId): GroupMembershipDTO {
-		$this->groupId = $groupId;
-
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getGroupId() : string
+    {
+        return $this->groupId;
+    }
 
 
-	/**
-	 * @return int
-	 */
-	public function getGroupIdType(): int {
-		return $this->groupIdType;
-	}
+    /**
+     * @param string $groupId
+     *
+     * @return GroupMembershipDTO
+     */
+    public function setGroupId(string $groupId) : GroupMembershipDTO
+    {
+        $this->groupId = $groupId;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param int $groupIdType
-	 *
-	 * @return GroupMembershipDTO
-	 */
-	public function setGroupIdType(int $groupIdType): GroupMembershipDTO {
-		$this->groupIdType = $groupIdType;
-
-		return $this;
-	}
+    /**
+     * @return int
+     */
+    public function getGroupIdType() : int
+    {
+        return $this->groupIdType;
+    }
 
 
-	/**
-	 * @return int
-	 */
-	public function getUserId() {
-		return $this->user_id;
-	}
+    /**
+     * @param int $groupIdType
+     *
+     * @return GroupMembershipDTO
+     */
+    public function setGroupIdType(int $groupIdType) : GroupMembershipDTO
+    {
+        $this->groupIdType = $groupIdType;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param int $user_id
-	 *
-	 * @return GroupMembershipDTO
-	 */
-	public function setUserId(int $user_id): GroupMembershipDTO {
-		$this->user_id = $user_id;
-
-		return $this;
-	}
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
 
 
-	/**
-	 * @return mixed
-	 */
-	public function getRole() {
-		return $this->role;
-	}
+    /**
+     * @param int $user_id
+     *
+     * @return GroupMembershipDTO
+     */
+    public function setUserId(int $user_id) : GroupMembershipDTO
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param mixed $role
-	 *
-	 * @return GroupMembershipDTO
-	 */
-	public function setRole($role) {
-		$this->role = $role;
-
-		return $this;
-	}
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 
 
-	/**
-	 * @return bool
-	 */
-	public function isContact(): bool {
-		return $this->isContact;
-	}
+    /**
+     * @param mixed $role
+     *
+     * @return GroupMembershipDTO
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param bool $isContact
-	 *
-	 * @return $this
-	 */
-	public function setIsContact(bool $isContact) {
-		$this->isContact = $isContact;
+    /**
+     * @return bool
+     */
+    public function isContact() : bool
+    {
+        return $this->isContact;
+    }
 
-		return $this;
-	}
+
+    /**
+     * @param bool $isContact
+     *
+     * @return $this
+     */
+    public function setIsContact(bool $isContact)
+    {
+        $this->isContact = $isContact;
+
+        return $this;
+    }
 }

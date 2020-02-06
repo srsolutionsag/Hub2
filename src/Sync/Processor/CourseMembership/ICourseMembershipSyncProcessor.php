@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  * @package srag\Plugins\Hub2\Sync\Processor\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICourseMembershipSyncProcessor extends IObjectSyncProcessor {
+interface ICourseMembershipSyncProcessor extends IObjectSyncProcessor
+{
 
 }

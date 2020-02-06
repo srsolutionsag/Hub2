@@ -4,79 +4,81 @@ namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilDBConstants;
 use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Category\ICategoryDTO;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
 use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagementDTO;
+use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\Course\ICourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\Group\ARGroup;
 use srag\Plugins\Hub2\Object\Group\IGroupDTO;
+use srag\Plugins\Hub2\Object\OrgUnit\AROrgUnit;
 use srag\Plugins\Hub2\Object\OrgUnit\IOrgUnitDTO;
+use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\Session\ISessionDTO;
+use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Object\User\IUserDTO;
-use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
- * Class ByImportId
+ * Class ByExtId
+ *
+ * Used to map new records from one origin to existing records of other origins
  *
  * @package srag\Plugins\Hub2\MappingStrategy
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ByImportId extends AMappingStrategy implements IMappingStrategy
+class ByExtId extends AMappingStrategy implements IMappingStrategy
 {
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function map(IDataTransferObject $dto) : int
     {
         switch (true) {
             case $dto instanceof IUserDTO:
-                $object_type = "usr";
+                $table_name = ARUser::TABLE_NAME;
                 break;
 
             case $dto instanceof ICourseDTO:
-                $object_type = "crs";
+                $table_name = ARCourse::TABLE_NAME;
                 break;
 
             case $dto instanceof ICategoryDTO:
-                $object_type = "cat";
+                $table_name = ARCategory::TABLE_NAME;
                 break;
 
             case $dto instanceof IGroupDTO:
-                $object_type = "grp";
+                $table_name = ARGroup::TABLE_NAME;
                 break;
 
             case $dto instanceof ISessionDTO:
-                $object_type = "sess";
+                $table_name = ARSession::TABLE_NAME;
                 break;
 
             case $dto instanceof IOrgUnitDTO:
-                $object_type = "orgu";
+                $table_name = AROrgUnit::TABLE_NAME;
                 break;
 
             case $dto instanceof ICompetenceManagementDTO:
-                $object_type = "skmg";
+                $table_name = ARCompetenceManagement::TABLE_NAME;
                 break;
 
             default:
-                throw new HubException("Cannot find import id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!");
+                throw new HubException("Cannot find ILIAS id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!");
                 break;
         }
 
-        if ($dto instanceof ICompetenceManagementDTO) {
-            $result = self::dic()->database()->queryF('SELECT obj_id FROM skl_tree_node WHERE ' . self::dic()->database()
-                    ->like("import_id", ilDBConstants::T_TEXT, IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()), [], []);
-        } else {
-            $result = self::dic()->database()->queryF('SELECT obj_id FROM object_data WHERE type=%s AND ' . self::dic()->database()
-                    ->like("import_id", ilDBConstants::T_TEXT, IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()), [ilDBConstants::T_TEXT], [$object_type]);
-        }
+        $result = self::dic()->database()->queryF('SELECT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s', [ilDBConstants::T_TEXT], [$dto->getExtId()]);
 
         if ($result->rowCount() > 0) {
             if ($result->rowCount() > 1) {
-                throw new HubException("Multiple import id's for type=" . $object_type . ",ext_id=" . $dto->getExtId() . " found!");
+                throw new HubException("Multiple ILIAS id's for type=" . $table_name . ",ext_id=" . $dto->getExtId() . " found!");
             }
 
-            return intval($result->fetchAssoc()["obj_id"]);
+            return intval($result->fetchAssoc()["ilias_id"]);
         }
 
         return 0;

@@ -12,20 +12,23 @@ use srag\Plugins\Hub2\Origin\Properties\GroupMembership\GroupMembershipPropertie
  * @package srag\Plugins\Hub2\Origin\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARGroupMembershipOrigin extends AROrigin implements IGroupMembershipOrigin {
+class ARGroupMembershipOrigin extends AROrigin implements IGroupMembershipOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data) {
-		return new GroupMembershipOriginConfig($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data)
+    {
+        return new GroupMembershipOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data) {
-		return new GroupMembershipProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data)
+    {
+        return new GroupMembershipProperties($data);
+    }
 }

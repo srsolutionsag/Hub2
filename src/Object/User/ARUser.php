@@ -12,8 +12,9 @@ use srag\Plugins\Hub2\Object\ARObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARUser extends ARObject implements IUser {
+class ARUser extends ARObject implements IUser
+{
 
-	use ARMetadataAwareObject;
-	const TABLE_NAME = 'sr_hub2_user';
+    use ARMetadataAwareObject;
+    const TABLE_NAME = 'sr_hub2_user';
 }

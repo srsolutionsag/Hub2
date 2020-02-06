@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
  * @package srag\Plugins\Hub2\Sync\Processor\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IGroupSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor {
+interface IGroupSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor
+{
 
 }

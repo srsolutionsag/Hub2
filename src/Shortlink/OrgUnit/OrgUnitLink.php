@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class OrgUnitLink extends AbstractRepositoryLink implements IObjectLink {
+class OrgUnitLink extends AbstractRepositoryLink implements IObjectLink
+{
 
 }

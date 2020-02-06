@@ -13,16 +13,17 @@ use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManageme
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface ICompetenceManagementOrigin extends IOrigin {
+interface ICompetenceManagementOrigin extends IOrigin
+{
 
-	/**
-	 * @return ICompetenceManagementOriginConfig
-	 */
-	public function config(): ICompetenceManagementOriginConfig;
+    /**
+     * @return ICompetenceManagementOriginConfig
+     */
+    public function config() : ICompetenceManagementOriginConfig;
 
 
-	/**
-	 * @return ICompetenceManagementProperties
-	 */
-	public function properties(): ICompetenceManagementProperties;
+    /**
+     * @return ICompetenceManagementProperties
+     */
+    public function properties() : ICompetenceManagementProperties;
 }

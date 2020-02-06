@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class CompetenceManagementRepository extends ObjectRepository implements ICompetenceManagementRepository {
+class CompetenceManagementRepository extends ObjectRepository implements ICompetenceManagementRepository
+{
 
 }

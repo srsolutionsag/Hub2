@@ -12,72 +12,78 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @package srag\Plugins\Hub2\Taxonomy\Node
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class Node implements INode {
+class Node implements INode
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	/**
-	 * @var string
-	 */
-	protected $title = '';
-	/**
-	 * @var INode[]
-	 */
-	protected $nodes = [];
-
-
-	/**
-	 * Node constructor
-	 *
-	 * @param string $title
-	 */
-	public function __construct(string $title) { $this->title = $title; }
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var string
+     */
+    protected $title = '';
+    /**
+     * @var INode[]
+     */
+    protected $nodes = [];
 
 
-	/**
-	 * @return string
-	 */
-	public function getTitle(): string {
-		return $this->title;
-	}
+    /**
+     * Node constructor
+     *
+     * @param string $title
+     */
+    public function __construct(string $title) { $this->title = $title; }
 
 
-	/**
-	 * @param string $title
-	 */
-	public function setTitle(string $title) {
-		$this->title = $title;
-	}
+    /**
+     * @return string
+     */
+    public function getTitle() : string
+    {
+        return $this->title;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getNodes(): array {
-		return $this->nodes;
-	}
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getNodeTitlesAsArray(): array {
-		$titles = [];
-		foreach ($this->nodes as $node) {
-			$titles[] = $node->getTitle();
-		}
-
-		return $titles;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getNodes() : array
+    {
+        return $this->nodes;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attach(INode $node): INode {
-		$this->nodes[] = $node;
+    /**
+     * @inheritdoc
+     */
+    public function getNodeTitlesAsArray() : array
+    {
+        $titles = [];
+        foreach ($this->nodes as $node) {
+            $titles[] = $node->getTitle();
+        }
 
-		return $this;
-	}
+        return $titles;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function attach(INode $node) : INode
+    {
+        $this->nodes[] = $node;
+
+        return $this;
+    }
 }

@@ -10,16 +10,17 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IMappingStrategyAwareDataTransferObject extends IDataTransferObject {
+interface IMappingStrategyAwareDataTransferObject extends IDataTransferObject
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getMappingStrategy(): IMappingStrategy;
+    /**
+     * @inheritdoc
+     */
+    public function getMappingStrategy() : IMappingStrategy;
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function overrideMappingStrategy(IMappingStrategy $strategy): IDataTransferObject;
+    /**
+     * @inheritdoc
+     */
+    public function overrideMappingStrategy(IMappingStrategy $strategy) : IDataTransferObject;
 }

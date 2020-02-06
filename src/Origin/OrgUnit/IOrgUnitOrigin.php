@@ -13,16 +13,17 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitOrigin extends IOrigin {
+interface IOrgUnitOrigin extends IOrigin
+{
 
-	/**
-	 * @return IOrgUnitOriginConfig
-	 */
-	public function config(): IOrgUnitOriginConfig;
+    /**
+     * @return IOrgUnitOriginConfig
+     */
+    public function config() : IOrgUnitOriginConfig;
 
 
-	/**
-	 * @return IOrgUnitProperties
-	 */
-	public function properties(): IOrgUnitProperties;
+    /**
+     * @return IOrgUnitProperties
+     */
+    public function properties() : IOrgUnitProperties;
 }

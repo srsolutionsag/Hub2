@@ -11,136 +11,148 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  * @package srag\Plugins\Hub2\Object\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class SessionMembershipDTO extends DataTransferObject implements ISessionMembershipDTO {
+class SessionMembershipDTO extends DataTransferObject implements ISessionMembershipDTO
+{
 
-	/**
-	 * @var string
-	 */
-	protected $sessionId;
-	/**
-	 * @var int
-	 */
-	protected $sessionIdType = self::PARENT_ID_TYPE_REF_ID;
-	/**
-	 * @var int
-	 */
-	protected $role;
-	/**
-	 * @var int
-	 */
-	protected $userId;
-	/**
-	 * @var bool
-	 */
-	protected $isContact = false;
-
-
-	/**
-	 * @inheritdoc
-	 */
-	public function __construct($session_id, $user_id) {
-		parent::__construct(implode(FakeIliasMembershipObject::GLUE, [ $session_id, $user_id ]));
-		$this->sessionId = $session_id;
-		$this->userId = $user_id;
-	}
+    /**
+     * @var string
+     */
+    protected $sessionId;
+    /**
+     * @var int
+     */
+    protected $sessionIdType = self::PARENT_ID_TYPE_REF_ID;
+    /**
+     * @var int
+     */
+    protected $role;
+    /**
+     * @var int
+     */
+    protected $userId;
+    /**
+     * @var bool
+     */
+    protected $isContact = false;
 
 
-	/**
-	 * @return string
-	 */
-	public function getSessionId(): string {
-		return $this->sessionId;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function __construct($session_id, $user_id)
+    {
+        parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$session_id, $user_id]));
+        $this->sessionId = $session_id;
+        $this->userId = $user_id;
+    }
 
 
-	/**
-	 * @param string $sessionId
-	 *
-	 * @return SessionMembershipDTO
-	 */
-	public function setSessionId(string $sessionId): SessionMembershipDTO {
-		$this->sessionId = $sessionId;
-
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getSessionId() : string
+    {
+        return $this->sessionId;
+    }
 
 
-	/**
-	 * @return int
-	 */
-	public function getSessionIdType(): int {
-		return $this->sessionIdType;
-	}
+    /**
+     * @param string $sessionId
+     *
+     * @return SessionMembershipDTO
+     */
+    public function setSessionId(string $sessionId) : SessionMembershipDTO
+    {
+        $this->sessionId = $sessionId;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param int $sessionIdType
-	 *
-	 * @return SessionMembershipDTO
-	 */
-	public function setSessionIdType(int $sessionIdType): SessionMembershipDTO {
-		$this->sessionIdType = $sessionIdType;
-
-		return $this;
-	}
+    /**
+     * @return int
+     */
+    public function getSessionIdType() : int
+    {
+        return $this->sessionIdType;
+    }
 
 
-	/**
-	 * @return int
-	 */
-	public function getRole(): int {
-		return $this->role;
-	}
+    /**
+     * @param int $sessionIdType
+     *
+     * @return SessionMembershipDTO
+     */
+    public function setSessionIdType(int $sessionIdType) : SessionMembershipDTO
+    {
+        $this->sessionIdType = $sessionIdType;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param int $role
-	 *
-	 * @return SessionMembershipDTO
-	 */
-	public function setRole(int $role): SessionMembershipDTO {
-		$this->role = $role;
-
-		return $this;
-	}
+    /**
+     * @return int
+     */
+    public function getRole() : int
+    {
+        return $this->role;
+    }
 
 
-	/**
-	 * @return int
-	 */
-	public function getUserId(): int {
-		return $this->userId;
-	}
+    /**
+     * @param int $role
+     *
+     * @return SessionMembershipDTO
+     */
+    public function setRole(int $role) : SessionMembershipDTO
+    {
+        $this->role = $role;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param int $userId
-	 *
-	 * @return SessionMembershipDTO
-	 */
-	public function setUserId(int $userId): SessionMembershipDTO {
-		$this->userId = $userId;
-
-		return $this;
-	}
+    /**
+     * @return int
+     */
+    public function getUserId() : int
+    {
+        return $this->userId;
+    }
 
 
-	/**
-	 * @return bool
-	 */
-	public function isContact(): bool {
-		return $this->isContact;
-	}
+    /**
+     * @param int $userId
+     *
+     * @return SessionMembershipDTO
+     */
+    public function setUserId(int $userId) : SessionMembershipDTO
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
 
 
-	/**
-	 * @param bool $isContact
-	 *
-	 * @return $this
-	 */
-	public function setIsContact(bool $isContact) {
-		$this->isContact = $isContact;
+    /**
+     * @return bool
+     */
+    public function isContact() : bool
+    {
+        return $this->isContact;
+    }
 
-		return $this;
-	}
+
+    /**
+     * @param bool $isContact
+     *
+     * @return $this
+     */
+    public function setIsContact(bool $isContact)
+    {
+        $this->isContact = $isContact;
+
+        return $this;
+    }
 }
