@@ -38,7 +38,7 @@ trait MetadataSyncProcessor
 
             foreach ($dto->getMetaData() as $metaDatum) {
                 if (!isset($flat_existing_md[$metaDatum->getRecordId()]) || !isset($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()])) {
-                    continue;
+                    $flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()] = null;
                 }
                 if ($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()] !== $metaDatum->getValue()) {
                     $f->getImplementationForDTO($dto, $metaDatum, (int) $ilias_object->getId())->write();
