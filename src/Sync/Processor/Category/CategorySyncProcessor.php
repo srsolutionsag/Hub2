@@ -151,6 +151,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             $this->moveCategory($ilObjCategory, $dto);
         }
         }
+        $ilObjCategory->update();
     }
 
 

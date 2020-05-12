@@ -76,7 +76,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             'numberOfNextSessions',
             'orderType',
             'courseStart',
-            'courseEnd'
+            'courseEnd',
+            'activationStart',
+            'activationEnd'
         ];
 
 
@@ -140,7 +142,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             $setter = "set" . ucfirst($property);
             $getter = "get" . ucfirst($property);
             if ($dto->$getter() !== null && $setter !== "setActivationType") {
-                $ilObjCourse->$setter($dto->$getter());
+                if ($property === "activationStart" || $property === "activationEnd") {
+                    $ilObjCourse->$setter($dto->$getter() !== null ? $dto->$getter()->get(IL_CAL_UNIX) : null);
+                } else {
+                    $ilObjCourse->$setter($dto->$getter());
+                }
             }
         }
         if ($dto->getDidacticTemplate() > 0) {
@@ -369,7 +375,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             $setter = "set" . ucfirst($property);
             $getter = "get" . ucfirst($property);
             if ($dto->$getter() !== null && $setter !== "setActivationType") {
-                $ilObjCourse->$setter($dto->$getter());
+                if ($property === "activationStart" || $property === "activationEnd") {
+                    $ilObjCourse->$setter($dto->$getter() !== null ? $dto->$getter()->get(IL_CAL_UNIX) : null);
+                } else {
+                    $ilObjCourse->$setter($dto->$getter());
+                }
             }
         }
         if ($this->props->updateDTOProperty("didacticTemplate") && $dto->getDidacticTemplate() > 0) {
