@@ -181,6 +181,14 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @var ilDate|null
      */
     protected $courseEnd = null;
+    /**
+     * @var ilDate|null
+     */
+    protected $activationStart = null;
+    /**
+     * @var ilDate|null
+     */
+    protected $activationEnd = null;
 
 
     /**
@@ -874,6 +882,50 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     public function setCourseEnd(/*?*/ ilDate $courseEnd = null) : self
     {
         $this->courseEnd = $courseEnd;
+
+        return $this;
+    }
+
+
+    /**
+     * @return ilDate|null
+     */
+    public function getActivationStart()/*? : ilDate*/
+    {
+        return $this->activationStart;
+    }
+
+
+    /**
+     * @param ilDate|null $activationStart
+     *
+     * @return self
+     */
+    public function setActivationStart(/*?*/ ilDate $activationStart = null) : self
+    {
+        $this->activationStart = $activationStart;
+
+        return $this;
+    }
+
+
+    /**
+     * @return ilDate|null
+     */
+    public function getActivationEnd()/*? : ilDate*/
+    {
+        return $this->activationEnd;
+    }
+
+
+    /**
+     * @param ilDate|null $activationEnd
+     *
+     * @return self
+     */
+    public function setActivationEnd(/*?*/ ilDate $activationEnd = null) : self
+    {
+        $this->activationEnd = $activationEnd;
 
         return $this;
     }
