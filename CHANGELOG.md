@@ -1,6 +1,8 @@
 # Changelog
 
 ## [x]
+- ILIAS 6 support
+- Remove ILIAS 5.3 support
 - Improved Logging: log on update and only if data changed, added status to logs
 - Fix: User set passwd
 - OrgUnits are now Mapping Strategy Aware
