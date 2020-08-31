@@ -34,7 +34,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
     public function getStaticTopItems() : array
     {
         return [
-            $this->mainmenu->topParentItem(self::dic()->globalScreen()->identification()->plugin($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_top"))->withTitle(ilHub2Plugin::PLUGIN_NAME)
+            $this->mainmenu->topParentItem($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_top"))->withTitle(ilHub2Plugin::PLUGIN_NAME)
                 ->withAvailableCallable(function () : bool {
                     return self::plugin()->getPluginObject()->isActive();
                 })->withVisibilityCallable(function () : bool {
@@ -58,7 +58,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "pname", ilHub2Plugin::PLUGIN_NAME);
 
         return [
-            $this->mainmenu->link(self::dic()->globalScreen()->identification()->plugin($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))->withParent($parent->getProviderIdentification())
+            $this->mainmenu->link($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))->withParent($parent->getProviderIdentification())
                 ->withTitle(ilHub2Plugin::PLUGIN_NAME)->withAction(self::dic()->ctrl()->getLinkTargetByClass([
                     ilAdministrationGUI::class,
                     ilObjComponentSettingsGUI::class,
