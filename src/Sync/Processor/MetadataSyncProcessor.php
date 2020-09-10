@@ -37,9 +37,10 @@ trait MetadataSyncProcessor
             }
 
             foreach ($dto->getMetaData() as $metaDatum) {
-                if (!isset($flat_existing_md[$metaDatum->getRecordId()]) || !isset($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()])) {
+                // TODO: Not work with new delivered metadata fields (For instance on create or new added on update)
+                /*if (!isset($flat_existing_md[$metaDatum->getRecordId()]) || !isset($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()])) {
                     continue;
-                }
+                }*/
                 if ($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()] !== $metaDatum->getValue()) {
                     $f->getImplementationForDTO($dto, $metaDatum, (int) $ilias_object->getId())->write();
                 }
