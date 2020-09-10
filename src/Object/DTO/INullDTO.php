@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface INullDTO extends IDataTransferObject {
+interface INullDTO extends IDataTransferObject
+{
 
 }

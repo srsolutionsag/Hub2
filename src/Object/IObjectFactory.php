@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Object;
 use ActiveRecord;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\Category\ICategory;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\Course\ICourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
@@ -29,163 +31,178 @@ use srag\Plugins\Hub2\Object\User\IUser;
  * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IObjectFactory {
+interface IObjectFactory
+{
 
-	/**
-	 * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
-	 * concatenation of the origins ID with the external-ID, see IObject::create()
-	 *
-	 * @param string $ext_id
-	 *
-	 * @return string
-	 */
-	public function getId($ext_id);
-
-
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return ActiveRecord|ARCategory|ICategory|ARCourse|ICourse|ARCourseMembership|ICourseMembership|ARGroup|IGroup|ARGroupMembership|IGroupMembership|ARSession|ISession|ARUser|IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership
-	 */
-	public function undefined($ext_id);
+    /**
+     * Get the primary ID of an object. In the ActiveRecord implementation, the primary key is a
+     * concatenation of the origins ID with the external-ID, see IObject::create()
+     *
+     * @param string $ext_id
+     *
+     * @return string
+     */
+    public function getId($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return IUser
-	 */
-	public function user($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return ActiveRecord|ARCategory|ICategory|ARCourse|ICourse|ARCourseMembership|ICourseMembership|ARGroup|IGroup|ARGroupMembership|IGroupMembership|ARSession|ISession|ARUser|IUser|IOrgUnit|AROrgUnit|IOrgUnitMembership|AROrgUnitMembership|ICompetenceManagement|ArCompetenceManagement
+     */
+    public function undefined($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return ICourse
-	 */
-	public function course($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return IUser
+     */
+    public function user($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return ICategory
-	 */
-	public function category($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return ICourse
+     */
+    public function course($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return IGroup
-	 */
-	public function group($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return ICategory
+     */
+    public function category($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return ISession
-	 */
-	public function session($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return IGroup
+     */
+    public function group($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return ICourseMembership
-	 */
-	public function courseMembership($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return ISession
+     */
+    public function session($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return IGroupMembership
-	 */
-	public function groupMembership($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return ICourseMembership
+     */
+    public function courseMembership($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return ISessionMembership
-	 */
-	public function sessionMembership($ext_id);
+    /**
+     * @param string $ext_id
+     *
+     * @return IGroupMembership
+     */
+    public function groupMembership($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return IOrgUnit
-	 */
-	public function orgUnit(string $ext_id): IOrgUnit;
+    /**
+     * @param string $ext_id
+     *
+     * @return ISessionMembership
+     */
+    public function sessionMembership($ext_id);
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return IOrgUnitMembership
-	 */
-	public function orgUnitMembership(string $ext_id): IOrgUnitMembership;
+    /**
+     * @param string $ext_id
+     *
+     * @return IOrgUnit
+     */
+    public function orgUnit(string $ext_id) : IOrgUnit;
 
 
-	/**
-	 * @return IUser[]
-	 */
-	public function users(): array;
+    /**
+     * @param string $ext_id
+     *
+     * @return IOrgUnitMembership
+     */
+    public function orgUnitMembership(string $ext_id) : IOrgUnitMembership;
 
 
-	/**
-	 * @return ICourse[]
-	 */
-	public function courses(): array;
+    /**
+     * @param string $ext_id
+     *
+     * @return ICompetenceManagement
+     */
+    public function competenceManagement(string $ext_id) : ICompetenceManagement;
 
 
-	/**
-	 * @return ICategory[]
-	 */
-	public function categories(): array;
+    /**
+     * @return IUser[]
+     */
+    public function users() : array;
 
 
-	/**
-	 * @return IGroup[]
-	 */
-	public function groups(): array;
+    /**
+     * @return ICourse[]
+     */
+    public function courses() : array;
 
 
-	/**
-	 * @return ISession[]
-	 */
-	public function sessions(): array;
+    /**
+     * @return ICategory[]
+     */
+    public function categories() : array;
 
 
-	/**
-	 * @return ICourseMembership[]
-	 */
-	public function courseMemberships(): array;
+    /**
+     * @return IGroup[]
+     */
+    public function groups() : array;
 
 
-	/**
-	 * @return IGroupMembership[]
-	 */
-	public function groupMemberships(): array;
+    /**
+     * @return ISession[]
+     */
+    public function sessions() : array;
 
 
-	/**
-	 * @return ISessionMembership[]
-	 */
-	public function sessionMemberships(): array;
+    /**
+     * @return ICourseMembership[]
+     */
+    public function courseMemberships() : array;
 
 
-	/**
-	 * @return IOrgUnit[]
-	 */
-	public function orgUnits(): array;
+    /**
+     * @return IGroupMembership[]
+     */
+    public function groupMemberships() : array;
 
 
-	/**
-	 * @return IOrgUnitMembership[]
-	 */
-	public function orgUnitMemberships(): array;
+    /**
+     * @return ISessionMembership[]
+     */
+    public function sessionMemberships() : array;
+
+
+    /**
+     * @return IOrgUnit[]
+     */
+    public function orgUnits() : array;
+
+
+    /**
+     * @return IOrgUnitMembership[]
+     */
+    public function orgUnitMemberships() : array;
+
+
+    /**
+     * @return ICompetenceManagement[]
+     */
+    public function competenceManagements() : array;
 }

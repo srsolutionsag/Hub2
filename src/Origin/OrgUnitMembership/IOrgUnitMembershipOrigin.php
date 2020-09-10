@@ -13,16 +13,17 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\IOrgUnitMembershipProp
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitMembershipOrigin extends IOrigin {
+interface IOrgUnitMembershipOrigin extends IOrigin
+{
 
-	/**
-	 * @return IOrgUnitMembershipOriginConfig
-	 */
-	public function config(): IOrgUnitMembershipOriginConfig;
+    /**
+     * @return IOrgUnitMembershipOriginConfig
+     */
+    public function config() : IOrgUnitMembershipOriginConfig;
 
 
-	/**
-	 * @return IOrgUnitMembershipProperties
-	 */
-	public function properties(): IOrgUnitMembershipProperties;
+    /**
+     * @return IOrgUnitMembershipProperties
+     */
+    public function properties() : IOrgUnitMembershipProperties;
 }

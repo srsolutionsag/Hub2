@@ -8,40 +8,47 @@ namespace srag\Plugins\Hub2\MappingStrategy;
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IMappingStrategyFactory {
+interface IMappingStrategyFactory
+{
 
-	/**
-	 * @return IMappingStrategy
-	 */
-	public function byEmail(): IMappingStrategy;
-
-
-	/**
-	 * @return IMappingStrategy
-	 */
-	public function byLogin(): IMappingStrategy;
+    /**
+     * @return IMappingStrategy
+     */
+    public function byEmail() : IMappingStrategy;
 
 
-	/**
-	 * @return IMappingStrategy
-	 */
-	public function byExternalAccount(): IMappingStrategy;
+    /**
+     * @return IMappingStrategy
+     */
+    public function byLogin() : IMappingStrategy;
 
 
-	/**
-	 * @return IMappingStrategy
-	 */
-	public function byTitle(): IMappingStrategy;
+    /**
+     * @return IMappingStrategy
+     */
+    public function byExternalAccount() : IMappingStrategy;
 
 
-	/**
-	 * @return IMappingStrategy
-	 */
-	public function byImportId(): IMappingStrategy;
+    /**
+     * @return IMappingStrategy
+     */
+    public function byTitle() : IMappingStrategy;
 
 
-	/**
-	 * @return IMappingStrategy
-	 */
-	public function none(): IMappingStrategy;
+    /**
+     * @return IMappingStrategy
+     */
+    public function byImportId() : IMappingStrategy;
+
+
+    /**
+     * @return IMappingStrategy
+     */
+    public function byExtId() : IMappingStrategy;
+
+
+    /**
+     * @return IMappingStrategy
+     */
+    public function none() : IMappingStrategy;
 }

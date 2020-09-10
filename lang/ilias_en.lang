@@ -281,6 +281,8 @@ usr_config_login_field_3#:#External Account
 usr_config_login_field_4#:#External ID
 usr_config_login_field_5#:#firstname.lastname (john.doe)
 usr_config_login_field_6#:#Hub field login
+usr_config_login_keep_case#:#Keep upper and lower case for login
+usr_config_login_keep_case_info#:#If inactive, the login will be entirely lower case.
 usr_prop_password_mail_body#:#Text
 usr_prop_password_mail_date_format#:#Date format for placeholders
 usr_prop_password_mail_placeholders#:#Available placeholders
@@ -292,8 +294,10 @@ usr_prop_send_password_field#:#Field with e-mail address
 usr_prop_syncfield#:#Sync field
 usr_prop_syncfield_none#:#No field
 usr_prop_ilias_roles_info#:#Assigns the user to the given ILIAS roles. Note that this setting does NOT remove the user from any roles assigned with previous synchronizations
-usr_prop_resend_password#:#Send password new and send
-usr_prop_resend_password_info#:#Send password new and send
+usr_prop_resend_password#:#Send password again
+usr_prop_resend_password_info#:#Send password again
+usr_prop_update_password#:#Update Password
+usr_prop_update_password_info#:#The DTO must have a password, no new one is generated
 usr_prop_password_mail_date_format_info#:#Info
 view_hubcategory_index#:#Categories
 view_hubcourse_index#:#Course
@@ -419,6 +423,13 @@ origin_id#:#ID
 origin_sort#:#Sort
 origin_table_header_id#:#ID
 origin_table_header_sort#:#Sort
+origin_object_type_competenceManagement#:#Competence Management (Categories, competences, levels, profiles, assignments, ...)
+competencemanagement_id_if_no_parent_id#:#Base ID
+competencemanagement_id_if_no_parent_id_info#:#Base ID of a competence management (If no parent ID set). If set this to 0, the root competence management will be used.
+competencemanagement_delete_mode#:#Delete behavior
+competencemanagement_delete_mode_none#:#No action
+competencemanagement_delete_mode_delete#:#Delete
+competencemanagement_move#:#Move
 logs_additional_data#:#Additional data
 logs_cron#:#Delete old logs
 logs_cron_description#:#After the specified config time, old logs will be deleted automatically. The newest log per origin id and ext id will always be kept
@@ -443,6 +454,7 @@ logs_show_logs#:#Show logs
 logs_summary#:#Logs:
 logs_summary_logs_in#:#Hub2: Logs in %s
 logs_title#:#Title
+logs_status#:#Status
 removeplugindataconfirm_cancel#:#Cancel
 removeplugindataconfirm_confirm_remove_data#:#Do you want to remove the %1$s data as well? At most, you just want to disable the %1$s plugin?
 removeplugindataconfirm_deactivate#:#Just deactivate %1$s plugin

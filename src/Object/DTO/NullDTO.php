@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\DTI\INullDTO;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class NullDTO extends DataTransferObject implements INullDTO {
+class NullDTO extends DataTransferObject implements INullDTO
+{
 
 }

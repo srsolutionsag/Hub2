@@ -11,7 +11,8 @@ use srag\Plugins\Hub2\Object\ARObject;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class AROrgUnit extends ARObject implements IOrgUnit {
+class AROrgUnit extends ARObject implements IOrgUnit
+{
 
-	const TABLE_NAME = "sr_hub2_org_unit";
+    const TABLE_NAME = "sr_hub2_org_unit";
 }

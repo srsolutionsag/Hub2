@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
  * @package srag\Plugins\Hub2\Origin\Category
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICategoryOrigin extends IOrigin {
+interface ICategoryOrigin extends IOrigin
+{
 
 }

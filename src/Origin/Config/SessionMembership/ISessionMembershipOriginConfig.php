@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  * @package srag\Plugins\Hub2\Origin\Config\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ISessionMembershipOriginConfig extends IOriginConfig {
+interface ISessionMembershipOriginConfig extends IOriginConfig
+{
 
 }

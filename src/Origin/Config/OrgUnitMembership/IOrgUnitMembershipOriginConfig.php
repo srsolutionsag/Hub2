@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitMembershipOriginConfig extends IOriginConfig {
+interface IOrgUnitMembershipOriginConfig extends IOriginConfig
+{
 
 }

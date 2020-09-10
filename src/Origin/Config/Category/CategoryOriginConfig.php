@@ -11,34 +11,39 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Origin\Config\Category
  */
-class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig {
+class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
+{
 
-	/**
-	 * @var array
-	 */
-	protected $categoryData = [
-		self::REF_ID_NO_PARENT_ID_FOUND => 1,
-		self::EXT_ID_NO_PARENT_ID_FOUND => '',
-	];
-
-
-	public function __construct(array $data) {
-		parent::__construct(array_merge($this->categoryData, $data));
-	}
+    /**
+     * @var array
+     */
+    protected $categoryData
+        = [
+            self::REF_ID_NO_PARENT_ID_FOUND => 1,
+            self::EXT_ID_NO_PARENT_ID_FOUND => '',
+        ];
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getParentRefIdIfNoParentIdFound(): int {
-		return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
-	}
+    public function __construct(array $data)
+    {
+        parent::__construct(array_merge($this->categoryData, $data));
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function getExternalParentIdIfNoParentIdFound(): int {
-		return intval($this->get(self::EXT_ID_NO_PARENT_ID_FOUND));
-	}
+    /**
+     * @inheritdoc
+     */
+    public function getParentRefIdIfNoParentIdFound() : int
+    {
+        return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getExternalParentIdIfNoParentIdFound() : int
+    {
+        return intval($this->get(self::EXT_ID_NO_PARENT_ID_FOUND));
+    }
 }

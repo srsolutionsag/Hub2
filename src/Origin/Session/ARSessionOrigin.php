@@ -12,20 +12,23 @@ use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
  * @package srag\Plugins\Hub2\Origin\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARSessionOrigin extends AROrigin implements ISessionOrigin {
+class ARSessionOrigin extends AROrigin implements ISessionOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data) {
-		return new SessionOriginConfig($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data)
+    {
+        return new SessionOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data) {
-		return new SessionProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data)
+    {
+        return new SessionProperties($data);
+    }
 }

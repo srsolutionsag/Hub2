@@ -10,18 +10,19 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  * @package srag\Plugins\Hub2\Object\DTO
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ITaxonomyAwareDataTransferObject extends IDataTransferObject {
+interface ITaxonomyAwareDataTransferObject extends IDataTransferObject
+{
 
-	/**
-	 * @param ITaxonomy $ITaxonomy
-	 *
-	 * @return ITaxonomyAwareDataTransferObject
-	 */
-	public function addTaxonomy(ITaxonomy $ITaxonomy): ITaxonomyAwareDataTransferObject;
+    /**
+     * @param ITaxonomy $ITaxonomy
+     *
+     * @return ITaxonomyAwareDataTransferObject
+     */
+    public function addTaxonomy(ITaxonomy $ITaxonomy) : ITaxonomyAwareDataTransferObject;
 
 
-	/**
-	 * @return ITaxonomy[]
-	 */
-	public function getTaxonomies(): array;
+    /**
+     * @return ITaxonomy[]
+     */
+    public function getTaxonomies() : array;
 }

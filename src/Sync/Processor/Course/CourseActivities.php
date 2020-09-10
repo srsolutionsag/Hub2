@@ -14,27 +14,30 @@ use ilObject2;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class CourseActivities implements ICourseActivities {
+class CourseActivities implements ICourseActivities
+{
 
-	/**
-	 * @var ilDB
-	 */
-	protected $db;
-
-
-	/**
-	 * @param ilDBInterface $db
-	 */
-	public function __construct(ilDBInterface $db) {
-		$this->db = $db;
-	}
+    /**
+     * @var ilDB
+     */
+    protected $db;
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function hasActivities(ilObjCourse $ilObjCourse) {
-		$sql = "SELECT 
+    /**
+     * @param ilDBInterface $db
+     */
+    public function __construct(ilDBInterface $db)
+    {
+        $this->db = $db;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function hasActivities(ilObjCourse $ilObjCourse)
+    {
+        $sql = "SELECT 
 				    wre.*, dat.*, rbac_ua.*
 				FROM
 				    catch_write_events AS wre
@@ -45,8 +48,8 @@ class CourseActivities implements ICourseActivities {
 				        JOIN rbac_ua ON rbac_ua.rol_id = dat.obj_id AND rbac_ua.usr_id = wre.usr_id				        
 				WHERE
 				    wre.obj_id = " . $this->db->quote(ilObject2::_lookupObjId($ilObjCourse->getRefId()), 'integer');
-		$query = $this->db->query($sql);
+        $query = $this->db->query($sql);
 
-		return ($this->db->numRows($query) > 0);
-	}
+        return ($this->db->numRows($query) > 0);
+    }
 }

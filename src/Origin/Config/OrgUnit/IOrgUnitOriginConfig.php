@@ -11,16 +11,17 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitOriginConfig extends IOriginConfig {
+interface IOrgUnitOriginConfig extends IOriginConfig
+{
 
-	/**
-	 * @var string
-	 */
-	const REF_ID_IF_NO_PARENT_ID = "ref_id_if_no_parent_id";
+    /**
+     * @var string
+     */
+    const REF_ID_IF_NO_PARENT_ID = "ref_id_if_no_parent_id";
 
 
-	/**
-	 * @return int
-	 */
-	public function getRefIdIfNoParentId(): int;
+    /**
+     * @return int
+     */
+    public function getRefIdIfNoParentId() : int;
 }

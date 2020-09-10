@@ -10,7 +10,8 @@ use srag\Plugins\Hub2\Object\ARObject;
  * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARGroupMembership extends ARObject implements IGroupMembership {
+class ARGroupMembership extends ARObject implements IGroupMembership
+{
 
-	const TABLE_NAME = 'sr_hub2_group_mem';
+    const TABLE_NAME = 'sr_hub2_group_mem';
 }

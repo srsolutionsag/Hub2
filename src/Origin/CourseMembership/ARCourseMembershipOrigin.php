@@ -12,20 +12,23 @@ use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipPropert
  * @package srag\Plugins\Hub2\Origin\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARCourseMembershipOrigin extends AROrigin implements ICourseMembershipOrigin {
+class ARCourseMembershipOrigin extends AROrigin implements ICourseMembershipOrigin
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginConfig(array $data) {
-		return new CourseMembershipOriginConfig($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginConfig(array $data)
+    {
+        return new CourseMembershipOriginConfig($data);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function getOriginProperties(array $data) {
-		return new CourseMembershipProperties($data);
-	}
+    /**
+     * @inheritdoc
+     */
+    protected function getOriginProperties(array $data)
+    {
+        return new CourseMembershipProperties($data);
+    }
 }

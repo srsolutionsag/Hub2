@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Shortlink;
 
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
 use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
 use srag\Plugins\Hub2\Object\Group\ARGroup;
@@ -17,6 +18,7 @@ use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\Category\CategoryLink;
+use srag\Plugins\Hub2\Shortlink\CompetenceManagement\CompetenceManagementLink;
 use srag\Plugins\Hub2\Shortlink\Course\CourseLink;
 use srag\Plugins\Hub2\Shortlink\CourseMembership\CourseMembershipLink;
 use srag\Plugins\Hub2\Shortlink\Group\GroupLink;
@@ -33,88 +35,95 @@ use srag\Plugins\Hub2\Shortlink\User\UserLink;
  * @package srag\Plugins\Hub2\Shortlink
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ObjectLinkFactory {
+class ObjectLinkFactory
+{
 
-	/**
-	 * @var OriginFactory
-	 */
-	private $origin_factory;
-
-
-	/**
-	 * ObjectLinkFactory constructor
-	 */
-	public function __construct() {
-		$this->origin_factory = new OriginFactory();
-	}
+    /**
+     * @var OriginFactory
+     */
+    private $origin_factory;
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return IObjectLink
-	 */
-	public function findByExtId(string $ext_id): IObjectLink {
-		foreach ($this->origin_factory->getAllActive() as $origin) {
-			$l = $this->findByExtIdAndOrigin($ext_id, $origin);
-
-			if (!($l instanceof NullLink)) {
-				return $l;
-			}
-		}
-
-		return new NullLink();
-	}
+    /**
+     * ObjectLinkFactory constructor
+     */
+    public function __construct()
+    {
+        $this->origin_factory = new OriginFactory();
+    }
 
 
-	/**
-	 * @param string  $ext_id
-	 * @param IOrigin $origin
-	 *
-	 * @return IObjectLink
-	 */
-	public function findByExtIdAndOrigin(string $ext_id, IOrigin $origin): IObjectLink {
-		$f = new ObjectFactory($origin);
+    /**
+     * @param string $ext_id
+     *
+     * @return IObjectLink
+     */
+    public function findByExtId(string $ext_id) : IObjectLink
+    {
+        foreach ($this->origin_factory->getAllActive() as $origin) {
+            $l = $this->findByExtIdAndOrigin($ext_id, $origin);
 
-		$object = $f->undefined($ext_id);
+            if (!($l instanceof NullLink)) {
+                return $l;
+            }
+        }
 
-		return $this->findByObject($object);
-	}
+        return new NullLink();
+    }
 
 
-	/**
-	 * @param ARObject $object
-	 *
-	 * @return IObjectLink
-	 */
-	public function findByObject(ARObject $object): IObjectLink {
-		if ($object->getILIASId()) {
-			switch (true) {
-				case ($object instanceof ARCourseMembership):
-					return new CourseMembershipLink($object);
-				case ($object instanceof ARGroupMembership):
-					return new GroupMembershipLink($object);
-				case ($object instanceof ARSessionMembership):
-					return new SessionMembershipLink($object);
-				case ($object instanceof ARSession):
-					return new SessionLink($object);
-				case ($object instanceof ARCategory):
-					return new CategoryLink($object);
-				case ($object instanceof ARCourse):
-					return new CourseLink($object);
-				case ($object instanceof ARGroup):
-					return new GroupLink($object);
-				case ($object instanceof ARUser):
-					return new UserLink($object);
-				case ($object instanceof IOrgUnit):
-					return new OrgUnitLink($object);
-				case ($object instanceof IOrgUnitMembership):
-					return new OrgUnitMembershipLink($object);
-				default:
-					break;
-			}
-		}
+    /**
+     * @param string  $ext_id
+     * @param IOrigin $origin
+     *
+     * @return IObjectLink
+     */
+    public function findByExtIdAndOrigin(string $ext_id, IOrigin $origin) : IObjectLink
+    {
+        $f = new ObjectFactory($origin);
 
-		return new NullLink();
-	}
+        $object = $f->undefined($ext_id);
+
+        return $this->findByObject($object);
+    }
+
+
+    /**
+     * @param ARObject $object
+     *
+     * @return IObjectLink
+     */
+    public function findByObject(ARObject $object) : IObjectLink
+    {
+        if ($object->getILIASId()) {
+            switch (true) {
+                case ($object instanceof ARCourseMembership):
+                    return new CourseMembershipLink($object);
+                case ($object instanceof ARGroupMembership):
+                    return new GroupMembershipLink($object);
+                case ($object instanceof ARSessionMembership):
+                    return new SessionMembershipLink($object);
+                case ($object instanceof ARSession):
+                    return new SessionLink($object);
+                case ($object instanceof ARCategory):
+                    return new CategoryLink($object);
+                case ($object instanceof ARCourse):
+                    return new CourseLink($object);
+                case ($object instanceof ARGroup):
+                    return new GroupLink($object);
+                case ($object instanceof ARUser):
+                    return new UserLink($object);
+                case ($object instanceof IOrgUnit):
+                    return new OrgUnitLink($object);
+                case ($object instanceof IOrgUnitMembership):
+                    return new OrgUnitMembershipLink($object);
+                case ($object instanceof ICompetenceManagement):
+                    return new CompetenceManagementLink($object);
+                default:
+                    break;
+            }
+        }
+
+        return new NullLink();
+    }
 }

@@ -8,6 +8,8 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CompetenceManagement\CompetenceManagementSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CompetenceManagement\ICompetenceManagementSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Course\CourseActivities;
 use srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor;
@@ -30,115 +32,136 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class SyncProcessorFactory implements ISyncProcessorFactory {
+class SyncProcessorFactory implements ISyncProcessorFactory
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	/**
-	 * @var IOrigin
-	 */
-	protected $origin;
-	/**
-	 * @var IObjectStatusTransition
-	 *
-	 * @deprecated
-	 */
-	protected $statusTransition;
-	/**
-	 * @var IOriginImplementation
-	 */
-	protected $implementation;
-
-
-	/**
-	 * @param IOrigin                 $origin
-	 * @param IOriginImplementation   $implementation
-	 * @param IObjectStatusTransition $statusTransition
-	 */
-	public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition) {
-		$this->origin = $origin;
-		$this->statusTransition = $statusTransition;
-		$this->implementation = $implementation;
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var IOrigin
+     */
+    protected $origin;
+    /**
+     * @var IObjectStatusTransition
+     *
+     * @deprecated
+     */
+    protected $statusTransition;
+    /**
+     * @var IOriginImplementation
+     */
+    protected $implementation;
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function user() {
-		return new UserSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @param IOrigin                 $origin
+     * @param IOriginImplementation   $implementation
+     * @param IObjectStatusTransition $statusTransition
+     */
+    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition)
+    {
+        $this->origin = $origin;
+        $this->statusTransition = $statusTransition;
+        $this->implementation = $implementation;
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function course() {
-		return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new CourseActivities(self::dic()->database()));
-	}
+    /**
+     * @inheritdoc
+     */
+    public function user()
+    {
+        return new UserSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function category() {
-		return new CategorySyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function course()
+    {
+        return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new CourseActivities(self::dic()->database()));
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function session() {
-		return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function category()
+    {
+        return new CategorySyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function courseMembership() {
-		return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function session()
+    {
+        return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function group() {
-		return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new GroupActivities(self::dic()->database()));
-	}
+    /**
+     * @inheritdoc
+     */
+    public function courseMembership()
+    {
+        return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function groupMembership() {
-		return new GroupMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function group()
+    {
+        return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new GroupActivities(self::dic()->database()));
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function sessionMembership() {
-		return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function groupMembership()
+    {
+        return new GroupMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function orgUnit(): IOrgUnitSyncProcessor {
-		return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function sessionMembership()
+    {
+        return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
 
 
-	/**
-	 * @inheritdoc
-	 */
-	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor {
-		return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function orgUnit() : IOrgUnitSyncProcessor
+    {
+        return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor
+    {
+        return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function competenceManagement() : ICompetenceManagementSyncProcessor
+    {
+        return new CompetenceManagementSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+    }
 }

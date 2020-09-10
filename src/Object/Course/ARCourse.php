@@ -13,9 +13,10 @@ use srag\Plugins\Hub2\Object\ARTaxonomyAwareObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ARCourse extends ARObject implements ICourse {
+class ARCourse extends ARObject implements ICourse
+{
 
-	use ARMetadataAwareObject;
-	use ARTaxonomyAwareObject;
-	const TABLE_NAME = 'sr_hub2_course';
+    use ARMetadataAwareObject;
+    use ARTaxonomyAwareObject;
+    const TABLE_NAME = 'sr_hub2_course';
 }

@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
  * @package srag\Plugins\Hub2\Object\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IGroup extends IObject, IMetadataAwareObject, ITaxonomyAwareObject {
+interface IGroup extends IObject, IMetadataAwareObject, ITaxonomyAwareObject
+{
 
 }

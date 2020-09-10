@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
  * @package srag\Plugins\Hub2\Sync\Processor\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ISessionSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor {
+interface ISessionSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor
+{
 
 }

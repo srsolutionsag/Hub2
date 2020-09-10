@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Object\OrgUnit;
 
+use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
@@ -11,112 +12,113 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-interface IOrgUnitDTO extends IDataTransferObject {
+interface IOrgUnitDTO extends IDataTransferObject, IMappingStrategyAwareDataTransferObject
+{
 
-	/**
-	 * @var int
-	 */
-	const PARENT_ID_TYPE_REF_ID = 1;
-	/**
-	 * @var int
-	 */
-	const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
-
-
-	/**
-	 * @return string
-	 */
-	public function getTitle(): string;
+    /**
+     * @var int
+     */
+    const PARENT_ID_TYPE_REF_ID = 1;
+    /**
+     * @var int
+     */
+    const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 
 
-	/**
-	 * @param string $title
-	 *
-	 * @return self
-	 */
-	public function setTitle(string $title): self;
+    /**
+     * @return string
+     */
+    public function getTitle() : string;
 
 
-	/**
-	 * @return string
-	 */
-	public function getDescription(): string;
+    /**
+     * @param string $title
+     *
+     * @return self
+     */
+    public function setTitle(string $title) : self;
 
 
-	/**
-	 * @param string $description
-	 *
-	 * @return self
-	 */
-	public function setDescription(string $description): self;
+    /**
+     * @return string
+     */
+    public function getDescription() : string;
 
 
-	/**
-	 * @return int
-	 */
-	public function getOwner(): int;
+    /**
+     * @param string $description
+     *
+     * @return self
+     */
+    public function setDescription(string $description) : self;
 
 
-	/**
-	 * @param int $owner
-	 *
-	 * @return self
-	 */
-	public function setOwner(int $owner): self;
+    /**
+     * @return int
+     */
+    public function getOwner() : int;
 
 
-	/**
-	 * @return string
-	 */
-	public function getParentId(): string;
+    /**
+     * @param int $owner
+     *
+     * @return self
+     */
+    public function setOwner(int $owner) : self;
 
 
-	/**
-	 * @param string $parent_id
-	 *
-	 * @return self
-	 */
-	public function setParentId(string $parent_id): self;
+    /**
+     * @return string
+     */
+    public function getParentId() : string;
 
 
-	/**
-	 * @return int
-	 */
-	public function getParentIdType(): int;
+    /**
+     * @param string $parent_id
+     *
+     * @return self
+     */
+    public function setParentId(string $parent_id) : self;
 
 
-	/**
-	 * @param int $parent_id_type
-	 *
-	 * @return self
-	 */
-	public function setParentIdType(int $parent_id_type): self;
+    /**
+     * @return int
+     */
+    public function getParentIdType() : int;
 
 
-	/**
-	 * @return string
-	 */
-	public function getOrgUnitType(): string;
+    /**
+     * @param int $parent_id_type
+     *
+     * @return self
+     */
+    public function setParentIdType(int $parent_id_type) : self;
 
 
-	/**
-	 * @param string $org_unit_type
-	 *
-	 * @return self
-	 */
-	public function setOrgUnitType(string $org_unit_type): self;
+    /**
+     * @return string
+     */
+    public function getOrgUnitType() : string;
 
 
-	/**
-	 * @return string
-	 */
-	public function getExtId(): string;
+    /**
+     * @param string $org_unit_type
+     *
+     * @return self
+     */
+    public function setOrgUnitType(string $org_unit_type) : self;
 
 
-	/**
-	 * @param string $ext_id
-	 *
-	 * @return self
-	 */
-	public function setExtId(string $ext_id): self;
+    /**
+     * @return string
+     */
+    public function getExtId() : string;
+
+
+    /**
+     * @param string $ext_id
+     *
+     * @return self
+     */
+    public function setExtId(string $ext_id) : self;
 }

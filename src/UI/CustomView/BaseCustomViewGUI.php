@@ -14,30 +14,32 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  *
  * @author  Timon Amstutz
  */
-abstract class BaseCustomViewGUI {
+abstract class BaseCustomViewGUI
+{
 
-	use DICTrait;
-	use Hub2Trait;
-	const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-	/**
-	 * @var hub2CustomViewGUI
-	 */
-	protected $parent_gui;
-
-
-	/**
-	 * BaseCustomViewGUI constructor
-	 *
-	 * @param hub2CustomViewGUI $parent_gui
-	 */
-	public function __construct(hub2CustomViewGUI $parent_gui) {
-		$this->parent_gui = $parent_gui;
-	}
+    use DICTrait;
+    use Hub2Trait;
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var hub2CustomViewGUI
+     */
+    protected $parent_gui;
 
 
-	/**
-	 *
-	 */
-	public abstract function executeCommand()/*: void*/
-	;
+    /**
+     * BaseCustomViewGUI constructor
+     *
+     * @param hub2CustomViewGUI $parent_gui
+     */
+    public function __construct(hub2CustomViewGUI $parent_gui)
+    {
+        $this->parent_gui = $parent_gui;
+    }
+
+
+    /**
+     *
+     */
+    public abstract function executeCommand()/*: void*/
+    ;
 }

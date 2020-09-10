@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
  * @package srag\Plugins\Hub2\Origin\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IGroupOrigin extends IOrigin {
+interface IGroupOrigin extends IOrigin
+{
 
 }

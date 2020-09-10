@@ -10,12 +10,14 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class None extends AMappingStrategy implements IMappingStrategy {
+class None extends AMappingStrategy implements IMappingStrategy
+{
 
-	/**
-	 * @inheritdoc
-	 */
-	public function map(IDataTransferObject $dto): int {
-		return 0;
-	}
+    /**
+     * @inheritdoc
+     */
+    public function map(IDataTransferObject $dto) : int
+    {
+        return 0;
+    }
 }

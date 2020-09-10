@@ -8,36 +8,37 @@ namespace srag\Plugins\Hub2\Taxonomy\Node;
  * @package srag\Plugins\Hub2\Taxonomy\Node
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface INode {
+interface INode
+{
 
-	/**
-	 * @param string $title
-	 */
-	public function setTitle(string $title);
-
-
-	/**
-	 * @return string
-	 */
-	public function getTitle(): string;
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title);
 
 
-	/**
-	 * @return INode[]
-	 */
-	public function getNodes(): array;
+    /**
+     * @return string
+     */
+    public function getTitle() : string;
 
 
-	/**
-	 * @return string[]
-	 */
-	public function getNodeTitlesAsArray(): array;
+    /**
+     * @return INode[]
+     */
+    public function getNodes() : array;
 
 
-	/**
-	 * @param INode $node
-	 *
-	 * @return INode
-	 */
-	public function attach(INode $node): INode;
+    /**
+     * @return string[]
+     */
+    public function getNodeTitlesAsArray() : array;
+
+
+    /**
+     * @param INode $node
+     *
+     * @return INode
+     */
+    public function attach(INode $node) : INode;
 }

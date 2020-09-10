@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  * @package srag\Plugins\Hub2\Origin\Config\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICourseMembershipOriginConfig extends IOriginConfig {
+interface ICourseMembershipOriginConfig extends IOriginConfig
+{
 
 }

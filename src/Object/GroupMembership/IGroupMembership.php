@@ -10,6 +10,7 @@ use srag\Plugins\Hub2\Object\IObject;
  * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IGroupMembership extends IObject {
+interface IGroupMembership extends IObject
+{
 
 }

@@ -8,8 +8,9 @@ namespace srag\Plugins\Hub2\Object\DTO;
  * @package srag\Plugins\Hub2\Object\DTO
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-trait TaxonomyAndMetadataAwareDataTransferObject {
+trait TaxonomyAndMetadataAwareDataTransferObject
+{
 
-	use MetadataAwareDataTransferObject;
-	use TaxonomyAwareDataTransferObject;
+    use MetadataAwareDataTransferObject;
+    use TaxonomyAwareDataTransferObject;
 }

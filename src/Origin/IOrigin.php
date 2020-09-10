@@ -11,217 +11,219 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
  * @package srag\Plugins\Hub2\Origin
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IOrigin {
+interface IOrigin
+{
 
-	const OBJECT_TYPE_USER = 'user';
-	const OBJECT_TYPE_COURSE_MEMBERSHIP = 'courseMembership';
-	const OBJECT_TYPE_COURSE = 'course';
-	const OBJECT_TYPE_CATEGORY = 'category';
-	const OBJECT_TYPE_GROUP = 'group';
-	const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
-	const OBJECT_TYPE_SESSION = 'session';
-	const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
-	const OBJECT_TYPE_ORGNUNIT = "orgUnit";
-	const OBJECT_TYPE_ORGNUNIT_MEMBERSHIP = "orgUnitMembership";
-	const ORIGIN_MAIN_NAMESPACE = "srag\\Plugins\\Hub2\\Origin";
-
-
-	/**
-	 * @return int
-	 */
-	public function getId();
+    const OBJECT_TYPE_USER = 'user';
+    const OBJECT_TYPE_COURSE_MEMBERSHIP = 'courseMembership';
+    const OBJECT_TYPE_COURSE = 'course';
+    const OBJECT_TYPE_CATEGORY = 'category';
+    const OBJECT_TYPE_GROUP = 'group';
+    const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
+    const OBJECT_TYPE_SESSION = 'session';
+    const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
+    const OBJECT_TYPE_ORGNUNIT = "orgUnit";
+    const OBJECT_TYPE_ORGNUNIT_MEMBERSHIP = "orgUnitMembership";
+    const OBJECT_TYPE_COMPETENCE_MANAGEMENT = "competenceManagement";
+    const ORIGIN_MAIN_NAMESPACE = "srag\\Plugins\\Hub2\\Origin";
 
 
-	/**
-	 * @return string
-	 */
-	public function getTitle();
+    /**
+     * @return int
+     */
+    public function getId();
 
 
-	/**
-	 * @param string $title
-	 *
-	 * @return $this
-	 */
-	public function setTitle($title);
+    /**
+     * @return string
+     */
+    public function getTitle();
 
 
-	/**
-	 * @return string
-	 */
-	public function getDescription();
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle($title);
 
 
-	/**
-	 * @param string $description
-	 *
-	 * @return $this
-	 */
-	public function setDescription($description);
+    /**
+     * @return string
+     */
+    public function getDescription();
 
 
-	/**
-	 * @return bool
-	 */
-	public function isActive();
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description);
 
 
-	/**
-	 * @param bool $active
-	 *
-	 * @return $this
-	 */
-	public function setActive($active);
+    /**
+     * @return bool
+     */
+    public function isActive();
 
 
-	/**
-	 * @return string
-	 */
-	public function getImplementationClassName();
+    /**
+     * @param bool $active
+     *
+     * @return $this
+     */
+    public function setActive($active);
 
 
-	/**
-	 * @param string $name
-	 *
-	 * @return $this
-	 */
-	public function setImplementationClassName($name);
+    /**
+     * @return string
+     */
+    public function getImplementationClassName();
 
 
-	/**
-	 * @return string
-	 */
-	public function getImplementationNamespace();
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setImplementationClassName($name);
 
 
-	/**
-	 * @param string $implementation_namespace
-	 */
-	public function setImplementationNamespace($implementation_namespace);
+    /**
+     * @return string
+     */
+    public function getImplementationNamespace();
 
 
-	/**
-	 * Get the object type that will be synced with this origin, e.g.
-	 * user|course|category|courseMembership
-	 *
-	 * @return string
-	 */
-	public function getObjectType();
+    /**
+     * @param string $implementation_namespace
+     */
+    public function setImplementationNamespace($implementation_namespace);
 
 
-	/**
-	 * @param string $type
-	 *
-	 * @return $this
-	 */
-	public function setObjectType($type);
+    /**
+     * Get the object type that will be synced with this origin, e.g.
+     * user|course|category|courseMembership
+     *
+     * @return string
+     */
+    public function getObjectType();
 
 
-	/**
-	 * @return string
-	 */
-	public function getCreatedAt();
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setObjectType($type);
 
 
-	/**
-	 * @return string
-	 */
-	public function getUpdatedAt();
+    /**
+     * @return string
+     */
+    public function getCreatedAt();
 
 
-	/**
-	 * Get access to all configuration data of this origin.
-	 *
-	 * @return IOriginConfig
-	 */
-	public function config();
+    /**
+     * @return string
+     */
+    public function getUpdatedAt();
 
 
-	/**
-	 * Get access to all properties data of this origin.
-	 *
-	 * @return IOriginProperties
-	 */
-	public function properties();
+    /**
+     * Get access to all configuration data of this origin.
+     *
+     * @return IOriginConfig
+     */
+    public function config();
 
 
-	/**
-	 * @return string
-	 */
-	public function getLastRun();
+    /**
+     * Get access to all properties data of this origin.
+     *
+     * @return IOriginProperties
+     */
+    public function properties();
 
 
-	/**
-	 * @param string $last_run
-	 */
-	public function setLastRun($last_run);
+    /**
+     * @return string
+     */
+    public function getLastRun();
 
 
-	/**
-	 *
-	 */
-	public function update();
+    /**
+     * @param string $last_run
+     */
+    public function setLastRun($last_run);
 
 
-	/**
-	 *
-	 */
-	public function create();
+    /**
+     *
+     */
+    public function update();
 
 
-	/**
-	 * Run Sync without Hash comparison
-	 */
-	public function forceUpdate();
+    /**
+     *
+     */
+    public function create();
 
 
-	/**
-	 * @return bool
-	 */
-	public function isUpdateForced(): bool;
+    /**
+     * Run Sync without Hash comparison
+     */
+    public function forceUpdate();
 
 
-	/**
-	 * @return bool
-	 */
-	public function isAdHoc(): bool;
+    /**
+     * @return bool
+     */
+    public function isUpdateForced() : bool;
 
 
-	/**
-	 * @param bool $active
-	 */
-	public function setAdHoc(bool $adhoc)/*: void*/
-	;
+    /**
+     * @return bool
+     */
+    public function isAdHoc() : bool;
 
 
-	/**
-	 * @return bool
-	 */
-	public function isAdhocParentScope(): bool;
+    /**
+     * @param bool $active
+     */
+    public function setAdHoc(bool $adhoc)/*: void*/
+    ;
 
 
-	/**
-	 * @param bool $adhoc_parent_scope
-	 */
-	public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/
-	;
+    /**
+     * @return bool
+     */
+    public function isAdhocParentScope() : bool;
 
 
-	/**
-	 * @return int
-	 */
-	public function getSort(): int;
+    /**
+     * @param bool $adhoc_parent_scope
+     */
+    public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/
+    ;
 
 
-	/**
-	 * @param int $sort
-	 */
-	public function setSort(int $sort)/*: void*/
-	;
+    /**
+     * @return int
+     */
+    public function getSort() : int;
 
 
-	/**
-	 *
-	 */
-	public function store();
+    /**
+     * @param int $sort
+     */
+    public function setSort(int $sort)/*: void*/
+    ;
+
+
+    /**
+     *
+     */
+    public function store();
 }

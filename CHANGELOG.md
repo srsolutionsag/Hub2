@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.4.0]
+- Improved Logging: log on update and only if data changed, added status to logs
+- Fix: User set passwd
+- OrgUnits are now Mapping Strategy Aware
+- Improvement Log Table: allow usage of wildcard (%) for external i (%) for external id
+- Fix Error notification was sent without errors occuring
+- Fix course subscription types
+- Competence management origin type
+- Fix install log
+- New default path to origins '/var/www/ilias/Customizing/global/origins/'
+- Fix language keys with line break
+- Fix read fallback parent ref id read
+- Write rbac log when creating object
+- Fix: mapping byTitle for Org Units
+- Feature: User DTO with language
+- Origins can now set course start and end date
+- Assign ILIAS default role to user per default
+- Mapping strategy by ext id
+- Fix missing move session implementation
+- Fix insert on update, if insert failed on create
+- Feature: user origin config to keep login case (instead of all to lower case)
+- Fix set new metadata fields
+
 ## [2.3.0]
 - Support ILIAS 5.4
 - Optimize `handleSort` in org unit

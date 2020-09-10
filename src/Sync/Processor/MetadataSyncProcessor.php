@@ -5,9 +5,12 @@ namespace srag\Plugins\Hub2\Sync\Processor;
 use ilContainer;
 use ilObject;
 use ilObjectServiceSettingsGUI;
-use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Metadata\Implementation\MetadataImplementationFactory;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\Group\GroupDTO;
+use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 
 /**
  * Class MetadataSyncProcessor
@@ -15,23 +18,49 @@ use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-trait MetadataSyncProcessor {
+trait MetadataSyncProcessor
+{
 
-	/**
-	 * @param IMetadataAwareDataTransferObject $dto
-	 * @param ilObject                         $object
-	 *
-	 * @throws HubException
-	 */
-	public function handleMetadata(IMetadataAwareDataTransferObject $dto, ilObject $object) {
-		if (count($dto->getMetaData()) > 0) {
+    /**
+     * @param IMetadataAwareDataTransferObject $dto
+     * @param IMetadataAwareObject             $iobject
+     * @param ilObject                         $ilias_object
+     */
+    public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object)
+    {
+        if (count($dto->getMetaData()) > 0) {
+            $this->handleDTOSpecificMetadataSettings($dto, $ilias_object);
+            $f = new MetadataImplementationFactory();
+            $flat_existing_md = [];
+            foreach ($iobject->getMetaData() as $md) {
+                $flat_existing_md[$md->getRecordId()][$md->getIdentifier()] = $md->getValue();
+            }
 
-			ilContainer::_writeContainerSetting($object->getId(), ilObjectServiceSettingsGUI::CUSTOM_METADATA, 1);
-			$f = new MetadataImplementationFactory();
+            foreach ($dto->getMetaData() as $metaDatum) {
+                // TODO: Not work with new delivered metadata fields (For instance on create or new added on update)
+                /*if (!isset($flat_existing_md[$metaDatum->getRecordId()]) || !isset($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()])) {
+                    continue;
+                }*/
+                if ($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()] !== $metaDatum->getValue()) {
+                    $f->getImplementationForDTO($dto, $metaDatum, (int) $ilias_object->getId())->write();
+                }
+            }
+        }
+    }
 
-			foreach ($dto->getMetaData() as $metaDatum) {
-				$f->getImplementationForDTO($dto, $metaDatum, (int)$object->getId())->write();
-			}
-		}
-	}
+
+    /**
+     * @param IMetadataAwareDataTransferObject $dto
+     * @param ilObject                         $object
+     */
+    private function handleDTOSpecificMetadataSettings(IMetadataAwareDataTransferObject $dto, ilObject $object)
+    {
+        switch (true) {
+            case $dto instanceof CourseDTO:
+            case $dto instanceof CategoryDTO:
+            case $dto instanceof GroupDTO:
+                ilContainer::_writeContainerSetting($object->getId(), ilObjectServiceSettingsGUI::CUSTOM_METADATA, 1);
+                break;
+        }
+    }
 }

@@ -8,47 +8,48 @@ namespace srag\Plugins\Hub2\Metadata;
  * @package srag\Plugins\Hub2\Metadata
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IMetadata {
+interface IMetadata
+{
 
-	const DEFAULT_RECORD_ID = 1;
-
-
-	/**
-	 * @param string $value
-	 *
-	 * @return IMetadata
-	 */
-	public function setValue($value): IMetadata;
+    const DEFAULT_RECORD_ID = 1;
 
 
-	/**
-	 * @param int $identifier
-	 *
-	 * @return IMetadata
-	 */
-	public function setIdentifier(int $identifier): IMetadata;
+    /**
+     * @param string $value
+     *
+     * @return IMetadata
+     */
+    public function setValue($value) : IMetadata;
 
 
-	/**
-	 * @return mixed
-	 */
-	public function getValue();
+    /**
+     * @param int $identifier
+     *
+     * @return IMetadata
+     */
+    public function setIdentifier(int $identifier) : IMetadata;
 
 
-	/**
-	 * @return mixed
-	 */
-	public function getIdentifier();
+    /**
+     * @return mixed
+     */
+    public function getValue();
 
 
-	/**
-	 * @return int
-	 */
-	public function getRecordId(): int;
+    /**
+     * @return mixed
+     */
+    public function getIdentifier();
 
 
-	/**
-	 * @return string
-	 */
-	public function __toString(): string;
+    /**
+     * @return int
+     */
+    public function getRecordId() : int;
+
+
+    /**
+     * @return string
+     */
+    public function __toString() : string;
 }

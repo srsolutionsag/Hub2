@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use srag\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\CompetenceManagement\ICompetenceManagementSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Course\ICourseSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\CourseMembership\ICourseMembershipSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\Group\IGroupSyncProcessor;
@@ -19,64 +20,71 @@ use srag\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor;
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ISyncProcessorFactory {
+interface ISyncProcessorFactory
+{
 
-	/**
-	 * @return IUserSyncProcessor
-	 */
-	public function user();
-
-
-	/**
-	 * @return ICourseSyncProcessor
-	 */
-	public function course();
+    /**
+     * @return IUserSyncProcessor
+     */
+    public function user();
 
 
-	/**
-	 * @return ICategorySyncProcessor
-	 */
-	public function category();
+    /**
+     * @return ICourseSyncProcessor
+     */
+    public function course();
 
 
-	/**
-	 * @return ISessionSyncProcessor
-	 */
-	public function session();
+    /**
+     * @return ICategorySyncProcessor
+     */
+    public function category();
 
 
-	/**
-	 * @return ICourseMembershipSyncProcessor
-	 */
-	public function courseMembership();
+    /**
+     * @return ISessionSyncProcessor
+     */
+    public function session();
 
 
-	/**
-	 * @return IGroupSyncProcessor
-	 */
-	public function group();
+    /**
+     * @return ICourseMembershipSyncProcessor
+     */
+    public function courseMembership();
 
 
-	/**
-	 * @return IGroupMembershipSyncProcessor
-	 */
-	public function groupMembership();
+    /**
+     * @return IGroupSyncProcessor
+     */
+    public function group();
 
 
-	/**
-	 * @return ISessionMembershipSyncProcessor
-	 */
-	public function sessionMembership();
+    /**
+     * @return IGroupMembershipSyncProcessor
+     */
+    public function groupMembership();
 
 
-	/**
-	 * @return IOrgUnitSyncProcessor
-	 */
-	public function orgUnit(): IOrgUnitSyncProcessor;
+    /**
+     * @return ISessionMembershipSyncProcessor
+     */
+    public function sessionMembership();
 
 
-	/**
-	 * @return IOrgUnitMembershipSyncProcessor
-	 */
-	public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor;
+    /**
+     * @return IOrgUnitSyncProcessor
+     */
+    public function orgUnit() : IOrgUnitSyncProcessor;
+
+
+    /**
+     * @return IOrgUnitMembershipSyncProcessor
+     */
+    public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor;
+
+
+    /**
+     * @return ICompetenceManagementSyncProcessor
+     */
+    public function competenceManagement() : ICompetenceManagementSyncProcessor;
 }
