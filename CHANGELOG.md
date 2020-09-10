@@ -1,6 +1,6 @@
 # Changelog
 
-## [x]
+## [2.4.0]
 - Improved Logging: log on update and only if data changed, added status to logs
 - Fix: User set passwd
 - OrgUnits are now Mapping Strategy Aware
