@@ -3,6 +3,8 @@
 ## [x]
 - ILIAS 6 support
 - Remove ILIAS 5.3 support
+
+## [2.4.0]
 - Improved Logging: log on update and only if data changed, added status to logs
 - Fix: User set passwd
 - OrgUnits are now Mapping Strategy Aware
@@ -23,6 +25,7 @@
 - Fix missing move session implementation
 - Fix insert on update, if insert failed on create
 - Feature: user origin config to keep login case (instead of all to lower case)
+- Fix set new metadata fields
 
 ## [2.3.0]
 - Support ILIAS 5.4
