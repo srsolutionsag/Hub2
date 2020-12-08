@@ -3,6 +3,7 @@
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilObjUser;
+use srag\DIC\Hub2\Version\Version;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\User\UserDTO;
@@ -16,6 +17,19 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
 {
     private const GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6 = '_getUserIdsByEmail';
     private const GET_USER_IDS_BY_EMAIL_ILIAS_6 = 'getUserIdsByEmail';
+    /**
+     * @var Version
+     */
+    protected $version;
+
+    /**
+     * ByEmail constructor.
+     * @param Version $version
+     */
+    public function __construct(Version $version = null)
+    {
+        $this->version = $version ?? new Version();
+    }
 
     /**
      * @inheritdoc
@@ -25,14 +39,11 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
         if (!$dto instanceof UserDTO) {
             throw new HubException("Mapping using Email not supported for this type of DTO");
         }
-        static $method;
-        if (!isset($method)) {
-            if (method_exists(ilObjUser::class, self::GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6)) {
-                $method = self::GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6;
-            } elseif (method_exists(ilObjUser::class, self::GET_USER_IDS_BY_EMAIL_ILIAS_6)) {
-                $method = self::GET_USER_IDS_BY_EMAIL_ILIAS_6;
-            }
-            return 0;
+
+        if ($this->version->isLower('6.0')) {
+            $method = self::GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6;
+        } else {
+            $method = self::GET_USER_IDS_BY_EMAIL_ILIAS_6;
         }
 
         $login             = false;
