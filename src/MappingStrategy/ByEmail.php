@@ -9,12 +9,13 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class ByEmail
- *
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class ByEmail extends AMappingStrategy implements IMappingStrategy
 {
+    private const GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6 = '_getUserIdsByEmail';
+    private const GET_USER_IDS_BY_EMAIL_ILIAS_6 = 'getUserIdsByEmail';
 
     /**
      * @inheritdoc
@@ -24,8 +25,18 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
         if (!$dto instanceof UserDTO) {
             throw new HubException("Mapping using Email not supported for this type of DTO");
         }
-        $login = false;
-        $user_ids_by_email = ilObjUser::_getUserIdsByEmail($dto->getEmail());
+        static $method;
+        if (!isset($method)) {
+            if (method_exists(ilObjUser::class, self::GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6)) {
+                $method = self::GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6;
+            } elseif (method_exists(ilObjUser::class, self::GET_USER_IDS_BY_EMAIL_ILIAS_6)) {
+                $method = self::GET_USER_IDS_BY_EMAIL_ILIAS_6;
+            }
+            return 0;
+        }
+
+        $login             = false;
+        $user_ids_by_email = ilObjUser::{$method}($dto->getEmail());
         if (is_array($user_ids_by_email)) {
             $login = $user_ids_by_email[0];
         }
