@@ -16,6 +16,7 @@ use ilObjCourse;
 use ilRepUtil;
 use ilSession;
 use ilSoapFunctions;
+use srag\DIC\Hub2\Version\Version;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -75,12 +76,13 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             'numberOfPreviousSessions',
             'numberOfNextSessions',
             'orderType',
-            'courseStart',
-            'courseEnd',
             'activationStart',
             'activationEnd'
         ];
-
+    /**
+     * @var Version
+     */
+    protected $version;
 
     /**
      * @param IOrigin                 $origin
@@ -94,6 +96,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $this->props = $origin->properties();
         $this->config = $origin->config();
         $this->courseActivities = $courseActivities;
+        $this->version = new Version();
     }
 
 
@@ -149,6 +152,18 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 }
             }
         }
+
+        // Course Start and Ane are handled differently in ILIAS 5.4 and 6
+        if ($dto->getCourseStart() && $dto->getCourseEnd()) {
+            if ($this->version->is54()) {
+                $ilObjCourse->setCourseStart($dto->getCourseStart());
+                $ilObjCourse->setCourseEnd($dto->getCourseEnd());
+            } elseif ($this->version->is6()) {
+                $ilObjCourse->setCoursePeriod($dto->getCourseStart(), $dto->getCourseEnd());
+            }
+        }
+
+
         if ($dto->getDidacticTemplate() > 0) {
             $ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
         }
