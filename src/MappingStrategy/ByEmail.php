@@ -55,7 +55,11 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
         if (!$login) {
             return 0;
         }
+        if ($this->version->isLower('6.0')) {
+            return (int) ilObjUser::_lookupId($login);
+        } else {
+            return (int) $login;
+        }
 
-        return (int) ilObjUser::_lookupId($login);
     }
 }
