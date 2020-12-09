@@ -155,10 +155,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         // Course Start and Ane are handled differently in ILIAS 5.4 and 6
         if ($dto->getCourseStart() && $dto->getCourseEnd()) {
-            if ($this->version->is54()) {
+            if ($this->version->isLower('6.0')) {
                 $ilObjCourse->setCourseStart($dto->getCourseStart());
                 $ilObjCourse->setCourseEnd($dto->getCourseEnd());
-            } elseif ($this->version->is6()) {
+            } else {
                 $ilObjCourse->setCoursePeriod($dto->getCourseStart(), $dto->getCourseEnd());
             }
         }
