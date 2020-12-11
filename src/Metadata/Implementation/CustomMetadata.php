@@ -9,6 +9,8 @@ use ilADTInternalLink;
 use ilADTText;
 use ilAdvancedMDValues;
 use ilDateTime;
+use ilADTInteger;
+use ilADTFloat;
 
 /**
  * Class CustomMetadata
@@ -47,6 +49,10 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
                 break;
             case ($ilADT instanceof ilADTInternalLink):
                 $ilADT->setTargetRefId($value);
+                break;
+            case ($ilADT instanceof ilADTInteger):
+            case ($ilADT instanceof ilADTFloat):
+                $ilADT->setNumber($value);
                 break;
         }
 

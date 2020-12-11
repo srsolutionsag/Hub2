@@ -75,10 +75,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             'numberOfPreviousSessions',
             'numberOfNextSessions',
             'orderType',
-            'courseStart',
-            'courseEnd',
             'activationStart',
-            'activationEnd'
+            'activationEnd',
+            'targetGroup'
         ];
 
 
@@ -147,6 +146,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 } else {
                     $ilObjCourse->$setter($dto->$getter());
                 }
+            }
+        }
+        if ($dto->getCourseStart() !== null && $dto->getCourseEnd() !== null) {
+            if ($this->isMinVersion('6.0')) {
+                $ilObjCourse->setCoursePeriod($dto->getCourseStart(), $dto->getCourseEnd());
+            } else {
+                $ilObjCourse->setCourseStart($dto->getCourseStart());
+                $ilObjCourse->setCourseEnd($dto->getCourseEnd());
             }
         }
         if ($dto->getDidacticTemplate() > 0) {
@@ -380,6 +387,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 } else {
                     $ilObjCourse->$setter($dto->$getter());
                 }
+            }
+        }
+        if ($this->props->updateDTOProperty("courseStart") || $this->props->updateDTOProperty("courseEnd")) {
+            $start = $this->props->updateDTOProperty("courseStart") ? $dto->getCourseStart() : $ilObjCourse->getCourseStart();
+            $end = $this->props->updateDTOProperty("courseEnd") ? $dto->getCourseEnd() : $ilObjCourse->getCourseEnd();
+            if ($this->isMinVersion('6.0')) {
+                $ilObjCourse->setCoursePeriod($start, $end);
+            } else {
+                $ilObjCourse->setCourseStart($start);
+                $ilObjCourse->setCourseEnd($end);
             }
         }
         if ($this->props->updateDTOProperty("didacticTemplate") && $dto->getDidacticTemplate() > 0) {
@@ -660,5 +677,13 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
         self::dic()->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
         self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function isMinVersion(string $version) : bool
+    {
+        return (version_compare(ILIAS_VERSION_NUMERIC, $version) >= 0);
     }
 }
