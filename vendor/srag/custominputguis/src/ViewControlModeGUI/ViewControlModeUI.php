@@ -12,123 +12,133 @@ use srag\DIC\Hub2\DICTrait;
  *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ViewControlModeUI {
+class ViewControlModeUI
+{
 
-	use DICTrait;
-	const CMD_HANDLE_BUTTONS = "ViewControlModeUIHandleButtons";
-	/**
-	 * @var array
-	 */
-	protected $buttons = [];
-	/**
-	 * @var string
-	 */
-	protected $default_active_id = "";
-	/**
-	 * @var string
-	 */
-	protected $id = "";
-	/**
-	 * @var string
-	 */
-	protected $link = "";
+    use DICTrait;
 
-
-	/**
-	 * ViewControlModeUI constructor
-	 */
-	public function __construct() {
-
-	}
+    const CMD_HANDLE_BUTTONS = "ViewControlModeUIHandleButtons";
+    /**
+     * @var array
+     */
+    protected $buttons = [];
+    /**
+     * @var string
+     */
+    protected $default_active_id = "";
+    /**
+     * @var string
+     */
+    protected $id = "";
+    /**
+     * @var string
+     */
+    protected $link = "";
 
 
-	/**
-	 * @param array $buttons
-	 *
-	 * @return self
-	 */
-	public function withButtons(array $buttons): self {
-		$this->buttons = $buttons;
+    /**
+     * ViewControlModeUI constructor
+     */
+    public function __construct()
+    {
 
-		return $this;
-	}
+    }
 
 
-	/**
-	 * @param string $default_active_id
-	 *
-	 * @return self
-	 */
-	public function withDefaultActiveId(string $default_active_id): self {
-		$this->default_active_id = $default_active_id;
+    /**
+     * @return string
+     */
+    public function getActiveId() : string
+    {
+        $active_id = ilSession::get(self::CMD_HANDLE_BUTTONS . "_" . $this->id);
 
-		return $this;
-	}
+        if ($active_id === null || !isset($this->buttons[$active_id])) {
+            return $active_id = $this->default_active_id;
+        }
 
-
-	/**
-	 * @param string $id
-	 *
-	 * @return self
-	 */
-	public function withId(string $id): self {
-		$this->id = $id;
-
-		return $this;
-	}
+        return $active_id;
+    }
 
 
-	/**
-	 * @param string $link
-	 *
-	 * @return self
-	 */
-	public function withLink(string $link): self {
-		$this->link = $link;
+    /**
+     *
+     */
+    public function handleButtons()/*: void*/
+    {
+        $active_id = filter_input(INPUT_GET, self::CMD_HANDLE_BUTTONS);
 
-		return $this;
-	}
+        ilSession::set(self::CMD_HANDLE_BUTTONS . "_" . $this->id, $active_id);
 
-
-	/**
-	 * @return string
-	 */
-	public function render(): string {
-		ilSession::set(self::CMD_HANDLE_BUTTONS . "_" . $this->id . "_url", $_SERVER["REQUEST_URI"]);
-
-		$actions = [];
-
-		foreach ($this->buttons as $id => $txt) {
-			$actions[$txt] = $this->link . "&" . self::CMD_HANDLE_BUTTONS . "=" . $id;
-		}
-
-		return self::output()->getHTML(self::dic()->ui()->factory()->viewControl()->mode($actions, "")
-			->withActive($this->buttons[$this->getActiveId()]));
-	}
+        self::dic()->ctrl()->redirectToURL(ilSession::get(self::CMD_HANDLE_BUTTONS . "_" . $this->id . "_url"));
+    }
 
 
-	/**
-	 *
-	 */
-	public function handleButtons()/*: void*/ {
-		$active_id = filter_input(INPUT_GET, self::CMD_HANDLE_BUTTONS);
+    /**
+     * @return string
+     */
+    public function render() : string
+    {
+        ilSession::set(self::CMD_HANDLE_BUTTONS . "_" . $this->id . "_url", $_SERVER["REQUEST_URI"]);
 
-		ilSession::set(self::CMD_HANDLE_BUTTONS . "_" . $this->id, $active_id);
+        $actions = [];
 
-		self::dic()->ctrl()->redirectToURL(ilSession::get(self::CMD_HANDLE_BUTTONS . "_" . $this->id . "_url"));
-	}
+        foreach ($this->buttons as $id => $txt) {
+            $actions[$txt] = $this->link . "&" . self::CMD_HANDLE_BUTTONS . "=" . $id;
+        }
+
+        return self::output()->getHTML(self::dic()->ui()->factory()->viewControl()->mode($actions, "")
+            ->withActive($this->buttons[$this->getActiveId()]));
+    }
 
 
-	/**
-	 * @return string
-	 */
-	public function getActiveId(): string {
-		$active_id = ilSession::get(self::CMD_HANDLE_BUTTONS . "_" . $this->id);
+    /**
+     * @param array $buttons
+     *
+     * @return self
+     */
+    public function withButtons(array $buttons) : self
+    {
+        $this->buttons = $buttons;
 
-		if ($active_id === null || !isset($this->buttons[$active_id])) {
-			return $active_id = $this->default_active_id;
-		}
+        return $this;
+    }
 
-		return $active_id;
-	}
+
+    /**
+     * @param string $default_active_id
+     *
+     * @return self
+     */
+    public function withDefaultActiveId(string $default_active_id) : self
+    {
+        $this->default_active_id = $default_active_id;
+
+        return $this;
+    }
+
+
+    /**
+     * @param string $id
+     *
+     * @return self
+     */
+    public function withId(string $id) : self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+
+    /**
+     * @param string $link
+     *
+     * @return self
+     */
+    public function withLink(string $link) : self
+    {
+        $this->link = $link;
+
+        return $this;
+    }
 }

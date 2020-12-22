@@ -366,7 +366,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string|null
      */

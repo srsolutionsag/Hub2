@@ -59,14 +59,14 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
     {
         $ilias_course_ref_id = $this->determineCourseRefId($dto);
-        $dto->getCourseId();
+
         $course = $this->findILIASCourse($ilias_course_ref_id);
         if (!$course) {
             return;
         }
-
+        
         $user_id = $dto->getUserId();
-        $membership_obj = $course->getMembersObject();
+        $membership_obj = new \ilCourseParticipants(ilObject2::_lookupObjectId($ilias_course_ref_id));
         $membership_obj->add($user_id, $this->mapRole($dto));
         $membership_obj->updateContact($user_id, $dto->isContact());
 
