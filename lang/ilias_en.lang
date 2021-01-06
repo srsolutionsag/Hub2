@@ -436,7 +436,7 @@ logs_cron_description#:#After the specified config time, old logs will be delete
 logs_date#:#Date / Time
 logs_days#:#Days
 logs_deleted_status#:#Deleted %s log(s)
-logs_keep_old_logs_time#:#Keyp old logs maximal for
+logs_keep_old_logs_time#:#Keep old logs maximal for
 logs_keep_old_logs_time_info#:#After the specified time, old logs will be deleted automatically. The newest log per origin id and ext id will always be kept
 logs_level#:#Level
 logs_level_200#:#Info
