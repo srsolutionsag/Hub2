@@ -120,6 +120,7 @@ class OriginSync implements IOriginSync
                 throw new AbortOriginSyncException($msg);
             }
         }
+
         $this->dtoObjects = $this->implementation->buildObjects();
 
         $type = $this->origin->getObjectType();
