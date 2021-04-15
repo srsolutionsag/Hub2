@@ -16,6 +16,7 @@ use ilObjCourse;
 use ilRepUtil;
 use ilSession;
 use ilSoapFunctions;
+use srag\DIC\Hub2\Version\Version;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -79,7 +80,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             'activationEnd',
             'targetGroup'
         ];
-
+    /**
+     * @var Version
+     */
+    protected $version;
 
     /**
      * @param IOrigin                 $origin
@@ -93,6 +97,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $this->props = $origin->properties();
         $this->config = $origin->config();
         $this->courseActivities = $courseActivities;
+        $this->version = new Version();
     }
 
 
@@ -148,14 +153,17 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 }
             }
         }
-        if ($dto->getCourseStart() !== null && $dto->getCourseEnd() !== null) {
-            if ($this->isMinVersion('6.0')) {
-                $ilObjCourse->setCoursePeriod($dto->getCourseStart(), $dto->getCourseEnd());
-            } else {
+
+        // Course Start and Ane are handled differently in ILIAS 5.4 and 6
+        if ($dto->getCourseStart() && $dto->getCourseEnd()) {
+            if ($this->version->isLower('6.0')) {
                 $ilObjCourse->setCourseStart($dto->getCourseStart());
                 $ilObjCourse->setCourseEnd($dto->getCourseEnd());
+            } else {
+                $ilObjCourse->setCoursePeriod($dto->getCourseStart(), $dto->getCourseEnd());
             }
         }
+
         if ($dto->getDidacticTemplate() > 0) {
             $ilObjCourse->applyDidacticTemplate($dto->getDidacticTemplate());
         }
@@ -530,10 +538,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
-            $origin = array_pop(array_filter($originRepository->categories(), function ($origin) use ($linkedOriginId) {
+            $filtered = array_filter($originRepository->categories(), function ($origin) use ($linkedOriginId) {
                 /** @var IOrigin $origin */
                 return $origin->getId() == $linkedOriginId;
-            }));
+            });
+            $origin = array_pop($filtered);
             if ($origin === null) {
                 $msg = "The linked origin syncing categories was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
