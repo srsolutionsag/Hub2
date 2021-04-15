@@ -6,10 +6,13 @@ use hub2MainGUI;
 use ilAdministrationGUI;
 use ilHub2ConfigGUI;
 use ilHub2Plugin;
+use ILIAS\GlobalScreen\Scope\MainMenu\Factory\AbstractBaseItem;
 use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvider;
+use ILIAS\UI\Component\Symbol\Icon\Standard;
 use ilObjComponentSettingsGUI;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\Plugins\Hub2\Config\ArConfig;
 
 /**
  * Class Menu
@@ -34,13 +37,23 @@ class Menu extends AbstractStaticPluginMainMenuProvider
     public function getStaticTopItems() : array
     {
         return [
-            self::dic()->globalScreen()->mainmenu()->topParentItem(self::dic()->globalScreen()->identification()->plugin(self::plugin()
-                ->getPluginObject(), $this)->identifier(ilHub2Plugin::PLUGIN_ID . "_top"))->withTitle(ilHub2Plugin::PLUGIN_NAME)
+            $this->symbol($this->mainmenu->topParentItem($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_top"))->withTitle(ilHub2Plugin::PLUGIN_NAME)
                 ->withAvailableCallable(function () : bool {
                     return self::plugin()->getPluginObject()->isActive();
                 })->withVisibilityCallable(function () : bool {
-                    return self::dic()->rbacreview()->isAssigned(self::dic()->user()->getId(), 2); // Default admin role
-                })
+                    $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
+                    if (null !== $config) {
+                        // replace outer brackets from array string and convert values to int
+                        $roles = preg_replace("/[\[\]']+/", '', $config->getValue());
+                        $roles = array_map('intval', explode(',', $roles));
+                        // add at least default admin role id (doesn't matter if it's repeatedly)
+                        $roles[] = 2;
+                    } else {
+                        $roles = [2];
+                    }
+
+                    return self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(self::dic()->user()->getId(), $roles);
+                }))
         ];
     }
 
@@ -59,8 +72,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "pname", ilHub2Plugin::PLUGIN_NAME);
 
         return [
-            self::dic()->globalScreen()->mainmenu()->link(self::dic()->globalScreen()->identification()->plugin(self::plugin()
-                ->getPluginObject(), $this)->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))->withParent($parent->getProviderIdentification())
+            $this->symbol($this->mainmenu->link($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))->withParent($parent->getProviderIdentification())
                 ->withTitle(ilHub2Plugin::PLUGIN_NAME)->withAction(self::dic()->ctrl()->getLinkTargetByClass([
                     ilAdministrationGUI::class,
                     ilObjComponentSettingsGUI::class,
@@ -68,8 +80,34 @@ class Menu extends AbstractStaticPluginMainMenuProvider
                 ], hub2MainGUI::CMD_INDEX))->withAvailableCallable(function () : bool {
                     return self::plugin()->getPluginObject()->isActive();
                 })->withVisibilityCallable(function () : bool {
-                    return self::dic()->rbacreview()->isAssigned(self::dic()->user()->getId(), 2); // Default admin role
-                })
+                    $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
+                    if (null !== $config) {
+                        // replace outer brackets from array string and convert values to int
+                        $roles = preg_replace("/[\[\]']+/", '', $config->getValue());
+                        $roles = array_map('intval', explode(',', $roles));
+                        // add at least default admin role id (doesn't matter if it's repeatedly)
+                        $roles[] = 2;
+                    } else {
+                        $roles = [2];
+                    }
+
+                    return self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(self::dic()->user()->getId(), $roles);
+                }))
         ];
+    }
+
+
+    /**
+     * @param AbstractBaseItem $entry
+     *
+     * @return AbstractBaseItem
+     */
+    protected function symbol(AbstractBaseItem $entry) : AbstractBaseItem
+    {
+        if (self::version()->is6()) {
+            $entry = $entry->withSymbol(self::dic()->ui()->factory()->symbol()->icon()->standard(Standard::RFIL, ilHub2Plugin::PLUGIN_NAME)->withIsOutlined(true));
+        }
+
+        return $entry;
     }
 }

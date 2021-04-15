@@ -1,5 +1,9 @@
 # Changelog
 
+## [x]
+- ILIAS 6 support
+- Remove ILIAS 5.3 support
+
 ## [2.4.0]
 - Improved Logging: log on update and only if data changed, added status to logs
 - Fix: User set passwd

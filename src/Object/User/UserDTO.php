@@ -24,6 +24,11 @@ class UserDTO extends DataTransferObject implements IUserDTO
     use MetadataAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
     use LanguageCheck;
+
+    const AUTH_MODE_LDAP_2 = 'ldap_2';
+    const AUTH_MODE_LDAP_3 = 'ldap_3';
+    const AUTH_MODE_LDAP_4 = 'ldap_4';
+    const AUTH_MODE_LDAP_5 = 'ldap_5';
     /**
      * @var array
      */
@@ -42,6 +47,10 @@ class UserDTO extends DataTransferObject implements IUserDTO
             self::AUTH_MODE_SHIB,
             self::AUTH_MODE_LDAP,
             self::AUTH_MODE_RADIUS,
+            self::AUTH_MODE_LDAP_2,
+            self::AUTH_MODE_LDAP_3,
+            self::AUTH_MODE_LDAP_4,
+            self::AUTH_MODE_LDAP_5
         ];
     /**
      * @var string

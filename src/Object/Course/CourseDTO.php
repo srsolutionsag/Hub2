@@ -122,6 +122,10 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      */
     protected $syllabus = '';
     /**
+     * @var string|null
+     */
+    protected $targetGroup;
+    /**
      * @var string
      */
     protected $contactName;
@@ -300,11 +304,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
-    /**
-     * @return string
-     */
-    public function getFirstDependenceCategory()
+    public function getFirstDependenceCategory() : ?string
     {
         return $this->firstDependenceCategory;
     }
@@ -322,11 +322,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
-    /**
-     * @return string
-     */
-    public function getSecondDependenceCategory()
+    public function getSecondDependenceCategory() : ?string
     {
         return $this->secondDependenceCategory;
     }
@@ -344,11 +340,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
-    /**
-     * @return string
-     */
-    public function getThirdDependenceCategory()
+    public function getThirdDependenceCategory() : ?string
     {
         return $this->thirdDependenceCategory;
     }
@@ -366,11 +358,10 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
-    public function getFourthDependenceCategory() : string
+    public function getFourthDependenceCategory(): ?string
     {
         return $this->fourthDependenceCategory;
     }
@@ -926,6 +917,25 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     public function setActivationEnd(/*?*/ ilDate $activationEnd = null) : self
     {
         $this->activationEnd = $activationEnd;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTargetGroup() : ?string
+    {
+        return $this->targetGroup;
+    }
+
+    /**
+     * @param string $targetGroup
+     * @return CourseDTO
+     */
+    public function setTargetGroup(string $targetGroup) : self
+    {
+        $this->targetGroup = $targetGroup;
 
         return $this;
     }

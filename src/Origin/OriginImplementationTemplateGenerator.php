@@ -50,9 +50,17 @@ class OriginImplementationTemplateGenerator
         }
         $path = $this->getPath($origin);
         if (!is_dir($path)) {
-            if (!ilUtil::makeDirParents($path)) {
+            try {
+                if(!ilUtil::makeDirParents($path)) {
+                    throw new HubException("Could not create directory: $path");
+                }
+            }catch (\Throwable $t) {
                 throw new HubException("Could not create directory: $path");
             }
+
+        }
+        if (!is_writable($classFile)) {
+            throw new HubException("Class file not writable: $classFile");
         }
         $template = file_get_contents(__DIR__ . '/../../templates/OriginImplementationTemplate.tpl');
         if ($template === false) {
