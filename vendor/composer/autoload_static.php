@@ -14,12 +14,12 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
-            'srag\\RemovePluginDataConfirm\\' => 29,
+            'srag\\RemovePluginDataConfirm\\Hub2\\' => 34,
             'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
-            'srag\\DIC\\' => 9,
-            'srag\\CustomInputGUIs\\' => 21,
-            'srag\\ActiveRecordConfig\\' => 24,
+            'srag\\DIC\\Hub2\\' => 14,
+            'srag\\CustomInputGUIs\\Hub2\\' => 26,
+            'srag\\ActiveRecordConfig\\Hub2\\' => 29,
         ),
         'p' => 
         array (
@@ -46,7 +46,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
     );
 
     public static $prefixDirsPsr4 = array (
-        'srag\\RemovePluginDataConfirm\\' => 
+        'srag\\RemovePluginDataConfirm\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/removeplugindataconfirm/src',
         ),
@@ -58,15 +58,15 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         array (
             0 => __DIR__ . '/..' . '/srag/librariesnamespacechanger/src',
         ),
-        'srag\\DIC\\' => 
+        'srag\\DIC\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/dic/src',
         ),
-        'srag\\CustomInputGUIs\\' => 
+        'srag\\CustomInputGUIs\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/custominputguis/src',
         ),
-        'srag\\ActiveRecordConfig\\' => 
+        'srag\\ActiveRecordConfig\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/activerecordconfig/src',
         ),
@@ -1098,6 +1098,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Metadata\\Implementation\\UDF' => __DIR__ . '/../..' . '/src/Metadata/Implementation/UDF.php',
         'srag\\Plugins\\Hub2\\Metadata\\Metadata' => __DIR__ . '/../..' . '/src/Metadata/Metadata.php',
         'srag\\Plugins\\Hub2\\Metadata\\MetadataFactory' => __DIR__ . '/../..' . '/src/Metadata/MetadataFactory.php',
+        'srag\\Plugins\\Hub2\\Object\\ARDidacticTemplateAwareObject' => __DIR__ . '/../..' . '/src/Object/ARDidacticTemplateAwareObject.php',
         'srag\\Plugins\\Hub2\\Object\\ARMetadataAwareObject' => __DIR__ . '/../..' . '/src/Object/ARMetadataAwareObject.php',
         'srag\\Plugins\\Hub2\\Object\\ARObject' => __DIR__ . '/../..' . '/src/Object/ARObject.php',
         'srag\\Plugins\\Hub2\\Object\\ARTaxonomyAwareObject' => __DIR__ . '/../..' . '/src/Object/ARTaxonomyAwareObject.php',
@@ -1132,8 +1133,10 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Object\\DTI\\INullDTO' => __DIR__ . '/../..' . '/src/Object/DTO/INullDTO.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\DataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/DataTransferObject.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\DataTransferObjectFactory' => __DIR__ . '/../..' . '/src/Object/DTO/DataTransferObjectFactory.php',
+        'srag\\Plugins\\Hub2\\Object\\DTO\\DidacticTemplateAwareDataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/DidacticTemplateAwareDataTransferObject.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\IDataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/IDataTransferObject.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\IDataTransferObjectFactory' => __DIR__ . '/../..' . '/src/Object/DTO/IDataTransferObjectFactory.php',
+        'srag\\Plugins\\Hub2\\Object\\DTO\\IDidacticTemplateAwareDataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/IDidacticTemplateAwareDataTransferObject.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\IMetadataAwareDataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/IMetadataAwareDataTransferObject.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\ITaxonomyAndMetadataAwareDataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/ITaxonomyAndMetadataAwareDataTransferObject.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\ITaxonomyAwareDataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/ITaxonomyAwareDataTransferObject.php',
@@ -1154,6 +1157,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Object\\Group\\IGroupDTO' => __DIR__ . '/../..' . '/src/Object/Group/IGroupDTO.php',
         'srag\\Plugins\\Hub2\\Object\\Group\\IGroupRepository' => __DIR__ . '/../..' . '/src/Object/Group/IGroupRepository.php',
         'srag\\Plugins\\Hub2\\Object\\HookObject' => __DIR__ . '/../..' . '/src/Object/HookObject.php',
+        'srag\\Plugins\\Hub2\\Object\\IDidacticTemplateAwareObject' => __DIR__ . '/../..' . '/src/Object/IDidacticTemplateAwareObject.php',
         'srag\\Plugins\\Hub2\\Object\\IMetadataAwareObject' => __DIR__ . '/../..' . '/src/Object/IMetadataAwareObject.php',
         'srag\\Plugins\\Hub2\\Object\\IObject' => __DIR__ . '/../..' . '/src/Object/IObject.php',
         'srag\\Plugins\\Hub2\\Object\\IObjectFactory' => __DIR__ . '/../..' . '/src/Object/IObjectFactory.php',
@@ -1294,9 +1298,11 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Shortlink\\Session\\SessionLink' => __DIR__ . '/../..' . '/src/Shortlink/Session/SessionLink.php',
         'srag\\Plugins\\Hub2\\Shortlink\\User\\UserLink' => __DIR__ . '/../..' . '/src/Shortlink/User/UserLink.php',
         'srag\\Plugins\\Hub2\\Sync\\DataTransferObjectSort' => __DIR__ . '/../..' . '/src/Sync/DataTransferObjectSort.php',
+        'srag\\Plugins\\Hub2\\Sync\\DidacticTemplateSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/DidacticTemplateSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\GlobalHook\\GlobalHook' => __DIR__ . '/../..' . '/src/Sync/GlobalHook/GlobalHook.php',
         'srag\\Plugins\\Hub2\\Sync\\GlobalHook\\IGlobalHook' => __DIR__ . '/../..' . '/src/Sync/GlobalHook/IGlobalHook.php',
         'srag\\Plugins\\Hub2\\Sync\\IDataTransferObjectSort' => __DIR__ . '/../..' . '/src/Sync/IDataTransferObjectSort.php',
+        'srag\\Plugins\\Hub2\\Sync\\IDidacticTemplateSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/IDidacticTemplateSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\IObjectStatusTransition' => __DIR__ . '/../..' . '/src/Sync/IObjectStatusTransition.php',
         'srag\\Plugins\\Hub2\\Sync\\IOriginSync' => __DIR__ . '/../..' . '/src/Sync/IOriginSync.php',
         'srag\\Plugins\\Hub2\\Sync\\ObjectStatusTransition' => __DIR__ . '/../..' . '/src/Sync/ObjectStatusTransition.php',

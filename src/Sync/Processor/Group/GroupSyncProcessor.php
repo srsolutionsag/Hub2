@@ -20,6 +20,7 @@ use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 
 /**
  * Class GroupSyncProcessor
@@ -32,6 +33,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
+    use DidacticTemplateSyncProcessor;
     /**
      * @var GroupProperties
      */

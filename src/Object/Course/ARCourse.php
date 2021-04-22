@@ -5,6 +5,7 @@ namespace srag\Plugins\Hub2\Object\Course;
 use srag\Plugins\Hub2\Object\ARMetadataAwareObject;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\ARTaxonomyAwareObject;
+use srag\Plugins\Hub2\Object\ARDidacticTemplateAwareObject;
 
 /**
  * Class ARCourse
@@ -18,5 +19,6 @@ class ARCourse extends ARObject implements ICourse
 
     use ARMetadataAwareObject;
     use ARTaxonomyAwareObject;
+    use ARDidacticTemplateAwareObject;
     const TABLE_NAME = 'sr_hub2_course';
 }

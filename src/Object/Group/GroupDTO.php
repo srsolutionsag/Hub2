@@ -3,10 +3,10 @@
 namespace srag\Plugins\Hub2\Object\Group;
 
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 
 /**
  * Class GroupDTO
@@ -15,30 +15,13 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
  *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class GroupDTO extends DataTransferObject implements IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject
+class GroupDTO extends DataTransferObject implements IGroupDTO
 {
 
     use MetadataAwareDataTransferObject;
     use TaxonomyAwareDataTransferObject;
-    // View
-    const VIEW_BY_TYPE = 5;
-    // Registration
-    const GRP_REGISTRATION_DEACTIVATED = -1;
-    const GRP_REGISTRATION_DIRECT = 0;
-    const GRP_REGISTRATION_REQUEST = 1;
-    const GRP_REGISTRATION_PASSWORD = 2;
-    // Type
-    const GRP_REGISTRATION_LIMITED = 1;
-    const GRP_REGISTRATION_UNLIMITED = 2;
-    const GRP_TYPE_UNKNOWN = 0;
-    const GRP_TYPE_CLOSED = 1;
-    const GRP_TYPE_OPEN = 2;
-    const GRP_TYPE_PUBLIC = 3;
-    // Other
-    const MAIL_ALLOWED_ALL = 1;
-    const MAIL_ALLOWED_TUTORS = 2;
-    const PARENT_ID_TYPE_REF_ID = 1;
-    const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
+    use MappingStrategyAwareDataTransferObject;
+    use DidacticTemplateAwareDataTransferObject;
     /**
      * @var string
      */

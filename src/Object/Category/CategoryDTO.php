@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
 
 /**
  * Class CategoryDTO
@@ -19,6 +20,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     use TaxonomyAndMetadataAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
+    use DidacticTemplateAwareDataTransferObject;
     /**
      * @var array
      */

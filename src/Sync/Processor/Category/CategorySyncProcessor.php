@@ -18,6 +18,7 @@ use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 
 /**
  * Class CategorySyncProcessor
@@ -31,6 +32,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
     use MetadataSyncProcessor;
     use TaxonomySyncProcessor;
+    use DidacticTemplateSyncProcessor;
     /**
      * @var CategoryProperties
      */

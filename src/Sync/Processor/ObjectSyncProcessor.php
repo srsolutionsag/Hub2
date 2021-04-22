@@ -26,6 +26,9 @@ use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
+use srag\Plugins\Hub2\Sync\IDidacticTemplateSyncProcessor;
+use srag\Plugins\Hub2\Object\IDidacticTemplateAwareObject;
+use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 
 /**
  * Class ObjectProcessor
@@ -127,6 +130,10 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
                 if ($this instanceof ITaxonomySyncProcessor && $hub_object instanceof ITaxonomyAwareObject && $dto instanceof ITaxonomyAwareDataTransferObject) {
                     $this->handleTaxonomies($dto, $hub_object, $this->current_ilias_object);
+                }
+
+                if ($this instanceof IDidacticTemplateSyncProcessor && $dto instanceof IDidacticTemplateAwareDataTransferObject) {
+                    $this->handleDidacticTemplate($dto, $this->current_ilias_object);
                 }
 
                 $hub_object->setILIASId($this->getILIASId($this->current_ilias_object));

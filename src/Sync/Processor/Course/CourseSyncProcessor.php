@@ -30,6 +30,7 @@ use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 
 /**
  * Class CourseSyncProcessor
@@ -43,6 +44,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
+    use DidacticTemplateSyncProcessor;
     /**
      * @var CourseProperties
      */

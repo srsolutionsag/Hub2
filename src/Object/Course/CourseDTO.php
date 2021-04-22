@@ -9,6 +9,7 @@ use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\LanguageCheck;
+use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
 
 /**
  * Class CourseDTO
@@ -22,6 +23,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
 
     use TaxonomyAndMetadataAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
+    use DidacticTemplateAwareDataTransferObject;
     use LanguageCheck;
     /**
      * @var array
