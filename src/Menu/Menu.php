@@ -13,6 +13,7 @@ use ilObjComponentSettingsGUI;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Config\ArConfig;
+use ILIAS\MainMenu\Provider\StandardTopItemsProvider;
 
 /**
  * Class Menu
@@ -36,25 +37,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
      */
     public function getStaticTopItems() : array
     {
-        return [
-            $this->symbol($this->mainmenu->topParentItem($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_top"))->withTitle(ilHub2Plugin::PLUGIN_NAME)
-                ->withAvailableCallable(function () : bool {
-                    return self::plugin()->getPluginObject()->isActive();
-                })->withVisibilityCallable(function () : bool {
-                    $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
-                    if (null !== $config) {
-                        // replace outer brackets from array string and convert values to int
-                        $roles = preg_replace("/[\[\]']+/", '', $config->getValue());
-                        $roles = array_map('intval', explode(',', $roles));
-                        // add at least default admin role id (doesn't matter if it's repeatedly)
-                        $roles[] = 2;
-                    } else {
-                        $roles = [2];
-                    }
-
-                    return self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(self::dic()->user()->getId(), $roles);
-                }))
-        ];
+        return [];
     }
 
 
@@ -63,16 +46,22 @@ class Menu extends AbstractStaticPluginMainMenuProvider
      */
     public function getStaticSubItems() : array
     {
-        $parent = $this->getStaticTopItems()[0];
+        $obj_id = array_key_first(\ilObject2::_getObjectsByType('cmps') ?? []);
+        if (!$obj_id) {
+            return [];
+        }
 
-        self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ref_id", 31);
+        $s      = StandardTopItemsProvider::getInstance();
+        $parent = $s->getAdministrationIdentification();
+        $ref_id = array_key_first(\ilObject2::_getAllReferences($obj_id) ?? []);
+        self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ref_id", $ref_id);
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ctype", IL_COMP_SERVICE);
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "cname", "Cron");
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "slot_id", "crnhk");
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "pname", ilHub2Plugin::PLUGIN_NAME);
 
         return [
-            $this->symbol($this->mainmenu->link($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))->withParent($parent->getProviderIdentification())
+            $this->symbol($this->mainmenu->link($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))->withParent($parent)
                 ->withTitle(ilHub2Plugin::PLUGIN_NAME)->withAction(self::dic()->ctrl()->getLinkTargetByClass([
                     ilAdministrationGUI::class,
                     ilObjComponentSettingsGUI::class,
