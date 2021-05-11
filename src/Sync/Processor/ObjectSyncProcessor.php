@@ -170,7 +170,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
                     if ($this instanceof ITaxonomySyncProcessor && $hub_object instanceof ITaxonomyAwareObject && $dto instanceof ITaxonomyAwareDataTransferObject) {
                         $this->handleTaxonomies($dto, $hub_object, $this->current_ilias_object);
                     }
-
+                    
+                    if ($this instanceof IDidacticTemplateSyncProcessor && $dto instanceof IDidacticTemplateAwareDataTransferObject) {
+                        $this->handleDidacticTemplate($dto, $this->current_ilias_object);
+                    }
+                    
                     $hub_object->setILIASId($this->getILIASId($this->current_ilias_object));
 
                     $this->implementation->afterUpdateILIASObject($hook_object->withILIASObject($this->current_ilias_object));
