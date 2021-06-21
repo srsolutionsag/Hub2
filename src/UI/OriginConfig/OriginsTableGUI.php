@@ -85,14 +85,22 @@ class OriginsTableGUI extends ilTable2GUI
     {
         $data = [];
         foreach ($this->originRepository->all() as $origin) {
+            self::dic()->ctrl()->setParameter($this->parent_obj, 'origin_id', $origin->getId());
             $class = "srag\\Plugins\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\" . ucfirst($origin->getObjectType()) . "Repository";
             /** @var IObjectRepository $objectRepository */
-            $objectRepository = new $class($origin);
+            $objectRepository   = new $class($origin);
             $row = [];
             $row['id'] = $origin->getId();
             $row['sort'] = $origin->getSort();
             $row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
-            $row['title'] = $origin->getTitle();
+            $linked_title = self::dic()->ui()->renderer()->render(self::dic()->ui()->factory()->link()->standard(
+                $origin->getTitle(),
+                self::dic()->ctrl()->getLinkTarget(
+                    $this->parent_obj,
+                    hub2ConfigOriginsGUI::CMD_EDIT_ORGIN
+                )
+            ));
+            $row['title'] = $linked_title;
             $row['description'] = $origin->getDescription();
             $row['object_type'] = self::plugin()->translate("origin_object_type_" . $origin->getObjectType());
             $row['last_sync'] = $origin->getLastRun();

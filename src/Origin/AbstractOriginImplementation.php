@@ -158,4 +158,15 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
     {
         return [];
     }
+    
+    public function handleNoLongerDeliveredObject(HookObject $hook)
+    {
+        // TODO: Implement handleOutdated() method.
+    }
+    
+    public function handleAllObjects(HookObject $hook)
+    {
+        // TODO: Implement handleAllObjects() method.
+    }
+    
 }

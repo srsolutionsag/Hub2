@@ -169,4 +169,12 @@ interface IOriginImplementation
      * when determining dto's to be deleted.
      */
     public function getAdHocParentScopesAsExtIds() : array;
+    
+    /**
+     * @param HookObject $hook
+     * @return mixed
+     */
+    public function handleNoLongerDeliveredObject(HookObject $hook);
+    
+    public function handleAllObjects(HookObject $hook);
 }

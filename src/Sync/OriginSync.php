@@ -7,8 +7,10 @@ use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
+use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\NullDTO;
+use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\IObjectFactory;
 use srag\Plugins\Hub2\Object\IObjectRepository;
@@ -114,8 +116,8 @@ class OriginSync implements IOriginSync
             $total = $this->repository->count();
             $percentage = ($total > 0 && $count > 0) ? (100 / $total * $count) : 0;
             if ($total > 0 && ($percentage < $threshold)) {
-                $msg = "Amount of delivered data not sufficient: Got {$count} datasets, 
-					which is " . number_format($percentage, 2) . "% of the existing data in hub, 
+                $msg = "Amount of delivered data not sufficient: Got {$count} datasets,
+					which is " . number_format($percentage, 2) . "% of the existing data in hub,
 					need at least {$threshold}% according to origin config";
                 throw new AbortOriginSyncException($msg);
             }
@@ -172,6 +174,28 @@ class OriginSync implements IOriginSync
             $nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
             $object->setStatus(IObject::STATUS_TO_OUTDATED);
             $this->processObject($object, $nullDTO);
+        }
+        
+        // After that we propose all objects to the origin which are no longer devlivered
+        $delivered_dto_ext_ids = [];
+        array_walk($this->dtoObjects, static function (DataTransferObject $dto) use (&$delivered_dto_ext_ids){
+            $delivered_dto_ext_ids[] = $dto->getExtId();
+        });
+        $all_ext_ids = [];
+        array_walk($this->factory->{$type . 's'}(), static function (IObject $o) use (&$all_ext_ids) {
+            $all_ext_ids[] = $o->getExtId();
+        });
+    
+        foreach ($all_ext_ids as $all_ext_id) {
+            $hook_object = new HookObject($object = $this->factory->$type($all_ext_id), new NullDTO($all_ext_id));
+            $this->implementation->handleAllObjects($hook_object);
+        }
+        
+        
+        $missing = array_diff($all_ext_ids, $delivered_dto_ext_ids);
+        foreach ($missing as $missing_ext_id) {
+            $hook_object = new HookObject($object = $this->factory->$type($missing_ext_id), new NullDTO($missing_ext_id));
+            $this->implementation->handleNoLongerDeliveredObject($hook_object);
         }
 
         $this->implementation->afterSync();
