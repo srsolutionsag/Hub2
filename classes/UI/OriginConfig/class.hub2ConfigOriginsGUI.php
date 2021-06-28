@@ -47,6 +47,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     const CMD_CANCEL = 'cancel';
     const CMD_DEACTIVATE_ALL = 'deactivateAll';
     const CMD_ACTIVATE_ALL = 'activateAll';
+    const CMD_TOGGLE = 'toggle';
     /**
      * @var OriginSyncSummaryFactory
      */
@@ -271,6 +272,15 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         }
         ilUtil::sendSuccess(self::plugin()->translate('msg_origin_deactivated'), true);
         self::dic()->ctrl()->redirect($this);
+    }
+
+    protected function toggle(){
+        /** @var AROrigin $origin */
+        $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
+        $origin->setActive(!$origin->isActive());
+        $origin->save();
+        ilUtil::sendSuccess(self::plugin()->translate('msg_origin_toggled'), true);
+        $this->cancel();
     }
 
 

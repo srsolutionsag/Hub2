@@ -231,6 +231,7 @@ origin_form_header_connection#:#Connection to data
 origin_form_header_notification#:#Notifications
 origin_form_header_sync#:#Sync
 origin_table_button_dryrun#:#Dry run
+origin_table_button_toggle#:#Toggle Activation
 origin_table_button_activate_all#:#Activate all
 origin_table_button_add#:#Add origin
 origin_table_button_deactivate_all#:#Deactivate all
