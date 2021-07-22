@@ -6,6 +6,7 @@ use ilHub2Plugin;
 use LogicException;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\Category\ICategory;
 use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
 use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -296,8 +297,16 @@ class ObjectFactory implements IObjectFactory
         return ARCategory::get();
     }
 
+	/**
+	 * @inheritdoc
+	 */
+	public function categorys(): array
+	{
+		return $this->categories();
+	}
 
-    /**
+
+	/**
      * @inheritdoc
      */
     public function groups() : array

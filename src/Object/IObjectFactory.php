@@ -159,6 +159,17 @@ interface IObjectFactory
     public function categories() : array;
 
 
+	/**
+	 * Since there are places where the code makes the plural of a type
+	 * (such as 'user'), in case of 'category' it leads to a call to categorys()
+	 * which is – indeed – gramatically wrong but should just return the same as
+	 * @see categories()
+	 *
+	 * @return ICategory[]
+	 */
+    public function categorys() : array;
+
+
     /**
      * @return IGroup[]
      */
