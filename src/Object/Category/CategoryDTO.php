@@ -35,6 +35,31 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
     /**
      * @var array
      */
+    private static $orderDirections
+        = [
+            self::ORDER_DIRECTION_ASC,
+            self::ORDER_DIRECTION_DESC
+        ];
+    /**
+     * @var array
+     */
+    private static $newItemsPositions
+        = [
+            self::ORDER_NEW_ITEMS_POSITION_TOP,
+            self::ORDER_NEW_ITEMS_POSITION_BOTTOM
+        ];
+    /**
+     * @var array
+     */
+    private static $newItemsOrderTypes
+        = [
+            self::ORDER_NEW_ITEMS_BY_TITLE,
+            self::ORDER_NEW_ITEMS_BY_CREATION,
+            self::ORDER_NEW_ITEMS_BY_ACTIVATION
+        ];
+    /**
+     * @var array
+     */
     private static $parentIdTypes
         = [
             self::PARENT_ID_TYPE_REF_ID,
@@ -52,6 +77,18 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @var int
      */
     protected $orderType = self::ORDER_TYPE_TITLE;
+    /**
+     * @var int
+     */
+    protected $orderDirection = self::ORDER_DIRECTION_ASC;
+    /**
+     * @var int
+     */
+    protected $newItemsPosition = self::ORDER_NEW_ITEMS_POSITION_BOTTOM;
+    /**
+     * @var int
+     */
+    protected $newItemsOrderType = self::ORDER_NEW_ITEMS_BY_TITLE;
     /**
      * @var int
      */
@@ -138,6 +175,81 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
             throw new InvalidArgumentException("Given '$orderType' is not a valid order type'");
         }
         $this->orderType = $orderType;
+
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getOrderDirection()
+    {
+        return $this->orderDirection;
+    }
+
+
+    /**
+     * @param int $orderDirection
+     *
+     * @return CategoryDTO
+     */
+    public function setOrderDirection($orderDirection)
+    {
+        if (!in_array($orderDirection, self::$orderDirections)) {
+            throw new InvalidArgumentException("Given '$orderDirection' is not a valid order direction'");
+        }
+        $this->orderDirection = $orderDirection;
+
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getNewItemsPosition()
+    {
+        return $this->newItemsPosition;
+    }
+
+
+    /**
+     * @param int $newItemsPosition
+     *
+     * @return CategoryDTO
+     */
+    public function setNewItemsPosition($newItemsPosition)
+    {
+        if (!in_array($newItemsPosition, self::$newItemsPositions)) {
+            throw new InvalidArgumentException("Given '$newItemsPosition' is not a valid new items position'");
+        }
+        $this->newItemsPosition = $newItemsPosition;
+
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getNewItemsOrderType()
+    {
+        return $this->newItemsOrderType;
+    }
+
+
+    /**
+     * @param int $newItemsOrderType
+     *
+     * @return CategoryDTO
+     */
+    public function setNewItemsOrderType($newItemsOrderType)
+    {
+        if (!in_array($newItemsOrderType, self::$newItemsOrderTypes)) {
+            throw new InvalidArgumentException("Given '$newItemsOrderType' is not a valid new items order type'");
+        }
+        $this->newItemsOrderType = $newItemsOrderType;
 
         return $this;
     }

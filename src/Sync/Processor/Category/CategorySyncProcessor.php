@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Category;
 
+use ilContainerSortingSettings;
 use ilObjCategory;
 use ilObjectServiceSettingsGUI;
 use ilRepUtil;
@@ -143,6 +144,14 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         }
         if ($this->props->updateDTOProperty('showInfoPage')) {
             ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
+        }
+        if ($this->props->updateDTOProperty('orderType')) {
+            $sorting_settings = new ilContainerSortingSettings($ilObjCategory->getId());
+            $sorting_settings->setSortMode($dto->getOrderType());
+            $sorting_settings->setSortDirection($dto->getOrderDirection());
+            $sorting_settings->setSortNewItemsPosition($dto->getNewItemsPosition());
+            $sorting_settings->setSortNewItemsOrder($dto->getNewItemsOrderType());
+            $sorting_settings->update();
         }
         if (!self::dic()->tree()->isInTree($ilObjCategory->getRefId())) {
             $parentRefId = $this->determineParentRefId($dto);
