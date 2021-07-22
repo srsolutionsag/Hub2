@@ -29,6 +29,7 @@ abstract class ARObject extends ActiveRecord implements IObject
 
     use DICTrait;
     use Hub2Trait;
+
     /**
      * @abstract
      */
@@ -73,16 +74,16 @@ abstract class ARObject extends ActiveRecord implements IObject
      */
     public static $available_status
         = [
-            IObject::STATUS_NEW         => "new",
-            IObject::STATUS_TO_CREATE   => "to_create",
-            IObject::STATUS_CREATED     => "created",
-            IObject::STATUS_UPDATED     => "updated",
-            IObject::STATUS_TO_UPDATE   => "to_update",
+            IObject::STATUS_NEW => "new",
+            IObject::STATUS_TO_CREATE => "to_create",
+            IObject::STATUS_CREATED => "created",
+            IObject::STATUS_UPDATED => "updated",
+            IObject::STATUS_TO_UPDATE => "to_update",
             IObject::STATUS_TO_OUTDATED => "to_outdated",
-            IObject::STATUS_OUTDATED    => "outdated",
-            IObject::STATUS_TO_RESTORE  => "to_restore",
-            IObject::STATUS_IGNORED     => "ignored",
-            IObject::STATUS_FAILED      => "failed",
+            IObject::STATUS_OUTDATED => "outdated",
+            IObject::STATUS_TO_RESTORE => "to_restore",
+            IObject::STATUS_IGNORED => "ignored",
+            IObject::STATUS_FAILED => "failed",
         ];
     /**
      * fields whose changes trigger the creation of a log entry
@@ -91,10 +92,10 @@ abstract class ARObject extends ActiveRecord implements IObject
     public static $observed_fields
         = [
             'External ID' => 'ext_id',
-            'ILIAS ID'    => 'ilias_id',
-            'Status'      => 'status',
-            'Period'      => 'period',
-            'Data'        => 'data'
+            'ILIAS ID' => 'ilias_id',
+            'Status' => 'status',
+            'Period' => 'period',
+            'Data' => 'data',
         ];
     /**
      * The primary ID is a composition of the origin-ID and ext_id
@@ -192,7 +193,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                  * @var IMetadata[]          $metadata
                  */
                 $metadataObjects = [];
-                $metadata        = $this->getMetaData();
+                $metadata = $this->getMetaData();
                 foreach ($metadata as $metadatum) {
                     $metadataObjects[$metadatum->getRecordId()][$metadatum->getIdentifier()] = $metadatum->getValue();
                 }
@@ -205,7 +206,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                  * @var ITaxonomyAwareObject $this
                  */
                 $taxonomyObjects = [];
-                $taxonomies      = $this->getTaxonomies();
+                $taxonomies = $this->getTaxonomies();
                 foreach ($taxonomies as $tax) {
                     $nodes = [];
                     foreach ($tax->getNodes() as $node) {
@@ -240,7 +241,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                     return [];
                 }
                 $json_decode = json_decode($field_value, true);
-                $IMetadata   = [];
+                $IMetadata = [];
                 if (is_array($json_decode)) {
                     foreach ($json_decode as $record_id => $records) {
                         if (!is_array($records)) {
@@ -258,7 +259,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                     return [];
                 }
                 $json_decode = json_decode($field_value, true);
-                $taxonomies  = [];
+                $taxonomies = [];
                 foreach ($json_decode as $tax_title => $nodes) {
                     $taxonomy = new Taxonomy($tax_title, ITaxonomy::MODE_CREATE);
                     foreach ($nodes as $node) {
@@ -311,7 +312,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         if (!$this->ext_id) {
             throw new Exception("External-ID is missing");
         }
-        $this->id        = $this->origin_id . $this->ext_id;
+        $this->id = $this->origin_id . $this->ext_id;
         $this->hash_code = $this->computeHashCode();
         parent::create();
         self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)

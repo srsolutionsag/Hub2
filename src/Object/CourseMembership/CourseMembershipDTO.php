@@ -7,7 +7,6 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class CourseMembershipDTO
- *
  * @package srag\Plugins\Hub2\Object\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -23,7 +22,6 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         $this->courseId = $course_ext_id;
         $this->userId = $user_id;
     }
-
 
     const ROLE_MEMBER = 2;
     const ROLE_TUTOR = 3;
@@ -51,7 +49,6 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
      */
     protected $isContact = false;
 
-
     /**
      * @return int
      */
@@ -60,10 +57,8 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this->courseId;
     }
 
-
     /**
      * @param int $courseId
-     *
      * @return CourseMembershipDTO
      */
     public function setCourseId($courseId) : CourseMembershipDTO
@@ -73,7 +68,6 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -82,10 +76,8 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this->userId;
     }
 
-
     /**
      * @param int $userId
-     *
      * @return CourseMembershipDTO
      */
     public function setUserId(int $userId) : CourseMembershipDTO
@@ -95,7 +87,6 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this;
     }
 
-
     /**
      * @return mixed
      */
@@ -104,10 +95,8 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this->role;
     }
 
-
     /**
      * @param mixed $role
-     *
      * @return CourseMembershipDTO
      */
     public function setRole($role)
@@ -117,7 +106,6 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -126,10 +114,8 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this->courseIdType;
     }
 
-
     /**
      * @param int $courseIdType
-     *
      * @return CourseMembershipDTO
      */
     public function setCourseIdType(int $courseIdType) : CourseMembershipDTO
@@ -139,7 +125,6 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -148,10 +133,8 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this->isContact;
     }
 
-
     /**
      * @param bool $isContact
-     *
      * @return $this
      */
     public function setIsContact(bool $isContact)

@@ -12,9 +12,7 @@ use stdClass;
 
 /**
  * Class Log
- *
  * @package srag\Plugins\Hub2\Log
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class Log extends ActiveRecord implements ILog
@@ -22,9 +20,9 @@ class Log extends ActiveRecord implements ILog
 
     use DICTrait;
     use Hub2Trait;
+
     const TABLE_NAME = "sr_hub2_log";
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
 
     /**
      * @return string
@@ -34,10 +32,8 @@ class Log extends ActiveRecord implements ILog
         return static::TABLE_NAME;
     }
 
-
     /**
      * @return string
-     *
      * @deprecated
      */
     public final static function returnDbTableName() : string
@@ -45,20 +41,18 @@ class Log extends ActiveRecord implements ILog
         return static::TABLE_NAME;
     }
 
-
     /**
      * @var array
      */
     public static $levels
         = [
-            self::LEVEL_INFO      => self::LEVEL_INFO,
-            self::LEVEL_WARNING   => self::LEVEL_WARNING,
+            self::LEVEL_INFO => self::LEVEL_INFO,
+            self::LEVEL_WARNING => self::LEVEL_WARNING,
             self::LEVEL_EXCEPTION => self::LEVEL_EXCEPTION,
-            self::LEVEL_CRITICAL  => self::LEVEL_CRITICAL
+            self::LEVEL_CRITICAL => self::LEVEL_CRITICAL,
         ];
     /**
      * @var int
-     *
      * @con_has_field    true
      * @con_fieldtype    integer
      * @con_length       8
@@ -68,7 +62,6 @@ class Log extends ActiveRecord implements ILog
     protected $log_id = 0;
     /**
      * @var string
-     *
      * @con_has_field    true
      * @con_fieldtype    text
      * @con_is_notnull   true
@@ -76,7 +69,6 @@ class Log extends ActiveRecord implements ILog
     protected $title = "";
     /**
      * @var string
-     *
      * @con_has_field    true
      * @con_fieldtype    text
      * @con_is_notnull   true
@@ -84,7 +76,6 @@ class Log extends ActiveRecord implements ILog
     protected $message = "";
     /**
      * @var int
-     *
      * @con_has_field    true
      * @con_fieldtype    integer
      * @con_length       8
@@ -92,7 +83,6 @@ class Log extends ActiveRecord implements ILog
     protected $status = 0;
     /**
      * @var ilDateTime
-     *
      * @con_has_field    true
      * @con_fieldtype    timestamp
      * @con_is_notnull   true
@@ -100,7 +90,6 @@ class Log extends ActiveRecord implements ILog
     protected $date = null;
     /**
      * @var int
-     *
      * @con_has_field    true
      * @con_fieldtype    integer
      * @con_length       8
@@ -109,7 +98,6 @@ class Log extends ActiveRecord implements ILog
     protected $level = self::LEVEL_INFO;
     /**
      * @var stdClass
-     *
      * @con_has_field    true
      * @con_fieldtype    text
      * @con_is_notnull   true
@@ -117,7 +105,6 @@ class Log extends ActiveRecord implements ILog
     protected $additional_data;
     /**
      * @var int
-     *
      * @con_has_field    true
      * @con_fieldtype    integer
      * @con_length       8
@@ -126,7 +113,6 @@ class Log extends ActiveRecord implements ILog
     protected $origin_id = null;
     /**
      * @var string
-     *
      * @con_has_field    true
      * @con_fieldtype    text
      * @con_is_notnull   true
@@ -134,7 +120,6 @@ class Log extends ActiveRecord implements ILog
     protected $origin_object_type = "";
     /**
      * @var string|null
-     *
      * @con_has_field    true
      * @con_fieldtype    text
      * @con_length       255
@@ -143,7 +128,6 @@ class Log extends ActiveRecord implements ILog
     protected $object_ext_id = null;
     /**
      * @var int|null
-     *
      * @con_has_field    true
      * @con_fieldtype    integer
      * @con_length       8
@@ -151,10 +135,8 @@ class Log extends ActiveRecord implements ILog
      */
     protected $object_ilias_id = null;
 
-
     /**
      * Log constructor
-     *
      * @param int              $primary_key_value
      * @param arConnector|null $connector
      */
@@ -166,7 +148,6 @@ class Log extends ActiveRecord implements ILog
         //parent::__construct($primary_key_value, $connector);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -174,7 +155,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->log_id;
     }
-
 
     /**
      * @inheritdoc
@@ -186,7 +166,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -194,7 +173,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->title;
     }
-
 
     /**
      * @inheritdoc
@@ -206,7 +184,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -214,7 +191,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->message;
     }
-
 
     /**
      * @inheritdoc
@@ -226,7 +202,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -234,7 +209,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->date;
     }
-
 
     /**
      * @inheritdoc
@@ -246,7 +220,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -255,10 +228,8 @@ class Log extends ActiveRecord implements ILog
         return $this->status;
     }
 
-
     /**
      * @param int $status
-     *
      * @return $this
      */
     public function withStatus(int $status) : ILog
@@ -268,7 +239,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -276,7 +246,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->level;
     }
-
 
     /**
      * @inheritdoc
@@ -288,7 +257,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -296,7 +264,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->additional_data;
     }
-
 
     /**
      * @inheritdoc
@@ -308,7 +275,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -319,7 +285,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -327,7 +292,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->origin_id;
     }
-
 
     /**
      * @inheritdoc
@@ -339,7 +303,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -347,7 +310,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->origin_object_type;
     }
-
 
     /**
      * @inheritdoc
@@ -359,7 +321,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -367,7 +328,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->object_ext_id;
     }
-
 
     /**
      * @inheritdoc
@@ -380,7 +340,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -388,7 +347,6 @@ class Log extends ActiveRecord implements ILog
     {
         return $this->object_ilias_id;
     }
-
 
     /**
      * @inheritdoc
@@ -400,7 +358,6 @@ class Log extends ActiveRecord implements ILog
 
         return $this;
     }
-
 
     /**
      * @inheritdoc

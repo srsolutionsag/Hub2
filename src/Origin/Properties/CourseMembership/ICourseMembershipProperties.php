@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface ICourseMembershipProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

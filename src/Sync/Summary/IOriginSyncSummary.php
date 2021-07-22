@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
 
 /**
  * Interface IOriginSyncSummary
- *
  * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,12 +17,10 @@ interface IOriginSyncSummary
      */
     public function getOutputAsString();
 
-
     /**
      * @param IOriginSync $originSync add another already ran IOriginSync
      */
     public function addOriginSync(IOriginSync $originSync);
-
 
     /**
      * @return void

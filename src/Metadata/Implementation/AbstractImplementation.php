@@ -9,7 +9,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class CustomMetadata
- *
  * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,6 +17,7 @@ abstract class AbstractImplementation implements IMetadataImplementation
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
@@ -28,10 +28,8 @@ abstract class AbstractImplementation implements IMetadataImplementation
      */
     private $metadata;
 
-
     /**
      * UDF constructor
-     *
      * @param IMetadata $metadata
      */
     public function __construct(IMetadata $metadata, int $ilias_id)
@@ -40,12 +38,10 @@ abstract class AbstractImplementation implements IMetadataImplementation
         $this->ilias_id = $ilias_id;
     }
 
-
     /**
      * @inheritdoc
      */
     abstract public function write();
-
 
     /**
      * @inheritdoc
@@ -54,7 +50,6 @@ abstract class AbstractImplementation implements IMetadataImplementation
     {
         return $this->metadata;
     }
-
 
     /**
      * @inheritdoc

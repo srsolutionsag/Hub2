@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
 
 /**
  * Class UserOriginConfig
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Origin\Config\User
@@ -23,7 +22,6 @@ class UserOriginConfig extends OriginConfig implements IUserOriginConfig
             self::LOGIN_FIELD => IUserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME,
             self::LOGIN_KEEP_CASE => false,
         ];
-
 
     public function __construct(array $data)
     {

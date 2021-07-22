@@ -21,7 +21,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class SessionMembershipSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -41,19 +40,20 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
      */
     protected static $properties = array();
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
-
 
     /**
      * @return array
@@ -63,10 +63,8 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         return self::$properties;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param SessionMembershipDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -79,10 +77,8 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         $this->current_ilias_object = new FakeIliasMembershipObject($session_ref_id, $dto->getUserId());
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param SessionMembershipDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -101,10 +97,8 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param SessionMembershipDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -114,10 +108,8 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         $this->removeMembership($ilObjSession, $obj->getUserIdIlias());
     }
 
-
     /**
      * @param int $ilias_id
-     *
      * @return ilObjSession
      * @throws HubException
      */
@@ -130,10 +122,8 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         return new ilObjSession($ilias_id, true);
     }
 
-
     /**
      * @param SessionMembershipDTO $dto
-     *
      * @return int
      * @throws HubException
      */
@@ -154,10 +144,14 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
-            $origin = array_pop(array_filter($originRepository->sessions(), function ($origin) use ($linkedOriginId) {
-                /** @var IOrigin $origin */
-                return (int) $origin->getId() == $linkedOriginId;
-            }));
+            $origin = array_pop(
+                array_filter(
+                    $originRepository->sessions(), function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return (int) $origin->getId() == $linkedOriginId;
+                }
+                )
+            );
             if ($origin === null) {
                 $msg = "The linked origin syncing sessions was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
@@ -177,11 +171,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         return 0;
     }
 
-
     /**
      * @param ilObjSession         $ilObjSession
      * @param SessionMembershipDTO $dto
-     *
      * @throws HubException
      */
     protected function handleMembership(ilObjSession $ilObjSession, SessionMembershipDTO $dto)
@@ -199,11 +191,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         $ilSessionParticipants->register((int) $user_id);
     }
 
-
     /**
      * @param ilObjSession         $ilObjSession
      * @param SessionMembershipDTO $dto
-     *
      * @throws HubException
      */
     protected function handleContact(ilObjSession $ilObjSession, SessionMembershipDTO $dto)
@@ -222,7 +212,6 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
          * Note to who ever might be concerned, No I was not drunken while writting the next
          * few lines. After some investigation, it seemed the simplest way to set a single
          * user as participant of a session. See the gem ilSessionParticipants
-         *
          * This Option would also be possible, but is nast as well an very slow:
          * $ilSessionParticipants->getEventParticipants()->__read();
          * $user = $ilSessionParticipants->getEventParticipants()->getUser((int)$user_id);
@@ -231,17 +220,17 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
          * $ilSessionParticipants->getEventParticipants()->updateUser();
          */
         $event_id = $ilSessionParticipants->getEventParticipants()->getEventId();
-        $query = "UPDATE event_participants " . "SET contact = " . self::dic()->database()->quote($dto->isContact(), 'integer') . " "
-            . "WHERE event_id = " . self::dic()->database()->quote($event_id, 'integer') . " " . "AND usr_id = " . self::dic()->database()
-                ->quote($user_id, 'integer') . " ";
+        $query = "UPDATE event_participants " . "SET contact = " . self::dic()->database()->quote($dto->isContact(),
+                'integer') . " "
+            . "WHERE event_id = " . self::dic()->database()->quote($event_id,
+                'integer') . " " . "AND usr_id = " . self::dic()->database()
+                                                         ->quote($user_id, 'integer') . " ";
         self::dic()->database()->manipulate($query);
     }
-
 
     /**
      * @param ilObjSession $ilObjSession
      * @param int          $user_id
-     *
      * @throws HubException
      */
     protected function removeMembership(ilObjSession $ilObjSession, $user_id)

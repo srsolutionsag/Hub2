@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface IUserProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -30,7 +29,6 @@ interface IUserProperties extends IOriginProperties
     const DELETE_MODE_NONE = 0;
     const DELETE_MODE_DELETE = 1;
     const DELETE_MODE_INACTIVE = 2;
-
 
     /**
      * @return array

@@ -15,7 +15,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginImplementationFactory
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Origin\Config
@@ -25,11 +24,11 @@ class OriginImplementationFactory
 
     use DICTrait;
     use Hub2Trait;
+
     /**
      * @var IOrigin
      */
     protected $origin;
-
 
     /**
      * @param IOrigin $origin
@@ -38,7 +37,6 @@ class OriginImplementationFactory
     {
         $this->origin = $origin;
     }
-
 
     /**
      * @return IOriginImplementation
@@ -59,7 +57,8 @@ class OriginImplementationFactory
         if (!class_exists($class)) {
             throw new HubException("Origin implementation namespace\\class does not exist, should be: $class");
         }
-        $instance = new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
+        $instance = new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(),
+            new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
 
         return $instance;
     }

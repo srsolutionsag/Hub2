@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Interface ICourseMembershipSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

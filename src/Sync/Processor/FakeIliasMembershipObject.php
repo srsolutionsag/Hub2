@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
 
 /**
  * Class FakeIliasMembershipObject
- *
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -23,10 +22,8 @@ class FakeIliasMembershipObject extends FakeIliasObject
      */
     protected $container_id_ilias;
 
-
     /**
      * FakeIliasMembershipObject constructor
-     *
      * @param int $container_id_ilias
      * @param int $user_id_ilias
      */
@@ -38,10 +35,8 @@ class FakeIliasMembershipObject extends FakeIliasObject
         $this->initId();
     }
 
-
     /**
      * @param string $id
-     *
      * @return FakeIliasMembershipObject
      */
     public static function loadInstanceWithConcatenatedId(string $id)
@@ -51,7 +46,6 @@ class FakeIliasMembershipObject extends FakeIliasObject
         return new self((int) $container_id_ilias, (int) $user_id_ilias);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -59,7 +53,6 @@ class FakeIliasMembershipObject extends FakeIliasObject
     {
         return $this->id;
     }
-
 
     /**
      * @return int
@@ -69,7 +62,6 @@ class FakeIliasMembershipObject extends FakeIliasObject
         return $this->user_id_ilias;
     }
 
-
     /**
      * @param int $user_id_ilias
      */
@@ -77,7 +69,6 @@ class FakeIliasMembershipObject extends FakeIliasObject
     {
         $this->user_id_ilias = $user_id_ilias;
     }
-
 
     /**
      * @return int
@@ -87,7 +78,6 @@ class FakeIliasMembershipObject extends FakeIliasObject
         return $this->container_id_ilias;
     }
 
-
     /**
      * @param int $container_id_ilias
      */
@@ -95,7 +85,6 @@ class FakeIliasMembershipObject extends FakeIliasObject
     {
         $this->container_id_ilias = $container_id_ilias;
     }
-
 
     /**
      *

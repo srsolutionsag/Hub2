@@ -9,7 +9,6 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class ByLogin
- *
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

@@ -11,11 +11,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class MainGUI
- *
  * @package           srag\Plugins\Hub2\UI
- *
  * @author            Fabian Schmid <fs@studer-raimann.ch>
- *
  * @ilCtrl_IsCalledBy hub2MainGUI: ilHub2ConfigGUI
  * @ilCtrl_calls      hub2MainGUI: hub2ConfigOriginsGUI
  * @ilCtrl_calls      hub2MainGUI: hub2ConfigGUI
@@ -27,12 +24,12 @@ class hub2MainGUI
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
     const TAB_ORIGINS = 'tab_origins';
     const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
     const CMD_INDEX = 'index';
-
 
     /**
      * MainGUI constructor
@@ -41,7 +38,6 @@ class hub2MainGUI
     {
 
     }
-
 
     /**
      *
@@ -71,7 +67,6 @@ class hub2MainGUI
         }
     }
 
-
     /**
      *
      */
@@ -80,24 +75,28 @@ class hub2MainGUI
         self::dic()->ctrl()->redirectByClass(hub2ConfigGUI::class);
     }
 
-
     /**
      *
      */
     protected function initTabs()/*: void*/
     {
-        self::dic()->tabs()->addTab(self::TAB_PLUGIN_CONFIG, self::plugin()->translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
-            ->getLinkTargetByClass(hub2ConfigGUI::class));
+        self::dic()->tabs()->addTab(
+            self::TAB_PLUGIN_CONFIG, self::plugin()->translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
+                                                                                             ->getLinkTargetByClass(hub2ConfigGUI::class)
+        );
 
-        self::dic()->tabs()->addTab(self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
-            ->getLinkTargetByClass(hub2ConfigOriginsGUI::class));
+        self::dic()->tabs()->addTab(
+            self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
+                                                                                 ->getLinkTargetByClass(hub2ConfigOriginsGUI::class)
+        );
 
         if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
-            self::dic()->tabs()->addTab(self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
-                ->getLinkTargetByClass(hub2CustomViewGUI::class));
+            self::dic()->tabs()->addTab(
+                self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
+                                                                                               ->getLinkTargetByClass(hub2CustomViewGUI::class)
+            );
         }
     }
-
 
     /**
      *
@@ -107,14 +106,15 @@ class hub2MainGUI
         $this->index();
     }
 
-
     /**
      *
      */
     protected function handleExplorerCommand()/*: void*/
     {
-        (new OriginConfigFormGUI(new hub2ConfigOriginsGUI(), new OriginRepository(),
-            (new OriginFactory())->getById(intval(filter_input(INPUT_GET, hub2ConfigOriginsGUI::ORIGIN_ID)))))->getILIASFileRepositorySelector()
-            ->handleExplorerCommand();
+        (new OriginConfigFormGUI(
+            new hub2ConfigOriginsGUI(), new OriginRepository(),
+            (new OriginFactory())->getById(intval(filter_input(INPUT_GET, hub2ConfigOriginsGUI::ORIGIN_ID)))
+        ))->getILIASFileRepositorySelector()
+          ->handleExplorerCommand();
     }
 }

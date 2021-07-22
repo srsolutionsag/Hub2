@@ -10,9 +10,7 @@ use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 
 /**
  * Class DataGUI
- *
  * @package srag\Plugins\Hub2\UI\Data
- *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class hub2DataGUI extends hub2MainGUI
@@ -28,7 +26,6 @@ class hub2DataGUI extends hub2MainGUI
         $this->{$cmd}();
     }
 
-
     /**
      *
      */
@@ -37,7 +34,6 @@ class hub2DataGUI extends hub2MainGUI
         $table = new DataTableGUI($this, self::CMD_INDEX);
         self::output()->output($table);
     }
-
 
     /**
      *
@@ -51,7 +47,6 @@ class hub2DataGUI extends hub2MainGUI
         $this->index(); // Fix reset offset
     }
 
-
     /**
      *
      */
@@ -64,7 +59,6 @@ class hub2DataGUI extends hub2MainGUI
         $this->index(); // Fix reset offset
     }
 
-
     /**
      *
      */
@@ -72,7 +66,6 @@ class hub2DataGUI extends hub2MainGUI
     {
         self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
     }
-
 
     /**
      *
@@ -132,8 +125,12 @@ class hub2DataGUI extends hub2MainGUI
 
         $data_table = $factory->listing()->descriptive($filtered);
 
-        $modal = $factory->modal()->roundtrip(self::plugin()->translate("data_table_header_data") . "<br>" . self::plugin()
-                ->translate("data_table_hash", "", [$object->getHashCode()]), $data_table)->withCancelButtonLabel("close");
+        $modal = $factory->modal()->roundtrip(
+            self::plugin()->translate("data_table_header_data") . "<br>" . self::plugin()
+                                                                               ->translate("data_table_hash", "",
+                                                                                   [$object->getHashCode()]),
+            $data_table
+        )->withCancelButtonLabel("close");
 
         self::output()->output(self::dic()->ui()->renderer()->renderAsync($modal));
     }

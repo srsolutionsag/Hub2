@@ -10,7 +10,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ITaxonomyImplementationFactory
- *
  * @package srag\Plugins\Hub2\Taxonomy\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -19,8 +18,8 @@ class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc

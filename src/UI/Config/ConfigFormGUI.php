@@ -19,9 +19,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ConfigFormGUI
- *
  * @package srag\Plugins\Hub2\UI\Config
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -30,16 +28,15 @@ class ConfigFormGUI extends ilPropertyFormGUI
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var ilHub2ConfigGUI
      */
     protected $parent_gui;
 
-
     /**
      * ConfigFormGUI constructor
-     *
      * @param hub2ConfigGUI $parent_gui
      */
     public function __construct(hub2ConfigGUI $parent_gui)
@@ -50,7 +47,6 @@ class ConfigFormGUI extends ilPropertyFormGUI
 
         $this->initForm();
     }
-
 
     /**
      *
@@ -64,7 +60,8 @@ class ConfigFormGUI extends ilPropertyFormGUI
 
         $this->setTitle(self::plugin()->translate('admin_form_title'));
 
-        $item = new ilTextInputGUI(self::plugin()->translate('admin_origins_path'), ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH);
+        $item = new ilTextInputGUI(self::plugin()->translate('admin_origins_path'),
+            ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH);
         $item->setInfo(self::plugin()->translate('admin_origins_path_info'));
         $item->setValue(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH));
         $this->addItem($item);
@@ -73,13 +70,16 @@ class ConfigFormGUI extends ilPropertyFormGUI
         $cb->setChecked(ArConfig::getField(ArConfig::KEY_LOCK_ORIGINS_CONFIG));
         $this->addItem($cb);
 
-        $cb = new ilCheckboxInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_ACTIVE), ArConfig::KEY_GLOBAL_HOCK_ACTIVE);
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_ACTIVE),
+            ArConfig::KEY_GLOBAL_HOCK_ACTIVE);
         $cb->setChecked(ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_ACTIVE));
-        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_PATH), ArConfig::KEY_GLOBAL_HOCK_PATH);
+        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_PATH),
+            ArConfig::KEY_GLOBAL_HOCK_PATH);
         $sub_item->setValue(ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_PATH));
         $sub_item->setInfo(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_PATH . '_info'));
         $cb->addSubItem($sub_item);
-        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_CLASS), ArConfig::KEY_GLOBAL_HOCK_CLASS);
+        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_CLASS),
+            ArConfig::KEY_GLOBAL_HOCK_CLASS);
         $sub_item->setValue(ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_CLASS));
         $sub_item->setInfo(self::plugin()->translate('admin_msg_' . ArConfig::KEY_GLOBAL_HOCK_CLASS . '_info'));
         $cb->addSubItem($sub_item);
@@ -89,10 +89,14 @@ class ConfigFormGUI extends ilPropertyFormGUI
         $item->setTitle(self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS));
         $this->addItem($item);
 
-        $item = new ilNumberInputGUI(self::plugin()
-            ->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME, hub2LogsGUI::LANG_MODULE_LOGS), ArConfig::KEY_KEEP_OLD_LOGS_TIME);
+        $item = new ilNumberInputGUI(
+            self::plugin()
+                ->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME, hub2LogsGUI::LANG_MODULE_LOGS),
+            ArConfig::KEY_KEEP_OLD_LOGS_TIME
+        );
         $item->setSuffix(self::plugin()->translate("days", hub2LogsGUI::LANG_MODULE_LOGS));
-        $item->setInfo(self::plugin()->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME . "_info", hub2LogsGUI::LANG_MODULE_LOGS));
+        $item->setInfo(self::plugin()->translate(ArConfig::KEY_KEEP_OLD_LOGS_TIME . "_info",
+            hub2LogsGUI::LANG_MODULE_LOGS));
         $item->setMinValue(0);
         $item->setValue(ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME));
         $this->addItem($item);
@@ -102,7 +106,8 @@ class ConfigFormGUI extends ilPropertyFormGUI
         $this->addItem($item);
 
         $item = new ilTextInputGUI(self::plugin()->translate('common_roles'), ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
-        $item->setValue(implode(', ', ArConfig::getField(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS))); // TODO: Use better config gui for getAdministrationRoleIds
+        $item->setValue(implode(', ',
+            ArConfig::getField(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS))); // TODO: Use better config gui for getAdministrationRoleIds
         $item->setInfo(self::plugin()->translate('admin_roles_info'));
         $this->addItem($item);
 
@@ -110,21 +115,30 @@ class ConfigFormGUI extends ilPropertyFormGUI
         $h->setTitle(self::plugin()->translate('admin_shortlink'));
         $this->addItem($h);
 
-        $item = new ilTextAreaInputGUI(self::plugin()->translate('admin_msg_'
-            . ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND), ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND);
+        $item = new ilTextAreaInputGUI(
+            self::plugin()->translate(
+                'admin_msg_'
+                . ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND
+            ), ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND
+        );
         $item->setUseRte(false);
         $item->setValue(ArConfig::getField(ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND));
         $item->setInfo(self::plugin()->translate('admin_msg_' . ArConfig::KEY_SHORTLINK_OBJECT_NOT_FOUND . '_info'));
         $this->addItem($item);
 
-        $item = new ilTextAreaInputGUI(self::plugin()->translate('admin_msg_'
-            . ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE), ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE);
+        $item = new ilTextAreaInputGUI(
+            self::plugin()->translate(
+                'admin_msg_'
+                . ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE
+            ), ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE
+        );
         $item->setUseRte(false);
         $item->setValue(ArConfig::getField(ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE));
         $item->setInfo(self::plugin()->translate('admin_msg_' . ArConfig::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE . '_info'));
         $this->addItem($item);
 
-        $item = new ilTextAreaInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_SHORTLINK_SUCCESS), ArConfig::KEY_SHORTLINK_SUCCESS);
+        $item = new ilTextAreaInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_SHORTLINK_SUCCESS),
+            ArConfig::KEY_SHORTLINK_SUCCESS);
         $item->setUseRte(false);
         $item->setValue(ArConfig::getField(ArConfig::KEY_SHORTLINK_SUCCESS));
         $item->setInfo(self::plugin()->translate('admin_msg_' . ArConfig::KEY_SHORTLINK_SUCCESS . '_info'));
@@ -134,13 +148,16 @@ class ConfigFormGUI extends ilPropertyFormGUI
         $h->setTitle(self::plugin()->translate('views'));
         $this->addItem($h);
 
-        $cb = new ilCheckboxInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_ACTIVE), ArConfig::KEY_CUSTOM_VIEWS_ACTIVE);
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_ACTIVE),
+            ArConfig::KEY_CUSTOM_VIEWS_ACTIVE);
         $cb->setChecked(ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE));
-        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_PATH), ArConfig::KEY_CUSTOM_VIEWS_PATH);
+        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_PATH),
+            ArConfig::KEY_CUSTOM_VIEWS_PATH);
         $sub_item->setValue(ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH));
         $sub_item->setInfo(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_PATH . '_info'));
         $cb->addSubItem($sub_item);
-        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_CLASS), ArConfig::KEY_CUSTOM_VIEWS_CLASS);
+        $sub_item = new ilTextInputGUI(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_CLASS),
+            ArConfig::KEY_CUSTOM_VIEWS_CLASS);
         $sub_item->setValue(ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_CLASS));
         $sub_item->setInfo(self::plugin()->translate('admin_msg_' . ArConfig::KEY_CUSTOM_VIEWS_CLASS . '_info'));
         $cb->addSubItem($sub_item);
@@ -190,7 +207,6 @@ class ConfigFormGUI extends ilPropertyFormGUI
         //		$this->addItem($cb);
     }
 
-
     /**
      *
      */
@@ -202,10 +218,13 @@ class ConfigFormGUI extends ilPropertyFormGUI
                 case ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS:
                     $administration_role_ids = $this->getInput($item->getPostVar());
                     $administration_role_ids = preg_split('/, */', $administration_role_ids);
-                    $administration_role_ids = array_map(function (string $id) : int {
-                        return intval($id);
-                    }, $administration_role_ids);
-                    ArConfig::setField($item->getPostVar(), $administration_role_ids); // TODO: Use better config gui for getAdministrationRoleIds
+                    $administration_role_ids = array_map(
+                        function (string $id) : int {
+                            return intval($id);
+                        }, $administration_role_ids
+                    );
+                    ArConfig::setField($item->getPostVar(),
+                        $administration_role_ids); // TODO: Use better config gui for getAdministrationRoleIds
                     break;
                 default:
                     ArConfig::setField($item->getPostVar(), $this->getInput($item->getPostVar()));

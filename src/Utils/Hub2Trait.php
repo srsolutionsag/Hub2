@@ -9,9 +9,7 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Trait Hub2Trait
- *
  * @package srag\Plugins\Hub2\Utils
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 trait Hub2Trait
@@ -25,7 +23,6 @@ trait Hub2Trait
         return Access::getInstance();
     }
 
-
     /**
      * @return Ilias
      */
@@ -33,7 +30,6 @@ trait Hub2Trait
     {
         return Ilias::getInstance();
     }
-
 
     /**
      * @return ILogRepository

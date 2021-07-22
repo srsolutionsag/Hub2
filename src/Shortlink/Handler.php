@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Handler
- *
  * @package srag\Plugins\Hub2\Shortlink
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -23,6 +22,7 @@ class Handler
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
     /**
@@ -38,10 +38,8 @@ class Handler
      */
     protected $ext_id = '';
 
-
     /**
      * Handler constructor
-     *
      * @param string $ext_id
      */
     public function __construct(string $ext_id)
@@ -50,7 +48,6 @@ class Handler
         $this->ext_id = $ext_id;
     }
 
-
     /**
      *
      */
@@ -58,7 +55,6 @@ class Handler
     {
         $return = setcookie('xhub_query', $this->ext_id, time() + 10);
     }
-
 
     /**
      * @throws ShortlinkException
@@ -86,7 +82,6 @@ class Handler
         $this->doRedirect($link->getAccessGrantedExternalLink());
     }
 
-
     /**
      * @param string $link
      */
@@ -95,7 +90,6 @@ class Handler
         $link = $this->sanitizeLink($link);
         self::dic()->ctrl()->redirectToURL($link);
     }
-
 
     /**
      * @param string $message
@@ -106,7 +100,6 @@ class Handler
             ilUtil::sendInfo($message, true);
         }
     }
-
 
     /**
      *
@@ -120,7 +113,6 @@ class Handler
 
         $this->init = true;
     }
-
 
     /**
      *
@@ -144,10 +136,8 @@ class Handler
         $this->init = true;
     }
 
-
     /**
      * @param string $link
-     *
      * @return mixed|string
      */
     protected function sanitizeLink(string $link)
@@ -158,7 +148,6 @@ class Handler
 
         return $link;
     }
-
 
     /**
      *

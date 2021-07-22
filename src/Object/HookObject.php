@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class HookObject
- *
  * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -22,6 +21,7 @@ class HookObject
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IDataTransferObject
@@ -36,7 +36,6 @@ class HookObject
      */
     private $ilias_object;
 
-
     /**
      * @param IObject $object
      */
@@ -46,10 +45,8 @@ class HookObject
         $this->dto = $dto;
     }
 
-
     /**
      * Get the external ID of the object helps to identify the object
-     *
      * @return string
      */
     public function getExtId()
@@ -57,10 +54,8 @@ class HookObject
         return $this->object->getExtId();
     }
 
-
     /**
      * Get the current status, see constants in IObject
-     *
      * @return int
      */
     public function getStatus()
@@ -68,10 +63,8 @@ class HookObject
         return $this->object->getStatus();
     }
 
-
     /**
      * @param int $status
-     *
      * @throws HubException
      */
     public function overrideStatus(int $status)
@@ -79,10 +72,8 @@ class HookObject
         $this->object->setStatus($status);
     }
 
-
     /**
      * @param ilObject|FakeIliasObject $object
-     *
      * @return HookObject
      */
     public function withILIASObject($object)
@@ -93,13 +84,11 @@ class HookObject
         return $clone;
     }
 
-
     /**
      * Get the ILIAS object which has been processed.
      * Note that this object is only available in the
      * IOriginImplementation::after(Create|Update|Delete)Object callbacks, it is NOT set for any
      * before callbacks
-     *
      * @return ilObject|FakeIliasObject|null
      */
     public function getILIASObject()
@@ -107,20 +96,17 @@ class HookObject
         return $this->ilias_object;
     }
 
-
     /**
      * Get the ID of the linked ILIAS object.
      * Note that this ID may be the object or ref-ID depending on the synced object.
      * Also note that this ID may be NULL if the ILIAS object has not been created yet, e.g.
      * in the case of IOriginImplementation::beforeCreateILIASObject()
-     *
      * @return int
      */
     public function getILIASId()
     {
         return $this->object->getILIASId();
     }
-
 
     /**
      * @return IDataTransferObject
@@ -129,7 +115,6 @@ class HookObject
     {
         return $this->dto;
     }
-
 
     /**
      * @return IObject the internal AR Object, not the ILIAS Object

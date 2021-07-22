@@ -14,6 +14,7 @@ use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ILIASObjectNotFoundException;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
@@ -23,16 +24,13 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginFactory;
+use srag\Plugins\Hub2\Sync\IDidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
-use srag\Plugins\Hub2\Sync\IDidacticTemplateSyncProcessor;
-use srag\Plugins\Hub2\Object\IDidacticTemplateAwareObject;
-use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 
 /**
  * Class ObjectProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -42,8 +40,10 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     use Helper;
+
     /**
      * @var IOrigin
      */
@@ -61,19 +61,20 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
      */
     protected $current_ilias_object = null;
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         $this->origin = $origin;
         $this->transition = $transition;
         $this->implementation = $implementation;
     }
-
 
     /**
      * @inheritdoc
@@ -98,7 +99,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
             if ($ilias_id > 0) {
                 $hub_object->setStatus(IObject::STATUS_TO_UPDATE);
                 $hub_object->setILIASId($ilias_id);
-                self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin->getId()), $hub_object)->write(
+                self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin->getId()),
+                    $hub_object)->write(
                     "Existing object found by Mapping Strategy"
                 );
             } elseif ($ilias_id < 0) {
@@ -170,11 +172,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
                     if ($this instanceof ITaxonomySyncProcessor && $hub_object instanceof ITaxonomyAwareObject && $dto instanceof ITaxonomyAwareDataTransferObject) {
                         $this->handleTaxonomies($dto, $hub_object, $this->current_ilias_object);
                     }
-                    
+
                     if ($this instanceof IDidacticTemplateSyncProcessor && $dto instanceof IDidacticTemplateAwareDataTransferObject) {
                         $this->handleDidacticTemplate($dto, $this->current_ilias_object);
                     }
-                    
+
                     $hub_object->setILIASId($this->getILIASId($this->current_ilias_object));
 
                     $this->implementation->afterUpdateILIASObject($hook_object->withILIASObject($this->current_ilias_object));
@@ -227,10 +229,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         $hub_object->store();
     }
 
-
     /**
      * @param ilObject|FakeIliasObject|null $object
-     *
      * @return int|null
      */
     protected function getILIASId($object)
@@ -249,12 +249,9 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         return $object->getRefId();
     }
 
-
     /**
      * The import ID is set on the ILIAS object.
-     *
      * @param IDataTransferObject $object
-     *
      * @return string
      */
     protected function getImportId(IDataTransferObject $object)
@@ -262,10 +259,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         return self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
     }
 
-
     /**
      * use this every time a new repository object is created
-     *
      * @param int $ref_id
      */
     protected function writeRBACLog(int $ref_id)/*: void*/
@@ -276,7 +271,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         ilRbacLog::add(ilRbacLog::CREATE_OBJECT, $ref_id, $rbac_log);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -285,45 +279,33 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         return false;
     }
 
-
     /**
      * Create a new ILIAS object from the given data transfer object.
-     *
      * @param IDataTransferObject $dto
-     *
      * @return void
-     *
      * @throws HubException
      */
     protected abstract function handleCreate(IDataTransferObject $dto)/*: void*/
     ;
 
-
     /**
      * Update the corresponding ILIAS object.
      * Return the processed ILIAS object or null if the object was not found, e.g. it is deleted in
      * ILIAS.
-     *
      * @param IDataTransferObject $dto
      * @param int                 $iliasId
-     *
      * @return void
-     *
      * @throws HubException
      */
     protected abstract function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
     ;
 
-
     /**
      * Delete the corresponding ILIAS object.
      * Return the deleted ILIAS object or null if the object was not found in ILIAS.
-     *
      * @param IDataTransferObject $dto
      * @param int                 $ilias_id
-     *
      * @return void
-     *
      * @throws HubException
      */
     protected abstract function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/

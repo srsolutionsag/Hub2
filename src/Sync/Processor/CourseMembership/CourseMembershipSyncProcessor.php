@@ -20,7 +20,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class CourseMembershipSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\CourseMembership
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -37,23 +36,23 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
      */
     protected $config;
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CourseMembershipDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -64,7 +63,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         if (!$course) {
             return;
         }
-        
+
         $user_id = $dto->getUserId();
         $membership_obj = new \ilCourseParticipants(ilObject2::_lookupObjectId($ilias_course_ref_id));
         $membership_obj->add($user_id, $this->mapRole($dto));
@@ -73,10 +72,8 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         $this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CourseMembershipDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -108,10 +105,8 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         $obj->initId();
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CourseMembershipDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -126,10 +121,8 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         $course->getMembersObject()->delete($obj->getUserIdIlias());
     }
 
-
     /**
      * @param int $iliasId
-     *
      * @return ilObjCourse|null
      */
     protected function findILIASCourse($iliasId)
@@ -141,10 +134,8 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         return new ilObjCourse($iliasId);
     }
 
-
     /**
      * @param CourseMembershipDTO $object
-     *
      * @return int
      */
     protected function mapRole(CourseMembershipDTO $object)
@@ -161,11 +152,9 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         }
     }
 
-
     /**
      * @param CourseMembershipDTO $object
      * @param ilObjCourse         $course
-     *
      * @return int
      */
     protected function getILIASRole(CourseMembershipDTO $object, ilObjCourse $course)
@@ -182,10 +171,8 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         }
     }
 
-
     /**
      * @param CourseMembershipDTO $course_membership
-     *
      * @return int
      * @throws HubException
      */
@@ -205,10 +192,14 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
-            $origin = array_pop(array_filter($originRepository->courses(), function ($origin) use ($linkedOriginId) {
-                /** @var IOrigin $origin */
-                return $origin->getId() == $linkedOriginId;
-            }));
+            $origin = array_pop(
+                array_filter(
+                    $originRepository->courses(), function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return $origin->getId() == $linkedOriginId;
+                }
+                )
+            );
             if ($origin === null) {
                 $msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
                 throw new HubException($msg);

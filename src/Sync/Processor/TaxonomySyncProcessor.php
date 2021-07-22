@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Taxonomy\Implementation\TaxonomyImplementationFactory;
 
 /**
  * Class TaxonomySyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -26,8 +25,11 @@ trait TaxonomySyncProcessor
      * @param ITaxonomyAwareObject             $iobject
      * @param ilObject                         $ilias_object
      */
-    public function handleTaxonomies(ITaxonomyAwareDataTransferObject $dto, ITaxonomyAwareObject $iobject, ilObject $ilias_object)
-    {
+    public function handleTaxonomies(
+        ITaxonomyAwareDataTransferObject $dto,
+        ITaxonomyAwareObject $iobject,
+        ilObject $ilias_object
+    ) {
         if (count($dto->getTaxonomies()) > 0) {
 
             $this->handleDTOSpecificTaxonomySettings($dto, $ilias_object);
@@ -38,7 +40,6 @@ trait TaxonomySyncProcessor
             }
         }
     }
-
 
     /**
      * @param ITaxonomyAwareDataTransferObject $dto

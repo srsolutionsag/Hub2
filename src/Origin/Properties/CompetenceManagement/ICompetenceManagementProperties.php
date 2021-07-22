@@ -6,9 +6,7 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface ICompetenceManagementProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\CompetenceManagement
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface ICompetenceManagementProperties extends IOriginProperties

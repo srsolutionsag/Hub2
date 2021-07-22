@@ -15,15 +15,14 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
 use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
+use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
-use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 
 /**
  * Class CategorySyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -34,6 +33,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     use MetadataSyncProcessor;
     use TaxonomySyncProcessor;
     use DidacticTemplateSyncProcessor;
+
     /**
      * @var CategoryProperties
      */
@@ -53,19 +53,20 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             'orderType',
         ];
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
-
 
     /**
      * @return array
@@ -75,10 +76,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         return self::$properties;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CategoryDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -101,21 +100,22 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             }
         }
         if ($this->props->get(CategoryProperties::SHOW_NEWS)) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
+            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY,
+                $dto->isShowNews());
         }
         if ($this->props->get(CategoryProperties::SHOW_INFO_TAB)) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
+            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(),
+                ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
         }
         $ilObjCategory->update();
 
         $ilObjCategory->removeTranslations();
-        $ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), self::dic()->language()->getDefaultLanguage(), true);
+        $ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(),
+            self::dic()->language()->getDefaultLanguage(), true);
     }
-
 
     /**
      * @inheritdoc
-     *
      * @param CategoryDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -137,13 +137,16 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         }
         if ($this->props->updateDTOProperty('title')) {
             $ilObjCategory->removeTranslations();
-            $ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(), self::dic()->language()->getDefaultLanguage(), true);
+            $ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(),
+                self::dic()->language()->getDefaultLanguage(), true);
         }
         if ($this->props->updateDTOProperty('showNews')) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY, $dto->isShowNews());
+            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY,
+                $dto->isShowNews());
         }
         if ($this->props->updateDTOProperty('showInfoPage')) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
+            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(),
+                ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
         }
         if ($this->props->updateDTOProperty('orderType')) {
             $sorting_settings = new ilContainerSortingSettings($ilObjCategory->getId());
@@ -158,17 +161,15 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
             $ilObjCategory->putInTree($parentRefId);
         } else {
-        if ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
-            $this->moveCategory($ilObjCategory, $dto);
-        }
+            if ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
+                $this->moveCategory($ilObjCategory, $dto);
+            }
         }
         $ilObjCategory->update();
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CategoryDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -191,10 +192,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         }
     }
 
-
     /**
      * @param CategoryDTO $category
-     *
      * @return int
      * @throws HubException
      */
@@ -232,10 +231,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         return 0;
     }
 
-
     /**
      * @param int $iliasId
-     *
      * @return ilObjCategory|null
      */
     protected function findILIASCategory($iliasId)
@@ -247,10 +244,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         return new ilObjCategory($iliasId);
     }
 
-
     /**
      * Move the category to a new parent.
-     *
      * @param ilObjCategory $ilObjCategory
      * @param CategoryDTO   $category
      */

@@ -7,7 +7,6 @@ use ilObject2;
 
 /**
  * Class AbstractRepositoryLink
- *
  * @package srag\Plugins\Hub2\Shortlink
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -26,7 +25,6 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return ilObject2::_exists($this->getILIASId(), true);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -34,7 +32,6 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     {
         return (bool) self::dic()->access()->checkAccess("read", '', $this->getILIASId());
     }
-
 
     /**
      * @inheritdoc
@@ -48,7 +45,6 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         }
     }
 
-
     /**
      * @inheritdoc
      */
@@ -59,7 +55,6 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
 
         return $link;
     }
-
 
     /**
      * @inheritdoc
@@ -76,7 +71,6 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return $link;
     }
 
-
     /**
      * @return int
      */
@@ -85,7 +79,6 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return $this->object->getILIASId();
     }
 
-
     /**
      * @return int
      */
@@ -93,7 +86,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     {
         $ref_id = $this->getILIASId();
 
-        while ($ref_id AND !self::dic()->access()->checkAccess('read', '', $ref_id) AND $ref_id != 1) {
+        while ($ref_id and !self::dic()->access()->checkAccess('read', '', $ref_id) and $ref_id != 1) {
             $ref_id = (int) self::dic()->tree()->getParentId($ref_id);
         }
 
@@ -106,10 +99,8 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return (int) $ref_id;
     }
 
-
     /**
      * @param int $ref_id
-     *
      * @return mixed|string
      */
     private function generateLink($ref_id)

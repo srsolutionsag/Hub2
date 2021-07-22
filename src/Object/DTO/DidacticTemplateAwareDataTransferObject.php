@@ -5,7 +5,7 @@ namespace srag\Plugins\Hub2\Object\DTO;
 /**
  * Trait DidacticTemplateAwareDataTransferObject
  * @package srag\Plugins\Hub2\Object\DTO
- * @author Thibeau Fuhrer <thf@studer-raimann.ch>
+ * @author  Thibeau Fuhrer <thf@studer-raimann.ch>
  */
 trait DidacticTemplateAwareDataTransferObject
 {

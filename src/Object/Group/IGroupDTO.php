@@ -4,13 +4,12 @@ namespace srag\Plugins\Hub2\Object\Group;
 
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 
 /**
  * Interface IGroupDTO
- *
  * @package srag\Plugins\Hub2\Object\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

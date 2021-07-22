@@ -34,9 +34,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginConfigFormGUI
- *
  * @package      srag\Plugins\Hub2\UI\OriginConfig
- *
  * @author       Stefan Wanzenried <sw@studer-raimann.ch>
  * @author       Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -45,6 +43,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     const POST_VAR_ADHOC = "adhoc";
     const POST_VAR_SORT = "sort";
@@ -57,7 +56,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      * @var IOriginRepository
      */
     protected $originRepository;
-
 
     /**
      * @param hub2ConfigOriginsGUI $parent_gui
@@ -82,7 +80,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         parent::__construct();
     }
 
-
     /**
      *
      */
@@ -96,22 +93,24 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
 
             // Properties for object status: NEW, UPDATE, DELETE
             $header = new ilFormSectionHeaderGUI();
-            $header->setTitle(self::plugin()->translate('common_on_status', "", [self::plugin()->translate('common_on_status_new')]));
+            $header->setTitle(self::plugin()->translate('common_on_status', "",
+                [self::plugin()->translate('common_on_status_new')]));
             $this->addItem($header);
             $this->addPropertiesNew();
 
             $header = new ilFormSectionHeaderGUI();
-            $header->setTitle(self::plugin()->translate('common_on_status', "", [self::plugin()->translate('common_on_status_update')]));
+            $header->setTitle(self::plugin()->translate('common_on_status', "",
+                [self::plugin()->translate('common_on_status_update')]));
             $this->addItem($header);
             $this->addPropertiesUpdate();
 
             $header = new ilFormSectionHeaderGUI();
-            $header->setTitle(self::plugin()->translate('common_on_status', "", [self::plugin()->translate('common_on_status_delete')]));
+            $header->setTitle(self::plugin()->translate('common_on_status', "",
+                [self::plugin()->translate('common_on_status_delete')]));
             $this->addItem($header);
             $this->addPropertiesDelete();
         }
     }
-
 
     /**
      *
@@ -119,7 +118,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     protected function addPropertiesNew()
     {
     }
-
 
     /**
      * By default, this method parses the DTO objects and presents a checkbox for each DTO property,
@@ -144,14 +142,12 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         }
     }
 
-
     /**
      *
      */
     protected function addPropertiesDelete()
     {
     }
-
 
     /**
      *
@@ -161,16 +157,17 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $h = new ilFormSectionHeaderGUI();
         $h->setTitle(self::plugin()->translate('origin_form_header_notification'));
         $this->addItem($h);
-        $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_summary_email'), $this->conf(IOriginConfig::NOTIFICATION_SUMMARY));
+        $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_summary_email'),
+            $this->conf(IOriginConfig::NOTIFICATION_SUMMARY));
         $te->setValue(implode(',', $this->origin->config()->getNotificationsSummary()));
         $te->setInfo(self::plugin()->translate('origin_form_comma_separated'));
         $this->addItem($te);
-        $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_notification_email'), $this->conf(IOriginConfig::NOTIFICATION_ERRORS));
+        $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_notification_email'),
+            $this->conf(IOriginConfig::NOTIFICATION_ERRORS));
         $te->setValue(implode(',', $this->origin->config()->getNotificationsErrors()));
         $te->setInfo(self::plugin()->translate('origin_form_comma_separated'));
         $this->addItem($te);
     }
-
 
     /**
      *
@@ -180,69 +177,98 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $header = new ilFormSectionHeaderGUI();
         $header->setTitle(self::plugin()->translate('origin_form_header_connection'));
         $this->addItem($header);
-        $ro = new ilRadioGroupInputGUI(self::plugin()->translate('origin_form_field_conf_type'), $this->conf(IOriginConfig::CONNECTION_TYPE));
+        $ro = new ilRadioGroupInputGUI(self::plugin()->translate('origin_form_field_conf_type'),
+            $this->conf(IOriginConfig::CONNECTION_TYPE));
         $ro->setValue($this->origin->config()->getConnectionType());
         {
-            $db = new ilRadioOption(self::plugin()->translate('origin_form_field_conf_type_path'), IOriginConfig::CONNECTION_TYPE_PATH, self::plugin()
-                ->translate('origin_form_field_conf_type_path_info'));
+            $db = new ilRadioOption(
+                self::plugin()->translate('origin_form_field_conf_type_path'), IOriginConfig::CONNECTION_TYPE_PATH,
+                self::plugin()
+                    ->translate('origin_form_field_conf_type_path_info')
+            );
             {
-                $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_path_path'), $this->conf(IOriginConfig::PATH));
+                $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_path_path'),
+                    $this->conf(IOriginConfig::PATH));
                 $te->setValue($this->origin->config()->get(IOriginConfig::PATH));
                 $db->addSubItem($te);
             }
             $ro->addOption($db);
-            $file = new ilRadioOption(self::plugin()
-                ->translate('origin_form_field_conf_type_db'), IOriginConfig::CONNECTION_TYPE_SERVER, self::plugin()
-                ->translate('origin_form_field_conf_type_db_info'));
+            $file = new ilRadioOption(
+                self::plugin()
+                    ->translate('origin_form_field_conf_type_db'), IOriginConfig::CONNECTION_TYPE_SERVER, self::plugin()
+                                                                                                              ->translate('origin_form_field_conf_type_db_info')
+            );
             {
-                $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_db_host'), $this->conf(IOriginConfig::SERVER_HOST));
+                $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_db_host'),
+                    $this->conf(IOriginConfig::SERVER_HOST));
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_HOST));
                 $file->addSubItem($te);
-                $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_db_port'), $this->conf(IOriginConfig::SERVER_PORT));
+                $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_conf_type_db_port'),
+                    $this->conf(IOriginConfig::SERVER_PORT));
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PORT));
                 $file->addSubItem($te);
-                $te = new ilTextInputGUI(self::plugin()
-                    ->translate('origin_form_field_conf_type_db_username'), $this->conf(IOriginConfig::SERVER_USERNAME));
+                $te = new ilTextInputGUI(
+                    self::plugin()
+                        ->translate('origin_form_field_conf_type_db_username'),
+                    $this->conf(IOriginConfig::SERVER_USERNAME)
+                );
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_USERNAME));
                 $file->addSubItem($te);
-                $te = new ilTextInputGUI(self::plugin()
-                    ->translate('origin_form_field_conf_type_db_password'), $this->conf(IOriginConfig::SERVER_PASSWORD));
+                $te = new ilTextInputGUI(
+                    self::plugin()
+                        ->translate('origin_form_field_conf_type_db_password'),
+                    $this->conf(IOriginConfig::SERVER_PASSWORD)
+                );
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
                 $file->addSubItem($te);
-                $te = new ilTextInputGUI(self::plugin()
-                    ->translate('origin_form_field_conf_type_db_database'), $this->conf(IOriginConfig::SERVER_DATABASE));
+                $te = new ilTextInputGUI(
+                    self::plugin()
+                        ->translate('origin_form_field_conf_type_db_database'),
+                    $this->conf(IOriginConfig::SERVER_DATABASE)
+                );
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_DATABASE));
                 $file->addSubItem($te);
-                $te = new ilTextInputGUI(self::plugin()
-                    ->translate('origin_form_field_conf_type_db_search_base'), $this->conf(IOriginConfig::SERVER_SEARCH_BASE));
+                $te = new ilTextInputGUI(
+                    self::plugin()
+                        ->translate('origin_form_field_conf_type_db_search_base'),
+                    $this->conf(IOriginConfig::SERVER_SEARCH_BASE)
+                );
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_SEARCH_BASE));
                 $file->addSubItem($te);
             }
             $ro->addOption($file);
-            $external = new ilRadioOption(self::plugin()
-                ->translate('origin_form_field_conf_type_external'), IOriginConfig::CONNECTION_TYPE_EXTERNAL, self::plugin()
-                ->translate('origin_form_field_conf_type_external_info'));
+            $external = new ilRadioOption(
+                self::plugin()
+                    ->translate('origin_form_field_conf_type_external'), IOriginConfig::CONNECTION_TYPE_EXTERNAL,
+                self::plugin()
+                    ->translate('origin_form_field_conf_type_external_info')
+            );
             $ro->addOption($external);
 
-            $ilias_file = new ilRadioOption(self::plugin()
-                ->translate('origin_form_field_conf_type_ilias_file'), IOriginConfig::CONNECTION_TYPE_ILIAS_FILE, self::plugin()
-                ->translate('origin_form_field_conf_type_ilias_file_info'));
+            $ilias_file = new ilRadioOption(
+                self::plugin()
+                    ->translate('origin_form_field_conf_type_ilias_file'), IOriginConfig::CONNECTION_TYPE_ILIAS_FILE,
+                self::plugin()
+                    ->translate('origin_form_field_conf_type_ilias_file_info')
+            );
             $ilias_file->addSubItem($this->getILIASFileRepositorySelector());
             $ro->addOption($ilias_file);
         }
         $this->addItem($ro);
     }
 
-
     /**
      * @return ilRepositorySelector2InputGUI
      */
     public function getILIASFileRepositorySelector() : ilRepositorySelector2InputGUI
     {
-        self::dic()->ctrl()->setParameterByClass(hub2MainGUI::class, hub2ConfigOriginsGUI::ORIGIN_ID, $this->origin->getId());
+        self::dic()->ctrl()->setParameterByClass(hub2MainGUI::class, hub2ConfigOriginsGUI::ORIGIN_ID,
+            $this->origin->getId());
 
-        $ilias_file_selector = new ilRepositorySelector2InputGUI(self::plugin()
-            ->translate("origin_form_field_conf_type_ilias_file"), $this->conf(IOriginConfig::ILIAS_FILE_REF_ID));
+        $ilias_file_selector = new ilRepositorySelector2InputGUI(
+            self::plugin()
+                ->translate("origin_form_field_conf_type_ilias_file"), $this->conf(IOriginConfig::ILIAS_FILE_REF_ID)
+        );
 
         $ilias_file_selector->getExplorerGUI()->setSelectableTypes(["file"]);
 
@@ -250,7 +276,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
 
         return $ilias_file_selector;
     }
-
 
     /**
      *
@@ -261,9 +286,17 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $h->setTitle(self::plugin()->translate('origin_form_header_sync'));
         $this->addItem($h);
 
-        $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_class_name'), 'implementation_class_name');
-        $te->setInfo(nl2br(str_replace("\\n", "\n", self::plugin()
-            ->translate('origin_form_field_class_name_info', "", [ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH)])), false));
+        $te = new ilTextInputGUI(self::plugin()->translate('origin_form_field_class_name'),
+            'implementation_class_name');
+        $te->setInfo(
+            nl2br(
+                str_replace(
+                    "\\n", "\n", self::plugin()
+                                     ->translate('origin_form_field_class_name_info', "",
+                                         [ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH)])
+                ), false
+            )
+        );
         $te->setValue($this->origin->getImplementationClassName());
         $te->setRequired(true);
         $this->addItem($te);
@@ -274,7 +307,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $te->setRequired(true);
         $this->addItem($te);
 
-        $se = new ilSelectInputGUI(self::plugin()->translate('com_prop_link_to_origin'), $this->conf(IOriginConfig::LINKED_ORIGIN_ID));
+        $se = new ilSelectInputGUI(self::plugin()->translate('com_prop_link_to_origin'),
+            $this->conf(IOriginConfig::LINKED_ORIGIN_ID));
         $options = ['' => ''];
         foreach ($this->originRepository->all() as $origin) {
             if ($origin->getId() == $this->origin->getId()) {
@@ -286,12 +320,15 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $se->setValue($this->origin->config()->getLinkedOriginId());
         $this->addItem($se);
 
-        $cb = new ilCheckboxInputGUI(self::plugin()->translate('com_prop_check_amount'), $this->conf(IOriginConfig::CHECK_AMOUNT));
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('com_prop_check_amount'),
+            $this->conf(IOriginConfig::CHECK_AMOUNT));
         $cb->setInfo(self::plugin()->translate('com_prop_check_amount_info'));
         $cb->setChecked($this->origin->config()->getCheckAmountData());
 
-        $se = new ilSelectInputGUI(self::plugin()
-            ->translate('com_prop_check_amount_percentage'), $this->conf(IOriginConfig::CHECK_AMOUNT_PERCENTAGE));
+        $se = new ilSelectInputGUI(
+            self::plugin()
+                ->translate('com_prop_check_amount_percentage'), $this->conf(IOriginConfig::CHECK_AMOUNT_PERCENTAGE)
+        );
         $options = [];
         for ($i = 10; $i <= 100; $i += 10) {
             $options[$i] = "$i%";
@@ -301,19 +338,21 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $cb->addSubItem($se);
         $this->addItem($cb);
 
-        $cb = new ilCheckboxInputGUI(self::plugin()->translate('com_prop_shortlink'), $this->conf(IOriginConfig::SHORT_LINK));
+        $cb = new ilCheckboxInputGUI(self::plugin()->translate('com_prop_shortlink'),
+            $this->conf(IOriginConfig::SHORT_LINK));
         $cb->setChecked($this->origin->config()->useShortLink());
-        $subcb = new ilCheckboxInputGUI(self::plugin()->translate('com_prop_force_login'), $this->conf(IOriginConfig::SHORT_LINK_FORCE_LOGIN));
+        $subcb = new ilCheckboxInputGUI(self::plugin()->translate('com_prop_force_login'),
+            $this->conf(IOriginConfig::SHORT_LINK_FORCE_LOGIN));
         $subcb->setChecked($this->origin->config()->useShortLinkForcedLogin());
         $cb->addSubItem($subcb);
         $this->addItem($cb);
 
-        $te = new ilTextInputGUI(self::plugin()->translate('origin_from_field_active_period'), $this->conf(IOriginConfig::ACTIVE_PERIOD));
+        $te = new ilTextInputGUI(self::plugin()->translate('origin_from_field_active_period'),
+            $this->conf(IOriginConfig::ACTIVE_PERIOD));
         $te->setInfo(self::plugin()->translate('origin_from_field_active_period_info'));
         $te->setValue($this->origin->config()->getActivePeriod());
         $this->addItem($te);
     }
-
 
     /**
      *
@@ -351,7 +390,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             $item->setInfo(self::plugin()->translate("origin_form_field_adhoc_info"));
 
             if ($this->hasOriginAdHocParentScope()) {
-                $subitem = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc_parent_scope"), "adhoc_parent_scope");
+                $subitem = new ilCheckboxInputGUI(self::plugin()->translate("origin_form_field_adhoc_parent_scope"),
+                    "adhoc_parent_scope");
                 $subitem->setChecked($this->origin->isAdhocParentScope());
                 $subitem->setInfo(self::plugin()->translate("origin_form_field_adhoc_parent_scope_info"));
                 $item->addSubItem($subitem);
@@ -373,7 +413,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         }
     }
 
-
     /**
      * @return bool
      */
@@ -391,10 +430,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         }
     }
 
-
     /**
      * @param string $postVar
-     *
      * @return string
      */
     protected function prop($postVar)
@@ -402,10 +439,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         return 'prop_' . $postVar;
     }
 
-
     /**
      * @param string $postVar
-     *
      * @return string
      */
     protected function conf($postVar)

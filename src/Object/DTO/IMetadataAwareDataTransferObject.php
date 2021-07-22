@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
 
 /**
  * Interface IMetadataAwareDataTransferObject
- *
  * @package srag\Plugins\Hub2\Object\DTO
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -15,11 +14,9 @@ interface IMetadataAwareDataTransferObject extends IDataTransferObject
 
     /**
      * @param IMetadata $IMetadata
-     *
      * @return IMetadataAwareDataTransferObject
      */
     public function addMetadata(IMetadata $IMetadata) : IMetadataAwareDataTransferObject;
-
 
     /**
      * @return IMetadata[]

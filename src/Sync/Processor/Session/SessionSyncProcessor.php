@@ -24,7 +24,6 @@ use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 
 /**
  * Class SessionSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -33,6 +32,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
     use MetadataSyncProcessor;
     use TaxonomySyncProcessor;
+
     /**
      * @var SessionProperties
      */
@@ -60,19 +60,20 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             "waitingListAutoFill",
         );
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
-
 
     /**
      * @return array
@@ -82,10 +83,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         return self::$properties;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param SessionDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -123,10 +122,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         $ilObjSession->getFirstAppointment()->create();
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param SessionDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -162,10 +159,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param SessionDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -188,10 +183,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         }
     }
 
-
     /**
      * @param int $ilias_id
-     *
      * @return ilObjSession|null
      */
     protected function findILIASObject($ilias_id)
@@ -203,10 +196,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         return new ilObjSession($ilias_id);
     }
 
-
     /**
      * @param SessionDTO $session
-     *
      * @return int
      * @throws HubException
      */
@@ -227,10 +218,14 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             }
             $originRepository = new OriginRepository();
             $possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
-            $origin = array_pop(array_filter($possible_parents, function ($origin) use ($linkedOriginId) {
-                /** @var IOrigin $origin */
-                return (int) $origin->getId() == $linkedOriginId;
-            }));
+            $origin = array_pop(
+                array_filter(
+                    $possible_parents, function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return (int) $origin->getId() == $linkedOriginId;
+                }
+                )
+            );
             if ($origin === null) {
                 $msg = "The linked origin syncing courses or groups was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
@@ -256,12 +251,10 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         return 0;
     }
 
-
     /**
      * @param SessionDTO   $object
      * @param ilObjSession $ilObjSession
      * @param bool         $force
-     *
      * @return ilObjSession
      */
     protected function setDataForFirstAppointment(SessionDTO $object, ilObjSession $ilObjSession, $force = false)
@@ -291,9 +284,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
         return $ilObjSession;
     }
 
-
     /**
-     * @param $ilObjSession $ilObjCourse
+     * @param            $ilObjSession $ilObjCourse
      * @param SessionDTO $session
      */
     protected function moveSession(ilObjSession $ilObjSession, SessionDTO $session)

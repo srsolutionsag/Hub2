@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractTaxonomy
- *
  * @package srag\Plugins\Hub2\Taxonomy\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -21,6 +20,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
@@ -47,10 +47,8 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
      */
     protected $ilias_parent_id;
 
-
     /**
      * Taxonomy constructor
-     *
      * @param ITaxonomy $taxonomy
      */
     public function __construct(ITaxonomy $taxonomy, int $ilias_parent_id)
@@ -58,7 +56,6 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         $this->taxonomy = $taxonomy;
         $this->ilias_parent_id = $ilias_parent_id;
     }
-
 
     /**
      * @return bool
@@ -80,7 +77,6 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         return false;
     }
 
-
     /**
      *
      */
@@ -90,7 +86,6 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         $this->tree_root_id = $this->tree->readRootId();
         $this->setChildrenByParentId($this->tree_root_id);
     }
-
 
     /**
      * @param int $parent_id
@@ -103,10 +98,8 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         }
     }
 
-
     /**
      * @param INode $node
-     *
      * @return bool
      */
     protected function nodeExists(INode $node) : bool
@@ -114,12 +107,10 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         return in_array($node->getTitle(), $this->childs);
     }
 
-
     /**
      * @inheritdoc
      */
     abstract public function write();
-
 
     /**
      * @inheritdoc
@@ -128,7 +119,6 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     {
         return $this->taxonomy;
     }
-
 
     /**
      * @inheritdoc

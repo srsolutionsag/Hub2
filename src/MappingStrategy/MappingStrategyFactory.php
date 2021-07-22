@@ -9,7 +9,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class MappingStrategyFactory
- *
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,6 +17,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var Version
@@ -40,7 +40,6 @@ class MappingStrategyFactory implements IMappingStrategyFactory
         return new ByEmail($this->version);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -48,7 +47,6 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     {
         return new ByLogin();
     }
-
 
     /**
      * @inheritdoc
@@ -58,7 +56,6 @@ class MappingStrategyFactory implements IMappingStrategyFactory
         return new ByExternalAccount();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -66,7 +63,6 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     {
         return new ByTitle();
     }
-
 
     /**
      * @inheritdoc
@@ -76,7 +72,6 @@ class MappingStrategyFactory implements IMappingStrategyFactory
         return new ByImportId();
     }
 
-
     /**
      * @inheritDoc
      */
@@ -84,7 +79,6 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     {
         return new ByExtId();
     }
-
 
     /**
      * @inheritdoc

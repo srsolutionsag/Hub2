@@ -10,7 +10,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectDTO
- *
  * @package srag\Plugins\Hub2\Object\DTO
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -20,6 +19,7 @@ abstract class DataTransferObject implements IDataTransferObject
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
@@ -38,7 +38,6 @@ abstract class DataTransferObject implements IDataTransferObject
      */
     protected $additionalData;
 
-
     /**
      * @param string $ext_id
      */
@@ -46,7 +45,6 @@ abstract class DataTransferObject implements IDataTransferObject
     {
         $this->ext_id = $ext_id;
     }
-
 
     /**
      * @inheritdoc
@@ -56,7 +54,6 @@ abstract class DataTransferObject implements IDataTransferObject
         return $this->ext_id;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -64,7 +61,6 @@ abstract class DataTransferObject implements IDataTransferObject
     {
         return $this->period;
     }
-
 
     /**
      * @inheritdoc
@@ -75,7 +71,6 @@ abstract class DataTransferObject implements IDataTransferObject
 
         return $this;
     }
-
 
     /**
      * @inheritdoc
@@ -89,7 +84,6 @@ abstract class DataTransferObject implements IDataTransferObject
 
         return $data;
     }
-
 
     /**
      * @inheritdoc
@@ -105,7 +99,6 @@ abstract class DataTransferObject implements IDataTransferObject
         return $this;
     }
 
-
     /**
      * @return array
      */
@@ -117,7 +110,6 @@ abstract class DataTransferObject implements IDataTransferObject
         }
         );
     }
-
 
     /**
      * @return string
@@ -132,7 +124,6 @@ abstract class DataTransferObject implements IDataTransferObject
         );
     }
 
-
     /**
      * @inheritdoc
      */
@@ -140,7 +131,6 @@ abstract class DataTransferObject implements IDataTransferObject
     {
         return $this->should_deleted;
     }
-
 
     /**
      * @inheritdoc
@@ -151,7 +141,6 @@ abstract class DataTransferObject implements IDataTransferObject
 
         return $this;
     }
-
 
     /**
      * @inheritdoc
@@ -166,7 +155,6 @@ abstract class DataTransferObject implements IDataTransferObject
         return $object;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -176,7 +164,6 @@ abstract class DataTransferObject implements IDataTransferObject
 
         return $this;
     }
-
 
     /**
      * @param array  $data
@@ -190,7 +177,6 @@ abstract class DataTransferObject implements IDataTransferObject
         }
     }
 
-
     /**
      * @param array  $data
      * @param string $key
@@ -202,7 +188,6 @@ abstract class DataTransferObject implements IDataTransferObject
                 $this->{$key} = $data[$key];
         }
     }
-
 
     /**
      * @inheritdoc

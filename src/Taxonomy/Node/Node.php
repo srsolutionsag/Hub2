@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Node
- *
  * @package srag\Plugins\Hub2\Taxonomy\Node
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -17,6 +16,7 @@ class Node implements INode
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
@@ -27,14 +27,14 @@ class Node implements INode
      */
     protected $nodes = [];
 
-
     /**
      * Node constructor
-     *
      * @param string $title
      */
-    public function __construct(string $title) { $this->title = $title; }
-
+    public function __construct(string $title)
+    {
+        $this->title = $title;
+    }
 
     /**
      * @return string
@@ -44,7 +44,6 @@ class Node implements INode
         return $this->title;
     }
 
-
     /**
      * @param string $title
      */
@@ -53,7 +52,6 @@ class Node implements INode
         $this->title = $title;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -61,7 +59,6 @@ class Node implements INode
     {
         return $this->nodes;
     }
-
 
     /**
      * @inheritdoc
@@ -75,7 +72,6 @@ class Node implements INode
 
         return $titles;
     }
-
 
     /**
      * @inheritdoc

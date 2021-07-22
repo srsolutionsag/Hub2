@@ -6,9 +6,7 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
 
 /**
  * Class OrgUnitOriginConfig
- *
  * @package srag\Plugins\Hub2\Origin\Config\OrgUnit
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig
@@ -19,9 +17,8 @@ class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig
      */
     protected $orgUnitConfig
         = [
-            self::REF_ID_IF_NO_PARENT_ID => 0
+            self::REF_ID_IF_NO_PARENT_ID => 0,
         ];
-
 
     /**
      * @param array $data
@@ -30,7 +27,6 @@ class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig
     {
         parent::__construct(array_merge($this->orgUnitConfig, $data));
     }
-
 
     /**
      * @inheritdoc

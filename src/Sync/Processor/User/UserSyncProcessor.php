@@ -19,7 +19,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class UserProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -28,6 +27,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 {
 
     use MetadataSyncProcessor;
+
     /**
      * @var UserProperties
      */
@@ -65,22 +65,23 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
             'gender',
             'birthday',
             'language',
-            'passwd'
+            'passwd',
         );
-
 
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
-
 
     /**
      * @return array
@@ -90,10 +91,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         return self::$properties;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param UserDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -140,12 +139,9 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         $this->assignILIASRoles($dto, $ilObjUser);
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param UserDTO $dto
-     *
      * @throws ilUserException
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -201,7 +197,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         $ilObjUser->update();
     }
 
-
     private function sendPasswordMail(IDataTransferObject $dto)
     {
         /** @var UserDTO $dto */
@@ -213,20 +208,20 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
             $mail->To($dto->getEmail());
             $body = $this->props->get(UserProperties::PASSWORD_MAIL_BODY);
 
-            $body = strtr($body, array(
-                '[PASSWORD]' => $dto->getPasswd(),
-                '[LOGIN]'    => $dto->getLogin()
-            ));
+            $body = strtr(
+                $body, array(
+                    '[PASSWORD]' => $dto->getPasswd(),
+                    '[LOGIN]' => $dto->getLogin(),
+                )
+            );
             $mail->Subject($this->props->get(UserProperties::PASSWORD_MAIL_SUBJECT)); // TODO: Also replace placeholders
             $mail->Body($body);
             $mail->Send();
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param UserDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -249,7 +244,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         }
     }
 
-
     /**
      * @param UserDTO   $user
      * @param ilObjUser $ilObjUser
@@ -261,13 +255,10 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         }
     }
 
-
     /**
      * Build the login name depending on the origin properties
-     *
      * @param UserDTO   $user
      * @param ilObjUser $ilObjUser
-     *
      * @return string
      */
     protected function buildLogin(UserDTO $user, ilObjUser $ilObjUser)
@@ -289,10 +280,12 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
                 $login = $user->getLogin();
                 break;
             case IUserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME:
-                $login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
+                $login = substr($this->clearString($user->getFirstname()), 0,
+                        1) . '.' . $this->clearString($user->getLastname());
                 break;
             default:
-                $login = substr($this->clearString($user->getFirstname()), 0, 1) . '.' . $this->clearString($user->getLastname());
+                $login = substr($this->clearString($user->getFirstname()), 0,
+                        1) . '.' . $this->clearString($user->getLastname());
         }
 
         if (!$this->config->isKeepCase()) {
@@ -312,10 +305,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         return $login;
     }
 
-
     /**
      * @param int $ilias_id
-     *
      * @return ilObjUser|null
      */
     protected function findILIASUser($ilias_id)
@@ -326,7 +317,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
         return new ilObjUser($ilias_id);
     }
-
 
     /**
      * @return string

@@ -4,9 +4,7 @@ namespace srag\Plugins\Hub2\Object\CompetenceManagement\SkillLevel;
 
 /**
  * Class SkillLevel
- *
  * @package srag\Plugins\Hub2\Object\CompetenceManagement\SkillLevel
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class SkillLevel implements ISkillLevel
@@ -25,10 +23,8 @@ class SkillLevel implements ISkillLevel
      */
     protected $description = "";
 
-
     /**
      * SkillLevel constructor
-     *
      * @param string $ext_id
      * @param string $title
      * @param string $description
@@ -40,7 +36,6 @@ class SkillLevel implements ISkillLevel
         $this->description = $description;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -48,7 +43,6 @@ class SkillLevel implements ISkillLevel
     {
         return $this->ext_id;
     }
-
 
     /**
      * @inheritdoc
@@ -60,7 +54,6 @@ class SkillLevel implements ISkillLevel
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -68,7 +61,6 @@ class SkillLevel implements ISkillLevel
     {
         return $this->title;
     }
-
 
     /**
      * @inheritdoc
@@ -80,7 +72,6 @@ class SkillLevel implements ISkillLevel
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -88,7 +79,6 @@ class SkillLevel implements ISkillLevel
     {
         return $this->description;
     }
-
 
     /**
      * @inheritdoc
@@ -100,16 +90,15 @@ class SkillLevel implements ISkillLevel
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
     public function jsonSerialize() : array
     {
         return [
-            "ext_id"      => $this->ext_id,
-            "title"       => $this->title,
-            "description" => $this->description
+            "ext_id" => $this->ext_id,
+            "title" => $this->title,
+            "description" => $this->description,
         ];
     }
 }

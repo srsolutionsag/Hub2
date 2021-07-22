@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
 
 /**
  * Class GroupOriginConfig
- *
  * @package srag\Plugins\Hub2\Origin\Config\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -21,12 +20,10 @@ class GroupOriginConfig extends OriginConfig implements IGroupOriginConfig
             self::REF_ID_NO_PARENT_ID_FOUND => 1,
         ];
 
-
     public function __construct(array $data)
     {
         parent::__construct(array_merge($this->courseData, $data));
     }
-
 
     /**
      * @inheritdoc

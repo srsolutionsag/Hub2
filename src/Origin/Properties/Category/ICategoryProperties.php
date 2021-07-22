@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface ICategoryProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -22,7 +21,6 @@ interface ICategoryProperties extends IOriginProperties
     const DELETE_MODE_NONE = 0;
     const DELETE_MODE_MARK = 1;
     const DELETE_MODE_DELETE = 2;
-
 
     /**
      * @return array

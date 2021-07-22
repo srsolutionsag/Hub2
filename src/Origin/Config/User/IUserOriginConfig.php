@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 
 /**
  * Interface IUserOriginConfig
- *
  * @package srag\Plugins\Hub2\Origin\Config\User
  */
 interface IUserOriginConfig extends IOriginConfig
@@ -38,7 +37,6 @@ interface IUserOriginConfig extends IOriginConfig
      * @return bool
      */
     public function isKeepCase() : bool;
-
 
     /**
      * @return array

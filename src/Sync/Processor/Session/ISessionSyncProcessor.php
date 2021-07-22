@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
 
 /**
  * Interface ISessionSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

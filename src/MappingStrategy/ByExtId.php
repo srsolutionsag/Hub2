@@ -22,11 +22,8 @@ use srag\Plugins\Hub2\Object\User\IUserDTO;
 
 /**
  * Class ByExtId
- *
  * Used to map new records from one origin to existing records of other origins
- *
  * @package srag\Plugins\Hub2\MappingStrategy
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class ByExtId extends AMappingStrategy implements IMappingStrategy
@@ -71,7 +68,8 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
                 break;
         }
 
-        $result = self::dic()->database()->queryF('SELECT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s', [ilDBConstants::T_TEXT], [$dto->getExtId()]);
+        $result = self::dic()->database()->queryF('SELECT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s',
+            [ilDBConstants::T_TEXT], [$dto->getExtId()]);
 
         if ($result->rowCount() > 0) {
             if ($result->rowCount() > 1) {

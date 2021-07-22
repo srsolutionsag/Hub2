@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class IMetadataFactory
- *
  * @package srag\Plugins\Hub2\Metadata
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -17,12 +16,11 @@ class MetadataFactory implements IMetadataFactory
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @param int $id
-     *
      * @return IMetadata
      */
     public function getDTOWithIliasId(int $ilas_id, int $record_id = IMetadata::DEFAULT_RECORD_ID) : IMetadata

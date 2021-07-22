@@ -7,15 +7,14 @@ use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 
 /**
  * Class OrgUnitDTO
- *
  * @package srag\Plugins\Hub2\Object\OrgUnit
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
 {
 
     use MappingStrategyAwareDataTransferObject;
+
     /**
      * @var string
      */
@@ -45,7 +44,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
      */
     protected $ext_id = "";
 
-
     /**
      * @inheritdoc
      */
@@ -55,7 +53,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         $this->ext_id = $ext_id;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -63,7 +60,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     {
         return $this->title;
     }
-
 
     /**
      * @inheritdoc
@@ -75,7 +71,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -83,7 +78,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     {
         return $this->description;
     }
-
 
     /**
      * @inheritdoc
@@ -95,7 +89,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -103,7 +96,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     {
         return $this->owner;
     }
-
 
     /**
      * @inheritdoc
@@ -115,7 +107,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -123,7 +114,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     {
         return $this->parent_id;
     }
-
 
     /**
      * @inheritdoc
@@ -135,7 +125,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -143,7 +132,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     {
         return $this->parent_id_type;
     }
-
 
     /**
      * @inheritdoc
@@ -155,7 +143,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -163,7 +150,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     {
         return $this->org_unit_type;
     }
-
 
     /**
      * @inheritdoc
@@ -175,7 +161,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -183,7 +168,6 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     {
         return $this->ext_id;
     }
-
 
     /**
      * @inheritdoc

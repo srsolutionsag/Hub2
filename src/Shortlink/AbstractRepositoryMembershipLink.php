@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
 
 /**
  * Class AbstractRepositoryMembershipLink
- *
  * @package srag\Plugins\Hub2\Shortlink
  * @author  Timon Amstutz <timon.amstutz@ilub.unibe.ch>
  */

@@ -2,13 +2,13 @@
 
 namespace srag\Plugins\Hub2\Sync;
 
-use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 use ilObject;
+use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 
 /**
  * Trait DidacticTemplateSyncProcessor
  * @package srag\Plugins\Hub2\Sync
- * @author Thibeau Fuhrer <thf@studer-raimann.ch>
+ * @author  Thibeau Fuhrer <thf@studer-raimann.ch>
  */
 trait DidacticTemplateSyncProcessor
 {

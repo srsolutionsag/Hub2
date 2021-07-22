@@ -16,7 +16,6 @@ use srag\Plugins\Hub2\Sync\Processor\User\IUserSyncProcessor;
 
 /**
  * Interface ISyncProcessorFactory
- *
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -28,60 +27,50 @@ interface ISyncProcessorFactory
      */
     public function user();
 
-
     /**
      * @return ICourseSyncProcessor
      */
     public function course();
-
 
     /**
      * @return ICategorySyncProcessor
      */
     public function category();
 
-
     /**
      * @return ISessionSyncProcessor
      */
     public function session();
-
 
     /**
      * @return ICourseMembershipSyncProcessor
      */
     public function courseMembership();
 
-
     /**
      * @return IGroupSyncProcessor
      */
     public function group();
-
 
     /**
      * @return IGroupMembershipSyncProcessor
      */
     public function groupMembership();
 
-
     /**
      * @return ISessionMembershipSyncProcessor
      */
     public function sessionMembership();
-
 
     /**
      * @return IOrgUnitSyncProcessor
      */
     public function orgUnit() : IOrgUnitSyncProcessor;
 
-
     /**
      * @return IOrgUnitMembershipSyncProcessor
      */
     public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor;
-
 
     /**
      * @return ICompetenceManagementSyncProcessor

@@ -31,7 +31,6 @@ use srag\Plugins\Hub2\Shortlink\User\UserLink;
 
 /**
  * Class ObjectLinkFactory
- *
  * @package srag\Plugins\Hub2\Shortlink
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -43,7 +42,6 @@ class ObjectLinkFactory
      */
     private $origin_factory;
 
-
     /**
      * ObjectLinkFactory constructor
      */
@@ -52,10 +50,8 @@ class ObjectLinkFactory
         $this->origin_factory = new OriginFactory();
     }
 
-
     /**
      * @param string $ext_id
-     *
      * @return IObjectLink
      */
     public function findByExtId(string $ext_id) : IObjectLink
@@ -71,11 +67,9 @@ class ObjectLinkFactory
         return new NullLink();
     }
 
-
     /**
      * @param string  $ext_id
      * @param IOrigin $origin
-     *
      * @return IObjectLink
      */
     public function findByExtIdAndOrigin(string $ext_id, IOrigin $origin) : IObjectLink
@@ -87,10 +81,8 @@ class ObjectLinkFactory
         return $this->findByObject($object);
     }
 
-
     /**
      * @param ARObject $object
-     *
      * @return IObjectLink
      */
     public function findByObject(ARObject $object) : IObjectLink

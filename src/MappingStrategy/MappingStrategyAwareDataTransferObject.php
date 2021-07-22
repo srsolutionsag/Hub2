@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class MappingStrategyAwareDataTransferObject
- *
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,7 +17,6 @@ trait MappingStrategyAwareDataTransferObject
      */
     private $_mapping_strategy;
 
-
     /**
      * @inheritdoc
      */
@@ -27,10 +25,8 @@ trait MappingStrategyAwareDataTransferObject
         return $this->_mapping_strategy ? $this->_mapping_strategy : new None();
     }
 
-
     /**
      * @inheritdoc
-     *
      * @return static
      */
     public function overrideMappingStrategy(IMappingStrategy $strategy) : IDataTransferObject

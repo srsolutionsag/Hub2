@@ -21,7 +21,6 @@ use Throwable;
 
 /**
  * Class RunSync
- *
  * @package srag\Plugins\Hub2\Jobs
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -30,6 +29,7 @@ class RunSync extends ilCronJob
 
     use DICTrait;
     use Hub2Trait;
+
     const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID;
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
@@ -45,10 +45,8 @@ class RunSync extends ilCronJob
      */
     protected $force_update;
 
-
     /**
      * RunSync constructor
-     *
      * @param IOrigin[]               $origins
      * @param IOriginSyncSummary|null $summary
      * @param bool                    $force_update
@@ -63,7 +61,6 @@ class RunSync extends ilCronJob
         $this->force_update = $force_update;
     }
 
-
     /**
      * @return string
      */
@@ -71,7 +68,6 @@ class RunSync extends ilCronJob
     {
         return self::CRON_JOB_ID;
     }
-
 
     /**
      * @return string
@@ -81,7 +77,6 @@ class RunSync extends ilCronJob
         return ilHub2Plugin::PLUGIN_NAME;
     }
 
-
     /**
      * @return string
      */
@@ -89,7 +84,6 @@ class RunSync extends ilCronJob
     {
         return "";
     }
-
 
     /**
      * @return bool
@@ -99,7 +93,6 @@ class RunSync extends ilCronJob
         return true;
     }
 
-
     /**
      * @return bool
      */
@@ -107,7 +100,6 @@ class RunSync extends ilCronJob
     {
         return true;
     }
-
 
     /**
      * @return int
@@ -117,7 +109,6 @@ class RunSync extends ilCronJob
         return ilCronJob::SCHEDULE_TYPE_DAILY;
     }
 
-
     /**
      * @return null
      */
@@ -125,7 +116,6 @@ class RunSync extends ilCronJob
     {
         return 1;
     }
-
 
     /**
      * @return AbstractResult

@@ -10,7 +10,6 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Class TaxonomyCreate
- *
  * @package srag\Plugins\Hub2\Taxonomy\Implementation
  */
 class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
@@ -28,7 +27,6 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
         ilObjTaxonomy::saveUsage($this->ilObjTaxonomy->getId(), ilObject2::_lookupObjId($this->getILIASParentId()));
         $this->handleNodes();
     }
-
 
     /**
      *
@@ -51,7 +49,6 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
         $this->ilObjTaxonomy = $tax;
     }
 
-
     protected function handleNodes()
     {
         $this->initTaxTree();
@@ -61,7 +58,6 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
             }
         }
     }
-
 
     /**
      * @param INode $nodeDTO

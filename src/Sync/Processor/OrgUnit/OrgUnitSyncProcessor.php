@@ -22,9 +22,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class OrgUnitSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\OrgUnit
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncProcessor
@@ -47,19 +45,20 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      */
     protected $current_ilias_object = null;
 
-
     /**
      * @param IOrgUnitOrigin          $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
-
 
     /**
      * @return array
@@ -69,29 +68,31 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         return self::$properties;
     }
 
-
     /**
      * @param IDataTransferObjectSort[] $sort_dtos
-     *
      * @return bool
      * @throws HubException
      */
     public function handleSort(array $sort_dtos) : bool
     {
-        $sort_dtos = array_filter($sort_dtos, function (IDataTransferObjectSort $sort_dto) : bool {
+        $sort_dtos = array_filter(
+            $sort_dtos, function (IDataTransferObjectSort $sort_dto) : bool {
             /**
              * @var IOrgUnitDTO $dto
              */
             $dto = $sort_dto->getDtoObject();
 
             return ($dto->getParentIdType() === IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID && !$this->isRootId($dto));
-        });
+        }
+        );
 
-        $dtos = array_reduce($sort_dtos, function (array $dtos, IDataTransferObjectSort $sort_dto) : array {
+        $dtos = array_reduce(
+            $sort_dtos, function (array $dtos, IDataTransferObjectSort $sort_dto) : array {
             $dtos[$sort_dto->getDtoObject()->getExtId()] = $sort_dto->getDtoObject();
 
             return $dtos;
-        }, []);
+        }, []
+        );
 
         foreach ($sort_dtos as $sort_dto) {
             /**
@@ -111,10 +112,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         return true;
     }
 
-
     /**
      * @param IOrgUnitDTO $dto
-     *
      * @return bool
      * @throws HubException
      */
@@ -127,10 +126,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         //	|| $parent_id === ilObjOrgUnit::getRootOrgRefId()));
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param IOrgUnitDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -157,10 +154,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         $this->writeRBACLog($this->current_ilias_object->getRefId());
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param IOrgUnitDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -194,20 +189,18 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
             $this->current_ilias_object->putInTree($parent_id);
         } else {
-        if ($this->props->get(IOrgUnitProperties::MOVE)) {
-            if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
-                || $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)
-            ) {
-                $this->moveOrgUnit($dto);
+            if ($this->props->get(IOrgUnitProperties::MOVE)) {
+                if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
+                    || $this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID_TYPE)
+                ) {
+                    $this->moveOrgUnit($dto);
+                }
             }
-        }
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param IOrgUnitDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -230,10 +223,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         }
     }
 
-
     /**
      * @param int $obj_id
-     *
      * @return ilObjOrgUnit|null
      */
     protected function getOrgUnitObject(int $obj_id)
@@ -252,10 +243,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         }
     }
 
-
     /**
      * @param IOrgUnitDTO $dto
-     *
      * @return int
      */
     protected function getOrgUnitTypeId(IOrgUnitDTO $dto) : int
@@ -266,7 +255,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
             /**
              * @var ilOrgUnitType $org_type
              */
-            if (ilOrgUnitTypeTranslation::getInstance($org_type->getId(), $org_type->getDefaultLang())->getMember("title")
+            if (ilOrgUnitTypeTranslation::getInstance($org_type->getId(),
+                    $org_type->getDefaultLang())->getMember("title")
                 === $dto->getOrgUnitType()
             ) {
                 $orgu_type_id = (int) $org_type->getId();
@@ -277,10 +267,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         return $orgu_type_id;
     }
 
-
     /**
      * @param IOrgUnitDTO $dto
-     *
      * @return int
      * @throws HubException
      */
@@ -322,10 +310,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         return $parent_id;
     }
 
-
     /**
      * @param IOrgUnitDTO $dto
-     *
      * @throws HubException
      */
     protected function moveOrgUnit(IOrgUnitDTO $dto)

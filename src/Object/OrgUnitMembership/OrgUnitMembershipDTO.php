@@ -7,9 +7,7 @@ use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObje
 
 /**
  * Class OrgUnitMembershipDTO
- *
  * @package srag\Plugins\Hub2\Object\OrgUnitMembership
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembershipDTO
@@ -32,7 +30,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
      */
     protected $position;
 
-
     /**
      * @param string $org_unit_id
      * @param int    $user_id
@@ -46,7 +43,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         $this->position = $position;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -54,7 +50,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     {
         return $this->org_unit_id;
     }
-
 
     /**
      * @inheritdoc
@@ -66,7 +61,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -74,7 +68,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     {
         return $this->org_unit_id_type;
     }
-
 
     /**
      * @inheritdoc
@@ -86,7 +79,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -94,7 +86,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     {
         return $this->user_id;
     }
-
 
     /**
      * @inheritdoc
@@ -106,7 +97,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -114,7 +104,6 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     {
         return $this->position;
     }
-
 
     /**
      * @inheritdoc

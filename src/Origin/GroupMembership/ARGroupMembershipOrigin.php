@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Origin\Properties\GroupMembership\GroupMembershipPropertie
 
 /**
  * Class ARGroupMembershipOrigin
- *
  * @package srag\Plugins\Hub2\Origin\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -22,7 +21,6 @@ class ARGroupMembershipOrigin extends AROrigin implements IGroupMembershipOrigin
     {
         return new GroupMembershipOriginConfig($data);
     }
-
 
     /**
      * @inheritdoc

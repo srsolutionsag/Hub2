@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipPrope
 
 /**
  * Class ARSessionMembershipOrigin
- *
  * @package srag\Plugins\Hub2\Origin\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -22,7 +21,6 @@ class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOr
     {
         return new SessionMembershipOriginConfig($data);
     }
-
 
     /**
      * @inheritdoc

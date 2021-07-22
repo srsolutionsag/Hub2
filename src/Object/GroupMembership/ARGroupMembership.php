@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class ARGroup
- *
  * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

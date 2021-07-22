@@ -27,7 +27,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class SyncProcessorFactory
- *
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -37,6 +36,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin
@@ -44,7 +44,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     protected $origin;
     /**
      * @var IObjectStatusTransition
-     *
      * @deprecated
      */
     protected $statusTransition;
@@ -53,19 +52,20 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     protected $implementation;
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $statusTransition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $statusTransition
+    ) {
         $this->origin = $origin;
         $this->statusTransition = $statusTransition;
         $this->implementation = $implementation;
     }
-
 
     /**
      * @inheritdoc
@@ -75,15 +75,14 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         return new UserSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
 
-
     /**
      * @inheritdoc
      */
     public function course()
     {
-        return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new CourseActivities(self::dic()->database()));
+        return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition,
+            new CourseActivities(self::dic()->database()));
     }
-
 
     /**
      * @inheritdoc
@@ -93,7 +92,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         return new CategorySyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -101,7 +99,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     {
         return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
-
 
     /**
      * @inheritdoc
@@ -111,15 +108,14 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
 
-
     /**
      * @inheritdoc
      */
     public function group()
     {
-        return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition, new GroupActivities(self::dic()->database()));
+        return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition,
+            new GroupActivities(self::dic()->database()));
     }
-
 
     /**
      * @inheritdoc
@@ -129,7 +125,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         return new GroupMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -137,7 +132,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     {
         return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
-
 
     /**
      * @inheritdoc
@@ -147,7 +141,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -155,7 +148,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     {
         return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
-
 
     /**
      * @inheritdoc

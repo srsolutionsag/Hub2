@@ -16,9 +16,7 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 
 /**
  * Class ByImportId
- *
  * @package srag\Plugins\Hub2\MappingStrategy
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class ByImportId extends AMappingStrategy implements IMappingStrategy
@@ -64,11 +62,19 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
         }
 
         if ($dto instanceof ICompetenceManagementDTO) {
-            $result = self::dic()->database()->queryF('SELECT obj_id FROM skl_tree_node WHERE ' . self::dic()->database()
-                    ->like("import_id", ilDBConstants::T_TEXT, IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()), [], []);
+            $result = self::dic()->database()->queryF(
+                'SELECT obj_id FROM skl_tree_node WHERE ' . self::dic()->database()
+                                                                ->like("import_id", ilDBConstants::T_TEXT,
+                                                                    IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()),
+                [], []
+            );
         } else {
-            $result = self::dic()->database()->queryF('SELECT obj_id FROM object_data WHERE type=%s AND ' . self::dic()->database()
-                    ->like("import_id", ilDBConstants::T_TEXT, IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()), [ilDBConstants::T_TEXT], [$object_type]);
+            $result = self::dic()->database()->queryF(
+                'SELECT obj_id FROM object_data WHERE type=%s AND ' . self::dic()->database()
+                                                                          ->like("import_id", ilDBConstants::T_TEXT,
+                                                                              IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()),
+                [ilDBConstants::T_TEXT], [$object_type]
+            );
         }
 
         if ($result->rowCount() > 0) {

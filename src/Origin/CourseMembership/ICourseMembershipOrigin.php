@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Interface ICourseMembershipOrigin
- *
  * @package srag\Plugins\Hub2\Origin\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

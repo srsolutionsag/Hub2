@@ -15,6 +15,7 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
  */
 class ByEmail extends AMappingStrategy implements IMappingStrategy
 {
+
     private const GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6 = '_getUserIdsByEmail';
     private const GET_USER_IDS_BY_EMAIL_ILIAS_6 = 'getUserIdsByEmail';
     /**
@@ -46,7 +47,7 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
             $method = self::GET_USER_IDS_BY_EMAIL_ILIAS_6;
         }
 
-        $login             = false;
+        $login = false;
         $user_ids_by_email = ilObjUser::{$method}($dto->getEmail());
         if (is_array($user_ids_by_email)) {
             $login = $user_ids_by_email[0];
@@ -60,6 +61,5 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
         } else {
             return (int) $login;
         }
-
     }
 }

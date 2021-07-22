@@ -7,7 +7,6 @@ use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 
 /**
  * Class OriginConfig
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Origin\Config
@@ -20,25 +19,24 @@ class OriginConfig implements IOriginConfig
      */
     protected $data
         = [
-            self::CHECK_AMOUNT            => false,
+            self::CHECK_AMOUNT => false,
             self::CHECK_AMOUNT_PERCENTAGE => 10,
-            self::SHORT_LINK              => false,
-            self::SHORT_LINK_FORCE_LOGIN  => false,
-            self::NOTIFICATION_ERRORS     => '',
-            self::NOTIFICATION_SUMMARY    => '',
-            self::CONNECTION_TYPE         => IOriginConfig::CONNECTION_TYPE_PATH,
-            self::PATH                    => '',
-            self::SERVER_HOST             => '',
-            self::SERVER_PORT             => '',
-            self::SERVER_USERNAME         => '',
-            self::SERVER_PASSWORD         => '',
-            self::SERVER_DATABASE         => '',
-            self::SERVER_SEARCH_BASE      => '',
-            self::ACTIVE_PERIOD           => '',
-            self::LINKED_ORIGIN_ID        => 0,
-            self::ILIAS_FILE_REF_ID       => 0
+            self::SHORT_LINK => false,
+            self::SHORT_LINK_FORCE_LOGIN => false,
+            self::NOTIFICATION_ERRORS => '',
+            self::NOTIFICATION_SUMMARY => '',
+            self::CONNECTION_TYPE => IOriginConfig::CONNECTION_TYPE_PATH,
+            self::PATH => '',
+            self::SERVER_HOST => '',
+            self::SERVER_PORT => '',
+            self::SERVER_USERNAME => '',
+            self::SERVER_PASSWORD => '',
+            self::SERVER_DATABASE => '',
+            self::SERVER_SEARCH_BASE => '',
+            self::ACTIVE_PERIOD => '',
+            self::LINKED_ORIGIN_ID => 0,
+            self::ILIAS_FILE_REF_ID => 0,
         ];
-
 
     /**
      * @param array $data
@@ -48,7 +46,6 @@ class OriginConfig implements IOriginConfig
         $this->data = array_merge($this->data, $data);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -56,7 +53,6 @@ class OriginConfig implements IOriginConfig
     {
         return $this->data;
     }
-
 
     /**
      * @inheritdoc
@@ -66,7 +62,6 @@ class OriginConfig implements IOriginConfig
         $this->data = array_merge($this->data, $data);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -74,7 +69,6 @@ class OriginConfig implements IOriginConfig
     {
         return (isset($this->data[$key])) ? $this->data[$key] : null;
     }
-
 
     /**
      * @inheritdoc
@@ -86,7 +80,6 @@ class OriginConfig implements IOriginConfig
         return $this->get($key);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -94,7 +87,6 @@ class OriginConfig implements IOriginConfig
     {
         return intval($this->get(self::CONNECTION_TYPE));
     }
-
 
     /**
      * @inheritdoc
@@ -118,7 +110,6 @@ class OriginConfig implements IOriginConfig
         return $path;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -130,7 +121,6 @@ class OriginConfig implements IOriginConfig
 
         return $this->get(self::SERVER_HOST);
     }
-
 
     /**
      * @inheritdoc
@@ -144,7 +134,6 @@ class OriginConfig implements IOriginConfig
         return intval($this->get(self::SERVER_PORT));
     }
 
-
     /**
      * @inheritdoc
      */
@@ -156,7 +145,6 @@ class OriginConfig implements IOriginConfig
 
         return $this->get(self::SERVER_USERNAME);
     }
-
 
     /**
      * @inheritdoc
@@ -170,7 +158,6 @@ class OriginConfig implements IOriginConfig
         return $this->get(self::SERVER_PASSWORD);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -183,7 +170,6 @@ class OriginConfig implements IOriginConfig
         return $this->get(self::SERVER_DATABASE);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -195,7 +181,6 @@ class OriginConfig implements IOriginConfig
 
         return $this->get(self::SERVER_SEARCH_BASE);
     }
-
 
     /**
      * @inheritdoc
@@ -215,7 +200,6 @@ class OriginConfig implements IOriginConfig
         return $ilias_file_ref_id;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -234,7 +218,6 @@ class OriginConfig implements IOriginConfig
         return $path;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -242,7 +225,6 @@ class OriginConfig implements IOriginConfig
     {
         return $this->get(self::ACTIVE_PERIOD);
     }
-
 
     /**
      * @inheritdoc
@@ -252,7 +234,6 @@ class OriginConfig implements IOriginConfig
         return boolval($this->get(self::CHECK_AMOUNT));
     }
 
-
     /**
      * @inheritdoc
      */
@@ -260,7 +241,6 @@ class OriginConfig implements IOriginConfig
     {
         return intval($this->get(self::CHECK_AMOUNT_PERCENTAGE));
     }
-
 
     /**
      * @inheritdoc
@@ -270,7 +250,6 @@ class OriginConfig implements IOriginConfig
         return boolval($this->get(self::SHORT_LINK));
     }
 
-
     /**
      * @inheritdoc
      */
@@ -278,7 +257,6 @@ class OriginConfig implements IOriginConfig
     {
         return boolval($this->get(self::SHORT_LINK_FORCE_LOGIN));
     }
-
 
     /**
      * @inheritdoc
@@ -288,7 +266,6 @@ class OriginConfig implements IOriginConfig
         return intval($this->get(self::LINKED_ORIGIN_ID));
     }
 
-
     /**
      * @inheritdoc
      */
@@ -296,7 +273,6 @@ class OriginConfig implements IOriginConfig
     {
         return explode(',', $this->get(self::NOTIFICATION_SUMMARY));
     }
-
 
     /**
      * @inheritdoc

@@ -19,7 +19,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class GroupMembershipSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\GroupMembership
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -36,23 +35,23 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
      */
     protected $config;
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param GroupMembershipDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -72,10 +71,8 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         $this->current_ilias_object = new FakeIliasMembershipObject($ilias_group_ref_id, $user_id);
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param GroupMembershipDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -106,10 +103,8 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         $obj->initId();
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param GroupMembershipDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -120,10 +115,8 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         $group->getMembersObject()->delete($obj->getUserIdIlias());
     }
 
-
     /**
      * @param int $iliasId
-     *
      * @return ilObjGroup|null
      */
     protected function findILIASGroup($iliasId)
@@ -135,10 +128,8 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         return new ilObjGroup($iliasId);
     }
 
-
     /**
      * @param GroupMembershipDTO $dto
-     *
      * @return int
      * @throws HubException
      */
@@ -159,10 +150,14 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
-            $origin = array_pop(array_filter($originRepository->groups(), function ($origin) use ($linkedOriginId) {
-                /** @var IOrigin $origin */
-                return (int) $origin->getId() == $linkedOriginId;
-            }));
+            $origin = array_pop(
+                array_filter(
+                    $originRepository->groups(), function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return (int) $origin->getId() == $linkedOriginId;
+                }
+                )
+            );
             if ($origin === null) {
                 $msg = "The linked origin syncing group was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
@@ -182,10 +177,8 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         return 0;
     }
 
-
     /**
      * @param GroupMembershipDTO $object
-     *
      * @return int
      */
     protected function mapRole(GroupMembershipDTO $object)
@@ -200,11 +193,9 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         }
     }
 
-
     /**
      * @param GroupMembershipDTO $object
      * @param ilObjGroup         $group
-     *
      * @return int
      */
     protected function getILIASRole(GroupMembershipDTO $object, ilObjGroup $group)

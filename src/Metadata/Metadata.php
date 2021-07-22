@@ -16,6 +16,7 @@ class Metadata implements IMetadata
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
@@ -37,7 +38,7 @@ class Metadata implements IMetadata
     public function __construct($identifier, int $record_id = self::DEFAULT_RECORD_ID)
     {
         $this->identifier = $identifier;
-        $this->record_id  = $record_id;
+        $this->record_id = $record_id;
     }
 
     /**

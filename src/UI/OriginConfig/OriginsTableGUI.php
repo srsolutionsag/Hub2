@@ -14,9 +14,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginsTableGUI
- *
  * @package srag\Plugins\Hub2\UI\OriginConfig
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -25,6 +23,7 @@ class OriginsTableGUI extends ilTable2GUI
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
@@ -35,12 +34,10 @@ class OriginsTableGUI extends ilTable2GUI
      */
     protected $originRepository;
 
-
     /**
      * @param hub2ConfigOriginsGUI $a_parent_obj
      * @param string               $a_parent_cmd
      * @param IOriginRepository    $originRepository
-     *
      * @throws DICException
      * @internal param
      */
@@ -56,10 +53,11 @@ class OriginsTableGUI extends ilTable2GUI
         $this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
         $this->initColumns();
         $this->initTableData();
-        $this->addCommandButton(hub2ConfigOriginsGUI::CMD_DEACTIVATE_ALL, self::plugin()->translate('origin_table_button_deactivate_all'));
-        $this->addCommandButton(hub2ConfigOriginsGUI::CMD_ACTIVATE_ALL, self::plugin()->translate('origin_table_button_activate_all'));
+        $this->addCommandButton(hub2ConfigOriginsGUI::CMD_DEACTIVATE_ALL,
+            self::plugin()->translate('origin_table_button_deactivate_all'));
+        $this->addCommandButton(hub2ConfigOriginsGUI::CMD_ACTIVATE_ALL,
+            self::plugin()->translate('origin_table_button_activate_all'));
     }
-
 
     /**
      *
@@ -77,7 +75,6 @@ class OriginsTableGUI extends ilTable2GUI
         $this->addColumn(self::plugin()->translate('common_actions'));
     }
 
-
     /**
      *
      */
@@ -88,18 +85,20 @@ class OriginsTableGUI extends ilTable2GUI
             self::dic()->ctrl()->setParameter($this->parent_obj, 'origin_id', $origin->getId());
             $class = "srag\\Plugins\\Hub2\\Object\\" . ucfirst($origin->getObjectType()) . "\\" . ucfirst($origin->getObjectType()) . "Repository";
             /** @var IObjectRepository $objectRepository */
-            $objectRepository   = new $class($origin);
+            $objectRepository = new $class($origin);
             $row = [];
             $row['id'] = $origin->getId();
             $row['sort'] = $origin->getSort();
             $row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
-            $linked_title = self::dic()->ui()->renderer()->render(self::dic()->ui()->factory()->link()->standard(
-                $origin->getTitle(),
-                self::dic()->ctrl()->getLinkTarget(
-                    $this->parent_obj,
-                    hub2ConfigOriginsGUI::CMD_EDIT_ORGIN
+            $linked_title = self::dic()->ui()->renderer()->render(
+                self::dic()->ui()->factory()->link()->standard(
+                    $origin->getTitle(),
+                    self::dic()->ctrl()->getLinkTarget(
+                        $this->parent_obj,
+                        hub2ConfigOriginsGUI::CMD_EDIT_ORGIN
+                    )
                 )
-            ));
+            );
             $row['title'] = $linked_title;
             $row['description'] = $origin->getDescription();
             $row['object_type'] = self::plugin()->translate("origin_object_type_" . $origin->getObjectType());
@@ -111,7 +110,6 @@ class OriginsTableGUI extends ilTable2GUI
         $this->setDefaultOrderField("sort");
         $this->setDefaultOrderDirection("asc");
     }
-
 
     /**
      * @param array $a_set
@@ -127,14 +125,26 @@ class OriginsTableGUI extends ilTable2GUI
         $actions->setId('actions_' . $a_set['id']);
         $actions->setListTitle(self::plugin()->translate('common_actions'));
         self::dic()->ctrl()->setParameter($this->parent_obj, 'origin_id', $a_set['id']);
-        $actions->addItem(self::plugin()->translate('common_edit'), 'edit', self::dic()->ctrl()
-            ->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_EDIT_ORGIN));
-        $actions->addItem(self::plugin()->translate('common_delete'), 'delete', self::dic()->ctrl()
-            ->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE));
-        $actions->addItem(self::plugin()->translate('origin_table_button_run'), 'runOriginSync', self::dic()->ctrl()
-            ->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC));
-        $actions->addItem(self::plugin()->translate('origin_table_button_run_force_update'), 'runOriginSyncForceUpdate', self::dic()->ctrl()
-            ->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE));
+        $actions->addItem(
+            self::plugin()->translate('common_edit'), 'edit', self::dic()->ctrl()
+                                                                  ->getLinkTarget($this->parent_obj,
+                                                                      hub2ConfigOriginsGUI::CMD_EDIT_ORGIN)
+        );
+        $actions->addItem(
+            self::plugin()->translate('common_delete'), 'delete', self::dic()->ctrl()
+                                                                      ->getLinkTarget($this->parent_obj,
+                                                                          hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE)
+        );
+        $actions->addItem(
+            self::plugin()->translate('origin_table_button_run'), 'runOriginSync', self::dic()->ctrl()
+                                                                                       ->getLinkTarget($this->parent_obj,
+                                                                                           hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC)
+        );
+        $actions->addItem(
+            self::plugin()->translate('origin_table_button_run_force_update'), 'runOriginSyncForceUpdate',
+            self::dic()->ctrl()
+                ->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE)
+        );
         $actions->addItem(
             self::plugin()->translate('origin_table_button_toggle'),
             hub2ConfigOriginsGUI::CMD_TOGGLE,

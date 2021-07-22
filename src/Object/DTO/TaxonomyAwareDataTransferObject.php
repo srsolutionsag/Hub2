@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 
 /**
  * Class TaxonomyAwareDataTransferObject
- *
  * @package srag\Plugins\Hub2\Object\DTO
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,7 +17,6 @@ trait TaxonomyAwareDataTransferObject
      */
     private $_taxonomies = [];
 
-
     /**
      * @inheritdoc
      */
@@ -28,7 +26,6 @@ trait TaxonomyAwareDataTransferObject
 
         return $this;
     }
-
 
     /**
      * @inheritdoc

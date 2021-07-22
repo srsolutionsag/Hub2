@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Object\ARTaxonomyAwareObject;
 
 /**
  * Class ARSession
- *
  * @package srag\Plugins\Hub2\Object\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -17,5 +16,6 @@ class ARSession extends ARObject implements ISession
 
     use ARMetadataAwareObject;
     use ARTaxonomyAwareObject;
+
     const TABLE_NAME = 'sr_hub2_session';
 }

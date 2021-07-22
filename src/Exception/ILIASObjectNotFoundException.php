@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\IObject;
 
 /**
  * Class ILIASObjectNotFoundException
- *
  * @package srag\Plugins\Hub2\Exception
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -19,7 +18,6 @@ class ILIASObjectNotFoundException extends HubException
      */
     protected $object;
 
-
     /**
      * @param IObject $object
      */
@@ -28,7 +26,6 @@ class ILIASObjectNotFoundException extends HubException
         parent::__construct("ILIAS object not found for: {$object}");
         $this->object = $object;
     }
-
 
     /**
      * @return IObject

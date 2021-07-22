@@ -21,9 +21,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class OrgUnitMembershipSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrgUnitMembershipSyncProcessor
@@ -46,19 +44,20 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
      */
     protected $current_ilias_object = null;
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
     }
-
 
     /**
      * @return array
@@ -68,10 +67,8 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
         return self::$properties;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param IOrgUnitMembershipDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -79,10 +76,8 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
         $this->current_ilias_object = $this->getFakeIliasObject($this->assignToOrgUnit($dto));
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param IOrgUnitMembershipDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -100,10 +95,8 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param IOrgUnitMembershipDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -112,11 +105,13 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
             case IOrgUnitMembershipProperties::DELETE_MODE_DELETE:
                 $this->current_ilias_object = FakeOrgUnitMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-                $assignment = ilOrgUnitUserAssignment::where([
-                    "orgu_id"     => $this->current_ilias_object->getContainerIdIlias(),
-                    "user_id"     => $this->current_ilias_object->getUserIdIlias(),
-                    "position_id" => $this->current_ilias_object->getPositionId()
-                ])->first();
+                $assignment = ilOrgUnitUserAssignment::where(
+                    [
+                        "orgu_id" => $this->current_ilias_object->getContainerIdIlias(),
+                        "user_id" => $this->current_ilias_object->getUserIdIlias(),
+                        "position_id" => $this->current_ilias_object->getPositionId(),
+                    ]
+                )->first();
 
                 if ($assignment !== null) {
                     $assignment->delete();
@@ -129,10 +124,8 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
         }
     }
 
-
     /**
      * @param IOrgUnitMembershipDTO $dto
-     *
      * @return ilOrgUnitUserAssignment
      * @throws HubException
      */
@@ -152,25 +145,23 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
                 break;
         }
 
-        return ilOrgUnitUserAssignment::findOrCreateAssignment($dto->getUserId(), $position_id, $this->getOrgUnitId($dto));
+        return ilOrgUnitUserAssignment::findOrCreateAssignment($dto->getUserId(), $position_id,
+            $this->getOrgUnitId($dto));
     }
-
 
     /**
      * @param ilOrgUnitUserAssignment $assignment
-     *
      * @return FakeIliasObject
      * @throws HubException
      */
     protected function getFakeIliasObject(ilOrgUnitUserAssignment $assignment) : FakeIliasObject
     {
-        return new FakeOrgUnitMembershipObject($assignment->getOrguId(), $assignment->getUserId(), $assignment->getPositionId());
+        return new FakeOrgUnitMembershipObject($assignment->getOrguId(), $assignment->getUserId(),
+            $assignment->getPositionId());
     }
-
 
     /**
      * @param IOrgUnitMembershipDTO $dto
-     *
      * @return int
      * @throws HubException
      */
@@ -213,10 +204,8 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
         return $org_unit->getRefId();
     }
 
-
     /**
      * @param int $obj_id
-     *
      * @return ilObjOrgUnit|null
      */
     protected function getOrgUnitObject(int $obj_id)

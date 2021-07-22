@@ -15,9 +15,7 @@ use Throwable;
 
 /**
  * Class Factory
- *
  * @package srag\Plugins\Hub2\Log
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 final class Factory implements IFactory
@@ -25,12 +23,12 @@ final class Factory implements IFactory
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IFactory
      */
     protected static $instance = null;
-
 
     /**
      * @return IFactory
@@ -44,7 +42,6 @@ final class Factory implements IFactory
         return self::$instance;
     }
 
-
     /**
      * @param IFactory $instance
      */
@@ -53,7 +50,6 @@ final class Factory implements IFactory
         self::$instance = $instance;
     }
 
-
     /**
      * Factory constructor
      */
@@ -61,7 +57,6 @@ final class Factory implements IFactory
     {
 
     }
-
 
     /**
      * @inheritdoc
@@ -72,7 +67,6 @@ final class Factory implements IFactory
 
         return $log;
     }
-
 
     /**
      * @inheritdoc
@@ -117,17 +111,20 @@ final class Factory implements IFactory
         return $log;
     }
 
-
     /**
      * @inheritdoc
      */
-    public function exceptionLog(Throwable $ex, IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null) : ILog
-    {
+    public function exceptionLog(
+        Throwable $ex,
+        IOrigin $origin = null,
+        IObject $object = null,
+        IDataTransferObject $dto = null
+    ) : ILog {
         $log = $this->originLog($origin, $object, $dto);
 
         $log->withLevel(ILog::LEVEL_EXCEPTION);
         $log->withMessage($ex->getMessage());
-        $additional       = new stdClass();
+        $additional = new stdClass();
         $additional->file = $ex->getFile();
         $additional->line = $ex->getLine();
         $log->withAdditionalData($additional);
@@ -135,17 +132,18 @@ final class Factory implements IFactory
         return $log;
     }
 
-
     /**
      * @inheritdoc
      */
     public function fromDB(stdClass $data) : ILog
     {
         $log = $this->log()->withLogId($data->log_id)->withTitle($data->title)->withMessage($data->message)
-            ->withDate(new ilDateTime($data->date, IL_CAL_DATETIME))->withLevel($data->level)->withAdditionalData(json_decode($data->additional_data, false) ?? new stdClass())
-            ->withOriginId($data->origin_id)->withOriginObjectType($data->origin_object_type)->withObjectExtId($data->object_ext_id)
-            ->withObjectIliasId($data->object_ilias_id)
-            ->withStatus(intval($data->status));
+                    ->withDate(new ilDateTime($data->date,
+                        IL_CAL_DATETIME))->withLevel($data->level)->withAdditionalData(json_decode($data->additional_data,
+                    false) ?? new stdClass())
+                    ->withOriginId($data->origin_id)->withOriginObjectType($data->origin_object_type)->withObjectExtId($data->object_ext_id)
+                    ->withObjectIliasId($data->object_ilias_id)
+                    ->withStatus(intval($data->status));
 
         return $log;
     }

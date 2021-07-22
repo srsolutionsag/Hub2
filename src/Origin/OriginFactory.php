@@ -10,7 +10,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginFactory
- *
  * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -20,8 +19,8 @@ class OriginFactory implements IOriginFactory
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      *
@@ -30,7 +29,6 @@ class OriginFactory implements IOriginFactory
     {
 
     }
-
 
     /**
      * @inheritdoc
@@ -49,7 +47,6 @@ class OriginFactory implements IOriginFactory
         return $class::find((int) $id);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -59,7 +56,6 @@ class OriginFactory implements IOriginFactory
 
         return new $class();
     }
-
 
     /**
      * @inheritdoc
@@ -75,7 +71,6 @@ class OriginFactory implements IOriginFactory
 
         return $origins;
     }
-
 
     /**
      * @inheritdoc
@@ -93,10 +88,8 @@ class OriginFactory implements IOriginFactory
         return $origins;
     }
 
-
     /**
      * @param string $type
-     *
      * @return string
      */
     protected function getClass($type)
@@ -106,7 +99,6 @@ class OriginFactory implements IOriginFactory
 
         return $class;
     }
-
 
     /**
      * @param int $origin_id

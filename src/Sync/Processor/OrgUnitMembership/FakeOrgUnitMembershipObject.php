@@ -6,9 +6,7 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class FakeOrgUnitMembershipObject
- *
  * @package srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
@@ -18,7 +16,6 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
      * @var int
      */
     protected $position_id;
-
 
     /**
      * @param int $container_id_ilias
@@ -34,7 +31,6 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
         $this->initId();
     }
 
-
     /**
      * @return int
      */
@@ -42,7 +38,6 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
     {
         return $this->position_id;
     }
-
 
     /**
      * @param int $position_id
@@ -52,7 +47,6 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
         $this->position_id = $position_id;
     }
 
-
     /**
      *
      */
@@ -61,10 +55,8 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
         $this->setId(implode(self::GLUE, [$this->container_id_ilias, $this->user_id_ilias, $this->position_id]));
     }
 
-
     /**
      * @param string $id
-     *
      * @return FakeOrgUnitMembershipObject
      */
     public static function loadInstanceWithConcatenatedId(string $id)

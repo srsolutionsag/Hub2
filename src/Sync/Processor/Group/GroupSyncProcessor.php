@@ -16,15 +16,14 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
+use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
-use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 
 /**
  * Class GroupSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -34,6 +33,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
+
     /**
      * @var GroupProperties
      */
@@ -85,21 +85,23 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             "registrationEnd",
         );
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $transition
      * @param IGroupActivities        $groupActivities
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, IGroupActivities $groupActivities)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition,
+        IGroupActivities $groupActivities
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
         $this->groupActivities = $groupActivities;
     }
-
 
     /**
      * @return array
@@ -109,10 +111,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         return self::$properties;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param GroupDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -161,10 +161,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         $this->handleAppointementsColor($ilObjGroup, $dto);
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param GroupDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -232,13 +230,12 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
             $ilObjGroup->putInTree($parentRefId);
         } else {
-        if ($this->props->get(GroupProperties::MOVE_GROUP)) {
-            $this->moveGroup($ilObjGroup, $dto);
-        }
+            if ($this->props->get(GroupProperties::MOVE_GROUP)) {
+                $this->moveGroup($ilObjGroup, $dto);
+            }
         }
         $ilObjGroup->update();
     }
-
 
     /**
      * @param ilObjGroup $ilObjGroup
@@ -257,10 +254,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param GroupDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -294,10 +289,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         }
     }
 
-
     /**
      * @param GroupDTO $group
-     *
      * @return int
      * @throws HubException
      */
@@ -325,10 +318,14 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             }
             $originRepository = new OriginRepository();
             $possible_parents = array_merge($originRepository->categories(), $originRepository->courses());
-            $origin = array_pop(array_filter($possible_parents, function ($origin) use ($linkedOriginId) {
-                /** @var IOrigin $origin */
-                return $origin->getId() == $linkedOriginId;
-            }));
+            $origin = array_pop(
+                array_filter(
+                    $possible_parents, function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return $origin->getId() == $linkedOriginId;
+                }
+                )
+            );
             if ($origin === null) {
                 $msg = "The linked origin syncing categories or courses was not found,
 				please check that the correct origin is linked";
@@ -356,10 +353,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         return 0;
     }
 
-
     /**
      * @param int $iliasId
-     *
      * @return ilObjGroup|null
      */
     protected function findILIASGroup($iliasId)
@@ -371,11 +366,9 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         return new ilObjGroup($iliasId);
     }
 
-
     /**
      * Move the group to a new parent.
      * Note: May also create the dependence categories
-     *
      * @param ilObjGroup $ilObjGroup
      * @param GroupDTO   $group
      */

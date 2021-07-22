@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
 
 /**
  * Class SessionDTO
- *
  * @package srag\Plugins\Hub2\Object\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -17,6 +16,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     use MetadataAwareDataTransferObject;
     use TaxonomyAwareDataTransferObject;
+
     /**
      * @var string
      */
@@ -90,7 +90,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      */
     protected $end;
 
-
     /**
      * @return string
      */
@@ -99,10 +98,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->title;
     }
 
-
     /**
      * @param string $title
-     *
      * @return SessionDTO
      */
     public function setTitle($title)
@@ -112,7 +109,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -121,10 +117,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->description;
     }
 
-
     /**
      * @param string $description
-     *
      * @return SessionDTO
      */
     public function setDescription($description)
@@ -134,7 +128,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -143,10 +136,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->location;
     }
 
-
     /**
      * @param string $location
-     *
      * @return SessionDTO
      */
     public function setLocation($location)
@@ -156,7 +147,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -165,10 +155,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->details;
     }
 
-
     /**
      * @param string $details
-     *
      * @return SessionDTO
      */
     public function setDetails($details)
@@ -178,7 +166,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -187,10 +174,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->name;
     }
 
-
     /**
      * @param string $name
-     *
      * @return SessionDTO
      */
     public function setName($name)
@@ -200,7 +185,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -209,10 +193,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->phone;
     }
 
-
     /**
      * @param string $phone
-     *
      * @return SessionDTO
      */
     public function setPhone($phone)
@@ -222,7 +204,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -231,10 +212,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->email;
     }
 
-
     /**
      * @param string $email
-     *
      * @return SessionDTO
      */
     public function setEmail($email)
@@ -244,7 +223,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -253,10 +231,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->registrationType;
     }
 
-
     /**
      * @param int $registrationType
-     *
      * @return SessionDTO
      */
     public function setRegistrationType($registrationType)
@@ -266,7 +242,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -275,10 +250,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->registrationLimited;
     }
 
-
     /**
      * @param bool $registrationLimited
-     *
      * @return SessionDTO
      */
     public function setRegistrationLimited($registrationLimited)
@@ -288,7 +261,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -297,10 +269,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->registrationMinUsers;
     }
 
-
     /**
      * @param int $registrationMinUsers
-     *
      * @return SessionDTO
      */
     public function setRegistrationMinUsers($registrationMinUsers)
@@ -310,7 +280,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -319,10 +288,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->registrationMaxUsers;
     }
 
-
     /**
      * @param int $registrationMaxUsers
-     *
      * @return SessionDTO
      */
     public function setRegistrationMaxUsers($registrationMaxUsers)
@@ -332,7 +299,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -341,10 +307,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->registrationWaitingList;
     }
 
-
     /**
      * @param bool $registrationWaitingList
-     *
      * @return SessionDTO
      */
     public function setRegistrationWaitingList($registrationWaitingList)
@@ -354,7 +318,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -363,10 +326,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->waitingListAutoFill;
     }
 
-
     /**
      * @param bool $waitingListAutoFill
-     *
      * @return SessionDTO
      */
     public function setWaitingListAutoFill($waitingListAutoFill)
@@ -376,7 +337,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -385,10 +345,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->parentId;
     }
 
-
     /**
      * @param string $parentId
-     *
      * @return SessionDTO
      */
     public function setParentId($parentId)
@@ -398,7 +356,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -407,10 +364,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->parentIdType;
     }
 
-
     /**
      * @param int $parentIdType
-     *
      * @return SessionDTO
      */
     public function setParentIdType($parentIdType)
@@ -420,7 +375,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -429,10 +383,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->fullDay;
     }
 
-
     /**
      * @param bool $fullDay
-     *
      * @return SessionDTO
      */
     public function setFullDay($fullDay)
@@ -442,7 +394,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -451,10 +402,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->start;
     }
 
-
     /**
      * @param int $start
-     *
      * @return SessionDTO
      */
     public function setStart($start)
@@ -464,7 +413,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -473,10 +421,8 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
         return $this->end;
     }
 
-
     /**
      * @param int $end Unix Timestamp
-     *
      * @return SessionDTO
      */
     public function setEnd($end)

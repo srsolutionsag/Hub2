@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\MappingStrategy;
 
 /**
  * Interface IMappingStrategyFactory
- *
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -16,36 +15,30 @@ interface IMappingStrategyFactory
      */
     public function byEmail() : IMappingStrategy;
 
-
     /**
      * @return IMappingStrategy
      */
     public function byLogin() : IMappingStrategy;
-
 
     /**
      * @return IMappingStrategy
      */
     public function byExternalAccount() : IMappingStrategy;
 
-
     /**
      * @return IMappingStrategy
      */
     public function byTitle() : IMappingStrategy;
-
 
     /**
      * @return IMappingStrategy
      */
     public function byImportId() : IMappingStrategy;
 
-
     /**
      * @return IMappingStrategy
      */
     public function byExtId() : IMappingStrategy;
-
 
     /**
      * @return IMappingStrategy

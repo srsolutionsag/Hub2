@@ -16,7 +16,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginSyncFactory
- *
  * @package srag\Plugins\Hub2\Sync
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -26,12 +25,12 @@ class OriginSyncFactory
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin
      */
     protected $origin;
-
 
     /**
      * @param IOrigin $origin
@@ -41,25 +40,22 @@ class OriginSyncFactory
         $this->origin = $origin;
     }
 
-
     /**
      * @return OriginSync
-     *
      * @throws HubException
      */
     public function instance() : OriginSync
     {
         $statusTransition = new ObjectStatusTransition($this->origin->config());
 
-        $originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin), $statusTransition);
+        $originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin),
+            $statusTransition);
 
         return $originSync;
     }
 
-
     /**
      * @param OriginSync $originSync
-     *
      * @throws HubException
      */
     public function initImplementation(OriginSync $originSync)
@@ -68,11 +64,11 @@ class OriginSyncFactory
 
         $originImplementation = $implementationFactory->instance();
 
-        $originSync->setProcessor($this->getSyncProcessor($this->origin, $originImplementation, $originSync->getStatusTransition()));
+        $originSync->setProcessor($this->getSyncProcessor($this->origin, $originImplementation,
+            $originSync->getStatusTransition()));
 
         $originSync->setImplementation($originImplementation);
     }
-
 
     /**
      * @return IObjectRepository
@@ -85,16 +81,17 @@ class OriginSyncFactory
         return new $class($this->origin);
     }
 
-
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
      * @param IObjectStatusTransition $statusTransition
-     *
      * @return IObjectSyncProcessor
      */
-    protected function getSyncProcessor(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $statusTransition)
-    {
+    protected function getSyncProcessor(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $statusTransition
+    ) {
         $processorFactory = new SyncProcessorFactory($origin, $implementation, $statusTransition);
         $processor = $origin->getObjectType();
 

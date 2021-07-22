@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface ISessionProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

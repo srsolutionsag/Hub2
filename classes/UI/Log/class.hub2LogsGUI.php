@@ -7,9 +7,7 @@ use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
 
 /**
  * Class LogsGUI
- *
  * @package srag\Plugins\Hub2\UI\Log
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class hub2LogsGUI extends hub2MainGUI
@@ -20,7 +18,6 @@ class hub2LogsGUI extends hub2MainGUI
     const CMD_SHOW_LOGS_OF_EXT_ID = "showLogsOfExtID";
     const SUBTAB_LOGS = "subtab_logs";
     const LANG_MODULE_LOGS = "logs";
-
 
     /**
      * @inheritdoc
@@ -44,7 +41,6 @@ class hub2LogsGUI extends hub2MainGUI
         }
     }
 
-
     /**
      * @inheritdoc
      */
@@ -53,10 +49,8 @@ class hub2LogsGUI extends hub2MainGUI
         self::dic()->tabs()->activateSubTab(self::SUBTAB_LOGS);
     }
 
-
     /**
      * @param string $cmd
-     *
      * @return LogsTableGUI
      */
     protected function getLogsTable($cmd = self::CMD_INDEX) : LogsTableGUI
@@ -65,7 +59,6 @@ class hub2LogsGUI extends hub2MainGUI
 
         return $table;
     }
-
 
     /**
      * @inheritdoc
@@ -76,7 +69,6 @@ class hub2LogsGUI extends hub2MainGUI
 
         self::output()->output($table);
     }
-
 
     /**
      *
@@ -93,7 +85,6 @@ class hub2LogsGUI extends hub2MainGUI
         $this->index(); // Fix reset offset
     }
 
-
     /**
      *
      */
@@ -108,7 +99,6 @@ class hub2LogsGUI extends hub2MainGUI
         //self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
         $this->index(); // Fix reset offset
     }
-
 
     /**
      *

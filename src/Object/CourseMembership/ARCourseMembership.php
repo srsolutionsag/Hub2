@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class ARCourse
- *
  * @package srag\Plugins\Hub2\Object\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

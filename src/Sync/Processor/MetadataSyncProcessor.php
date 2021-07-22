@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 
 /**
  * Class MetadataSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -26,8 +25,11 @@ trait MetadataSyncProcessor
      * @param IMetadataAwareObject             $iobject
      * @param ilObject                         $ilias_object
      */
-    public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object)
-    {
+    public function handleMetadata(
+        IMetadataAwareDataTransferObject $dto,
+        IMetadataAwareObject $iobject,
+        ilObject $ilias_object
+    ) {
         if (count($dto->getMetaData()) > 0) {
             $this->handleDTOSpecificMetadataSettings($dto, $ilias_object);
             $f = new MetadataImplementationFactory();
@@ -47,7 +49,6 @@ trait MetadataSyncProcessor
             }
         }
     }
-
 
     /**
      * @param IMetadataAwareDataTransferObject $dto

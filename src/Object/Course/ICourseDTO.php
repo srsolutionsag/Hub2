@@ -4,12 +4,11 @@ namespace srag\Plugins\Hub2\Object\Course;
 
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
 
 /**
  * Interface ICourseDTO
- *
  * @package srag\Plugins\Hub2\Object\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>

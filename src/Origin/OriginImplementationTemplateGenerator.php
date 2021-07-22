@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginImplementationTemplateGenerator
- *
  * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -21,8 +20,8 @@ class OriginImplementationTemplateGenerator
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * OriginImplementationTemplateGenerator constructor
@@ -32,13 +31,10 @@ class OriginImplementationTemplateGenerator
 
     }
 
-
     /**
      * Create the implementation class file from a given template at the correct location
      * based on the hub config.
-     *
      * @param IOrigin $origin
-     *
      * @return bool False if file exists, true if created
      * @throws HubException
      */
@@ -51,13 +47,12 @@ class OriginImplementationTemplateGenerator
         $path = $this->getPath($origin);
         if (!is_dir($path)) {
             try {
-                if(!ilUtil::makeDirParents($path)) {
+                if (!ilUtil::makeDirParents($path)) {
                     throw new HubException("Could not create directory: $path");
                 }
-            }catch (\Throwable $t) {
+            } catch (\Throwable $t) {
                 throw new HubException("Could not create directory: $path");
             }
-
         }
         if (!is_writable($classFile)) {
             throw new HubException("Class file not writable: $classFile");
@@ -78,7 +73,6 @@ class OriginImplementationTemplateGenerator
         return true;
     }
 
-
     public function classFileExists(IOrigin $origin)
     {
         $classFile = $this->getClassFilePath($origin);
@@ -86,10 +80,8 @@ class OriginImplementationTemplateGenerator
         return is_file($classFile);
     }
 
-
     /**
      * @param IOrigin $origin
-     *
      * @return string
      */
     public function getClassFilePath(IOrigin $origin)
@@ -101,10 +93,8 @@ class OriginImplementationTemplateGenerator
         return $classFile;
     }
 
-
     /**
      * @param IOrigin $origin
-     *
      * @return string
      */
     protected function getPath(IOrigin $origin)

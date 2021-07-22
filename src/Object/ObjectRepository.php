@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectRepository
- *
  * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -22,6 +21,7 @@ abstract class ObjectRepository implements IObjectRepository
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin
@@ -32,17 +32,14 @@ abstract class ObjectRepository implements IObjectRepository
      */
     protected static $classmap = [];
 
-
     /**
      * ObjectRepository constructor
-     *
      * @param IOrigin $origin
      */
     public function __construct(IOrigin $origin)
     {
         $this->origin = $origin;
     }
-
 
     /**
      * @inheritdoc
@@ -55,7 +52,6 @@ abstract class ObjectRepository implements IObjectRepository
         return $class::where(['origin_id' => $this->origin->getId()])->get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -64,12 +60,13 @@ abstract class ObjectRepository implements IObjectRepository
         $class = $this->getClass();
 
         /** @var ActiveRecord $class */
-        return $class::where([
-            'origin_id' => $this->origin->getId(),
-            'status'    => (int) $status,
-        ])->get();
+        return $class::where(
+            [
+                'origin_id' => $this->origin->getId(),
+                'status' => (int) $status,
+            ]
+        )->get();
     }
-
 
     /**
      * @inheritdoc
@@ -91,21 +88,24 @@ abstract class ObjectRepository implements IObjectRepository
                 $parent_scope_query = rtrim($parent_scope_query, "OR");
                 $parent_scope_query .= ")";
             } else {
-                $parent_scope_query = " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','", $parent_ext_ids) . "') ";
+                $parent_scope_query = " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','",
+                        $parent_ext_ids) . "') ";
             }
 
-            return $class::where("origin_id = " . $this->origin->getId() . " AND status IN ('" . implode("','", [
-                    IObject::STATUS_CREATED,
-                    IObject::STATUS_UPDATED,
-                    IObject::STATUS_IGNORED
-                ]) . "') " . $existing_ext_id_query . $parent_scope_query
+            return $class::where(
+                "origin_id = " . $this->origin->getId() . " AND status IN ('" . implode(
+                    "','", [
+                        IObject::STATUS_CREATED,
+                        IObject::STATUS_UPDATED,
+                        IObject::STATUS_IGNORED,
+                    ]
+                ) . "') " . $existing_ext_id_query . $parent_scope_query
 
             )->get();
         }
 
         return [];
     }
-
 
     /**
      * @inheritdoc
@@ -116,24 +116,27 @@ abstract class ObjectRepository implements IObjectRepository
 
         if (count($ext_ids) > 0) {
             /** @var ActiveRecord $class */
-            return $class::where([
-                'origin_id' => $this->origin->getId(),
-                // We only can transmit from final states CREATED and UPDATED to TO_DELETE
-                // E.g. not from OUTDATED or IGNORED
-                'status'    => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
-                'ext_id'    => $ext_ids,
-            ], ['origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN'])->get();
+            return $class::where(
+                [
+                    'origin_id' => $this->origin->getId(),
+                    // We only can transmit from final states CREATED and UPDATED to TO_DELETE
+                    // E.g. not from OUTDATED or IGNORED
+                    'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
+                    'ext_id' => $ext_ids,
+                ], ['origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN']
+            )->get();
         } else {
             /** @var ActiveRecord $class */
-            return $class::where([
-                'origin_id' => $this->origin->getId(),
-                // We only can transmit from final states CREATED and UPDATED to TO_DELETE
-                // E.g. not from OUTDATED or IGNORED
-                'status'    => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
-            ], ['origin_id' => '=', 'status' => 'IN'])->get();
+            return $class::where(
+                [
+                    'origin_id' => $this->origin->getId(),
+                    // We only can transmit from final states CREATED and UPDATED to TO_DELETE
+                    // E.g. not from OUTDATED or IGNORED
+                    'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
+                ], ['origin_id' => '=', 'status' => 'IN']
+            )->get();
         }
     }
-
 
     /**
      * @inheritdoc
@@ -146,10 +149,8 @@ abstract class ObjectRepository implements IObjectRepository
         return $class::where(['origin_id' => $this->origin->getId()])->count();
     }
 
-
     /**
      * Returns the active record class name for the origin
-     *
      * @return string
      */
     protected function getClass()

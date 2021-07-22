@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
 
 /**
  * Class GroupProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,13 +17,12 @@ class GroupProperties extends OriginProperties implements IGroupProperties
      */
     protected $data
         = [
-            self::SET_ONLINE       => false,
+            self::SET_ONLINE => false,
             self::SET_ONLINE_AGAIN => false,
-            self::CREATE_ICON      => false,
-            self::MOVE_GROUP       => false,
-            self::DELETE_MODE      => self::DELETE_MODE_NONE,
+            self::CREATE_ICON => false,
+            self::MOVE_GROUP => false,
+            self::DELETE_MODE => self::DELETE_MODE_NONE,
         ];
-
 
     /**
      * @inheritdoc

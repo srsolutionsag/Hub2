@@ -7,7 +7,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
  * Class GroupMembershipOriginConfigFormGUI
- *
  * @package srag\Plugins\Hub2\UI\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -19,7 +18,6 @@ class GroupMembershipOriginConfigFormGUI extends OriginConfigFormGUI
      */
     protected $origin;
 
-
     /**
      * @inheritdoc
      */
@@ -27,7 +25,6 @@ class GroupMembershipOriginConfigFormGUI extends OriginConfigFormGUI
     {
         parent::addSyncConfig();
     }
-
 
     /**
      * @inheritdoc
@@ -37,7 +34,6 @@ class GroupMembershipOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addPropertiesNew();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -45,7 +41,6 @@ class GroupMembershipOriginConfigFormGUI extends OriginConfigFormGUI
     {
         parent::addPropertiesUpdate();
     }
-
 
     /**
      * @inheritdoc

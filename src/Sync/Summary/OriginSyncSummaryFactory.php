@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Sync\Summary;
 
 /**
  * Class OriginSyncSummaryFactory
- *
  * @package srag\Plugins\Hub2\Sync\Summary
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,7 +17,6 @@ class OriginSyncSummaryFactory implements IOriginSyncSummaryFactory
     {
         return new OriginSyncSummaryWeb();
     }
-
 
     /**
      * @inheritdoc

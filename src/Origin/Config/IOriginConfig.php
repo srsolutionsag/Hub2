@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 
 /**
  * Interface IOriginConfig
- *
  * @package srag\Plugins\Hub2\Origin\Config
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -37,164 +36,126 @@ interface IOriginConfig
     const CUSTOM_PREFIX = 'custom_';
     const ILIAS_FILE_REF_ID = "ilias_file_ref_id";
 
-
     /**
      * Returns all the config data as associative array
-     *
      * @return array
      */
     public function getData() : array;
 
-
     /**
      * @param array $data
-     *
      * @return $this
      */
     public function setData(array $data);
 
-
     /**
      * @param string $key
-     *
      * @return mixed
      */
     public function get(string $key);
 
-
     /**
      * Get the value of a custom config entry or NULL if no config value is found.
-     *
      * @param string $key
-     *
      * @return mixed
      */
     public function getCustom(string $key);
 
-
     /**
      * @return int
-     *
      * @throws ConnectionFailedException
      */
     public function getConnectionType() : int;
 
-
     /**
      * @return string
-     *
      * @throws ConnectionFailedException
      */
     public function getPath() : string;
 
-
     /**
      * @return string
-     *
      * @throws ConnectionFailedException
      */
     public function getServerHost() : string;
 
-
     /**
      * @return int
-     *
      * @throws ConnectionFailedException
      */
     public function getServerPort() : int;
 
-
     /**
      * @return string
-     *
      * @throws ConnectionFailedException
      */
     public function getServerUsername() : string;
 
-
     /**
      * @return string
-     *
      * @throws ConnectionFailedException
      */
     public function getServerPassword() : string;
 
-
     /**
      * @return string
-     *
      * @throws ConnectionFailedException
      */
     public function getServerDatabase() : string;
 
-
     /**
      * @return string
-     *
      * @throws ConnectionFailedException
      */
     public function getServerSearchBase() : string;
 
-
     /**
      * @return int
-     *
      * @throws ConnectionFailedException
      */
     public function getIliasFileRefId() : int;
 
-
     /**
      * @return string
-     *
      * @throws ConnectionFailedException
      */
     public function getIliasFilePath() : string;
-
 
     /**
      * @return string
      */
     public function getActivePeriod() : string;
 
-
     /**
      * @return bool
      */
     public function getCheckAmountData() : bool;
-
 
     /**
      * @return int
      */
     public function getCheckAmountDataPercentage() : int;
 
-
     /**
      * @return bool
      */
     public function useShortLink() : bool;
-
 
     /**
      * @return bool
      */
     public function useShortLinkForcedLogin() : bool;
 
-
     /**
      * Get the ID of another origin which has been selected over the configuration GUI
-     *
      * @return int
      */
     public function getLinkedOriginId() : int;
-
 
     /**
      * @return array
      */
     public function getNotificationsSummary() : array;
-
 
     /**
      * @return array

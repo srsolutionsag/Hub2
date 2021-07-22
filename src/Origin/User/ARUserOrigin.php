@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
 
 /**
  * Class ARUserOrigin
- *
  * @package srag\Plugins\Hub2\Origin\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -23,7 +22,6 @@ class ARUserOrigin extends AROrigin implements IUserOrigin
     {
         return new UserOriginConfig($data);
     }
-
 
     /**
      * @inheritdoc

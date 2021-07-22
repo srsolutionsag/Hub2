@@ -9,7 +9,6 @@ use ilObject2;
 
 /**
  * Class CourseActivities
- *
  * @package srag\Plugins\Hub2\Sync\Processor\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -22,7 +21,6 @@ class CourseActivities implements ICourseActivities
      */
     protected $db;
 
-
     /**
      * @param ilDBInterface $db
      */
@@ -30,7 +28,6 @@ class CourseActivities implements ICourseActivities
     {
         $this->db = $db;
     }
-
 
     /**
      * @inheritdoc

@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Object;
 
 /**
  * Class ARDidacticTemplateAwareObject
- *
  * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

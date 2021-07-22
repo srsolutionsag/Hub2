@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface IGroupProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -23,7 +22,6 @@ interface IGroupProperties extends IOriginProperties
     const DELETE_MODE_DELETE = 2;
     const DELETE_MODE_DELETE_OR_CLOSE = 3;
     const DELETE_MODE_MOVE_TO_TRASH = 4;
-
 
     /**
      * @return array

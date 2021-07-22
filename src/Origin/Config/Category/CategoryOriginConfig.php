@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
 
 /**
  * Class CategoryOriginConfig
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Origin\Config\Category
@@ -23,12 +22,10 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
             self::EXT_ID_NO_PARENT_ID_FOUND => '',
         ];
 
-
     public function __construct(array $data)
     {
         parent::__construct(array_merge($this->categoryData, $data));
     }
-
 
     /**
      * @inheritdoc
@@ -37,7 +34,6 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
     {
         return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
     }
-
 
     /**
      * @inheritdoc

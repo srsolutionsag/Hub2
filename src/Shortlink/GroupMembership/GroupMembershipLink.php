@@ -7,8 +7,6 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
 
 /**
  * Class GroupMembershipLink
- *
- *
  * @package srag\Plugins\Hub2\Shortlink\GroupMembership
  * @author  Timon Amstutz <timon.amstutz@ilub.unibe.ch>
  */

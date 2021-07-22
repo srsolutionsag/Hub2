@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
 
 /**
  * Class ARMetadataAwareObject
- *
  * @package srag\Plugins\Hub2\Object
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -15,12 +14,10 @@ trait ARMetadataAwareObject
 
     /**
      * @var array
-     *
      * @db_has_field    true
      * @db_fieldtype    clob
      */
     protected $meta_data = array();
-
 
     /**
      * @return IMetadata[]
@@ -29,7 +26,6 @@ trait ARMetadataAwareObject
     {
         return is_array($this->meta_data) ? $this->meta_data : array();
     }
-
 
     /**
      * @param array $meta_data

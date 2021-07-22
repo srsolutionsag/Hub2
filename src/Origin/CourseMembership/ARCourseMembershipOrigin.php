@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipPropert
 
 /**
  * Class ARCourseMembershipOrigin
- *
  * @package srag\Plugins\Hub2\Origin\CourseMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -22,7 +21,6 @@ class ARCourseMembershipOrigin extends AROrigin implements ICourseMembershipOrig
     {
         return new CourseMembershipOriginConfig($data);
     }
-
 
     /**
      * @inheritdoc

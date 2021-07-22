@@ -7,7 +7,6 @@ use ReflectionProperty;
 
 /**
  * Class DTOPropertyParser
- *
  * @package srag\Plugins\Hub2\Origin\Properties
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -20,7 +19,6 @@ class DTOPropertyParser
      */
     private $dtoClass;
 
-
     /**
      * @param string $dtoClass Fully qualified name of a DTO class, e.g. UserDTO
      */
@@ -28,7 +26,6 @@ class DTOPropertyParser
     {
         $this->dtoClass = $dtoClass;
     }
-
 
     /**
      * @return DTOProperty[]

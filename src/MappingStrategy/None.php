@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class None
- *
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

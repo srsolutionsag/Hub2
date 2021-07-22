@@ -6,9 +6,7 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface IOrgUnitMembershipProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface IOrgUnitMembershipProperties extends IOriginProperties

@@ -19,12 +19,9 @@ use srag\Plugins\Hub2\UI\OriginFormFactory;
 
 /**
  * Class ConfigOriginsGUI
- *
  * @package      srag\Plugins\Hub2\UI\OriginConfig
- *
  * @author       Stefan Wanzenried <sw@studer-raimann.ch>
  * @author       Fabian Schmid <fs@studer-raimann.ch>
- *
  * @ilCtrl_calls hub2ConfigOriginsGUI: hub2DataGUI
  * @ilCtrl_calls hub2ConfigOriginsGUI: hub2LogsGUI
  */
@@ -61,7 +58,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
      */
     protected $originRepository;
 
-
     /**
      * ConfigOriginsGUI constructor
      */
@@ -72,7 +68,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->originRepository = new OriginRepository();
         $this->summaryFactory = new OriginSyncSummaryFactory();
     }
-
 
     /**
      *
@@ -92,25 +87,32 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         }
     }
 
-
     /**
      *
      */
     protected function initTabs()
     {
-        self::dic()->tabs()->addSubTab(self::SUBTAB_ORIGINS, self::plugin()->translate(self::SUBTAB_ORIGINS), self::dic()->ctrl()
-            ->getLinkTarget($this, self::CMD_INDEX));
+        self::dic()->tabs()->addSubTab(
+            self::SUBTAB_ORIGINS, self::plugin()->translate(self::SUBTAB_ORIGINS), self::dic()->ctrl()
+                                                                                       ->getLinkTarget($this,
+                                                                                           self::CMD_INDEX)
+        );
 
-        self::dic()->tabs()->addSubTab(self::SUBTAB_DATA, self::plugin()->translate(self::SUBTAB_DATA), self::dic()->ctrl()
-            ->getLinkTargetByClass(hub2DataGUI::class, hub2DataGUI::CMD_INDEX));
+        self::dic()->tabs()->addSubTab(
+            self::SUBTAB_DATA, self::plugin()->translate(self::SUBTAB_DATA), self::dic()->ctrl()
+                                                                                 ->getLinkTargetByClass(hub2DataGUI::class,
+                                                                                     hub2DataGUI::CMD_INDEX)
+        );
 
-        self::dic()->tabs()->addSubTab(hub2LogsGUI::SUBTAB_LOGS, self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS), self::dic()->ctrl()
-            ->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX));
+        self::dic()->tabs()->addSubTab(
+            hub2LogsGUI::SUBTAB_LOGS, self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS),
+            self::dic()->ctrl()
+                ->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX)
+        );
 
         self::dic()->tabs()->activateTab(self::TAB_ORIGINS);
         self::dic()->tabs()->activateSubTab(self::SUBTAB_ORIGINS);
     }
-
 
     /**
      *
@@ -141,7 +143,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         self::output()->output($table);
     }
 
-
     /**
      *
      */
@@ -149,7 +150,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     {
         $this->index();
     }
-
 
     /**
      *
@@ -159,7 +159,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
         self::output()->output($form);
     }
-
 
     /**
      *
@@ -179,7 +178,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $form->setValuesByPost();
         self::output()->output($form);
     }
-
 
     /**
      *
@@ -220,12 +218,18 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             try {
                 $result = $generator->create($origin);
                 if ($result) {
-                    ilUtil::sendInfo(self::plugin()
-                        ->translate("msg_created_class_implementation_file", "", [$generator->getClassFilePath($origin)]), true);
+                    ilUtil::sendInfo(
+                        self::plugin()
+                            ->translate("msg_created_class_implementation_file", "",
+                                [$generator->getClassFilePath($origin)]), true
+                    );
                 }
             } catch (HubException $e) {
-                ilUtil::sendInfo(self::plugin()
-                    ->translate("msg_created_class_implementation_file_failed", "", [$generator->getClassFilePath($origin)]), true);
+                ilUtil::sendInfo(
+                    self::plugin()
+                        ->translate("msg_created_class_implementation_file_failed", "",
+                            [$generator->getClassFilePath($origin)]), true
+                );
             }
             self::dic()->ctrl()->saveParameter($this, self::ORIGIN_ID);
             self::dic()->ctrl()->redirect($this, self::CMD_EDIT_ORGIN);
@@ -233,7 +237,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $form->setValuesByPost();
         self::output()->output($form);
     }
-
 
     /**
      *
@@ -245,7 +248,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $form = $this->getForm($origin);
         self::output()->output($form);
     }
-
 
     /**
      *
@@ -260,7 +262,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         self::dic()->ctrl()->redirect($this);
     }
 
-
     /**
      *
      */
@@ -274,7 +275,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         self::dic()->ctrl()->redirect($this);
     }
 
-    protected function toggle(){
+    protected function toggle()
+    {
         /** @var AROrigin $origin */
         $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
         $origin->setActive(!$origin->isActive());
@@ -282,7 +284,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         ilUtil::sendSuccess(self::plugin()->translate('msg_origin_toggled'), true);
         $this->cancel();
     }
-
 
     /**
      * @param IOrigin $origins
@@ -299,7 +300,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         self::dic()->ctrl()->redirect($this);
     }
 
-
     /**
      * @param bool $force_update
      */
@@ -308,7 +308,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->execute($this->originFactory->getAllActive(), $force_update);
     }
 
-
     /**
      *
      */
@@ -316,7 +315,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     {
         $this->run(true);
     }
-
 
     /**
      * @param bool $force_update
@@ -328,7 +326,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->execute([$origin], $force_update);
     }
 
-
     /**
      *
      */
@@ -336,7 +333,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     {
         $this->runOriginSync(true);
     }
-
 
     /**
      *
@@ -354,7 +350,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         self::output()->output($c);
     }
 
-
     /**
      *
      */
@@ -368,7 +363,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
     }
 
-
     /**
      * Check access based on plugin configuration.
      * Returns to personal desktop if a user does not have permission to administrate hub.
@@ -381,15 +375,13 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             if (self::version()->is6()) {
                 self::dic()->ctrl()->redirectByClass(ilDashboardGUI::class);
             } else {
-            self::dic()->ctrl()->redirectByClass(ilPersonalDesktopGUI::class);
+                self::dic()->ctrl()->redirectByClass(ilPersonalDesktopGUI::class);
             }
         }
     }
 
-
     /**
      * @param AROrigin $origin
-     *
      * @return OriginConfigFormGUI
      */
     protected function getForm(AROrigin $origin)
@@ -401,10 +393,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         return $form;
     }
 
-
     /**
      * @param int $id
-     *
      * @return AROrigin
      * @throws ilException
      */

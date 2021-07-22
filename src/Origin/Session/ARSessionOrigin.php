@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
 
 /**
  * Class ARSessionOrigin
- *
  * @package srag\Plugins\Hub2\Origin\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -22,7 +21,6 @@ class ARSessionOrigin extends AROrigin implements ISessionOrigin
     {
         return new SessionOriginConfig($data);
     }
-
 
     /**
      * @inheritdoc

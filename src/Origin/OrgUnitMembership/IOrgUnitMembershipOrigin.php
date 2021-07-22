@@ -8,9 +8,7 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\IOrgUnitMembershipProp
 
 /**
  * Interface IOrgUnitMembershipOrigin
- *
  * @package srag\Plugins\Hub2\Origin\OrgUnitMembership
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface IOrgUnitMembershipOrigin extends IOrigin
@@ -20,7 +18,6 @@ interface IOrgUnitMembershipOrigin extends IOrigin
      * @return IOrgUnitMembershipOriginConfig
      */
     public function config() : IOrgUnitMembershipOriginConfig;
-
 
     /**
      * @return IOrgUnitMembershipProperties

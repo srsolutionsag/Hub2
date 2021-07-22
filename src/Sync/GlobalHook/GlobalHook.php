@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Log\ILog;
 
 /**
  * Class GlobalHook
- *
  * @package srag\Plugins\Hub2\Sync\GlobalHook
  * @author  Timon Amstutz
  */
@@ -19,7 +18,6 @@ final class GlobalHook implements IGlobalHook
      * @var self
      */
     protected static $instance = null;
-
 
     /**
      * @return self
@@ -33,16 +31,13 @@ final class GlobalHook implements IGlobalHook
         return self::$instance;
     }
 
-
     /**
      * @var IGlobalHook
      */
     protected $global_hook;
 
-
     /**
      * GlobalHook constructor
-     *
      * @throws HubException
      */
     private function __construct()
@@ -51,7 +46,6 @@ final class GlobalHook implements IGlobalHook
             $this->global_hook = $this->instantiateGlobalHook();
         }
     }
-
 
     /**
      * @throws HubException
@@ -77,7 +71,6 @@ final class GlobalHook implements IGlobalHook
         return $global_hook;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -90,7 +83,6 @@ final class GlobalHook implements IGlobalHook
         return true;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -102,7 +94,6 @@ final class GlobalHook implements IGlobalHook
 
         return true;
     }
-
 
     /**
      * @inheritdoc

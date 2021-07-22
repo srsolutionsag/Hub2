@@ -9,7 +9,6 @@ use ilObjGroup;
 
 /**
  * Class GroupActivities
- *
  * @package srag\Plugins\Hub2\Sync\Processor\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -21,7 +20,6 @@ class GroupActivities implements IGroupActivities
      */
     protected $db;
 
-
     /**
      * @param ilDBInterface $db
      */
@@ -29,7 +27,6 @@ class GroupActivities implements IGroupActivities
     {
         $this->db = $db;
     }
-
 
     /**
      * @inheritdoc

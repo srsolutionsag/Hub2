@@ -26,15 +26,14 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
+use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
-use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
 
 /**
  * Class CourseSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -45,6 +44,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
+
     /**
      * @var CourseProperties
      */
@@ -80,7 +80,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             'orderType',
             'activationStart',
             'activationEnd',
-            'targetGroup'
+            'targetGroup',
         ];
     /**
      * @var Version
@@ -93,15 +93,18 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param IObjectStatusTransition $transition
      * @param ICourseActivities       $courseActivities
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition, ICourseActivities $courseActivities)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition,
+        ICourseActivities $courseActivities
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
         $this->courseActivities = $courseActivities;
         $this->version = new Version();
     }
-
 
     /**
      * @return array
@@ -111,10 +114,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return self::$properties;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CourseDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -127,8 +128,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if ($template_id = $dto->getTemplateId()) {
             // copy from template
             if (!ilObjCourse::_exists($template_id, true)) {
-                throw new HubException('Creation of course with ext_id = ' . $dto->getExtId() . ' failed: template course with ref_id = '
-                    . $template_id . ' does not exist in ILIAS');
+                throw new HubException(
+                    'Creation of course with ext_id = ' . $dto->getExtId() . ' failed: template course with ref_id = '
+                    . $template_id . ' does not exist in ILIAS'
+                );
             }
             $return = $this->cloneAllObject($parentRefId, $template_id, $this->getCloneOptions($template_id));
             $this->current_ilias_object = $ilObjCourse = new ilObjCourse($return);
@@ -198,7 +201,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $this->handleAppointementsColor($ilObjCourse, $dto);
     }
 
-
     /**
      * @param IDataTransferObject $dto
      */
@@ -223,10 +225,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $settings->update();
     }
 
-
     /**
      * @param $source_id
-     *
      * @return array
      */
     protected function getCloneOptions($source_id)
@@ -250,14 +250,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return $options;
     }
 
-
     /**
      * This is a leaner version of ilContainer::cloneAllObject, which doens't use soap
-     *
      * @param int   $parent_ref_id
      * @param int   $clone_source
      * @param array $options
-     *
      * @return int $ref_id
      */
     public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options) : int
@@ -289,7 +286,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return $parent_ref_id;
     }
 
-
     /**
      * @param CourseDTO   $dto
      * @param ilObjCourse $ilObjCourse
@@ -306,7 +302,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $language->update();
     }
 
-
     /**
      * @param CourseDTO   $dto
      * @param ilObjCourse $ilObjCourse
@@ -321,7 +316,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             $ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_UNLIMITED);
         }
     }
-
 
     /**
      * @param CourseDTO $dto
@@ -339,10 +333,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $mail->From($sender);
         $mail->To($dto->getNotificationEmails());
         $mail->Subject($this->props->get(CourseProperties::CREATE_NOTIFICATION_SUBJECT));
-        $mail->Body($this->replaceBodyTextForMail($this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY), $ilObjCourse));
+        $mail->Body($this->replaceBodyTextForMail($this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY),
+            $ilObjCourse));
         $mail->Send();
     }
-
 
     protected function replaceBodyTextForMail($body, ilObjCourse $ilObjCourse)
     {
@@ -372,10 +366,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return $body;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CourseDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -443,9 +435,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
             $ilObjCourse->putInTree($parentRefId);
         } else {
-        if ($this->props->get(CourseProperties::MOVE_COURSE)) {
-            $this->moveCourse($ilObjCourse, $dto);
-        }
+            if ($this->props->get(CourseProperties::MOVE_COURSE)) {
+                $this->moveCourse($ilObjCourse, $dto);
+            }
         }
 
         if ($this->props->updateDTOProperty("appointementsColor")) {
@@ -454,7 +446,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         $ilObjCourse->update();
     }
-
 
     /**
      * @param ilObjCourse $ilObjCourse
@@ -473,10 +464,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param CourseDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -510,10 +499,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
     }
 
-
     /**
      * @param CourseDTO $course
-     *
      * @return int
      * @throws HubException
      */
@@ -540,10 +527,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
-            $filtered = array_filter($originRepository->categories(), function ($origin) use ($linkedOriginId) {
+            $filtered = array_filter(
+                $originRepository->categories(), function ($origin) use ($linkedOriginId) {
                 /** @var IOrigin $origin */
                 return $origin->getId() == $linkedOriginId;
-            });
+            }
+            );
             $origin = array_pop($filtered);
             if ($origin === null) {
                 $msg = "The linked origin syncing categories was not found, please check that the correct origin is linked";
@@ -552,8 +541,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             $objectFactory = new ObjectFactory($origin);
             $category = $objectFactory->category($course->getParentId());
             if (!$category->getILIASId()) {
-                throw new HubException("The linked category (" . $category->getExtId() . ") does not (yet) exist in ILIAS for course: "
-                    . $course->getExtId());
+                throw new HubException(
+                    "The linked category (" . $category->getExtId() . ") does not (yet) exist in ILIAS for course: "
+                    . $course->getExtId()
+                );
             }
             if (!self::dic()->tree()->isInTree($category->getILIASId())) {
                 throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
@@ -565,11 +556,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return 0;
     }
 
-
     /**
      * @param CourseDTO $object
      * @param int       $parentRefId
-     *
      * @return int
      */
     protected function buildDependenceCategories(CourseDTO $object, $parentRefId)
@@ -599,18 +588,15 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return $parentRefId;
     }
 
-
     /**
      * Creates a category under the given $parentRefId if it does not yet exist.
      * Note that this implementation is copied over from the old hub plugin: We check if we
      * find a category having the same title. If not, a new category is created.
      * It would be better to identify the category over the unique import ID and then update
      * the title of the category, if necessary.
-     *
      * @param string $title
      * @param int    $parentRefId
      * @param int    $level
-     *
      * @return int
      */
     protected function buildDependenceCategory($title, $parentRefId, $level)
@@ -622,9 +608,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $cache[$cacheKey];
         }
         $categories = self::dic()->tree()->getChildsByType($parentRefId, 'cat');
-        $matches = array_filter($categories, function ($category) use ($title) {
+        $matches = array_filter(
+            $categories, function ($category) use ($title) {
             return $category['title'] == $title;
-        });
+        }
+        );
         if (count($matches) > 0) {
             $category = array_pop($matches);
             $cache[$cacheKey] = $category['ref_id'];
@@ -632,12 +620,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $category['ref_id'];
         }
         // No category with the given title found, create it!
-        $importId = self::IMPORT_PREFIX . implode('_', [
-                $this->origin->getId(),
-                $parentRefId,
-                'depth',
-                $level,
-            ]);
+        $importId = self::IMPORT_PREFIX . implode(
+                '_', [
+                    $this->origin->getId(),
+                    $parentRefId,
+                    'depth',
+                    $level,
+                ]
+            );
         $ilObjCategory = new ilObjCategory();
         $ilObjCategory->setTitle($title);
         $ilObjCategory->setImportId($importId);
@@ -651,10 +641,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return $ilObjCategory->getRefId();
     }
 
-
     /**
      * @param int $iliasId
-     *
      * @return ilObjCourse|null
      */
     protected function findILIASCourse($iliasId)
@@ -666,11 +654,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return new ilObjCourse($iliasId);
     }
 
-
     /**
      * Move the course to a new parent.
      * Note: May also create the dependence categories
-     *
      * @param ilObjCourse $ilObjCourse
      * @param CourseDTO   $course
      */

@@ -29,9 +29,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 
 /**
  * Class CompetenceManagementSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor\CompetenceManagement
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements ICompetenceManagementSyncProcessor
@@ -58,21 +56,22 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
      */
     protected $skill_tree;
 
-
     /**
      * @param ICompetenceManagementOrigin $origin
      * @param IOriginImplementation       $implementation
      * @param IObjectStatusTransition     $transition
      */
-    public function __construct(IOrigin $origin, IOriginImplementation $implementation, IObjectStatusTransition $transition)
-    {
+    public function __construct(
+        IOrigin $origin,
+        IOriginImplementation $implementation,
+        IObjectStatusTransition $transition
+    ) {
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
 
         $this->skill_tree = new ilSkillTree();
     }
-
 
     /**
      * @return array
@@ -82,29 +81,31 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         return self::$properties;
     }
 
-
     /**
      * @param IDataTransferObjectSort[] $sort_dtos
-     *
      * @return bool
      * @throws HubException
      */
     public function handleSort(array $sort_dtos) : bool
     {
-        $sort_dtos = array_filter($sort_dtos, function (IDataTransferObjectSort $sort_dto) : bool {
+        $sort_dtos = array_filter(
+            $sort_dtos, function (IDataTransferObjectSort $sort_dto) : bool {
             /**
              * @var ICompetenceManagementDTO $dto
              */
             $dto = $sort_dto->getDtoObject();
 
             return ($dto->getParentIdType() === ICompetenceManagementDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID && !$this->isRootId($dto));
-        });
+        }
+        );
 
-        $dtos = array_reduce($sort_dtos, function (array $dtos, IDataTransferObjectSort $sort_dto) : array {
+        $dtos = array_reduce(
+            $sort_dtos, function (array $dtos, IDataTransferObjectSort $sort_dto) : array {
             $dtos[$sort_dto->getDtoObject()->getExtId()] = $sort_dto->getDtoObject();
 
             return $dtos;
-        }, []);
+        }, []
+        );
 
         foreach ($sort_dtos as $sort_dto) {
             /**
@@ -124,10 +125,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         return true;
     }
 
-
     /**
      * @param ICompetenceManagementDTO $dto
-     *
      * @return bool
      * @throws HubException
      */
@@ -140,10 +139,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         //	|| $parent_id === $this->skill_tree->getRootId()));
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param ICompetenceManagementDTO $dto
      */
     protected function handleCreate(IDataTransferObject $dto)/*: void*/
@@ -212,10 +209,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param ICompetenceManagementDTO $dto
      */
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -286,10 +281,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         }
     }
 
-
     /**
      * @inheritdoc
-     *
      * @param ICompetenceManagementDTO $dto
      */
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
@@ -325,10 +318,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         }
     }
 
-
     /**
      * @param ICompetenceManagementDTO $dto
-     *
      * @throws HubException
      */
     protected function handleSkillLevels(ICompetenceManagementDTO $dto)/*: void*/
@@ -339,21 +330,21 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
             }
 
             $result = self::dic()->database()
-                ->queryF("SELECT id FROM skl_level WHERE import_id=%s", [ilDBConstants::T_TEXT], [$this->getSkillLevelImportId($dto->getExtId(), $skill_level->getExtId())]);
+                          ->queryF("SELECT id FROM skl_level WHERE import_id=%s", [ilDBConstants::T_TEXT],
+                              [$this->getSkillLevelImportId($dto->getExtId(), $skill_level->getExtId())]);
 
             if (($row = $result->fetchAssoc()) !== false) {
                 ilBasicSkill::writeLevelTitle($row["id"], $skill_level->getTitle());
                 ilBasicSkill::writeLevelDescription($row["id"], $skill_level->getDescription());
             } else {
-                $this->current_ilias_object->addLevel($skill_level->getTitle(), $skill_level->getDescription(), $this->getSkillLevelImportId($dto->getExtId(), $skill_level->getExtId()));
+                $this->current_ilias_object->addLevel($skill_level->getTitle(), $skill_level->getDescription(),
+                    $this->getSkillLevelImportId($dto->getExtId(), $skill_level->getExtId()));
             }
         }
     }
 
-
     /**
      * @param int $obj_id
-     *
      * @return ilSkillTreeNode|null
      */
     protected function getSkillObject(int $obj_id)
@@ -367,10 +358,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         }
     }
 
-
     /**
      * @param ICompetenceManagementDTO $dto
-     *
      * @return int
      * @throws HubException
      */
@@ -410,11 +399,9 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         return $parent_id;
     }
 
-
     /**
      * @param string $skill_id
      * @param string $level_id
-     *
      * @return string
      */
     protected function getSkillLevelImportId(string $skill_id, string $level_id) : string
@@ -422,10 +409,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         return self::IMPORT_PREFIX . $this->origin->getId() . "_" . $skill_id . "_" . $level_id;
     }
 
-
     /**
      * @param ICompetenceManagementDTO $dto
-     *
      * @throws HubException
      */
     protected function handleProfileLevels(ICompetenceManagementDTO $dto)/*: void*/
@@ -443,10 +428,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         }
     }
 
-
     /**
      * @param ICompetenceManagementDTO $dto
-     *
      * @throws HubException
      */
     protected function handleProfileAssignedUsers(ICompetenceManagementDTO $dto)/*: void*/
@@ -460,10 +443,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         }
     }
 
-
     /**
      * @param IProfileLevel $level
-     *
      * @return int
      * @throws HubException
      */
@@ -496,11 +477,9 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         return $skill_id;
     }
 
-
     /**
-     * @param int           $skill_id
+     * @param int $skill_id
      * @param IProfileLevel $level
-     *
      * @return int
      * @throws HubException
      */
@@ -513,7 +492,8 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
                 $ext_id = $level->getLevelId();
                 if (!empty($ext_id)) {
                     $result = self::dic()->database()
-                        ->queryF("SELECT id FROM skl_level WHERE import_id=%s", [ilDBConstants::T_TEXT], [$this->getSkillLevelImportId($skill_id, $ext_id)]);
+                                  ->queryF("SELECT id FROM skl_level WHERE import_id=%s", [ilDBConstants::T_TEXT],
+                                      [$this->getSkillLevelImportId($skill_id, $ext_id)]);
 
                     if (($row = $result->fetchAssoc()) !== false) {
                         $level_id = intval($row["id"]);

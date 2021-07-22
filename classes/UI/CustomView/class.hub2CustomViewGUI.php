@@ -9,9 +9,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class CustomViewGUI
- *
  * @package srag\Plugins\Hub2\UI\CustomView
- *
  * @author  Timon Amstutz
  */
 class hub2CustomViewGUI
@@ -19,8 +17,8 @@ class hub2CustomViewGUI
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * hub2CustomViewGUI constructor
@@ -29,7 +27,6 @@ class hub2CustomViewGUI
     {
 
     }
-
 
     /**
      *
@@ -53,9 +50,11 @@ class hub2CustomViewGUI
                 throw new Exception("Class " . $class_name . " is not an instance of BaseCustomViewGUI");
             }
         } catch (Throwable $e) {
-            ilUtil::sendInfo(self::plugin()->translate("admin_custom_view_class_not_found_1") . " '"
+            ilUtil::sendInfo(
+                self::plugin()->translate("admin_custom_view_class_not_found_1") . " '"
                 . ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH) . "' " . self::plugin()->translate("admin_custom_view_class_not_found_2")
-                . " Error: " . $e->getMessage());
+                . " Error: " . $e->getMessage()
+            );
         }
         $class->executeCommand();
     }

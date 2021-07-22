@@ -7,7 +7,6 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 
 /**
  * Class GroupMembershipDTO
- *
  * @package srag\Plugins\Hub2\Object\GroupMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -39,7 +38,6 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
      */
     protected $isContact = false;
 
-
     /**
      * @inheritdoc
      */
@@ -50,7 +48,6 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         $this->setUserId($user_id);
     }
 
-
     /**
      * @return string
      */
@@ -59,10 +56,8 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this->groupId;
     }
 
-
     /**
      * @param string $groupId
-     *
      * @return GroupMembershipDTO
      */
     public function setGroupId(string $groupId) : GroupMembershipDTO
@@ -72,7 +67,6 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -81,10 +75,8 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this->groupIdType;
     }
 
-
     /**
      * @param int $groupIdType
-     *
      * @return GroupMembershipDTO
      */
     public function setGroupIdType(int $groupIdType) : GroupMembershipDTO
@@ -94,7 +86,6 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -103,10 +94,8 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this->user_id;
     }
 
-
     /**
      * @param int $user_id
-     *
      * @return GroupMembershipDTO
      */
     public function setUserId(int $user_id) : GroupMembershipDTO
@@ -116,7 +105,6 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this;
     }
 
-
     /**
      * @return mixed
      */
@@ -125,10 +113,8 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this->role;
     }
 
-
     /**
      * @param mixed $role
-     *
      * @return GroupMembershipDTO
      */
     public function setRole($role)
@@ -138,7 +124,6 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -147,10 +132,8 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this->isContact;
     }
 
-
     /**
      * @param bool $isContact
-     *
      * @return $this
      */
     public function setIsContact(bool $isContact)

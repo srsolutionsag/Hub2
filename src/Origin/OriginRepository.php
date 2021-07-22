@@ -18,7 +18,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginRepository
- *
  * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -28,30 +27,33 @@ class OriginRepository implements IOriginRepository
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc
      */
     public function all()
     {
-        return array_merge($this->users(), $this->categories(), $this->courses(), $this->courseMemberships(), $this->groups(), $this->groupMemberships(), $this->sessions(),
-            $this->sessionsMemberships(), $this->orgUnits(), $this->orgUnitMemberships(), $this->competenceManagements());
+        return array_merge(
+            $this->users(), $this->categories(), $this->courses(), $this->courseMemberships(), $this->groups(),
+            $this->groupMemberships(), $this->sessions(),
+            $this->sessionsMemberships(), $this->orgUnits(), $this->orgUnitMemberships(), $this->competenceManagements()
+        );
     }
-
 
     /**
      * @inheritdoc
      */
     public function allActive()
     {
-        return array_filter($this->all(), function ($origin) {
+        return array_filter(
+            $this->all(), function ($origin) {
             /** @var IOrigin $origin */
             return $origin->isActive();
-        });
+        }
+        );
     }
-
 
     /**
      * @inheritdoc
@@ -61,7 +63,6 @@ class OriginRepository implements IOriginRepository
         return ARUserOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_USER])->get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -69,7 +70,6 @@ class OriginRepository implements IOriginRepository
     {
         return ARCourseOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_COURSE])->get();
     }
-
 
     /**
      * @inheritdoc
@@ -79,7 +79,6 @@ class OriginRepository implements IOriginRepository
         return ARCategoryOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_CATEGORY])->get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -87,7 +86,6 @@ class OriginRepository implements IOriginRepository
     {
         return ARCourseMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP])->get();
     }
-
 
     /**
      * @inheritdoc
@@ -97,7 +95,6 @@ class OriginRepository implements IOriginRepository
         return ARGroupOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_GROUP])->get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -105,7 +102,6 @@ class OriginRepository implements IOriginRepository
     {
         return ARGroupMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP])->get();
     }
-
 
     /**
      * @inheritdoc
@@ -115,7 +111,6 @@ class OriginRepository implements IOriginRepository
         return ARSessionOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_SESSION])->get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -123,7 +118,6 @@ class OriginRepository implements IOriginRepository
     {
         return ARSessionMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP])->get();
     }
-
 
     /**
      * @inheritdoc
@@ -133,7 +127,6 @@ class OriginRepository implements IOriginRepository
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT])->get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -141,7 +134,6 @@ class OriginRepository implements IOriginRepository
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP])->get();
     }
-
 
     /**
      * @inheritdoc

@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Interface ICourseProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -29,12 +28,10 @@ interface ICourseProperties extends IOriginProperties
     const DELETE_MODE_DELETE_OR_OFFLINE = 3; // Set offline if there were any activities in the course, delete otherwise
     const DELETE_MODE_MOVE_TO_TRASH = 4;
 
-
     /**
      * @return string
      */
     public static function getPlaceHolderStrings() : string;
-
 
     /**
      * @return array

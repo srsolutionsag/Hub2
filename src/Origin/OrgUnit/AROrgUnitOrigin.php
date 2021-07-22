@@ -10,9 +10,7 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnit\OrgUnitProperties;
 
 /**
  * Class AROrgUnitOrigin
- *
  * @package srag\Plugins\Hub2\Origin\OrgUnit
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
@@ -26,7 +24,6 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
         return new OrgUnitOriginConfig($data);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -35,7 +32,6 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
         return new OrgUnitProperties($data);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -43,7 +39,6 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
     {
         return parent::config();
     }
-
 
     /**
      * @inheritdoc

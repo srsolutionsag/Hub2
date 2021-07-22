@@ -6,9 +6,7 @@ use srag\Plugins\Hub2\UI\Config\ConfigFormGUI;
 
 /**
  * Class ConfigGUI
- *
  * @package srag\Plugins\Hub2\UI\Config
- *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class hub2ConfigGUI extends hub2MainGUI
@@ -16,7 +14,6 @@ class hub2ConfigGUI extends hub2MainGUI
 
     const CMD_SAVE_CONFIG = 'saveConfig';
     const CMD_CANCEL = 'cancel';
-
 
     /**
      * @return ConfigFormGUI
@@ -28,7 +25,6 @@ class hub2ConfigGUI extends hub2MainGUI
         return $form;
     }
 
-
     /**
      *
      */
@@ -37,7 +33,6 @@ class hub2ConfigGUI extends hub2MainGUI
         $form = $this->getConfigForm();
         self::output()->output($form);
     }
-
 
     /**
      *
@@ -54,7 +49,6 @@ class hub2ConfigGUI extends hub2MainGUI
         $form->setValuesByPost();
         self::output()->output($form);
     }
-
 
     /**
      *

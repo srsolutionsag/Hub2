@@ -10,7 +10,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class TaxonomyFactory
- *
  * @package srag\Plugins\Hub2\Taxonomy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -19,8 +18,8 @@ class TaxonomyFactory implements ITaxonomyFactory
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc
@@ -30,7 +29,6 @@ class TaxonomyFactory implements ITaxonomyFactory
         return new Taxonomy($title, ITaxonomy::MODE_SELECT);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -38,7 +36,6 @@ class TaxonomyFactory implements ITaxonomyFactory
     {
         return new Taxonomy($title, ITaxonomy::MODE_CREATE);
     }
-
 
     /**
      * @inheritdoc

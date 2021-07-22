@@ -7,13 +7,12 @@ use InvalidArgumentException;
 use srag\Plugins\Hub2\Exception\LanguageCodeException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\LanguageCheck;
-use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
 
 /**
  * Class CourseDTO
- *
  * @package srag\Plugins\Hub2\Object\Course
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -25,6 +24,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     use MappingStrategyAwareDataTransferObject;
     use DidacticTemplateAwareDataTransferObject;
     use LanguageCheck;
+
     /**
      * @var array
      */
@@ -45,7 +45,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
             self::VIEW_MODE_TIMING,
             self::VIEW_MODE_SIMPLE,
             self::VIEW_MODE_BY_TYPE,
-            self::VIEW_MODE_INHERIT
+            self::VIEW_MODE_INHERIT,
         ];
     /**
      * @var array
@@ -196,7 +196,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      */
     protected $activationEnd = null;
 
-
     /**
      * @return string
      */
@@ -205,10 +204,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->title;
     }
 
-
     /**
      * @param string $title
-     *
      * @return CourseDTO
      */
     public function setTitle($title)
@@ -218,7 +215,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -227,10 +223,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->description;
     }
 
-
     /**
      * @param string $description
-     *
      * @return CourseDTO
      */
     public function setDescription($description)
@@ -240,7 +234,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -249,10 +242,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->importantInformation;
     }
 
-
     /**
      * @param string $importantInformation
-     *
      * @return CourseDTO
      */
     public function setImportantInformation($importantInformation)
@@ -262,7 +253,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -271,10 +261,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->contactResponsibility;
     }
 
-
     /**
      * @param string $contactResponsibility
-     *
      * @return CourseDTO
      */
     public function setContactResponsibility($contactResponsibility)
@@ -284,7 +272,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -293,10 +280,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->contactEmail;
     }
 
-
     /**
      * @param string $contactEmail
-     *
      * @return CourseDTO
      */
     public function setContactEmail($contactEmail)
@@ -311,10 +296,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->firstDependenceCategory;
     }
 
-
     /**
      * @param string $firstDependenceCategory
-     *
      * @return CourseDTO
      */
     public function setFirstDependenceCategory($firstDependenceCategory)
@@ -329,10 +312,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->secondDependenceCategory;
     }
 
-
     /**
      * @param string $secondDependenceCategory
-     *
      * @return CourseDTO
      */
     public function setSecondDependenceCategory($secondDependenceCategory)
@@ -347,10 +328,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->thirdDependenceCategory;
     }
 
-
     /**
      * @param string $thirdDependenceCategory
-     *
      * @return CourseDTO
      */
     public function setThirdDependenceCategory($thirdDependenceCategory)
@@ -363,15 +342,13 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     /**
      * @return string
      */
-    public function getFourthDependenceCategory(): ?string
+    public function getFourthDependenceCategory() : ?string
     {
         return $this->fourthDependenceCategory;
     }
 
-
     /**
      * @param string $fourthDependenceCategory
-     *
      * @return CourseDTO
      */
     public function setFourthDependenceCategory(string $fourthDependenceCategory)
@@ -381,7 +358,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -390,10 +366,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->template_id;
     }
 
-
     /**
      * @param int $template_id
-     *
      * @return $this
      */
     public function setTemplateId(int $template_id)
@@ -403,7 +377,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return array
      */
@@ -412,10 +385,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->notificationEmails;
     }
 
-
     /**
      * @param array $notificationEmails
-     *
      * @return CourseDTO
      */
     public function setNotificationEmails($notificationEmails)
@@ -425,7 +396,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -434,10 +404,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->owner;
     }
 
-
     /**
      * @param int $owner
-     *
      * @return CourseDTO
      */
     public function setOwner($owner)
@@ -447,7 +415,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -456,10 +423,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->subscriptionLimitationType;
     }
 
-
     /**
      * @param int $subscriptionLimitationType
-     *
      * @return CourseDTO
      */
     public function setSubscriptionLimitationType($subscriptionLimitationType)
@@ -472,7 +437,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -481,10 +445,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->viewMode;
     }
 
-
     /**
      * @param int $viewMode
-     *
      * @return CourseDTO
      */
     public function setViewMode($viewMode)
@@ -497,7 +459,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -506,10 +467,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->parentId;
     }
 
-
     /**
      * @param int $parentId
-     *
      * @return $this
      */
     public function setParentId($parentId)
@@ -519,7 +478,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -528,10 +486,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->parentIdType;
     }
 
-
     /**
      * @param int $parentIdType
-     *
      * @return CourseDTO
      */
     public function setParentIdType($parentIdType)
@@ -544,7 +500,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -553,10 +508,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->syllabus;
     }
 
-
     /**
      * @param string $syllabus
-     *
      * @return CourseDTO
      */
     public function setSyllabus($syllabus)
@@ -566,7 +519,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -575,10 +527,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->contactName;
     }
 
-
     /**
      * @param string $contactName
-     *
      * @return CourseDTO
      */
     public function setContactName($contactName)
@@ -588,7 +538,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -597,10 +546,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->contactConsultation;
     }
 
-
     /**
      * @param string $contactConsultation
-     *
      * @return CourseDTO
      */
     public function setContactConsultation($contactConsultation)
@@ -610,7 +557,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -619,10 +565,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->contactPhone;
     }
 
-
     /**
      * @param string $contactPhone
-     *
      * @return CourseDTO
      */
     public function setContactPhone($contactPhone)
@@ -632,7 +576,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -641,10 +584,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->activationType;
     }
 
-
     /**
      * @param int $activationType
-     *
      * @return CourseDTO
      */
     public function setActivationType($activationType)
@@ -654,7 +595,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -663,12 +603,9 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->languageCode;
     }
 
-
     /**
      * @param $languageCode
-     *
      * @return CourseDTO
-     *
      * @throws LanguageCodeException if the passed $language is not a valid
      * ILIAS language code
      */
@@ -681,7 +618,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -690,10 +626,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return (int) $this->didacticTemplate;
     }
 
-
     /**
      * @param int $didacticTemplate
-     *
      * @return CourseDTO
      */
     public function setDidacticTemplate(int $didacticTemplate) : CourseDTO
@@ -703,7 +637,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -712,10 +645,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return is_string($this->icon) ? $this->icon : '';
     }
 
-
     /**
      * @param string $icon
-     *
      * @return CourseDTO
      */
     public function setIcon(string $icon) : CourseDTO
@@ -725,7 +656,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -733,7 +663,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     {
         return $this->sessionLimitEnabled;
     }
-
 
     /**
      * @param bool $sessionLimitEnabled
@@ -743,7 +672,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         $this->sessionLimitEnabled = $sessionLimitEnabled;
     }
 
-
     /**
      * @return int
      */
@@ -751,7 +679,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     {
         return $this->numberOfPreviousSessions;
     }
-
 
     /**
      * @param int $numberOfPreviousSessions
@@ -761,7 +688,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         $this->numberOfPreviousSessions = $numberOfPreviousSessions;
     }
 
-
     /**
      * @return int
      */
@@ -769,7 +695,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     {
         return $this->numberOfNextSessions;
     }
-
 
     /**
      * @param int $numberOfNextSessions
@@ -779,7 +704,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         $this->numberOfNextSessions = $numberOfNextSessions;
     }
 
-
     /**
      * @return int
      */
@@ -787,7 +711,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     {
         return $this->orderType;
     }
-
 
     /**
      * @param int $orderType
@@ -797,7 +720,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         $this->orderType = $orderType;
     }
 
-
     /**
      * @return int
      */
@@ -805,7 +727,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     {
         return $this->orderDirection;
     }
-
 
     /**
      * @param int $orderDirection
@@ -815,7 +736,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         $this->orderDirection = $orderDirection;
     }
 
-
     /**
      * @return string
      */
@@ -823,7 +743,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     {
         return $this->appointementsColor;
     }
-
 
     /**
      * @param string $appointementsColor
@@ -835,7 +754,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return ilDate|null
      */
@@ -844,10 +762,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->courseStart;
     }
 
-
     /**
      * @param ilDate|null $courseStart
-     *
      * @return self
      */
     public function setCourseStart(/*?*/ ilDate $courseStart = null) : self
@@ -857,7 +773,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return ilDate|null
      */
@@ -866,10 +781,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->courseEnd;
     }
 
-
     /**
      * @param ilDate|null $courseEnd
-     *
      * @return self
      */
     public function setCourseEnd(/*?*/ ilDate $courseEnd = null) : self
@@ -879,7 +792,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return ilDate|null
      */
@@ -888,10 +800,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->activationStart;
     }
 
-
     /**
      * @param ilDate|null $activationStart
-     *
      * @return self
      */
     public function setActivationStart(/*?*/ ilDate $activationStart = null) : self
@@ -901,7 +811,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-
     /**
      * @return ilDate|null
      */
@@ -910,10 +819,8 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this->activationEnd;
     }
 
-
     /**
      * @param ilDate|null $activationEnd
-     *
      * @return self
      */
     public function setActivationEnd(/*?*/ ilDate $activationEnd = null) : self

@@ -12,9 +12,7 @@ use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManageme
 
 /**
  * Class CompetenceManagementDTO
- *
  * @package srag\Plugins\Hub2\Object\CompetenceManagement
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class CompetenceManagementDTO extends DataTransferObject implements ICompetenceManagementDTO
@@ -65,7 +63,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
      */
     protected $ext_id = "";
 
-
     /**
      * @inheritdoc
      */
@@ -75,7 +72,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         $this->ext_id = $ext_id;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -83,7 +79,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->type;
     }
-
 
     /**
      * @inheritdoc
@@ -95,7 +90,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -103,7 +97,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->title;
     }
-
 
     /**
      * @inheritdoc
@@ -115,7 +108,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -123,7 +115,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->title;
     }
-
 
     /**
      * @inheritdoc
@@ -139,7 +130,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -147,7 +137,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->parent_id;
     }
-
 
     /**
      * @inheritdoc
@@ -163,7 +152,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -171,7 +159,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->parent_id_type;
     }
-
 
     /**
      * @inheritdoc
@@ -187,7 +174,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -195,7 +181,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->status;
     }
-
 
     /**
      * @inheritdoc
@@ -211,7 +196,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -219,7 +203,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->self_evaluation;
     }
-
 
     /**
      * @inheritdoc
@@ -235,7 +218,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -250,7 +232,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -258,7 +239,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->skill_levels;
     }
-
 
     /**
      * @inheritdoc
@@ -274,7 +254,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -289,7 +268,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -297,7 +275,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->profile_levels;
     }
-
 
     /**
      * @inheritdoc
@@ -313,7 +290,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -328,7 +304,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -336,7 +311,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->profile_assigned_users;
     }
-
 
     /**
      * @inheritdoc
@@ -352,7 +326,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -360,7 +333,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         return $this->ext_id;
     }
-
 
     /**
      * @inheritdoc
@@ -371,7 +343,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
 
         return $this;
     }
-
 
     /**
      * @inheritdoc
@@ -388,7 +359,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         }
     }
 
-
     /**
      * @inheritdoc
      */
@@ -396,22 +366,28 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     {
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
-                return array_map(function ($skill_level) : ISkillLevel {
-                    if ($skill_level instanceof ISkillLevel) {
-                        $this->{$key} = $skill_level;
-                    }
+                return array_map(
+                    function ($skill_level) : ISkillLevel {
+                        if ($skill_level instanceof ISkillLevel) {
+                            $this->{$key} = $skill_level;
+                        }
 
-                    return new SkillLevel($skill_level["ext_id"], $skill_level["title"], $skill_level["description"]);
-                }, $data[$key]);
+                        return new SkillLevel($skill_level["ext_id"], $skill_level["title"],
+                            $skill_level["description"]);
+                    }, $data[$key]
+                );
 
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
-                return array_map(function ($profile_level) : IProfileLevel {
-                    if ($profile_level instanceof IProfileLevel) {
-                        $this->{$key} = $profile_level;
-                    }
+                return array_map(
+                    function ($profile_level) : IProfileLevel {
+                        if ($profile_level instanceof IProfileLevel) {
+                            $this->{$key} = $profile_level;
+                        }
 
-                    $this->{$key} = new ProfileLevel($profile_level["skill_id"], $profile_level["skill_id_type"], $profile_level["level_id"], $profile_level["level_id_type"]);
-                }, $data[$key]);
+                        $this->{$key} = new ProfileLevel($profile_level["skill_id"], $profile_level["skill_id_type"],
+                            $profile_level["level_id"], $profile_level["level_id_type"]);
+                    }, $data[$key]
+                );
 
             default:
                 return parent::wakeUpValue($data, $key);

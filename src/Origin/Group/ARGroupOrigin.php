@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
 
 /**
  * Class ARGroupOrigin
- *
  * @package srag\Plugins\Hub2\Origin\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -22,7 +21,6 @@ class ARGroupOrigin extends AROrigin implements IGroupOrigin
     {
         return new GroupOriginConfig($data);
     }
-
 
     /**
      * @inheritdoc

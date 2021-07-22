@@ -7,7 +7,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ilHub2ConfigGUI
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -16,8 +15,8 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @param string $cmd

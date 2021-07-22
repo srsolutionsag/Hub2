@@ -6,7 +6,6 @@ use ilUserDefinedData;
 
 /**
  * Class CustomMetadata
- *
  * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -14,7 +13,6 @@ class UDF extends AbstractImplementation implements IMetadataImplementation
 {
 
     const PREFIX = 'f_';
-
 
     /**
      * @inheritdoc

@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * Interface IGroupOrigin
- *
  * @package srag\Plugins\Hub2\Origin\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

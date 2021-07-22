@@ -7,8 +7,6 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
 
 /**
  * Class CourseLink
- *
- *
  * @package srag\Plugins\Hub2\Shortlink\Course
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

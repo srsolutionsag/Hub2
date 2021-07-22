@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Interface ISessionMembershipDTO
- *
  * @package srag\Plugins\Hub2\Object\SessionMembership
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

@@ -8,9 +8,7 @@ use stdClass;
 
 /**
  * Interface IRepository
- *
  * @package srag\Plugins\Hub2\Log
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 interface IRepository
@@ -21,20 +19,16 @@ interface IRepository
      */
     public function deleteLog(ILog $log)/*: void*/ ;
 
-
     /**
      * @param int $keep_old_logs_time
-     *
      * @return int
      */
     public function deleteOldLogs(int $keep_old_logs_time) : int;
-
 
     /**
      * @return IFactory
      */
     public function factory() : IFactory;
-
 
     /**
      * @param string|null     $sort_by
@@ -51,9 +45,7 @@ interface IRepository
      * @param string|null     $object_ext_id
      * @param int|null        $object_ilias_id
      * @param string|null     $additional_data
-     *
      * @param int|null        $status
-     *
      * @return ILog[]
      */
     public function getLogs(
@@ -74,7 +66,6 @@ interface IRepository
         int $status = null
     ) : array;
 
-
     /**
      * @param string|null     $title
      * @param string|null     $message
@@ -86,9 +77,7 @@ interface IRepository
      * @param string|null     $object_ext_id
      * @param int|null        $object_ilias_id
      * @param string|null     $additional_data
-     *
      * @param int|null        $status
-     *
      * @return int
      */
     public function getLogsCount(
@@ -105,43 +94,34 @@ interface IRepository
         int $status = null
     ) : int;
 
-
     /**
      * @param int $log_id
-     *
      * @return ILog|null
      */
     public function getLogById(int $log_id)/*: ?ILog*/ ;
-
 
     /**
      * @return stdClass
      */
     public function getGlobalAdditionalData() : stdClass;
 
-
     /**
      * @param stdClass $global_additional_data
-     *
      * @return self
      */
     public function withGlobalAdditionalData(stdClass $global_additional_data) : self;
-
 
     /**
      * @param ILog $log
      */
     public function keepLog(ILog $log)/*:void*/ ;
 
-
     /**
      * @param IOrigin  $origin
      * @param int|null $level
-     *
      * @return ILog[]
      */
     public function getKeptLogs(IOrigin $origin,/*?*/ int $level = null) : array;
-
 
     /**
      * @param ILog $log

@@ -5,16 +5,15 @@ namespace srag\Plugins\Hub2\Metadata\Implementation;
 use ilADTDate;
 use ilADTDateTime;
 use ilADTExternalLink;
+use ilADTFloat;
+use ilADTInteger;
 use ilADTInternalLink;
 use ilADTText;
 use ilAdvancedMDValues;
 use ilDateTime;
-use ilADTInteger;
-use ilADTFloat;
 
 /**
  * Class CustomMetadata
- *
  * @package srag\Plugins\Hub2\Metadata\Implementation
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -28,7 +27,8 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
     {
         $id = $this->getMetadata()->getIdentifier();
 
-        $ilAdvancedMDValues = new ilAdvancedMDValues($this->getMetadata()->getRecordId(), $this->getIliasId(), null, "-");
+        $ilAdvancedMDValues = new ilAdvancedMDValues($this->getMetadata()->getRecordId(), $this->getIliasId(), null,
+            "-");
 
         $ilAdvancedMDValues->read();
         $ilADTGroup = $ilAdvancedMDValues->getADTGroup();

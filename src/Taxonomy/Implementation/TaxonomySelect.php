@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 
 /**
  * Class TaxonomySelect
- *
  * @package srag\Plugins\Hub2\Taxonomy\Implementation
  */
 class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
@@ -33,7 +32,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
      */
     protected $selectable_taxonomies = [];
 
-
     /**
      * @inheritdoc
      */
@@ -48,7 +46,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         $this->handleNodes();
     }
 
-
     /**
      *
      */
@@ -62,7 +59,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
             $this->selectNode($node);
         }
     }
-
 
     /**
      *
@@ -79,10 +75,8 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         $this->ilTaxNodeAssignment = new ilTaxNodeAssignment($a_component_id, $this->container_obj_id, "obj", $tax_id);
     }
 
-
     /**
      * @param INode $node
-     *
      * @throws TaxonomyNodeNotFoundException
      * @throws ilTaxonomyException
      */
@@ -96,7 +90,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         $this->ilTaxNodeAssignment->addAssignment($node_id, $this->container_obj_id);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -104,7 +97,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     {
         return in_array($this->getTaxonomy()->getTitle(), $this->selectable_taxonomies);
     }
-
 
     /**
      *
@@ -115,7 +107,8 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         foreach (self::dic()->tree()->getPathFull((int) $this->getILIASParentId()) as $node) {
             if ($node["ref_id"] != (int) $this->getILIASParentId()) {
                 if ($node["type"] == "cat") {
-                    if (ilContainer::_lookupContainerSetting($node["obj_id"], ilObjectServiceSettingsGUI::TAXONOMIES, false)) {
+                    if (ilContainer::_lookupContainerSetting($node["obj_id"], ilObjectServiceSettingsGUI::TAXONOMIES,
+                        false)) {
                         $tax_ids = ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
                         if (sizeof($tax_ids)) {
                             $res = array_merge($res, $tax_ids);

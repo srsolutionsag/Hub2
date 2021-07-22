@@ -11,8 +11,6 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
 
 /**
  * Class UserLink
- *
- *
  * @package srag\Plugins\Hub2\Shortlink\User
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -31,7 +29,6 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         return ilObjUser::_exists($this->object->getILIASId(), false);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -45,7 +42,6 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         return self::dic()->access()->checkAccess('read', '', 7); // Read access to user administration
     }
 
-
     /**
      * @inheritdoc
      */
@@ -54,7 +50,6 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         return ilLink::_getLink($this->object->getILIASId(), 'usr');
     }
 
-
     /**
      * @inheritdoc
      */
@@ -62,7 +57,6 @@ class UserLink extends AbstractBaseLink implements IObjectLink
     {
         return "ilias.php";
     }
-
 
     /**
      * @inheritdoc

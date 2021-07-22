@@ -4,7 +4,6 @@ use srag\Plugins\Hub2\Exception\LanguageCodeException;
 
 /**
  * Trait LanguageCheck
- *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
 trait LanguageCheck
@@ -12,7 +11,6 @@ trait LanguageCheck
 
     /**
      * Copied from ilMDLanguageItem::_getPossibleLanguageCodes
-     *
      * @var string[]
      */
     private static $available_languages
@@ -155,13 +153,11 @@ trait LanguageCheck
             "yo",
             "za",
             "zh",
-            "zu"
+            "zu",
         ];
-
 
     /**
      * @param string $languageCode
-     *
      * @return bool
      */
     public static function isLanguageCode(string $languageCode) : bool
@@ -169,10 +165,8 @@ trait LanguageCheck
         return in_array($languageCode, self::$available_languages);
     }
 
-
     /**
      * @param string $languageCode
-     *
      * @throws LanguageCodeException
      */
     public static function checkLanguageCode(string $languageCode)

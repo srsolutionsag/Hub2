@@ -26,7 +26,6 @@ use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
 
 /**
  * Class ilHub2Plugin
- *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -35,6 +34,7 @@ class ilHub2Plugin extends ilCronHookPlugin
 
     use PluginUninstallTrait;
     use Hub2Trait;
+
     const PLUGIN_ID = 'hub2';
     const PLUGIN_NAME = 'Hub2';
     const PLUGIN_CLASS_NAME = self::class;
@@ -44,7 +44,6 @@ class ilHub2Plugin extends ilCronHookPlugin
      */
     protected static $instance;
 
-
     /**
      * @return string
      */
@@ -52,7 +51,6 @@ class ilHub2Plugin extends ilCronHookPlugin
     {
         return self::PLUGIN_NAME;
     }
-
 
     /**
      * @return self
@@ -66,7 +64,6 @@ class ilHub2Plugin extends ilCronHookPlugin
         return self::$instance;
     }
 
-
     /**
      * @return ilCronJob[]
      */
@@ -75,10 +72,8 @@ class ilHub2Plugin extends ilCronHookPlugin
         return [new RunSync(), new DeleteOldLogsJob()];
     }
 
-
     /**
      * @param string $a_job_id
-     *
      * @return ilCronJob
      */
     public function getCronJobInstance(/*string*/
@@ -97,7 +92,6 @@ class ilHub2Plugin extends ilCronHookPlugin
         }
     }
 
-
     /**
      * @inheritdoc
      */
@@ -105,7 +99,6 @@ class ilHub2Plugin extends ilCronHookPlugin
     {
         return new Menu(self::dic()->dic(), $this);
     }
-
 
     /**
      * @inheritdoc
@@ -131,7 +124,6 @@ class ilHub2Plugin extends ilCronHookPlugin
 
         ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
     }
-
 
     /**
      * @inheritDoc

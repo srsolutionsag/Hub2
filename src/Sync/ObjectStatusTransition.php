@@ -10,11 +10,9 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectStatusTransition
- *
  * @package srag\Plugins\Hub2\Sync
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
- *
  * @deprecated
  */
 class ObjectStatusTransition implements IObjectStatusTransition
@@ -22,23 +20,20 @@ class ObjectStatusTransition implements IObjectStatusTransition
 
     use DICTrait;
     use Hub2Trait;
+
     /**
      * @var string
-     *
      * @deprecated
      */
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOriginConfig
-     *
      * @deprecated
      */
     protected $config;
 
-
     /**
      * @param IOriginConfig $config
-     *
      * @deprecated
      */
     public function __construct(IOriginConfig $config)
@@ -46,10 +41,8 @@ class ObjectStatusTransition implements IObjectStatusTransition
         $this->config = $config;
     }
 
-
     /**
      * @inheritdoc
-     *
      * @deprecated
      */
     public function finalToIntermediate(IObject $object) : int

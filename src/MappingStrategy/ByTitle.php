@@ -17,7 +17,6 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class ByTitle
- *
  * @package srag\Plugins\Hub2\MappingStrategy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -67,10 +66,8 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
         return 0;
     }
 
-
     /**
      * @param IDataTransferObject $dto
-     *
      * @return string
      */
     private function getTypeByDTO(IDataTransferObject $dto) : string

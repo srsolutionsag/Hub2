@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
 
 /**
  * Interface ISessionDTO
- *
  * @package srag\Plugins\Hub2\Object\Session
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */

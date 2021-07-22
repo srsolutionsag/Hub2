@@ -9,7 +9,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Taxonomy
- *
  * @package srag\Plugins\Hub2\Taxonomy
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -18,6 +17,7 @@ class Taxonomy implements ITaxonomy
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var INode[]
@@ -36,10 +36,8 @@ class Taxonomy implements ITaxonomy
      */
     protected $description = "";
 
-
     /**
      * Taxonomy constructor
-     *
      * @param string $title
      * @param int    $mode
      */
@@ -49,7 +47,6 @@ class Taxonomy implements ITaxonomy
         $this->mode = $mode;
     }
 
-
     /**
      * @return string
      */
@@ -57,7 +54,6 @@ class Taxonomy implements ITaxonomy
     {
         return $this->title;
     }
-
 
     /**
      * @inheritdoc
@@ -67,7 +63,6 @@ class Taxonomy implements ITaxonomy
         return $this->mode;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -75,7 +70,6 @@ class Taxonomy implements ITaxonomy
     {
         return $this->nodes;
     }
-
 
     /**
      * @inheritdoc
@@ -90,7 +84,6 @@ class Taxonomy implements ITaxonomy
         return $titles;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -101,7 +94,6 @@ class Taxonomy implements ITaxonomy
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -110,10 +102,8 @@ class Taxonomy implements ITaxonomy
         return $this->description;
     }
 
-
     /**
      * @param string $description
-     *
      * @return Taxonomy
      */
     public function setDescription($description)
@@ -122,7 +112,6 @@ class Taxonomy implements ITaxonomy
 
         return $this;
     }
-
 
     /**
      * @inheritdoc

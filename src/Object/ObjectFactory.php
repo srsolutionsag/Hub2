@@ -6,7 +6,6 @@ use ilHub2Plugin;
 use LogicException;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
-use srag\Plugins\Hub2\Object\Category\ICategory;
 use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
 use srag\Plugins\Hub2\Object\CompetenceManagement\ICompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -25,7 +24,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectFactory
- *
  * @package srag\Plugins\Hub2\Object
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -35,12 +33,12 @@ class ObjectFactory implements IObjectFactory
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin
      */
     protected $origin;
-
 
     /**
      * @param IOrigin $origin
@@ -49,7 +47,6 @@ class ObjectFactory implements IObjectFactory
     {
         $this->origin = $origin;
     }
-
 
     /**
      * @inheritdoc
@@ -84,7 +81,6 @@ class ObjectFactory implements IObjectFactory
         }
     }
 
-
     /**
      * @inheritdoc
      */
@@ -99,7 +95,6 @@ class ObjectFactory implements IObjectFactory
 
         return $user;
     }
-
 
     /**
      * @inheritdoc
@@ -116,7 +111,6 @@ class ObjectFactory implements IObjectFactory
         return $course;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -131,7 +125,6 @@ class ObjectFactory implements IObjectFactory
 
         return $category;
     }
-
 
     /**
      * @inheritdoc
@@ -148,7 +141,6 @@ class ObjectFactory implements IObjectFactory
         return $group;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -163,7 +155,6 @@ class ObjectFactory implements IObjectFactory
 
         return $session;
     }
-
 
     /**
      * @inheritdoc
@@ -180,7 +171,6 @@ class ObjectFactory implements IObjectFactory
         return $course_membership;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -195,7 +185,6 @@ class ObjectFactory implements IObjectFactory
 
         return $group_membership;
     }
-
 
     /**
      * @inheritdoc
@@ -212,7 +201,6 @@ class ObjectFactory implements IObjectFactory
         return $session_membership;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -228,7 +216,6 @@ class ObjectFactory implements IObjectFactory
         return $org_unit;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -243,7 +230,6 @@ class ObjectFactory implements IObjectFactory
 
         return $org_unit_membership;
     }
-
 
     /**
      * @inheritdoc
@@ -261,7 +247,6 @@ class ObjectFactory implements IObjectFactory
         return $competence_management;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -269,7 +254,6 @@ class ObjectFactory implements IObjectFactory
     {
         return $this->origin->getId() . $ext_id;
     }
-
 
     /**
      * @inheritdoc
@@ -279,7 +263,6 @@ class ObjectFactory implements IObjectFactory
         return ARUser::get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -287,7 +270,6 @@ class ObjectFactory implements IObjectFactory
     {
         return ARCourse::get();
     }
-
 
     /**
      * @inheritdoc
@@ -297,23 +279,21 @@ class ObjectFactory implements IObjectFactory
         return ARCategory::get();
     }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function categorys(): array
-	{
-		return $this->categories();
-	}
+    /**
+     * @inheritdoc
+     */
+    public function categorys() : array
+    {
+        return $this->categories();
+    }
 
-
-	/**
+    /**
      * @inheritdoc
      */
     public function groups() : array
     {
         return ARGroup::get();
     }
-
 
     /**
      * @inheritdoc
@@ -323,7 +303,6 @@ class ObjectFactory implements IObjectFactory
         return ARSession::get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -331,7 +310,6 @@ class ObjectFactory implements IObjectFactory
     {
         return ARCourseMembership::get();
     }
-
 
     /**
      * @inheritdoc
@@ -341,7 +319,6 @@ class ObjectFactory implements IObjectFactory
         return ARGroupMembership::get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -349,7 +326,6 @@ class ObjectFactory implements IObjectFactory
     {
         return ARSessionMembership::get();
     }
-
 
     /**
      * @inheritdoc
@@ -359,7 +335,6 @@ class ObjectFactory implements IObjectFactory
         return AROrgUnit::get();
     }
 
-
     /**
      * @inheritdoc
      */
@@ -367,7 +342,6 @@ class ObjectFactory implements IObjectFactory
     {
         return AROrgUnitMembership::get();
     }
-
 
     /**
      * @inheritdoc

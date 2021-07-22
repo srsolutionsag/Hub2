@@ -16,9 +16,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractOriginImplementation
- *
  * Any implementation of a origin MUST extend this class.
- *
  * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -28,6 +26,7 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
 
     use DICTrait;
     use Hub2Trait;
+
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IMappingStrategyFactory
@@ -58,14 +57,12 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
      */
     protected $origin;
 
-
     /**
      * AbstractOriginImplementation constructor
-     *
-     * @param IOriginConfig $config
+     * @param IOriginConfig              $config
      * @param IDataTransferObjectFactory $factory
-     * @param IMetadataFactory $metadataFactory
-     * @param ITaxonomyFactory $taxonomyFactory
+     * @param IMetadataFactory           $metadataFactory
+     * @param ITaxonomyFactory           $taxonomyFactory
      */
     public function __construct(
         IOriginConfig $config,
@@ -83,7 +80,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
         $this->origin = $origin;
     }
 
-
     /**
      * @return IOriginConfig
      */
@@ -91,7 +87,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
     {
         return $this->originConfig;
     }
-
 
     /**
      * @return IDataTransferObjectFactory
@@ -101,17 +96,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
         return $this->factory;
     }
 
-
     /**
      * @param IDataTransferObject $dto
-     *
      * @return ILog
      */
     protected final function log(IDataTransferObject $dto = null) : ILog
     {
         return self::logs()->factory()->originLog($this->origin, null, $dto);
     }
-
 
     /**
      * @return IMappingStrategyFactory
@@ -121,7 +113,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
         return $this->mapping_strategy_factory;
     }
 
-
     /**
      * @return IMetadataFactory
      */
@@ -129,7 +120,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
     {
         return $this->metadataFactory;
     }
-
 
     /**
      * @return ITaxonomyFactory
@@ -141,7 +131,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
 
     // HOOKS
 
-
     /**
      * @inheritdoc
      */
@@ -150,7 +139,6 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
         // TODO: Implement overrideStatus() method.
     }
 
-
     /**
      * @inheritdoc
      */
@@ -158,15 +146,14 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
     {
         return [];
     }
-    
+
     public function handleNoLongerDeliveredObject(HookObject $hook)
     {
         // TODO: Implement handleOutdated() method.
     }
-    
+
     public function handleAllObjects(HookObject $hook)
     {
         // TODO: Implement handleAllObjects() method.
     }
-    
 }

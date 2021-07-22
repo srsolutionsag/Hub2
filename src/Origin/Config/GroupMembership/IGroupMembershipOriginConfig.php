@@ -6,7 +6,6 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 
 /**
  * Interface IGroupMembershipOriginConfig
- *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  * @package srag\Plugins\Hub2\Origin\Config\GroupMembership
  */

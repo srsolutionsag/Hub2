@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Origin\Properties;
 
 /**
  * Class OriginProperties
- *
  * @package srag\Plugins\Hub2\Origin\Properties
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -17,7 +16,6 @@ abstract class OriginProperties implements IOriginProperties
      */
     protected $data = [];
 
-
     /**
      * @param array $data
      */
@@ -25,7 +23,6 @@ abstract class OriginProperties implements IOriginProperties
     {
         $this->data = array_merge($this->data, $data);
     }
-
 
     /**
      * @inheritdoc
@@ -35,7 +32,6 @@ abstract class OriginProperties implements IOriginProperties
         return (isset($this->data[$key])) ? $this->data[$key] : null;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -44,7 +40,6 @@ abstract class OriginProperties implements IOriginProperties
         return $this->get(self::PREFIX_UPDATE_DTO . $property);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -52,7 +47,6 @@ abstract class OriginProperties implements IOriginProperties
     {
         $this->data = array_merge($this->data, $data);
     }
-
 
     /**
      * @inheritdoc

@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
- *
  * @package srag\Plugins\Hub2\Origin
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -23,6 +22,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
 
     use DICTrait;
     use Hub2Trait;
+
     const TABLE_NAME = 'sr_hub2_origin';
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
@@ -30,19 +30,18 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     static $object_types
         = [
-            IOrigin::OBJECT_TYPE_USER                  => IOrigin::OBJECT_TYPE_USER,
-            IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP     => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP,
-            IOrigin::OBJECT_TYPE_COURSE                => IOrigin::OBJECT_TYPE_COURSE,
-            IOrigin::OBJECT_TYPE_CATEGORY              => IOrigin::OBJECT_TYPE_CATEGORY,
-            IOrigin::OBJECT_TYPE_GROUP                 => IOrigin::OBJECT_TYPE_GROUP,
-            IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP      => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
-            IOrigin::OBJECT_TYPE_SESSION               => IOrigin::OBJECT_TYPE_SESSION,
-            IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP    => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
-            IOrigin::OBJECT_TYPE_ORGNUNIT              => IOrigin::OBJECT_TYPE_ORGNUNIT,
-            IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP   => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP,
-            IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT => IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT
+            IOrigin::OBJECT_TYPE_USER => IOrigin::OBJECT_TYPE_USER,
+            IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP,
+            IOrigin::OBJECT_TYPE_COURSE => IOrigin::OBJECT_TYPE_COURSE,
+            IOrigin::OBJECT_TYPE_CATEGORY => IOrigin::OBJECT_TYPE_CATEGORY,
+            IOrigin::OBJECT_TYPE_GROUP => IOrigin::OBJECT_TYPE_GROUP,
+            IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP,
+            IOrigin::OBJECT_TYPE_SESSION => IOrigin::OBJECT_TYPE_SESSION,
+            IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP,
+            IOrigin::OBJECT_TYPE_ORGNUNIT => IOrigin::OBJECT_TYPE_ORGNUNIT,
+            IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP,
+            IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT => IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT,
         ];
-
 
     /**
      * @return string
@@ -52,10 +51,8 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return self::TABLE_NAME;
     }
 
-
     /**
      * @return string
-     *
      * @deprecated
      */
     public static function returnDbTableName()
@@ -63,10 +60,8 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return self::TABLE_NAME;
     }
 
-
     /**
      * @var int
-     *
      * @db_has_field          true
      * @db_is_unique          true
      * @db_is_primary         true
@@ -77,7 +72,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $id = 0;
     /**
      * @var string
-     *
      * @db_has_field           true
      * @db_fieldtype           text
      * @db_length              32
@@ -86,7 +80,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $object_type;
     /**
      * @var bool
-     *
      * @db_has_field           true
      * @db_fieldtype           integer
      * @db_length              1
@@ -94,7 +87,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $active = 0;
     /**
      * @var string
-     *
      * @db_has_field           true
      * @db_is_notnull          true
      * @db_fieldtype           text
@@ -103,7 +95,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $title;
     /**
      * @var string
-     *
      * @db_has_field        true
      * @db_fieldtype        text
      * @db_length           2048
@@ -111,7 +102,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $description;
     /**
      * @var string
-     *
      * @db_has_field           true
      * @db_fieldtype           text
      * @db_length              256
@@ -120,7 +110,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $implementation_class_name = '';
     /**
      * @var string
-     *
      * @db_has_field           true
      * @db_fieldtype           text
      * @db_length              256
@@ -128,21 +117,18 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $implementation_namespace = IOrigin::ORIGIN_MAIN_NAMESPACE;
     /**
      * @var string
-     *
      * @db_has_field           true
      * @db_fieldtype           timestamp
      */
     protected $updated_at;
     /**
      * @var string
-     *
      * @db_has_field           true
      * @db_fieldtype           timestamp
      */
     protected $created_at;
     /**
      * @var array
-     *
      * @db_has_field        true
      * @db_fieldtype        clob
      * @db_length           4000
@@ -150,7 +136,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $config = array();
     /**
      * @var array
-     *
      * @db_has_field        true
      * @db_fieldtype        clob
      * @db_length           4000
@@ -166,7 +151,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $_properties;
     /**
      * @var string
-     *
      * @db_has_field           true
      * @db_fieldtype           timestamp
      */
@@ -177,7 +161,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $force_update = false;
     /**
      * @var bool
-     *
      * @con_has_field    true
      * @con_fieldtype    integer
      * @con_length       1
@@ -186,7 +169,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $adhoc = false;
     /**
      * @var bool
-     *
      * @con_has_field  true
      * @con_fieldtype  integer
      * @con_length     1
@@ -195,14 +177,12 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     protected $adhoc_parent_scope = false;
     /**
      * @var int
-     *
      * @db_has_field  true
      * @db_fieldtype  integer
      * @db_length     8
      * @db_is_notnull true
      */
     protected $sort = 0;
-
 
     /**
      *
@@ -224,7 +204,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         parent::create();
     }
 
-
     /**
      *
      */
@@ -233,7 +212,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->updated_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
         parent::update();
     }
-
 
     /**
      * @inheritdoc
@@ -270,7 +248,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         }
     }
 
-
     /**
      * @inheritdoc
      */
@@ -293,7 +270,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         }
     }
 
-
     /**
      *
      */
@@ -303,7 +279,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->_properties = $this->getOriginProperties($this->getPropertiesData());
     }
 
-
     /**
      * @inheritdoc
      */
@@ -312,7 +287,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this->id;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -320,7 +294,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->title;
     }
-
 
     /**
      * @inheritdoc
@@ -332,7 +305,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -340,7 +312,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->description;
     }
-
 
     /**
      * @inheritdoc
@@ -350,7 +321,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->description = $description;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -358,7 +328,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return (bool) $this->active;
     }
-
 
     /**
      * @inheritdoc
@@ -370,7 +339,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -378,7 +346,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->implementation_class_name;
     }
-
 
     /**
      * @inheritdoc
@@ -390,7 +357,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -398,7 +364,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->implementation_namespace ? $this->implementation_namespace : IOrigin::ORIGIN_MAIN_NAMESPACE;
     }
-
 
     /**
      * @param string $implementation_namespace
@@ -408,7 +373,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->implementation_namespace = $implementation_namespace;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -416,7 +380,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->created_at;
     }
-
 
     /**
      * @inheritdoc
@@ -426,7 +389,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this->updated_at;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -434,7 +396,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->object_type;
     }
-
 
     /**
      * @return string
@@ -444,7 +405,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this->last_run;
     }
 
-
     /**
      * @param string $last_run
      */
@@ -452,7 +412,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         $this->last_run = $last_run;
     }
-
 
     /**
      * @inheritdoc
@@ -467,7 +426,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -475,7 +433,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->_config;
     }
-
 
     /**
      * @inheritdoc
@@ -495,23 +452,17 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
 
     /**
      * Return the concrete implementation of the IOriginConfig.
-     *
      * @param array $data
-     *
      * @return IOriginConfig
      */
     abstract protected function getOriginConfig(array $data);
 
-
     /**
      * Return the concrete implementation of the origin properties.
-     *
      * @param array $data
-     *
      * @return IOriginProperties
      */
     abstract protected function getOriginProperties(array $data);
-
 
     /**
      * @return string
@@ -524,7 +475,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return lcfirst($out[1]);
     }
 
-
     /**
      * @return array
      */
@@ -532,7 +482,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->config;
     }
-
 
     /**
      * @return array
@@ -542,7 +491,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this->properties;
     }
 
-
     /**
      * Run Sync without Hash comparison
      */
@@ -550,7 +498,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         $this->force_update = true;
     }
-
 
     /**
      * @return bool
@@ -560,7 +507,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this->force_update;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -568,7 +514,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->adhoc;
     }
-
 
     /**
      * @inheritdoc
@@ -578,7 +523,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->adhoc = $adhoc;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -586,7 +530,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->adhoc_parent_scope;
     }
-
 
     /**
      * @inheritdoc
@@ -596,7 +539,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->adhoc_parent_scope = $adhoc_parent_scope;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -604,7 +546,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         return $this->sort;
     }
-
 
     /**
      * @inheritdoc

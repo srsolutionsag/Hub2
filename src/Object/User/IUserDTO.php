@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 
 /**
  * Interface IUserDTO
- *
  * @package srag\Plugins\Hub2\Object\User
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>

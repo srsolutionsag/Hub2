@@ -13,9 +13,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class RunSync
- *
  * @package srag\Plugins\Hub2\Jobs\Log
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class DeleteOldLogsJob extends ilCronJob
@@ -23,20 +21,18 @@ class DeleteOldLogsJob extends ilCronJob
 
     use DICTrait;
     use Hub2Trait;
+
     const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID . "_delete_old_logs";
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-
     /**
      * Get id
-     *
      * @return string
      */
     public function getId() : string
     {
         return self::CRON_JOB_ID;
     }
-
 
     /**
      * @return string
@@ -46,7 +42,6 @@ class DeleteOldLogsJob extends ilCronJob
         return ilHub2Plugin::PLUGIN_NAME . ": " . self::plugin()->translate("cron", hub2LogsGUI::LANG_MODULE_LOGS);
     }
 
-
     /**
      * @return string
      */
@@ -55,10 +50,8 @@ class DeleteOldLogsJob extends ilCronJob
         return self::plugin()->translate("cron_description", hub2LogsGUI::LANG_MODULE_LOGS);
     }
 
-
     /**
      * Is to be activated on "installation"
-     *
      * @return boolean
      */
     public function hasAutoActivation() : bool
@@ -66,10 +59,8 @@ class DeleteOldLogsJob extends ilCronJob
         return true;
     }
 
-
     /**
      * Can the schedule be configured?
-     *
      * @return boolean
      */
     public function hasFlexibleSchedule() : bool
@@ -77,10 +68,8 @@ class DeleteOldLogsJob extends ilCronJob
         return true;
     }
 
-
     /**
      * Get schedule type
-     *
      * @return int
      */
     public function getDefaultScheduleType() : int
@@ -88,10 +77,8 @@ class DeleteOldLogsJob extends ilCronJob
         return self::SCHEDULE_TYPE_DAILY;
     }
 
-
     /**
      * Get schedule value
-     *
      * @return int|array
      */
     public function getDefaultScheduleValue()
@@ -99,10 +86,8 @@ class DeleteOldLogsJob extends ilCronJob
         return null;
     }
 
-
     /**
      * Run job
-     *
      * @return ilCronJobResult
      */
     public function run() : ilCronJobResult

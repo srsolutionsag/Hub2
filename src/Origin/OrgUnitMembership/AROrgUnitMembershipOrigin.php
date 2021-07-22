@@ -10,9 +10,7 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\OrgUnitMembershipPrope
 
 /**
  * Class AROrgUnitMembershipOrigin
- *
  * @package srag\Plugins\Hub2\Origin\OrgUnitMembership
- *
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
 class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOrigin
@@ -26,7 +24,6 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
         return new OrgUnitMembershipOriginConfig($data);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -35,7 +32,6 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
         return new OrgUnitMembershipProperties($data);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -43,7 +39,6 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
     {
         return parent::config();
     }
-
 
     /**
      * @inheritdoc

@@ -2,17 +2,15 @@
 
 namespace srag\Plugins\Hub2\Object\Group;
 
+use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\MetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
-use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 
 /**
  * Class GroupDTO
- *
  * @package srag\Plugins\Hub2\Object\Group
- *
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 class GroupDTO extends DataTransferObject implements IGroupDTO
@@ -22,6 +20,7 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     use TaxonomyAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
     use DidacticTemplateAwareDataTransferObject;
+
     /**
      * @var string
      */
@@ -135,7 +134,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
      */
     protected $appointementsColor = '';
 
-
     /**
      * @return string
      */
@@ -144,10 +142,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->title;
     }
 
-
     /**
      * @param string $title
-     *
      * @return GroupDTO
      */
     public function setTitle($title)
@@ -157,7 +153,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -166,10 +161,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->description;
     }
 
-
     /**
      * @param string $description
-     *
      * @return GroupDTO
      */
     public function setDescription($description)
@@ -179,7 +172,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -188,10 +180,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->registerMode;
     }
 
-
     /**
      * @param int $registerMode
-     *
      * @return GroupDTO
      */
     public function setRegisterMode($registerMode)
@@ -201,7 +191,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -210,10 +199,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->information;
     }
 
-
     /**
      * @param string $information
-     *
      * @return GroupDTO
      */
     public function setInformation($information)
@@ -223,7 +210,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -232,10 +218,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->groupType;
     }
 
-
     /**
      * @param int $groupType
-     *
      * @return GroupDTO
      */
     public function setGroupType($groupType)
@@ -245,7 +229,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -254,10 +237,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->owner;
     }
 
-
     /**
      * @param int $owner
-     *
      * @return GroupDTO
      */
     public function setOwner($owner)
@@ -267,7 +248,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -276,10 +256,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->regUnlimited;
     }
 
-
     /**
      * @param bool $regUnlimited
-     *
      * @return GroupDTO
      */
     public function setRegUnlimited($regUnlimited)
@@ -289,7 +267,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -298,10 +275,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->registrationStart;
     }
 
-
     /**
      * @param int $registrationStart
-     *
      * @return GroupDTO
      */
     public function setRegistrationStart($registrationStart)
@@ -311,7 +286,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -320,10 +294,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->registrationEnd;
     }
 
-
     /**
      * @param int $registrationEnd
-     *
      * @return GroupDTO
      */
     public function setRegistrationEnd($registrationEnd)
@@ -333,7 +305,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -342,10 +313,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->password;
     }
 
-
     /**
      * @param string $password
-     *
      * @return GroupDTO
      */
     public function setPassword($password)
@@ -355,7 +324,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -364,10 +332,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->regMembershipLimitation;
     }
 
-
     /**
      * @param bool $regMembershipLimitation
-     *
      * @return GroupDTO
      */
     public function setRegMembershipLimitation($regMembershipLimitation)
@@ -377,7 +343,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -386,10 +351,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->minMembers;
     }
 
-
     /**
      * @param int $minMembers
-     *
      * @return GroupDTO
      */
     public function setMinMembers($minMembers)
@@ -399,7 +362,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -408,10 +370,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->maxMembers;
     }
 
-
     /**
      * @param int $maxMembers
-     *
      * @return GroupDTO
      */
     public function setMaxMembers($maxMembers)
@@ -421,7 +381,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -430,10 +389,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->waitingList;
     }
 
-
     /**
      * @param bool $waitingList
-     *
      * @return GroupDTO
      */
     public function setWaitingList($waitingList)
@@ -443,7 +400,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -452,10 +408,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->waitingListAutoFill;
     }
 
-
     /**
      * @param bool $waitingListAutoFill
-     *
      * @return GroupDTO
      */
     public function setWaitingListAutoFill($waitingListAutoFill)
@@ -465,7 +419,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -474,10 +427,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->cancellationEnd;
     }
 
-
     /**
      * @param int $cancellationEnd
-     *
      * @return GroupDTO
      */
     public function setCancellationEnd($cancellationEnd)
@@ -487,7 +438,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -496,10 +446,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->start;
     }
 
-
     /**
      * @param int $start
-     *
      * @return GroupDTO
      */
     public function setStart($start)
@@ -509,7 +457,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -518,10 +465,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->end;
     }
 
-
     /**
      * @param int $end
-     *
      * @return GroupDTO
      */
     public function setEnd($end)
@@ -531,7 +476,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return float
      */
@@ -540,10 +484,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->latitude;
     }
 
-
     /**
      * @param float $latitude
-     *
      * @return GroupDTO
      */
     public function setLatitude($latitude)
@@ -553,7 +495,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return float
      */
@@ -562,10 +503,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->longitude;
     }
 
-
     /**
      * @param float $longitude
-     *
      * @return GroupDTO
      */
     public function setLongitude($longitude)
@@ -575,7 +514,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -584,10 +522,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->locationzoom;
     }
 
-
     /**
      * @param int $locationzoom
-     *
      * @return GroupDTO
      */
     public function setLocationzoom($locationzoom)
@@ -597,7 +533,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -606,10 +541,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->enableGroupMap;
     }
 
-
     /**
      * @param int $enableGroupMap
-     *
      * @return GroupDTO
      */
     public function setEnableGroupMap($enableGroupMap)
@@ -619,7 +552,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return bool
      */
@@ -628,10 +560,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->regAccessCodeEnabled;
     }
 
-
     /**
      * @param bool $regAccessCodeEnabled
-     *
      * @return GroupDTO
      */
     public function setRegAccessCodeEnabled($regAccessCodeEnabled)
@@ -641,7 +571,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -650,10 +579,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->registrationAccessCode;
     }
 
-
     /**
      * @param string $registrationAccessCode
-     *
      * @return GroupDTO
      */
     public function setRegistrationAccessCode($registrationAccessCode)
@@ -663,7 +590,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -672,10 +598,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->viewMode;
     }
 
-
     /**
      * @param int $viewMode
-     *
      * @return GroupDTO
      */
     public function setViewMode($viewMode)
@@ -685,7 +609,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -694,10 +617,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->parentId;
     }
 
-
     /**
      * @param string $parentId
-     *
      * @return GroupDTO
      */
     public function setParentId($parentId)
@@ -707,7 +628,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -716,10 +636,8 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this->parentIdType;
     }
 
-
     /**
      * @param int $parentIdType
-     *
      * @return GroupDTO
      */
     public function setParentIdType($parentIdType)
@@ -729,7 +647,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -737,7 +654,6 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     {
         return $this->appointementsColor;
     }
-
 
     /**
      * @param string $appointementsColor

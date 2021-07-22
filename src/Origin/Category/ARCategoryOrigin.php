@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
 
 /**
  * Class ARCategoryOrigin
- *
  * @package srag\Plugins\Hub2\Origin\Category
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -23,7 +22,6 @@ class ARCategoryOrigin extends AROrigin implements ICategoryOrigin
     {
         return new CategoryOriginConfig($data);
     }
-
 
     /**
      * @inheritdoc

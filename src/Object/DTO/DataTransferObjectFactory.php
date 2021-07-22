@@ -22,7 +22,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class DataTransferObjectFactory
- *
  * @package srag\Plugins\Hub2\Object\DTO
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
@@ -32,8 +31,8 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
 
     use DICTrait;
     use Hub2Trait;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc
@@ -43,7 +42,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
         return new UserDTO($ext_id);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -51,7 +49,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     {
         return new CourseDTO($ext_id);
     }
-
 
     /**
      * @inheritdoc
@@ -61,7 +58,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
         return new CategoryDTO($ext_id);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -69,7 +65,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     {
         return new GroupDTO($ext_id);
     }
-
 
     /**
      * @inheritdoc
@@ -79,7 +74,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
         return new SessionDTO($ext_id);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -87,7 +81,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     {
         return new CourseMembershipDTO($course_id, $user_id);
     }
-
 
     /**
      * @inheritdoc
@@ -97,7 +90,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
         return new GroupMembershipDTO($group_id, $user_id);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -105,7 +97,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     {
         return new SessionMembershipDTO($session_id, $user_id);
     }
-
 
     /**
      * @inheritdoc
@@ -115,7 +106,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
         return new OrgUnitDTO($ext_id);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -123,7 +113,6 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     {
         return new OrgUnitMembershipDTO($org_unit_id, $user_id, $position);
     }
-
 
     /**
      * @inheritdoc

@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 
 /**
  * Interface IMetadataSyncProcessor
- *
  * @package srag\Plugins\Hub2\Sync\Processor
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
@@ -19,8 +18,11 @@ interface IMetadataSyncProcessor
      * @param IMetadataAwareDataTransferObject $dto
      * @param IMetadataAwareObject             $iobject
      * @param ilObject                         $ilias_object
-     *
      * @return void
      */
-    public function handleMetadata(IMetadataAwareDataTransferObject $dto, IMetadataAwareObject $iobject, ilObject $ilias_object);
+    public function handleMetadata(
+        IMetadataAwareDataTransferObject $dto,
+        IMetadataAwareObject $iobject,
+        ilObject $ilias_object
+    );
 }
