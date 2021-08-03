@@ -36,6 +36,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
             self::GENDER_MALE,
             self::GENDER_FEMALE,
             self::GENDER_NONE,
+            self::GENDER_NEUTRAL,
         ];
     /**
      * @var array
@@ -278,7 +279,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      */
     public function setGender($gender)
     {
-        if (!in_array($gender, self::$genders)) {
+        if (!in_array($gender, self::$genders, true)) {
             throw new InvalidArgumentException("'$gender' is not a valid gender");
         }
         $this->gender = $gender;

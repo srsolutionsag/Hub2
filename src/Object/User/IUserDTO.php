@@ -18,6 +18,7 @@ interface IUserDTO extends IDataTransferObject, IMetadataAwareDataTransferObject
     const GENDER_MALE = 'm';
     const GENDER_FEMALE = 'f';
     const GENDER_NONE = " ";
+    const GENDER_NEUTRAL = "n";
     const AUTH_MODE_ILIAS = 'local';
     const AUTH_MODE_SHIB = 'shibboleth';
     const AUTH_MODE_LDAP = 'ldap_1';
