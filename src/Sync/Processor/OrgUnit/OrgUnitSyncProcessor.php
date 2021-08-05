@@ -184,10 +184,9 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
         $this->current_ilias_object->update();
 
-        if (!self::dic()->tree()->isInTree($this->current_ilias_object->getRefId())) {
-            $parent_id = $this->getParentId($dto);
-
-            $this->current_ilias_object->putInTree($parent_id);
+        if (!self::dic()->tree()->isDeleted($this->current_ilias_object->getRefId())) {
+//            ilRepUtil::restoreObjects($this->getParentId($dto), [$this->current_ilias_object->getRefId()]);
+//            $this->current_ilias_object->putInTree($parent_id);
         } else {
             if ($this->props->get(IOrgUnitProperties::MOVE)) {
                 if ($this->props->updateDTOProperty(IOrgUnitProperties::PROP_PARENT_ID)
