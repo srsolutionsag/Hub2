@@ -36,11 +36,7 @@ class LogsTableGUI extends TableGUI
      * @inheritdoc
      * @param ILog $row
      */
-    protected function getColumnValue(/*string*/
-        $column, /*ILog*/
-        $row, /*bool*/
-        $raw_export = false
-    ) : string {
+    protected function getColumnValue(string $column, /*array*/ $row, int $format = self::DEFAULT_FORMAT) : string {
         $value = Items::getter($row, $column);
 
         switch ($column) {
