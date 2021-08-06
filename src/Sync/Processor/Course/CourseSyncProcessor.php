@@ -595,24 +595,22 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * It would be better to identify the category over the unique import ID and then update
      * the title of the category, if necessary.
      * @param string $title
-     * @param int    $parentRefId
+     * @param int    $parent_ref_id
      * @param int    $level
      * @return int
      */
-    protected function buildDependenceCategory($title, $parentRefId, $level)
+    protected function buildDependenceCategory($title, $parent_ref_id, $level)
     {
         static $cache = [];
         // We use a cache for created dependence categories to save some SQL queries
-        $cacheKey = hash("sha256", $title . $parentRefId . $level);
+        $cacheKey = hash("sha256", $title . $parent_ref_id . $level);
         if (isset($cache[$cacheKey])) {
             return $cache[$cacheKey];
         }
-        $categories = self::dic()->tree()->getChildsByType($parentRefId, 'cat');
-        $matches = array_filter(
-            $categories, function ($category) use ($title) {
-            return $category['title'] == $title;
-        }
-        );
+        $categories = self::dic()->tree()->getChildsByType($parent_ref_id, 'cat');
+        $matches = array_filter($categories, static function ($category) use ($title) {
+            return $category['title'] === $title;
+        });
         if (count($matches) > 0) {
             $category = array_pop($matches);
             $cache[$cacheKey] = $category['ref_id'];
@@ -620,21 +618,21 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $category['ref_id'];
         }
         // No category with the given title found, create it!
-        $importId = self::IMPORT_PREFIX . implode(
+        $import_id = self::IMPORT_PREFIX . implode(
                 '_', [
                     $this->origin->getId(),
-                    $parentRefId,
+                    $parent_ref_id,
                     'depth',
                     $level,
                 ]
             );
         $ilObjCategory = new ilObjCategory();
         $ilObjCategory->setTitle($title);
-        $ilObjCategory->setImportId($importId);
+        $ilObjCategory->setImportId($import_id);
         $ilObjCategory->create();
         $ilObjCategory->createReference();
-        $ilObjCategory->putInTree($parentRefId);
-        $ilObjCategory->setPermissions($parentRefId);
+        $ilObjCategory->putInTree($parent_ref_id);
+        $ilObjCategory->setPermissions($parent_ref_id);
         $this->writeRBACLog($ilObjCategory->getRefId());
         $cache[$cacheKey] = $ilObjCategory->getRefId();
 
