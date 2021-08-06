@@ -124,9 +124,20 @@ final class Factory implements IFactory
 
         $log->withLevel(ILog::LEVEL_EXCEPTION);
         $log->withMessage($ex->getMessage());
-        $additional = new stdClass();
-        $additional->file = $ex->getFile();
-        $additional->line = $ex->getLine();
+        $relevant = true;
+        $filter = static function (array $stack) use (&$relevant) {
+            $relevant = strpos($stack["file"], 'OriginSync.php') === false && $relevant;
+            return $relevant;
+        };
+        $stack = array_filter($ex->getTrace(), $filter);
+
+        $closure = static function (array $stack) {
+            // $file = str_replace(getcwd(), "", $stack["file"]);
+            $file = basename($stack["file"]);
+            return "$file({$stack["line"] })->{$stack["function"]}()";
+        };
+        $small_stack = array_map($closure, $stack);
+        $additional = (object) $small_stack;
         $log->withAdditionalData($additional);
 
         return $log;
