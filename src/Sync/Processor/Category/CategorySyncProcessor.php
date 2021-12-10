@@ -158,6 +158,9 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         }
         if (!self::dic()->tree()->isInTree($ilObjCategory->getRefId())) {
             $parentRefId = $this->determineParentRefId($dto);
+            if (!self::dic()->tree()->isInTree($ilObjCategory->getRefId())) {
+                $parentRefId = $this->config->getParentRefIdIfNoParentIdFound() ?? 1;
+            }
 
             $ilObjCategory->putInTree($parentRefId);
         } else {
@@ -228,7 +231,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             return $parentCategory->getILIASId();
         }
 
-        return 0;
+        return (int) $this->config->getParentRefIdIfNoParentIdFound() ?? 1;
     }
 
     /**
@@ -244,23 +247,34 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         return new ilObjCategory($iliasId);
     }
 
-    /**
-     * Move the category to a new parent.
-     * @param ilObjCategory $ilObjCategory
-     * @param CategoryDTO   $category
-     */
     protected function moveCategory(ilObjCategory $ilObjCategory, CategoryDTO $category)
     {
-        $parentRefId = $this->determineParentRefId($category);
-        if (self::dic()->tree()->isDeleted($ilObjCategory->getRefId())) {
+        $parent_ref_id = $this->determineParentRefId($category);
+        $current_ilias_ref_id = (int) $this->current_ilias_object->getRefId();
+        if (self::dic()->tree()->isDeleted($current_ilias_ref_id)) {
             $ilRepUtil = new ilRepUtil();
-            $ilRepUtil->restoreObjects($parentRefId, [$ilObjCategory->getRefId()]);
+            $node_data = self::dic()->tree()->getNodeTreeData($current_ilias_ref_id);
+            $deleted_ref_id = (int) -$node_data['tree'];
+
+            // if a parent node of the org unit was deleted, we first have to recover this parent
+            if ($deleted_ref_id !== $current_ilias_ref_id) {
+                $node_data_deleted_parent = self::dic()->tree()->getNodeTreeData($deleted_ref_id);
+                $ilRepUtil->restoreObjects($node_data_deleted_parent['parent'], [$deleted_ref_id]);
+                // then move the actual orgunit
+                self::dic()->tree()->moveTree($current_ilias_ref_id, $parent_ref_id);
+                // then delete the parent again
+                self::dic()->tree()->moveToTrash($deleted_ref_id);
+            } else {
+                // recover and move the actual org unit
+                $ilRepUtil->restoreObjects($parent_ref_id, [$current_ilias_ref_id]);
+            }
         }
-        $oldParentRefId = self::dic()->tree()->getParentId($ilObjCategory->getRefId());
-        if ($oldParentRefId == $parentRefId) {
+        $old_parent_id = (int) self::dic()->tree()->getParentId($current_ilias_ref_id);
+        if ($old_parent_id === $parent_ref_id) {
             return;
         }
-        self::dic()->tree()->moveTree($ilObjCategory->getRefId(), $parentRefId);
-        self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCategory->getRefId(), $oldParentRefId);
+        self::dic()->tree()->moveTree($current_ilias_ref_id, $parent_ref_id);
+        self::dic()->rbacadmin()->adjustMovedObjectPermissions($current_ilias_ref_id, $old_parent_id);
     }
+
 }
