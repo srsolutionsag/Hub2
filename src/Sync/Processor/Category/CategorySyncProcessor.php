@@ -20,6 +20,8 @@ use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Sync\IDataTransferObjectSort;
+use srag\Plugins\Hub2\Object\Category\ICategoryDTO;
 
 /**
  * Class CategorySyncProcessor
@@ -227,6 +229,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
                     throw new HubException("The linked category does not (yet) exist in ILIAS");
                 }
             }
+            if (!self::dic()->tree()->isInTree($parentCategory->getILIASId())) {
+                // try to restore
+
+                throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentCategory->getILIASId()}'");
+            }
 
             return $parentCategory->getILIASId();
         }
@@ -275,6 +282,19 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         }
         self::dic()->tree()->moveTree($current_ilias_ref_id, $parent_ref_id);
         self::dic()->rbacadmin()->adjustMovedObjectPermissions($current_ilias_ref_id, $old_parent_id);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function handleSort(array $sort_dtos) : bool
+    {
+        array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto) {
+            /** @var ICategoryDTO $object_a */
+            $sort_dto->setLevel((int) $sort_dto->getDtoObject()->getPeriod());
+        });
+
+        return true;
     }
 
 }
