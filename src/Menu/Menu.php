@@ -29,6 +29,8 @@ class Menu extends AbstractStaticPluginMainMenuProvider
 
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
+    protected static $polyfill_init = false;
+
     /**
      * @inheritdoc
      */
@@ -37,18 +39,41 @@ class Menu extends AbstractStaticPluginMainMenuProvider
         return [];
     }
 
+    protected function initPolyfill()
+    {
+        if (!self::$polyfill_init) {
+            // Polyfill
+            if (!function_exists('array_key_first')) {
+                function array_key_first(array $array)
+                {
+                    foreach ($array as $key => $value) {
+                        return $key;
+                    }
+                }
+            }
+            self::$polyfill_init = true;
+        }
+    }
+
     /**
      * @inheritdoc
      */
     public function getStaticSubItems() : array
     {
+        $this->initPolyFill();
         $obj_id = array_key_first(\ilObject2::_getObjectsByType('cmps') ?? []);
         if (!$obj_id) {
             return [];
         }
+        if (class_exists(StandardTopItemsProvider::class)) {
+            $s = StandardTopItemsProvider::getInstance();
+            $parent = $s->getAdministrationIdentification();
+        } else {
+            global $DIC;
+            $p = new \ilAdmGlobalScreenProvider($DIC);
+            $parent = $p->getTopItem();
+        }
 
-        $s = StandardTopItemsProvider::getInstance();
-        $parent = $s->getAdministrationIdentification();
         $ref_id = array_key_first(\ilObject2::_getAllReferences($obj_id) ?? []);
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ref_id", $ref_id);
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ctype", IL_COMP_SERVICE);
