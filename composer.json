@@ -1,5 +1,5 @@
 {
-  "name": "srag/plugins/hub2",
+  "name": "srsolutions/hub2",
   "description": "",
   "type": "project",
   "keywords": [
@@ -10,15 +10,12 @@
   "license": "GPL-3.0-only",
   "authors": [
     {
-      "name": "studer + raimann ag - Team Custom 1",
-      "email": "support-custom1@studer-raimann.ch",
-      "homepage": "https://studer-raimann.ch",
+      "name": "sr.solutions",
+      "email": "support@sr.solutions",
+      "homepage": "https://sr.solutions/",
       "role": "Developer"
     }
   ],
-  "support": {
-    "issues": "https://plugins.studer-raimann.ch/goto.php?target=uihk_srsu_PLHUB2"
-  },
   "require": {
     "php": ">=7.0",
     "srag/activerecordconfig": ">=0.1.0",
