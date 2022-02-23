@@ -21,7 +21,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  * @since   ILIAS 5.4
  */
-class Menu extends AbstractStaticMainMenuPluginProvider
+class Menu extends AbstractStaticPluginMainMenuProvider
 {
 
     use DICTrait;
