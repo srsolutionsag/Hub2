@@ -93,7 +93,7 @@ final class Repository implements IRepository
         while (($row = $result->fetchAssoc()) !== false) {
             $keep_log_ids[] = intval($row["log_id"]);
         }
-
+        // $keep_log_ids = [];
         $count = self::dic()->database()->manipulateF(
             'DELETE FROM ' . self::dic()->database()->quoteIdentifier(Log::TABLE_NAME) . ' WHERE date<%s AND ' . self::dic()->database()
                                                                                                                      ->in("log_id",

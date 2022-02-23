@@ -30,13 +30,33 @@ class hub2MainGUI
     const TAB_ORIGINS = 'tab_origins';
     const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
     const CMD_INDEX = 'index';
-
+    /**
+     * @var ilTemplate
+     */
+    protected $tpl;
+    /**
+     * @var ilCtrl
+     */
+    protected $ctrl;
+    /**
+     * @var ilTabsGUI
+     */
+    protected $tabs;
+    /**
+     * @var ilHub2Plugin
+     */
+    protected $plugin;
+    
     /**
      * MainGUI constructor
      */
     public function __construct()
     {
-
+        global $DIC;
+        $this->tpl = $DIC['tpl'];
+        $this->ctrl = $DIC['ilCtrl'];
+        $this->tabs = $DIC['ilTabs'];
+        $this->plugin = ilHub2Plugin::getInstance();
     }
 
     /**

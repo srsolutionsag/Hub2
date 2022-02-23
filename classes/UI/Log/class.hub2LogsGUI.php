@@ -18,7 +18,19 @@ class hub2LogsGUI extends hub2MainGUI
     const CMD_SHOW_LOGS_OF_EXT_ID = "showLogsOfExtID";
     const SUBTAB_LOGS = "subtab_logs";
     const LANG_MODULE_LOGS = "logs";
-
+    const CMD_CLEAR = 'clear';
+    /**
+     * @var ilToolbarGUI
+     */
+    protected $toolbar;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        global $DIC;
+        $this->toolbar = $DIC['ilToolbar'];
+    }
+    
     /**
      * @inheritdoc
      */
@@ -26,13 +38,14 @@ class hub2LogsGUI extends hub2MainGUI
     {
         $this->initTabs();
 
-        $cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
+        $cmd = $this->ctrl->getCmd(self::CMD_INDEX);
 
         switch ($cmd) {
             case self::CMD_INDEX:
             case self::CMD_APPLY_FILTER:
             case self::CMD_RESET_FILTER:
             case self::CMD_SHOW_LOGS_OF_EXT_ID:
+            case self::CMD_CLEAR:
                 $this->{$cmd}();
                 break;
 
@@ -46,7 +59,7 @@ class hub2LogsGUI extends hub2MainGUI
      */
     protected function initTabs()/*: void*/
     {
-        self::dic()->tabs()->activateSubTab(self::SUBTAB_LOGS);
+        $this->tabs->activateSubTab(self::SUBTAB_LOGS);
     }
 
     /**
@@ -65,9 +78,20 @@ class hub2LogsGUI extends hub2MainGUI
      */
     protected function index()/*: void*/
     {
+        $this->toolbar->addButton(
+            $this->plugin->txt('clear_logs'),
+            $this->ctrl->getLinkTarget($this, self::CMD_CLEAR)
+        );
+        
         $table = $this->getLogsTable();
 
-        self::output()->output($table);
+        $this->tpl->setContent($table->getHTML());
+    }
+    
+    protected function clear()
+    {
+        self::logs()->deleteOldLogs(0);
+        $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
     /**
@@ -81,7 +105,7 @@ class hub2LogsGUI extends hub2MainGUI
 
         $table->resetOffset();
 
-        //self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+        //$this->ctrl->redirect($this, self::CMD_INDEX);
         $this->index(); // Fix reset offset
     }
 
@@ -96,7 +120,7 @@ class hub2LogsGUI extends hub2MainGUI
 
         $table->resetOffset();
 
-        //self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
+        //$this->ctrl->redirect($this, self::CMD_INDEX);
         $this->index(); // Fix reset offset
     }
 
