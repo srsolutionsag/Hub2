@@ -340,7 +340,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getFourthDependenceCategory() : ?string
     {
