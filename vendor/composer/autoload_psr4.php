@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'srag\\RemovePluginDataConfirm\\Hub2\\' => array($vendorDir . '/srag/removeplugindataconfirm/src'),
-    'srag\\Plugins\\Hub2\\' => array($baseDir . '/src'),
     'srag\\LibrariesNamespaceChanger\\' => array($vendorDir . '/srag/librariesnamespacechanger/src'),
     'srag\\DIC\\Hub2\\' => array($vendorDir . '/srag/dic/src'),
     'srag\\CustomInputGUIs\\Hub2\\' => array($vendorDir . '/srag/custominputguis/src'),

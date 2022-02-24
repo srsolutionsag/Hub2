@@ -51,7 +51,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      * @var IOriginImplementation
      */
     protected $implementation;
-
+    /**
+     * @var \ilDBInterface
+     */
+    protected $database;
+    
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
@@ -62,6 +66,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         IOriginImplementation $implementation,
         IObjectStatusTransition $statusTransition
     ) {
+        global $DIC;
+        $this->database = $DIC->database();
         $this->origin = $origin;
         $this->statusTransition = $statusTransition;
         $this->implementation = $implementation;
@@ -80,8 +86,12 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function course()
     {
-        return new CourseSyncProcessor($this->origin, $this->implementation, $this->statusTransition,
-            new CourseActivities(self::dic()->database()));
+        return new CourseSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition,
+            new CourseActivities($this->database)
+        );
     }
 
     /**
@@ -89,7 +99,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function category()
     {
-        return new CategorySyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new CategorySyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition
+        );
     }
 
     /**
@@ -97,7 +111,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function session()
     {
-        return new SessionSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new SessionSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition
+        );
     }
 
     /**
@@ -105,7 +123,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function courseMembership()
     {
-        return new CourseMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new CourseMembershipSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition
+        );
     }
 
     /**
@@ -113,8 +135,12 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function group()
     {
-        return new GroupSyncProcessor($this->origin, $this->implementation, $this->statusTransition,
-            new GroupActivities(self::dic()->database()));
+        return new GroupSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition,
+            new GroupActivities($this->database)
+        );
     }
 
     /**
@@ -122,7 +148,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function groupMembership()
     {
-        return new GroupMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new GroupMembershipSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition
+        );
     }
 
     /**
@@ -130,7 +160,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function sessionMembership()
     {
-        return new SessionMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new SessionMembershipSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition
+        );
     }
 
     /**
@@ -138,7 +172,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function orgUnit() : IOrgUnitSyncProcessor
     {
-        return new OrgUnitSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new OrgUnitSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition
+        );
     }
 
     /**
@@ -146,7 +184,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor
     {
-        return new OrgUnitMembershipSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new OrgUnitMembershipSyncProcessor(
+            $this->origin,
+            $this->implementation,
+            $this->statusTransition
+        );
     }
 
     /**
@@ -154,6 +196,10 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      */
     public function competenceManagement() : ICompetenceManagementSyncProcessor
     {
-        return new CompetenceManagementSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
+        return new CompetenceManagementSyncProcessor(
+            $this->origin,
+            $this->implementation, 
+            $this->statusTransition
+        );
     }
 }

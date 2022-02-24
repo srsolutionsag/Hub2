@@ -15,7 +15,6 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         's' => 
         array (
             'srag\\RemovePluginDataConfirm\\Hub2\\' => 34,
-            'srag\\Plugins\\Hub2\\' => 18,
             'srag\\LibrariesNamespaceChanger\\' => 31,
             'srag\\DIC\\Hub2\\' => 14,
             'srag\\CustomInputGUIs\\Hub2\\' => 26,
@@ -49,10 +48,6 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\RemovePluginDataConfirm\\Hub2\\' => 
         array (
             0 => __DIR__ . '/..' . '/srag/removeplugindataconfirm/src',
-        ),
-        'srag\\Plugins\\Hub2\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
         'srag\\LibrariesNamespaceChanger\\' => 
         array (
@@ -1123,6 +1118,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Object\\Course\\ICourse' => __DIR__ . '/../..' . '/src/Object/Course/ICourse.php',
         'srag\\Plugins\\Hub2\\Object\\Course\\ICourseDTO' => __DIR__ . '/../..' . '/src/Object/Course/ICourseDTO.php',
         'srag\\Plugins\\Hub2\\Object\\Course\\ICourseRepository' => __DIR__ . '/../..' . '/src/Object/Course/ICourseRepository.php',
+        'srag\\Plugins\\Hub2\\Object\\DTI\\INullDTO' => __DIR__ . '/../..' . '/src/Object/DTO/INullDTO.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\DataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/DataTransferObject.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\DataTransferObjectFactory' => __DIR__ . '/../..' . '/src/Object/DTO/DataTransferObjectFactory.php',
         'srag\\Plugins\\Hub2\\Object\\DTO\\DidacticTemplateAwareDataTransferObject' => __DIR__ . '/../..' . '/src/Object/DTO/DidacticTemplateAwareDataTransferObject.php',
@@ -1308,6 +1304,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Course\\CourseSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/Course/CourseSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Course\\ICourseActivities' => __DIR__ . '/../..' . '/src/Sync/Processor/Course/ICourseActivities.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Course\\ICourseSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/Course/ICourseSyncProcessor.php',
+        'srag\\Plugins\\Hub2\\Sync\\Processor\\DidacticTemplateSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/DidacticTemplateSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\FakeIliasMembershipObject' => __DIR__ . '/../..' . '/src/Sync/Processor/FakeIliasMembershipObject.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\FakeIliasObject' => __DIR__ . '/../..' . '/src/Sync/Processor/FakeIliasObject.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\GroupMembership\\GroupMembershipSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/GroupMembership/GroupMembershipSyncProcessor.php',
@@ -1317,6 +1314,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\IGroupActivities' => __DIR__ . '/../..' . '/src/Sync/Processor/Group/IGroupActivities.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\IGroupSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/Group/IGroupSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Helper' => __DIR__ . '/../..' . '/src/Sync/Processor/Helper.php',
+        'srag\\Plugins\\Hub2\\Sync\\Processor\\IDidacticTemplateSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/IDidacticTemplateSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\IMetadataSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/IMetadataSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\IObjectSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/IObjectSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\ISyncProcessorFactory' => __DIR__ . '/../..' . '/src/Sync/Processor/ISyncProcessorFactory.php',

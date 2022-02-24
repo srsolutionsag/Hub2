@@ -26,7 +26,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
-use srag\Plugins\Hub2\Sync\DidacticTemplateSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\DidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;

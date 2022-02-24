@@ -1,11 +1,10 @@
 <?php
 
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
-
-use srag\Plugins\Hub2\Sync\IDidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\IMetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\IDidacticTemplateSyncProcessor;
 
 /**
  * Interface ICourseSyncProcessor

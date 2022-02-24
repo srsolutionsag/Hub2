@@ -31,10 +31,11 @@
   },
   "autoload": {
     "psr-4": {
-      "srag\\Plugins\\Hub2\\": "src/"
+
     },
     "classmap": [
-      "classes"
+      "classes",
+      "src"
     ]
   },
   "config": {

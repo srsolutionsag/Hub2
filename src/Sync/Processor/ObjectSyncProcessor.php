@@ -24,7 +24,7 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginFactory;
-use srag\Plugins\Hub2\Sync\IDidacticTemplateSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\IDidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
