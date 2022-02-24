@@ -72,6 +72,8 @@ abstract class AbstractOriginImplementation implements IOriginImplementation
         IMappingStrategyFactory $mapping_strategy,
         IOrigin $origin
     ) {
+        /** @noRector  include once for Origins*/
+        include_once "./Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/autoload.php";
         $this->originConfig = $config;
         $this->factory = $factory;
         $this->metadataFactory = $metadataFactory;
