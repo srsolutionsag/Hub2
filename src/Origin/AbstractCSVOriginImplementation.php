@@ -26,6 +26,22 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
     
     protected $csv = [];
     
+    /**
+     * @return string
+     */
+    protected function getEnclosure() : string
+    {
+        return '"';
+    }
+    
+    /**
+     * @return string
+     */
+    protected function getSeparator() : string
+    {
+        return ";";
+    }
+    
     public function connect() : bool
     {
         $this->file_path = $this->config()->getPath();
@@ -35,10 +51,17 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
         return true;
     }
     
+    private function removeBOM(string $text) : string
+    {
+        $bom = pack('H*', 'EFBBBF');
+        $text = preg_replace("/^$bom/", '', $text);
+        return $text;
+    }
+    
     public function parseData() : int
     {
         $csv = array_map(function (string $line) : array {
-            return str_getcsv($line, ";");
+            return str_getcsv($this->removeBOM($line), $this->getSeparator(), $this->getEnclosure());
         }, file($this->file_path));
         
         $delivered_columns = array_shift($csv);
@@ -82,7 +105,7 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
                 return !$isset;
             });
         }
-    
+        
         if (count($this->getColumnMapping()) > 0) {
             $mapping = $this->getColumnMapping();
             $csv = array_map(function (array $item) use ($mapping) : array {
