@@ -28,7 +28,11 @@ final class Repository implements IRepository
      * @var IRepository
      */
     protected static $instance = null;
-
+    /**
+     * @var \ilDBInterface
+     */
+    protected $db;
+    
     /**
      * @return IRepository
      */
@@ -65,7 +69,9 @@ final class Repository implements IRepository
      */
     private function __construct()
     {
+        global $DIC;
         $this->withGlobalAdditionalData(new stdClass());
+        $this->db = $DIC->database();
     }
 
     /**
@@ -73,8 +79,8 @@ final class Repository implements IRepository
      */
     public function deleteLog(ILog $log)/*: void*/
     {
-        self::dic()->database()->manipulate(
-            'DELETE FROM ' . self::dic()->database()->quoteIdentifier(Log::TABLE_NAME)
+        $this->db->manipulate(
+            'DELETE FROM ' . $this->db->quoteIdentifier(Log::TABLE_NAME)
             . " WHERE log_id=%s", [ilDBConstants::T_INTEGER], [$log->getLogId()]
         );
     }
@@ -89,21 +95,33 @@ final class Repository implements IRepository
         $keep_old_logs_time_date = new ilDateTime($keep_old_logs_time_timestamp, IL_CAL_UNIX);
 
         $keep_log_ids = [];
-        $result = self::dic()->database()->query('SELECT MAX(log_id) AS log_id FROM ' . self::dic()->database()->quoteIdentifier(Log::TABLE_NAME) . ' GROUP BY origin_id,object_ext_id');
-        while (($row = $result->fetchAssoc()) !== false) {
+        $result = $this->db->query(
+            'SELECT MAX(log_id) AS log_id FROM '
+            . $this->db->quoteIdentifier(Log::TABLE_NAME)
+            . ' GROUP BY origin_id,object_ext_id');
+        
+        while ($row = $result->fetchAssoc()) {
             $keep_log_ids[] = intval($row["log_id"]);
         }
         // $keep_log_ids = [];
-        $count = self::dic()->database()->manipulateF(
-            'DELETE FROM ' . self::dic()->database()->quoteIdentifier(Log::TABLE_NAME) . ' WHERE date<%s AND ' . self::dic()->database()
-                                                                                                                     ->in("log_id",
-                                                                                                                         $keep_log_ids,
-                                                                                                                         true,
-                                                                                                                         ilDBConstants::T_INTEGER),
-            [ilDBConstants::T_TEXT], [$keep_old_logs_time_date->get(IL_CAL_DATETIME)]
+        $count = $this->db->manipulateF(
+            'DELETE FROM '
+            . $this->db->quoteIdentifier(Log::TABLE_NAME)
+            . ' WHERE date<%s AND '
+            . $this->db->in(
+                "log_id",
+                $keep_log_ids,
+                true,
+                ilDBConstants::T_INTEGER
+            ),
+            [
+                ilDBConstants::T_TEXT
+            ], [
+                $keep_old_logs_time_date->get(IL_CAL_DATETIME)
+            ]
         );
 
-        self::dic()->database()->resetAutoIncrement(Log::TABLE_NAME, "log_id");
+        $this->db->resetAutoIncrement(Log::TABLE_NAME, "log_id");
 
         return $count;
     }
@@ -148,7 +166,7 @@ final class Repository implements IRepository
         /**
          * @var ILog[] $logs
          */
-        $logs = self::dic()->database()->fetchAllCallback(self::dic()->database()->query($sql),
+        $logs = $this->db->fetchAllCallback($this->db->query($sql),
             [$this->factory(), "fromDB"]);
 
         return $logs;
@@ -179,7 +197,7 @@ final class Repository implements IRepository
             $status
         );
 
-        $result = self::dic()->database()->query($sql);
+        $result = $this->db->query($sql);
 
         if (($row = $result->fetchAssoc()) !== false) {
             return intval($row["count"]);
@@ -225,56 +243,56 @@ final class Repository implements IRepository
         int $status = null
     ) : string {
 
-        $sql = ' FROM ' . self::dic()->database()->quoteIdentifier(Log::TABLE_NAME);
+        $sql = ' FROM ' . $this->db->quoteIdentifier(Log::TABLE_NAME);
 
         $wheres = [];
 
         if (!empty($title)) {
-            $wheres[] = self::dic()->database()->like("title", ilDBConstants::T_TEXT, '%' . $title . '%');
+            $wheres[] = $this->db->like("title", ilDBConstants::T_TEXT, '%' . $title . '%');
         }
 
         if (!empty($message)) {
-            $wheres[] = self::dic()->database()->like("message", ilDBConstants::T_TEXT, '%' . $message . '%');
+            $wheres[] = $this->db->like("message", ilDBConstants::T_TEXT, '%' . $message . '%');
         }
 
         if (!empty($date_start)) {
-            $wheres[] = 'date>=' . self::dic()->database()->quote($date_start->get(IL_CAL_DATETIME),
+            $wheres[] = 'date>=' . $this->db->quote($date_start->get(IL_CAL_DATETIME),
                     ilDBConstants::T_TEXT);
         }
 
         if (!empty($date_end)) {
-            $wheres[] = 'date<=' . self::dic()->database()->quote($date_start->get(IL_CAL_DATETIME),
+            $wheres[] = 'date<=' . $this->db->quote($date_start->get(IL_CAL_DATETIME),
                     ilDBConstants::T_TEXT);
         }
 
         if (!empty($level)) {
-            $wheres[] = 'level=' . self::dic()->database()->quote($level, ilDBConstants::T_INTEGER);
+            $wheres[] = 'level=' . $this->db->quote($level, ilDBConstants::T_INTEGER);
         }
 
         if (!empty($origin_id)) {
-            $wheres[] = 'origin_id=' . self::dic()->database()->quote($origin_id, ilDBConstants::T_INTEGER);
+            $wheres[] = 'origin_id=' . $this->db->quote($origin_id, ilDBConstants::T_INTEGER);
         }
 
         if (!empty($origin_object_type)) {
-            $wheres[] = 'origin_object_type=' . self::dic()->database()->quote($origin_object_type,
+            $wheres[] = 'origin_object_type=' . $this->db->quote($origin_object_type,
                     ilDBConstants::T_TEXT);
         }
 
         if (!empty($object_ext_id)) {
-            $wheres[] = 'object_ext_id LIKE ' . self::dic()->database()->quote($object_ext_id, ilDBConstants::T_TEXT);
+            $wheres[] = 'object_ext_id LIKE ' . $this->db->quote($object_ext_id, ilDBConstants::T_TEXT);
         }
 
         if (!empty($object_ilias_id)) {
-            $wheres[] = 'object_ilias_id=' . self::dic()->database()->quote($object_ilias_id, ilDBConstants::T_INTEGER);
+            $wheres[] = 'object_ilias_id=' . $this->db->quote($object_ilias_id, ilDBConstants::T_INTEGER);
         }
 
         if (!empty($additional_data)) {
-            $wheres[] = self::dic()->database()->like("additional_data", ilDBConstants::T_TEXT,
+            $wheres[] = $this->db->like("additional_data", ilDBConstants::T_TEXT,
                 '%' . $additional_data . '%');
         }
 
         if (!empty($status)) {
-            $wheres[] = 'status=' . self::dic()->database()->quote($status, ilDBConstants::T_INTEGER);
+            $wheres[] = 'status=' . $this->db->quote($status, ilDBConstants::T_INTEGER);
         }
 
         if (count($wheres) > 0) {
@@ -282,12 +300,12 @@ final class Repository implements IRepository
         }
 
         if ($sort_by !== null && $sort_by_direction !== null) {
-            $sql .= ' ORDER BY ' . self::dic()->database()->quoteIdentifier($sort_by) . ' ' . $sort_by_direction;
+            $sql .= ' ORDER BY ' . $this->db->quoteIdentifier($sort_by) . ' ' . $sort_by_direction;
         }
 
         if ($limit_start !== null && $limit_end !== null) {
-            $sql .= ' LIMIT ' . self::dic()->database()->quote($limit_start,
-                    ilDBConstants::T_INTEGER) . ',' . self::dic()->database()->quote($limit_end,
+            $sql .= ' LIMIT ' . $this->db->quote($limit_start,
+                    ilDBConstants::T_INTEGER) . ',' . $this->db->quote($limit_end,
                     ilDBConstants::T_INTEGER);
         }
 
@@ -302,9 +320,9 @@ final class Repository implements IRepository
         /**
          * @var Log|null $log
          */
-        $log = self::dic()->database()->fetchObjectCallback(
-            self::dic()->database()->queryF(
-                'SELECT * FROM ' . self::dic()->database()->quoteIdentifier(Log::TABLE_NAME)
+        $log = $this->db->fetchObjectCallback(
+            $this->db->queryF(
+                'SELECT * FROM ' . $this->db->quoteIdentifier(Log::TABLE_NAME)
                 . ' WHERE log_id=%s', [ilDBConstants::T_INTEGER], [$log_id]
             ), [$this->factory(), "fromDB"]
         );
@@ -385,7 +403,7 @@ final class Repository implements IRepository
 
         $json_encode = json_encode($log->getAdditionalData()) ?? '{}';
         $log->withLogId(
-            self::dic()->database()->store(
+            $this->db->store(
                 Log::TABLE_NAME, [
                 "title" => [ilDBConstants::T_TEXT, $log->getTitle()],
                 "message" => [ilDBConstants::T_TEXT, $log->getMessage()],
