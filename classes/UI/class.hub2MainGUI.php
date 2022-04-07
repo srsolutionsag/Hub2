@@ -1,6 +1,7 @@
 <?php
 
 //namespace srag\Plugins\Hub2\UI;
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
