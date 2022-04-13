@@ -26,6 +26,33 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
     
     protected $csv = [];
     
+    protected function applyFilter(array $csv, \Closure $closure) : array
+    {
+        return array_filter($csv, $closure);
+    }
+    
+    protected function filterMandatory(array $csv, array $mandatory) : array
+    {
+        return $this->applyFilter($csv, function (array $item) use ($mandatory) : bool {
+            $isset = true;
+            foreach ($mandatory as $column) {
+                $isset = $isset && isset($item[$column]) && $item[$column] !== '';
+            }
+            return $isset;
+        });
+    }
+    
+    protected function mapFieldsToTitle(array $csv, array $delivered_columns) : array
+    {
+        array_walk($csv, function (array &$item) use ($delivered_columns) {
+            foreach ($item as $k => $v) {
+                unset($item[$k]);
+                $item[$delivered_columns[$k]] = $this->sanitize($v);
+            }
+        });
+        return $csv;
+    }
+    
     /**
      * @return string
      */
@@ -51,19 +78,30 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
         return true;
     }
     
-    private function removeBOM(string $text) : string
+    protected function removeBOM(string $text) : string
     {
         $bom = pack('H*', 'EFBBBF');
         $text = preg_replace("/^$bom/", '', $text);
         return $text;
     }
     
+    protected function parseCSVFileAndApplyHeaders(string $path_to_file) : array
+    {
+        $csv = $this->parseCSVFile($path_to_file);
+        $delivered_columns = array_shift($csv);
+        return $this->mapFieldsToTitle($csv, $delivered_columns);
+    }
+    
+    protected function parseCSVFile(string $path_to_file) : array
+    {
+        return array_map(function (string $line) : array {
+            return str_getcsv($this->removeBOM($line), $this->getSeparator(), $this->getEnclosure());
+        }, file($path_to_file));
+    }
+    
     public function parseData() : int
     {
-        $csv = array_map(function (string $line) : array {
-            return str_getcsv($this->removeBOM($line), $this->getSeparator(), $this->getEnclosure());
-        }, file($this->file_path));
-        
+        $csv = $this->parseCSVFile($this->file_path);
         $delivered_columns = array_shift($csv);
         $mandatory_columns = $this->getMandatoryColumns();
         
@@ -79,27 +117,14 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
             );
         }
         
-        array_walk($csv, function (array &$item) use ($delivered_columns) {
-            foreach ($item as $k => $v) {
-                unset($item[$k]);
-                $item[$delivered_columns[$k]] = $this->sanitize($v);
-            }
-        });
-        
-        $csv = array_filter($csv, function (array $item) : bool {
-            $isset = true;
-            foreach ($this->getMandatoryColumns() as $column) {
-                $isset = $isset && isset($item[$column]) && $item[$column] !== '';
-            }
-            return $isset;
-        });
-        
-        $csv = array_filter($csv, $this->getFilter());
+        $csv = $this->mapFieldsToTitle($csv, $delivered_columns);
+        $csv = $this->filterMandatory($csv, $this->getMandatoryColumns());
+        $csv = $this->applyFilter($csv, $this->getFilter());
         
         if ($this->getUniqueField() !== '') {
             $field = $this->getUniqueField();
             $unique = [];
-            $csv = array_filter($csv, static function (array $item) use (&$unique, $field) : bool {
+            $csv = $this->applyFilter($csv, static function (array $item) use (&$unique, $field) : bool {
                 $isset = isset($unique[$item[$field]]);
                 $unique[$item[$field]] = true;
                 return !$isset;
