@@ -122,8 +122,6 @@ final class Repository implements IRepository
             ]
         );
         
-        $this->db->resetAutoIncrement(Log::TABLE_NAME, "log_id");
-        
         return $count;
     }
     
@@ -179,10 +177,14 @@ final class Repository implements IRepository
         /**
          * @var ILog[] $logs
          */
-        $logs = $this->db->fetchAllCallback(
-            $this->db->query($sql),
-            [$this->factory(), "fromDB"]
-        );
+        $stm = $this->db->query($sql);
+        $logs = [];
+        while ($d = $this->db->fetchObject($stm)) {
+            $logs[] = $d;
+        }
+        
+        $logs = array_map([$this->factory(), "fromDB"], $logs);
+        
         
         return $logs;
     }
