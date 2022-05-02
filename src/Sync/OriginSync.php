@@ -19,6 +19,7 @@ use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
+use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 
 /**
  * Class Sync
@@ -104,8 +105,11 @@ class OriginSync implements IOriginSync
         // Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
         // as the sync of this origin cannot continue.
         $this->implementation->beforeSync();
-
-        $this->implementation->connect();
+    
+        if (!$this->implementation->connect()) {
+            throw new ConnectionFailedException('could not connect() in origin');
+        }
+        
 
         $count = $this->implementation->parseData();
 
