@@ -1269,6 +1269,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Origin\\Session\\ISessionOrigin' => __DIR__ . '/../..' . '/src/Origin/Session/ISessionOrigin.php',
         'srag\\Plugins\\Hub2\\Origin\\User\\ARUserOrigin' => __DIR__ . '/../..' . '/src/Origin/User/ARUserOrigin.php',
         'srag\\Plugins\\Hub2\\Origin\\User\\IUserOrigin' => __DIR__ . '/../..' . '/src/Origin/User/IUserOrigin.php',
+        'srag\\Plugins\\Hub2\\Parser\\Csv' => __DIR__ . '/../..' . '/src/Parser/Csv.php',
         'srag\\Plugins\\Hub2\\Shortlink\\AbstractBaseLink' => __DIR__ . '/../..' . '/src/Shortlink/AbstractBaseLink.php',
         'srag\\Plugins\\Hub2\\Shortlink\\AbstractRepositoryLink' => __DIR__ . '/../..' . '/src/Shortlink/AbstractRepositoryLink.php',
         'srag\\Plugins\\Hub2\\Shortlink\\AbstractRepositoryMembershipLink' => __DIR__ . '/../..' . '/src/Shortlink/AbstractRepositoryMembershipLink.php',

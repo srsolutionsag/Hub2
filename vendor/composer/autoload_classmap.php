@@ -1167,6 +1167,7 @@ return array(
     'srag\\Plugins\\Hub2\\Origin\\Session\\ISessionOrigin' => $baseDir . '/src/Origin/Session/ISessionOrigin.php',
     'srag\\Plugins\\Hub2\\Origin\\User\\ARUserOrigin' => $baseDir . '/src/Origin/User/ARUserOrigin.php',
     'srag\\Plugins\\Hub2\\Origin\\User\\IUserOrigin' => $baseDir . '/src/Origin/User/IUserOrigin.php',
+    'srag\\Plugins\\Hub2\\Parser\\Csv' => $baseDir . '/src/Parser/Csv.php',
     'srag\\Plugins\\Hub2\\Shortlink\\AbstractBaseLink' => $baseDir . '/src/Shortlink/AbstractBaseLink.php',
     'srag\\Plugins\\Hub2\\Shortlink\\AbstractRepositoryLink' => $baseDir . '/src/Shortlink/AbstractRepositoryLink.php',
     'srag\\Plugins\\Hub2\\Shortlink\\AbstractRepositoryMembershipLink' => $baseDir . '/src/Shortlink/AbstractRepositoryMembershipLink.php',

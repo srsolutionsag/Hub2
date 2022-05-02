@@ -16,42 +16,22 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
+use srag\Plugins\Hub2\Parser\Csv;
 
 /**
  * Class AbstractCSVOriginImplementation
  */
 abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementation
 {
+    /**
+     * @var Csv
+     */
+    protected $csv_parser = null;
     protected $file_path = '';
-    
+    /**
+     * @var array
+     */
     protected $csv = [];
-    
-    protected function applyFilter(array $csv, \Closure $closure) : array
-    {
-        return array_filter($csv, $closure);
-    }
-    
-    protected function filterMandatory(array $csv, array $mandatory) : array
-    {
-        return $this->applyFilter($csv, function (array $item) use ($mandatory) : bool {
-            $isset = true;
-            foreach ($mandatory as $column) {
-                $isset = $isset && isset($item[$column]) && $item[$column] !== '';
-            }
-            return $isset;
-        });
-    }
-    
-    protected function mapFieldsToTitle(array $csv, array $delivered_columns) : array
-    {
-        array_walk($csv, function (array &$item) use ($delivered_columns) {
-            foreach ($item as $k => $v) {
-                unset($item[$k]);
-                $item[$delivered_columns[$k]] = $this->sanitize($v);
-            }
-        });
-        return $csv;
-    }
     
     /**
      * @return string
@@ -78,80 +58,21 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
         return true;
     }
     
-    protected function removeBOM(string $text) : string
-    {
-        $bom = pack('H*', 'EFBBBF');
-        $text = preg_replace("/^$bom/", '', $text);
-        return $text;
-    }
-    
-    protected function parseCSVFileAndApplyHeaders(string $path_to_file) : array
-    {
-        $csv = $this->parseCSVFile($path_to_file);
-        $delivered_columns = array_shift($csv);
-        return $this->mapFieldsToTitle($csv, $delivered_columns);
-    }
-    
-    protected function parseCSVFile(string $path_to_file) : array
-    {
-        return array_map(function (string $line) : array {
-            return str_getcsv($this->removeBOM($line), $this->getSeparator(), $this->getEnclosure());
-        }, file($path_to_file));
-    }
-    
     public function parseData() : int
     {
-        $csv = $this->parseCSVFile($this->file_path);
-        $delivered_columns = array_shift($csv);
-        $mandatory_columns = $this->getMandatoryColumns();
+        $this->csv_parser = new Csv(
+            $this->file_path,
+            $this->getUniqueField(),
+            $this->getMandatoryColumns(),
+            $this->getColumnMapping(),
+            $this->getEnclosure(),
+            $this->getSeparator()
+        );
         
-        if (!is_array($delivered_columns) || count(array_diff($mandatory_columns, $delivered_columns)) > 0) {
-            throw new ParseDataFailedException(
-                "Not all mandatory colums in csv available. received '" . implode(
-                    "|",
-                    (array) $delivered_columns
-                ) . "', expected '" . implode(
-                    "|",
-                    $mandatory_columns
-                ) . "' in {$this->file_path}"
-            );
-        }
+        $this->csv_parser->addFilter($this->getFilter());
         
-        $csv = $this->mapFieldsToTitle($csv, $delivered_columns);
-        $csv = $this->filterMandatory($csv, $this->getMandatoryColumns());
-        $csv = $this->applyFilter($csv, $this->getFilter());
-        
-        if ($this->getUniqueField() !== '') {
-            $field = $this->getUniqueField();
-            $unique = [];
-            $csv = $this->applyFilter($csv, static function (array $item) use (&$unique, $field) : bool {
-                $isset = isset($unique[$item[$field]]);
-                $unique[$item[$field]] = true;
-                return !$isset;
-            });
-        }
-        
-        if (count($this->getColumnMapping()) > 0) {
-            $mapping = $this->getColumnMapping();
-            $csv = array_map(function (array $item) use ($mapping) : array {
-                foreach ($mapping as $old_key => $new_key) {
-                    if (isset($item[$old_key])) {
-                        $item[$new_key] = $item[$old_key];
-                        unset($item[$old_key]);
-                    }
-                }
-                return $item;
-            }, $csv);
-        }
-        
-        $this->csv = $csv;
-        
+        $this->csv = $this->csv_parser->parseData();
         return count($this->csv);
-    }
-    
-    protected function sanitize(string $s) : string
-    {
-        return utf8_encode(utf8_decode($s));
     }
     
     abstract protected function getMandatoryColumns() : array;
