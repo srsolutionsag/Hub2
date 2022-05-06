@@ -30,7 +30,11 @@ class Metadata implements IMetadata
      * @var int
      */
     protected $record_id;
-
+    /**
+     * @var string
+     */
+    protected $language_code = 'de';
+    
     /**
      * Metadata constructor
      * @param int $identifier
@@ -60,7 +64,19 @@ class Metadata implements IMetadata
 
         return $this;
     }
-
+    
+    public function setLanguageCode(string $code) : IMetadata
+    {
+        $this->language_code = $code;
+    
+        return $this;
+    }
+    
+    public function getLanguageCode() : string
+    {
+        return $this->language_code;
+    }
+    
     /**
      * @inheritdoc
      */

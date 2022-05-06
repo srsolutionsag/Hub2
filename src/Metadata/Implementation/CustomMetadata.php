@@ -9,6 +9,7 @@ use ilADTFloat;
 use ilADTInteger;
 use ilADTInternalLink;
 use ilADTText;
+use ilADTLocalizedText;
 use ilAdvancedMDValues;
 use ilDateTime;
 
@@ -25,37 +26,46 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
      */
     public function write()
     {
-        $id = $this->getMetadata()->getIdentifier();
+        $field_id = $this->getMetadata()->getIdentifier();
+        $object_id = $this->getIliasId();
+        
+        $md_values = new ilAdvancedMDValues(
+            $this->getMetadata()->getRecordId(),
+            $object_id,
+            0,
+            "-"
+        );
 
-        $ilAdvancedMDValues = new ilAdvancedMDValues($this->getMetadata()->getRecordId(), $this->getIliasId(), null,
-            "-");
-
-        $ilAdvancedMDValues->read();
-        $ilADTGroup = $ilAdvancedMDValues->getADTGroup();
+        $md_values->read();
+        
+        $adt_group = $md_values->getADTGroup();
+        
         $value = $this->getMetadata()->getValue();
-        $ilADT = $ilADTGroup->getElement($id);
+        $adt = $adt_group->getElement($field_id);
 
         switch (true) {
-            case ($ilADT instanceof ilADTText):
-                $ilADT->setText($value);
+            case ($adt instanceof ilADTLocalizedText):
+                $adt->setTranslation($this->getMetadata()->getLanguageCode(), $value);
                 break;
-            case ($ilADT instanceof ilADTDate):
-            case ($ilADT instanceof ilADTDateTime):
-                $ilADT->setDate(new ilDateTime(strtotime($value), IL_CAL_UNIX));
+            case ($adt instanceof ilADTText):
+                $adt->setText($value);
                 break;
-            case ($ilADT instanceof ilADTExternalLink):
-                $ilADT->setUrl($value['url']);
-                $ilADT->setTitle($value['title']);
+            case ($adt instanceof ilADTDate):
+            case ($adt instanceof ilADTDateTime):
+                $adt->setDate(new ilDateTime(strtotime($value), IL_CAL_UNIX));
                 break;
-            case ($ilADT instanceof ilADTInternalLink):
-                $ilADT->setTargetRefId($value);
+            case ($adt instanceof ilADTExternalLink):
+                $adt->setUrl($value['url']);
+                $adt->setTitle($value['title']);
                 break;
-            case ($ilADT instanceof ilADTInteger):
-            case ($ilADT instanceof ilADTFloat):
-                $ilADT->setNumber($value);
+            case ($adt instanceof ilADTInternalLink):
+                $adt->setTargetRefId($value);
+                break;
+            case ($adt instanceof ilADTInteger):
+            case ($adt instanceof ilADTFloat):
+                $adt->setNumber($value);
                 break;
         }
-
-        $ilAdvancedMDValues->write();
+        $md_values->write();
     }
 }

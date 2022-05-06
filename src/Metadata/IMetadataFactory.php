@@ -11,9 +11,9 @@ interface IMetadataFactory
 {
 
     /**
-     * @param int $ilas_id
+     * @param int $ilias_field_id
      * @param int $record_id
      * @return IMetadata
      */
-    public function getDTOWithIliasId(int $ilas_id, int $record_id = IMetadata::DEFAULT_RECORD_ID) : IMetadata;
+    public function getDTOWithIliasId(int $ilias_field_id, int $record_id = IMetadata::DEFAULT_RECORD_ID) : IMetadata;
 }

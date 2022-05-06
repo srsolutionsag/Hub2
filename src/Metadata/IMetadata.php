@@ -23,6 +23,11 @@ interface IMetadata
      * @return IMetadata
      */
     public function setIdentifier(int $identifier) : IMetadata;
+    
+    
+    public function setLanguageCode(string $code) : IMetadata;
+    
+    public function getLanguageCode() : string;
 
     /**
      * @return mixed
