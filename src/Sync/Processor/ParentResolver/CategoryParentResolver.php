@@ -6,46 +6,59 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Exception\HubException;
+use srag\Plugins\Hub2\Object\Category\ICategoryDTO;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\ObjectFactory;
 
-class BasicParentResolver implements ParentResolver
+class CategoryParentResolver extends BasicParentResolver
 {
-    /**
-     * @var \ilTree
-     */
-    protected $tree;
-    /**
-     * @var int
-     */
-    protected $fallback_ref_id = 1;
     /**
      * @var string|null
      */
     protected $fallback_ext_id = null;
+    /**
+     * @var ObjectFactory
+     */
+    protected $factory;
     
     public function __construct(
+        ObjectFactory $factory,
         int $fallback_ref_id,
         string $fallback_ext_id = null
     ) {
-        global $DIC;
-        $this->tree = $DIC->repositoryTree();
-        $this->fallback_ref_id = $fallback_ref_id;
+        parent::__construct($fallback_ref_id);
+        $this->factory = $factory;
         $this->fallback_ext_id = $fallback_ext_id;
+        
     }
     
     public function resolveParentRefId(DataTransferObject $dto) : int
     {
-        
-        
-        return $this->checkAndReturnRefId(1);
-    }
-    
-    private function checkAndReturnRefId(int $ref_id) : int
-    {
-        if (!$this->tree->isInTree($ref_id)) {
-            // TODO try to restore
-            throw new HubException("Could not find the parent ref-ID in tree: '{$ref_id}'");
+        if (!$dto instanceof CategoryDTO) {
+            throw new \InvalidArgumentException();
         }
         
-        return $ref_id;
+        // Parent ID type is Ref-ID
+        if ($dto->getParentIdType() === ICategoryDTO::PARENT_ID_TYPE_REF_ID) {
+            return $this->resolveRefIdForDTOwithRefIdParentType($dto);
+        }
+        
+        // Parent ID type is External ID
+        if ($dto->getParentIdType() === ICategoryDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
+            $parent_category = $this->factory->category($dto->getParentId());
+            // Tha parent ext ID equals the base of the sync, fallback ref id is used
+            if ($parent_category->getParentId() === $this->fallback_ext_id) {
+                return $this->checkAndReturnRefId($this->fallback_ref_id);
+            }
+            
+            // no parent ref id available
+            if ($parent_category->getILIASId() === null || $parent_category->getILIASId() === 0) {
+                return $this->checkAndReturnRefId($this->fallback_ref_id);
+            } else {
+                return $this->checkAndReturnRefId($parent_category->getILIASId());
+            }
+        }
+        
+        return $this->checkAndReturnRefId($this->fallback_ref_id);
     }
 }

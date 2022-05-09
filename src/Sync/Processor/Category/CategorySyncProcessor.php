@@ -22,6 +22,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 use srag\Plugins\Hub2\Sync\IDataTransferObjectSort;
 use srag\Plugins\Hub2\Object\Category\ICategoryDTO;
+use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CategoryParentResolver;
 
 /**
  * Class CategorySyncProcessor
@@ -54,7 +55,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             'owner',
             'orderType',
         ];
-
+    /**
+     * @var CategoryParentResolver
+     */
+    protected $parent_resolver;
+    
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
@@ -68,6 +73,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
+        $this->parent_resolver = new CategoryParentResolver(
+            new ObjectFactory($this->origin),
+            (int) $this->config->getParentRefIdIfNoParentIdFound(),
+            $this->config->getExternalParentIdIfNoParentIdFound()
+        );
     }
 
     /**
@@ -204,41 +214,17 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      */
     protected function determineParentRefId(CategoryDTO $category)
     {
-        if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_REF_ID) {
-            if (self::dic()->tree()->isInTree($category->getParentId())) {
-                return $category->getParentId();
-            }
-            // The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
-            $parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-            if (!self::dic()->tree()->isInTree($parentRefId)) {
-                throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
-            }
-
-            return $parentRefId;
+        return $this->parent_resolver->resolveParentRefId($category);
+    }
+    
+    private function checkAndReturnRefId(int $ref_id) : int
+    {
+        if (!self::dic()->tree()->isInTree($ref_id)) {
+            // TODO try to restore
+            throw new HubException("Could not find the fallback parent ref-ID in tree: '{$ref_id}'");
         }
-        if ($category->getParentIdType() == CategoryDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
-            // The stored parent-ID is an external-ID from a category of the same origin.
-            // We must search the category and check if its ILIAS ID does exist.
-            $objectFactory = new ObjectFactory($this->origin);
-            $parentCategory = $objectFactory->category($category->getParentId());
-            if (!$parentCategory->getILIASId()) {
-                // The given parent-ID does not yet exist, we check if we find the fallback category
-                $fallbackExtId = $this->config->getExternalParentIdIfNoParentIdFound();
-                $parentCategory = $objectFactory->category($fallbackExtId);
-                if (!$parentCategory->getILIASId()) {
-                    throw new HubException("The linked category does not (yet) exist in ILIAS");
-                }
-            }
-            if (!self::dic()->tree()->isInTree($parentCategory->getILIASId())) {
-                // try to restore
-
-                throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentCategory->getILIASId()}'");
-            }
-
-            return $parentCategory->getILIASId();
-        }
-
-        return (int) $this->config->getParentRefIdIfNoParentIdFound() ?? 1;
+        
+        return $ref_id;
     }
 
     /**
@@ -253,35 +239,13 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
         return new ilObjCategory($iliasId);
     }
-
+    
     protected function moveCategory(ilObjCategory $ilObjCategory, CategoryDTO $category)
     {
-        $parent_ref_id = $this->determineParentRefId($category);
-        $current_ilias_ref_id = (int) $this->current_ilias_object->getRefId();
-        if (self::dic()->tree()->isDeleted($current_ilias_ref_id)) {
-            $ilRepUtil = new ilRepUtil();
-            $node_data = self::dic()->tree()->getNodeTreeData($current_ilias_ref_id);
-            $deleted_ref_id = (int) -$node_data['tree'];
-
-            // if a parent node of the org unit was deleted, we first have to recover this parent
-            if ($deleted_ref_id !== $current_ilias_ref_id) {
-                $node_data_deleted_parent = self::dic()->tree()->getNodeTreeData($deleted_ref_id);
-                $ilRepUtil->restoreObjects($node_data_deleted_parent['parent'], [$deleted_ref_id]);
-                // then move the actual orgunit
-                self::dic()->tree()->moveTree($current_ilias_ref_id, $parent_ref_id);
-                // then delete the parent again
-                self::dic()->tree()->moveToTrash($deleted_ref_id);
-            } else {
-                // recover and move the actual org unit
-                $ilRepUtil->restoreObjects($parent_ref_id, [$current_ilias_ref_id]);
-            }
-        }
-        $old_parent_id = (int) self::dic()->tree()->getParentId($current_ilias_ref_id);
-        if ($old_parent_id === $parent_ref_id) {
-            return;
-        }
-        self::dic()->tree()->moveTree($current_ilias_ref_id, $parent_ref_id);
-        self::dic()->rbacadmin()->adjustMovedObjectPermissions($current_ilias_ref_id, $old_parent_id);
+        $this->parent_resolver->move(
+            $this->current_ilias_object->getRefId(),
+            $this->determineParentRefId($category)
+        );
     }
 
     /**

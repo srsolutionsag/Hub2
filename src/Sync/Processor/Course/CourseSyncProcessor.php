@@ -31,6 +31,7 @@ use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CourseParentResolver;
 
 /**
  * Class CourseSyncProcessor
@@ -86,7 +87,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @var Version
      */
     protected $version;
-
+    /**
+     * @var CourseParentResolver
+     */
+    protected $parent_resolver;
+    
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
@@ -104,6 +109,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $this->config = $origin->config();
         $this->courseActivities = $courseActivities;
         $this->version = new Version();
+        $this->parent_resolver = new CourseParentResolver(
+            $this->config->getParentRefIdIfNoParentIdFound(),
+            $this->config->getLinkedOriginId()
+        );
     }
 
     /**
@@ -506,54 +515,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      */
     protected function determineParentRefId(CourseDTO $course)
     {
-        if ($course->getParentIdType() == CourseDTO::PARENT_ID_TYPE_REF_ID) {
-            if (self::dic()->tree()->isInTree($course->getParentId())) {
-                return $course->getParentId();
-            }
-            // The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
-            $parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-            if (!self::dic()->tree()->isInTree($parentRefId)) {
-                throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
-            }
-
-            return $parentRefId;
-        }
-        if ($course->getParentIdType() == CourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
-            // The stored parent-ID is an external-ID from a category.
-            // We must search the parent ref-ID from a category object synced by a linked origin.
-            // --> Get an instance of the linked origin and lookup the category by the given external ID.
-            $linkedOriginId = $this->config->getLinkedOriginId();
-            if (!$linkedOriginId) {
-                throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
-            }
-            $originRepository = new OriginRepository();
-            $filtered = array_filter(
-                $originRepository->categories(), function ($origin) use ($linkedOriginId) {
-                /** @var IOrigin $origin */
-                return $origin->getId() == $linkedOriginId;
-            }
-            );
-            $origin = array_pop($filtered);
-            if ($origin === null) {
-                $msg = "The linked origin syncing categories was not found, please check that the correct origin is linked";
-                throw new HubException($msg);
-            }
-            $objectFactory = new ObjectFactory($origin);
-            $category = $objectFactory->category($course->getParentId());
-            if (!$category->getILIASId()) {
-                throw new HubException(
-                    "The linked category (" . $category->getExtId() . ") does not (yet) exist in ILIAS for course: "
-                    . $course->getExtId()
-                );
-            }
-            if (!self::dic()->tree()->isInTree($category->getILIASId())) {
-                throw new HubException("Could not find the ref-ID of the parent category in the tree: '{$category->getILIASId()}'");
-            }
-
-            return $category->getILIASId();
-        }
-
-        return 0;
+        return $this->parent_resolver->resolveParentRefId($course);
     }
 
     /**
@@ -662,16 +624,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     {
         $parentRefId = $this->determineParentRefId($course);
         $parentRefId = $this->buildDependenceCategories($course, $parentRefId);
-        if (self::dic()->tree()->isDeleted($ilObjCourse->getRefId())) {
-            $ilRepUtil = new ilRepUtil();
-            $ilRepUtil->restoreObjects($parentRefId, [$ilObjCourse->getRefId()]);
-        }
-        $oldParentRefId = self::dic()->tree()->getParentId($ilObjCourse->getRefId());
-        if ($oldParentRefId == $parentRefId) {
-            return;
-        }
-        self::dic()->tree()->moveTree($ilObjCourse->getRefId(), $parentRefId);
-        self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjCourse->getRefId(), $oldParentRefId);
+        $this->parent_resolver->move($ilObjCourse->getRefId(), $parentRefId);
     }
 
     /**
