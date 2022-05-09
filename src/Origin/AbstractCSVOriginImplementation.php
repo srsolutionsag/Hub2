@@ -68,8 +68,10 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
             $this->getEnclosure(),
             $this->getSeparator()
         );
-        
-        $this->csv_parser->addFilter($this->getFilter());
+    
+        foreach ($this->getFilters() as $filter) {
+            $this->csv_parser->addFilter($filter);
+        }
         
         $this->csv = $this->csv_parser->parseData();
         return count($this->csv);
@@ -103,6 +105,13 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
         return static function (array $item) : bool {
             return true;
         };
+    }
+    
+    protected function getFilters() : array
+    {
+        return [
+            $this->getFilter()
+        ];
     }
     
     public function handleLog(ILog $log)
