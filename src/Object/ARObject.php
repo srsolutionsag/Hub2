@@ -382,7 +382,7 @@ abstract class ARObject extends ActiveRecord implements IObject
      */
     public function getILIASId()
     {
-        return $this->ilias_id;
+        return (int) $this->ilias_id;
     }
 
     /**

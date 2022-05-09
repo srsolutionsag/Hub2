@@ -252,7 +252,7 @@ class ObjectFactory implements IObjectFactory
      */
     public function getId($ext_id)
     {
-        return $this->origin->getId() . $ext_id;
+        return (string) $this->origin->getId() . $ext_id;
     }
 
     /**

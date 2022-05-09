@@ -38,8 +38,8 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
     /**
      * @inheritdoc
      */
-    public function getExternalParentIdIfNoParentIdFound() : int
+    public function getExternalParentIdIfNoParentIdFound() : string
     {
-        return intval($this->get(self::EXT_ID_NO_PARENT_ID_FOUND));
+        return (string) $this->get(self::EXT_ID_NO_PARENT_ID_FOUND);
     }
 }

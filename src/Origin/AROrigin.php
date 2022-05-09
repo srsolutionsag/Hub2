@@ -284,7 +284,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     public function getId()
     {
-        return $this->id;
+        return (int) $this->id;
     }
 
     /**
