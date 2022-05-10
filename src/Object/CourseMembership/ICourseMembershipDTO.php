@@ -12,6 +12,10 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  */
 interface ICourseMembershipDTO extends IDataTransferObject
 {
-
+    const ROLE_MEMBER = 2;
+    const ROLE_TUTOR = 3;
+    const ROLE_ADMIN = 1;
+    const COURSE_ID_TYPE_REF_ID = 1;
+    const COURSE_ID_TYPE_EXTERNAL_EXT_ID = 2;
     const GLUE = IObjectRepository::GLUE;
 }

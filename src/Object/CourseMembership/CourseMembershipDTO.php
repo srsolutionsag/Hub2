@@ -22,12 +22,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         $this->courseId = $course_ext_id;
         $this->userId = $user_id;
     }
-
-    const ROLE_MEMBER = 2;
-    const ROLE_TUTOR = 3;
-    const ROLE_ADMIN = 1;
-    const COURSE_ID_TYPE_REF_ID = 1;
-    const COURSE_ID_TYPE_EXTERNAL_EXT_ID = 2;
+    
     /**
      * @var int
      */
