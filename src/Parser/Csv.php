@@ -46,7 +46,14 @@ class Csv
      * @var array
      */
     protected $mandatory_columns = [];
+    /**
+     * @var array
+     */
     protected $delivered_columns = [];
+    /**
+     * @var array
+     */
+    protected $header = [];
     
     /**
      * @param string      $enclosure
@@ -70,6 +77,16 @@ class Csv
         $this->mandatory_columns = $mandatory_columns;
         $this->columns_mapping = $column_mapping;
     }
+    
+    /**
+     * @param array $header
+     */
+    public function setHeader(array $header) : void
+    {
+        $this->header = $header;
+    }
+    
+    
     
     public function addFilter(\Closure $filter) : void
     {
@@ -152,8 +169,12 @@ class Csv
     public function parseData() : array
     {
         $this->parseCSVFile($this->file_path);
-        $this->delivered_columns = array_shift($this->parsed_csv);
-    
+        if ($this->header === []) {
+            $this->delivered_columns = array_shift($this->parsed_csv);
+        } else {
+            $this->delivered_columns = $this->header;
+        }
+        
         if (!is_array($this->delivered_columns)
             || count(array_diff($this->mandatory_columns, $this->delivered_columns)) > 0) {
             throw new ParseDataFailedException(
