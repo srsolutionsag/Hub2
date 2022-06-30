@@ -149,8 +149,12 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         $this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
         if ($ilObjUser === null) {
             // Recreate deleted users
-            $this->handleCreate($dto);
-
+            $mapped_id = $dto->getMappingStrategy()->map($dto);
+            if ($mapped_id === 0) {
+                $this->handleCreate($dto);
+            } else {
+                $this->handleUpdate($dto, $mapped_id);
+            }
             return;
         }
         $ilObjUser->setImportId($this->getImportId($dto));
