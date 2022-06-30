@@ -68,6 +68,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         $membership_obj = new \ilCourseParticipants(ilObject2::_lookupObjectId($ilias_course_ref_id));
         $membership_obj->add($user_id, $this->mapRole($dto));
         $membership_obj->updateContact($user_id, $dto->isContact());
+        $membership_obj->updateNotification($user_id, $dto->hasNotification());
 
         $this->current_ilias_object = new FakeIliasMembershipObject($ilias_course_ref_id, $user_id);
     }
@@ -98,6 +99,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
         if ($this->props->updateDTOProperty("isContact")) {
             $membership_obj->updateContact($user_id, $dto->isContact());
+        }
+        
+        if ($this->props->updateDTOProperty("hasNotification")) {
+            $membership_obj->updateNotification($user_id, $dto->hasNotification());
         }
 
         $obj->setUserIdIlias($dto->getUserId());

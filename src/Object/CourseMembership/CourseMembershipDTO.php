@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class CourseMembershipDTO extends DataTransferObject implements ICourseMembershipDTO
 {
-
     /**
      * @inheritdoc
      */
@@ -43,6 +42,10 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
      * @var bool
      */
     protected $isContact = false;
+    /**
+     * @var bool
+     */
+    protected $hasNotification = false;
 
     /**
      * @return int
@@ -137,5 +140,21 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         $this->isContact = $isContact;
 
         return $this;
+    }
+    
+    /**
+     * @param bool $notification
+     * @return $this
+     */
+    public function setHasNotification(bool $notification)
+    {
+        $this->hasNotification = $notification;
+    
+        return $this;
+    }
+    
+    public function hasNotification() : bool
+    {
+        return $this->hasNotification;
     }
 }
