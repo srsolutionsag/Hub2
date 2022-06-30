@@ -13,7 +13,7 @@ interface IMetadata
     const DEFAULT_RECORD_ID = 1;
 
     /**
-     * @param string $value
+     * @param string|string[] $value
      * @return IMetadata
      */
     public function setValue($value) : IMetadata;
