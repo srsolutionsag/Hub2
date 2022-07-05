@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Sync;
 
 use srag\Plugins\Hub2\Origin\IOrigin;
 use Throwable;
+use srag\Plugins\Hub2\Jobs\Notifier;
 
 /**
  * Interface IOriginSync
@@ -17,7 +18,7 @@ interface IOriginSync
      * Execute the synchronization for the origin
      * @throws Throwable
      */
-    public function execute();
+    public function execute(Notifier $notifier);
 
     /**
      * Get the number of objects processed by the final status, e.g.

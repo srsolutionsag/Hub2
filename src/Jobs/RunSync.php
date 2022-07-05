@@ -44,7 +44,11 @@ class RunSync extends ilCronJob
      * @var IOriginSyncSummary
      */
     protected $force_update;
-
+    /**
+     * @var Notifier
+     */
+    protected $notifier;
+    
     /**
      * RunSync constructor
      * @param IOrigin[]               $origins
@@ -52,6 +56,7 @@ class RunSync extends ilCronJob
      * @param bool                    $force_update
      */
     public function __construct(
+        Notifier $notifier,
         array $origins = [],/*?*/
         IOriginSyncSummary $summary = null,
         bool $force_update = false
@@ -59,6 +64,7 @@ class RunSync extends ilCronJob
         $this->origins = $origins;
         $this->summary = $summary;
         $this->force_update = $force_update;
+        $this->notifier = $notifier;
     }
 
     /**
@@ -140,6 +146,8 @@ class RunSync extends ilCronJob
             }
 
             foreach ($this->origins as $origin) {
+                $this->notifier->notify();
+                
                 if ($origin->getObjectType() == $skip_object_type) {
                     continue;
                 }
@@ -155,7 +163,7 @@ class RunSync extends ilCronJob
                 try {
                     $originSyncFactory->initImplementation($originSync);
 
-                    $originSync->execute();
+                    $originSync->execute($this->notifier);
                 } catch (AbortSyncException $e) {
                     throw $e;
                 } catch (AbortOriginSyncException $ex) {

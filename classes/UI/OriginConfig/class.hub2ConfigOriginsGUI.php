@@ -16,6 +16,7 @@ use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginsTableGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
+use srag\Plugins\Hub2\Jobs\CronNotifier;
 
 /**
  * Class ConfigOriginsGUI
@@ -293,7 +294,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     {
         $summary = $this->summaryFactory->web();
 
-        (new RunSync($origins, $summary, $force_update))->run();
+        (new RunSync(new CronNotifier(), $origins, $summary, $force_update))->run();
 
         ilUtil::sendInfo(nl2br($summary->getOutputAsString(), false), true);
 

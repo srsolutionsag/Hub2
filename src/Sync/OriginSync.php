@@ -20,6 +20,7 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
+use srag\Plugins\Hub2\Jobs\Notifier;
 
 /**
  * Class Sync
@@ -34,6 +35,7 @@ class OriginSync implements IOriginSync
     use Hub2Trait;
 
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    const NOTIFY_ALL_X_DTOS = 500;
     /**
      * @var IOrigin
      */
@@ -100,7 +102,7 @@ class OriginSync implements IOriginSync
     /**
      * @inheritdoc
      */
-    public function execute()
+    public function execute(Notifier $notifier)
     {
         // Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
         // as the sync of this origin cannot continue.
@@ -143,7 +145,15 @@ class OriginSync implements IOriginSync
         $objects_to_outdated = [];
 
         $ext_ids_delivered = [];
+        $counter = 0;
         foreach ($this->dtoObjects as $dto) {
+            if ($counter === self::NOTIFY_ALL_X_DTOS) {
+                $notifier->notify();
+                $counter = 0;
+            } else {
+                $counter++;
+            }
+            
             $ext_ids_delivered[] = $dto->getExtId();
             /** @var IObject $object */
             $object = $this->factory->$type($dto->getExtId());

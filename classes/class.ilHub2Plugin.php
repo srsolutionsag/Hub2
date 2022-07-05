@@ -23,6 +23,8 @@ use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
+use srag\Plugins\Hub2\Jobs\CronNotifier;
+use srag\Plugins\Hub2\Jobs\Notifier;
 
 /**
  * Class ilHub2Plugin
@@ -43,7 +45,17 @@ class ilHub2Plugin extends ilCronHookPlugin
      * @var self
      */
     protected static $instance;
-
+    /**
+     * @var CronNotifier
+     */
+    protected $notifier;
+    
+    public function __construct(Notifier $notifier = null)
+    {
+        parent::__construct();
+        $this->notifier = $notifier ?? new CronNotifier();
+    }
+    
     /**
      * @return string
      */
@@ -69,7 +81,7 @@ class ilHub2Plugin extends ilCronHookPlugin
      */
     public function getCronJobInstances() : array
     {
-        return [new RunSync(), new DeleteOldLogsJob()];
+        return [new RunSync(new CronNotifier()), new DeleteOldLogsJob()];
     }
 
     /**
@@ -82,7 +94,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     {
         switch ($a_job_id) {
             case RunSync::CRON_JOB_ID:
-                return new RunSync();
+                return new RunSync(new CronNotifier());
 
             case DeleteOldLogsJob::CRON_JOB_ID:
                 return new DeleteOldLogsJob();
