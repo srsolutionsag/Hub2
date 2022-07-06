@@ -146,7 +146,7 @@ class RunSync extends ilCronJob
             }
 
             foreach ($this->origins as $origin) {
-                $this->notifier->notify();
+                $this->notifier->notify('Start Origin ' . $origin->getTitle());
                 
                 if ($origin->getObjectType() == $skip_object_type) {
                     continue;

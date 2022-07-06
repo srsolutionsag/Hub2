@@ -150,7 +150,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         if ($ilObjUser === null) {
             // Recreate deleted users
             $mapped_id = $dto->getMappingStrategy()->map($dto);
-            if ($mapped_id === 0) {
+            if ($mapped_id === 0 || $this->findILIASUser($mapped_id) === null) {
                 $this->handleCreate($dto);
             } else {
                 $this->handleUpdate($dto, $mapped_id);

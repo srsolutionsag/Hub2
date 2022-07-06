@@ -21,6 +21,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Jobs\Notifier;
+use srag\Plugins\Hub2\Origin\IOriginGeneratorImplementation;
 
 /**
  * Class Sync
@@ -49,7 +50,7 @@ class OriginSync implements IOriginSync
      */
     protected $factory;
     /**
-     * @var IDataTransferObject[]
+     * @var IDataTransferObject[]|\Generator
      */
     protected $dtoObjects = [];
     /**
@@ -107,13 +108,14 @@ class OriginSync implements IOriginSync
         // Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
         // as the sync of this origin cannot continue.
         $this->implementation->beforeSync();
-    
+        $notifier->notify('connect');
         if (!$this->implementation->connect()) {
             throw new ConnectionFailedException('could not connect() in origin');
         }
-        
-
+    
+        $notifier->notify('start parsing data');
         $count = $this->implementation->parseData();
+        $notifier->notify('end parsing data');
 
         $this->countDelivered = $count;
 
@@ -129,30 +131,28 @@ class OriginSync implements IOriginSync
                 throw new AbortOriginSyncException($msg);
             }
         }
-
+        $notifier->notify('start building objects');
         $this->dtoObjects = $this->implementation->buildObjects();
-
+        $notifier->notify('end building objects');
+        
         $type = $this->origin->getObjectType();
 
         // Sort dto objects
-        $this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
+        if (is_array($this->dtoObjects)) { // Only possible for
+            $this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
+        }
 
         // Start SYNC of delivered objects --> CREATE & UPDATE
         // ======================================================================================================
         // 1. Update current status to an intermediate status so the processor knows if it must CREATE/UPDATE/DELETE
         // 2. Let the processor process the corresponding ILIAS object
-
-        $objects_to_outdated = [];
-
+        
+        $objects_to_outdated_map = new \SplObjectStorage();
         $ext_ids_delivered = [];
         $counter = 0;
+        $notifier->notify('start looping DTOs');
         foreach ($this->dtoObjects as $dto) {
-            if ($counter === self::NOTIFY_ALL_X_DTOS) {
-                $notifier->notify();
-                $counter = 0;
-            } else {
-                $counter++;
-            }
+            $notifier->notifySometimes('processed DTOs');
             
             $ext_ids_delivered[] = $dto->getExtId();
             /** @var IObject $object */
@@ -168,52 +168,58 @@ class OriginSync implements IOriginSync
                 $object->setStatus($this->statusTransition->finalToIntermediate($object));
                 $this->processObject($object, $dto);
             } else {
-                $objects_to_outdated[] = $object;
+                $objects_to_outdated_map->attach($object);
             }
         }
+        $notifier->notify('end looping DTOs');
 
         // Start SYNC of objects not being delivered --> DELETE
         // ======================================================================================================
-
         if (!$this->origin->isAdHoc()) {
-            $objects_to_outdated = array_unique(array_merge($objects_to_outdated,
-                $this->repository->getToDelete($ext_ids_delivered)));
+            foreach ($this->repository->getToDelete($ext_ids_delivered) as $item) {
+                if(!$objects_to_outdated_map->contains($item)) {
+                    $objects_to_outdated_map->attach($item);
+                }
+            }
         } else {
             if ($this->origin->isAdHoc() && $this->origin->isAdhocParentScope()) {
                 $adhoc_parent_ids = $this->implementation->getAdHocParentScopesAsExtIds();
-                $objects_in_parent_scope_not_delivered = $this->repository->getToDeleteByParentScope($ext_ids_delivered,
-                    $adhoc_parent_ids);
-                $objects_to_outdated = array_unique(array_merge($objects_to_outdated,
-                    $objects_in_parent_scope_not_delivered));
+                $objects_in_parent_scope_not_delivered = $this->repository->getToDeleteByParentScope(
+                    $ext_ids_delivered,
+                    $adhoc_parent_ids
+                );
+    
+                foreach ($objects_in_parent_scope_not_delivered as $item) {
+                    if(!$objects_to_outdated_map->contains($item)) {
+                        $objects_to_outdated_map->attach($item);
+                    }
+                }
             }
         }
-
-        foreach ($objects_to_outdated as $object) {
+        $notifier->notify('start processing outdated DTOs');
+        foreach ($objects_to_outdated_map as $object) {
             $nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
             $object->setStatus(IObject::STATUS_TO_OUTDATED);
             $this->processObject($object, $nullDTO);
         }
+        $notifier->notify('end processing outdated DTOs');
 
         // After that we propose all objects to the origin which are no longer devlivered
-        $delivered_dto_ext_ids = [];
-        array_walk(
-            $this->dtoObjects, static function (DataTransferObject $dto) use (&$delivered_dto_ext_ids) {
-            $delivered_dto_ext_ids[] = $dto->getExtId();
-        }
-        );
         $all_ext_ids = [];
         array_walk(
-            $this->factory->{$type . 's'}(), static function (IObject $o) use (&$all_ext_ids) {
-            $all_ext_ids[] = $o->getExtId();
-        }
+            $this->factory->{$type . 's'}(),
+            static function (IObject $o) use (&$all_ext_ids) {
+                $all_ext_ids[] = $o->getExtId();
+            }
         );
-
+        $notifier->notify('start handle all objects');
         foreach ($all_ext_ids as $all_ext_id) {
             $hook_object = new HookObject($object = $this->factory->$type($all_ext_id), new NullDTO($all_ext_id));
             $this->implementation->handleAllObjects($hook_object);
         }
+        $notifier->notify('end handle all objects');
 
-        $missing = array_diff($all_ext_ids, $delivered_dto_ext_ids);
+        $missing = array_diff($all_ext_ids, $ext_ids_delivered);
         foreach ($missing as $missing_ext_id) {
             $hook_object = new HookObject($object = $this->factory->$type($missing_ext_id),
                 new NullDTO($missing_ext_id));
@@ -225,6 +231,7 @@ class OriginSync implements IOriginSync
         $this->getOrigin()->setLastRun(date(DATE_ATOM));
 
         $this->getOrigin()->update();
+        $notifier->notify('finished');
     }
 
     /**
@@ -293,20 +300,22 @@ class OriginSync implements IOriginSync
     {
         try {
             $this->processor->process($object, $dto, $this->origin->isUpdateForced());
-
             $this->incrementProcessed($object->getStatus());
         } catch (AbortSyncException $ex) {
             // Any exceptions aborting the global or current sync are forwarded to global sync
             $object->store();
-
+            unset($object);
+            unset($dto);
             throw $ex;
         } catch (AbortOriginSyncOfCurrentTypeException $ex) {
             $object->store();
-
+            unset($object);
+            unset($dto);
             throw $ex;
         } catch (AbortOriginSyncException $ex) {
             $object->store();
-
+            unset($object);
+            unset($dto);
             throw $ex;
         } catch (Throwable $ex) {
             $object->setStatus(IObject::STATUS_FAILED);
@@ -316,6 +325,9 @@ class OriginSync implements IOriginSync
             self::logs()->storeLog($log);
 
             $this->implementation->handleLog($log);
+        } finally {
+            unset($object);
+            unset($dto);
         }
     }
 

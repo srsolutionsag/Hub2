@@ -39,13 +39,19 @@ class ObjectFactory implements IObjectFactory
      * @var IOrigin
      */
     protected $origin;
-
+    /**
+     * @var \ilDBInterface
+     */
+    private $db;
+    
     /**
      * @param IOrigin $origin
      */
     public function __construct(IOrigin $origin)
     {
+        global $DIC;
         $this->origin = $origin;
+        $this->db = $DIC->database();
     }
 
     /**
@@ -80,20 +86,32 @@ class ObjectFactory implements IObjectFactory
                 throw new LogicException('no object-type for this origin found');
         }
     }
+    
+    private function buildARfromDB($ext_id, \ActiveRecord $ar) : \ActiveRecord
+    {
+        $r = $this->db->queryF(
+            "SELECT * FROM {$ar->getConnectorContainerName()} WHERE ext_id = %s AND origin_id = %s",
+            ['text', 'integer'],
+            [$ext_id, $this->origin->getId()]
+        );
+        
+        if ($r->numRows() === 0) {
+            $ar->setOriginId($this->origin->getId());
+            $ar->setExtId($ext_id);
+        } else {
+            $data = $r->fetchAssoc();
+            $ar = $ar->buildFromArray($data);
+        }
+        
+        return $ar;
+    }
 
     /**
      * @inheritdoc
      */
     public function user($ext_id)
     {
-        $user = ARUser::find($this->getId($ext_id));
-        if ($user === null) {
-            $user = new ARUser();
-            $user->setOriginId($this->origin->getId());
-            $user->setExtId($ext_id);
-        }
-
-        return $user;
+        return $this->buildARfromDB($ext_id, new ARUser());
     }
 
     /**
@@ -161,6 +179,7 @@ class ObjectFactory implements IObjectFactory
      */
     public function courseMembership($ext_id)
     {
+        return $this->buildARfromDB($ext_id, new ARCourseMembership());
         $course_membership = ARCourseMembership::find($this->getId($ext_id));
         if ($course_membership === null) {
             $course_membership = new ARCourseMembership();

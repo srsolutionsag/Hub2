@@ -37,21 +37,6 @@ interface IOriginImplementation
      */
     public function parseData();
 
-    /**
-     * Build the hub DTO objects from the parsed data.
-     * An instance of such objects MUST be obtained over the DTOObjectFactory. The factory
-     * is available via $this->factory().
-     * Example for an origin syncing users:
-     * $user = $this->factory()->user($data->extId);
-     * $user->setFirstname($data->firstname)
-     *  ->setLastname($data->lastname)
-     *  ->setGender(UserDTO::GENDER_FEMALE);
-     * Throw a BuildObjectsFailedException to abort the sync at this stage.
-     * @return IDataTransferObject[]
-     * @throws BuildObjectsFailedException
-     */
-    public function buildObjects();
-
 
     // HOOKS
     // ------------------------------------------------------------------------------------------------------------
