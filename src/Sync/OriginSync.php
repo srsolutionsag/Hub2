@@ -108,6 +108,7 @@ class OriginSync implements IOriginSync
         // Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
         // as the sync of this origin cannot continue.
         $this->implementation->beforeSync();
+        $notifier->reset();
         $notifier->notify('connect');
         if (!$this->implementation->connect()) {
             throw new ConnectionFailedException('could not connect() in origin');

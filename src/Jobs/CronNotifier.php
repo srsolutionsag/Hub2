@@ -5,14 +5,27 @@ namespace srag\Plugins\Hub2\Jobs;
 
 class CronNotifier implements Notifier
 {
-    const MODULO = 500;
+    const NOTIFY_MODULO = 500;
+    const PING_MODULO = 500;
     private $ping_counter = 0;
     private $notify_counter = 0;
+    /**
+     * @var \ilLogger
+     */
+    protected $logger;
     
     public function __construct()
     {
         ini_set('zend.enable_gc', true);
         gc_enable();
+        global $DIC;
+        $this->logger = $DIC->logger()->root();
+    }
+    
+    public function reset() : void
+    {
+        $this->ping_counter = 0;
+        $this->notify_counter = 0;
     }
     
     private function pingCronJob() : void
@@ -24,24 +37,21 @@ class CronNotifier implements Notifier
     
     public function ping() : void
     {
-        if ($this->ping_counter === 100) {
+        if ($this->ping_counter % self::PING_MODULO === 0) {
             $this->pingCronJob();
-            $this->ping_counter = 0;
-        } else {
-            $this->ping_counter++;
         }
+        $this->ping_counter++;
     }
     
     public function notify(string $text) : void
     {
         $this->pingCronJob();
-        global $DIC;
-        $DIC->logger()->root()->write('HUB2: ' . $text);
+        $this->logger->write('HUB2: ' . $text);
     }
     
     public function notifySometimes(string $text) : void
     {
-        if ($this->notify_counter % self::MODULO === 0) {
+        if ($this->notify_counter % self::NOTIFY_MODULO === 0) {
             $this->notify($text . " ({$this->notify_counter})");
             if (gc_enabled()) {
                 $collected = gc_collect_cycles();
