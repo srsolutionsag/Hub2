@@ -148,10 +148,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      */
     protected $languageCode = 'en';
     /**
-     * @var int
-     */
-    protected $didacticTemplate;
-    /**
      * @var string
      */
     protected $icon;
@@ -614,25 +610,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         self::checkLanguageCode($languageCode);
 
         $this->languageCode = $languageCode;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDidacticTemplate() : int
-    {
-        return (int) $this->didacticTemplate;
-    }
-
-    /**
-     * @param int $didacticTemplate
-     * @return CourseDTO
-     */
-    public function setDidacticTemplate(int $didacticTemplate) : CourseDTO
-    {
-        $this->didacticTemplate = $didacticTemplate;
 
         return $this;
     }
