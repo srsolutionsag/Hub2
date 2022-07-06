@@ -1230,6 +1230,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Origin\\GroupMembership\\IGroupMembershipOrigin' => __DIR__ . '/../..' . '/src/Origin/GroupMembership/IGroupMembershipOrigin.php',
         'srag\\Plugins\\Hub2\\Origin\\Group\\ARGroupOrigin' => __DIR__ . '/../..' . '/src/Origin/Group/ARGroupOrigin.php',
         'srag\\Plugins\\Hub2\\Origin\\Group\\IGroupOrigin' => __DIR__ . '/../..' . '/src/Origin/Group/IGroupOrigin.php',
+        'srag\\Plugins\\Hub2\\Origin\\Hook\\Config' => __DIR__ . '/../..' . '/src/Origin/Hook/Config.php',
         'srag\\Plugins\\Hub2\\Origin\\IOrigin' => __DIR__ . '/../..' . '/src/Origin/IOrigin.php',
         'srag\\Plugins\\Hub2\\Origin\\IOriginArrayImplementation' => __DIR__ . '/../..' . '/src/Origin/IOriginArrayImplementation.php',
         'srag\\Plugins\\Hub2\\Origin\\IOriginFactory' => __DIR__ . '/../..' . '/src/Origin/IOriginFactory.php',

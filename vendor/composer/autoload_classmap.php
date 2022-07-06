@@ -1128,6 +1128,7 @@ return array(
     'srag\\Plugins\\Hub2\\Origin\\GroupMembership\\IGroupMembershipOrigin' => $baseDir . '/src/Origin/GroupMembership/IGroupMembershipOrigin.php',
     'srag\\Plugins\\Hub2\\Origin\\Group\\ARGroupOrigin' => $baseDir . '/src/Origin/Group/ARGroupOrigin.php',
     'srag\\Plugins\\Hub2\\Origin\\Group\\IGroupOrigin' => $baseDir . '/src/Origin/Group/IGroupOrigin.php',
+    'srag\\Plugins\\Hub2\\Origin\\Hook\\Config' => $baseDir . '/src/Origin/Hook/Config.php',
     'srag\\Plugins\\Hub2\\Origin\\IOrigin' => $baseDir . '/src/Origin/IOrigin.php',
     'srag\\Plugins\\Hub2\\Origin\\IOriginArrayImplementation' => $baseDir . '/src/Origin/IOriginArrayImplementation.php',
     'srag\\Plugins\\Hub2\\Origin\\IOriginFactory' => $baseDir . '/src/Origin/IOriginFactory.php',

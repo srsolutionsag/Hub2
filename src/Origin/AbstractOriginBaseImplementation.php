@@ -13,6 +13,7 @@ use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\Plugins\Hub2\Origin\Hook\Config;
 
 /**
  * Class AbstractOriginBaseImplementation
@@ -96,6 +97,13 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     final protected function factory()
     {
         return $this->factory;
+    }
+    
+    public function hookConfig() : Config
+    {
+        return new Config(
+            true
+        );
     }
 
     /**

@@ -203,16 +203,18 @@ class OriginSync implements IOriginSync
             $this->processObject($object, $nullDTO);
         }
         $notifier->notify('end processing outdated DTOs');
-
-        // After that we propose all objects to the origin which are no longer devlivered
+    
         $all_ext_ids = $this->factory->{$type . 'sExtIds'}();
-        $notifier->notify('start handle all objects');
-        foreach ($all_ext_ids as $all_ext_id) {
-            $hook_object = new HookObject($object = $this->factory->$type($all_ext_id), new NullDTO($all_ext_id));
-            $this->implementation->handleAllObjects($hook_object);
+        if ($this->implementation->hookConfig()->hasAllObjectHook()) {
+            $notifier->notify('start handle all objects');
+            foreach ($all_ext_ids as $all_ext_id) {
+                $hook_object = new HookObject($object = $this->factory->$type($all_ext_id), new NullDTO($all_ext_id));
+                $this->implementation->handleAllObjects($hook_object);
+            }
+            $notifier->notify('end handle all objects');
         }
-        $notifier->notify('end handle all objects');
-
+        
+        // After that we propose all objects to the origin which are no longer devlivered
         $missing = array_diff($all_ext_ids, $ext_ids_delivered);
         foreach ($missing as $missing_ext_id) {
             $hook_object = new HookObject($object = $this->factory->$type($missing_ext_id),
