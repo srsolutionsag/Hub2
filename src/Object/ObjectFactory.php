@@ -369,4 +369,83 @@ class ObjectFactory implements IObjectFactory
     {
         return ARCompetenceManagement::get();
     }
+    
+    
+    // ExtIds only
+    private function fetchAllExtIds(\ActiveRecord $ar) : array
+    {
+        $r = $this->db->queryF(
+            "SELECT ext_id FROM {$ar->getConnectorContainerName()} WHERE origin_id = %s",
+            ['integer'],
+            [$this->origin->getId()]
+        );
+        $ext_ids = [];
+        while ($d = $this->db->fetchObject($r)) {
+            $ext_ids[] = $d->ext_id;
+        }
+        
+        return $ext_ids;
+    }
+    
+    
+    public function usersExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARUser());
+    }
+    
+    public function coursesExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARCourse());
+    }
+    
+    public function categoriesExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARCategory());
+    }
+    
+    public function categorysExtIds() : array
+    {
+        return $this->categoriesExtIds();
+    }
+    
+    public function groupsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARGroup());
+    }
+    
+    public function sessionsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARSession());
+    }
+    
+    public function courseMembershipsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARCourseMembership());
+    }
+    
+    public function groupMembershipsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARGroupMembership());
+    }
+    
+    public function sessionMembershipsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARSessionMembership());
+    }
+    
+    public function orgUnitsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new AROrgUnit());
+    }
+    
+    public function orgUnitMembershipsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new AROrgUnitMembership());
+    }
+    
+    public function competenceManagementsExtIds() : array
+    {
+        return $this->fetchAllExtIds(new ARCompetenceManagement());
+    }
+    
 }

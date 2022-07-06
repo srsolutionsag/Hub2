@@ -117,16 +117,22 @@ interface IObjectFactory
      * @return IUser[]
      */
     public function users() : array;
+    
+    public function usersExtIds() : array;
 
     /**
      * @return ICourse[]
      */
     public function courses() : array;
+    
+    public function coursesExtIds() : array;
 
     /**
      * @return ICategory[]
      */
     public function categories() : array;
+    
+    public function categoriesExtIds() : array;
 
     /**
      * Since there are places where the code makes the plural of a type
@@ -136,44 +142,62 @@ interface IObjectFactory
      * @see categories()
      */
     public function categorys() : array;
+    
+    public function categorysExtIds() : array;
 
     /**
      * @return IGroup[]
      */
     public function groups() : array;
+    
+    public function groupsExtIds() : array;
 
     /**
      * @return ISession[]
      */
     public function sessions() : array;
+    
+    public function sessionsExtIds() : array;
 
     /**
      * @return ICourseMembership[]
      */
     public function courseMemberships() : array;
+    
+    public function courseMembershipsExtIds() : array;
 
     /**
      * @return IGroupMembership[]
      */
     public function groupMemberships() : array;
+    
+    public function groupMembershipsExtIds() : array;
 
     /**
      * @return ISessionMembership[]
      */
     public function sessionMemberships() : array;
+    
+    public function sessionMembershipsExtIds() : array;
 
     /**
      * @return IOrgUnit[]
      */
     public function orgUnits() : array;
+    
+    public function orgUnitsExtIds() : array;
 
     /**
      * @return IOrgUnitMembership[]
      */
     public function orgUnitMemberships() : array;
+    
+    public function orgUnitMembershipsExtIds() : array;
 
     /**
      * @return ICompetenceManagement[]
      */
     public function competenceManagements() : array;
+    
+    public function competenceManagementsExtIds() : array;
 }
