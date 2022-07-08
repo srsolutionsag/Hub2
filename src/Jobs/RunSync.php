@@ -63,7 +63,7 @@ class RunSync extends ilCronJob
     ) {
         $this->origins = $origins;
         $this->summary = $summary;
-        $this->force_update = $force_update;
+        $this->force_update = $force_update || (getenv('HUB2_FORCED_SYNC') === "true");
         $this->notifier = $notifier;
     }
 
