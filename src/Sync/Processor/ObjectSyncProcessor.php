@@ -179,7 +179,9 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
                     $hub_object->setILIASId($this->getILIASId($this->current_ilias_object));
 
-                    $this->implementation->afterUpdateILIASObject($hook_object->withILIASObject($this->current_ilias_object));
+                    $this->implementation->afterUpdateILIASObject(
+                        $hook_object->withILIASObject($this->current_ilias_object)
+                    );
 
                     $hub_object->setStatus(IObject::STATUS_UPDATED);
                     $hub_object->setProcessedDate($time);
