@@ -105,9 +105,10 @@ abstract class DataTransferObject implements IDataTransferObject
     protected function getProperties()
     {
         return array_filter(
-            array_keys(get_class_vars(get_class($this))), function (string $property) : bool {
-            return ($property !== "should_deleted");
-        }
+            array_keys(get_class_vars(get_class($this))),
+            function (string $property) : bool {
+                return ($property !== "should_deleted" && $property !== 'additionalData');
+            }
         );
     }
 
