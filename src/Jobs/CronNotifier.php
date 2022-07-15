@@ -54,8 +54,7 @@ class CronNotifier implements Notifier
         if ($this->notify_counter % self::NOTIFY_MODULO === 0) {
             $this->notify($text . " ({$this->notify_counter})");
             if (gc_enabled()) {
-                $collected = gc_collect_cycles();
-                $this->notify("GC collected $collected cycles");
+                gc_collect_cycles();
             }
         }
         $this->notify_counter++;
