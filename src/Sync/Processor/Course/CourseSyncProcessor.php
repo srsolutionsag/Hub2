@@ -432,15 +432,15 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if ($this->props->updateDTOProperty("enableSessionLimit")) {
             $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
         }
-
-        if (!self::dic()->tree()->isInTree($ilObjCourse->getRefId())) {
-            $parentRefId = $this->determineParentRefId($dto);
-
-            $ilObjCourse->putInTree($parentRefId);
-        } else {
-            if ($this->props->get(CourseProperties::MOVE_COURSE)) {
-                $this->moveCourse($ilObjCourse, $dto);
-            }
+    
+        // move/put in tree
+        $parent_ref_id = $this->determineParentRefId($dto);
+        $ref_id = (int) $ilObjCourse->getRefId();
+    
+        if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
+            $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
+        } elseif ($this->props->get(CourseProperties::MOVE_COURSE)) {
+            $this->parent_resolver->move($ref_id, $parent_ref_id);
         }
 
         if ($this->props->updateDTOProperty("appointementsColor")) {

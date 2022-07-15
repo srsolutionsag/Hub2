@@ -82,6 +82,10 @@ class BasicParentResolver implements ParentResolver
     
     public function move(int $ref_id, int $to_ref_id) : bool
     {
+        if (!$this->tree->isInTree($ref_id)) {
+            $this->tree->insertNode($ref_id, $to_ref_id);
+        }
+        
         if ($this->isRefIdDeleted($ref_id)) {
             $this->restoreRefId($ref_id, $to_ref_id);
         }
@@ -89,6 +93,13 @@ class BasicParentResolver implements ParentResolver
         $old_parent_id = (int) $this->tree->getParentId($ref_id);
         if ($old_parent_id === $to_ref_id) {
             return false;
+        }
+        if (
+            $this->tree->isDeleted($to_ref_id)
+            || !$this->tree->isInTree($to_ref_id)
+            || $this->tree->isGrandChild($ref_id, $to_ref_id)
+        ) {
+            $to_ref_id = $this->fallback_ref_id;
         }
         $this->tree->moveTree($ref_id, $to_ref_id);
         $this->rbacadmin->adjustMovedObjectPermissions(

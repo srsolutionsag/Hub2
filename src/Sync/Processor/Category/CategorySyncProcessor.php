@@ -168,18 +168,17 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             $sorting_settings->setSortNewItemsOrder($dto->getNewItemsOrderType());
             $sorting_settings->update();
         }
-        if (!self::dic()->tree()->isInTree($ilObjCategory->getRefId())) {
-            $parentRefId = $this->determineParentRefId($dto);
-            if (!self::dic()->tree()->isInTree($ilObjCategory->getRefId())) {
-                $parentRefId = $this->config->getParentRefIdIfNoParentIdFound() ?? 1;
-            }
-
-            $ilObjCategory->putInTree($parentRefId);
-        } else {
-            if ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
-                $this->moveCategory($ilObjCategory, $dto);
-            }
+        
+        // move/put in tree
+        $parent_ref_id = $this->determineParentRefId($dto);
+        $ref_id = (int) $ilObjCategory->getRefId();
+    
+        if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
+            $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
+        } elseif ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
+            $this->parent_resolver->move($ref_id, $parent_ref_id);
         }
+        
         $ilObjCategory->update();
     }
 
