@@ -434,7 +434,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
     
         // move/put in tree
+        // Find the refId under which this course should be created
         $parent_ref_id = $this->determineParentRefId($dto);
+        // Check if we should create some dependence categories
+        $parent_ref_id = $this->buildDependenceCategories($dto, $parent_ref_id);
         $ref_id = (int) $ilObjCourse->getRefId();
     
         if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
@@ -606,19 +609,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
 
         return new ilObjCourse($iliasId);
-    }
-
-    /**
-     * Move the course to a new parent.
-     * Note: May also create the dependence categories
-     * @param ilObjCourse $ilObjCourse
-     * @param CourseDTO   $course
-     */
-    protected function moveCourse(ilObjCourse $ilObjCourse, CourseDTO $course)
-    {
-        $parentRefId = $this->determineParentRefId($course);
-        $parentRefId = $this->buildDependenceCategories($course, $parentRefId);
-        $this->parent_resolver->move($ilObjCourse->getRefId(), $parentRefId);
     }
 
     /**
