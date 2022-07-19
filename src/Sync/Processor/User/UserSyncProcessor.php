@@ -315,7 +315,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      */
     protected function findILIASUser($ilias_id)
     {
-        if (!ilObjUser::_exists($ilias_id)) {
+        if (!ilObjUser::_exists($ilias_id, false, 'usr')) {
             return null;
         }
 
