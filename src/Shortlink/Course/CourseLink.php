@@ -12,5 +12,8 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  */
 class CourseLink extends AbstractRepositoryLink implements IObjectLink
 {
-
+    public function getAccessDeniedLink() : string
+    {
+        return $this->getILIASId();
+    }
 }
