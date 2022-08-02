@@ -22,8 +22,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class hub2MainGUI
 {
-
-    use DICTrait;
+    
     use Hub2Trait;
 
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -32,7 +31,11 @@ class hub2MainGUI
     const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
     const CMD_INDEX = 'index';
     /**
-     * @var ilTemplate
+     * @var ilRbacReview
+     */
+    protected $rbac_review;
+    /**
+     * @var ilGlobalTemplateInterface
      */
     protected $tpl;
     /**
@@ -58,6 +61,7 @@ class hub2MainGUI
         $this->ctrl = $DIC['ilCtrl'];
         $this->tabs = $DIC['ilTabs'];
         $this->plugin = ilHub2Plugin::getInstance();
+        $this->rbac_review = $DIC->rbac()->review();
     }
 
     /**
@@ -66,24 +70,24 @@ class hub2MainGUI
     public function executeCommand()/*: void*/
     {
         $this->initTabs();
-        $nextClass = self::dic()->ctrl()->getNextClass();
-
+        $nextClass = $this->ctrl->getNextClass();
+        $this->tpl->setTitleIcon('./Customizing/global/plugins/Services/Cron/CronHook/Hub2/templates/hub2_icon.svg');
         switch ($nextClass) {
             case strtolower(hub2ConfigGUI::class):
-                self::dic()->ctrl()->forwardCommand(new hub2ConfigGUI());
+                $this->ctrl->forwardCommand(new hub2ConfigGUI());
                 break;
             case strtolower(hub2ConfigOriginsGUI::class):
-                self::dic()->ctrl()->forwardCommand(new hub2ConfigOriginsGUI());
+                $this->ctrl->forwardCommand(new hub2ConfigOriginsGUI());
                 break;
             case strtolower(hub2CustomViewGUI::class):
-                self::dic()->tabs()->activateTab(self::TAB_CUSTOM_VIEWS);
-                self::dic()->ctrl()->forwardCommand(new hub2CustomViewGUI());
+                $this->tabs->activateTab(self::TAB_CUSTOM_VIEWS);
+                $this->ctrl->forwardCommand(new hub2CustomViewGUI());
                 break;
             case strtolower(hub2DataGUI::class):
             case strtolower(hub2LogsGUI::class):
                 break;
             default:
-                $cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
+                $cmd = $this->ctrl->getCmd(self::CMD_INDEX);
                 $this->{$cmd}();
         }
     }
@@ -93,7 +97,7 @@ class hub2MainGUI
      */
     protected function index()/*: void*/
     {
-        self::dic()->ctrl()->redirectByClass(hub2ConfigGUI::class);
+        $this->ctrl->redirectByClass(hub2ConfigOriginsGUI::class);
     }
 
     /**
@@ -101,19 +105,19 @@ class hub2MainGUI
      */
     protected function initTabs()/*: void*/
     {
-        self::dic()->tabs()->addTab(
-            self::TAB_PLUGIN_CONFIG, self::plugin()->translate(self::TAB_PLUGIN_CONFIG), self::dic()->ctrl()
-                                                                                             ->getLinkTargetByClass(hub2ConfigGUI::class)
-        );
-
-        self::dic()->tabs()->addTab(
-            self::TAB_ORIGINS, self::plugin()->translate(self::TAB_ORIGINS), self::dic()->ctrl()
+        $this->tabs->addTab(
+            self::TAB_ORIGINS, $this->plugin->txt(self::TAB_ORIGINS), $this->ctrl
                                                                                  ->getLinkTargetByClass(hub2ConfigOriginsGUI::class)
         );
-
+    
+        $this->tabs->addTab(
+            self::TAB_PLUGIN_CONFIG, $this->plugin->txt(self::TAB_PLUGIN_CONFIG), $this->ctrl
+                                                                                             ->getLinkTargetByClass(hub2ConfigGUI::class)
+        );
+    
         if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
-            self::dic()->tabs()->addTab(
-                self::TAB_CUSTOM_VIEWS, self::plugin()->translate(self::TAB_CUSTOM_VIEWS), self::dic()->ctrl()
+            $this->tabs->addTab(
+                self::TAB_CUSTOM_VIEWS, $this->plugin->txt(self::TAB_CUSTOM_VIEWS), $this->ctrl
                                                                                                ->getLinkTargetByClass(hub2CustomViewGUI::class)
             );
         }

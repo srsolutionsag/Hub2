@@ -17,20 +17,21 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Menu
+ *
  * @package srag\Plugins\Hub2\Menu
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  * @since   ILIAS 5.4
  */
 class Menu extends AbstractStaticPluginMainMenuProvider
 {
-
+    
     use DICTrait;
     use Hub2Trait;
-
+    
     const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
+    
     protected static $polyfill_init = false;
-
+    
     /**
      * @inheritdoc
      */
@@ -38,7 +39,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
     {
         return [];
     }
-
+    
     protected function initPolyfill()
     {
         if (!self::$polyfill_init) {
@@ -54,7 +55,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
             self::$polyfill_init = true;
         }
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -73,50 +74,56 @@ class Menu extends AbstractStaticPluginMainMenuProvider
             $p = new \ilAdmGlobalScreenProvider($DIC);
             $parent = $p->getTopItem();
         }
-
+        
         $ref_id = array_key_first(\ilObject2::_getAllReferences($obj_id) ?? []);
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ref_id", $ref_id);
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ctype", IL_COMP_SERVICE);
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "cname", "Cron");
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "slot_id", "crnhk");
         self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "pname", ilHub2Plugin::PLUGIN_NAME);
-
+        
+        $action = self::dic()->ctrl()->getLinkTargetByClass(
+            [
+                ilAdministrationGUI::class,
+                ilObjComponentSettingsGUI::class,
+                ilHub2ConfigGUI::class,
+            ],
+            hub2MainGUI::CMD_INDEX
+        );
         return [
             $this->symbol(
-                $this->mainmenu->link($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))->withParent($parent)
-                               ->withTitle(ilHub2Plugin::PLUGIN_NAME)->withAction(
-                        self::dic()->ctrl()->getLinkTargetByClass(
-                            [
-                                ilAdministrationGUI::class,
-                                ilObjComponentSettingsGUI::class,
-                                ilHub2ConfigGUI::class,
-                            ], hub2MainGUI::CMD_INDEX
-                        )
-                    )->withAvailableCallable(
-                        function () : bool {
-                            return self::plugin()->getPluginObject()->isActive();
-                        }
-                    )->withVisibilityCallable(
-                        function () : bool {
-                            $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
-                            if (null !== $config) {
-                                // replace outer brackets from array string and convert values to int
-                                $roles = preg_replace("/[\[\]']+/", '', $config->getValue());
-                                $roles = array_map('intval', explode(',', $roles));
-                                // add at least default admin role id (doesn't matter if it's repeatedly)
-                                $roles[] = 2;
-                            } else {
-                                $roles = [2];
-                            }
-
-                            return self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(self::dic()->user()->getId(),
-                                $roles);
-                        }
-                    )
+                $this->mainmenu->link($this->if->identifier(ilHub2Plugin::PLUGIN_ID . "_configuration"))
+                               ->withParent($parent)
+                               ->withTitle('HUB Sync')
+                               ->withAction($action)
+                               ->withAvailableCallable(
+                                   function () : bool {
+                                       return self::plugin()->getPluginObject()->isActive();
+                                   }
+                               )
+                               ->withVisibilityCallable(
+                                   function () : bool {
+                                       $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
+                                       if (null !== $config) {
+                                           // replace outer brackets from array string and convert values to int
+                                           $roles = preg_replace("/[\[\]']+/", '', $config->getValue());
+                                           $roles = array_map('intval', explode(',', $roles));
+                                           // add at least default admin role id (doesn't matter if it's repeatedly)
+                                           $roles[] = 2;
+                                       } else {
+                                           $roles = [2];
+                                       }
+                        
+                                       return self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(
+                                           self::dic()->user()->getId(),
+                                           $roles
+                                       );
+                                   }
+                               )
             ),
         ];
     }
-
+    
     /**
      * @param AbstractBaseItem $entry
      * @return AbstractBaseItem
@@ -124,10 +131,14 @@ class Menu extends AbstractStaticPluginMainMenuProvider
     protected function symbol(AbstractBaseItem $entry) : AbstractBaseItem
     {
         if (self::version()->is6()) {
-            $entry = $entry->withSymbol(self::dic()->ui()->factory()->symbol()->icon()->standard(Standard::RFIL,
-                ilHub2Plugin::PLUGIN_NAME)->withIsOutlined(true));
+            $entry = $entry->withSymbol(
+                self::dic()->ui()->factory()->symbol()->icon()->custom(
+                    './Customizing/global/plugins/Services/Cron/CronHook/Hub2/templates/hub2_icon_outlined.svg',
+                    ilHub2Plugin::PLUGIN_NAME
+                )
+            );
         }
-
+        
         return $entry;
     }
 }

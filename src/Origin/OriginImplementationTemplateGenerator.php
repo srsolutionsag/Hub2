@@ -54,7 +54,7 @@ class OriginImplementationTemplateGenerator
                 throw new HubException("Could not create directory: $path");
             }
         }
-        if (!is_writable($classFile)) {
+        if (!is_writable(basename($classFile))) {
             throw new HubException("Class file not writable: $classFile");
         }
         $template = file_get_contents(__DIR__ . '/../../templates/OriginImplementationTemplate.tpl');

@@ -17,6 +17,7 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginsTableGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
 use srag\Plugins\Hub2\Jobs\CronNotifier;
+use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class ConfigOriginsGUI
@@ -28,7 +29,7 @@ use srag\Plugins\Hub2\Jobs\CronNotifier;
  */
 class hub2ConfigOriginsGUI extends hub2MainGUI
 {
-
+    use DICTrait;
     const CMD_DELETE = 'delete';
     const ORIGIN_ID = 'origin_id';
     const SUBTAB_ORIGINS = 'subtab_origins';
