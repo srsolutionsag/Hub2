@@ -1,3 +1,17 @@
+HUB2 Synchronisation
+====================
+
+![](templates/Sync.jpg)
+
+Many institutions already maintain user data or event registrations in external systems and would like to synchronise these with ILIAS. ILIAS itself already offers a variety of standard solutions such as ActiveDirectory, openID or Shibboleth for authentication. In addition, courses can also be created and updated via the existing SOAP interface, but this often involves greater effort for the institution, which has to implement the necessary processes and scripts itself.
+With HUB2, sr.solutions offers a simple solution for one-way synchronisation:
+- User accounts
+- categories
+- Courses and groups
+- Memberships in Courses and groups
+- Organisational units and positions
+- ...
+
 ## Installation
 
 ### Install Hub2 plugin
@@ -9,7 +23,7 @@ cd Customizing/global/plugins/Services/Cron/CronHook
 git clone https://github.com/studer-raimann/Hub2.git Hub2
 ```
 ### Requirements
-* ILIAS 5.4 or ILIAS 6
+* ILIAS 5.4 to ILIAS 7
 * PHP >=7.0
 
 
