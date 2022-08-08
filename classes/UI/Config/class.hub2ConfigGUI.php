@@ -31,7 +31,7 @@ class hub2ConfigGUI extends hub2MainGUI
     protected function index()/*: void*/
     {
         $form = $this->getConfigForm();
-        self::output()->output($form);
+        $this->tpl->setContent($form->getHTML());
     }
 
     /**
@@ -43,11 +43,11 @@ class hub2ConfigGUI extends hub2MainGUI
 
         if ($form->checkInput()) {
             $form->updateConfig();
-            ilUtil::sendSuccess(self::plugin()->translate('msg_successfully_saved'), true);
-            self::dic()->ctrl()->redirect($this);
+            ilUtil::sendSuccess($this->plugin->txt('msg_successfully_saved'), true);
+            $this->ctrl->redirect($this);
         }
         $form->setValuesByPost();
-        self::output()->output($form);
+        $this->tpl->setContent($form->getHTML());
     }
 
     /**
@@ -55,6 +55,6 @@ class hub2ConfigGUI extends hub2MainGUI
      */
     protected function initTabs()/*: void*/
     {
-        self::dic()->tabs()->activateTab(self::TAB_PLUGIN_CONFIG);
+        $this->tabs->activateTab(self::TAB_PLUGIN_CONFIG);
     }
 }
