@@ -31,6 +31,14 @@ class hub2MainGUI
     const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
     const CMD_INDEX = 'index';
     /**
+     * @var \ILIAS\DI\UIServices
+     */
+    protected $ui;
+    /**
+     * @var \ILIAS\DI\HTTPServices
+     */
+    protected $http;
+    /**
      * @var ilRbacReview
      */
     protected $rbac_review;
@@ -62,6 +70,8 @@ class hub2MainGUI
         $this->tabs = $DIC['ilTabs'];
         $this->plugin = ilHub2Plugin::getInstance();
         $this->rbac_review = $DIC->rbac()->review();
+        $this->http = $DIC->http();
+        $this->ui = $DIC->ui();
     }
 
     /**

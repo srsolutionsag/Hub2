@@ -22,7 +22,7 @@ class hub2DataGUI extends hub2MainGUI
     public function executeCommand()
     {
         $this->initTabs();
-        $cmd = self::dic()->ctrl()->getCmd(self::CMD_INDEX);
+        $cmd = $this->ctrl->getCmd(self::CMD_INDEX);
         $this->{$cmd}();
     }
 
@@ -32,7 +32,7 @@ class hub2DataGUI extends hub2MainGUI
     protected function index()
     {
         $table = new DataTableGUI($this, self::CMD_INDEX);
-        self::output()->output($table);
+        $this->tpl->setContent($table->getHTML());
     }
 
     /**
@@ -64,7 +64,7 @@ class hub2DataGUI extends hub2MainGUI
      */
     protected function initTabs()
     {
-        self::dic()->tabs()->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
+        $this->tabs->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
     }
 
     /**
@@ -72,15 +72,15 @@ class hub2DataGUI extends hub2MainGUI
      */
     protected function renderData()
     {
-        $ext_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
-        $origin_id = self::dic()->http()->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
+        $ext_id = $this->http->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
+        $origin_id = $this->http->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];
 
         $origin_factory = new OriginFactory();
         $object_factory = new ObjectFactory($origin_factory->getById($origin_id));
 
         $object = $object_factory->undefined($ext_id);
 
-        $factory = self::dic()->ui()->factory();
+        $factory = $this->ui->factory();
 
         /*$properties = array_merge([
             "period" => $object->getPeriod(),
@@ -126,12 +126,11 @@ class hub2DataGUI extends hub2MainGUI
         $data_table = $factory->listing()->descriptive($filtered);
 
         $modal = $factory->modal()->roundtrip(
-            self::plugin()->translate("data_table_header_data") . "<br>" . self::plugin()
-                                                                               ->translate("data_table_hash", "",
-                                                                                   [$object->getHashCode()]),
+            $this->plugin->txt("data_table_header_data")
+            . "<br>" . vsprintf($this->plugin->txt("data_table_hash"), [$object->getHashCode()]), //, "",
             $data_table
         )->withCancelButtonLabel("close");
 
-        self::output()->output(self::dic()->ui()->renderer()->renderAsync($modal));
+        $this->tpl->setContent($this->ui->renderer()->renderAsync($modal));
     }
 }
