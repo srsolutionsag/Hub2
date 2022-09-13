@@ -14,6 +14,12 @@ class Csv
 {
     const ENCLOSURE_DEFAULT = '"';
     const SEPARATOR_DEFAULT = ";";
+    const BAD_ENCLOSURE_REPLACEMENT = '';
+    
+    /**
+     * @var array
+     */
+    protected $bad_enclosures = [];
     /**
      * @var array
      */
@@ -68,7 +74,8 @@ class Csv
         array $mandatory_columns = [],
         array $column_mapping = [],
         string $enclosure = self::ENCLOSURE_DEFAULT,
-        string $separator = self::SEPARATOR_DEFAULT
+        string $separator = self::SEPARATOR_DEFAULT,
+        array $bad_enclosures = []
     ) {
         $this->enclosure = $enclosure;
         $this->separator = $separator;
@@ -76,6 +83,7 @@ class Csv
         $this->unique_field = $unique_field;
         $this->mandatory_columns = $mandatory_columns;
         $this->columns_mapping = $column_mapping;
+        $this->bad_enclosures = $bad_enclosures;
     }
     
     /**
@@ -162,7 +170,7 @@ class Csv
     protected function parseCSVFile(string $path_to_file) : void
     {
         $this->parsed_csv = array_map(function (string $line) : array {
-            return str_getcsv($this->removeBOM($line), $this->getSeparator(), $this->getEnclosure());
+            return str_getcsv($this->sanitizeEnclosures($this->removeBOM($line)), $this->getSeparator(), $this->getEnclosure());
         }, file($path_to_file));
     }
     
@@ -221,6 +229,20 @@ class Csv
     protected function sanitize(string $s) : string
     {
         return utf8_encode(utf8_decode($s));
+    }
+    
+    protected function sanitizeEnclosures(string $s) : string
+    {
+        if ($this->bad_enclosures === []) {
+            return $s;
+        }
+        static $non_enclosures;
+        if (!isset($non_enclosures)) {
+            $bad_enclosured = '/[' . implode('', $this->bad_enclosures) . ']/';
+            $non_enclosures = str_replace($this->getEnclosure(), '', $bad_enclosured);
+        }
+        
+        return preg_replace($non_enclosures, self::BAD_ENCLOSURE_REPLACEMENT, $s);
     }
     
     protected function getColumnMapping() : array
