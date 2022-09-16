@@ -104,7 +104,7 @@ interface IObject
     /**
      * Get the ID of this object in ILIAS. Depending on the object, this can either be the ILIAS
      * object-ID or ref-ID.
-     * @return int
+     * @return int|string
      */
     public function getILIASId();
 

@@ -118,7 +118,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-        if ($this->props->get(CourseMembershipProperties::DELETE_MODE) == CourseMembershipProperties::DELETE_MODE_NONE) {
+        if ((int)$this->props->get(CourseMembershipProperties::DELETE_MODE) === CourseMembershipProperties::DELETE_MODE_NONE) {
             return;
         }
 
