@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.0.2]
+- Fixed critical but which caused course members to stay in courses in status OUTDATED
+
 ## [x]
 - ILIAS 6 support
 - Remove ILIAS 5.3 support
