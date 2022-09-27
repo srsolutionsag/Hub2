@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Origin\Config;
 
 use ilObjFile;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
+use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 
 /**
  * Class OriginConfig
@@ -25,7 +26,7 @@ class OriginConfig implements IOriginConfig
             self::SHORT_LINK_FORCE_LOGIN => false,
             self::NOTIFICATION_ERRORS => '',
             self::NOTIFICATION_SUMMARY => '',
-            self::CONNECTION_TYPE => IOriginConfig::CONNECTION_TYPE_PATH,
+            self::CONNECTION_TYPE => IOriginConfig::CONNECTION_TYPE_FILE_DROP,
             self::PATH => '',
             self::SERVER_HOST => '',
             self::SERVER_PORT => '',
@@ -36,6 +37,8 @@ class OriginConfig implements IOriginConfig
             self::ACTIVE_PERIOD => '',
             self::LINKED_ORIGIN_ID => 0,
             self::ILIAS_FILE_REF_ID => 0,
+            self::FILE_DROP_USER => 'file_drop_user',
+            self::FILE_DROP_PASSWORD => 'file_drop_password',
         ];
 
     /**
@@ -93,11 +96,21 @@ class OriginConfig implements IOriginConfig
      */
     public function getPath() : string
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_PATH) {
+        if ($this->getConnectionType() !== self::CONNECTION_TYPE_PATH && $this->getConnectionType(
+            ) !== self::CONNECTION_TYPE_FILE_DROP) {
             throw new ConnectionFailedException("Please set connection type to path to use getPath");
         }
 
-        $path = $this->get(self::PATH);
+        switch ($this->getConnectionType()) {
+            case self::CONNECTION_TYPE_FILE_DROP:
+                $f = new Factory();
+                $path = $f->storage()->getPath($this->get(self::FILE_DROP_RID));
+                break;
+            default;
+            case self::CONNECTION_TYPE_PATH:
+                $path = $this->get(self::PATH);
+                break;
+        }
 
         if (empty($path)) {
             throw new ConnectionFailedException("Please set a path to use getPath");

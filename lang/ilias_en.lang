@@ -195,6 +195,14 @@ origin_form_title_edit#:#Edit origin
 origin_form_field_active#:#Sync active
 origin_form_field_class_name#:#PHP class name
 origin_form_field_class_name_info#:#Class file must exist in '%s'.\nAfter saving, Hub will try to automatically create a template for you at this location.
+origin_form_field_conf_type_filedrop#:#File drop
+origin_form_field_conf_type_filedrop_info#:#Dropping File for this Origin using POST to this URL
+origin_form_field_conf_type_filedrop_url#:#File drop URL
+origin_form_field_conf_type_filedrop_auth_user#:#BasicAuth User
+origin_form_field_conf_type_filedrop_auth_pw#:#BasicAuth Password
+origin_form_field_conf_type_filedrop_method#:#Method
+origin_form_field_conf_type_filedrop_rid#:#Resource ID
+origin_form_field_conf_type_filedrop_rid_nya#:#not yet available
 origin_form_field_conf_type#:#Connection type
 origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Database
