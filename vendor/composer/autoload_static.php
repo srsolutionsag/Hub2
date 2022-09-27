@@ -1331,6 +1331,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\GroupSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/Group/GroupSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\IGroupActivities' => __DIR__ . '/../..' . '/src/Sync/Processor/Group/IGroupActivities.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\IGroupSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/Group/IGroupSyncProcessor.php',
+        'srag\\Plugins\\Hub2\\Sync\\Processor\\HashCodeComputer' => __DIR__ . '/../..' . '/src/Sync/Processor/HashCodeComputer.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\Helper' => __DIR__ . '/../..' . '/src/Sync/Processor/Helper.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\IDidacticTemplateSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/IDidacticTemplateSyncProcessor.php',
         'srag\\Plugins\\Hub2\\Sync\\Processor\\IMetadataSyncProcessor' => __DIR__ . '/../..' . '/src/Sync/Processor/IMetadataSyncProcessor.php',

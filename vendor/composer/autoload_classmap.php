@@ -1229,6 +1229,7 @@ return array(
     'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\GroupSyncProcessor' => $baseDir . '/src/Sync/Processor/Group/GroupSyncProcessor.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\IGroupActivities' => $baseDir . '/src/Sync/Processor/Group/IGroupActivities.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\Group\\IGroupSyncProcessor' => $baseDir . '/src/Sync/Processor/Group/IGroupSyncProcessor.php',
+    'srag\\Plugins\\Hub2\\Sync\\Processor\\HashCodeComputer' => $baseDir . '/src/Sync/Processor/HashCodeComputer.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\Helper' => $baseDir . '/src/Sync/Processor/Helper.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\IDidacticTemplateSyncProcessor' => $baseDir . '/src/Sync/Processor/IDidacticTemplateSyncProcessor.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\IMetadataSyncProcessor' => $baseDir . '/src/Sync/Processor/IMetadataSyncProcessor.php',
