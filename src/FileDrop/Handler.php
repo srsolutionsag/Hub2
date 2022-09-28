@@ -158,7 +158,7 @@ class Handler
             case $e instanceof AccessDenied:
                 $this->http->saveResponse(
                     $this->http->response()->withStatus(401, $e->getMessage())->withHeader(
-                        'WWW-Authenticate', 'Basic realm="Hub2 FileDrop"'
+                        'WWW-Authenticate', 'Bearer realm="Hub2 FileDrop"'
                     )
                 );
                 break;
