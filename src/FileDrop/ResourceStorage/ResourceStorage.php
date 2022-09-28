@@ -11,21 +11,21 @@ use ILIAS\FileUpload\DTO\UploadResult;
  */
 interface ResourceStorage
 {
-    public function fromUpload(UploadResult $u) : string;
+    public function fromUpload(UploadResult $u): string;
 
     public function replaceUpload(UploadResult $u, string $rid_string): string;
 
-    public function fromPath(string $u, string $mime_type = null) : string;
+    public function fromPath(string $u, string $mime_type = null): string;
 
-    public function fromString(string $content, string $mime_type = null) : string;
+    public function fromString(string $content, string $mime_type = null): string;
 
-    public function remove(string $identification) : bool;
+    public function remove(string $identification): bool;
 
-    public function getRevisionInfo(string $identification) : array;
+    public function getRevisionInfo(string $identification): array;
 
-    public function has(string $identification) : bool;
+    public function has(string $identification): bool;
 
-    public function getString(string $identification) : string;
+    public function getString(string $identification): string;
 
-    public function getPath(string $identification) : string;
+    public function getPath(string $identification): string;
 }

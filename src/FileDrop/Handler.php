@@ -12,6 +12,11 @@ use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
+use srag\Plugins\Hub2\FileDrop\Exceptions\InternalError;
+use srag\Plugins\Hub2\FileDrop\Exceptions\AccessDenied;
+use srag\Plugins\Hub2\FileDrop\Exceptions\NotFound;
+use srag\Plugins\Hub2\FileDrop\Exceptions\Success;
+use ILIAS\Filesystem\Stream\Streams;
 
 /**
  * Class Handler
@@ -67,8 +72,8 @@ class Handler
         $this->upload = $DIC->upload();
         $this->file_drop_container = '';
         $f = new Factory();
-        $this->storage = $f ->storage();
-        $this->stakeholder = $f ->stakeholder();
+        $this->storage = $f->storage();
+        $this->stakeholder = $f->stakeholder();
     }
 
     public static function getURL(string $file_drop_container): string
@@ -85,7 +90,7 @@ class Handler
         $repo = new OriginFactory();
         $origin = $repo->getById($origin_id);
         if ($origin === null) {
-            throw new \LogicException('Origin not found');
+            throw new NotFound("FileDrop '$file_drop_container' not Found");
         }
         return $origin;
     }
@@ -100,20 +105,20 @@ class Handler
         $this->upload->process();
         $this->uploaded_files = $this->upload->getResults();
 
-        if(count($this->uploaded_files) > 1) {
-            throw new \LogicException('currently only one file is supported');
+        if (count($this->uploaded_files) > 1) {
+            throw new InternalError('currently only one file per drop is supported');
         }
 
         $result = end($this->uploaded_files);
 
         if ($result->getStatus()->getCode() !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
-            $this->throwException('Upload failed: ' . $result->getStatus()->getMessage());
+            throw new InternalError('Upload failed: ' . $result->getStatus()->getMessage());
         }
         $current_rid = $origin->config()->get(IOriginConfig::FILE_DROP_RID);
         $rid = $this->storage->replaceUpload($result, $current_rid ?? '');
         $origin->config()->setData([IOriginConfig::FILE_DROP_RID => $rid]);
         $origin->store();
-        echo $result->getName() . " uploaded successfully in $rid<br>";
+        throw new Success('File uploaded');
     }
 
     /**
@@ -126,18 +131,43 @@ class Handler
         $user = $origin->config()->get(IOriginConfig::FILE_DROP_USER);
         $password = $origin->config()->get(IOriginConfig::FILE_DROP_PASSWORD);
 
-        $this->http->request()->getMethod() === self::METHOD || $this->throwException('Method not allowed');
+        $this->http->request()->getMethod() === self::METHOD || $this->throwException(
+            new InternalError('Method not allowed')
+        );
         $this->http->request()->getServerParams()[self::PHP_AUTH_USER] === $user
-        || $this->throwException('Authentication failed');
+        || $this->throwException(new AccessDenied('Auth failed'));
         $this->http->request()->getServerParams()[self::PHP_AUTH_PW] === $password
-        || $this->throwException('Authentication failed');
+        || $this->throwException(new AccessDenied('Auth failed'));
 
         return true;
     }
 
-    private function throwException(string $message): void
+    private function throwException(\Exception $e): void
     {
-        throw new \LogicException($message);
+        throw $e;
+    }
+
+    private function handleException(\Exception $e): void
+    {
+        switch (true) {
+            case $e instanceof AccessDenied:
+                $this->http->saveResponse($this->http->response()->withStatus(403, $e->getMessage()));
+                break;
+            case $e instanceof NotFound:
+                $this->http->saveResponse($this->http->response()->withStatus(404, $e->getMessage()));
+                break;
+            case $e instanceof InternalError:
+                $this->http->saveResponse($this->http->response()->withStatus(500, $e->getMessage()));
+                break;
+            case $e instanceof Success:
+                $this->http->saveResponse($this->http->response()->withStatus(200, $e->getMessage()));
+                break;
+            default:
+                $this->http->saveResponse($this->http->response()->withStatus(500, $e->getMessage()));
+                break;
+        }
+        $this->http->saveResponse($this->http->response()->withBody(Streams::ofString($e->getMessage())));
+        $this->http->sendResponse();
     }
 
     /**
@@ -145,16 +175,20 @@ class Handler
      */
     public function process()
     {
-        global $DIC;
+        try {
+            global $DIC;
 
-        if (!$this->init || !$DIC->isDependencyAvailable('database')) {
-            throw new ShortlinkException("ILIAS not initialized, aborting...");
-        }
+            if (!$this->init || !$DIC->isDependencyAvailable('database')) {
+                throw new InternalError("ILIAS not initialized, aborting...");
+            }
 
-        // BASIC CHECKS
-        $this->file_drop_container = $this->http->request()->getQueryParams()[self::FD_CONTAINER] ?? '';
-        if ($this->checkAuth($this->file_drop_container)) {
-            $this->processFiles();
+            // BASIC CHECKS
+            $this->file_drop_container = $this->http->request()->getQueryParams()[self::FD_CONTAINER] ?? '';
+            if ($this->checkAuth($this->file_drop_container)) {
+                $this->processFiles();
+            }
+        } catch (\Exception $e) {
+            $this->handleException($e);
         }
     }
 

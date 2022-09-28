@@ -70,10 +70,9 @@ class ResourceStorage6 implements ResourceStorage
             $this->resource_repository,
             $this->information_repository
         );
-
     }
 
-    public function fromUpload(UploadResult $u) : string
+    public function fromUpload(UploadResult $u): string
     {
         $i = $this->services->upload($u, $this->stakeholder);
         return $i->serialize();
@@ -82,7 +81,7 @@ class ResourceStorage6 implements ResourceStorage
     public function replaceUpload(UploadResult $u, string $rid_string): string
     {
         $rid = $this->services->find($rid_string);
-        if($rid === null) {
+        if ($rid === null) {
             return $this->fromUpload($u);
         }
         // Get resource builder
@@ -118,7 +117,7 @@ class ResourceStorage6 implements ResourceStorage
         return $resource->getIdentification()->serialize();
     }
 
-    public function fromPath(string $u, string $mime_type = null) : string
+    public function fromPath(string $u, string $mime_type = null): string
     {
         $id = $this->storage_handler->getIdentificationGenerator()->getUniqueResourceIdentification();
 
@@ -153,7 +152,7 @@ class ResourceStorage6 implements ResourceStorage
         return $id->serialize();
     }
 
-    public function getDataURL(string $identification) : string
+    public function getDataURL(string $identification): string
     {
         $id = $this->services->find($identification);
         if ($id instanceof ResourceIdentification) {
@@ -167,12 +166,11 @@ class ResourceStorage6 implements ResourceStorage
                 default:
                     return 'data:' . $mime_type . ';base64,' . base64_encode($contents);
             }
-
         }
         return '';
     }
 
-    public function remove(string $identification) : bool
+    public function remove(string $identification): bool
     {
         $id = $this->services->find($identification);
         if ($id instanceof ResourceIdentification) {
@@ -182,7 +180,7 @@ class ResourceStorage6 implements ResourceStorage
         return false;
     }
 
-    public function getRevisionInfo(string $identification) : array
+    public function getRevisionInfo(string $identification): array
     {
         $id = $this->services->find($identification);
         if ($id instanceof ResourceIdentification) {
@@ -198,13 +196,13 @@ class ResourceStorage6 implements ResourceStorage
         ];
     }
 
-    public function has(string $identification) : bool
+    public function has(string $identification): bool
     {
         $id = $this->services->find($identification);
         return $id instanceof ResourceIdentification;
     }
 
-    public function getString(string $identification) : string
+    public function getString(string $identification): string
     {
         $id = $this->services->find($identification);
         if ($id instanceof ResourceIdentification) {
@@ -214,7 +212,7 @@ class ResourceStorage6 implements ResourceStorage
         return '';
     }
 
-    public function getPath(string $identification) : string
+    public function getPath(string $identification): string
     {
         $id = $this->services->find($identification);
         if ($id instanceof ResourceIdentification) {
@@ -223,7 +221,7 @@ class ResourceStorage6 implements ResourceStorage
         return '';
     }
 
-    public function fromString(string $content, string $mime_type = null) : string
+    public function fromString(string $content, string $mime_type = null): string
     {
         $id = $this->storage_handler->getIdentificationGenerator()->getUniqueResourceIdentification();
 

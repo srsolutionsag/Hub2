@@ -11,7 +11,7 @@ use ILIAS\MainMenu\Storage\Resource\Stakeholder\AbstractResourceStakeholder;
  */
 class Stakeholder6 extends AbstractResourceStakeholder
 {
-    public function getId() : string
+    public function getId(): string
     {
         return "hub2";
     }

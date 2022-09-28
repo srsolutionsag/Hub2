@@ -34,7 +34,7 @@ class ResourceStorage7 implements ResourceStorage
         $this->stakeholder = new Stakeholder7();
     }
 
-    public function fromUpload(UploadResult $u) : string
+    public function fromUpload(UploadResult $u): string
     {
         return $this->services->manage()->upload(
             $u,
@@ -42,7 +42,7 @@ class ResourceStorage7 implements ResourceStorage
         );
     }
 
-    public function fromPath(string $u, string $mime_type = null) : string
+    public function fromPath(string $u, string $mime_type = null): string
     {
         $stream = Streams::ofResource(fopen($u, "r"));
         return $this->services->manage()->stream(
@@ -51,7 +51,7 @@ class ResourceStorage7 implements ResourceStorage
         );
     }
 
-    public function getDataURL(string $identification) : string
+    public function getDataURL(string $identification): string
     {
         $identification = $this->services->manage()->find($identification);
         if ($identification === null) {
@@ -60,7 +60,7 @@ class ResourceStorage7 implements ResourceStorage
         return $this->services->consume()->src($identification)->getSrc();
     }
 
-    public function remove(string $identification) : bool
+    public function remove(string $identification): bool
     {
         $identification = $this->services->manage()->find($identification);
         if ($identification === null) {
@@ -70,7 +70,7 @@ class ResourceStorage7 implements ResourceStorage
         return true;
     }
 
-    public function getRevisionInfo(string $identification) : array
+    public function getRevisionInfo(string $identification): array
     {
         $identification = $this->services->manage()->find($identification);
         if ($identification === null) {
@@ -88,12 +88,12 @@ class ResourceStorage7 implements ResourceStorage
         ];
     }
 
-    public function has(string $identification) : bool
+    public function has(string $identification): bool
     {
         return $this->services->manage()->find($identification) instanceof ResourceIdentification;
     }
 
-    public function getString(string $identification) : string
+    public function getString(string $identification): string
     {
         $identification = $this->services->manage()->find($identification);
         if ($identification === null) {
@@ -102,7 +102,7 @@ class ResourceStorage7 implements ResourceStorage
         return $this->services->consume()->stream($identification)->getStream()->getContents();
     }
 
-    public function getPath(string $identification) : string
+    public function getPath(string $identification): string
     {
         $identification = $this->services->manage()->find($identification);
         if ($identification === null) {
@@ -111,7 +111,7 @@ class ResourceStorage7 implements ResourceStorage
         return $this->services->consume()->stream($identification)->getStream()->getMetadata('uri');
     }
 
-    public function fromString(string $content, string $mime_type = null) : string
+    public function fromString(string $content, string $mime_type = null): string
     {
         $stream = Streams::ofString($content);
         $identification = $this->services->manage()->stream(
