@@ -37,8 +37,7 @@ class OriginConfig implements IOriginConfig
             self::ACTIVE_PERIOD => '',
             self::LINKED_ORIGIN_ID => 0,
             self::ILIAS_FILE_REF_ID => 0,
-            self::FILE_DROP_USER => 'file_drop_user',
-            self::FILE_DROP_PASSWORD => 'file_drop_password',
+            self::FILE_DROP_AUTH_TOKEN => null
         ];
 
     /**

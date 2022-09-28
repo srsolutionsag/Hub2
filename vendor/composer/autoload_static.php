@@ -1061,6 +1061,7 @@ class ComposerStaticInita6ffae929a3aa50b2e4e37ffe4ad0880
         'srag\\Plugins\\Hub2\\FileDrop\\ResourceStorage\\ResourceStorage7' => __DIR__ . '/../..' . '/src/FileDrop/ResourceStorage/ResourceStorage7.php',
         'srag\\Plugins\\Hub2\\FileDrop\\ResourceStorage\\Stakeholder6' => __DIR__ . '/../..' . '/src/FileDrop/ResourceStorage/Stakeholder6.php',
         'srag\\Plugins\\Hub2\\FileDrop\\ResourceStorage\\Stakeholder7' => __DIR__ . '/../..' . '/src/FileDrop/ResourceStorage/Stakeholder7.php',
+        'srag\\Plugins\\Hub2\\FileDrop\\Token' => __DIR__ . '/../..' . '/src/FileDrop/Token.php',
         'srag\\Plugins\\Hub2\\Jobs\\CronNotifier' => __DIR__ . '/../..' . '/src/Jobs/CronNotifier.php',
         'srag\\Plugins\\Hub2\\Jobs\\Log\\DeleteOldLogsJob' => __DIR__ . '/../..' . '/src/Jobs/Log/DeleteOldLogsJob.php',
         'srag\\Plugins\\Hub2\\Jobs\\Notifier' => __DIR__ . '/../..' . '/src/Jobs/Notifier.php',

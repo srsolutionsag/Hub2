@@ -198,8 +198,7 @@ origin_form_field_class_name_info#:#Class file must exist in '%s'.\nAfter saving
 origin_form_field_conf_type_filedrop#:#File drop
 origin_form_field_conf_type_filedrop_info#:#Dropping File for this Origin using POST to this URL
 origin_form_field_conf_type_filedrop_url#:#File drop URL
-origin_form_field_conf_type_filedrop_auth_user#:#BasicAuth User
-origin_form_field_conf_type_filedrop_auth_pw#:#BasicAuth Password
+origin_form_field_conf_type_filedrop_auth_token#:#Bearer token
 origin_form_field_conf_type_filedrop_method#:#Method
 origin_form_field_conf_type_filedrop_rid#:#Resource ID
 origin_form_field_conf_type_filedrop_rid_nya#:#not yet available

@@ -32,6 +32,7 @@ use srag\Plugins\Hub2\Origin\Session\ISessionOrigin;
 use srag\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\FileDrop\Handler;
+use srag\Plugins\Hub2\FileDrop\Token;
 
 /**
  * Class OriginConfigFormGUI
@@ -49,6 +50,10 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     const POST_VAR_ADHOC = "adhoc";
     const POST_VAR_SORT = "sort";
     const PLUGIN_BASE = 'Customizing/global/plugins/Services/Cron/CronHook/Hub2';
+    /**
+     * @var Token
+     */
+    private $token;
     protected $parent_gui;
     /**
      * @var IOrigin
@@ -71,6 +76,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->lng =
         $this->origin = $origin;
         $this->originRepository = $originRepository;
+        $this->token = new Token();
         $this->setFormAction(self::dic()->ctrl()->getFormAction($this->parent_gui));
         $this->initForm();
         if (!$origin->getId()) {
@@ -316,19 +322,14 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 $rid->setValue($rid_link);
                 $filedrop->addSubItem($rid);
 
-                $auth_user = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_filedrop_auth_user'),
-                    $this->conf(IOriginConfig::FILE_DROP_USER)
+                $auth_token = new ilTextInputGUI(
+                    $this->translate('origin_form_field_conf_type_filedrop_auth_token'),
+                    $this->conf(IOriginConfig::FILE_DROP_AUTH_TOKEN)
                 );
-                $auth_user->setValue($this->origin->config()->get(IOriginConfig::FILE_DROP_USER));
-                $filedrop->addSubItem($auth_user);
-
-                $auth_pw = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_filedrop_auth_pw'),
-                    $this->conf(IOriginConfig::FILE_DROP_PASSWORD)
+                $auth_token->setValue(
+                    $this->origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN) ??$this->token->generate()
                 );
-                $auth_pw->setValue($this->origin->config()->get(IOriginConfig::FILE_DROP_PASSWORD));
-                $filedrop->addSubItem($auth_pw);
+                $filedrop->addSubItem($auth_token);
             }
             $ro->addOption($filedrop);
         }

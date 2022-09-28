@@ -959,6 +959,7 @@ return array(
     'srag\\Plugins\\Hub2\\FileDrop\\ResourceStorage\\ResourceStorage7' => $baseDir . '/src/FileDrop/ResourceStorage/ResourceStorage7.php',
     'srag\\Plugins\\Hub2\\FileDrop\\ResourceStorage\\Stakeholder6' => $baseDir . '/src/FileDrop/ResourceStorage/Stakeholder6.php',
     'srag\\Plugins\\Hub2\\FileDrop\\ResourceStorage\\Stakeholder7' => $baseDir . '/src/FileDrop/ResourceStorage/Stakeholder7.php',
+    'srag\\Plugins\\Hub2\\FileDrop\\Token' => $baseDir . '/src/FileDrop/Token.php',
     'srag\\Plugins\\Hub2\\Jobs\\CronNotifier' => $baseDir . '/src/Jobs/CronNotifier.php',
     'srag\\Plugins\\Hub2\\Jobs\\Log\\DeleteOldLogsJob' => $baseDir . '/src/Jobs/Log/DeleteOldLogsJob.php',
     'srag\\Plugins\\Hub2\\Jobs\\Notifier' => $baseDir . '/src/Jobs/Notifier.php',

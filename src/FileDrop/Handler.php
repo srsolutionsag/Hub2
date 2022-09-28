@@ -47,6 +47,10 @@ class Handler
      */
     private $stakeholder;
     /**
+     * @var Token
+     */
+    protected $token;
+    /**
      * @var string
      */
     protected $file_drop_container = '';
@@ -74,6 +78,7 @@ class Handler
         $f = new Factory();
         $this->storage = $f->storage();
         $this->stakeholder = $f->stakeholder();
+        $this->token = new Token();
     }
 
     public static function getURL(string $file_drop_container): string
@@ -128,15 +133,15 @@ class Handler
     protected function checkAuth(string $file_drop_token): bool
     {
         $origin = $this->getOriginByFileDropContainer($this->file_drop_container);
-        $user = $origin->config()->get(IOriginConfig::FILE_DROP_USER);
-        $password = $origin->config()->get(IOriginConfig::FILE_DROP_PASSWORD);
+        $auth_token = $origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN);
 
         $this->http->request()->getMethod() === self::METHOD || $this->throwException(
             new InternalError('Method not allowed')
         );
-        $this->http->request()->getServerParams()[self::PHP_AUTH_USER] === $user
-        || $this->throwException(new AccessDenied('Auth failed'));
-        $this->http->request()->getServerParams()[self::PHP_AUTH_PW] === $password
+
+        $request_token = $this->token->fromRequest($this->http->request());
+
+        $request_token === $auth_token
         || $this->throwException(new AccessDenied('Auth failed'));
 
         return true;
@@ -151,17 +156,19 @@ class Handler
     {
         switch (true) {
             case $e instanceof AccessDenied:
-                $this->http->saveResponse($this->http->response()->withStatus(403, $e->getMessage()));
+                $this->http->saveResponse(
+                    $this->http->response()->withStatus(401, $e->getMessage())->withHeader(
+                        'WWW-Authenticate', 'Basic realm="Hub2 FileDrop"'
+                    )
+                );
                 break;
             case $e instanceof NotFound:
                 $this->http->saveResponse($this->http->response()->withStatus(404, $e->getMessage()));
                 break;
-            case $e instanceof InternalError:
-                $this->http->saveResponse($this->http->response()->withStatus(500, $e->getMessage()));
-                break;
             case $e instanceof Success:
                 $this->http->saveResponse($this->http->response()->withStatus(200, $e->getMessage()));
                 break;
+            case $e instanceof InternalError:
             default:
                 $this->http->saveResponse($this->http->response()->withStatus(500, $e->getMessage()));
                 break;
