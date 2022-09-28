@@ -66,6 +66,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      */
     public function __construct($parent_gui, IOriginRepository $originRepository, IOrigin $origin)
     {
+        parent::__construct();
         $this->parent_gui = $parent_gui;
         $this->lng =
         $this->origin = $origin;
@@ -80,7 +81,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             $this->setTitle($this->translate('origin_form_title_edit'));
         }
         $this->addCommandButton(hub2ConfigOriginsGUI::CMD_CANCEL, $this->translate('button_cancel'));
-        parent::__construct();
     }
 
     /**
@@ -303,15 +303,17 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 $filedrop->addSubItem($url_info);
 
                 $method = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_method'));
-                $method->setValue( Handler::METHOD);
+                $method->setValue(Handler::METHOD);
                 $filedrop->addSubItem($method);
 
-                $rid = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_rid'));
-                $rid->setValue(
-                    $this->origin->config()->get(IOriginConfig::FILE_DROP_RID) ?? $this->translate(
+                $rid = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_rid'), "", true);
+                $resource_identification = $this->origin->config()->get(IOriginConfig::FILE_DROP_RID);
+                $rid_link = $resource_identification === null
+                    ? $this->translate(
                         'origin_form_field_conf_type_filedrop_rid_nya'
                     )
-                );
+                    : $this->getLinkToResource($resource_identification);
+                $rid->setValue($rid_link);
                 $filedrop->addSubItem($rid);
 
                 $auth_user = new ilTextInputGUI(
@@ -539,5 +541,11 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     protected function conf($postVar)
     {
         return 'config_' . $postVar;
+    }
+
+    private function getLinkToResource(string $resource_identification): string
+    {
+        $this->ctrl->setParameterByClass(hub2ConfigOriginsGUI::class, 'rid', $resource_identification);
+        return "<a href=\"{$this->ctrl->getLinkTarget($this->parent_gui, hub2ConfigOriginsGUI::CMD_DOWNLOAD_RID)}\">{$resource_identification}</a>";
     }
 }

@@ -18,6 +18,7 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginsTableGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
 use srag\Plugins\Hub2\Jobs\CronNotifier;
 use srag\DIC\Hub2\DICTrait;
+use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 
 /**
  * Class ConfigOriginsGUI
@@ -47,6 +48,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     const CMD_DEACTIVATE_ALL = 'deactivateAll';
     const CMD_ACTIVATE_ALL = 'activateAll';
     const CMD_TOGGLE = 'toggle';
+    const CMD_DOWNLOAD_RID = 'downloadFileDrop';
     /**
      * @var OriginSyncSummaryFactory
      */
@@ -161,6 +163,17 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
         self::output()->output($form);
     }
+
+    protected function downloadFileDrop():void {
+        $rid = $this->http->request()->getQueryParams()['rid'] ?? null;
+        if ($rid === null) {
+            $this->editOrigin();
+            return;
+        }
+        $storage = (new Factory())->storage();
+        $storage->download($rid);
+    }
+
 
     /**
      *

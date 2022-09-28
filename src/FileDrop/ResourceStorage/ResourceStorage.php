@@ -28,4 +28,6 @@ interface ResourceStorage
     public function getString(string $identification): string;
 
     public function getPath(string $identification): string;
+
+    public function download(string $identification): void;
 }

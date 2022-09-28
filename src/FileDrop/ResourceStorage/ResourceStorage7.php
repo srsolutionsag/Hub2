@@ -130,4 +130,12 @@ class ResourceStorage7 implements ResourceStorage
         return $identification;
     }
 
+    public function download(string $identification): void
+    {
+        $identification = $this->services->manage()->find($identification);
+        if ($identification === null) {
+            return;
+        }
+        $this->services->consume()->download($identification)->run();
+    }
 }
