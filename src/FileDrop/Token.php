@@ -25,8 +25,10 @@ use Psr\Http\Message\RequestInterface;
  */
 class Token
 {
-    const LENGTH = 16;
-    const BEARER = 'Bearer';
+    private const LENGTH = 16;
+    private const BEARER = 'Bearer';
+    private const SPACE = ' ';
+    private const HEADER_AUTHORIZATION = 'Authorization';
 
     public function generate(): string
     {
@@ -36,17 +38,17 @@ class Token
             $token = hash('sha256', uniqid((string) time(), true));
         }
 
-        return substr($token, 0, self::LENGTH);
+        return str_replace(self::SPACE, '', substr($token, 0, self::LENGTH));
     }
 
     public function fromRequest(RequestInterface $request): ?string
     {
-        $token = $request->getHeaderLine('Authorization');
+        $token = $request->getHeaderLine(self::HEADER_AUTHORIZATION);
         if (empty($token)) {
             return null;
         }
-        $slit_token = explode(':', str_replace(" ", "", $token));
-        if ($slit_token[0] !== self::BEARER || !isset($slit_token[1]) || $slit_token[1] == '') {
+        $slit_token = explode(self::SPACE, $token);
+        if ($slit_token[0] !== self::BEARER || !isset($slit_token[1]) || $slit_token[1] === '') {
             return null;
         }
 
