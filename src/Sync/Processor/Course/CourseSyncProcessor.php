@@ -13,18 +13,15 @@ use ilMDLanguageItem;
 use ilMimeMail;
 use ilObjCategory;
 use ilObjCourse;
-use ilRepUtil;
 use ilSession;
 use ilSoapFunctions;
 use srag\DIC\Hub2\Version\Version;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
-use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 use srag\Plugins\Hub2\Sync\Processor\DidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
@@ -32,6 +29,7 @@ use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CourseParentResolver;
+use srag\Plugins\Hub2\Sync\Processor\General\NewsSettingsSyncProcessor;
 
 /**
  * Class CourseSyncProcessor
@@ -41,10 +39,10 @@ use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CourseParentResolver;
  */
 class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProcessor
 {
-
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
+    use NewsSettingsSyncProcessor;
 
     /**
      * @var CourseProperties
@@ -199,14 +197,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         $this->setLanguage($dto, $ilObjCourse);
         $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
-
+    
+        $this->handleNewsSettings($dto, $ilObjCourse);
+        
         $ilObjCourse->update();
 
         $this->handleOrdering($dto, $ilObjCourse);
 
         $this->handleAppointementsColor($ilObjCourse, $dto);
     }
-
+    
     /**
      * @param IDataTransferObject $dto
      */
@@ -431,6 +431,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         if ($this->props->updateDTOProperty("enableSessionLimit")) {
             $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
+        }
+    
+        // News Settings
+        if ($this->props->updateDTOProperty("newsSettings")) {
+            $this->handleNewsSettings($dto, $ilObjCourse);
         }
     
         // move/put in tree
