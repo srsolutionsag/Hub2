@@ -194,6 +194,13 @@ origin_form_title_edit#:#Anbindung bearbeiten
 origin_form_field_active#:#Synchronisation aktiv
 origin_form_field_class_name#:#PHP-Klassenname
 origin_form_field_class_name_info#:#Die Klassendatei muss in '%s' vorhanden sein.\nNach dem Speichern versucht Hub, automatisch eine Vorlage für Sie an diesem Ort zu erstellen.
+origin_form_field_conf_type_filedrop#:#File drop
+origin_form_field_conf_type_filedrop_info#:#Eine Datei kann via POST an die folgende URL gesendet werden
+origin_form_field_conf_type_filedrop_url#:#File drop URL
+origin_form_field_conf_type_filedrop_auth_token#:#Bearer Token
+origin_form_field_conf_type_filedrop_method#:#Methode
+origin_form_field_conf_type_filedrop_rid#:#Resource ID
+origin_form_field_conf_type_filedrop_rid_nya#:#noch nicht verfügbar
 origin_form_field_conf_type#:#Verbindungs-Typ
 origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Datenbank
