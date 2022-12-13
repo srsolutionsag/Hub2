@@ -7,6 +7,7 @@ use ilHub2Plugin;
 use Serializable;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 
 /**
  * Class ObjectDTO
@@ -16,7 +17,7 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class DataTransferObject implements IDataTransferObject
 {
-
+    use HashCodeComputer;
     use DICTrait;
     use Hub2Trait;
 
@@ -107,7 +108,7 @@ abstract class DataTransferObject implements IDataTransferObject
         return array_filter(
             array_keys(get_class_vars(get_class($this))),
             function (string $property) : bool {
-                return ($property !== "should_deleted" && $property !== 'additionalData');
+                return ($property !== "should_deleted");
             }
         );
     }
@@ -188,30 +189,5 @@ abstract class DataTransferObject implements IDataTransferObject
             default:
                 $this->{$key} = $data[$key];
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function computeHashCode() : string
-    {
-        $hash = '';
-        foreach ($this->getData() as $property => $value) {
-            $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
-        }
-
-        if ($this instanceof IMetadataAwareDataTransferObject) {
-            foreach ($this->getMetaData() as $property => $value) {
-                $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
-            }
-        }
-
-        if ($this instanceof ITaxonomyAwareDataTransferObject) {
-            foreach ($this->getTaxonomies() as $property => $value) {
-                $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
-            }
-        }
-
-        return md5($hash); // TODO: Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
     }
 }

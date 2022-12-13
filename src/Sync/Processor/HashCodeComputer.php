@@ -1,0 +1,59 @@
+<?php
+
+namespace srag\Plugins\Hub2\Sync\Processor;
+
+use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
+use srag\Plugins\Hub2\Object\IObject;
+use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+
+/**
+ * Trait HashCodeComputer
+ *
+ * @author Fabian Schmid <fabian@sr.solutions>
+ */
+trait HashCodeComputer
+{
+    public function computeHashCode(): string
+    {
+        switch (true) {
+            case $this instanceof IDataTransferObject:
+                $data = $this->getData();
+                if ($this instanceof IMetadataAwareDataTransferObject) {
+                    $data = array_merge($data, $this->getMetadata());
+                }
+                if ($this instanceof ITaxonomyAwareDataTransferObject) {
+                    $data = array_merge($data, $this->getTaxonomy());
+                }
+                break;
+            case $this instanceof IObject:
+                $data = $this->data;
+                if (isset($this->meta_data)) {
+                    $data = array_merge($data, $this->meta_data);
+                }
+                if (isset($this->taxonomies)) {
+                    $data = array_merge($data, $this->taxonomies);
+                }
+                break;
+            default:
+                throw new \LogicException("Cannot compute hash code for " . get_class($this));
+                break;
+        }
+        $stringified_data = $this->flattenArray($data);
+
+        return md5($stringified_data);
+    }
+
+    private function flattenArray(array $array): string
+    {
+        $flat = '';
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $flat .= $this->flattenArray($value);
+            } else {
+                $flat .= $value;
+            }
+        }
+        return $flat;
+    }
+}

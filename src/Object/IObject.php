@@ -148,7 +148,7 @@ interface IObject
      * Note: Different objects MAY have identical hashcodes.
      * @return string
      */
-    public function computeHashCode();
+    public function computeHashCode() : string;
 
     /**
      * Get the current hash code of this object, e.g. the hash stored in db. May not be up to date!

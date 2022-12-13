@@ -17,6 +17,7 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\Node;
 use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 
 /**
  * Class ARObject
@@ -29,6 +30,7 @@ abstract class ARObject extends ActiveRecord implements IObject
 
     use DICTrait;
     use Hub2Trait;
+    use HashCodeComputer;
 
     /**
      * @abstract
@@ -444,31 +446,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->period = $period;
 
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function computeHashCode()
-    {
-        $hash = '';
-        foreach ($this->data as $property => $value) {
-            $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
-        }
-
-        if (isset($this->meta_data)) {
-            foreach ($this->meta_data as $property => $value) {
-                $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
-            }
-        }
-
-        if (isset($this->taxonomies)) {
-            foreach ($this->taxonomies as $property => $value) {
-                $hash .= (is_array($value)) ? implode('', $value) : (string) $value;
-            }
-        }
-
-        return md5($hash); // TODO: Use other not depcreated, safer hash algo (Like `hash("sha256", $hash)`). But this will cause update all origins!
     }
 
     /**

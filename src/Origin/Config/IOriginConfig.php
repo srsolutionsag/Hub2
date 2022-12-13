@@ -32,6 +32,9 @@ interface IOriginConfig
     const CONNECTION_TYPE_SERVER = 2;
     const CONNECTION_TYPE_EXTERNAL = 3;
     const CONNECTION_TYPE_ILIAS_FILE = 4;
+    const CONNECTION_TYPE_FILE_DROP = 5;
+    const FILE_DROP_AUTH_TOKEN = 'fd_auth_token';
+    const FILE_DROP_RID = 'fd_rid';
     // Prefix for keys that storing custom config values
     const CUSTOM_PREFIX = 'custom_';
     const ILIAS_FILE_REF_ID = "ilias_file_ref_id";
