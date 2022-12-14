@@ -6,13 +6,13 @@ use srag\Plugins\Hub2\Object\IDidacticTemplateAwareObject;
 use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
-use srag\Plugins\Hub2\Object\IDependentSettings;
+use srag\Plugins\Hub2\Object\General\IDependentSettings;
 use Exception;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class NewsSettings implements IDependentSettings
+class NewsSettings extends BaseDependentSetting implements IDependentSettings
 {
     public const ACCESS_USERS = 'users';
     public const ACCESS_PUBLIC = 'public';
@@ -57,11 +57,6 @@ class NewsSettings implements IDependentSettings
      */
     protected $show_news_after = null;
     
-    /**
-     * @var array
-     */
-    private $data = [];
-    
     public function __construct(
         bool $activate_news = true,
         bool $activate_news_block = true,
@@ -82,15 +77,20 @@ class NewsSettings implements IDependentSettings
         $this->setShowNewsAfter($show_news_after);
     }
     
+    protected function set(string $key, $value) : BaseDependentSetting
+    {
+        $this->{$key} = $value;
+        return parent::set($key, $value);
+    }
+    
     public function isActivateNews() : bool
     {
         return $this->activate_news;
     }
     
-    public function setActivateNews(bool $activate_news) : CourseNewsSettings
+    public function setActivateNews(bool $activate_news) : NewsSettings
     {
-        $this->activate_news = $this->data[self::F_ACTIVATE_NEWS] = $activate_news;
-        return $this;
+        return $this->set(self::F_ACTIVATE_NEWS, $activate_news);
     }
     
     public function isActivateNewsBlock() : bool
@@ -98,10 +98,9 @@ class NewsSettings implements IDependentSettings
         return $this->activate_news_block;
     }
     
-    public function setActivateNewsBlock(bool $activate_news_block) : CourseNewsSettings
+    public function setActivateNewsBlock(bool $activate_news_block) : NewsSettings
     {
-        $this->activate_news_block = $this->data[self::F_ACTIVATE_NEWS_BLOCK] = $activate_news_block;
-        return $this;
+        return $this->set(self::F_ACTIVATE_NEWS_BLOCK, $activate_news_block);
     }
     
     public function getNewsBlockDefaultAccess() : string
@@ -109,10 +108,9 @@ class NewsSettings implements IDependentSettings
         return $this->news_block_default_access;
     }
     
-    public function setNewsBlockDefaultAccess(string $news_block_default_access) : CourseNewsSettings
+    public function setNewsBlockDefaultAccess(string $news_block_default_access) : NewsSettings
     {
-        $this->news_block_default_access = $this->data[self::F_NEWS_BLOCK_DEFAULT_ACCESS] = $news_block_default_access;
-        return $this;
+        return $this->set(self::F_NEWS_BLOCK_DEFAULT_ACCESS, $news_block_default_access);
     }
     
     public function isActivateNewsBlockRss() : bool
@@ -120,10 +118,9 @@ class NewsSettings implements IDependentSettings
         return $this->activate_news_block_rss;
     }
     
-    public function setActivateNewsBlockRss(bool $activate_news_block_rss) : CourseNewsSettings
+    public function setActivateNewsBlockRss(bool $activate_news_block_rss) : NewsSettings
     {
-        $this->activate_news_block_rss = $this->data[self::F_ACTIVATE_NEWS_BLOCK_RSS] = $activate_news_block_rss;
-        return $this;
+        return $this->set(self::F_ACTIVATE_NEWS_BLOCK_RSS, $activate_news_block_rss);
     }
     
     public function isActivateNewsTimeline() : bool
@@ -131,10 +128,9 @@ class NewsSettings implements IDependentSettings
         return $this->activate_news_timeline;
     }
     
-    public function setActivateNewsTimeline(bool $activate_news_timeline) : CourseNewsSettings
+    public function setActivateNewsTimeline(bool $activate_news_timeline) : NewsSettings
     {
-        $this->activate_news_timeline = $this->data[self::F_ACTIVATE_NEWS_TIMELINE] = $activate_news_timeline;
-        return $this;
+        return $this->set(self::F_ACTIVATE_NEWS_TIMELINE, $activate_news_timeline);
     }
     
     public function isActivateNewsTimelineAutoEntries() : bool
@@ -142,10 +138,9 @@ class NewsSettings implements IDependentSettings
         return $this->activate_news_timeline_auto_entries;
     }
     
-    public function setActivateNewsTimelineAutoEntries(bool $activate_news_timeline_auto_entries) : CourseNewsSettings
+    public function setActivateNewsTimelineAutoEntries(bool $activate_news_timeline_auto_entries) : NewsSettings
     {
-        $this->activate_news_timeline_auto_entries = $this->data[self::F_ACTIVATE_NEWS_TIMELINE_AUTO_ENTRIES] = $activate_news_timeline_auto_entries;
-        return $this;
+        return $this->set(self::F_ACTIVATE_NEWS_TIMELINE_AUTO_ENTRIES, $activate_news_timeline_auto_entries);
     }
     
     public function isActivateNewsTimelineLandingPage() : bool
@@ -153,10 +148,9 @@ class NewsSettings implements IDependentSettings
         return $this->activate_news_timeline_landing_page;
     }
     
-    public function setActivateNewsTimelineLandingPage(bool $activate_news_timeline_landing_page) : CourseNewsSettings
+    public function setActivateNewsTimelineLandingPage(bool $activate_news_timeline_landing_page) : NewsSettings
     {
-        $this->activate_news_timeline_landing_page = $this->data[self::F_ACTIVATE_NEWS_TIMELINE_LANDING_PAGE] = $activate_news_timeline_landing_page;
-        return $this;
+        return $this->set(self::F_ACTIVATE_NEWS_TIMELINE_LANDING_PAGE, $activate_news_timeline_landing_page);
     }
     
     public function getShowNewsAfter() : ?\DateTimeImmutable
@@ -164,10 +158,9 @@ class NewsSettings implements IDependentSettings
         return $this->show_news_after;
     }
     
-    public function setShowNewsAfter(?\DateTimeImmutable $show_news_after) : CourseNewsSettings
+    public function setShowNewsAfter(?\DateTimeImmutable $show_news_after) : NewsSettings
     {
-        $this->show_news_after = $this->data[self::F_SHOW_NEWS_AFTER] = $show_news_after;
-        return $this;
+        return $this->set(self::F_SHOW_NEWS_AFTER, $show_news_after);
     }
     
     public function __toArray() : array
@@ -190,14 +183,34 @@ class NewsSettings implements IDependentSettings
         $this->__fromArray(unserialize($data));
     }
     
-    public function __toString():string
+    public function __toString() : string
     {
         return $this->serialize();
     }
-  
     
     public function __fromString(string $data) : void
     {
         $this->unserialize($data);
     }
+    
+    public function offsetExists($offset)
+    {
+        return $this->data[$offset] ?? false;
+    }
+    
+    public function offsetGet($offset)
+    {
+        return $this->data[$offset] ?? null;
+    }
+    
+    public function offsetSet($offset, $value)
+    {
+        $this->data[$offset] = $value;
+    }
+    
+    public function offsetUnset($offset)
+    {
+        unset($this->data[$offset]);
+    }
+    
 }

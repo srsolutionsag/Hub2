@@ -6,6 +6,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\General\IDependentSettings;
 
 /**
  * Trait HashCodeComputer
@@ -23,7 +24,7 @@ trait HashCodeComputer
                     $data = array_merge($data, $this->getMetadata());
                 }
                 if ($this instanceof ITaxonomyAwareDataTransferObject) {
-                    $data = array_merge($data, $this->getTaxonomy());
+                    $data = array_merge($data, $this->getTaxonomies());
                 }
                 break;
             case $this instanceof IObject:
@@ -48,6 +49,9 @@ trait HashCodeComputer
     {
         $flat = '';
         foreach ($array as $key => $value) {
+            if ($value instanceof IDependentSettings) {
+                $value = $value->__toArray();
+            }
             if (is_array($value)) {
                 $flat .= $this->flattenArray($value);
             } else {

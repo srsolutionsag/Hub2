@@ -1,11 +1,11 @@
 <?php
 
-namespace srag\Plugins\Hub2\Object;
+namespace srag\Plugins\Hub2\Object\General;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-interface IDependentSettings extends \Serializable
+interface IDependentSettings extends \Serializable, \ArrayAccess, \JsonSerializable
 {
     public function __toArray() : array;
     
