@@ -130,6 +130,11 @@ class ResourceStorage7 implements ResourceStorage
         return $identification;
     }
 
+    public function replaceFromString(string $rid_string, string $content, string $mime_type = null): string
+    {
+        // TODO: Implement replaceFromString() method.
+    }
+
     public function download(string $identification): void
     {
         $identification = $this->services->manage()->find($identification);

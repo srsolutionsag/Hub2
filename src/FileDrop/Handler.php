@@ -107,20 +107,39 @@ class Handler
     protected function processFiles(): void
     {
         $origin = $this->getOriginByFileDropContainer($this->file_drop_container);
-        $this->upload->process();
-        $this->uploaded_files = $this->upload->getResults();
-
-        if (count($this->uploaded_files) > 1) {
-            throw new InternalError('currently only one file per drop is supported');
-        }
-
-        $result = end($this->uploaded_files);
-
-        if ($result->getStatus()->getCode() !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
-            throw new InternalError('Upload failed: ' . $result->getStatus()->getMessage());
-        }
         $current_rid = $origin->config()->get(IOriginConfig::FILE_DROP_RID);
-        $rid = $this->storage->replaceUpload($result, $current_rid ?? '');
+
+        // We accept multipart/form-data or file-content directly
+        $header_line = $this->http->request()->getHeaderLine('Content-Type');
+        $content_type = strtolower(strtok($header_line, ';'));
+        switch ($content_type) {
+            case 'multipart/form-data':
+                $this->upload->process();
+                $this->uploaded_files = $this->upload->getResults();
+                if (count($this->uploaded_files) > 1) {
+                    throw new InternalError('currently only one file per drop is supported');
+                }
+
+                $result = end($this->uploaded_files);
+
+                if (null === $result || $result->getStatus()->getCode() !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
+                    $message = $result === null ? 'no file uploaded' : $result->getStatus()->getMessage();
+                    throw new InternalError('Upload failed: ' . $message);
+                }
+                $rid = $this->storage->replaceUpload($result, $current_rid ?? '');
+
+                break;
+            default:
+                $file_content = $this->http->request()->getBody()->getContents();
+                if (!$file_content) {
+                    throw new InternalError('no file uploaded');
+                }
+
+                $rid = $this->storage->replaceFromString($current_rid ?? '', $file_content);
+                break;
+        }
+
+
         $origin->config()->setData([IOriginConfig::FILE_DROP_RID => $rid]);
         $origin->store();
         throw new Success('File uploaded');
