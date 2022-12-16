@@ -42,6 +42,22 @@ class ResourceStorage7 implements ResourceStorage
         );
     }
 
+    public function replaceUpload(UploadResult $u, string $rid_string): string
+    {
+        $identification = $this->services->manage()->find($rid_string);
+        if ($identification === null) {
+            return $this->fromUpload($u);
+        }
+        $this->services->manage()->appendNewRevision(
+            $identification,
+            $u,
+            $this->stakeholder
+        );
+
+        return $rid_string;
+    }
+
+
     public function fromPath(string $u, string $mime_type = null): string
     {
         $stream = Streams::ofResource(fopen($u, "r"));
@@ -132,7 +148,27 @@ class ResourceStorage7 implements ResourceStorage
 
     public function replaceFromString(string $rid_string, string $content, string $mime_type = null): string
     {
-        // TODO: Implement replaceFromString() method.
+        $identification = $this->services->manage()->find($rid_string);
+        if ($identification === null) {
+            return $this->fromString($content, $mime_type);
+        }
+
+        $stream = Streams::ofString($content);
+        $this->services->manage()->appendNewRevisionFromStream(
+            $identification,
+            $stream,
+            $this->stakeholder
+        );
+
+        if ($mime_type !== null) {
+            $revision = $this->services->manage()->getCurrentRevision($identification);
+            $information = $revision->getInformation();
+            $information->setMimeType($mime_type);
+            $revision->setInformation($information);
+            $this->services->manage()->updateRevision($revision);
+        }
+
+        return $rid_string;
     }
 
     public function download(string $identification): void
