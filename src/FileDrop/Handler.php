@@ -135,7 +135,7 @@ class Handler
                     throw new InternalError('no file uploaded');
                 }
 
-                $rid = $this->storage->replaceFromString($current_rid ?? '', $file_content);
+                $rid = $this->storage->replaceFromString($current_rid ?? '', $file_content, $content_type);
                 break;
         }
 
