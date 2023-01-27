@@ -1,10 +1,17 @@
 # Changelog
 
+## [3.1.0]
+- Support for OpenID Connect Accounts
+- Support for Second E-Mails in User Accounts
+- News-Settings for Courses
+- File-Drop as default Connection Type
+- CSV-Base-origins with Generators for faster performance and better memory management
+
 ## [3.0.2]
 - Fixed critical but which caused course members to stay in courses in status OUTDATED
 
-## [x]
-- ILIAS 6 support
+## [3.0.0]
+- ILIAS 6/7 support
 - Remove ILIAS 5.3 support
 
 ## [2.4.0]

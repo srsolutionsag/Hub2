@@ -12,6 +12,8 @@ With HUB2, sr.solutions offers a simple solution for one-way synchronisation:
 - Organisational units and positions
 - ...
 
+More information can be found [here](https://sr.solutions/hub2).
+
 ## Installation
 
 ### Install Hub2 plugin
@@ -20,7 +22,7 @@ Start at your ILIAS root directory
 ```bash
 mkdir -p Customizing/global/plugins/Services/Cron/CronHook
 cd Customizing/global/plugins/Services/Cron/CronHook
-git clone https://github.com/studer-raimann/Hub2.git Hub2
+git clone https://github.com/srsolutionsag/Hub2.git Hub2
 ```
 ### Requirements
 * ILIAS 5.4 to ILIAS 7
