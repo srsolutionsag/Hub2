@@ -51,6 +51,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
             self::AUTH_MODE_LDAP_3,
             self::AUTH_MODE_LDAP_4,
             self::AUTH_MODE_LDAP_5,
+            self::AUTH_MODE_OIDC
         ];
     /**
      * @var string
