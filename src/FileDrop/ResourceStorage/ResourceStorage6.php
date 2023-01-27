@@ -78,6 +78,24 @@ class ResourceStorage6 implements ResourceStorage
         return $i->serialize();
     }
 
+    private function getResourceBuilder(): ResourceBuilder
+    {
+        $r = new \ReflectionClass($this->services);
+        $p = $r->getProperty('resource_builder');
+        $p->setAccessible(true);
+        /** @var $resource_builder ResourceBuilder */
+        return $p->getValue($this->services);
+    }
+
+    private function getRevisionRepository(ResourceBuilder $resource_builder): RevisionRepository
+    {
+        $r = new \ReflectionClass($resource_builder);
+        $p = $r->getProperty('revision_repository');
+        $p->setAccessible(true);
+        /** @var $revision_repository RevisionRepository */
+        return $p->getValue($resource_builder);
+    }
+
     public function replaceUpload(UploadResult $u, string $rid_string): string
     {
         $rid = $this->services->find($rid_string);
@@ -85,18 +103,9 @@ class ResourceStorage6 implements ResourceStorage
             return $this->fromUpload($u);
         }
         // Get resource builder
-        $r = new \ReflectionClass($this->services);
-        $p = $r->getProperty('resource_builder');
-        $p->setAccessible(true);
-        /** @var $resource_builder ResourceBuilder */
-        $resource_builder = $p->getValue($this->services);
+        $resource_builder = $this->getResourceBuilder();
         // Get Revision Repo
-        $r = new \ReflectionClass($resource_builder);
-        $p = $r->getProperty('revision_repository');
-        $p->setAccessible(true);
-        /** @var $revision_repository RevisionRepository */
-        $revision_repository = $p->getValue($resource_builder);
-
+        $revision_repository = $this->getRevisionRepository($resource_builder);
         // Get Resource
         $resource = $resource_builder->get($rid);
 
@@ -113,6 +122,50 @@ class ResourceStorage6 implements ResourceStorage
         // Store revision
         $resource->addRevision($revision);
         $resource_builder->store($resource);
+
+        return $resource->getIdentification()->serialize();
+    }
+
+    public function replaceFromString(string $rid_string, string $content, string $mime_type = null): string
+    {
+        $rid = $this->services->find($rid_string);
+        if ($rid === null) {
+            return $this->fromString($content, $mime_type);
+        }
+        // Get resource builder
+        $resource_builder = $this->getResourceBuilder();
+        // Get Revision Repo
+        $revision_repository = $this->getRevisionRepository($resource_builder);
+        // Get Resource
+        $resource = $resource_builder->get($rid);
+
+        // Create New Revision
+        $rev = new FileRevision($rid);
+        $version_number = $resource->getCurrentRevision()->getVersionNumber();
+        $new_version_number = $version_number + 1;
+        $rev->setVersionNumber($new_version_number);
+
+        $info = $rev->getInformation();
+        $info->setTitle('import');
+        $info->setMimeType($mime_type ?? 'application/octet-stream');
+        $info->setSize(strlen($content));
+        $info->setCreationDate(new \DateTimeImmutable());
+        $rev->setInformation($info);
+
+        // Store revision
+        $resource->addRevision($rev);
+        $resource_builder->store($resource);
+
+        $directory = rtrim(CLIENT_DATA_DIR, "/") . "/" . FileSystemStorageHandler::BASE . '/' . str_replace(
+                "-",
+                "/",
+                $rid->serialize()
+            ) . '/' . $new_version_number . '/';
+        $path = $directory . FileSystemStorageHandler::DATA;
+        if (!@mkdir($directory, 0777, true) && !is_dir($directory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
+        }
+        file_put_contents($path, $content);
 
         return $resource->getIdentification()->serialize();
     }
@@ -255,7 +308,6 @@ class ResourceStorage6 implements ResourceStorage
 
         return $id->serialize();
     }
-
 
     public function download(string $identification): void
     {

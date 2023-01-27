@@ -19,6 +19,8 @@ interface ResourceStorage
 
     public function fromString(string $content, string $mime_type = null): string;
 
+    public function replaceFromString(string $rid_string, string $content, string $mime_type = null): string;
+
     public function remove(string $identification): bool;
 
     public function getRevisionInfo(string $identification): array;
