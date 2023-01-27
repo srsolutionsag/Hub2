@@ -92,6 +92,10 @@ class UserDTO extends DataTransferObject implements IUserDTO
     /**
      * @var string
      */
+    protected $secondEmail;
+    /**
+     * @var string
+     */
     protected $emailPassword;
     /**
      * @var string
@@ -306,6 +310,25 @@ class UserDTO extends DataTransferObject implements IUserDTO
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getSecondEmail()
+    {
+        return $this->secondEmail;
+    }
+
+    /**
+     * @param string $secondEmail
+     * @return UserDTO
+     */
+    public function setSecondEmail($secondEmail)
+    {
+        $this->secondEmail = $secondEmail;
+        return $this;
+    }
+
 
     /**
      * @return string
