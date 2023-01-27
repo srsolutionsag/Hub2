@@ -6,6 +6,7 @@
 - News-Settings for Courses
 - File-Drop as default Connection Type
 - CSV-Base-origins with Generators for faster performance and better memory management
+- Recursive Didactic Templates
 
 ## [3.0.2]
 - Fixed critical but which caused course members to stay in courses in status OUTDATED
