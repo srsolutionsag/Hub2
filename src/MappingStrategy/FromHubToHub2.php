@@ -11,6 +11,10 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 class FromHubToHub2 extends AMappingStrategy implements IMappingStrategy
 {
     /**
+     * @var bool
+     */
+    protected $hub1_table_exists = false;
+    /**
      * @var \ilDBInterface
      */
     protected $database;
@@ -18,7 +22,7 @@ class FromHubToHub2 extends AMappingStrategy implements IMappingStrategy
      * @var int
      */
     protected $former_origin_id;
-    
+
     /**
      * @param \ilDBInterface $database
      * @param int            $former_origin_id
@@ -27,10 +31,14 @@ class FromHubToHub2 extends AMappingStrategy implements IMappingStrategy
     {
         $this->database = $database;
         $this->former_origin_id = $former_origin_id;
+        $this->hub1_table_exists = (bool) $this->database->tableExists('sr_hub_sync_history');
     }
-    
+
     public function map(IDataTransferObject $dto) : int
     {
+        if (!$this->hub1_table_exists) {
+            return 0;
+        }
         $q = "SELECT ilias_id, ext_id FROM sr_hub_sync_history WHERE ext_id = %s AND sr_hub_origin_id = %s";
         $r = $this->database->queryF(
             $q,
