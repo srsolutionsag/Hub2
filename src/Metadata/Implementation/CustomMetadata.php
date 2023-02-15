@@ -46,6 +46,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
         switch (true) {
             case ($adt instanceof ilADTLocalizedText):
                 $adt->setTranslation($this->getMetadata()->getLanguageCode(), $value);
+                $adt->setText($value);
                 break;
             case ($adt instanceof ilADTText):
                 $adt->setText($value);
