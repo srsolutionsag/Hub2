@@ -322,12 +322,19 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 $rid->setValue($rid_link);
                 $filedrop->addSubItem($rid);
 
+                if ($resource_identification !== null) {
+                    // new fileupload-field for manual upload
+                    $file = new \ilFileInputGUI($this->translate('origin_form_field_conf_type_filedrop_file'), 'manual_file_drop');
+                    $file->setRequired(false);
+                    $filedrop->addSubItem($file);
+                }
+
                 $auth_token = new ilTextInputGUI(
                     $this->translate('origin_form_field_conf_type_filedrop_auth_token'),
                     $this->conf(IOriginConfig::FILE_DROP_AUTH_TOKEN)
                 );
                 $auth_token->setValue(
-                    $this->origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN) ??$this->token->generate()
+                    $this->origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN) ?? $this->token->generate()
                 );
                 $filedrop->addSubItem($auth_token);
             }

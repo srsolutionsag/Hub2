@@ -19,6 +19,7 @@ use srag\Plugins\Hub2\UI\OriginFormFactory;
 use srag\Plugins\Hub2\Jobs\CronNotifier;
 use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 
 /**
  * Class ConfigOriginsGUI
@@ -224,6 +225,25 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
                     $propertyData[$key] = $form->getInput($item->getPostVar());
                 }
             }
+
+            // Manual File Drops
+            global $DIC;
+            $upload_service = $DIC->upload();
+            $upload_service->process();
+
+            $file_drop = $form->getInput('manual_file_drop');
+            if (
+                $upload_service->hasUploads()
+                && ($rid = $origin->config()->get(IOriginConfig::FILE_DROP_RID)) !== null
+            ) {
+                $uploads = $upload_service->getResults();
+                $upload = $uploads[$file_drop['tmp_name']] ?? null;
+                if ($upload !== null) {
+                    $storage = (new Factory())->storage();
+                    $storage->replaceUpload($upload, $rid);
+                }
+            }
+
             $origin->config()->setData($configData);
             $origin->properties()->setData($propertyData);
             $origin->store();
