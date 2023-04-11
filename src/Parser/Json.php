@@ -32,6 +32,10 @@ class Json
      * @var array
      */
     private $columns_mapping = [];
+    /**
+     * @var array
+     */
+    private $filters = [];
 
     /**
      *
@@ -92,21 +96,6 @@ class Json
         });
     }
 
-    /**
-     * @return string
-     */
-    protected function getEnclosure(): string
-    {
-        return $this->enclosure;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSeparator(): string
-    {
-        return $this->separator;
-    }
 
     protected function removeBOM(string $text): string
     {
