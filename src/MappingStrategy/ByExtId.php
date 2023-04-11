@@ -68,7 +68,7 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
                 break;
         }
 
-        $result = self::dic()->database()->queryF('SELECT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s',
+        $result = self::dic()->database()->queryF('SELECT DISTINCT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s',
             [ilDBConstants::T_TEXT], [$dto->getExtId()]);
 
         if ($result->rowCount() > 0) {
