@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.0]
+- Improvement to reassign Didactic Templates recursively
+- Fix in FromHubToHub2 MappingStrategy: Use only id Hub (1) table is avaliable
+- Upload Files to FileDrop manually
+- JsonParser
+
 ## [3.1.0]
 - Support for OpenID Connect Accounts
 - Support for Second E-Mails in User Accounts
