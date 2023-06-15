@@ -7,6 +7,7 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\INewsSettingsAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\ILearningProgressSettingsAwareDataTransferObject;
 
 /**
  * Interface ICourseDTO
@@ -14,7 +15,12 @@ use srag\Plugins\Hub2\Object\DTO\INewsSettingsAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICourseDTO extends IDataTransferObject, ITaxonomyAndMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject, INewsSettingsAwareDataTransferObject
+interface ICourseDTO extends IDataTransferObject,
+    ITaxonomyAndMetadataAwareDataTransferObject,
+    IMappingStrategyAwareDataTransferObject,
+    IDidacticTemplateAwareDataTransferObject,
+    INewsSettingsAwareDataTransferObject,
+    ILearningProgressSettingsAwareDataTransferObject
 {
 
     // @see ilCourseConstants

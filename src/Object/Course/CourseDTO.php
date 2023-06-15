@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Object\DTO\DidacticTemplateAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\LanguageCheck;
 use srag\Plugins\Hub2\Object\DTO\NewsSettingsAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\LearningProgressSettingsAwareDataTransferObject;
 
 /**
  * Class CourseDTO
@@ -24,6 +25,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     use MappingStrategyAwareDataTransferObject;
     use DidacticTemplateAwareDataTransferObject;
     use NewsSettingsAwareDataTransferObject;
+    use LearningProgressSettingsAwareDataTransferObject;
     use LanguageCheck;
 
     /**
@@ -827,5 +829,4 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
 
         return $this;
     }
-    
 }

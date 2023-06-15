@@ -30,6 +30,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CourseParentResolver;
 use srag\Plugins\Hub2\Sync\Processor\General\NewsSettingsSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\General\LearningProgressSettingsSyncProcessor;
 
 /**
  * Class CourseSyncProcessor
@@ -43,6 +44,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
     use NewsSettingsSyncProcessor;
+    use LearningProgressSettingsSyncProcessor;
 
     /**
      * @var CourseProperties
@@ -200,6 +202,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     
         $this->handleNewsSettings($dto, $ilObjCourse);
         
+        $this->handleLPSettings($dto, $ilObjCourse);
+        
         $ilObjCourse->update();
 
         $this->handleOrdering($dto, $ilObjCourse);
@@ -250,7 +254,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             //            else if (self::LINK_IF_COPY_NOT_POSSIBLE && self::dic()->objDefinition()->allowLink($node['type'])) {
             //                $options[$node['ref_id']] = ['type' => ilCopyWizardOptions::COPY_WIZARD_LINK];
             //            }
-
         }
 
         return $options;
@@ -339,8 +342,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $mail->From($sender);
         $mail->To($dto->getNotificationEmails());
         $mail->Subject($this->props->get(CourseProperties::CREATE_NOTIFICATION_SUBJECT));
-        $mail->Body($this->replaceBodyTextForMail($this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY),
-            $ilObjCourse));
+        $mail->Body($this->replaceBodyTextForMail(
+            $this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY),
+            $ilObjCourse
+        ));
         $mail->Send();
     }
 
@@ -436,6 +441,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         // News Settings
         if ($this->props->updateDTOProperty("newsSettings")) {
             $this->handleNewsSettings($dto, $ilObjCourse);
+        }
+        
+        // LP Settings
+        if ($this->props->updateDTOProperty("learningProgressSettings")) {
+            $this->handleLPSettings($dto, $ilObjCourse);
         }
     
         // move/put in tree
@@ -583,13 +593,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
         // No category with the given title found, create it!
         $import_id = self::IMPORT_PREFIX . implode(
-                '_', [
+            '_',
+            [
                     $this->origin->getId(),
                     $parent_ref_id,
                     'depth',
                     $level,
                 ]
-            );
+        );
         $ilObjCategory = new ilObjCategory();
         $ilObjCategory->setTitle($title);
         $ilObjCategory->setImportId($import_id);

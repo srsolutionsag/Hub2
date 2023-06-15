@@ -77,5 +77,4 @@ abstract class BaseDependentSetting implements IDependentSettings
     {
         return $this->__toArray();
     }
-    
 }
