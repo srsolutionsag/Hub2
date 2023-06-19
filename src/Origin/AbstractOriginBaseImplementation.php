@@ -166,4 +166,10 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     {
         // TODO: Implement handleAllObjects() method.
     }
+
+    public function canDroppedFileContentBestored(string $content): bool
+    {
+        return true;
+    }
+
 }
