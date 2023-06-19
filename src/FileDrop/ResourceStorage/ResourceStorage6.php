@@ -309,7 +309,7 @@ class ResourceStorage6 implements ResourceStorage
         return $id->serialize();
     }
 
-    public function download(string $identification): void
+    public function download(string $identification, string $filename = ''): void
     {
         $id = $this->services->find($identification);
         if ($id instanceof ResourceIdentification) {

@@ -166,13 +166,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     }
 
     protected function downloadFileDrop():void {
+        $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
         $rid = $this->http->request()->getQueryParams()['rid'] ?? null;
         if ($rid === null) {
             $this->editOrigin();
             return;
         }
         $storage = (new Factory())->storage();
-        $storage->download($rid);
+        $storage->download($rid, $origin->getTitle());
     }
 
 

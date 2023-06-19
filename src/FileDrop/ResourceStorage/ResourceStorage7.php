@@ -48,7 +48,7 @@ class ResourceStorage7 implements ResourceStorage
         if ($identification === null) {
             return $this->fromUpload($u);
         }
-        $this->services->manage()->appendNewRevision(
+        $this->services->manage()->replaceWithUpload(
             $identification,
             $u,
             $this->stakeholder
@@ -154,7 +154,7 @@ class ResourceStorage7 implements ResourceStorage
         }
 
         $stream = Streams::ofString($content);
-        $this->services->manage()->appendNewRevisionFromStream(
+        $this->services->manage()->replaceWithStream(
             $identification,
             $stream,
             $this->stakeholder
@@ -171,12 +171,16 @@ class ResourceStorage7 implements ResourceStorage
         return $rid_string;
     }
 
-    public function download(string $identification): void
+    public function download(string $identification, string $filename = ''): void
     {
         $identification = $this->services->manage()->find($identification);
         if ($identification === null) {
             return;
         }
-        $this->services->consume()->download($identification)->run();
+        $download_consumer = $this->services->consume()->download($identification);
+        if ($filename !== '') {
+            $download_consumer = $download_consumer->overrideFileName($filename);
+        }
+        $download_consumer->run();
     }
 }
