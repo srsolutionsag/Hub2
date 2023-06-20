@@ -241,11 +241,13 @@ class ResourceStorage6 implements ResourceStorage
             $title = $info->getTitle();
             $size = $info->getSize();
             $mime_type = $info->getMimeType();
+            $creation_date = $info->getCreationDate()->format(DATE_ATOM);
         }
         return [
-            'title' => $title,
-            'size' => $size,
-            'mime_type' => $mime_type
+            'title' => $title ?? '',
+            'size' => $size ?? 0,
+            'mime_type' => $mime_type ?? '',
+            'creation_date' => $creation_date ?? ''
         ];
     }
 

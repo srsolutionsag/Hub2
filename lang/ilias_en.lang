@@ -202,6 +202,8 @@ origin_form_field_conf_type_filedrop_auth_token#:#Bearer token
 origin_form_field_conf_type_filedrop_method#:#Method
 origin_form_field_conf_type_filedrop_rid#:#Resource ID
 origin_form_field_conf_type_filedrop_rid_nya#:#not yet available
+origin_form_field_conf_type_filedrop_latest#:#Last stored delivery
+origin_form_field_conf_type_filedrop_file#:#Manual Upload
 origin_form_field_conf_type#:#Connection type
 origin_form_field_conf_type_db#:#Server
 origin_form_field_conf_type_db_database#:#Database
