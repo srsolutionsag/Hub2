@@ -87,7 +87,9 @@ class ObjectLinkFactory
      */
     public function findByObject(ARObject $object) : IObjectLink
     {
-        if ($object->getILIASId()) {
+        $ilias_id = $object->getILIASId();
+
+        if ($ilias_id) {
             switch (true) {
                 case ($object instanceof ARCourseMembership):
                     return new CourseMembershipLink($object);

@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.1]
+- Fixed Shortlinks to Courses if not logged in
+- Download FileDrops with Origin Name
+- Check File-Content of File-Drops before storing
+
 ## [3.2.0]
 - Improvement to reassign Didactic Templates recursively
 - Fix in FromHubToHub2 MappingStrategy: Use only id Hub (1) table is avaliable
