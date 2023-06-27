@@ -31,5 +31,5 @@ interface ResourceStorage
 
     public function getPath(string $identification): string;
 
-    public function download(string $identification): void;
+    public function download(string $identification, string $filename = ''): void;
 }

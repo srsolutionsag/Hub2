@@ -33,6 +33,7 @@ use srag\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\FileDrop\Handler;
 use srag\Plugins\Hub2\FileDrop\Token;
+use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 
 /**
  * Class OriginConfigFormGUI
@@ -54,6 +55,11 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      * @var Token
      */
     private $token;
+    /**
+     * @var \srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage
+     */
+    protected $file_storage;
+
     protected $parent_gui;
     /**
      * @var IOrigin
@@ -77,6 +83,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->origin = $origin;
         $this->originRepository = $originRepository;
         $this->token = new Token();
+        $this->file_storage = (new Factory())->storage();
         $this->setFormAction(self::dic()->ctrl()->getFormAction($this->parent_gui));
         $this->initForm();
         if (!$origin->getId()) {
@@ -312,6 +319,15 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 $method->setValue(Handler::METHOD);
                 $filedrop->addSubItem($method);
 
+                $auth_token = new ilTextInputGUI(
+                    $this->translate('origin_form_field_conf_type_filedrop_auth_token'),
+                    $this->conf(IOriginConfig::FILE_DROP_AUTH_TOKEN)
+                );
+                $auth_token->setValue(
+                    $this->origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN) ?? $this->token->generate()
+                );
+                $filedrop->addSubItem($auth_token);
+
                 $rid = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_rid'), "", true);
                 $resource_identification = $this->origin->config()->get(IOriginConfig::FILE_DROP_RID);
                 $rid_link = $resource_identification === null
@@ -323,20 +339,16 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 $filedrop->addSubItem($rid);
 
                 if ($resource_identification !== null) {
+                    $latest_file  = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_latest'), "", true);
+                    $resource_info = $this->file_storage->getRevisionInfo($resource_identification);
+                    $latest_file->setValue($resource_info['creation_date'] ?? '');
+                    $filedrop->addSubItem($latest_file);
+
                     // new fileupload-field for manual upload
                     $file = new \ilFileInputGUI($this->translate('origin_form_field_conf_type_filedrop_file'), 'manual_file_drop');
                     $file->setRequired(false);
                     $filedrop->addSubItem($file);
                 }
-
-                $auth_token = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_filedrop_auth_token'),
-                    $this->conf(IOriginConfig::FILE_DROP_AUTH_TOKEN)
-                );
-                $auth_token->setValue(
-                    $this->origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN) ?? $this->token->generate()
-                );
-                $filedrop->addSubItem($auth_token);
             }
             $ro->addOption($filedrop);
         }

@@ -38,10 +38,12 @@ interface IOriginImplementation
      */
     public function parseData();
 
+    public function canDroppedFileContentBestored(string $content): bool;
+
 
     // HOOKS
     // ------------------------------------------------------------------------------------------------------------
-    
+
     public function hookConfig() : Config;
     /**
      * Called if any exception occurs during processing the ILIAS objects. This hook can be used to

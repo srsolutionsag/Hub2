@@ -51,6 +51,10 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     const CMD_TOGGLE = 'toggle';
     const CMD_DOWNLOAD_RID = 'downloadFileDrop';
     /**
+     * @var \srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage
+     */
+    protected $file_storage;
+    /**
      * @var OriginSyncSummaryFactory
      */
     protected $summaryFactory;
@@ -72,6 +76,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->originFactory = new OriginFactory();
         $this->originRepository = new OriginRepository();
         $this->summaryFactory = new OriginSyncSummaryFactory();
+        $this->file_storage = (new Factory())->storage();
     }
 
     /**
@@ -166,13 +171,13 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     }
 
     protected function downloadFileDrop():void {
+        $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
         $rid = $this->http->request()->getQueryParams()['rid'] ?? null;
         if ($rid === null) {
             $this->editOrigin();
             return;
         }
-        $storage = (new Factory())->storage();
-        $storage->download($rid);
+        $this->file_storage->download($rid, $origin->getTitle());
     }
 
 

@@ -17,6 +17,7 @@ use srag\Plugins\Hub2\FileDrop\Exceptions\AccessDenied;
 use srag\Plugins\Hub2\FileDrop\Exceptions\NotFound;
 use srag\Plugins\Hub2\FileDrop\Exceptions\Success;
 use ILIAS\Filesystem\Stream\Streams;
+use srag\Plugins\Hub2\Origin\Config\OriginImplementationFactory;
 
 /**
  * Class Handler
@@ -107,6 +108,9 @@ class Handler
     protected function processFiles(): void
     {
         $origin = $this->getOriginByFileDropContainer($this->file_drop_container);
+        $implementation_factory = new OriginImplementationFactory($origin);
+        $implementation = $implementation_factory->instance();
+
         $current_rid = $origin->config()->get(IOriginConfig::FILE_DROP_RID);
 
         // We accept multipart/form-data or file-content directly
@@ -126,6 +130,9 @@ class Handler
                     $message = $result === null ? 'no file uploaded' : $result->getStatus()->getMessage();
                     throw new InternalError('Upload failed: ' . $message);
                 }
+                if (!$implementation->canDroppedFileContentBestored(file_get_contents($result->getPath()))) {
+                    throw new InternalError('delivered file content is not valid');
+                }
                 $rid = $this->storage->replaceUpload($result, $current_rid ?? '');
 
                 break;
@@ -133,6 +140,9 @@ class Handler
                 $file_content = $this->http->request()->getBody()->getContents();
                 if (!$file_content) {
                     throw new InternalError('no file uploaded');
+                }
+                if (!$implementation->canDroppedFileContentBestored($file_content)) {
+                    throw new InternalError('delivered file content is not valid');
                 }
 
                 $rid = $this->storage->replaceFromString($current_rid ?? '', $file_content, $content_type);
