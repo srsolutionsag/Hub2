@@ -153,7 +153,9 @@ final class Factory implements IFactory
                         IL_CAL_DATETIME
                     ))->withLevel($data->level)->withAdditionalData(json_decode(
                         $data->additional_data,
-                        false
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
                     ) ?? new stdClass())
                     ->withOriginId($data->origin_id)->withOriginObjectType($data->origin_object_type)->withObjectExtId($data->object_ext_id)
                     ->withObjectIliasId($data->object_ilias_id)

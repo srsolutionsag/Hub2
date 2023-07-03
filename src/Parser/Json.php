@@ -66,7 +66,13 @@ class Json
 
     protected function applyFilter(\Closure $closure): void
     {
-        $this->parsed_json = array_filter($this->parsed_json, $closure);
+        $this->parsed_json = array_filter($this->parsed_json, ($closure ?? function ($v, $k): bool {
+            return !empty($v);
+        }) ?? function ($v, $k): bool {
+            return !empty($v);
+        }, ($closure ?? function ($v, $k): bool {
+            return !empty($v);
+        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0));
     }
 
     protected function filterMandatory(): void
@@ -105,12 +111,12 @@ class Json
     protected function parseCSVFileAndApplyHeaders(string $path_to_file): void
     {
         $this->parseJSONFile($path_to_file);
-        $this->mapFieldsToTitle($this->parsed_json);
+        $this->mapFieldsToTitle();
     }
 
     protected function parseJSONFile(string $path_to_file): void
     {
-        $raw_json = json_decode(file_get_contents($path_to_file), true, 512);
+        $raw_json = json_decode(file_get_contents($path_to_file), true, 512, JSON_THROW_ON_ERROR);
 
         $recursive_string_sanitizer = function (array $item) use (&$recursive_string_sanitizer): array {
             foreach ($item as $k => $v) {

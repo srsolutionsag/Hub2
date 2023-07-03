@@ -170,7 +170,7 @@ abstract class ARObject extends ActiveRecord implements IObject
      * @db_has_field    true
      * @db_fieldtype    clob
      */
-    protected $data = array();
+    protected $data = [];
 
     /**
      *
@@ -187,7 +187,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         switch ($field_name) {
             case 'data':
-                return json_encode($this->getData());
+                return json_encode($this->getData(), JSON_THROW_ON_ERROR);
             case "meta_data":
                 /**
                  * @var IMetadataAwareObject $this
@@ -199,7 +199,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                     $metadataObjects[$metadatum->getRecordId()][$metadatum->getIdentifier()] = $metadatum->getValue();
                 }
 
-                $json_encode = json_encode($metadataObjects);
+                $json_encode = json_encode($metadataObjects, JSON_THROW_ON_ERROR);
 
                 return $json_encode;
             case "taxonomies":
@@ -216,7 +216,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                     $taxonomyObjects[$tax->getTitle()] = $nodes;
                 }
 
-                $json_encode = json_encode($taxonomyObjects);
+                $json_encode = json_encode($taxonomyObjects, JSON_THROW_ON_ERROR);
 
                 return $json_encode;
         }
@@ -231,7 +231,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         switch ($field_name) {
             case 'data':
-                $data = json_decode($field_value, true);
+                $data = json_decode($field_value, true, 512, JSON_THROW_ON_ERROR);
                 if (!is_array($data)) {
                     $data = [];
                 }
@@ -241,7 +241,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                 if (is_null($field_value)) {
                     return [];
                 }
-                $json_decode = json_decode($field_value, true);
+                $json_decode = json_decode($field_value, true, 512, JSON_THROW_ON_ERROR);
                 $IMetadata = [];
                 if (is_array($json_decode)) {
                     foreach ($json_decode as $record_id => $records) {
@@ -259,7 +259,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                 if (is_null($field_value)) {
                     return [];
                 }
-                $json_decode = json_decode($field_value, true);
+                $json_decode = json_decode($field_value, true, 512, JSON_THROW_ON_ERROR);
                 $taxonomies = [];
                 foreach ($json_decode as $tax_title => $nodes) {
                     $taxonomy = new Taxonomy($tax_title, ITaxonomy::MODE_CREATE);

@@ -299,11 +299,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     protected function setLanguage(CourseDTO $dto, ilObjCourse $ilObjCourse)
     {
         $md_general = (new ilMD($ilObjCourse->getId()))->getGeneral();
+        $getLanguageIds = $md_general->getLanguageIds();
         //Note: this is terribly stupid, but the best (only) way if found to get to the
         //lang id of the primary language of some object. There seems to be multy lng
         //support however, not through the GUI. Maybe there is some bug in the generation
         //of the respective metadata form. See: initQuickEditForm() in ilMDEditorGUI
-        $language = $md_general->getLanguage(array_pop($md_general->getLanguageIds()));
+        $language = $md_general->getLanguage(array_pop($getLanguageIds));
         $language->setLanguage(new ilMDLanguageItem($dto->getLanguageCode()));
         $language->update();
     }

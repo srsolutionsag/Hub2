@@ -46,10 +46,10 @@ class demoGroup extends AbstractOriginImplementation
         $this->log()->write("This is a test-log entry");
 
         for ($x = 1; $x < 14; $x ++) {
-            if (rand(1, 10) === $x) {
+            if (random_int(1, 10) === $x) {
                 continue; // Simulate some random deletions
             }
-            $xrand = rand();
+            $xrand = random_int(0, mt_getrandmax());
             $this->data[] = $this->factory()->group($x)->setParentIdType(GroupDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)->setParentId(1)
                 ->setDescription("Description {$xrand}")->setTitle("Title {$xrand}")->setInformation("Information {$xrand}")
                 ->setRegisterMode(GroupDTO::GRP_REGISTRATION_LIMITED)->setGroupType(GroupDTO::GRP_TYPE_CLOSED)->setRegUnlimited(false)

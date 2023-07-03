@@ -68,7 +68,7 @@ class OriginConfig implements IOriginConfig
      */
     public function get(string $key)
     {
-        return (isset($this->data[$key])) ? $this->data[$key] : null;
+        return $this->data[$key] ?? null;
     }
 
     /**

@@ -229,7 +229,7 @@ class DataTableGUI extends ilTable2GUI
         }
         $union_query = rtrim($union_query, "UNION ");
 
-        $order_field = $this->getOrderField() ? $this->getOrderField() : $this->getDefaultOrderField();
+        $order_field = $this->getOrderField() ?: $this->getDefaultOrderField();
         $order_by_query = " ORDER BY " . $order_field . " " . $this->getOrderDirection();
 
         $query = $union_query . $order_by_query;
@@ -284,7 +284,7 @@ class DataTableGUI extends ilTable2GUI
                     }
                     break;
                 default:
-                    $this->tpl->setVariable('VALUE', $value ? $value : "&nbsp;");
+                    $this->tpl->setVariable('VALUE', $value ?: "&nbsp;");
                     break;
             }
 

@@ -14,7 +14,7 @@ trait MetadataAwareDataTransferObject
     /**
      * @var IMetadata[]
      */
-    private $_meta_data = array();
+    private $_meta_data = [];
 
     /**
      * @inheritdoc

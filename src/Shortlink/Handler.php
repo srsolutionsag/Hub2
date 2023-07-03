@@ -52,7 +52,7 @@ class Handler
      */
     public function storeQuery()
     {
-        $return = setcookie('xhub_query', $this->ext_id, time() + 10);
+        $return = setcookie('xhub_query', $this->ext_id, ['expires' => time() + 10]);
     }
 
     /**

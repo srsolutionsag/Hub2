@@ -44,20 +44,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
      * @var array
      */
     protected static $properties
-        = array(
-            "title",
-            "description",
-            "location",
-            "details",
-            "name",
-            "phone",
-            "email",
-            "registrationType",
-            "registrationMinUsers",
-            "registrationMaxUsers",
-            "registrationWaitingList",
-            "waitingListAutoFill",
-        );
+        = ["title", "description", "location", "details", "name", "phone", "email", "registrationType", "registrationMinUsers", "registrationMaxUsers", "registrationWaitingList", "waitingListAutoFill"];
 
     /**
      * @param IOrigin                 $origin
@@ -217,14 +204,15 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             }
             $originRepository = new OriginRepository();
             $possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
+            $arrayFilter = array_filter(
+                $possible_parents,
+                function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return (int) $origin->getId() == $linkedOriginId;
+                }
+            );
             $origin = array_pop(
-                array_filter(
-                    $possible_parents,
-                    function ($origin) use ($linkedOriginId) {
-                        /** @var IOrigin $origin */
-                        return (int) $origin->getId() == $linkedOriginId;
-                    }
-                )
+                $arrayFilter
             );
             if ($origin === null) {
                 $msg = "The linked origin syncing courses or groups was not found, please check that the correct origin is linked";

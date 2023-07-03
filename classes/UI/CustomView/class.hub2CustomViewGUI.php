@@ -32,6 +32,7 @@ class hub2CustomViewGUI
      */
     public function executeCommand()/*: void*/
     {
+        $class = null;
         try {
             $class_path = ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH);
             if (!file_exists($class_path)) {

@@ -14,20 +14,11 @@
 <#2>
 <?php
 \srag\DIC\Hub2\DICStatic::dic()->database()
-    ->modifyTableColumn(\srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership::TABLE_NAME, 'ilias_id', array(
-        "type" => "text",
-        "length" => 256,
-    ));
+    ->modifyTableColumn(\srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership::TABLE_NAME, 'ilias_id', ["type" => "text", "length" => 256]);
 \srag\DIC\Hub2\DICStatic::dic()->database()
-    ->modifyTableColumn(\srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, 'ilias_id', array(
-        "type" => "text",
-        "length" => 256,
-    ));
+    ->modifyTableColumn(\srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership::TABLE_NAME, 'ilias_id', ["type" => "text", "length" => 256]);
 \srag\DIC\Hub2\DICStatic::dic()->database()
-    ->modifyTableColumn(\srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, 'ilias_id', array(
-        "type" => "text",
-        "length" => 256,
-    ));
+    ->modifyTableColumn(\srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership::TABLE_NAME, 'ilias_id', ["type" => "text", "length" => 256]);
 ?>
 <#3>
 <?php
@@ -60,7 +51,7 @@ if (\srag\DIC\Hub2\DICStatic::dic()->database()->tableExists(\srag\Plugins\Hub2\
 ?>
 <#5>
 <?php
-$administration_role_ids = json_encode(\srag\Plugins\Hub2\Config\ArConfig::getField(\srag\Plugins\Hub2\Config\ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS));
+$administration_role_ids = json_encode(\srag\Plugins\Hub2\Config\ArConfig::getField(\srag\Plugins\Hub2\Config\ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS), JSON_THROW_ON_ERROR);
 
 if (strpos($administration_role_ids, "[") === false) {
     $administration_role_ids = preg_split('/, */', $administration_role_ids);

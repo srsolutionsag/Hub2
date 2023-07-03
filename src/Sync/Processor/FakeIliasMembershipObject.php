@@ -40,7 +40,7 @@ class FakeIliasMembershipObject extends FakeIliasObject
      */
     public static function loadInstanceWithConcatenatedId(string $id)
     {
-        list($container_id_ilias, $user_id_ilias) = explode(self::GLUE, $id);
+        [$container_id_ilias, $user_id_ilias] = explode(self::GLUE, $id);
 
         return new self((int) $container_id_ilias, (int) $user_id_ilias);
     }

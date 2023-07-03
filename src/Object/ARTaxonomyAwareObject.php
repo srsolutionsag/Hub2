@@ -16,7 +16,7 @@ trait ARTaxonomyAwareObject
      * @db_has_field    true
      * @db_fieldtype    clob
      */
-    protected $taxonomies = array();
+    protected $taxonomies = [];
 
     /**
      * @return ITaxonomy[]

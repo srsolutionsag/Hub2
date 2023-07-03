@@ -16,7 +16,7 @@ abstract class AbstractRepositoryMembershipLink extends AbstractRepositoryLink i
      */
     protected function getILIASId()
     {
-        list($container_id) = explode(IObjectRepository::GLUE, $this->object->getILIASId());
+        [$container_id] = explode(IObjectRepository::GLUE, $this->object->getILIASId());
 
         return $container_id;
     }

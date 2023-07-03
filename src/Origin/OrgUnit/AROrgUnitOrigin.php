@@ -18,7 +18,7 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data): IOrgUnitOriginConfig
+    protected function getOriginConfig(array $data): \srag\Plugins\Hub2\Origin\Config\IOriginConfig
     {
         return new OrgUnitOriginConfig($data);
     }
@@ -26,7 +26,7 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data): IOrgUnitProperties
+    protected function getOriginProperties(array $data): \srag\Plugins\Hub2\Origin\Properties\IOriginProperties
     {
         return new OrgUnitProperties($data);
     }
@@ -34,7 +34,7 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
     /**
      * @inheritdoc
      */
-    public function config(): IOrgUnitOriginConfig
+    public function config(): \srag\Plugins\Hub2\Origin\Config\OrgUnit\IOrgUnitOriginConfig
     {
         return parent::config();
     }
@@ -42,7 +42,7 @@ class AROrgUnitOrigin extends AROrigin implements IOrgUnitOrigin
     /**
      * @inheritdoc
      */
-    public function properties(): IOrgUnitProperties
+    public function properties(): \srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties
     {
         return parent::properties();
     }

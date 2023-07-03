@@ -172,7 +172,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @var array
      * @description usr_prop_ilias_roles_info
      */
-    protected $iliasRoles = array(self::USER_DEFAULT_ROLE);
+    protected $iliasRoles = [self::USER_DEFAULT_ROLE];
 
     /**
      * @return string

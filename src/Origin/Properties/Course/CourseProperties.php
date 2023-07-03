@@ -16,13 +16,7 @@ class CourseProperties extends OriginProperties implements ICourseProperties
      * @var array
      */
     public static $mail_notification_placeholder
-        = array(
-            'title',
-            'description',
-            'responsible',
-            'notification_email',
-            'shortlink',
-        );
+        = ['title', 'description', 'responsible', 'notification_email', 'shortlink'];
 
     /**
      * @inheritdoc

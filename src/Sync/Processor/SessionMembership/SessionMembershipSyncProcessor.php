@@ -37,7 +37,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
     /**
      * @var array
      */
-    protected static $properties = array();
+    protected static $properties = [];
 
     /**
      * @param IOrigin                 $origin
@@ -143,14 +143,15 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
+            $arrayFilter = array_filter(
+                $originRepository->sessions(),
+                function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return (int) $origin->getId() == $linkedOriginId;
+                }
+            );
             $origin = array_pop(
-                array_filter(
-                    $originRepository->sessions(),
-                    function ($origin) use ($linkedOriginId) {
-                        /** @var IOrigin $origin */
-                        return (int) $origin->getId() == $linkedOriginId;
-                    }
-                )
+                $arrayFilter
             );
             if ($origin === null) {
                 $msg = "The linked origin syncing sessions was not found, please check that the correct origin is linked";

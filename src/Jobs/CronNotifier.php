@@ -30,7 +30,7 @@ class CronNotifier implements Notifier
     private function pingCronJob(): void
     {
         if (php_sapi_name() === 'cli') {
-            \ilCronManager::ping(RunSync::CRON_JOB_ID);
+            (new \ilCronManager())->ping(RunSync::CRON_JOB_ID);
         }
     }
 

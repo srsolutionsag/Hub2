@@ -16,14 +16,14 @@ trait ARMetadataAwareObject
      * @db_has_field    true
      * @db_fieldtype    clob
      */
-    protected $meta_data = array();
+    protected $meta_data = [];
 
     /**
      * @return IMetadata[]
      */
     public function getMetaData(): array
     {
-        return is_array($this->meta_data) ? $this->meta_data : array();
+        return is_array($this->meta_data) ? $this->meta_data : [];
     }
 
     /**

@@ -308,12 +308,7 @@ class OriginSync implements IOriginSync
             unset($object);
             unset($dto);
             throw $ex;
-        } catch (AbortOriginSyncOfCurrentTypeException $ex) {
-            $object->store();
-            unset($object);
-            unset($dto);
-            throw $ex;
-        } catch (AbortOriginSyncException $ex) {
+        } catch (AbortOriginSyncOfCurrentTypeException|AbortOriginSyncException $ex) {
             $object->store();
             unset($object);
             unset($dto);

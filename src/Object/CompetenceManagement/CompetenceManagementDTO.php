@@ -351,7 +351,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
-                $data[$key] = json_decode(json_encode($this->{$key}), true);
+                $data[$key] = json_decode(json_encode($this->{$key}, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
 
                 // no break
             default:
@@ -368,6 +368,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
                 return array_map(
                     function ($skill_level): ISkillLevel {
+                        $key = null;
                         if ($skill_level instanceof ISkillLevel) {
                             $this->{$key} = $skill_level;
                         }
@@ -384,6 +385,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
                 return array_map(
                     function ($profile_level): IProfileLevel {
+                        $key = null;
                         if ($profile_level instanceof IProfileLevel) {
                             $this->{$key} = $profile_level;
                         }

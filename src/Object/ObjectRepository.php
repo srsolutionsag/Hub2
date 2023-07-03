@@ -72,6 +72,7 @@ abstract class ObjectRepository implements IObjectRepository
      */
     public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array
     {
+        $existing_ext_id_query = null;
         $glue = self::GLUE;
         $class = $this->getClass();
 

@@ -110,7 +110,13 @@ class Csv
 
     protected function applyFilter(\Closure $closure): void
     {
-        $this->parsed_csv = array_filter($this->parsed_csv, $closure);
+        $this->parsed_csv = array_filter($this->parsed_csv, ($closure ?? function ($v, $k): bool {
+            return !empty($v);
+        }) ?? function ($v, $k): bool {
+            return !empty($v);
+        }, ($closure ?? function ($v, $k): bool {
+            return !empty($v);
+        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0));
     }
 
     protected function filterMandatory(): void
@@ -164,7 +170,7 @@ class Csv
     protected function parseCSVFileAndApplyHeaders(string $path_to_file): void
     {
         $this->parseCSVFile($path_to_file);
-        $this->mapFieldsToTitle($this->parsed_csv);
+        $this->mapFieldsToTitle();
     }
 
     protected function parseCSVFile(string $path_to_file): void

@@ -54,7 +54,7 @@ class LogsTableGUI extends TableGUI
 
             case "additional_data":
                 if (!is_object($value)) {
-                    $value = json_decode($value);
+                    $value = json_decode($value, null, 512, JSON_THROW_ON_ERROR);
                 }
                 if (!is_object($value)) {
                     $value = new stdClass();

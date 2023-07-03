@@ -181,7 +181,7 @@ class Handler
         throw $e;
     }
 
-    private function handleException(\Exception $e): void
+    private function handleException(\Throwable $e): void
     {
         switch (true) {
             case $e instanceof AccessDenied:

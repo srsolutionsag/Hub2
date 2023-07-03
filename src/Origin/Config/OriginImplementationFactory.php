@@ -56,14 +56,7 @@ class OriginImplementationFactory
         if (!class_exists($class)) {
             throw new HubException("Origin implementation namespace\\class does not exist, should be: $class");
         }
-        $instance = new $class(
-            $this->origin->config(),
-            new DataTransferObjectFactory(),
-            new MetadataFactory(),
-            new TaxonomyFactory(),
-            new MappingStrategyFactory(),
-            $this->origin
-        );
+        $instance = new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
 
         return $instance;
     }

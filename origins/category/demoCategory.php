@@ -53,7 +53,7 @@ class demoCategory extends AbstractOriginImplementation
 
         $time = time();
         for ($x = 1; $x <= 10; $x ++) {
-            if (rand(1, 10) === $x) {
+            if (random_int(1, 10) === $x) {
                 // continue; // Simulate some random deletions
             }
 

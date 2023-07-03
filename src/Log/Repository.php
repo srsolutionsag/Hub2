@@ -451,7 +451,7 @@ final class Repository implements IRepository
             $log->withDate($date);
         }
 
-        $json_encode = json_encode($log->getAdditionalData()) ?? '{}';
+        $json_encode = json_encode($log->getAdditionalData(), JSON_THROW_ON_ERROR) ?? '{}';
         $log->withLogId(
             $this->store(
                 Log::TABLE_NAME,

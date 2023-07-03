@@ -53,7 +53,8 @@ class demoOrgUnitMembership extends AbstractOriginImplementation
      * @return int
      */
     public function parseData(): int // Parse csv file
-    {$csv_file = $this->config()->getPath();
+    {
+        $csv_file = $this->config()->getPath();
 
         $csv = new ilCSVReader();
         $csv->setSeparator(",");

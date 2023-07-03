@@ -125,7 +125,7 @@ class RunSync extends ilCronJob
     /**
      * @return AbstractResult
      */
-    public function run(): AbstractResult
+    public function run(): \ilCronJobResult
     {
         try {
             $skip_object_type = '';

@@ -46,7 +46,7 @@ class demoSessionMembership extends AbstractOriginImplementation
         $this->log()->write("This is a test-log entry");
 
         $this->data[] = $this->factory()->sessionMembership(1, 6)->setSessionIdType(SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID)
-            ->setSessionId(rand(1, 10))->setRole(SessionMembershipDTO::ROLE_MEMBER);
+            ->setSessionId(random_int(1, 10))->setRole(SessionMembershipDTO::ROLE_MEMBER);
 
         return count($this->data);
     }

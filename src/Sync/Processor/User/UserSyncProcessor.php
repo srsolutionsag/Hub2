@@ -39,34 +39,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      * @var array
      */
     protected static $properties
-        = array(
-            'authMode',
-            'externalAccount',
-            'firstname',
-            'lastname',
-            'email',
-            'secondEmail',
-            'institution',
-            'street',
-            'city',
-            'zipcode',
-            'country',
-            'selectedCountry',
-            'phoneOffice',
-            'phoneHome',
-            'phoneMobile',
-            'department',
-            'fax',
-            'timeLimitOwner',
-            'timeLimitUnlimited',
-            'timeLimitFrom',
-            'timeLimitUntil',
-            'matriculation',
-            'gender',
-            'birthday',
-            'language',
-            'passwd',
-        );
+        = ['authMode', 'externalAccount', 'firstname', 'lastname', 'email', 'secondEmail', 'institution', 'street', 'city', 'zipcode', 'country', 'selectedCountry', 'phoneOffice', 'phoneHome', 'phoneMobile', 'department', 'fax', 'timeLimitOwner', 'timeLimitUnlimited', 'timeLimitFrom', 'timeLimitUntil', 'matriculation', 'gender', 'birthday', 'language', 'passwd'];
 
     /**
      * @param IOrigin                 $origin
@@ -214,10 +187,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
             $body = strtr(
                 $body,
-                array(
-                    '[PASSWORD]' => $dto->getPasswd(),
-                    '[LOGIN]' => $dto->getLogin(),
-                )
+                ['[PASSWORD]' => $dto->getPasswd(), '[LOGIN]' => $dto->getLogin()]
             );
             $mail->Subject($this->props->get(UserProperties::PASSWORD_MAIL_SUBJECT)); // TODO: Also replace placeholders
             $mail->Body($body);
@@ -334,6 +304,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      */
     protected function generatePassword()
     {
-        return array_pop(ilUtil::generatePasswords(1));
+        $generatePasswords = ilUtil::generatePasswords(1);
+        return array_pop($generatePasswords);
     }
 }

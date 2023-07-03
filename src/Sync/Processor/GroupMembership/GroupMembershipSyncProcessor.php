@@ -149,14 +149,15 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
+            $arrayFilter = array_filter(
+                $originRepository->groups(),
+                function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return (int) $origin->getId() == $linkedOriginId;
+                }
+            );
             $origin = array_pop(
-                array_filter(
-                    $originRepository->groups(),
-                    function ($origin) use ($linkedOriginId) {
-                        /** @var IOrigin $origin */
-                        return (int) $origin->getId() == $linkedOriginId;
-                    }
-                )
+                $arrayFilter
             );
             if ($origin === null) {
                 $msg = "The linked origin syncing group was not found, please check that the correct origin is linked";

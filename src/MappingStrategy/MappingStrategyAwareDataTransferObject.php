@@ -21,7 +21,7 @@ trait MappingStrategyAwareDataTransferObject
      */
     public function getMappingStrategy(): IMappingStrategy
     {
-        return $this->_mapping_strategy ? $this->_mapping_strategy : new None();
+        return $this->_mapping_strategy ?: new None();
     }
 
     /**

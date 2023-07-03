@@ -25,7 +25,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     /**
      * @var IOriginSync[]
      */
-    protected $syncs = array();
+    protected $syncs = [];
 
     /**
      *OriginSyncSummaryCron constructor

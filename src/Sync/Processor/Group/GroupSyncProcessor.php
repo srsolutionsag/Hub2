@@ -76,13 +76,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @var array
      */
     protected static $ildate_fields
-        = array(
-            "cancellationEnd",
-            "start",
-            "end",
-            "registrationStart",
-            "registrationEnd",
-        );
+        = ["cancellationEnd", "start", "end", "registrationStart", "registrationEnd"];
 
     /**
      * @param IOrigin                 $origin
@@ -317,14 +311,15 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             }
             $originRepository = new OriginRepository();
             $possible_parents = array_merge($originRepository->categories(), $originRepository->courses());
+            $arrayFilter = array_filter(
+                $possible_parents,
+                function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return $origin->getId() == $linkedOriginId;
+                }
+            );
             $origin = array_pop(
-                array_filter(
-                    $possible_parents,
-                    function ($origin) use ($linkedOriginId) {
-                        /** @var IOrigin $origin */
-                        return $origin->getId() == $linkedOriginId;
-                    }
-                )
+                $arrayFilter
             );
             if ($origin === null) {
                 $msg = "The linked origin syncing categories or courses was not found,

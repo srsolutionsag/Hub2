@@ -132,14 +132,14 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      * @db_fieldtype        clob
      * @db_length           4000
      */
-    protected $config = array();
+    protected $config = [];
     /**
      * @var array
      * @db_has_field        true
      * @db_fieldtype        clob
      * @db_length           4000
      */
-    protected $properties = array();
+    protected $properties = [];
     /**
      * @var IOriginConfig
      */
@@ -224,9 +224,9 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
                 if ($this->_config === null) {
                     $config = $this->getOriginConfig([]);
 
-                    return json_encode($config->getData());
+                    return json_encode($config->getData(), JSON_THROW_ON_ERROR);
                 } else {
-                    return json_encode($this->config()->getData());
+                    return json_encode($this->config()->getData(), JSON_THROW_ON_ERROR);
                 }
 
                 // no break
@@ -234,9 +234,9 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
                 if ($this->_properties === null) {
                     $properties = $this->getOriginProperties([]);
 
-                    return json_encode($properties->getData());
+                    return json_encode($properties->getData(), JSON_THROW_ON_ERROR);
                 } else {
-                    return json_encode($this->properties()->getData());
+                    return json_encode($this->properties()->getData(), JSON_THROW_ON_ERROR);
                 }
 
                 // no break
@@ -257,7 +257,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         switch ($field_name) {
             case 'config':
             case 'properties':
-                return json_decode($field_value, true);
+                return json_decode($field_value, true, 512, JSON_THROW_ON_ERROR);
 
             case "adhoc":
             case "adhoc_parent_scope":
@@ -363,7 +363,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     public function getImplementationNamespace()
     {
-        return $this->implementation_namespace ? $this->implementation_namespace : IOrigin::ORIGIN_MAIN_NAMESPACE;
+        return $this->implementation_namespace ?: IOrigin::ORIGIN_MAIN_NAMESPACE;
     }
 
     /**

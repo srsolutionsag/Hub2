@@ -91,7 +91,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
      */
     protected function setChildrenByParentId($parent_id)
     {
-        foreach ($this->tree->getChildsByTypeFilter($parent_id, array("taxn")) as $item) {
+        foreach ($this->tree->getChildsByTypeFilter($parent_id, ["taxn"]) as $item) {
             $this->childs[$item['obj_id']] = $item['title'];
             $this->setChildrenByParentId($item['obj_id']);
         }

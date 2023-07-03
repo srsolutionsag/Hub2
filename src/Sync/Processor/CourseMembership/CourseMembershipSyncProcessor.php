@@ -196,14 +196,15 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
+            $arrayFilter = array_filter(
+                $originRepository->courses(),
+                function ($origin) use ($linkedOriginId) {
+                    /** @var IOrigin $origin */
+                    return $origin->getId() == $linkedOriginId;
+                }
+            );
             $origin = array_pop(
-                array_filter(
-                    $originRepository->courses(),
-                    function ($origin) use ($linkedOriginId) {
-                        /** @var IOrigin $origin */
-                        return $origin->getId() == $linkedOriginId;
-                    }
-                )
+                $arrayFilter
             );
             if ($origin === null) {
                 $msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";

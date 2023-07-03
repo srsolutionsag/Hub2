@@ -47,7 +47,7 @@ class demoUser extends AbstractOriginImplementation
 
         for ($x = 1; $x <= 10; $x ++) {
             $t = "";
-            if (rand(1, 10) === $x) {
+            if (random_int(1, 10) === $x) {
                 // continue; // Simulate deletion of random users
             }
 
