@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
  */
 interface IMetadataSyncProcessor
 {
-
     /**
      * @param IMetadataAwareDataTransferObject $dto
      * @param IMetadataAwareObject             $iobject

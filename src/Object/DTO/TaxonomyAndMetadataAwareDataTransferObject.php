@@ -9,7 +9,6 @@ namespace srag\Plugins\Hub2\Object\DTO;
  */
 trait TaxonomyAndMetadataAwareDataTransferObject
 {
-
     use MetadataAwareDataTransferObject;
     use TaxonomyAwareDataTransferObject;
 }

@@ -12,7 +12,6 @@ require_once __DIR__ . "/../AbstractHub2Tests.php";
  */
 class MetadataTest extends AbstractHub2Tests
 {
-
     protected function setUp()
     {
 

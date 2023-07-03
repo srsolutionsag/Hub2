@@ -28,11 +28,10 @@ use srag\Plugins\Hub2\Object\User\IUserDTO;
  */
 class ByExtId extends AMappingStrategy implements IMappingStrategy
 {
-
     /**
      * @inheritDoc
      */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         switch (true) {
             case $dto instanceof IUserDTO:
@@ -68,8 +67,11 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
                 break;
         }
 
-        $result = self::dic()->database()->queryF('SELECT DISTINCT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s',
-            [ilDBConstants::T_TEXT], [$dto->getExtId()]);
+        $result = self::dic()->database()->queryF(
+            'SELECT DISTINCT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s',
+            [ilDBConstants::T_TEXT],
+            [$dto->getExtId()]
+        );
 
         if ($result->rowCount() > 0) {
             if ($result->rowCount() > 1) {

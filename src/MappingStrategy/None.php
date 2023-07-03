@@ -11,11 +11,10 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 class None extends AMappingStrategy implements IMappingStrategy
 {
-
     /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         return 0;
     }

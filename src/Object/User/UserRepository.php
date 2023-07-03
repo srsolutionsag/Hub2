@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  */
 class UserRepository extends ObjectRepository implements IUserRepository
 {
-
 }

@@ -9,7 +9,7 @@ use srag\Plugins\Hub2\Object\General\NewsSettings;
  */
 interface INewsSettingsAwareDataTransferObject
 {
-    public function getNewsSettings() : ?NewsSettings;
-    
-    public function setNewsSettings(?NewsSettings $newsSettings) : INewsSettingsAwareDataTransferObject;
+    public function getNewsSettings(): ?NewsSettings;
+
+    public function setNewsSettings(?NewsSettings $newsSettings): INewsSettingsAwareDataTransferObject;
 }

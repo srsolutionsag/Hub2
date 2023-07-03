@@ -44,9 +44,8 @@ class Json
         string $file_path,
         ?string $unique_field,
         array $mandatory_columns = []
-//        array $column_mapping = []
-    )
-    {
+        //        array $column_mapping = []
+    ) {
         $this->file_path = $file_path;
         $this->unique_field = $unique_field;
         $this->mandatory_columns = $mandatory_columns;
@@ -149,7 +148,7 @@ class Json
             );
         }
         */
-//        $this->mapFieldsToTitle();
+        //        $this->mapFieldsToTitle();
         $this->filterMandatory();
         $this->applyFilters();
 

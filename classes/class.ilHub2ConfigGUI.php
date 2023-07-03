@@ -12,11 +12,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class ilHub2ConfigGUI extends ilPluginConfigGUI
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @param string $cmd

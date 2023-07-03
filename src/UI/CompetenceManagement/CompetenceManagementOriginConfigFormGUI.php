@@ -18,7 +18,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
 {
-
     /**
      * @var ARCompetenceManagementOrigin
      */
@@ -56,8 +55,10 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
     {
         parent::addPropertiesUpdate();
 
-        $cb = new ilCheckboxInputGUI(self::plugin()->translate("competencemanagement_move"),
-            $this->prop(ICompetenceManagementProperties::MOVE));
+        $cb = new ilCheckboxInputGUI(
+            self::plugin()->translate("competencemanagement_move"),
+            $this->prop(ICompetenceManagementProperties::MOVE)
+        );
         $cb->setChecked($this->origin->properties()->get(ICompetenceManagementProperties::MOVE));
         $this->addItem($cb);
     }
@@ -76,7 +77,8 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
         );
         $opt = new ilRadioOption(
             self::plugin()
-                ->translate("competencemanagement_delete_mode_none"), ICompetenceManagementProperties::DELETE_MODE_NONE
+                ->translate("competencemanagement_delete_mode_none"),
+            ICompetenceManagementProperties::DELETE_MODE_NONE
         );
         $delete->addOption($opt);
         $opt = new ilRadioOption(

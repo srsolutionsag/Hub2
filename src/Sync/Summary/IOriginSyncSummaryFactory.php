@@ -9,14 +9,13 @@ namespace srag\Plugins\Hub2\Sync\Summary;
  */
 interface IOriginSyncSummaryFactory
 {
+    /**
+     * @return IOriginSyncSummary
+     */
+    public function web(): IOriginSyncSummary;
 
     /**
      * @return IOriginSyncSummary
      */
-    public function web() : IOriginSyncSummary;
-
-    /**
-     * @return IOriginSyncSummary
-     */
-    public function mail() : IOriginSyncSummary;
+    public function mail(): IOriginSyncSummary;
 }

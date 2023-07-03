@@ -43,14 +43,13 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
  */
 class OriginConfigFormGUI extends ilPropertyFormGUI
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    const POST_VAR_ADHOC = "adhoc";
-    const POST_VAR_SORT = "sort";
-    const PLUGIN_BASE = 'Customizing/global/plugins/Services/Cron/CronHook/Hub2';
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const POST_VAR_ADHOC = "adhoc";
+    public const POST_VAR_SORT = "sort";
+    public const PLUGIN_BASE = 'Customizing/global/plugins/Services/Cron/CronHook/Hub2';
     /**
      * @var Token
      */
@@ -361,7 +360,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     public function getILIASFileRepositorySelector(): ilRepositorySelector2InputGUI
     {
         self::dic()->ctrl()->setParameterByClass(
-            hub2MainGUI::class, hub2ConfigOriginsGUI::ORIGIN_ID,
+            hub2MainGUI::class,
+            hub2ConfigOriginsGUI::ORIGIN_ID,
             $this->origin->getId()
         );
 
@@ -393,11 +393,14 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $te->setInfo(
             nl2br(
                 str_replace(
-                    "\\n", "\n", $this->translate(
-                    'origin_form_field_class_name_info',
-                    [ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH)]
-                )
-                ), false
+                    "\\n",
+                    "\n",
+                    $this->translate(
+                        'origin_form_field_class_name_info',
+                        [ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH)]
+                    )
+                ),
+                false
             )
         );
         $te->setValue($this->origin->getImplementationClassName());

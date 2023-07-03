@@ -27,7 +27,6 @@ use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
  */
 abstract class ARObject extends ActiveRecord implements IObject
 {
-
     use DICTrait;
     use Hub2Trait;
     use HashCodeComputer;
@@ -35,8 +34,8 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @abstract
      */
-    const TABLE_NAME = '';
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const TABLE_NAME = '';
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * a clone of this object made before any changes happened; used to compare when persisting
      * @var static
@@ -350,7 +349,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getDeliveryDate() : DateTime
+    public function getDeliveryDate(): DateTime
     {
         return new DateTime($this->delivery_date);
     }
@@ -358,7 +357,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getProcessedDate() : DateTime
+    public function getProcessedDate(): DateTime
     {
         return new DateTime($this->processed_date);
     }
@@ -400,7 +399,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getStatus() : int
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -478,10 +477,11 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @return string
      */
-    function __toString()
+    public function __toString()
     {
         return implode(
-            ', ', [
+            ', ',
+            [
                 "origin_id: " . $this->origin_id,
                 "type: " . get_class($this),
                 "ext_id: " . $this->getExtId(),

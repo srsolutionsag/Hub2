@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractImplementation implements IMetadataImplementation
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
      */
@@ -46,7 +45,7 @@ abstract class AbstractImplementation implements IMetadataImplementation
     /**
      * @inheritdoc
      */
-    public function getMetadata() : IMetadata
+    public function getMetadata(): IMetadata
     {
         return $this->metadata;
     }
@@ -54,7 +53,7 @@ abstract class AbstractImplementation implements IMetadataImplementation
     /**
      * @inheritdoc
      */
-    public function getIliasId() : int
+    public function getIliasId(): int
     {
         return $this->ilias_id;
     }

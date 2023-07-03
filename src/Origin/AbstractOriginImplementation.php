@@ -23,5 +23,4 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractOriginImplementation extends AbstractOriginBaseImplementation implements IOriginArrayImplementation
 {
-
 }

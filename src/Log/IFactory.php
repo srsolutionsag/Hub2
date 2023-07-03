@@ -15,11 +15,10 @@ use Throwable;
  */
 interface IFactory
 {
-
     /**
      * @return ILog
      */
-    public function log() : ILog;
+    public function log(): ILog;
 
     /**
      * @param IOrigin|null             $origin
@@ -27,7 +26,7 @@ interface IFactory
      * @param IDataTransferObject|null $dto
      * @return ILog
      */
-    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null) : ILog;
+    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog;
 
     /**
      * @param Throwable                $ex
@@ -41,11 +40,11 @@ interface IFactory
         IOrigin $origin = null,
         IObject $object = null,
         IDataTransferObject $dto = null
-    ) : ILog;
+    ): ILog;
 
     /**
      * @param stdClass $data
      * @return ILog
      */
-    public function fromDB(stdClass $data) : ILog;
+    public function fromDB(stdClass $data): ILog;
 }

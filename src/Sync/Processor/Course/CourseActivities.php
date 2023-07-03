@@ -15,7 +15,6 @@ use ilObject2;
  */
 class CourseActivities implements ICourseActivities
 {
-
     /**
      * @var ilDB
      */

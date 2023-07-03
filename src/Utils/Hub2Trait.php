@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 trait Hub2Trait
 {
-
     /**
      * @return Access
      */
-    protected static function access() : Access
+    protected static function access(): Access
     {
         return Access::getInstance();
     }
@@ -26,7 +25,7 @@ trait Hub2Trait
     /**
      * @return Ilias
      */
-    protected static function ilias() : Ilias
+    protected static function ilias(): Ilias
     {
         return Ilias::getInstance();
     }
@@ -34,7 +33,7 @@ trait Hub2Trait
     /**
      * @return ILogRepository
      */
-    protected static function logs() : ILogRepository
+    protected static function logs(): ILogRepository
     {
         return LogRepository::getInstance();
     }

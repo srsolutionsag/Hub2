@@ -18,7 +18,6 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
  */
 class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 {
-
     /**
      * @var int
      */
@@ -93,7 +92,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @inheritdoc
      */
-    protected function taxonomyExists() : bool
+    protected function taxonomyExists(): bool
     {
         return in_array($this->getTaxonomy()->getTitle(), $this->selectable_taxonomies);
     }
@@ -107,8 +106,11 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         foreach (self::dic()->tree()->getPathFull((int) $this->getILIASParentId()) as $node) {
             if ($node["ref_id"] != (int) $this->getILIASParentId()) {
                 if ($node["type"] == "cat") {
-                    if (ilContainer::_lookupContainerSetting($node["obj_id"], ilObjectServiceSettingsGUI::TAXONOMIES,
-                        false)) {
+                    if (ilContainer::_lookupContainerSetting(
+                        $node["obj_id"],
+                        ilObjectServiceSettingsGUI::TAXONOMIES,
+                        false
+                    )) {
                         $tax_ids = ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
                         if (sizeof($tax_ids)) {
                             $res = array_merge($res, $tax_ids);

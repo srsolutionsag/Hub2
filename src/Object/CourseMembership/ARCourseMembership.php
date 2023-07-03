@@ -11,6 +11,5 @@ use srag\Plugins\Hub2\Object\ARObject;
  */
 class ARCourseMembership extends ARObject implements ICourseMembership
 {
-
-    const TABLE_NAME = 'sr_hub2_course_mem';
+    public const TABLE_NAME = 'sr_hub2_course_mem';
 }

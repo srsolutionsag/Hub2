@@ -14,5 +14,4 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
  */
 interface ICategory extends IObject, IMetadataAwareObject, ITaxonomyAwareObject, IDidacticTemplateAwareObject
 {
-
 }

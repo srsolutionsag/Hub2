@@ -9,7 +9,6 @@ namespace srag\Plugins\Hub2\Origin;
  */
 interface IOriginFactory
 {
-
     /**
      * Get the concrete origin by ID, e.g. returns a IUserOrigin if the given ID belongs
      * to a origin of object type 'user'.
@@ -22,17 +21,17 @@ interface IOriginFactory
      * @param string $type
      * @return IOrigin
      */
-    public function createByType(string $type) : IOrigin;
+    public function createByType(string $type): IOrigin;
 
     /**
      * @return IOrigin[]
      */
-    public function getAllActive() : array;
+    public function getAllActive(): array;
 
     /**
      * @return IOrigin[]
      */
-    public function getAll() : array;
+    public function getAll(): array;
 
     /**
      * @param int $origin_id

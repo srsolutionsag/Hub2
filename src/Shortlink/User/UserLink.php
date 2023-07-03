@@ -16,11 +16,10 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  */
 class UserLink extends AbstractBaseLink implements IObjectLink
 {
-
     /**
      * @inheritdoc
      */
-    public function doesObjectExist() : bool
+    public function doesObjectExist(): bool
     {
         if (!$this->object->getILIASId()) {
             return false;
@@ -32,7 +31,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink
     /**
      * @inheritdoc
      */
-    public function isAccessGranted() : bool
+    public function isAccessGranted(): bool
     {
         $userObj = new ilObjUser($this->object->getILIASId());
         if ($userObj->hasPublicProfile()) {
@@ -45,7 +44,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink
     /**
      * @inheritdoc
      */
-    public function getAccessGrantedExternalLink() : string
+    public function getAccessGrantedExternalLink(): string
     {
         return ilLink::_getLink($this->object->getILIASId(), 'usr');
     }
@@ -53,7 +52,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink
     /**
      * @inheritdoc
      */
-    public function getAccessDeniedLink() : string
+    public function getAccessDeniedLink(): string
     {
         return "ilias.php";
     }
@@ -61,7 +60,7 @@ class UserLink extends AbstractBaseLink implements IObjectLink
     /**
      * @inheritdoc
      */
-    public function getAccessGrantedInternalLink() : string
+    public function getAccessGrantedInternalLink(): string
     {
         self::dic()->ctrl()->setParameterByClass(ilObjUserGUI::class, "ref_id", 7);
         self::dic()->ctrl()->setParameterByClass(ilObjUserGUI::class, "obj_id", $this->object->getILIASId());

@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Taxonomy implements ITaxonomy
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var INode[]
      */
@@ -50,7 +49,7 @@ class Taxonomy implements ITaxonomy
     /**
      * @return string
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -58,7 +57,7 @@ class Taxonomy implements ITaxonomy
     /**
      * @inheritdoc
      */
-    public function getMode() : int
+    public function getMode(): int
     {
         return $this->mode;
     }
@@ -66,7 +65,7 @@ class Taxonomy implements ITaxonomy
     /**
      * @inheritdoc
      */
-    public function getNodes() : array
+    public function getNodes(): array
     {
         return $this->nodes;
     }
@@ -74,7 +73,7 @@ class Taxonomy implements ITaxonomy
     /**
      * @inheritdoc
      */
-    public function getNodeTitlesAsArray() : array
+    public function getNodeTitlesAsArray(): array
     {
         $titles = [];
         foreach ($this->nodes as $node) {
@@ -87,7 +86,7 @@ class Taxonomy implements ITaxonomy
     /**
      * @inheritdoc
      */
-    public function attach(INode $node) : ITaxonomy
+    public function attach(INode $node): ITaxonomy
     {
         $this->nodes[] = $node;
 
@@ -116,7 +115,7 @@ class Taxonomy implements ITaxonomy
     /**
      * @inheritdoc
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ""; // Is this needed?
     }

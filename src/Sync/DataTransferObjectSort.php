@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 final class DataTransferObjectSort implements IDataTransferObjectSort
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IDataTransferObject
      */
@@ -39,7 +38,7 @@ final class DataTransferObjectSort implements IDataTransferObjectSort
     /**
      * @inheritdoc
      */
-    public function getDtoObject() : IDataTransferObject
+    public function getDtoObject(): IDataTransferObject
     {
         return $this->dto_object;
     }
@@ -55,7 +54,7 @@ final class DataTransferObjectSort implements IDataTransferObjectSort
     /**
      * @inheritdoc
      */
-    public function getLevel() : int
+    public function getLevel(): int
     {
         return $this->level;
     }

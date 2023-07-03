@@ -13,8 +13,7 @@ use srag\Plugins\Hub2\Object\ARObject;
  */
 class ARUser extends ARObject implements IUser
 {
-
     use ARMetadataAwareObject;
 
-    const TABLE_NAME = 'sr_hub2_user';
+    public const TABLE_NAME = 'sr_hub2_user';
 }

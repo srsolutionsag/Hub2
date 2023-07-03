@@ -15,6 +15,5 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractHub2Tests extends TestCase
 {
-
     use MockeryPHPUnitIntegration;
 }

@@ -15,10 +15,9 @@ use srag\Plugins\Hub2\Object\ARTaxonomyAwareObject;
  */
 class ARCourse extends ARObject implements ICourse
 {
-
     use ARMetadataAwareObject;
     use ARTaxonomyAwareObject;
     use ARDidacticTemplateAwareObject;
 
-    const TABLE_NAME = 'sr_hub2_course';
+    public const TABLE_NAME = 'sr_hub2_course';
 }

@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
  */
 class SessionDTO extends DataTransferObject implements ISessionDTO
 {
-
     use MetadataAwareDataTransferObject;
     use TaxonomyAwareDataTransferObject;
 

@@ -17,7 +17,6 @@ use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManageme
  */
 class CompetenceManagementDTO extends DataTransferObject implements ICompetenceManagementDTO
 {
-
     /**
      * @var int
      */
@@ -75,7 +74,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getType() : int
+    public function getType(): int
     {
         return $this->type;
     }
@@ -83,7 +82,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setType(int $type) : ICompetenceManagementDTO
+    public function setType(int $type): ICompetenceManagementDTO
     {
         $this->type = $type;
 
@@ -93,7 +92,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -101,7 +100,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setTitle(string $title) : ICompetenceManagementDTO
+    public function setTitle(string $title): ICompetenceManagementDTO
     {
         $this->title = $title;
 
@@ -111,7 +110,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->title;
     }
@@ -119,7 +118,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setDescription(string $description) : ICompetenceManagementDTO
+    public function setDescription(string $description): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
             throw new HubException("Description are only supported for TYPE_PROFILE!");
@@ -133,7 +132,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getParentId() : string
+    public function getParentId(): string
     {
         return $this->parent_id;
     }
@@ -141,7 +140,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setParentId(string $parent_id) : ICompetenceManagementDTO
+    public function setParentId(string $parent_id): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
             throw new HubException("ParentId are not supported for TYPE_PROFILE!");
@@ -155,7 +154,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getParentIdType() : int
+    public function getParentIdType(): int
     {
         return $this->parent_id_type;
     }
@@ -163,7 +162,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setParentIdType(int $parent_id__type) : ICompetenceManagementDTO
+    public function setParentIdType(int $parent_id__type): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
             throw new HubException("ParentIdType are not supported for TYPE_PROFILE!");
@@ -177,7 +176,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getStatus() : int
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -185,7 +184,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setStatus(int $status) : ICompetenceManagementDTO
+    public function setStatus(int $status): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
             throw new HubException("Status are not supported for TYPE_PROFILE!");
@@ -199,7 +198,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getSelfEvaluation() : bool
+    public function getSelfEvaluation(): bool
     {
         return $this->self_evaluation;
     }
@@ -207,7 +206,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setSelfEvaluation(bool $self_evaluation) : ICompetenceManagementDTO
+    public function setSelfEvaluation(bool $self_evaluation): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
             throw new HubException("SelfEvaluation are not supported for TYPE_PROFILE!");
@@ -221,7 +220,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function addSkillLevel(ISkillLevel $skill_level) : ICompetenceManagementDTO
+    public function addSkillLevel(ISkillLevel $skill_level): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_COMPETENCE) {
             throw new HubException("SkillLevels are only supported for TYPE_COMPETENCE!");
@@ -235,7 +234,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getSkillLevels() : array
+    public function getSkillLevels(): array
     {
         return $this->skill_levels;
     }
@@ -243,7 +242,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setSkillLevels(array $skill_levels) : ICompetenceManagementDTO
+    public function setSkillLevels(array $skill_levels): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_COMPETENCE) {
             throw new HubException("SkillLevels are only supported for TYPE_COMPETENCE!");
@@ -257,7 +256,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function addProfileLevel(IProfileLevel $profile_level) : ICompetenceManagementDTO
+    public function addProfileLevel(IProfileLevel $profile_level): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
             throw new HubException("ProfileLevels are only supported for TYPE_PROFILE!");
@@ -271,7 +270,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getProfileLevels() : array
+    public function getProfileLevels(): array
     {
         return $this->profile_levels;
     }
@@ -279,7 +278,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setProfileLevels(array $profile_levels) : ICompetenceManagementDTO
+    public function setProfileLevels(array $profile_levels): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
             throw new HubException("ProfileLevels are only supported for TYPE_PROFILE!");
@@ -293,7 +292,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function addProfileAssignedUser(int $user_id) : ICompetenceManagementDTO
+    public function addProfileAssignedUser(int $user_id): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
             throw new HubException("ProfileAssignedUsers are only supported for TYPE_PROFILE!");
@@ -307,7 +306,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getProfileAssignedUsers() : array
+    public function getProfileAssignedUsers(): array
     {
         return $this->profile_assigned_users;
     }
@@ -315,7 +314,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setProfileAssignedUsers(array $user_ids) : ICompetenceManagementDTO
+    public function setProfileAssignedUsers(array $user_ids): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
             throw new HubException("ProfileAssignedUsers are only supported for TYPE_PROFILE!");
@@ -329,7 +328,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function getExtId() : string
+    public function getExtId(): string
     {
         return $this->ext_id;
     }
@@ -337,7 +336,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
     /**
      * @inheritdoc
      */
-    public function setExtId(string $ext_id) : ICompetenceManagementDTO
+    public function setExtId(string $ext_id): ICompetenceManagementDTO
     {
         $this->ext_id = $ext_id;
 
@@ -354,6 +353,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
                 $data[$key] = json_decode(json_encode($this->{$key}), true);
 
+                // no break
             default:
                 parent::sleepValue($data, $key);
         }
@@ -367,26 +367,35 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
                 return array_map(
-                    function ($skill_level) : ISkillLevel {
+                    function ($skill_level): ISkillLevel {
                         if ($skill_level instanceof ISkillLevel) {
                             $this->{$key} = $skill_level;
                         }
 
-                        return new SkillLevel($skill_level["ext_id"], $skill_level["title"],
-                            $skill_level["description"]);
-                    }, $data[$key]
+                        return new SkillLevel(
+                            $skill_level["ext_id"],
+                            $skill_level["title"],
+                            $skill_level["description"]
+                        );
+                    },
+                    $data[$key]
                 );
 
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
                 return array_map(
-                    function ($profile_level) : IProfileLevel {
+                    function ($profile_level): IProfileLevel {
                         if ($profile_level instanceof IProfileLevel) {
                             $this->{$key} = $profile_level;
                         }
 
-                        $this->{$key} = new ProfileLevel($profile_level["skill_id"], $profile_level["skill_id_type"],
-                            $profile_level["level_id"], $profile_level["level_id_type"]);
-                    }, $data[$key]
+                        $this->{$key} = new ProfileLevel(
+                            $profile_level["skill_id"],
+                            $profile_level["skill_id_type"],
+                            $profile_level["level_id"],
+                            $profile_level["level_id_type"]
+                        );
+                    },
+                    $data[$key]
                 );
 
             default:

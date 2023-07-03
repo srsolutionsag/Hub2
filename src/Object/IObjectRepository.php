@@ -9,21 +9,20 @@ namespace srag\Plugins\Hub2\Object;
  */
 interface IObjectRepository
 {
-
-    const GLUE = "|||";
+    public const GLUE = "|||";
 
     /**
      * Return all objects
      * @return IObject[]
      */
-    public function all() : array;
+    public function all(): array;
 
     /**
      * Return only the objects having the given status
      * @param int $status
      * @return IObject[]
      */
-    public function getByStatus(int $status) : array;
+    public function getByStatus(int $status): array;
 
     /**
      * Return all objects where the status TO_DELETE should be applied.
@@ -32,7 +31,7 @@ interface IObjectRepository
      * @param array $ext_ids
      * @return IObject[]
      */
-    public function getToDelete(array $ext_ids) : array;
+    public function getToDelete(array $ext_ids): array;
 
     /**
      * As getToDelete this method returns all objects where the status TO_DELETE should be applied.
@@ -41,11 +40,11 @@ interface IObjectRepository
      * @param array $ext_ids
      * @return IObject[]
      */
-    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids) : array;
+    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array;
 
     /**
      * Return the number of objects
      * @return int
      */
-    public function count() : int;
+    public function count(): int;
 }

@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
  */
 class ARCourseOrigin extends AROrigin implements ICourseOrigin
 {
-
     /**
      * @inheritdoc
      */

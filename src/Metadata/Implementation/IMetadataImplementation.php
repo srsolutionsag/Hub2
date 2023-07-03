@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
  */
 interface IMetadataImplementation
 {
-
     /**
      * Writes the Value in the ILIAS representative (UDF od Custom MD)
      * @return void
@@ -21,10 +20,10 @@ interface IMetadataImplementation
     /**
      * @return IMetadata
      */
-    public function getMetadata() : IMetadata;
+    public function getMetadata(): IMetadata;
 
     /**
      * @return int
      */
-    public function getIliasId() : int;
+    public function getIliasId(): int;
 }

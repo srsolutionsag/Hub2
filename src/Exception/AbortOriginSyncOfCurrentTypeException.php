@@ -12,5 +12,4 @@ namespace srag\Plugins\Hub2\Exception;
  */
 class AbortOriginSyncOfCurrentTypeException extends HubException
 {
-
 }

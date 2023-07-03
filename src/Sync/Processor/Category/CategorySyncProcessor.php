@@ -32,7 +32,6 @@ use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CategoryParentResolver;
  */
 class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySyncProcessor
 {
-
     use MetadataSyncProcessor;
     use TaxonomySyncProcessor;
     use DidacticTemplateSyncProcessor;
@@ -59,7 +58,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      * @var CategoryParentResolver
      */
     protected $parent_resolver;
-    
+
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
@@ -112,18 +111,28 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             }
         }
         if ($this->props->get(CategoryProperties::SHOW_NEWS)) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY,
-                $dto->isShowNews());
+            ilObjCategory::_writeContainerSetting(
+                $ilObjCategory->getId(),
+                ilObjectServiceSettingsGUI::NEWS_VISIBILITY,
+                $dto->isShowNews()
+            );
         }
         if ($this->props->get(CategoryProperties::SHOW_INFO_TAB)) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(),
-                ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
+            ilObjCategory::_writeContainerSetting(
+                $ilObjCategory->getId(),
+                ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY,
+                $dto->isShowInfoPage()
+            );
         }
         $ilObjCategory->update();
 
         $ilObjCategory->removeTranslations();
-        $ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(),
-            self::dic()->language()->getDefaultLanguage(), true);
+        $ilObjCategory->addTranslation(
+            $dto->getTitle(),
+            $dto->getDescription(),
+            self::dic()->language()->getDefaultLanguage(),
+            true
+        );
     }
 
     /**
@@ -149,16 +158,26 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         }
         if ($this->props->updateDTOProperty('title')) {
             $ilObjCategory->removeTranslations();
-            $ilObjCategory->addTranslation($dto->getTitle(), $dto->getDescription(),
-                self::dic()->language()->getDefaultLanguage(), true);
+            $ilObjCategory->addTranslation(
+                $dto->getTitle(),
+                $dto->getDescription(),
+                self::dic()->language()->getDefaultLanguage(),
+                true
+            );
         }
         if ($this->props->updateDTOProperty('showNews')) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(), ilObjectServiceSettingsGUI::NEWS_VISIBILITY,
-                $dto->isShowNews());
+            ilObjCategory::_writeContainerSetting(
+                $ilObjCategory->getId(),
+                ilObjectServiceSettingsGUI::NEWS_VISIBILITY,
+                $dto->isShowNews()
+            );
         }
         if ($this->props->updateDTOProperty('showInfoPage')) {
-            ilObjCategory::_writeContainerSetting($ilObjCategory->getId(),
-                ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY, $dto->isShowInfoPage());
+            ilObjCategory::_writeContainerSetting(
+                $ilObjCategory->getId(),
+                ilObjectServiceSettingsGUI::INFO_TAB_VISIBILITY,
+                $dto->isShowInfoPage()
+            );
         }
         if ($this->props->updateDTOProperty('orderType')) {
             $sorting_settings = new ilContainerSortingSettings($ilObjCategory->getId());
@@ -168,17 +187,17 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             $sorting_settings->setSortNewItemsOrder($dto->getNewItemsOrderType());
             $sorting_settings->update();
         }
-        
+
         // move/put in tree
         $parent_ref_id = $this->determineParentRefId($dto);
         $ref_id = (int) $ilObjCategory->getRefId();
-    
+
         if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
             $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
         } elseif ($this->props->get(CategoryProperties::MOVE_CATEGORY)) {
             $this->parent_resolver->move($ref_id, $parent_ref_id);
         }
-        
+
         $ilObjCategory->update();
     }
 
@@ -215,14 +234,14 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     {
         return $this->parent_resolver->resolveParentRefId($category);
     }
-    
-    private function checkAndReturnRefId(int $ref_id) : int
+
+    private function checkAndReturnRefId(int $ref_id): int
     {
         if (!self::dic()->tree()->isInTree($ref_id)) {
             // TODO try to restore
             throw new HubException("Could not find the fallback parent ref-ID in tree: '{$ref_id}'");
         }
-        
+
         return $ref_id;
     }
 
@@ -238,7 +257,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
         return new ilObjCategory($iliasId);
     }
-    
+
     protected function moveCategory(ilObjCategory $ilObjCategory, CategoryDTO $category)
     {
         $this->parent_resolver->move(
@@ -250,7 +269,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     /**
      * @inheritdoc
      */
-    public function handleSort(array $sort_dtos) : bool
+    public function handleSort(array $sort_dtos): bool
     {
         array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto) {
             /** @var ICategoryDTO $object_a */

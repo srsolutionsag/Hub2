@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class MappingStrategyFactory implements IMappingStrategyFactory
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var Version
      */
@@ -35,7 +34,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     /**
      * @inheritdoc
      */
-    public function byEmail() : IMappingStrategy
+    public function byEmail(): IMappingStrategy
     {
         return new ByEmail($this->version);
     }
@@ -43,7 +42,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     /**
      * @inheritdoc
      */
-    public function byLogin() : IMappingStrategy
+    public function byLogin(): IMappingStrategy
     {
         return new ByLogin();
     }
@@ -51,7 +50,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     /**
      * @inheritdoc
      */
-    public function byExternalAccount() : IMappingStrategy
+    public function byExternalAccount(): IMappingStrategy
     {
         return new ByExternalAccount();
     }
@@ -59,7 +58,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     /**
      * @inheritdoc
      */
-    public function byTitle() : IMappingStrategy
+    public function byTitle(): IMappingStrategy
     {
         return new ByTitle();
     }
@@ -67,7 +66,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     /**
      * @inheritdoc
      */
-    public function byImportId() : IMappingStrategy
+    public function byImportId(): IMappingStrategy
     {
         return new ByImportId();
     }
@@ -75,7 +74,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     /**
      * @inheritDoc
      */
-    public function byExtId() : IMappingStrategy
+    public function byExtId(): IMappingStrategy
     {
         return new ByExtId();
     }
@@ -83,7 +82,7 @@ class MappingStrategyFactory implements IMappingStrategyFactory
     /**
      * @inheritdoc
      */
-    public function none() : IMappingStrategy
+    public function none(): IMappingStrategy
     {
         return new None();
     }

@@ -26,12 +26,11 @@ use Throwable;
  */
 class RunSync extends ilCronJob
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID;
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin[]
      */
@@ -48,7 +47,7 @@ class RunSync extends ilCronJob
      * @var Notifier
      */
     protected $notifier;
-    
+
     /**
      * RunSync constructor
      * @param IOrigin[]               $origins
@@ -70,7 +69,7 @@ class RunSync extends ilCronJob
     /**
      * @return string
      */
-    public function getId() : string
+    public function getId(): string
     {
         return self::CRON_JOB_ID;
     }
@@ -78,7 +77,7 @@ class RunSync extends ilCronJob
     /**
      * @return string
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return ilHub2Plugin::PLUGIN_NAME;
     }
@@ -86,7 +85,7 @@ class RunSync extends ilCronJob
     /**
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return "";
     }
@@ -94,7 +93,7 @@ class RunSync extends ilCronJob
     /**
      * @return bool
      */
-    public function hasAutoActivation() : bool
+    public function hasAutoActivation(): bool
     {
         return true;
     }
@@ -102,7 +101,7 @@ class RunSync extends ilCronJob
     /**
      * @return bool
      */
-    public function hasFlexibleSchedule() : bool
+    public function hasFlexibleSchedule(): bool
     {
         return true;
     }
@@ -110,7 +109,7 @@ class RunSync extends ilCronJob
     /**
      * @return int
      */
-    public function getDefaultScheduleType() : int
+    public function getDefaultScheduleType(): int
     {
         return ilCronJob::SCHEDULE_TYPE_DAILY;
     }
@@ -126,7 +125,7 @@ class RunSync extends ilCronJob
     /**
      * @return AbstractResult
      */
-    public function run() : AbstractResult
+    public function run(): AbstractResult
     {
         try {
             $skip_object_type = '';
@@ -147,7 +146,7 @@ class RunSync extends ilCronJob
 
             foreach ($this->origins as $origin) {
                 $this->notifier->notify('Start Origin ' . $origin->getTitle());
-                
+
                 if ($origin->getObjectType() == $skip_object_type) {
                     continue;
                 }

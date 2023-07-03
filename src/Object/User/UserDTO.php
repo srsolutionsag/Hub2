@@ -19,15 +19,14 @@ use srag\Plugins\Hub2\Object\LanguageCheck;
  */
 class UserDTO extends DataTransferObject implements IUserDTO
 {
-
     use MetadataAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
     use LanguageCheck;
 
-    const AUTH_MODE_LDAP_2 = 'ldap_2';
-    const AUTH_MODE_LDAP_3 = 'ldap_3';
-    const AUTH_MODE_LDAP_4 = 'ldap_4';
-    const AUTH_MODE_LDAP_5 = 'ldap_5';
+    public const AUTH_MODE_LDAP_2 = 'ldap_2';
+    public const AUTH_MODE_LDAP_3 = 'ldap_3';
+    public const AUTH_MODE_LDAP_4 = 'ldap_4';
+    public const AUTH_MODE_LDAP_5 = 'ldap_5';
     /**
      * @var array
      */
@@ -754,10 +753,11 @@ class UserDTO extends DataTransferObject implements IUserDTO
         return $this;
     }
 
-    function __toString()
+    public function __toString()
     {
         return implode(
-            ', ', [
+            ', ',
+            [
                 "ext_id: " . $this->getExtId(),
                 "period: " . $this->getPeriod(),
                 "firstname: " . $this->getFirstname(),

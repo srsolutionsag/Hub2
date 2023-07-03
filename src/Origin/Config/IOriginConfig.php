@@ -11,39 +11,38 @@ use srag\Plugins\Hub2\Exception\ConnectionFailedException;
  */
 interface IOriginConfig
 {
-
-    const CHECK_AMOUNT = 'check_amount';
-    const CHECK_AMOUNT_PERCENTAGE = 'check_amount_percentage';
-    const SHORT_LINK = 'shortlink';
-    const SHORT_LINK_FORCE_LOGIN = 'shortlink_force_login';
-    const NOTIFICATION_ERRORS = 'notification_errors';
-    const NOTIFICATION_SUMMARY = 'notification_summary';
-    const CONNECTION_TYPE = 'connection_type';
-    const PATH = 'file_path';
-    const SERVER_HOST = 'server_host';
-    const SERVER_PORT = 'server_port';
-    const SERVER_USERNAME = 'server_username';
-    const SERVER_PASSWORD = 'server_password';
-    const SERVER_DATABASE = 'server_database';
-    const SERVER_SEARCH_BASE = 'server_search_base';
-    const ACTIVE_PERIOD = 'active_period';
-    const LINKED_ORIGIN_ID = 'linked_origin_id';
-    const CONNECTION_TYPE_PATH = 1;
-    const CONNECTION_TYPE_SERVER = 2;
-    const CONNECTION_TYPE_EXTERNAL = 3;
-    const CONNECTION_TYPE_ILIAS_FILE = 4;
-    const CONNECTION_TYPE_FILE_DROP = 5;
-    const FILE_DROP_AUTH_TOKEN = 'fd_auth_token';
-    const FILE_DROP_RID = 'fd_rid';
+    public const CHECK_AMOUNT = 'check_amount';
+    public const CHECK_AMOUNT_PERCENTAGE = 'check_amount_percentage';
+    public const SHORT_LINK = 'shortlink';
+    public const SHORT_LINK_FORCE_LOGIN = 'shortlink_force_login';
+    public const NOTIFICATION_ERRORS = 'notification_errors';
+    public const NOTIFICATION_SUMMARY = 'notification_summary';
+    public const CONNECTION_TYPE = 'connection_type';
+    public const PATH = 'file_path';
+    public const SERVER_HOST = 'server_host';
+    public const SERVER_PORT = 'server_port';
+    public const SERVER_USERNAME = 'server_username';
+    public const SERVER_PASSWORD = 'server_password';
+    public const SERVER_DATABASE = 'server_database';
+    public const SERVER_SEARCH_BASE = 'server_search_base';
+    public const ACTIVE_PERIOD = 'active_period';
+    public const LINKED_ORIGIN_ID = 'linked_origin_id';
+    public const CONNECTION_TYPE_PATH = 1;
+    public const CONNECTION_TYPE_SERVER = 2;
+    public const CONNECTION_TYPE_EXTERNAL = 3;
+    public const CONNECTION_TYPE_ILIAS_FILE = 4;
+    public const CONNECTION_TYPE_FILE_DROP = 5;
+    public const FILE_DROP_AUTH_TOKEN = 'fd_auth_token';
+    public const FILE_DROP_RID = 'fd_rid';
     // Prefix for keys that storing custom config values
-    const CUSTOM_PREFIX = 'custom_';
-    const ILIAS_FILE_REF_ID = "ilias_file_ref_id";
+    public const CUSTOM_PREFIX = 'custom_';
+    public const ILIAS_FILE_REF_ID = "ilias_file_ref_id";
 
     /**
      * Returns all the config data as associative array
      * @return array
      */
-    public function getData() : array;
+    public function getData(): array;
 
     /**
      * @param array $data
@@ -68,100 +67,100 @@ interface IOriginConfig
      * @return int
      * @throws ConnectionFailedException
      */
-    public function getConnectionType() : int;
+    public function getConnectionType(): int;
 
     /**
      * @return string
      * @throws ConnectionFailedException
      */
-    public function getPath() : string;
+    public function getPath(): string;
 
     /**
      * @return string
      * @throws ConnectionFailedException
      */
-    public function getServerHost() : string;
+    public function getServerHost(): string;
 
     /**
      * @return int
      * @throws ConnectionFailedException
      */
-    public function getServerPort() : int;
+    public function getServerPort(): int;
 
     /**
      * @return string
      * @throws ConnectionFailedException
      */
-    public function getServerUsername() : string;
+    public function getServerUsername(): string;
 
     /**
      * @return string
      * @throws ConnectionFailedException
      */
-    public function getServerPassword() : string;
+    public function getServerPassword(): string;
 
     /**
      * @return string
      * @throws ConnectionFailedException
      */
-    public function getServerDatabase() : string;
+    public function getServerDatabase(): string;
 
     /**
      * @return string
      * @throws ConnectionFailedException
      */
-    public function getServerSearchBase() : string;
+    public function getServerSearchBase(): string;
 
     /**
      * @return int
      * @throws ConnectionFailedException
      */
-    public function getIliasFileRefId() : int;
+    public function getIliasFileRefId(): int;
 
     /**
      * @return string
      * @throws ConnectionFailedException
      */
-    public function getIliasFilePath() : string;
+    public function getIliasFilePath(): string;
 
     /**
      * @return string
      */
-    public function getActivePeriod() : string;
+    public function getActivePeriod(): string;
 
     /**
      * @return bool
      */
-    public function getCheckAmountData() : bool;
+    public function getCheckAmountData(): bool;
 
     /**
      * @return int
      */
-    public function getCheckAmountDataPercentage() : int;
+    public function getCheckAmountDataPercentage(): int;
 
     /**
      * @return bool
      */
-    public function useShortLink() : bool;
+    public function useShortLink(): bool;
 
     /**
      * @return bool
      */
-    public function useShortLinkForcedLogin() : bool;
+    public function useShortLinkForcedLogin(): bool;
 
     /**
      * Get the ID of another origin which has been selected over the configuration GUI
      * @return int
      */
-    public function getLinkedOriginId() : int;
+    public function getLinkedOriginId(): int;
 
     /**
      * @return array
      */
-    public function getNotificationsSummary() : array;
+    public function getNotificationsSummary(): array;
 
     /**
      * @return array
      */
-    public function getNotificationsErrors() : array;
+    public function getNotificationsErrors(): array;
 }

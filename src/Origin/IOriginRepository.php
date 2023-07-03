@@ -21,7 +21,6 @@ use srag\Plugins\Hub2\Origin\User\IUserOrigin;
  */
 interface IOriginRepository
 {
-
     /**
      * Returns all available origins in the correct order of the syncing process:
      * Users > Categories > Courses > CourseMemberShips > Groups > GroupMemberships > Sessions
@@ -79,15 +78,15 @@ interface IOriginRepository
     /**
      * @return IOrgUnitOrigin[]
      */
-    public function orgUnits() : array;
+    public function orgUnits(): array;
 
     /**
      * @return IOrgUnitMembershipOrigin[]
      */
-    public function orgUnitMemberships() : array;
+    public function orgUnitMemberships(): array;
 
     /**
      * @return ICompetenceManagementOrigin[]
      */
-    public function competenceManagements() : array;
+    public function competenceManagements(): array;
 }

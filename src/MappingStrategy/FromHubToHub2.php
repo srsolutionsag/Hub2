@@ -34,7 +34,7 @@ class FromHubToHub2 extends AMappingStrategy implements IMappingStrategy
         $this->hub1_table_exists = (bool) $this->database->tableExists('sr_hub_sync_history');
     }
 
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         if (!$this->hub1_table_exists) {
             return 0;

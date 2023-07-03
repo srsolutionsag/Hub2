@@ -14,5 +14,4 @@ use srag\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
  */
 interface ICategorySyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor, IDidacticTemplateSyncProcessor
 {
-
 }

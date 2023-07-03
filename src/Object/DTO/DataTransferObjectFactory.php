@@ -28,11 +28,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class DataTransferObjectFactory implements IDataTransferObjectFactory
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc
@@ -101,7 +100,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function orgUnit(string $ext_id) : IOrgUnitDTO
+    public function orgUnit(string $ext_id): IOrgUnitDTO
     {
         return new OrgUnitDTO($ext_id);
     }
@@ -109,7 +108,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function orgUnitMembership(string $org_unit_id, int $user_id, int $position) : IOrgUnitMembershipDTO
+    public function orgUnitMembership(string $org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO
     {
         return new OrgUnitMembershipDTO($org_unit_id, $user_id, $position);
     }
@@ -117,7 +116,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function competenceManagement(string $ext_id) : ICompetenceManagementDTO
+    public function competenceManagement(string $ext_id): ICompetenceManagementDTO
     {
         return new CompetenceManagementDTO($ext_id);
     }

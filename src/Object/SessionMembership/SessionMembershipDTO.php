@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class SessionMembershipDTO extends DataTransferObject implements ISessionMembershipDTO
 {
-
     /**
      * @var string
      */
@@ -47,7 +46,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
     /**
      * @return string
      */
-    public function getSessionId() : string
+    public function getSessionId(): string
     {
         return $this->sessionId;
     }
@@ -56,7 +55,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
      * @param string $sessionId
      * @return SessionMembershipDTO
      */
-    public function setSessionId(string $sessionId) : SessionMembershipDTO
+    public function setSessionId(string $sessionId): SessionMembershipDTO
     {
         $this->sessionId = $sessionId;
 
@@ -66,7 +65,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
     /**
      * @return int
      */
-    public function getSessionIdType() : int
+    public function getSessionIdType(): int
     {
         return $this->sessionIdType;
     }
@@ -75,7 +74,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
      * @param int $sessionIdType
      * @return SessionMembershipDTO
      */
-    public function setSessionIdType(int $sessionIdType) : SessionMembershipDTO
+    public function setSessionIdType(int $sessionIdType): SessionMembershipDTO
     {
         $this->sessionIdType = $sessionIdType;
 
@@ -85,7 +84,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
     /**
      * @return int
      */
-    public function getRole() : int
+    public function getRole(): int
     {
         return $this->role;
     }
@@ -94,7 +93,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
      * @param int $role
      * @return SessionMembershipDTO
      */
-    public function setRole(int $role) : SessionMembershipDTO
+    public function setRole(int $role): SessionMembershipDTO
     {
         $this->role = $role;
 
@@ -104,7 +103,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
     /**
      * @return int
      */
-    public function getUserId() : int
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -113,7 +112,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
      * @param int $userId
      * @return SessionMembershipDTO
      */
-    public function setUserId(int $userId) : SessionMembershipDTO
+    public function setUserId(int $userId): SessionMembershipDTO
     {
         $this->userId = $userId;
 
@@ -123,7 +122,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
     /**
      * @return bool
      */
-    public function isContact() : bool
+    public function isContact(): bool
     {
         return $this->isContact;
     }

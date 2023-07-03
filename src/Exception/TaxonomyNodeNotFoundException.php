@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
  */
 class TaxonomyNodeNotFoundException extends HubException
 {
-
     /**
      * @var INode
      */
@@ -30,7 +29,7 @@ class TaxonomyNodeNotFoundException extends HubException
     /**
      * @return INode
      */
-    public function getNode() : INode
+    public function getNode(): INode
     {
         return $this->node;
     }

@@ -13,11 +13,10 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
  */
 class ByExternalAccount extends AMappingStrategy implements IMappingStrategy
 {
-
     /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         if (!$dto instanceof UserDTO) {
             throw new HubException("Mapping using External Account not supported for this type of DTO");

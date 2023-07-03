@@ -11,8 +11,7 @@ use srag\RemovePluginDataConfirm\Hub2\AbstractRemovePluginDataConfirm;
  */
 class hub2RemoveDataConfirm extends AbstractRemovePluginDataConfirm
 {
-
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 }

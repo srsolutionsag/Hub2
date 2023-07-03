@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  */
 class CourseMembershipRepository extends ObjectRepository implements ICourseMembershipRepository
 {
-
 }

@@ -15,7 +15,6 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
  */
 class ByEmail extends AMappingStrategy implements IMappingStrategy
 {
-
     private const GET_USER_IDS_BY_EMAIL_PRIOR_ILIAS_6 = '_getUserIdsByEmail';
     private const GET_USER_IDS_BY_EMAIL_ILIAS_6 = 'getUserIdsByEmail';
     /**
@@ -35,7 +34,7 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
     /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         if (!$dto instanceof UserDTO) {
             throw new HubException("Mapping using Email not supported for this type of DTO");

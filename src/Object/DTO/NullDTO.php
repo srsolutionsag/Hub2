@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Object\DTI\INullDTO;
  */
 class NullDTO extends DataTransferObject implements INullDTO
 {
-
 }

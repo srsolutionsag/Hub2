@@ -11,49 +11,48 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
  */
 interface IOrgUnitProperties extends IOriginProperties
 {
-
     /**
      * @var string
      */
-    const MOVE = "move";
+    public const MOVE = "move";
     /**
      * @var string
      */
-    const DELETE_MODE = "delete_mode";
+    public const DELETE_MODE = "delete_mode";
     /**
      * @var int
      */
-    const DELETE_MODE_NONE = 0;
+    public const DELETE_MODE_NONE = 0;
     /**
      * @var int
      */
-    const DELETE_MODE_DELETE = 1;
+    public const DELETE_MODE_DELETE = 1;
     /**
      * @var string
      */
-    const PROP_DESCRIPTION = "description";
+    public const PROP_DESCRIPTION = "description";
     /**
      * @var string
      */
-    const PROP_EXT_ID = "ext_id";
+    public const PROP_EXT_ID = "ext_id";
     /**
      * @var string
      */
-    const PROP_ORG_UNIT_TYPE = "org_unit_type";
+    public const PROP_ORG_UNIT_TYPE = "org_unit_type";
     /**
      * @var string
      */
-    const PROP_OWNER = "owner";
+    public const PROP_OWNER = "owner";
     /**
      * @var string
      */
-    const PROP_PARENT_ID = "parent_id";
+    public const PROP_PARENT_ID = "parent_id";
     /**
      * @var string
      */
-    const PROP_PARENT_ID_TYPE = "parent_id_type";
+    public const PROP_PARENT_ID_TYPE = "parent_id_type";
     /**
      * @var string
      */
-    const PROP_TITLE = "title";
+    public const PROP_TITLE = "title";
 }

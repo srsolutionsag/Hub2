@@ -11,5 +11,4 @@ namespace srag\Plugins\Hub2\Exception;
  */
 class ParseDataFailedException extends HubException
 {
-
 }

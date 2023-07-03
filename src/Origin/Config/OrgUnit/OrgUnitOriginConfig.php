@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  */
 class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig
 {
-
     /**
      * @var array
      */
@@ -31,7 +30,7 @@ class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig
     /**
      * @inheritdoc
      */
-    public function getRefIdIfNoParentId() : int
+    public function getRefIdIfNoParentId(): int
     {
         return intval($this->get(self::REF_ID_IF_NO_PARENT_ID));
     }

@@ -25,7 +25,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroupMembershipSyncProcessor
 {
-
     /**
      * @var GroupProperties
      */
@@ -152,10 +151,11 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
             $originRepository = new OriginRepository();
             $origin = array_pop(
                 array_filter(
-                    $originRepository->groups(), function ($origin) use ($linkedOriginId) {
-                    /** @var IOrigin $origin */
-                    return (int) $origin->getId() == $linkedOriginId;
-                }
+                    $originRepository->groups(),
+                    function ($origin) use ($linkedOriginId) {
+                        /** @var IOrigin $origin */
+                        return (int) $origin->getId() == $linkedOriginId;
+                    }
                 )
             );
             if ($origin === null) {

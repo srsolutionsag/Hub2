@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Object\IObject;
  */
 interface IObjectStatusTransition
 {
-
     /**
      * Transition from the current final status of the object to the next intermediate status.
      * If the current status is not a final one (e.g. CREATED, UPDATED, OUTDATED, IGNORED...), the
@@ -22,5 +21,5 @@ interface IObjectStatusTransition
      * @return int
      * @deprecated
      */
-    public function finalToIntermediate(IObject $object) : int;
+    public function finalToIntermediate(IObject $object): int;
 }

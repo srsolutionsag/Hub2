@@ -11,8 +11,7 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  */
 class FakeIliasMembershipObject extends FakeIliasObject
 {
-
-    const GLUE = IObjectRepository::GLUE;
+    public const GLUE = IObjectRepository::GLUE;
     /**
      * @var int
      */
@@ -49,7 +48,7 @@ class FakeIliasMembershipObject extends FakeIliasObject
     /**
      * @inheritdoc
      */
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
@@ -57,7 +56,7 @@ class FakeIliasMembershipObject extends FakeIliasObject
     /**
      * @return int
      */
-    public function getUserIdIlias() : int
+    public function getUserIdIlias(): int
     {
         return $this->user_id_ilias;
     }
@@ -73,7 +72,7 @@ class FakeIliasMembershipObject extends FakeIliasObject
     /**
      * @return int
      */
-    public function getContainerIdIlias() : int
+    public function getContainerIdIlias(): int
     {
         return $this->container_id_ilias;
     }

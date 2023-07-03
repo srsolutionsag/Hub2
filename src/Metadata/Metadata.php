@@ -13,11 +13,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Metadata implements IMetadata
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
      */
@@ -34,7 +33,7 @@ class Metadata implements IMetadata
      * @var string
      */
     protected $language_code = 'de';
-    
+
     /**
      * Metadata constructor
      * @param int $identifier
@@ -48,7 +47,7 @@ class Metadata implements IMetadata
     /**
      * @inheritdoc
      */
-    public function setValue($value) : IMetadata
+    public function setValue($value): IMetadata
     {
         $this->value = $value;
 
@@ -58,25 +57,25 @@ class Metadata implements IMetadata
     /**
      * @inheritdoc
      */
-    public function setIdentifier(int $identifier) : IMetadata
+    public function setIdentifier(int $identifier): IMetadata
     {
         $this->identifier = $identifier;
 
         return $this;
     }
-    
-    public function setLanguageCode(string $code) : IMetadata
+
+    public function setLanguageCode(string $code): IMetadata
     {
         $this->language_code = $code;
-    
+
         return $this;
     }
-    
-    public function getLanguageCode() : string
+
+    public function getLanguageCode(): string
     {
         return $this->language_code;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -96,7 +95,7 @@ class Metadata implements IMetadata
     /**
      * @inheritdoc
      */
-    public function getRecordId() : int
+    public function getRecordId(): int
     {
         return $this->record_id ?? self::DEFAULT_RECORD_ID;
     }
@@ -104,7 +103,7 @@ class Metadata implements IMetadata
     /**
      * @inheritdoc
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         $json_encode = json_encode([$this->getRecordId() => [$this->getIdentifier() => $this->getValue()]]);
 

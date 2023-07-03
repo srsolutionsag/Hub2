@@ -14,7 +14,6 @@ use ILIAS\ResourceStorage\Identification\ResourceIdentification;
  */
 class ResourceStorage7 implements ResourceStorage
 {
-
     /**
      * @var \ILIAS\ResourceStorage\Services
      */

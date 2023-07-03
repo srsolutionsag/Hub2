@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  */
 class SessionOriginConfig extends OriginConfig implements ISessionOriginConfig
 {
-
 }

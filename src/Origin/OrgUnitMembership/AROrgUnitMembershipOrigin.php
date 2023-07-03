@@ -15,11 +15,10 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\OrgUnitMembershipPrope
  */
 class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOrigin
 {
-
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data) : IOrgUnitMembershipOriginConfig
+    protected function getOriginConfig(array $data): IOrgUnitMembershipOriginConfig
     {
         return new OrgUnitMembershipOriginConfig($data);
     }
@@ -27,7 +26,7 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data) : IOrgUnitMembershipProperties
+    protected function getOriginProperties(array $data): IOrgUnitMembershipProperties
     {
         return new OrgUnitMembershipProperties($data);
     }
@@ -35,7 +34,7 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
     /**
      * @inheritdoc
      */
-    public function config() : IOrgUnitMembershipOriginConfig
+    public function config(): IOrgUnitMembershipOriginConfig
     {
         return parent::config();
     }
@@ -43,7 +42,7 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
     /**
      * @inheritdoc
      */
-    public function properties() : IOrgUnitMembershipProperties
+    public function properties(): IOrgUnitMembershipProperties
     {
         return parent::properties();
     }

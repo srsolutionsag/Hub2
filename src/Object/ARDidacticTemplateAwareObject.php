@@ -9,11 +9,10 @@ namespace srag\Plugins\Hub2\Object;
  */
 trait ARDidacticTemplateAwareObject
 {
-
     /**
      * @param int $id
      */
-    public function setDidacticTemplateId(int $id) : void
+    public function setDidacticTemplateId(int $id): void
     {
         $this->data[self::F_NAME_TEMPLATE_ID] = $id;
     }
@@ -21,7 +20,7 @@ trait ARDidacticTemplateAwareObject
     /**
      * @return int
      */
-    public function getDidacticTemplateId() : ?int
+    public function getDidacticTemplateId(): ?int
     {
         return $this->data[self::F_NAME_TEMPLATE_ID];
     }

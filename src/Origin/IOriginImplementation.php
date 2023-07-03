@@ -19,7 +19,6 @@ use srag\Plugins\Hub2\Origin\Hook\Config;
  */
 interface IOriginImplementation
 {
-
     /**
      * Connect to the service providing the sync data.
      * Throw a ConnectionFailedException to abort the sync if a connection is not possible.
@@ -44,7 +43,7 @@ interface IOriginImplementation
     // HOOKS
     // ------------------------------------------------------------------------------------------------------------
 
-    public function hookConfig() : Config;
+    public function hookConfig(): Config;
     /**
      * Called if any exception occurs during processing the ILIAS objects. This hook can be used to
      * influence the further processing of the current origin sync or the global sync:
@@ -127,7 +126,7 @@ interface IOriginImplementation
      * @return array ext_ids of parent containers, who's children will be considered
      * when determining dto's to be deleted.
      */
-    public function getAdHocParentScopesAsExtIds() : array;
+    public function getAdHocParentScopesAsExtIds(): array;
 
     /**
      * @param HookObject $hook

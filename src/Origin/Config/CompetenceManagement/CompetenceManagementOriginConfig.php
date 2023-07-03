@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  */
 class CompetenceManagementOriginConfig extends OriginConfig implements ICompetenceManagementOriginConfig
 {
-
     /**
      * @var array
      */
@@ -31,7 +30,7 @@ class CompetenceManagementOriginConfig extends OriginConfig implements ICompeten
     /**
      * @inheritdoc
      */
-    public function getIdIfNoParentId() : int
+    public function getIdIfNoParentId(): int
     {
         return intval($this->get(self::ID_IF_NO_PARENT_ID));
     }

@@ -16,7 +16,6 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
  */
 class CategoryDTO extends DataTransferObject implements ICategoryDTO
 {
-
     use TaxonomyAndMetadataAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
     use DidacticTemplateAwareDataTransferObject;

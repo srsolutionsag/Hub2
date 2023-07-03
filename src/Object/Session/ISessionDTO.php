@@ -13,10 +13,9 @@ use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
  */
 interface ISessionDTO extends IDataTransferObject, IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject
 {
-
-    const PARENT_ID_TYPE_REF_ID = 1;
-    const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
-    const REGISTRATION_TYPE_NONE = 0;
-    const REGISTRATION_TYPE_DIRECT = 1;
-    const REGISTRATION_TYPE_REQUEST = 3;
+    public const PARENT_ID_TYPE_REF_ID = 1;
+    public const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
+    public const REGISTRATION_TYPE_NONE = 0;
+    public const REGISTRATION_TYPE_DIRECT = 1;
+    public const REGISTRATION_TYPE_REQUEST = 3;
 }

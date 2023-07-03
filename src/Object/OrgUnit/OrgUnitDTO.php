@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
  */
 class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
 {
-
     use MappingStrategyAwareDataTransferObject;
 
     /**
@@ -56,7 +55,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -64,7 +63,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function setTitle(string $title) : IOrgUnitDTO
+    public function setTitle(string $title): IOrgUnitDTO
     {
         $this->title = $title;
 
@@ -74,7 +73,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -82,7 +81,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function setDescription(string $description) : IOrgUnitDTO
+    public function setDescription(string $description): IOrgUnitDTO
     {
         $this->description = $description;
 
@@ -92,7 +91,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function getOwner() : int
+    public function getOwner(): int
     {
         return $this->owner;
     }
@@ -100,7 +99,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function setOwner(int $owner) : IOrgUnitDTO
+    public function setOwner(int $owner): IOrgUnitDTO
     {
         $this->owner = $owner;
 
@@ -110,7 +109,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function getParentId() : string
+    public function getParentId(): string
     {
         return $this->parent_id;
     }
@@ -118,7 +117,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function setParentId(string $parent_id) : IOrgUnitDTO
+    public function setParentId(string $parent_id): IOrgUnitDTO
     {
         $this->parent_id = $parent_id;
 
@@ -128,7 +127,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function getParentIdType() : int
+    public function getParentIdType(): int
     {
         return $this->parent_id_type;
     }
@@ -136,7 +135,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function setParentIdType(int $parent_id__type) : IOrgUnitDTO
+    public function setParentIdType(int $parent_id__type): IOrgUnitDTO
     {
         $this->parent_id_type = $parent_id__type;
 
@@ -146,7 +145,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function getOrgUnitType() : string
+    public function getOrgUnitType(): string
     {
         return $this->org_unit_type;
     }
@@ -154,7 +153,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function setOrgUnitType(string $org_unit_type) : IOrgUnitDTO
+    public function setOrgUnitType(string $org_unit_type): IOrgUnitDTO
     {
         $this->org_unit_type = $org_unit_type;
 
@@ -164,7 +163,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function getExtId() : string
+    public function getExtId(): string
     {
         return $this->ext_id;
     }
@@ -172,7 +171,7 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
     /**
      * @inheritdoc
      */
-    public function setExtId(string $ext_id) : IOrgUnitDTO
+    public function setExtId(string $ext_id): IOrgUnitDTO
     {
         $this->ext_id = $ext_id;
 

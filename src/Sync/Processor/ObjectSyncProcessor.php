@@ -37,12 +37,11 @@ use Throwable;
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 {
-
     use DICTrait;
     use Hub2Trait;
-
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     use Helper;
+
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @var IOrigin
@@ -79,7 +78,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
     /**
      * @inheritdoc
      */
-    public final function process(IObject $hub_object, IDataTransferObject $dto, bool $force = false)
+    final public function process(IObject $hub_object, IDataTransferObject $dto, bool $force = false)
     {
         // The HookObject is filled with the object (known Data in HUB) and the DTO delivered with
         // your origin. Additionally, if available, the HookObject is filled with the given
@@ -99,8 +98,10 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
             if ($ilias_id > 0) {
                 $hub_object->setStatus(IObject::STATUS_TO_UPDATE);
                 $hub_object->setILIASId($ilias_id);
-                self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin->getId()),
-                    $hub_object)->write(
+                self::logs()->factory()->originLog(
+                    (new OriginFactory())->getById($this->origin->getId()),
+                    $hub_object
+                )->write(
                     "Existing object found by Mapping Strategy"
                 );
             } elseif ($ilias_id < 0) {
@@ -276,7 +277,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
     /**
      * @inheritdoc
      */
-    public function handleSort(array $sort_dtos) : bool
+    public function handleSort(array $sort_dtos): bool
     {
         return false;
     }
@@ -287,7 +288,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
      * @return void
      * @throws HubException
      */
-    protected abstract function handleCreate(IDataTransferObject $dto)/*: void*/
+    abstract protected function handleCreate(IDataTransferObject $dto)/*: void*/
     ;
 
     /**
@@ -299,7 +300,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
      * @return void
      * @throws HubException
      */
-    protected abstract function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
+    abstract protected function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
     ;
 
     /**
@@ -310,6 +311,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
      * @return void
      * @throws HubException
      */
-    protected abstract function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    abstract protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
     ;
 }

@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipPrope
  */
 class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOrigin
 {
-
     /**
      * @inheritdoc
      */

@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  */
 interface ITaxonomyImplementation
 {
-
     /**
      * Writes the Value in the ILIAS representative
      * @return void
@@ -21,10 +20,10 @@ interface ITaxonomyImplementation
     /**
      * @return ITaxonomy
      */
-    public function getTaxonomy() : ITaxonomy;
+    public function getTaxonomy(): ITaxonomy;
 
     /**
      * @return int
      */
-    public function getILIASParentId() : int;
+    public function getILIASParentId(): int;
 }

@@ -11,65 +11,64 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
  */
 interface ICompetenceManagementProperties extends IOriginProperties
 {
-
     /**
      * @var string
      */
-    const MOVE = "move";
+    public const MOVE = "move";
     /**
      * @var string
      */
-    const DELETE_MODE = "delete_mode";
+    public const DELETE_MODE = "delete_mode";
     /**
      * @var int
      */
-    const DELETE_MODE_NONE = 0;
+    public const DELETE_MODE_NONE = 0;
     /**
      * @var int
      */
-    const DELETE_MODE_DELETE = 1;
+    public const DELETE_MODE_DELETE = 1;
     /**
      * @var string
      */
-    const PROP_DESCRIPTION = "description";
+    public const PROP_DESCRIPTION = "description";
     /**
      * @var string
      */
-    const PROP_EXT_ID = "ext_id";
+    public const PROP_EXT_ID = "ext_id";
     /**
      * @var string
      */
-    const PROP_PARENT_ID = "parent_id";
+    public const PROP_PARENT_ID = "parent_id";
     /**
      * @var string
      */
-    const PROP_PARENT_ID_TYPE = "parent_id_type";
+    public const PROP_PARENT_ID_TYPE = "parent_id_type";
     /**
      * @var string
      */
-    const PROP_PROFILE_LEVELS = "profile_levels";
+    public const PROP_PROFILE_LEVELS = "profile_levels";
     /**
      * @var string
      */
-    const PROP_PROFILE_ASSIGNED_USERS = "profile_assigned_users";
+    public const PROP_PROFILE_ASSIGNED_USERS = "profile_assigned_users";
     /**
      * @var string
      */
-    const PROP_SELF_EVALUATION = "self_evaluation";
+    public const PROP_SELF_EVALUATION = "self_evaluation";
     /**
      * @var string
      */
-    const PROP_SKILL_LEVELS = "skill_levels";
+    public const PROP_SKILL_LEVELS = "skill_levels";
     /**
      * @var string
      */
-    const PROP_STATUS = "status";
+    public const PROP_STATUS = "status";
     /**
      * @var string
      */
-    const PROP_TITLE = "title";
+    public const PROP_TITLE = "title";
     /**
      * @var string
      */
-    const PROP_TYPE = "type";
+    public const PROP_TYPE = "type";
 }

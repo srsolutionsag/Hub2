@@ -13,11 +13,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class FakeIliasObject
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
      */
@@ -35,7 +34,7 @@ abstract class FakeIliasObject
     /**
      * @return string
      */
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
@@ -51,5 +50,5 @@ abstract class FakeIliasObject
     /**
      * @return mixed
      */
-    public abstract function initId();
+    abstract public function initId();
 }

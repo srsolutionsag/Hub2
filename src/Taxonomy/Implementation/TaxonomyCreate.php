@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
  */
 class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 {
-
     /**
      * @inheritdoc
      */

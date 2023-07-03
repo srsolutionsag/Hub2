@@ -26,7 +26,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICourseMembershipSyncProcessor
 {
-
     /**
      * @var CourseProperties
      */
@@ -100,7 +99,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         if ($this->props->updateDTOProperty("isContact")) {
             $membership_obj->updateContact($user_id, $dto->isContact());
         }
-        
+
         if ($this->props->updateDTOProperty("hasNotification")) {
             $membership_obj->updateNotification($user_id, $dto->hasNotification());
         }
@@ -199,10 +198,11 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
             $originRepository = new OriginRepository();
             $origin = array_pop(
                 array_filter(
-                    $originRepository->courses(), function ($origin) use ($linkedOriginId) {
-                    /** @var IOrigin $origin */
-                    return $origin->getId() == $linkedOriginId;
-                }
+                    $originRepository->courses(),
+                    function ($origin) use ($linkedOriginId) {
+                        /** @var IOrigin $origin */
+                        return $origin->getId() == $linkedOriginId;
+                    }
                 )
             );
             if ($origin === null) {

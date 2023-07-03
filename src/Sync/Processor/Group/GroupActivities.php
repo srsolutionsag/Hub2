@@ -14,7 +14,6 @@ use ilObjGroup;
  */
 class GroupActivities implements IGroupActivities
 {
-
     /**
      * @var ilDB
      */

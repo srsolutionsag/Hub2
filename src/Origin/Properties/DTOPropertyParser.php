@@ -13,7 +13,6 @@ use ReflectionProperty;
  */
 class DTOPropertyParser
 {
-
     /**
      * @var string
      */

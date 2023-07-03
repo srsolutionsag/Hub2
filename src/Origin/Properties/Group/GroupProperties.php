@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  */
 class GroupProperties extends OriginProperties implements IGroupProperties
 {
-
     /**
      * @var array
      */
@@ -27,7 +26,7 @@ class GroupProperties extends OriginProperties implements IGroupProperties
     /**
      * @inheritdoc
      */
-    public static function getAvailableDeleteModes() : array
+    public static function getAvailableDeleteModes(): array
     {
         return [
             self::DELETE_MODE_NONE,

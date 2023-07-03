@@ -21,7 +21,6 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
  */
 interface IDataTransferObjectFactory
 {
-
     /**
      * @param string $ext_id
      * @return UserDTO
@@ -77,7 +76,7 @@ interface IDataTransferObjectFactory
      * @param string $ext_id
      * @return IOrgUnitDTO
      */
-    public function orgUnit(string $ext_id) : IOrgUnitDTO;
+    public function orgUnit(string $ext_id): IOrgUnitDTO;
 
     /**
      * @param string $org_unit_id
@@ -85,11 +84,11 @@ interface IDataTransferObjectFactory
      * @param int    $position
      * @return IOrgUnitMembershipDTO
      */
-    public function orgUnitMembership(string $org_unit_id, int $user_id, int $position) : IOrgUnitMembershipDTO;
+    public function orgUnitMembership(string $org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO;
 
     /**
      * @param string $ext_id
      * @return ICompetenceManagementDTO
      */
-    public function competenceManagement(string $ext_id) : ICompetenceManagementDTO;
+    public function competenceManagement(string $ext_id): ICompetenceManagementDTO;
 }

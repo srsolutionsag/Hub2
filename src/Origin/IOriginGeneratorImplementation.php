@@ -18,7 +18,6 @@ use srag\Plugins\Hub2\Object\HookObject;
  */
 interface IOriginGeneratorImplementation extends IOriginImplementation
 {
-    
     /**
      * Build the hub DTO objects from the parsed data.
      * An instance of such objects MUST be obtained over the DTOObjectFactory. The factory
@@ -32,5 +31,5 @@ interface IOriginGeneratorImplementation extends IOriginImplementation
      * @return IDataTransferObject[]|\Generator
      * @throws BuildObjectsFailedException
      */
-    public function buildObjects() :\Generator;
+    public function buildObjects(): \Generator;
 }

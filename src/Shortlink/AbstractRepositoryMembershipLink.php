@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
  */
 abstract class AbstractRepositoryMembershipLink extends AbstractRepositoryLink implements IObjectLink
 {
-
     /**
      * @inheritdoc
      */

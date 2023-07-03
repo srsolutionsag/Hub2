@@ -21,7 +21,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         $this->courseId = $course_ext_id;
         $this->userId = $user_id;
     }
-    
+
     /**
      * @var int
      */
@@ -59,7 +59,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
      * @param int $courseId
      * @return CourseMembershipDTO
      */
-    public function setCourseId($courseId) : CourseMembershipDTO
+    public function setCourseId($courseId): CourseMembershipDTO
     {
         $this->courseId = $courseId;
 
@@ -78,7 +78,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
      * @param int $userId
      * @return CourseMembershipDTO
      */
-    public function setUserId(int $userId) : CourseMembershipDTO
+    public function setUserId(int $userId): CourseMembershipDTO
     {
         $this->userId = $userId;
 
@@ -107,7 +107,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
     /**
      * @return int
      */
-    public function getCourseIdType() : int
+    public function getCourseIdType(): int
     {
         return $this->courseIdType;
     }
@@ -116,7 +116,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
      * @param int $courseIdType
      * @return CourseMembershipDTO
      */
-    public function setCourseIdType(int $courseIdType) : CourseMembershipDTO
+    public function setCourseIdType(int $courseIdType): CourseMembershipDTO
     {
         $this->courseIdType = $courseIdType;
 
@@ -126,7 +126,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
     /**
      * @return bool
      */
-    public function isContact() : bool
+    public function isContact(): bool
     {
         return $this->isContact;
     }
@@ -141,7 +141,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
 
         return $this;
     }
-    
+
     /**
      * @param bool $notification
      * @return $this
@@ -149,11 +149,11 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
     public function setHasNotification(bool $notification)
     {
         $this->hasNotification = $notification;
-    
+
         return $this;
     }
-    
-    public function hasNotification() : bool
+
+    public function hasNotification(): bool
     {
         return $this->hasNotification;
     }

@@ -18,18 +18,17 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class DeleteOldLogsJob extends ilCronJob
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID . "_delete_old_logs";
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID . "_delete_old_logs";
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * Get id
      * @return string
      */
-    public function getId() : string
+    public function getId(): string
     {
         return self::CRON_JOB_ID;
     }
@@ -37,7 +36,7 @@ class DeleteOldLogsJob extends ilCronJob
     /**
      * @return string
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return ilHub2Plugin::PLUGIN_NAME . ": " . self::plugin()->translate("cron", hub2LogsGUI::LANG_MODULE_LOGS);
     }
@@ -45,7 +44,7 @@ class DeleteOldLogsJob extends ilCronJob
     /**
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return self::plugin()->translate("cron_description", hub2LogsGUI::LANG_MODULE_LOGS);
     }
@@ -54,7 +53,7 @@ class DeleteOldLogsJob extends ilCronJob
      * Is to be activated on "installation"
      * @return boolean
      */
-    public function hasAutoActivation() : bool
+    public function hasAutoActivation(): bool
     {
         return true;
     }
@@ -63,7 +62,7 @@ class DeleteOldLogsJob extends ilCronJob
      * Can the schedule be configured?
      * @return boolean
      */
-    public function hasFlexibleSchedule() : bool
+    public function hasFlexibleSchedule(): bool
     {
         return true;
     }
@@ -72,7 +71,7 @@ class DeleteOldLogsJob extends ilCronJob
      * Get schedule type
      * @return int
      */
-    public function getDefaultScheduleType() : int
+    public function getDefaultScheduleType(): int
     {
         return self::SCHEDULE_TYPE_DAILY;
     }
@@ -90,7 +89,7 @@ class DeleteOldLogsJob extends ilCronJob
      * Run job
      * @return ilCronJobResult
      */
-    public function run() : ilCronJobResult
+    public function run(): ilCronJobResult
     {
         $keep_old_logs_time = ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME);
 

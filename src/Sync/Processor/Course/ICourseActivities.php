@@ -12,7 +12,6 @@ use ilObjCourse;
  */
 interface ICourseActivities
 {
-
     /**
      * Returns true if any activities happened in the given course, false otherwise.
      * @param ilObjCourse $ilObjCourse

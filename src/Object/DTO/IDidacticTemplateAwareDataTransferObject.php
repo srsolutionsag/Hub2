@@ -9,7 +9,6 @@ namespace srag\Plugins\Hub2\Object\DTO;
  */
 interface IDidacticTemplateAwareDataTransferObject
 {
-
     /**
      * @param int $id
      */
@@ -18,5 +17,5 @@ interface IDidacticTemplateAwareDataTransferObject
     /**
      * @return int
      */
-    public function getDidacticTemplateId() : ?int;
+    public function getDidacticTemplateId(): ?int;
 }

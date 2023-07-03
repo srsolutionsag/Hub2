@@ -89,7 +89,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @var CourseParentResolver
      */
     protected $parent_resolver;
-    
+
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
@@ -197,16 +197,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         $this->setLanguage($dto, $ilObjCourse);
         $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
-    
+
         $this->handleNewsSettings($dto, $ilObjCourse);
-        
+
         $ilObjCourse->update();
 
         $this->handleOrdering($dto, $ilObjCourse);
 
         $this->handleAppointementsColor($ilObjCourse, $dto);
     }
-    
+
     /**
      * @param IDataTransferObject $dto
      */
@@ -263,7 +263,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param array $options
      * @return int $ref_id
      */
-    public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options) : int
+    public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options): int
     {
         // Save wizard options
         $copy_id = ilCopyWizardOptions::_allocateCopyId();
@@ -339,8 +339,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $mail->From($sender);
         $mail->To($dto->getNotificationEmails());
         $mail->Subject($this->props->get(CourseProperties::CREATE_NOTIFICATION_SUBJECT));
-        $mail->Body($this->replaceBodyTextForMail($this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY),
-            $ilObjCourse));
+        $mail->Body($this->replaceBodyTextForMail(
+            $this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY),
+            $ilObjCourse
+        ));
         $mail->Send();
     }
 
@@ -432,19 +434,19 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if ($this->props->updateDTOProperty("enableSessionLimit")) {
             $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
         }
-    
+
         // News Settings
         if ($this->props->updateDTOProperty("newsSettings")) {
             $this->handleNewsSettings($dto, $ilObjCourse);
         }
-    
+
         // move/put in tree
         // Find the refId under which this course should be created
         $parent_ref_id = $this->determineParentRefId($dto);
         // Check if we should create some dependence categories
         $parent_ref_id = $this->buildDependenceCategories($dto, $parent_ref_id);
         $ref_id = (int) $ilObjCourse->getRefId();
-    
+
         if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
             $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
         } elseif ($this->props->get(CourseProperties::MOVE_COURSE)) {
@@ -583,13 +585,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
         // No category with the given title found, create it!
         $import_id = self::IMPORT_PREFIX . implode(
-                '_', [
+            '_',
+            [
                     $this->origin->getId(),
                     $parent_ref_id,
                     'depth',
                     $level,
                 ]
-            );
+        );
         $ilObjCategory = new ilObjCategory();
         $ilObjCategory->setTitle($title);
         $ilObjCategory->setImportId($import_id);
@@ -619,7 +622,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     /**
      * @inheritDoc
      */
-    protected function isMinVersion(string $version) : bool
+    protected function isMinVersion(string $version): bool
     {
         return (version_compare(ILIAS_VERSION_NUMERIC, $version) >= 0);
     }

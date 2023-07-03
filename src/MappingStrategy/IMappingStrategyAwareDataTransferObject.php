@@ -11,14 +11,13 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 interface IMappingStrategyAwareDataTransferObject extends IDataTransferObject
 {
+    /**
+     * @inheritdoc
+     */
+    public function getMappingStrategy(): IMappingStrategy;
 
     /**
      * @inheritdoc
      */
-    public function getMappingStrategy() : IMappingStrategy;
-
-    /**
-     * @inheritdoc
-     */
-    public function overrideMappingStrategy(IMappingStrategy $strategy) : IDataTransferObject;
+    public function overrideMappingStrategy(IMappingStrategy $strategy): IDataTransferObject;
 }

@@ -24,11 +24,10 @@ use srag\Plugins\Hub2\Origin\Hook\Config;
  */
 abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IMappingStrategyFactory
      */
@@ -98,8 +97,8 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     {
         return $this->factory;
     }
-    
-    public function hookConfig() : Config
+
+    public function hookConfig(): Config
     {
         return new Config(
             true
@@ -110,7 +109,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
      * @param IDataTransferObject $dto
      * @return ILog
      */
-    protected final function log(IDataTransferObject $dto = null) : ILog
+    final protected function log(IDataTransferObject $dto = null): ILog
     {
         return self::logs()->factory()->originLog($this->origin, null, $dto);
     }
@@ -118,7 +117,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     /**
      * @return IMappingStrategyFactory
      */
-    final protected function mapping() : IMappingStrategyFactory
+    final protected function mapping(): IMappingStrategyFactory
     {
         return $this->mapping_strategy_factory;
     }
@@ -152,7 +151,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     /**
      * @inheritdoc
      */
-    public function getAdHocParentScopesAsExtIds() : array
+    public function getAdHocParentScopesAsExtIds(): array
     {
         return [];
     }

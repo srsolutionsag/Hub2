@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 interface IMappingStrategy
 {
-
     /**
      * @param IDataTransferObject $dto
      * @return int ILIAS ID which will be passed to the Processor.
@@ -20,5 +19,5 @@ interface IMappingStrategy
      * Return an existing ILIAS ID which leads to an update of the Object
      * @throws HubException
      */
-    public function map(IDataTransferObject $dto) : int;
+    public function map(IDataTransferObject $dto): int;
 }

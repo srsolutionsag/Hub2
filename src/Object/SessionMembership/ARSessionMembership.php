@@ -11,6 +11,5 @@ use srag\Plugins\Hub2\Object\ARObject;
  */
 class ARSessionMembership extends ARObject implements ISessionMembership
 {
-
-    const TABLE_NAME = 'sr_hub2_session_mem';
+    public const TABLE_NAME = 'sr_hub2_session_mem';
 }

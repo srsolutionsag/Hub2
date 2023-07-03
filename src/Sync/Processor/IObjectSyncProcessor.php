@@ -14,9 +14,8 @@ use Throwable;
  */
 interface IObjectSyncProcessor
 {
-
     // This prefix MUST be used by the processors when setting the import ID on the ILIAS objects
-    const IMPORT_PREFIX = 'srhub_';
+    public const IMPORT_PREFIX = 'srhub_';
 
     /**
      * Process the given hub object and its corresponding DTO:
@@ -35,5 +34,5 @@ interface IObjectSyncProcessor
      * @param IDataTransferObjectSort[] $sort_dtos
      * @return bool Should sort?
      */
-    public function handleSort(array $sort_dtos) : bool;
+    public function handleSort(array $sort_dtos): bool;
 }

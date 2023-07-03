@@ -12,11 +12,10 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  */
 interface ITaxonomyImplementationFactory
 {
-
     /**
      * @param ITaxonomy $Taxonomy
      * @param ilObject  $ilias_object
      * @return ITaxonomyImplementation
      */
-    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object) : ITaxonomyImplementation;
+    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object): ITaxonomyImplementation;
 }

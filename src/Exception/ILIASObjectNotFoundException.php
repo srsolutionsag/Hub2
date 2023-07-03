@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Object\IObject;
  */
 class ILIASObjectNotFoundException extends HubException
 {
-
     /**
      * @var IObject
      */

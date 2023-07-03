@@ -15,11 +15,10 @@ use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManageme
  */
 class ARCompetenceManagementOrigin extends AROrigin implements ICompetenceManagementOrigin
 {
-
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data) : ICompetenceManagementOriginConfig
+    protected function getOriginConfig(array $data): ICompetenceManagementOriginConfig
     {
         return new CompetenceManagementOriginConfig($data);
     }
@@ -27,7 +26,7 @@ class ARCompetenceManagementOrigin extends AROrigin implements ICompetenceManage
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data) : ICompetenceManagementProperties
+    protected function getOriginProperties(array $data): ICompetenceManagementProperties
     {
         return new CompetenceManagementProperties($data);
     }
@@ -35,7 +34,7 @@ class ARCompetenceManagementOrigin extends AROrigin implements ICompetenceManage
     /**
      * @inheritdoc
      */
-    public function config() : ICompetenceManagementOriginConfig
+    public function config(): ICompetenceManagementOriginConfig
     {
         return parent::config();
     }
@@ -43,7 +42,7 @@ class ARCompetenceManagementOrigin extends AROrigin implements ICompetenceManage
     /**
      * @inheritdoc
      */
-    public function properties() : ICompetenceManagementProperties
+    public function properties(): ICompetenceManagementProperties
     {
         return parent::properties();
     }

@@ -20,16 +20,15 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class MetadataImplementationFactory implements IMetadataImplementationFactory
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc
      */
-    public function userDefinedField(IMetadata $metadata, int $ilias_id) : IMetadataImplementation
+    public function userDefinedField(IMetadata $metadata, int $ilias_id): IMetadataImplementation
     {
         return new UDF($metadata, $ilias_id);
     }
@@ -37,7 +36,7 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory
     /**
      * @inheritdoc
      */
-    public function customMetadata(IMetadata $metadata, int $ilias_id) : IMetadataImplementation
+    public function customMetadata(IMetadata $metadata, int $ilias_id): IMetadataImplementation
     {
         return new CustomMetadata($metadata, $ilias_id);
     }
@@ -49,7 +48,7 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory
         IMetadataAwareDataTransferObject $dto,
         IMetadata $metadata,
         int $ilias_id
-    ) : IMetadataImplementation {
+    ): IMetadataImplementation {
         switch (true) {
             case is_a($dto, GroupDTO::class):
             case is_a($dto, CourseDTO::class):

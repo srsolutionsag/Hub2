@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
 {
-
     /**
      * @var int
      */
@@ -34,7 +33,7 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
     /**
      * @return int
      */
-    public function getPositionId() : int
+    public function getPositionId(): int
     {
         return $this->position_id;
     }

@@ -9,25 +9,24 @@ namespace srag\Plugins\Hub2\Metadata;
  */
 interface IMetadata
 {
-
-    const DEFAULT_RECORD_ID = 1;
+    public const DEFAULT_RECORD_ID = 1;
 
     /**
      * @param string|string[] $value
      * @return IMetadata
      */
-    public function setValue($value) : IMetadata;
+    public function setValue($value): IMetadata;
 
     /**
      * @param int $identifier
      * @return IMetadata
      */
-    public function setIdentifier(int $identifier) : IMetadata;
-    
-    
-    public function setLanguageCode(string $code) : IMetadata;
-    
-    public function getLanguageCode() : string;
+    public function setIdentifier(int $identifier): IMetadata;
+
+
+    public function setLanguageCode(string $code): IMetadata;
+
+    public function getLanguageCode(): string;
 
     /**
      * @return mixed
@@ -42,10 +41,10 @@ interface IMetadata
     /**
      * @return int
      */
-    public function getRecordId() : int;
+    public function getRecordId(): int;
 
     /**
      * @return string
      */
-    public function __toString() : string;
+    public function __toString(): string;
 }

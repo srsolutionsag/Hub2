@@ -21,7 +21,7 @@ abstract class DataTransferObject implements IDataTransferObject
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
      */
@@ -107,7 +107,7 @@ abstract class DataTransferObject implements IDataTransferObject
     {
         return array_filter(
             array_keys(get_class_vars(get_class($this))),
-            function (string $property) : bool {
+            function (string $property): bool {
                 return ($property !== "should_deleted");
             }
         );
@@ -119,7 +119,8 @@ abstract class DataTransferObject implements IDataTransferObject
     public function __toString()
     {
         return implode(
-            ', ', [
+            ', ',
+            [
                 "ext_id: " . $this->getExtId(),
                 "period: " . $this->getPeriod(),
             ]
@@ -129,7 +130,7 @@ abstract class DataTransferObject implements IDataTransferObject
     /**
      * @inheritdoc
      */
-    public function shouldDeleted() : bool
+    public function shouldDeleted(): bool
     {
         return $this->should_deleted;
     }
@@ -147,7 +148,7 @@ abstract class DataTransferObject implements IDataTransferObject
     /**
      * @inheritdoc
      */
-    public function getAdditionalData() : Serializable
+    public function getAdditionalData(): Serializable
     {
         $object = unserialize($this->additionalData);
         if (!$object) {

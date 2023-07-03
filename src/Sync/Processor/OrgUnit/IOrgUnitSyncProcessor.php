@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  */
 interface IOrgUnitSyncProcessor extends IObjectSyncProcessor
 {
-
 }

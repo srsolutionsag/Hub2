@@ -19,7 +19,6 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
  */
 trait MetadataSyncProcessor
 {
-
     /**
      * @param IMetadataAwareDataTransferObject $dto
      * @param IMetadataAwareObject             $iobject

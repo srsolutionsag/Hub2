@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  */
 class OrgUnitMembershipProperties extends OriginProperties implements IOrgUnitMembershipProperties
 {
-
 }

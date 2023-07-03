@@ -33,14 +33,13 @@ use srag\Plugins\Hub2\Jobs\Notifier;
  */
 class ilHub2Plugin extends ilCronHookPlugin
 {
-
     use PluginUninstallTrait;
     use Hub2Trait;
 
-    const PLUGIN_ID = 'hub2';
-    const PLUGIN_NAME = 'Hub2';
-    const PLUGIN_CLASS_NAME = self::class;
-    const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = hub2RemoveDataConfirm::class;
+    public const PLUGIN_ID = 'hub2';
+    public const PLUGIN_NAME = 'Hub2';
+    public const PLUGIN_CLASS_NAME = self::class;
+    public const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = hub2RemoveDataConfirm::class;
     /**
      * @var self
      */
@@ -49,17 +48,17 @@ class ilHub2Plugin extends ilCronHookPlugin
      * @var CronNotifier
      */
     protected $notifier;
-    
+
     public function __construct(Notifier $notifier = null)
     {
         parent::__construct();
         $this->notifier = $notifier ?? new CronNotifier();
     }
-    
+
     /**
      * @return string
      */
-    public function getPluginName() : string
+    public function getPluginName(): string
     {
         return self::PLUGIN_NAME;
     }
@@ -67,7 +66,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return self
      */
-    public static function getInstance() : self
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -79,7 +78,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return ilCronJob[]
      */
-    public function getCronJobInstances() : array
+    public function getCronJobInstances(): array
     {
         return [new RunSync(new CronNotifier()), new DeleteOldLogsJob()];
     }
@@ -90,8 +89,7 @@ class ilHub2Plugin extends ilCronHookPlugin
      */
     public function getCronJobInstance(/*string*/
         $a_job_id
-    )/*: ?ilCronJob*/
-    {
+    ) {/*: ?ilCronJob*/
         switch ($a_job_id) {
             case RunSync::CRON_JOB_ID:
                 return new RunSync(new CronNotifier());
@@ -107,7 +105,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritdoc
      */
-    public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
+    public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
     {
         return new Menu(self::dic()->dic(), $this);
     }
@@ -140,7 +138,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritDoc
      */
-    protected function shouldUseOneUpdateStepOnly() : bool
+    protected function shouldUseOneUpdateStepOnly(): bool
     {
         return false;
     }

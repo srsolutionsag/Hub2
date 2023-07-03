@@ -26,17 +26,17 @@ use stdClass;
  */
 class LogsTableGUI extends TableGUI
 {
-
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    const LANG_MODULE = hub2LogsGUI::LANG_MODULE_LOGS;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const LANG_MODULE = hub2LogsGUI::LANG_MODULE_LOGS;
 
     /**
      * @inheritdoc
      * @param ILog $row
      */
-    protected function getColumnValue(string $column, /*array*/ $row, int $format = self::DEFAULT_FORMAT) : string {
+    protected function getColumnValue(string $column, /*array*/ $row, int $format = self::DEFAULT_FORMAT): string
+    {
         $value = Items::getter($row, $column);
 
         switch ($column) {
@@ -62,10 +62,13 @@ class LogsTableGUI extends TableGUI
                 $value = get_object_vars($value);
 
                 $value = implode(
-                    "<br>", array_map(
-                        function (string $key, $value) : string {
+                    "<br>",
+                    array_map(
+                        function (string $key, $value): string {
                             return "$key: $value";
-                        }, array_keys($value), $value
+                        },
+                        array_keys($value),
+                        $value
                     )
                 );
 
@@ -84,7 +87,7 @@ class LogsTableGUI extends TableGUI
     /**
      * @inheritdoc
      */
-    public function getSelectableColumns2() : array
+    public function getSelectableColumns2(): array
     {
         $columns = [
             "date" => "date",
@@ -100,13 +103,14 @@ class LogsTableGUI extends TableGUI
         ];
 
         $columns = array_map(
-            function (string $key) : array {
+            function (string $key): array {
                 return [
                     "id" => $key,
                     "default" => true,
                     "sort" => ($key !== "additional_data"),
                 ];
-            }, $columns
+            },
+            $columns
         );
 
         return $columns;
@@ -185,16 +189,39 @@ class LogsTableGUI extends TableGUI
         $this->setData(
             self::logs()
                 ->getLogs(
-                    $this->getOrderField(), $this->getOrderDirection(), intval($this->getOffset()),
-                    intval($this->getLimit()), $title, $message, $date_start, $date_end, $level, $origin_id,
-                    $origin_object_type, $object_ext_id, $object_ilias_id, $additional_data, $status
+                    $this->getOrderField(),
+                    $this->getOrderDirection(),
+                    intval($this->getOffset()),
+                    intval($this->getLimit()),
+                    $title,
+                    $message,
+                    $date_start,
+                    $date_end,
+                    $level,
+                    $origin_id,
+                    $origin_object_type,
+                    $object_ext_id,
+                    $object_ilias_id,
+                    $additional_data,
+                    $status
                 )
         );
 
         $this->setMaxCount(
             self::logs()
-                ->getLogsCount($title, $message, $date_start, $date_end, $level, $origin_id, $origin_object_type,
-                    $object_ext_id, $object_ilias_id, $additional_data, $status)
+                ->getLogsCount(
+                    $title,
+                    $message,
+                    $date_start,
+                    $date_end,
+                    $level,
+                    $origin_id,
+                    $origin_object_type,
+                    $object_ext_id,
+                    $object_ilias_id,
+                    $additional_data,
+                    $status
+                )
         );
     }
 
@@ -227,9 +254,10 @@ class LogsTableGUI extends TableGUI
                 PropertyFormGUI::PROPERTY_OPTIONS => [
                         "" => "",
                     ] + array_map(
-                        function (string $origin_object_type) : string {
+                        function (string $origin_object_type): string {
                             return self::plugin()->translate("origin_object_type_" . $origin_object_type);
-                        }, AROrigin::$object_types
+                        },
+                        AROrigin::$object_types
                     ),
             ],
             "status" => [
@@ -256,9 +284,10 @@ class LogsTableGUI extends TableGUI
                 PropertyFormGUI::PROPERTY_OPTIONS => [
                         "" => "",
                     ] + array_map(
-                        function (int $level) : string {
+                        function (int $level): string {
                             return $this->txt("level_" . $level);
-                        }, Log::$levels
+                        },
+                        Log::$levels
                     ),
             ],
             "additional_data" => [

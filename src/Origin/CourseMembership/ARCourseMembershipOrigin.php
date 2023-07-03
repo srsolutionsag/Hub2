@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipPropert
  */
 class ARCourseMembershipOrigin extends AROrigin implements ICourseMembershipOrigin
 {
-
     /**
      * @inheritdoc
      */

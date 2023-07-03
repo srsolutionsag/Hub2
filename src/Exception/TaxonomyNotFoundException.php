@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  */
 class TaxonomyNotFoundException extends HubException
 {
-
     /**
      * @var ITaxonomy
      */
@@ -30,7 +29,7 @@ class TaxonomyNotFoundException extends HubException
     /**
      * @return ITaxonomy
      */
-    public function getTaxonomy() : ITaxonomy
+    public function getTaxonomy(): ITaxonomy
     {
         return $this->taxonomy;
     }

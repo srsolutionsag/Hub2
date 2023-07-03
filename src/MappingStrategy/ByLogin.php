@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
  */
 class ByLogin extends AMappingStrategy implements IMappingStrategy
 {
-
     /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         if (!$dto instanceof UserDTO) {
             throw new HubException("Mapping using Login not supported for this type of DTO");

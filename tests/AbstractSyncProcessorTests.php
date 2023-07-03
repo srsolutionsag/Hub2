@@ -27,7 +27,6 @@ use srag\Plugins\Hub2\Sync\ObjectStatusTransition;
  */
 abstract class AbstractSyncProcessorTests extends AbstractHub2Tests
 {
-
     use MockeryPHPUnitIntegration;
 
     /**

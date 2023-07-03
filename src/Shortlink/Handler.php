@@ -19,12 +19,11 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Handler
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
     /**
      * @var bool
      */

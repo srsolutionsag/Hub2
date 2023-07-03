@@ -9,5 +9,4 @@ namespace srag\Plugins\Hub2\Exception;
  */
 class ShortlinkException extends HubException
 {
-
 }

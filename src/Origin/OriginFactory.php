@@ -16,11 +16,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginFactory implements IOriginFactory
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      *
@@ -50,7 +49,7 @@ class OriginFactory implements IOriginFactory
     /**
      * @inheritdoc
      */
-    public function createByType(string $type) : IOrigin
+    public function createByType(string $type): IOrigin
     {
         $class = $this->getClass($type);
 
@@ -60,7 +59,7 @@ class OriginFactory implements IOriginFactory
     /**
      * @inheritdoc
      */
-    public function getAllActive() : array
+    public function getAllActive(): array
     {
         $sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s ORDER BY sort';
         $set = self::dic()->database()->queryF($sql, ['integer'], [1]);
@@ -75,7 +74,7 @@ class OriginFactory implements IOriginFactory
     /**
      * @inheritdoc
      */
-    public function getAll() : array
+    public function getAll(): array
     {
         $origins = [];
 

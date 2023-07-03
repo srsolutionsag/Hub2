@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipDTO
 {
-
     /**
      * @var int
      */
@@ -51,7 +50,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
     /**
      * @return string
      */
-    public function getGroupId() : string
+    public function getGroupId(): string
     {
         return $this->groupId;
     }
@@ -60,7 +59,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
      * @param string $groupId
      * @return GroupMembershipDTO
      */
-    public function setGroupId(string $groupId) : GroupMembershipDTO
+    public function setGroupId(string $groupId): GroupMembershipDTO
     {
         $this->groupId = $groupId;
 
@@ -70,7 +69,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
     /**
      * @return int
      */
-    public function getGroupIdType() : int
+    public function getGroupIdType(): int
     {
         return $this->groupIdType;
     }
@@ -79,7 +78,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
      * @param int $groupIdType
      * @return GroupMembershipDTO
      */
-    public function setGroupIdType(int $groupIdType) : GroupMembershipDTO
+    public function setGroupIdType(int $groupIdType): GroupMembershipDTO
     {
         $this->groupIdType = $groupIdType;
 
@@ -98,7 +97,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
      * @param int $user_id
      * @return GroupMembershipDTO
      */
-    public function setUserId(int $user_id) : GroupMembershipDTO
+    public function setUserId(int $user_id): GroupMembershipDTO
     {
         $this->user_id = $user_id;
 
@@ -127,7 +126,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
     /**
      * @return bool
      */
-    public function isContact() : bool
+    public function isContact(): bool
     {
         return $this->isContact;
     }

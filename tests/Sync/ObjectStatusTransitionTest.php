@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Sync\ObjectStatusTransition;
  */
 class ObjectStatusTransitionTest extends AbstractHub2Tests
 {
-
     public function tearDown()
     {
         Mockery::close();

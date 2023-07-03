@@ -13,7 +13,7 @@ use ILIAS\Data\URI;
  */
 class CourseLink extends AbstractRepositoryLink implements IObjectLink
 {
-    public function getAccessDeniedLink() : string
+    public function getAccessDeniedLink(): string
     {
         $link = \ilLink::_getLink($this->getILIASId());
 

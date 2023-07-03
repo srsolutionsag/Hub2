@@ -22,14 +22,13 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class hub2MainGUI
 {
-    
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
-    const TAB_ORIGINS = 'tab_origins';
-    const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
-    const CMD_INDEX = 'index';
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
+    public const TAB_ORIGINS = 'tab_origins';
+    public const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
+    public const CMD_INDEX = 'index';
     /**
      * @var \ILIAS\DI\UIServices
      */
@@ -58,7 +57,7 @@ class hub2MainGUI
      * @var ilHub2Plugin
      */
     protected $plugin;
-    
+
     /**
      * MainGUI constructor
      */
@@ -116,18 +115,24 @@ class hub2MainGUI
     protected function initTabs()/*: void*/
     {
         $this->tabs->addTab(
-            self::TAB_ORIGINS, $this->plugin->txt(self::TAB_ORIGINS), $this->ctrl
+            self::TAB_ORIGINS,
+            $this->plugin->txt(self::TAB_ORIGINS),
+            $this->ctrl
                                                                                  ->getLinkTargetByClass(hub2ConfigOriginsGUI::class)
         );
-    
+
         $this->tabs->addTab(
-            self::TAB_PLUGIN_CONFIG, $this->plugin->txt(self::TAB_PLUGIN_CONFIG), $this->ctrl
+            self::TAB_PLUGIN_CONFIG,
+            $this->plugin->txt(self::TAB_PLUGIN_CONFIG),
+            $this->ctrl
                                                                                              ->getLinkTargetByClass(hub2ConfigGUI::class)
         );
-    
+
         if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
             $this->tabs->addTab(
-                self::TAB_CUSTOM_VIEWS, $this->plugin->txt(self::TAB_CUSTOM_VIEWS), $this->ctrl
+                self::TAB_CUSTOM_VIEWS,
+                $this->plugin->txt(self::TAB_CUSTOM_VIEWS),
+                $this->ctrl
                                                                                                ->getLinkTargetByClass(hub2CustomViewGUI::class)
             );
         }
@@ -147,7 +152,8 @@ class hub2MainGUI
     protected function handleExplorerCommand()/*: void*/
     {
         (new OriginConfigFormGUI(
-            new hub2ConfigOriginsGUI(), new OriginRepository(),
+            new hub2ConfigOriginsGUI(),
+            new OriginRepository(),
             (new OriginFactory())->getById(intval(filter_input(INPUT_GET, hub2ConfigOriginsGUI::ORIGIN_ID)))
         ))->getILIASFileRepositorySelector()
           ->handleExplorerCommand();

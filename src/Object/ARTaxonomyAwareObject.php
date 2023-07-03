@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  */
 trait ARTaxonomyAwareObject
 {
-
     /**
      * @var array
      * @db_has_field    true
@@ -22,7 +21,7 @@ trait ARTaxonomyAwareObject
     /**
      * @return ITaxonomy[]
      */
-    public function getTaxonomies() : array
+    public function getTaxonomies(): array
     {
         return $this->taxonomies;
     }

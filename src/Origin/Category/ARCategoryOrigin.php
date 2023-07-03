@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
  */
 class ARCategoryOrigin extends AROrigin implements ICategoryOrigin
 {
-
     /**
      * @inheritdoc
      */

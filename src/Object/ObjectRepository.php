@@ -18,11 +18,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class ObjectRepository implements IObjectRepository
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin
      */
@@ -44,7 +43,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function all() : array
+    public function all(): array
     {
         $class = $this->getClass();
 
@@ -55,7 +54,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function getByStatus(int $status) : array
+    public function getByStatus(int $status): array
     {
         $class = $this->getClass();
 
@@ -71,7 +70,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids) : array
+    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array
     {
         $glue = self::GLUE;
         $class = $this->getClass();
@@ -88,19 +87,21 @@ abstract class ObjectRepository implements IObjectRepository
                 $parent_scope_query = rtrim($parent_scope_query, "OR");
                 $parent_scope_query .= ")";
             } else {
-                $parent_scope_query = " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode("','",
-                        $parent_ext_ids) . "') ";
+                $parent_scope_query = " AND SUBSTRING_INDEX(ext_id,'" . $glue . "',1) IN ('" . implode(
+                    "','",
+                    $parent_ext_ids
+                ) . "') ";
             }
 
             return $class::where(
                 "origin_id = " . $this->origin->getId() . " AND status IN ('" . implode(
-                    "','", [
+                    "','",
+                    [
                         IObject::STATUS_CREATED,
                         IObject::STATUS_UPDATED,
                         IObject::STATUS_IGNORED,
                     ]
                 ) . "') " . $existing_ext_id_query . $parent_scope_query
-
             )->get();
         }
 
@@ -110,7 +111,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function getToDelete(array $ext_ids) : array
+    public function getToDelete(array $ext_ids): array
     {
         $class = $this->getClass();
 
@@ -123,7 +124,8 @@ abstract class ObjectRepository implements IObjectRepository
                     // E.g. not from OUTDATED or IGNORED
                     'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
                     'ext_id' => $ext_ids,
-                ], ['origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN']
+                ],
+                ['origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN']
             )->get();
         } else {
             /** @var ActiveRecord $class */
@@ -133,7 +135,8 @@ abstract class ObjectRepository implements IObjectRepository
                     // We only can transmit from final states CREATED and UPDATED to TO_DELETE
                     // E.g. not from OUTDATED or IGNORED
                     'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
-                ], ['origin_id' => '=', 'status' => 'IN']
+                ],
+                ['origin_id' => '=', 'status' => 'IN']
             )->get();
         }
     }
@@ -141,7 +144,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function count() : int
+    public function count(): int
     {
         $class = $this->getClass();
 

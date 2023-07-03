@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  */
 class CategoryProperties extends OriginProperties implements ICategoryProperties
 {
-
     /**
      * @var array
      */
@@ -28,7 +27,7 @@ class CategoryProperties extends OriginProperties implements ICategoryProperties
     /**
      * @inheritdoc
      */
-    public static function getAvailableDeleteModes() : array
+    public static function getAvailableDeleteModes(): array
     {
         return [
             self::DELETE_MODE_NONE,

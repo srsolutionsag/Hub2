@@ -11,14 +11,13 @@ use srag\Plugins\Hub2\UI\Config\ConfigFormGUI;
  */
 class hub2ConfigGUI extends hub2MainGUI
 {
-
-    const CMD_SAVE_CONFIG = 'saveConfig';
-    const CMD_CANCEL = 'cancel';
+    public const CMD_SAVE_CONFIG = 'saveConfig';
+    public const CMD_CANCEL = 'cancel';
 
     /**
      * @return ConfigFormGUI
      */
-    protected function getConfigForm() : ConfigFormGUI
+    protected function getConfigForm(): ConfigFormGUI
     {
         $form = new ConfigFormGUI($this);
 

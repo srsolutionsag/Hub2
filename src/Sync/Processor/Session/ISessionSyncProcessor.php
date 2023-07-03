@@ -13,5 +13,4 @@ use srag\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
  */
 interface ISessionSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor
 {
-
 }

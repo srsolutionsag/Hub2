@@ -11,11 +11,10 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
  */
 interface IMetadataAwareObject extends IObject
 {
-
     /**
      * @return IMetadata[]
      */
-    public function getMetaData() : array;
+    public function getMetaData(): array;
 
     /**
      * @param IMetadata[] $metadata

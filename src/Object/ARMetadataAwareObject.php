@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
  */
 trait ARMetadataAwareObject
 {
-
     /**
      * @var array
      * @db_has_field    true
@@ -22,7 +21,7 @@ trait ARMetadataAwareObject
     /**
      * @return IMetadata[]
      */
-    public function getMetaData() : array
+    public function getMetaData(): array
     {
         return is_array($this->meta_data) ? $this->meta_data : array();
     }

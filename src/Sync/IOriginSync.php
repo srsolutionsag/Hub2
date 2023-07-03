@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Jobs\Notifier;
  */
 interface IOriginSync
 {
-
     /**
      * Execute the synchronization for the origin
      * @throws Throwable

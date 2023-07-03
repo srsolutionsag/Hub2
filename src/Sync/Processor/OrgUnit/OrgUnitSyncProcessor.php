@@ -27,7 +27,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncProcessor
 {
-
     /**
      * @var IOrgUnitProperties
      */
@@ -63,7 +62,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     /**
      * @return array
      */
-    public static function getProperties() : array
+    public static function getProperties(): array
     {
         return self::$properties;
     }
@@ -71,13 +70,14 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     /**
      * @return int
      */
-    protected function getParentRefIdFallback() : int
+    protected function getParentRefIdFallback(): int
     {
         static $ref_id_fallback;
         if (!isset($ref_id_fallback)) {
             $ref_id_fallback = $this->config->getRefIdIfNoParentId();
             if ($ref_id_fallback === 0) {
-                $ref_id_fallback = (int) ilObjOrgUnit::getRootOrgRefId();;
+                $ref_id_fallback = (int) ilObjOrgUnit::getRootOrgRefId();
+                ;
             }
 
         }
@@ -89,25 +89,28 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @return bool
      * @throws HubException
      */
-    public function handleSort(array $sort_dtos) : bool
+    public function handleSort(array $sort_dtos): bool
     {
         $sort_dtos = array_filter(
-            $sort_dtos, function (IDataTransferObjectSort $sort_dto) : bool {
-            /**
-             * @var IOrgUnitDTO $dto
-             */
-            $dto = $sort_dto->getDtoObject();
+            $sort_dtos,
+            function (IDataTransferObjectSort $sort_dto): bool {
+                /**
+                 * @var IOrgUnitDTO $dto
+                 */
+                $dto = $sort_dto->getDtoObject();
 
-            return ($dto->getParentIdType() === IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID && !$this->isRootId($dto));
-        }
+                return ($dto->getParentIdType() === IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID && !$this->isRootId($dto));
+            }
         );
 
         $dtos = array_reduce(
-            $sort_dtos, function (array $dtos, IDataTransferObjectSort $sort_dto) : array {
-            $dtos[$sort_dto->getDtoObject()->getExtId()] = $sort_dto->getDtoObject();
+            $sort_dtos,
+            function (array $dtos, IDataTransferObjectSort $sort_dto): array {
+                $dtos[$sort_dto->getDtoObject()->getExtId()] = $sort_dto->getDtoObject();
 
-            return $dtos;
-        }, []
+                return $dtos;
+            },
+            []
         );
 
         foreach ($sort_dtos as $sort_dto) {
@@ -133,7 +136,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @return bool
      * @throws HubException
      */
-    private function isRootId(IOrgUnitDTO $dto) : bool
+    private function isRootId(IOrgUnitDTO $dto): bool
     {
         //$parent_id = $this->getParentId($dto);
 
@@ -253,7 +256,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @param IOrgUnitDTO $dto
      * @return int
      */
-    protected function getOrgUnitTypeId(IOrgUnitDTO $dto) : int
+    protected function getOrgUnitTypeId(IOrgUnitDTO $dto): int
     {
         $orgu_type_id = 0;
 
@@ -261,8 +264,10 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
             /**
              * @var ilOrgUnitType $org_type
              */
-            if (ilOrgUnitTypeTranslation::getInstance($org_type->getId(),
-                    $org_type->getDefaultLang())->getMember("title")
+            if (ilOrgUnitTypeTranslation::getInstance(
+                $org_type->getId(),
+                $org_type->getDefaultLang()
+            )->getMember("title")
                 === $dto->getOrgUnitType()
             ) {
                 $orgu_type_id = (int) $org_type->getId();
@@ -278,7 +283,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @return int
      * @throws HubException
      */
-    protected function getParentId(IOrgUnitDTO $dto) : int
+    protected function getParentId(IOrgUnitDTO $dto): int
     {
         $parent_id = 0;
         $ref_id_fallback = $this->getParentRefIdFallback();

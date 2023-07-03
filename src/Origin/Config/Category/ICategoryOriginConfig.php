@@ -11,9 +11,8 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 interface ICategoryOriginConfig extends IOriginConfig
 {
-
-    const REF_ID_NO_PARENT_ID_FOUND = 'ref_id_no_parent_id_found';
-    const EXT_ID_NO_PARENT_ID_FOUND = 'ext_id_no_parent_id_found';
+    public const REF_ID_NO_PARENT_ID_FOUND = 'ref_id_no_parent_id_found';
+    public const EXT_ID_NO_PARENT_ID_FOUND = 'ext_id_no_parent_id_found';
 
     /**
      * Get the ILIAS ref-ID acting as parent, only if hub was not able to find
@@ -21,7 +20,7 @@ interface ICategoryOriginConfig extends IOriginConfig
      * in the repository (refId = 1).
      * @return int
      */
-    public function getParentRefIdIfNoParentIdFound() : int;
+    public function getParentRefIdIfNoParentIdFound(): int;
 
     /**
      * Get an external ID of another category from the same origin acting as parent,
@@ -31,5 +30,5 @@ interface ICategoryOriginConfig extends IOriginConfig
      *
      * @return string
      */
-    public function getExternalParentIdIfNoParentIdFound() : string;
+    public function getExternalParentIdIfNoParentIdFound(): string;
 }

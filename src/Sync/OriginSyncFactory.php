@@ -22,11 +22,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginSyncFactory
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin
      */
@@ -44,12 +43,16 @@ class OriginSyncFactory
      * @return OriginSync
      * @throws HubException
      */
-    public function instance() : OriginSync
+    public function instance(): OriginSync
     {
         $statusTransition = new ObjectStatusTransition($this->origin->config());
 
-        $originSync = new OriginSync($this->origin, $this->getObjectRepository(), new ObjectFactory($this->origin),
-            $statusTransition);
+        $originSync = new OriginSync(
+            $this->origin,
+            $this->getObjectRepository(),
+            new ObjectFactory($this->origin),
+            $statusTransition
+        );
 
         return $originSync;
     }
@@ -64,8 +67,11 @@ class OriginSyncFactory
 
         $originImplementation = $implementationFactory->instance();
 
-        $originSync->setProcessor($this->getSyncProcessor($this->origin, $originImplementation,
-            $originSync->getStatusTransition()));
+        $originSync->setProcessor($this->getSyncProcessor(
+            $this->origin,
+            $originImplementation,
+            $originSync->getStatusTransition()
+        ));
 
         $originSync->setImplementation($originImplementation);
     }

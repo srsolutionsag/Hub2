@@ -11,8 +11,7 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 interface IGroupOriginConfig extends IOriginConfig
 {
-
-    const REF_ID_NO_PARENT_ID_FOUND = 'ref_id_no_parent_id_found';
+    public const REF_ID_NO_PARENT_ID_FOUND = 'ref_id_no_parent_id_found';
 
     /**
      * Get the ILIAS ref-ID acting as parent, only if hub was not able to find
@@ -20,5 +19,5 @@ interface IGroupOriginConfig extends IOriginConfig
      * in the repository (refId = 1).
      * @return int
      */
-    public function getParentRefIdIfNoParentIdFound() : int;
+    public function getParentRefIdIfNoParentIdFound(): int;
 }

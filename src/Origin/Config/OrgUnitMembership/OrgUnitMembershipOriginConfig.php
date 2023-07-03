@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  */
 class OrgUnitMembershipOriginConfig extends OriginConfig implements IOrgUnitMembershipOriginConfig
 {
-
 }

@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class BaseCustomViewGUI
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var hub2CustomViewGUI
      */
@@ -36,6 +35,6 @@ abstract class BaseCustomViewGUI
     /**
      *
      */
-    public abstract function executeCommand()/*: void*/
+    abstract public function executeCommand()/*: void*/
     ;
 }

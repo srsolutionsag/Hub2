@@ -12,19 +12,18 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
  */
 interface IOrigin
 {
-
-    const OBJECT_TYPE_USER = 'user';
-    const OBJECT_TYPE_COURSE_MEMBERSHIP = 'courseMembership';
-    const OBJECT_TYPE_COURSE = 'course';
-    const OBJECT_TYPE_CATEGORY = 'category';
-    const OBJECT_TYPE_GROUP = 'group';
-    const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
-    const OBJECT_TYPE_SESSION = 'session';
-    const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
-    const OBJECT_TYPE_ORGNUNIT = "orgUnit";
-    const OBJECT_TYPE_ORGNUNIT_MEMBERSHIP = "orgUnitMembership";
-    const OBJECT_TYPE_COMPETENCE_MANAGEMENT = "competenceManagement";
-    const ORIGIN_MAIN_NAMESPACE = "srag\\Plugins\\Hub2\\Origin";
+    public const OBJECT_TYPE_USER = 'user';
+    public const OBJECT_TYPE_COURSE_MEMBERSHIP = 'courseMembership';
+    public const OBJECT_TYPE_COURSE = 'course';
+    public const OBJECT_TYPE_CATEGORY = 'category';
+    public const OBJECT_TYPE_GROUP = 'group';
+    public const OBJECT_TYPE_GROUP_MEMBERSHIP = 'groupMembership';
+    public const OBJECT_TYPE_SESSION = 'session';
+    public const OBJECT_TYPE_SESSION_MEMBERSHIP = 'sessionMembership';
+    public const OBJECT_TYPE_ORGNUNIT = "orgUnit";
+    public const OBJECT_TYPE_ORGNUNIT_MEMBERSHIP = "orgUnitMembership";
+    public const OBJECT_TYPE_COMPETENCE_MANAGEMENT = "competenceManagement";
+    public const ORIGIN_MAIN_NAMESPACE = "srag\\Plugins\\Hub2\\Origin";
 
     /**
      * @return int
@@ -148,12 +147,12 @@ interface IOrigin
     /**
      * @return bool
      */
-    public function isUpdateForced() : bool;
+    public function isUpdateForced(): bool;
 
     /**
      * @return bool
      */
-    public function isAdHoc() : bool;
+    public function isAdHoc(): bool;
 
     /**
      * @param bool $active
@@ -164,7 +163,7 @@ interface IOrigin
     /**
      * @return bool
      */
-    public function isAdhocParentScope() : bool;
+    public function isAdhocParentScope(): bool;
 
     /**
      * @param bool $adhoc_parent_scope
@@ -175,7 +174,7 @@ interface IOrigin
     /**
      * @return int
      */
-    public function getSort() : int;
+    public function getSort(): int;
 
     /**
      * @param int $sort

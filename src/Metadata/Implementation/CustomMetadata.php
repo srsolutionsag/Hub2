@@ -20,7 +20,6 @@ use ilDateTime;
  */
 class CustomMetadata extends AbstractImplementation implements IMetadataImplementation
 {
-
     /**
      * @inheritdoc
      */
@@ -28,7 +27,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
     {
         $field_id = $this->getMetadata()->getIdentifier();
         $object_id = $this->getIliasId();
-        
+
         $md_values = new ilAdvancedMDValues(
             $this->getMetadata()->getRecordId(),
             $object_id,
@@ -37,9 +36,9 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
         );
 
         $md_values->read();
-        
+
         $adt_group = $md_values->getADTGroup();
-        
+
         $value = $this->getMetadata()->getValue();
         $adt = $adt_group->getElement($field_id);
 

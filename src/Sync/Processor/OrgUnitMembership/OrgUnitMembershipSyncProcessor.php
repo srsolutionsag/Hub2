@@ -26,7 +26,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrgUnitMembershipSyncProcessor
 {
-
     /**
      * @var IOrgUnitMembershipProperties
      */
@@ -62,7 +61,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
     /**
      * @return array
      */
-    public static function getProperties() : array
+    public static function getProperties(): array
     {
         return self::$properties;
     }
@@ -129,7 +128,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
      * @return ilOrgUnitUserAssignment
      * @throws HubException
      */
-    protected function assignToOrgUnit(IOrgUnitMembershipDTO $dto) : ilOrgUnitUserAssignment
+    protected function assignToOrgUnit(IOrgUnitMembershipDTO $dto): ilOrgUnitUserAssignment
     {
         switch ($dto->getPosition()) {
             case IOrgUnitMembershipDTO::POSITION_EMPLOYEE:
@@ -145,8 +144,11 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
                 break;
         }
 
-        return ilOrgUnitUserAssignment::findOrCreateAssignment($dto->getUserId(), $position_id,
-            $this->getOrgUnitId($dto));
+        return ilOrgUnitUserAssignment::findOrCreateAssignment(
+            $dto->getUserId(),
+            $position_id,
+            $this->getOrgUnitId($dto)
+        );
     }
 
     /**
@@ -154,10 +156,13 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
      * @return FakeIliasObject
      * @throws HubException
      */
-    protected function getFakeIliasObject(ilOrgUnitUserAssignment $assignment) : FakeIliasObject
+    protected function getFakeIliasObject(ilOrgUnitUserAssignment $assignment): FakeIliasObject
     {
-        return new FakeOrgUnitMembershipObject($assignment->getOrguId(), $assignment->getUserId(),
-            $assignment->getPositionId());
+        return new FakeOrgUnitMembershipObject(
+            $assignment->getOrguId(),
+            $assignment->getUserId(),
+            $assignment->getPositionId()
+        );
     }
 
     /**
@@ -165,7 +170,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
      * @return int
      * @throws HubException
      */
-    protected function getOrgUnitId(IOrgUnitMembershipDTO $dto) : int
+    protected function getOrgUnitId(IOrgUnitMembershipDTO $dto): int
     {
         switch ($dto->getOrgUnitIdType()) {
             case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_EXTERNAL_EXT_ID:

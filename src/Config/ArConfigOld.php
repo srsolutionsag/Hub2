@@ -15,7 +15,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class ArConfigOld extends ActiveRecord
 {
-
     use DICTrait;
     use Hub2Trait;
 
@@ -23,12 +22,12 @@ class ArConfigOld extends ActiveRecord
      * @var string
      * @deprecated
      */
-    const TABLE_NAME = 'sr_hub2_config';
+    public const TABLE_NAME = 'sr_hub2_config';
     /**
      * @var string
      * @deprecated
      */
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @return string

@@ -24,8 +24,7 @@ use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
  */
 class UserSyncProcessorTest extends AbstractSyncProcessorTests
 {
-
-    const ILIAS_ID = 123;
+    public const ILIAS_ID = 123;
     /**
      * @var MockInterface|IUserSyncProcessor
      */

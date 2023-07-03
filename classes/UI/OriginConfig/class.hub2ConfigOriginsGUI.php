@@ -32,24 +32,24 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 class hub2ConfigOriginsGUI extends hub2MainGUI
 {
     use DICTrait;
-    const CMD_DELETE = 'delete';
-    const ORIGIN_ID = 'origin_id';
-    const SUBTAB_ORIGINS = 'subtab_origins';
-    const SUBTAB_DATA = 'subtab_data';
-    const CMD_RUN = 'run';
-    const CMD_RUN_FORCE_UPDATE = 'runForceUpdate';
-    const CMD_ADD_ORIGIN = 'addOrigin';
-    const CMD_EDIT_ORGIN = 'editOrigin';
-    const CMD_RUN_ORIGIN_SYNC = 'runOriginSync';
-    const CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE = 'runOriginSyncForceUpdate';
-    const CMD_CONFIRM_DELETE = 'confirmDelete';
-    const CMD_CREATE_ORIGIN = 'createOrigin';
-    const CMD_SAVE_ORIGIN = 'saveOrigin';
-    const CMD_CANCEL = 'cancel';
-    const CMD_DEACTIVATE_ALL = 'deactivateAll';
-    const CMD_ACTIVATE_ALL = 'activateAll';
-    const CMD_TOGGLE = 'toggle';
-    const CMD_DOWNLOAD_RID = 'downloadFileDrop';
+    public const CMD_DELETE = 'delete';
+    public const ORIGIN_ID = 'origin_id';
+    public const SUBTAB_ORIGINS = 'subtab_origins';
+    public const SUBTAB_DATA = 'subtab_data';
+    public const CMD_RUN = 'run';
+    public const CMD_RUN_FORCE_UPDATE = 'runForceUpdate';
+    public const CMD_ADD_ORIGIN = 'addOrigin';
+    public const CMD_EDIT_ORGIN = 'editOrigin';
+    public const CMD_RUN_ORIGIN_SYNC = 'runOriginSync';
+    public const CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE = 'runOriginSyncForceUpdate';
+    public const CMD_CONFIRM_DELETE = 'confirmDelete';
+    public const CMD_CREATE_ORIGIN = 'createOrigin';
+    public const CMD_SAVE_ORIGIN = 'saveOrigin';
+    public const CMD_CANCEL = 'cancel';
+    public const CMD_DEACTIVATE_ALL = 'deactivateAll';
+    public const CMD_ACTIVATE_ALL = 'activateAll';
+    public const CMD_TOGGLE = 'toggle';
+    public const CMD_DOWNLOAD_RID = 'downloadFileDrop';
     /**
      * @var \srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage
      */
@@ -103,19 +103,28 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     protected function initTabs()
     {
         self::dic()->tabs()->addSubTab(
-            self::SUBTAB_ORIGINS, self::plugin()->translate(self::SUBTAB_ORIGINS), self::dic()->ctrl()
-                                                                                       ->getLinkTarget($this,
-                                                                                           self::CMD_INDEX)
+            self::SUBTAB_ORIGINS,
+            self::plugin()->translate(self::SUBTAB_ORIGINS),
+            self::dic()->ctrl()
+                                                                                       ->getLinkTarget(
+                                                                                           $this,
+                                                                                           self::CMD_INDEX
+                                                                                       )
         );
 
         self::dic()->tabs()->addSubTab(
-            self::SUBTAB_DATA, self::plugin()->translate(self::SUBTAB_DATA), self::dic()->ctrl()
-                                                                                 ->getLinkTargetByClass(hub2DataGUI::class,
-                                                                                     hub2DataGUI::CMD_INDEX)
+            self::SUBTAB_DATA,
+            self::plugin()->translate(self::SUBTAB_DATA),
+            self::dic()->ctrl()
+                                                                                 ->getLinkTargetByClass(
+                                                                                     hub2DataGUI::class,
+                                                                                     hub2DataGUI::CMD_INDEX
+                                                                                 )
         );
 
         self::dic()->tabs()->addSubTab(
-            hub2LogsGUI::SUBTAB_LOGS, self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS),
+            hub2LogsGUI::SUBTAB_LOGS,
+            self::plugin()->translate("logs", hub2LogsGUI::LANG_MODULE_LOGS),
             self::dic()->ctrl()
                 ->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX)
         );
@@ -170,7 +179,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         self::output()->output($form);
     }
 
-    protected function downloadFileDrop():void {
+    protected function downloadFileDrop(): void
+    {
         $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
         $rid = $this->http->request()->getQueryParams()['rid'] ?? null;
         if ($rid === null) {
@@ -260,15 +270,23 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
                 if ($result) {
                     ilUtil::sendInfo(
                         self::plugin()
-                            ->translate("msg_created_class_implementation_file", "",
-                                [$generator->getClassFilePath($origin)]), true
+                            ->translate(
+                                "msg_created_class_implementation_file",
+                                "",
+                                [$generator->getClassFilePath($origin)]
+                            ),
+                        true
                     );
                 }
             } catch (HubException $e) {
                 ilUtil::sendInfo(
                     self::plugin()
-                        ->translate("msg_created_class_implementation_file_failed", "",
-                            [$generator->getClassFilePath($origin)]), true
+                        ->translate(
+                            "msg_created_class_implementation_file_failed",
+                            "",
+                            [$generator->getClassFilePath($origin)]
+                        ),
+                    true
                 );
             }
             self::dic()->ctrl()->saveParameter($this, self::ORIGIN_ID);

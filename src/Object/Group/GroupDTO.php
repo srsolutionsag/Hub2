@@ -15,7 +15,6 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAwareDataTransferObject;
  */
 class GroupDTO extends DataTransferObject implements IGroupDTO
 {
-
     use MetadataAwareDataTransferObject;
     use TaxonomyAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
@@ -650,7 +649,7 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     /**
      * @return string
      */
-    public function getAppointementsColor() : string
+    public function getAppointementsColor(): string
     {
         return $this->appointementsColor;
     }

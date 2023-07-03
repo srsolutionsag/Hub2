@@ -18,11 +18,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOriginSync[]
      */
@@ -88,8 +87,11 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
                 ) {
                     $mail->To($error_email);
 
-                    $mail->Subject(self::plugin()->translate("summary_logs_in", hub2LogsGUI::LANG_MODULE_LOGS,
-                        [$title]));
+                    $mail->Subject(self::plugin()->translate(
+                        "summary_logs_in",
+                        hub2LogsGUI::LANG_MODULE_LOGS,
+                        [$title]
+                    ));
 
                     $mail->Body($this->renderOneSync($originSync, true, true));
 
@@ -109,40 +111,63 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         IOriginSync $originSync,
         bool $only_logs = false,
         bool $output_message = null
-    ) : string {
+    ): string {
         $msg = "";
         if (!$only_logs) {
             // Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
             $msg .= self::plugin()->translate("summary_for", "", [$originSync->getOrigin()->getTitle()]) . "\n";
-            $msg .= self::plugin()->translate("summary_delivered_data_sets", "",
-                    [$originSync->getCountDelivered()]) . "\n";
-            $msg .= self::plugin()->translate("summary_failed", "",
-                    [$originSync->getCountProcessedByStatus(IObject::STATUS_FAILED)]) . "\n";
-            $msg .= self::plugin()->translate("summary_created", "",
-                    [$originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)]) . "\n";
-            $msg .= self::plugin()->translate("summary_updated", "",
-                    [$originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)]) . "\n";
-            $msg .= self::plugin()->translate("summary_outdated", "",
-                    [$originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED)]) . "\n";
-            $msg .= self::plugin()->translate("summary_ignored", "",
-                [$originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)]);
+            $msg .= self::plugin()->translate(
+                "summary_delivered_data_sets",
+                "",
+                [$originSync->getCountDelivered()]
+            ) . "\n";
+            $msg .= self::plugin()->translate(
+                "summary_failed",
+                "",
+                [$originSync->getCountProcessedByStatus(IObject::STATUS_FAILED)]
+            ) . "\n";
+            $msg .= self::plugin()->translate(
+                "summary_created",
+                "",
+                [$originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)]
+            ) . "\n";
+            $msg .= self::plugin()->translate(
+                "summary_updated",
+                "",
+                [$originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)]
+            ) . "\n";
+            $msg .= self::plugin()->translate(
+                "summary_outdated",
+                "",
+                [$originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED)]
+            ) . "\n";
+            $msg .= self::plugin()->translate(
+                "summary_ignored",
+                "",
+                [$originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)]
+            );
         }
 
         if (count(self::logs()->getKeptLogs($originSync->getOrigin())) > 0) {
             $msg .= "\n" . self::plugin()->translate("summary", hub2LogsGUI::LANG_MODULE_LOGS) . "\n";
 
             $msg .= implode(
-                "\n", array_map(
-                    function (int $level) use ($output_message, $originSync) : string {
+                "\n",
+                array_map(
+                    function (int $level) use ($output_message, $originSync): string {
                         $logs = self::logs()->getKeptLogs($originSync->getOrigin(), $level);
 
-                        return self::plugin()->translate("level_" . $level,
-                                hub2LogsGUI::LANG_MODULE_LOGS) . ": " . count($logs) . ($output_message ? " - "
+                        return self::plugin()->translate(
+                            "level_" . $level,
+                            hub2LogsGUI::LANG_MODULE_LOGS
+                        ) . ": " . count($logs) . ($output_message ? " - "
                                 . current($logs)->getMessage() : "");
-                    }, array_filter(
-                        Log::$levels, function (int $level) use ($originSync) : bool {
-                        return (count(self::logs()->getKeptLogs($originSync->getOrigin(), $level)) > 0);
-                    }
+                    },
+                    array_filter(
+                        Log::$levels,
+                        function (int $level) use ($originSync): bool {
+                            return (count(self::logs()->getKeptLogs($originSync->getOrigin(), $level)) > 0);
+                        }
                     )
                 )
             );

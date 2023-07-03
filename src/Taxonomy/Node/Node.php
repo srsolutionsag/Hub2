@@ -13,11 +13,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Node implements INode
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
      */
@@ -39,7 +38,7 @@ class Node implements INode
     /**
      * @return string
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -55,7 +54,7 @@ class Node implements INode
     /**
      * @inheritdoc
      */
-    public function getNodes() : array
+    public function getNodes(): array
     {
         return $this->nodes;
     }
@@ -63,7 +62,7 @@ class Node implements INode
     /**
      * @inheritdoc
      */
-    public function getNodeTitlesAsArray() : array
+    public function getNodeTitlesAsArray(): array
     {
         $titles = [];
         foreach ($this->nodes as $node) {
@@ -76,7 +75,7 @@ class Node implements INode
     /**
      * @inheritdoc
      */
-    public function attach(INode $node) : INode
+    public function attach(INode $node): INode
     {
         $this->nodes[] = $node;
 

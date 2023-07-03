@@ -25,12 +25,12 @@ use srag\Plugins\Hub2\Origin\Config\OriginImplementationFactory;
  */
 class Handler
 {
-    const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
-    const DROP_FILE = "file_drop.php";
-    const METHOD = 'POST';
-    const PHP_AUTH_USER = 'PHP_AUTH_USER';
-    const PHP_AUTH_PW = 'PHP_AUTH_PW';
-    const FD_CONTAINER = 'fd_container';
+    public const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
+    public const DROP_FILE = "file_drop.php";
+    public const METHOD = 'POST';
+    public const PHP_AUTH_USER = 'PHP_AUTH_USER';
+    public const PHP_AUTH_PW = 'PHP_AUTH_PW';
+    public const FD_CONTAINER = 'fd_container';
     /**
      * @var \ILIAS\FileUpload\DTO\UploadResult[]
      */
@@ -187,7 +187,8 @@ class Handler
             case $e instanceof AccessDenied:
                 $this->http->saveResponse(
                     $this->http->response()->withStatus(401, $e->getMessage())->withHeader(
-                        'WWW-Authenticate', 'Bearer realm="Hub2 FileDrop"'
+                        'WWW-Authenticate',
+                        'Bearer realm="Hub2 FileDrop"'
                     )
                 );
                 break;

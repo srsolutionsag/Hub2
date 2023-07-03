@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  */
 class GroupLink extends AbstractRepositoryLink implements IObjectLink
 {
-
 }

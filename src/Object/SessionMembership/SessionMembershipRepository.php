@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Object\Session\ISessionRepository;
  */
 class SessionMembershipRepository extends ObjectRepository implements ISessionRepository
 {
-
 }

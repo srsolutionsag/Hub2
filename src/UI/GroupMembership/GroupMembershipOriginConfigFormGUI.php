@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class GroupMembershipOriginConfigFormGUI extends OriginConfigFormGUI
 {
-
     /**
      * @var ARGroupMembershipOrigin
      */

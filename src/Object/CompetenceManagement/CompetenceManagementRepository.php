@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  */
 class CompetenceManagementRepository extends ObjectRepository implements ICompetenceManagementRepository
 {
-
 }

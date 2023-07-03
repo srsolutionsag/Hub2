@@ -11,7 +11,6 @@ namespace srag\Plugins\Hub2\Exception;
  */
 class LanguageCodeException extends HubException
 {
-
     /**
      * LanguageCodeException constructor
      * @param string $code

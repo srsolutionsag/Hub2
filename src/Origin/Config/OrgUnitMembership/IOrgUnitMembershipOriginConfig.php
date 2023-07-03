@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 interface IOrgUnitMembershipOriginConfig extends IOriginConfig
 {
-
 }

@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\General;
 
-
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\General\NewsSettings;
 
@@ -24,7 +23,7 @@ trait NewsSettingsSyncProcessor
         $container->setNewsTimeline($news_settings->isActivateNewsTimeline());
         $container->setNewsTimelineLandingPage($news_settings->isActivateNewsTimelineLandingPage());
         $container->setNewsTimelineAutoEntries($news_settings->isActivateNewsTimelineAutoEntries());
-        
+
         // Default Access
         \ilBlockSetting::_write(
             'news',
@@ -33,7 +32,7 @@ trait NewsSettingsSyncProcessor
             0,
             $course_obj_id
         );
-        
+
         // RSS Block
         \ilBlockSetting::_write(
             'news',
@@ -42,10 +41,10 @@ trait NewsSettingsSyncProcessor
             0,
             $course_obj_id
         );
-        
+
         // Timeline Block
         $show_news_after_input = $news_settings->getShowNewsAfter();
-        
+
         if ($show_news_after_input !== null) {
             $show_news_after = $show_news_after_input->format('Y-m-d H:i:s');
             if ($show_news_after === $show_news_after_input) {

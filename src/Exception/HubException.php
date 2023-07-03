@@ -15,11 +15,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class HubException extends ilException
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @param string $message

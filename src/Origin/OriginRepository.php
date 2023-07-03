@@ -24,11 +24,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginRepository implements IOriginRepository
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc
@@ -36,9 +35,17 @@ class OriginRepository implements IOriginRepository
     public function all()
     {
         return array_merge(
-            $this->users(), $this->categories(), $this->courses(), $this->courseMemberships(), $this->groups(),
-            $this->groupMemberships(), $this->sessions(),
-            $this->sessionsMemberships(), $this->orgUnits(), $this->orgUnitMemberships(), $this->competenceManagements()
+            $this->users(),
+            $this->categories(),
+            $this->courses(),
+            $this->courseMemberships(),
+            $this->groups(),
+            $this->groupMemberships(),
+            $this->sessions(),
+            $this->sessionsMemberships(),
+            $this->orgUnits(),
+            $this->orgUnitMemberships(),
+            $this->competenceManagements()
         );
     }
 
@@ -48,10 +55,11 @@ class OriginRepository implements IOriginRepository
     public function allActive()
     {
         return array_filter(
-            $this->all(), function ($origin) {
-            /** @var IOrigin $origin */
-            return $origin->isActive();
-        }
+            $this->all(),
+            function ($origin) {
+                /** @var IOrigin $origin */
+                return $origin->isActive();
+            }
         );
     }
 
@@ -122,7 +130,7 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function orgUnits() : array
+    public function orgUnits(): array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT])->get();
     }
@@ -130,7 +138,7 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function orgUnitMemberships() : array
+    public function orgUnitMemberships(): array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP])->get();
     }
@@ -138,7 +146,7 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function competenceManagements() : array
+    public function competenceManagements(): array
     {
         return ARCompetenceManagementOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT])->get();
     }

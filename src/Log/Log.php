@@ -17,17 +17,16 @@ use stdClass;
  */
 class Log extends ActiveRecord implements ILog
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const TABLE_NAME = "sr_hub2_log";
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const TABLE_NAME = "sr_hub2_log";
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @return string
      */
-    public final function getConnectorContainerName() : string
+    final public function getConnectorContainerName(): string
     {
         return static::TABLE_NAME;
     }
@@ -36,7 +35,7 @@ class Log extends ActiveRecord implements ILog
      * @return string
      * @deprecated
      */
-    public final static function returnDbTableName() : string
+    final public static function returnDbTableName(): string
     {
         return static::TABLE_NAME;
     }
@@ -140,7 +139,7 @@ class Log extends ActiveRecord implements ILog
      * @param int              $primary_key_value
      * @param arConnector|null $connector
      */
-    public final function __construct(/*int*/
+    final public function __construct(/*int*/
         $primary_key_value = 0,
         arConnector $connector = null
     ) {
@@ -151,7 +150,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getLogId() : int
+    public function getLogId(): int
     {
         return $this->log_id;
     }
@@ -159,7 +158,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withLogId(int $log_id) : ILog
+    public function withLogId(int $log_id): ILog
     {
         $this->log_id = $log_id;
 
@@ -169,7 +168,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -177,7 +176,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withTitle(string $title) : ILog
+    public function withTitle(string $title): ILog
     {
         $this->title = $title;
 
@@ -187,7 +186,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -195,7 +194,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withMessage(string $message) : ILog
+    public function withMessage(string $message): ILog
     {
         $this->message = $message;
 
@@ -205,7 +204,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getDate() : ilDateTime
+    public function getDate(): ilDateTime
     {
         return $this->date;
     }
@@ -213,7 +212,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withDate(ilDateTime $date) : ILog
+    public function withDate(ilDateTime $date): ILog
     {
         $this->date = $date;
 
@@ -223,7 +222,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @return int
      */
-    public function getStatus() : int
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -232,7 +231,7 @@ class Log extends ActiveRecord implements ILog
      * @param int $status
      * @return $this
      */
-    public function withStatus(int $status) : ILog
+    public function withStatus(int $status): ILog
     {
         $this->status = $status;
 
@@ -242,7 +241,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getLevel() : int
+    public function getLevel(): int
     {
         return $this->level;
     }
@@ -250,7 +249,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withLevel(int $level) : ILog
+    public function withLevel(int $level): ILog
     {
         $this->level = $level;
 
@@ -260,7 +259,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getAdditionalData() : stdClass
+    public function getAdditionalData(): stdClass
     {
         return $this->additional_data;
     }
@@ -268,7 +267,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withAdditionalData(stdClass $additional_data) : ILog
+    public function withAdditionalData(stdClass $additional_data): ILog
     {
         $this->additional_data = $additional_data;
 
@@ -278,7 +277,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function addAdditionalData(string $key, $value) : ILog
+    public function addAdditionalData(string $key, $value): ILog
     {
         $this->additional_data->{$key} = $value;
 
@@ -288,7 +287,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getOriginId() : int
+    public function getOriginId(): int
     {
         return $this->origin_id;
     }
@@ -296,7 +295,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withOriginId(int $origin_id) : ILog
+    public function withOriginId(int $origin_id): ILog
     {
         $this->origin_id = $origin_id;
 
@@ -306,7 +305,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function getOriginObjectType() : string
+    public function getOriginObjectType(): string
     {
         return $this->origin_object_type;
     }
@@ -314,7 +313,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function withOriginObjectType(string $origin_object_type) : ILog
+    public function withOriginObjectType(string $origin_object_type): ILog
     {
         $this->origin_object_type = $origin_object_type;
 
@@ -334,7 +333,7 @@ class Log extends ActiveRecord implements ILog
      */
     public function withObjectExtId(/*?*/
         string $object_ext_id = null
-    ) : ILog {
+    ): ILog {
         $this->object_ext_id = $object_ext_id;
 
         return $this;
@@ -353,7 +352,7 @@ class Log extends ActiveRecord implements ILog
      */
     public function withObjectIliasId(/*?*/
         int $object_ilias_id = null
-    ) : ILog {
+    ): ILog {
         $this->object_ilias_id = $object_ilias_id;
 
         return $this;

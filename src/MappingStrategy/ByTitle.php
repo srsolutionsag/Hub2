@@ -22,11 +22,10 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
  */
 class ByTitle extends AMappingStrategy implements IMappingStrategy
 {
-
     /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         switch (true) {
             case ($dto instanceof UserDTO):
@@ -70,7 +69,7 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
      * @param IDataTransferObject $dto
      * @return string
      */
-    private function getTypeByDTO(IDataTransferObject $dto) : string
+    private function getTypeByDTO(IDataTransferObject $dto): string
     {
         switch (true) {
             case ($dto instanceof GroupDTO):
@@ -81,8 +80,8 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
                 return "orgu";
             case ($dto instanceof CategoryDTO):
                 return "cat";
-            /*case ($dto instanceof ICompetenceManagementDTO):
-                return "skmg";*/
+                /*case ($dto instanceof ICompetenceManagementDTO):
+                    return "skmg";*/
         }
 
         return '';

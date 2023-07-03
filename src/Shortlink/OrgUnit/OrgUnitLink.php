@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Shortlink\IObjectLink;
  */
 class OrgUnitLink extends AbstractRepositoryLink implements IObjectLink
 {
-
 }

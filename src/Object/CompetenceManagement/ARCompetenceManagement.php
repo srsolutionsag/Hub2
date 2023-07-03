@@ -11,6 +11,5 @@ use srag\Plugins\Hub2\Object\ARObject;
  */
 class ARCompetenceManagement extends ARObject implements ICompetenceManagement
 {
-
-    const TABLE_NAME = "sr_hub2_comp_man";
+    public const TABLE_NAME = "sr_hub2_comp_man";
 }

@@ -9,7 +9,6 @@ namespace srag\Plugins\Hub2\Jobs\Result;
  */
 class OK extends AbstractResult
 {
-
     /**
      * @inheritdoc
      */

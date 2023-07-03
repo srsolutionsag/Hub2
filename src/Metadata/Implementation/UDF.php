@@ -11,8 +11,7 @@ use ilUserDefinedData;
  */
 class UDF extends AbstractImplementation implements IMetadataImplementation
 {
-
-    const PREFIX = 'f_';
+    public const PREFIX = 'f_';
 
     /**
      * @inheritdoc

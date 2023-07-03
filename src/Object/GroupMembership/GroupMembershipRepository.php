@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  */
 class GroupMembershipRepository extends ObjectRepository implements IGroupMembershipRepository
 {
-
 }

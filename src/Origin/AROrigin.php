@@ -19,16 +19,15 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AROrigin extends ActiveRecord implements IOrigin
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const TABLE_NAME = 'sr_hub2_origin';
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const TABLE_NAME = 'sr_hub2_origin';
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var array
      */
-    static $object_types
+    public static $object_types
         = [
             IOrigin::OBJECT_TYPE_USER => IOrigin::OBJECT_TYPE_USER,
             IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP,
@@ -230,6 +229,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
                     return json_encode($this->config()->getData());
                 }
 
+                // no break
             case 'properties':
                 if ($this->_properties === null) {
                     $properties = $this->getOriginProperties([]);
@@ -239,6 +239,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
                     return json_encode($this->properties()->getData());
                 }
 
+                // no break
             case "adhoc":
             case "adhoc_parent_scope":
                 return ($field_value ? 1 : 0);
@@ -502,7 +503,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @return bool
      */
-    public function isUpdateForced() : bool
+    public function isUpdateForced(): bool
     {
         return $this->force_update;
     }
@@ -510,7 +511,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function isAdHoc() : bool
+    public function isAdHoc(): bool
     {
         return $this->adhoc;
     }
@@ -526,7 +527,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function isAdhocParentScope() : bool
+    public function isAdhocParentScope(): bool
     {
         return $this->adhoc_parent_scope;
     }
@@ -542,7 +543,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function getSort() : int
+    public function getSort(): int
     {
         return $this->sort;
     }

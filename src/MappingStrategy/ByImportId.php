@@ -21,11 +21,10 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  */
 class ByImportId extends AMappingStrategy implements IMappingStrategy
 {
-
     /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         switch (true) {
             case $dto instanceof IUserDTO:
@@ -64,16 +63,24 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
         if ($dto instanceof ICompetenceManagementDTO) {
             $result = self::dic()->database()->queryF(
                 'SELECT obj_id FROM skl_tree_node WHERE ' . self::dic()->database()
-                                                                ->like("import_id", ilDBConstants::T_TEXT,
-                                                                    IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()),
-                [], []
+                                                                ->like(
+                                                                    "import_id",
+                                                                    ilDBConstants::T_TEXT,
+                                                                    IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()
+                                                                ),
+                [],
+                []
             );
         } else {
             $result = self::dic()->database()->queryF(
                 'SELECT obj_id FROM object_data WHERE type=%s AND ' . self::dic()->database()
-                                                                          ->like("import_id", ilDBConstants::T_TEXT,
-                                                                              IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()),
-                [ilDBConstants::T_TEXT], [$object_type]
+                                                                          ->like(
+                                                                              "import_id",
+                                                                              ilDBConstants::T_TEXT,
+                                                                              IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()
+                                                                          ),
+                [ilDBConstants::T_TEXT],
+                [$object_type]
             );
         }
 

@@ -22,9 +22,8 @@ use srag\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor;
  */
 class SessionSyncProcessorTest extends AbstractSyncProcessorTests
 {
-
-    const REF_ID = 57;
-    const USER_ID_OF_MEMBER_TO_DELETE = 22;
+    public const REF_ID = 57;
+    public const USER_ID_OF_MEMBER_TO_DELETE = 22;
     /**
      * @var MockInterface|ilSessionParticipants
      */

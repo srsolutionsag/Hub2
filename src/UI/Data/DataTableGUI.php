@@ -42,13 +42,12 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class DataTableGUI extends ilTable2GUI
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    const F_ORIGIN_ID = 'origin_id';
-    const F_EXT_ID = 'ext_id';
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const F_ORIGIN_ID = 'origin_id';
+    public const F_EXT_ID = 'ext_id';
     /**
      * @var ARObject[]
      */
@@ -134,10 +133,11 @@ class DataTableGUI extends ilTable2GUI
         $status = new ilSelectInputGUI(self::plugin()->translate('data_table_header_status'), 'status');
 
         $options = ["" => ""] + array_map(
-                function (string $txt) : string {
-                    return self::plugin()->translate("data_table_status_" . $txt);
-                }, ARObject::$available_status
-            ) + [
+            function (string $txt): string {
+                return self::plugin()->translate("data_table_status_" . $txt);
+            },
+            ARObject::$available_status
+        ) + [
                 "!" . IObject::STATUS_IGNORED => self::plugin()->translate("data_table_status_not_ignored"),
             ];
 
@@ -156,7 +156,7 @@ class DataTableGUI extends ilTable2GUI
      * @param string $field_id
      * @return bool
      */
-    protected function hasSessionValue(string $field_id) : bool
+    protected function hasSessionValue(string $field_id): bool
     {
         // Not set on first visit, false on reset filter, string if is set
         return (isset($_SESSION["form_" . $this->getId()][$field_id]) && $_SESSION["form_" . $this->getId()][$field_id] !== false);
@@ -262,15 +262,19 @@ class DataTableGUI extends ilTable2GUI
             $this->tpl->setCurrentBlock('cell');
             switch ($key) {
                 case 'status':
-                    $this->tpl->setVariable('VALUE',
-                        self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]));
+                    $this->tpl->setVariable(
+                        'VALUE',
+                        self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value])
+                    );
                     break;
                 case self::F_EXT_ID:
                     $this->tpl->setVariable('VALUE', $value);
                     break;
                 case "ilias_id":
-                    $this->tpl->setVariable('VALUE',
-                        $this->renderILIASLinkForIliasId($value, $a_set[self::F_EXT_ID], $origin));
+                    $this->tpl->setVariable(
+                        'VALUE',
+                        $this->renderILIASLinkForIliasId($value, $a_set[self::F_EXT_ID], $origin)
+                    );
                     break;
                 case self::F_ORIGIN_ID:
                     if (!$origin) {
@@ -287,18 +291,28 @@ class DataTableGUI extends ilTable2GUI
             $this->tpl->parseCurrentBlock();
         }
 
-        $modal = self::dic()->ui()->factory()->modal()->roundtrip($a_set[self::F_EXT_ID],
-            self::dic()->ui()->factory()->legacy(''))
-                     ->withAsyncRenderUrl(self::dic()->ctrl()->getLinkTarget($this->parent_obj, 'renderData', '',
-                         true));
+        $modal = self::dic()->ui()->factory()->modal()->roundtrip(
+            $a_set[self::F_EXT_ID],
+            self::dic()->ui()->factory()->legacy('')
+        )
+                     ->withAsyncRenderUrl(self::dic()->ctrl()->getLinkTarget(
+                         $this->parent_obj,
+                         'renderData',
+                         '',
+                         true
+                     ));
 
         $actions = new ilAdvancedSelectionListGUI();
         $actions->setListTitle(self::plugin()->translate("data_table_header_actions"));
         $actions->addItem(self::plugin()->translate("data_table_header_data"), "view");
         $actions->addItem(
-            self::plugin()->translate("show_logs", hub2LogsGUI::LANG_MODULE_LOGS), "", self::dic()->ctrl()
-                                                                                           ->getLinkTargetByClass([hub2LogsGUI::class,],
-                                                                                               hub2LogsGUI::CMD_SHOW_LOGS_OF_EXT_ID)
+            self::plugin()->translate("show_logs", hub2LogsGUI::LANG_MODULE_LOGS),
+            "",
+            self::dic()->ctrl()
+                                                                                           ->getLinkTargetByClass(
+                                                                                               [hub2LogsGUI::class,],
+                                                                                               hub2LogsGUI::CMD_SHOW_LOGS_OF_EXT_ID
+                                                                                           )
         );
         $actions_html = self::output()->getHTML($actions);
 
@@ -345,15 +359,17 @@ class DataTableGUI extends ilTable2GUI
         ilExcel $excel, /*int*/
         &$row, /*array*/
         $result
-    )/*: void*/
-    {
+    ) {/*: void*/
 
         $col = 0;
         foreach ($result as $key => $value) {
             switch ($key) {
                 case 'status':
-                    $excel->setCell($row, $col,
-                        self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]));
+                    $excel->setCell(
+                        $row,
+                        $col,
+                        self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value])
+                    );
                     break;
                 default:
                     $excel->setCell($row, $col, $value);
@@ -369,7 +385,7 @@ class DataTableGUI extends ilTable2GUI
      * @param IOrigin|null $origin
      * @return string
      */
-    protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin = null) : string
+    protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin = null): string
     {
         if (!$origin) {
             return strval($ilias_id);
@@ -379,8 +395,10 @@ class DataTableGUI extends ilTable2GUI
         if ($link->doesObjectExist()) {
             $link_factory = self::dic()->ui()->factory()->link();
 
-            return self::output()->getHTML($link_factory->standard($ilias_id,
-                $link->getAccessGrantedInternalLink())->withOpenInNewViewport(true));
+            return self::output()->getHTML($link_factory->standard(
+                $ilias_id,
+                $link->getAccessGrantedInternalLink()
+            )->withOpenInNewViewport(true));
         } else {
             return strval($ilias_id);
         }

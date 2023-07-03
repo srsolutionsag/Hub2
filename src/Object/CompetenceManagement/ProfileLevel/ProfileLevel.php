@@ -9,7 +9,6 @@ namespace srag\Plugins\Hub2\Object\CompetenceManagement\ProfileLevel;
  */
 class ProfileLevel implements IProfileLevel
 {
-
     /**
      * @var string
      */
@@ -49,7 +48,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function getSkillId() : string
+    public function getSkillId(): string
     {
         return $this->skill_id;
     }
@@ -57,7 +56,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function setSkillId(string $skill_id) : IProfileLevel
+    public function setSkillId(string $skill_id): IProfileLevel
     {
         $this->skill_id = $skill_id;
 
@@ -67,7 +66,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function getSkillIdType() : int
+    public function getSkillIdType(): int
     {
         return $this->skill_id_type;
     }
@@ -75,7 +74,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function setSkillIdType(int $skill_id_type) : IProfileLevel
+    public function setSkillIdType(int $skill_id_type): IProfileLevel
     {
         $this->skill_id_type = $skill_id_type;
 
@@ -85,7 +84,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function getLevelId() : string
+    public function getLevelId(): string
     {
         return $this->level_id;
     }
@@ -93,7 +92,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function setLevelId(string $level_id) : IProfileLevel
+    public function setLevelId(string $level_id): IProfileLevel
     {
         $this->level_id = $level_id;
 
@@ -103,7 +102,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function getLevelIdType() : int
+    public function getLevelIdType(): int
     {
         return $this->level_id_type;
     }
@@ -111,7 +110,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function setLevelIdType(int $level_id_type) : IProfileLevel
+    public function setLevelIdType(int $level_id_type): IProfileLevel
     {
         $this->level_id_type = $level_id_type;
 
@@ -121,7 +120,7 @@ class ProfileLevel implements IProfileLevel
     /**
      * @inheritdoc
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             "skill_id" => $this->skill_id,

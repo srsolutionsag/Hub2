@@ -11,10 +11,9 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
  */
 interface ISessionProperties extends IOriginProperties
 {
-
-    const MOVE_SESSION = 'move_session';
-    const DELETE_MODE = 'delete_mode';
-    const DELETE_MODE_NONE = 0;
-    const DELETE_MODE_DELETE = 2;
-    const DELETE_MODE_MOVE_TO_TRASH = 4;
+    public const MOVE_SESSION = 'move_session';
+    public const DELETE_MODE = 'delete_mode';
+    public const DELETE_MODE_NONE = 0;
+    public const DELETE_MODE_DELETE = 2;
+    public const DELETE_MODE_MOVE_TO_TRASH = 4;
 }

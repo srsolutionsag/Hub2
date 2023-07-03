@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
  */
 interface IDidacticTemplateSyncProcessor
 {
-
     /**
      * @param IDidacticTemplateAwareDataTransferObject $dto
      * @param ilObject                                 $ilias_object

@@ -13,5 +13,4 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
  */
 interface ISession extends IObject, IMetadataAwareObject, ITaxonomyAwareObject
 {
-
 }

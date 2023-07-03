@@ -9,7 +9,7 @@ namespace srag\Plugins\Hub2\Version;
  */
 class ILIASVersion extends Version
 {
-    const ILIAS_SEVEN = '7.0';
+    public const ILIAS_SEVEN = '7.0';
     /**
      * @var Version
      */

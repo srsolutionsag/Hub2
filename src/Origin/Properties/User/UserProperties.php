@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  */
 class UserProperties extends OriginProperties implements IUserProperties
 {
-
     /**
      * Default values
      * @var array
@@ -33,7 +32,7 @@ class UserProperties extends OriginProperties implements IUserProperties
     /**
      * @inheritdoc
      */
-    public static function getAvailableDeleteModes() : array
+    public static function getAvailableDeleteModes(): array
     {
         return [
             self::DELETE_MODE_NONE,

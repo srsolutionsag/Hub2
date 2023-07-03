@@ -10,7 +10,6 @@ namespace srag\Plugins\Hub2\Origin\Properties;
  */
 class DTOProperty
 {
-
     /**
      * @var string
      */

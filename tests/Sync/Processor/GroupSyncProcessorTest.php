@@ -23,9 +23,8 @@ use srag\Plugins\Hub2\Sync\Processor\Group\IGroupActivities;
  */
 class GroupSyncProcessorTest extends AbstractSyncProcessorTests
 {
-
-    const ILIAS_USER_ID = 123;
-    const GROUP_REF_ID = 57;
+    public const ILIAS_USER_ID = 123;
+    public const GROUP_REF_ID = 57;
     /**
      * @var MockInterface|IGroupActivities
      */
@@ -95,8 +94,12 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests
      */
     public function test_create_group_with_default_properties()
     {
-        $processor = new GroupSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition,
-            $this->activities);
+        $processor = new GroupSyncProcessor(
+            $this->origin,
+            $this->originImplementation,
+            $this->statusTransition,
+            $this->activities
+        );
 
         $this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
         $this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -119,8 +122,12 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests
 
     public function test_update_group_with_default_properties()
     {
-        $processor = new GroupSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition,
-            $this->activities);
+        $processor = new GroupSyncProcessor(
+            $this->origin,
+            $this->originImplementation,
+            $this->statusTransition,
+            $this->activities
+        );
 
         //$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
 

@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Origin\Properties\GroupMembership\GroupMembershipPropertie
  */
 class ARGroupMembershipOrigin extends AROrigin implements IGroupMembershipOrigin
 {
-
     /**
      * @inheritdoc
      */

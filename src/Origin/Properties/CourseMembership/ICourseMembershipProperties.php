@@ -11,8 +11,7 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
  */
 interface ICourseMembershipProperties extends IOriginProperties
 {
-
-    const DELETE_MODE = 'delete_mode';
-    const DELETE_MODE_NONE = 0;
-    const DELETE_MODE_DELETE = 1;
+    public const DELETE_MODE = 'delete_mode';
+    public const DELETE_MODE_NONE = 0;
+    public const DELETE_MODE_DELETE = 1;
 }

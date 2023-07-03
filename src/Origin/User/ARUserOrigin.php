@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
  */
 class ARUserOrigin extends AROrigin implements IUserOrigin
 {
-
     /**
      * @inheritdoc
      */

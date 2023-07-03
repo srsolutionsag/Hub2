@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  */
 interface IUserSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor
 {
-
 }

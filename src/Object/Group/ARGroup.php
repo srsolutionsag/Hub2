@@ -15,10 +15,9 @@ use srag\Plugins\Hub2\Object\ARTaxonomyAwareObject;
  */
 class ARGroup extends ARObject implements IGroup
 {
-
     use ARMetadataAwareObject;
     use ARTaxonomyAwareObject;
     use ARDidacticTemplateAwareObject;
 
-    const TABLE_NAME = 'sr_hub2_group';
+    public const TABLE_NAME = 'sr_hub2_group';
 }

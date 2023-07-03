@@ -12,25 +12,24 @@ use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
  */
 class hub2LogsGUI extends hub2MainGUI
 {
-
-    const CMD_APPLY_FILTER = "applyFilter";
-    const CMD_RESET_FILTER = "resetFilter";
-    const CMD_SHOW_LOGS_OF_EXT_ID = "showLogsOfExtID";
-    const SUBTAB_LOGS = "subtab_logs";
-    const LANG_MODULE_LOGS = "logs";
-    const CMD_CLEAR = 'clear';
+    public const CMD_APPLY_FILTER = "applyFilter";
+    public const CMD_RESET_FILTER = "resetFilter";
+    public const CMD_SHOW_LOGS_OF_EXT_ID = "showLogsOfExtID";
+    public const SUBTAB_LOGS = "subtab_logs";
+    public const LANG_MODULE_LOGS = "logs";
+    public const CMD_CLEAR = 'clear';
     /**
      * @var ilToolbarGUI
      */
     protected $toolbar;
-    
+
     public function __construct()
     {
         parent::__construct();
         global $DIC;
         $this->toolbar = $DIC['ilToolbar'];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -66,7 +65,7 @@ class hub2LogsGUI extends hub2MainGUI
      * @param string $cmd
      * @return LogsTableGUI
      */
-    protected function getLogsTable($cmd = self::CMD_INDEX) : LogsTableGUI
+    protected function getLogsTable($cmd = self::CMD_INDEX): LogsTableGUI
     {
         $table = new LogsTableGUI($this, $cmd);
 
@@ -82,12 +81,12 @@ class hub2LogsGUI extends hub2MainGUI
             $this->plugin->txt('clear_logs'),
             $this->ctrl->getLinkTarget($this, self::CMD_CLEAR)
         );
-        
+
         $table = $this->getLogsTable();
 
         $this->tpl->setContent($table->getHTML());
     }
-    
+
     protected function clear()
     {
         self::logs()->deleteOldLogs(0);

@@ -13,7 +13,6 @@ use stdClass;
  */
 interface IRepository
 {
-
     /**
      * @param ILog $log
      */
@@ -23,12 +22,12 @@ interface IRepository
      * @param int $keep_old_logs_time
      * @return int
      */
-    public function deleteOldLogs(int $keep_old_logs_time) : int;
+    public function deleteOldLogs(int $keep_old_logs_time): int;
 
     /**
      * @return IFactory
      */
-    public function factory() : IFactory;
+    public function factory(): IFactory;
 
     /**
      * @param string|null     $sort_by
@@ -64,7 +63,7 @@ interface IRepository
         int $object_ilias_id = null,
         string $additional_data = null,
         int $status = null
-    ) : array;
+    ): array;
 
     /**
      * @param string|null     $title
@@ -92,7 +91,7 @@ interface IRepository
         int $object_ilias_id = null,
         string $additional_data = null,
         int $status = null
-    ) : int;
+    ): int;
 
     /**
      * @param int $log_id
@@ -103,13 +102,13 @@ interface IRepository
     /**
      * @return stdClass
      */
-    public function getGlobalAdditionalData() : stdClass;
+    public function getGlobalAdditionalData(): stdClass;
 
     /**
      * @param stdClass $global_additional_data
      * @return self
      */
-    public function withGlobalAdditionalData(stdClass $global_additional_data) : self;
+    public function withGlobalAdditionalData(stdClass $global_additional_data): self;
 
     /**
      * @param ILog $log
@@ -121,7 +120,7 @@ interface IRepository
      * @param int|null $level
      * @return ILog[]
      */
-    public function getKeptLogs(IOrigin $origin,/*?*/ int $level = null) : array;
+    public function getKeptLogs(IOrigin $origin, /*?*/ int $level = null): array;
 
     /**
      * @param ILog $log

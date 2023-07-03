@@ -15,7 +15,6 @@ use srag\Plugins\Hub2\UI\Data\DataTableGUI;
  */
 class hub2DataGUI extends hub2MainGUI
 {
-
     /**
      *
      */

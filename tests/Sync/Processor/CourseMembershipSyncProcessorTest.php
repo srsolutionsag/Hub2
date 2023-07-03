@@ -24,10 +24,9 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
  */
 class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
 {
-
-    const COURSE_REF_ID = 57;
-    const USER_ID = 6;
-    const IL_CRS_TUTOR_123 = 'il_crs_tutor_123';
+    public const COURSE_REF_ID = 57;
+    public const USER_ID = 6;
+    public const IL_CRS_TUTOR_123 = 'il_crs_tutor_123';
     /**
      * @var MockInterface|ilCourseParticipants
      */
@@ -90,8 +89,10 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
      */
     protected function setUp()
     {
-        $this->initOrigin(new CourseMembershipProperties(['update_dto_role' => true]),
-            new CourseMembershipOriginConfig([]));
+        $this->initOrigin(
+            new CourseMembershipProperties(['update_dto_role' => true]),
+            new CourseMembershipOriginConfig([])
+        );
         $this->setupGeneralDependencies();
         $this->initHubObject();
         $this->initILIASObject();
@@ -105,8 +106,11 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
 
     public function test_create_course_membership()
     {
-        $processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation,
-            $this->statusTransition);
+        $processor = new CourseMembershipSyncProcessor(
+            $this->origin,
+            $this->originImplementation,
+            $this->statusTransition
+        );
 
         $this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
         $this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
@@ -127,8 +131,11 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
 
     public function test_update_course_membership()
     {
-        $processor = new CourseMembershipSyncProcessor($this->origin, $this->originImplementation,
-            $this->statusTransition);
+        $processor = new CourseMembershipSyncProcessor(
+            $this->origin,
+            $this->originImplementation,
+            $this->statusTransition
+        );
 
         $this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_UPDATE);
         $this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());

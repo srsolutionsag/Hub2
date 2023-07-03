@@ -26,7 +26,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISessionMembershipSyncProcessor
 {
-
     /**
      * @var SessionMembershipProperties
      */
@@ -146,10 +145,11 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
             $originRepository = new OriginRepository();
             $origin = array_pop(
                 array_filter(
-                    $originRepository->sessions(), function ($origin) use ($linkedOriginId) {
-                    /** @var IOrigin $origin */
-                    return (int) $origin->getId() == $linkedOriginId;
-                }
+                    $originRepository->sessions(),
+                    function ($origin) use ($linkedOriginId) {
+                        /** @var IOrigin $origin */
+                        return (int) $origin->getId() == $linkedOriginId;
+                    }
                 )
             );
             if ($origin === null) {
@@ -220,10 +220,14 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
          * $ilSessionParticipants->getEventParticipants()->updateUser();
          */
         $event_id = $ilSessionParticipants->getEventParticipants()->getEventId();
-        $query = "UPDATE event_participants " . "SET contact = " . self::dic()->database()->quote($dto->isContact(),
-                'integer') . " "
-            . "WHERE event_id = " . self::dic()->database()->quote($event_id,
-                'integer') . " " . "AND usr_id = " . self::dic()->database()
+        $query = "UPDATE event_participants " . "SET contact = " . self::dic()->database()->quote(
+            $dto->isContact(),
+            'integer'
+        ) . " "
+            . "WHERE event_id = " . self::dic()->database()->quote(
+                $event_id,
+                'integer'
+            ) . " " . "AND usr_id = " . self::dic()->database()
                                                          ->quote($user_id, 'integer') . " ";
         self::dic()->database()->manipulate($query);
     }

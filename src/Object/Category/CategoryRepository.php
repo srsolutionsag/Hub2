@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Object\ObjectRepository;
  */
 class CategoryRepository extends ObjectRepository implements ICategoryRepository
 {
-
 }

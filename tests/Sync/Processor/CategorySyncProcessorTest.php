@@ -24,8 +24,7 @@ use srag\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
  */
 class CategorySyncProcessorTest extends AbstractSyncProcessorTests
 {
-
-    const REF_ID = 57;
+    public const REF_ID = 57;
     /**
      * @var MockInterface|ICategorySyncProcessor
      */
@@ -67,8 +66,11 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests
      */
     public function test_create_category_with_default_properties()
     {
-        $processor = new CategorySyncProcessor($this->origin, $this->originImplementation,
-            $this->statusTransition); // , $this->activities
+        $processor = new CategorySyncProcessor(
+            $this->origin,
+            $this->originImplementation,
+            $this->statusTransition
+        ); // , $this->activities
 
         $this->iobject->shouldReceive('getStatus')->andReturn(IObject::STATUS_TO_CREATE);
         $this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());

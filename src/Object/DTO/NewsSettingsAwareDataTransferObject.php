@@ -16,13 +16,13 @@ trait NewsSettingsAwareDataTransferObject
      * @var NewsSettings|null
      */
     protected $newsSettings = null;
-    
-    public function getNewsSettings() : ?NewsSettings
+
+    public function getNewsSettings(): ?NewsSettings
     {
         return $this->newsSettings;
     }
-    
-    public function setNewsSettings(?NewsSettings $newsSettings) : INewsSettingsAwareDataTransferObject
+
+    public function setNewsSettings(?NewsSettings $newsSettings): INewsSettingsAwareDataTransferObject
     {
         $this->newsSettings = $newsSettings;
         return $this;

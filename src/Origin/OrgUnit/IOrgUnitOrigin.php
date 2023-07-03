@@ -13,14 +13,13 @@ use srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties;
  */
 interface IOrgUnitOrigin extends IOrigin
 {
-
     /**
      * @return IOrgUnitOriginConfig
      */
-    public function config() : IOrgUnitOriginConfig;
+    public function config(): IOrgUnitOriginConfig;
 
     /**
      * @return IOrgUnitProperties
      */
-    public function properties() : IOrgUnitProperties;
+    public function properties(): IOrgUnitProperties;
 }

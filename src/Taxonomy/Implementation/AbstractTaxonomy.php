@@ -17,11 +17,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractTaxonomy implements ITaxonomyImplementation
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
      */
@@ -60,7 +59,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @return bool
      */
-    protected function taxonomyExists() : bool
+    protected function taxonomyExists(): bool
     {
         $childsByType = self::dic()->tree()->getChildsByType($this->getILIASParentId(), 'tax');
         if (!count($childsByType)) {
@@ -102,7 +101,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
      * @param INode $node
      * @return bool
      */
-    protected function nodeExists(INode $node) : bool
+    protected function nodeExists(INode $node): bool
     {
         return in_array($node->getTitle(), $this->childs);
     }
@@ -115,7 +114,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @inheritdoc
      */
-    public function getTaxonomy() : ITaxonomy
+    public function getTaxonomy(): ITaxonomy
     {
         return $this->taxonomy;
     }
@@ -123,7 +122,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @inheritdoc
      */
-    public function getILIASParentId() : int
+    public function getILIASParentId(): int
     {
         return $this->ilias_parent_id;
     }

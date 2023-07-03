@@ -16,14 +16,13 @@ use srag\Plugins\Hub2\Object\HookObject;
  */
 class SampleOriginImplementation extends AbstractOriginImplementation
 {
-
     /**
      * Connect to the service providing the sync data.
      * Throw a ConnectionFailedException to abort the sync if a connection is not possible.
      * @return bool
      * @throws ConnectionFailedException
      */
-    public function connect() : bool
+    public function connect(): bool
     {
         //		$file = $this->config()->getPath();
         //		if (!is_file($file)) {
@@ -40,7 +39,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
      * @return int
      * @throws ParseDataFailedException
      */
-    public function parseData() : int
+    public function parseData(): int
     {
         //		foreach (['userData1', 'userData2', 'userData3'] as $fakeUserData) {
         //			$this->data[] = $fakeUserData;
@@ -62,7 +61,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
      * @return IDataTransferObject[]
      * @throws BuildObjectsFailedException
      */
-    public function buildObjects() : array
+    public function buildObjects(): array
     {
         //		$userDTOs = [];
         //		foreach ($this->data as $userData) {

@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
  */
 interface IOriginSyncSummary
 {
-
     /**
      * @return string The Output of all IOriginSyncs
      */

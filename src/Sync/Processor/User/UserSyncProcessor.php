@@ -25,7 +25,6 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
  */
 class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcessor
 {
-
     use MetadataSyncProcessor;
 
     /**
@@ -214,7 +213,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
             $body = $this->props->get(UserProperties::PASSWORD_MAIL_BODY);
 
             $body = strtr(
-                $body, array(
+                $body,
+                array(
                     '[PASSWORD]' => $dto->getPasswd(),
                     '[LOGIN]' => $dto->getLogin(),
                 )
@@ -285,12 +285,18 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
                 $login = $user->getLogin();
                 break;
             case IUserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME:
-                $login = substr($this->clearString($user->getFirstname()), 0,
-                        1) . '.' . $this->clearString($user->getLastname());
+                $login = substr(
+                    $this->clearString($user->getFirstname()),
+                    0,
+                    1
+                ) . '.' . $this->clearString($user->getLastname());
                 break;
             default:
-                $login = substr($this->clearString($user->getFirstname()), 0,
-                        1) . '.' . $this->clearString($user->getLastname());
+                $login = substr(
+                    $this->clearString($user->getFirstname()),
+                    0,
+                    1
+                ) . '.' . $this->clearString($user->getLastname());
         }
 
         if (!$this->config->isKeepCase()) {

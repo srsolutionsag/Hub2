@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Origin\IOrigin;
  */
 interface ICategoryOrigin extends IOrigin
 {
-
 }

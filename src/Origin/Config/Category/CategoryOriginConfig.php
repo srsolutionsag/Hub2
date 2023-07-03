@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Origin\Config\OriginConfig;
  */
 class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
 {
-
     /**
      * @var array
      */
@@ -30,7 +29,7 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
     /**
      * @inheritdoc
      */
-    public function getParentRefIdIfNoParentIdFound() : int
+    public function getParentRefIdIfNoParentIdFound(): int
     {
         return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
     }
@@ -38,7 +37,7 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
     /**
      * @inheritdoc
      */
-    public function getExternalParentIdIfNoParentIdFound() : string
+    public function getExternalParentIdIfNoParentIdFound(): string
     {
         return (string) $this->get(self::EXT_ID_NO_PARENT_ID_FOUND);
     }

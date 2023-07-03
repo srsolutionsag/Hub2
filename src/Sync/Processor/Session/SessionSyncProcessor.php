@@ -29,7 +29,6 @@ use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
  */
 class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncProcessor
 {
-
     use MetadataSyncProcessor;
     use TaxonomySyncProcessor;
 
@@ -220,10 +219,11 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             $possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
             $origin = array_pop(
                 array_filter(
-                    $possible_parents, function ($origin) use ($linkedOriginId) {
-                    /** @var IOrigin $origin */
-                    return (int) $origin->getId() == $linkedOriginId;
-                }
+                    $possible_parents,
+                    function ($origin) use ($linkedOriginId) {
+                        /** @var IOrigin $origin */
+                        return (int) $origin->getId() == $linkedOriginId;
+                    }
                 )
             );
             if ($origin === null) {

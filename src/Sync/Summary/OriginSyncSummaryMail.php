@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
  */
 class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSyncSummary
 {
-
     /**
      * @inheritdoc
      */
@@ -19,7 +18,7 @@ class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSync
         IOriginSync $originSync,
         bool $only_logs = false,
         bool $output_message = null
-    ) : string {
+    ): string {
         return parent::renderOneSync($originSync, $only_logs, true);
     }
 }

@@ -11,14 +11,13 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 interface ICompetenceManagementOriginConfig extends IOriginConfig
 {
-
     /**
      * @var string
      */
-    const ID_IF_NO_PARENT_ID = "id_if_no_parent_id";
+    public const ID_IF_NO_PARENT_ID = "id_if_no_parent_id";
 
     /**
      * @return int
      */
-    public function getIdIfNoParentId() : int;
+    public function getIdIfNoParentId(): int;
 }

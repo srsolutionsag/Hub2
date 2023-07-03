@@ -19,7 +19,6 @@ use srag\Plugins\Hub2\Taxonomy\Implementation\TaxonomyImplementationFactory;
  */
 trait TaxonomySyncProcessor
 {
-
     /**
      * @param ITaxonomyAwareDataTransferObject $dto
      * @param ITaxonomyAwareObject             $iobject

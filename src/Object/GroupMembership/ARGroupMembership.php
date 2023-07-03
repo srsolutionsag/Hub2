@@ -11,6 +11,5 @@ use srag\Plugins\Hub2\Object\ARObject;
  */
 class ARGroupMembership extends ARObject implements IGroupMembership
 {
-
-    const TABLE_NAME = 'sr_hub2_group_mem';
+    public const TABLE_NAME = 'sr_hub2_group_mem';
 }

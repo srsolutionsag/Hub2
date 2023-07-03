@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  */
 trait TaxonomyAwareDataTransferObject
 {
-
     /**
      * @var array
      */
@@ -20,7 +19,7 @@ trait TaxonomyAwareDataTransferObject
     /**
      * @inheritdoc
      */
-    public function addTaxonomy(ITaxonomy $ITaxonomy) : ITaxonomyAwareDataTransferObject
+    public function addTaxonomy(ITaxonomy $ITaxonomy): ITaxonomyAwareDataTransferObject
     {
         $this->_taxonomies[] = $ITaxonomy;
 
@@ -30,7 +29,7 @@ trait TaxonomyAwareDataTransferObject
     /**
      * @inheritdoc
      */
-    public function getTaxonomies() : array
+    public function getTaxonomies(): array
     {
         return $this->_taxonomies;
     }

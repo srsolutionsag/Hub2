@@ -15,16 +15,15 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * @inheritdoc
      */
-    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object) : ITaxonomyImplementation
+    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object): ITaxonomyImplementation
     {
         switch ($Taxonomy->getMode()) {
             case ITaxonomy::MODE_CREATE:

@@ -20,7 +20,7 @@ class CategoryParentResolver extends BasicParentResolver
      * @var ObjectFactory
      */
     protected $factory;
-    
+
     public function __construct(
         ObjectFactory $factory,
         int $fallback_ref_id,
@@ -29,20 +29,20 @@ class CategoryParentResolver extends BasicParentResolver
         parent::__construct($fallback_ref_id);
         $this->factory = $factory;
         $this->fallback_ext_id = $fallback_ext_id;
-        
+
     }
-    
-    public function resolveParentRefId(DataTransferObject $dto) : int
+
+    public function resolveParentRefId(DataTransferObject $dto): int
     {
         if (!$dto instanceof CategoryDTO) {
             throw new \InvalidArgumentException();
         }
-        
+
         // Parent ID type is Ref-ID
         if ($dto->getParentIdType() === ICategoryDTO::PARENT_ID_TYPE_REF_ID) {
             return $this->resolveRefIdForDTOwithRefIdParentType($dto);
         }
-        
+
         // Parent ID type is External ID
         if ($dto->getParentIdType() === ICategoryDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
             $parent_category = $this->factory->category($dto->getParentId());
@@ -50,7 +50,7 @@ class CategoryParentResolver extends BasicParentResolver
             if ($parent_category->getParentId() === $this->fallback_ext_id) {
                 return $this->checkAndReturnRefId($this->fallback_ref_id);
             }
-            
+
             // no parent ref id available
             if ($parent_category->getILIASId() === null || $parent_category->getILIASId() === 0) {
                 return $this->checkAndReturnRefId($this->fallback_ref_id);
@@ -58,7 +58,7 @@ class CategoryParentResolver extends BasicParentResolver
                 return $this->checkAndReturnRefId($parent_category->getILIASId());
             }
         }
-        
+
         return $this->checkAndReturnRefId($this->fallback_ref_id);
     }
 }

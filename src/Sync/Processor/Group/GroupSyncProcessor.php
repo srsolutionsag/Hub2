@@ -29,7 +29,6 @@ use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
  */
 class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProcessor
 {
-
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
@@ -320,10 +319,11 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             $possible_parents = array_merge($originRepository->categories(), $originRepository->courses());
             $origin = array_pop(
                 array_filter(
-                    $possible_parents, function ($origin) use ($linkedOriginId) {
-                    /** @var IOrigin $origin */
-                    return $origin->getId() == $linkedOriginId;
-                }
+                    $possible_parents,
+                    function ($origin) use ($linkedOriginId) {
+                        /** @var IOrigin $origin */
+                        return $origin->getId() == $linkedOriginId;
+                    }
                 )
             );
             if ($origin === null) {

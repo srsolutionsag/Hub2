@@ -1,4 +1,6 @@
-<?php namespace srag\Plugins\Hub2\Object;
+<?php
+
+namespace srag\Plugins\Hub2\Object;
 
 use srag\Plugins\Hub2\Exception\LanguageCodeException;
 
@@ -8,7 +10,6 @@ use srag\Plugins\Hub2\Exception\LanguageCodeException;
  */
 trait LanguageCheck
 {
-
     /**
      * Copied from ilMDLanguageItem::_getPossibleLanguageCodes
      * @var string[]
@@ -160,7 +161,7 @@ trait LanguageCheck
      * @param string $languageCode
      * @return bool
      */
-    public static function isLanguageCode(string $languageCode) : bool
+    public static function isLanguageCode(string $languageCode): bool
     {
         return in_array($languageCode, self::$available_languages);
     }
@@ -176,5 +177,3 @@ trait LanguageCheck
         }
     }
 }
-
-

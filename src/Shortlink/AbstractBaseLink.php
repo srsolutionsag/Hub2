@@ -14,11 +14,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractBaseLink implements IObjectLink
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var ARObject
      */
@@ -36,7 +35,7 @@ abstract class AbstractBaseLink implements IObjectLink
     /**
      * @inheritdoc
      */
-    public function getNonExistingLink() : string
+    public function getNonExistingLink(): string
     {
         return "index.php";
     }

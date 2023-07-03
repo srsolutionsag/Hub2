@@ -11,11 +11,10 @@ use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
  */
 interface ITaxonomyAwareObject extends IObject
 {
-
     /**
      * @return ITaxonomy[]
      */
-    public function getTaxonomies() : array;
+    public function getTaxonomies(): array;
 
     /**
      * @param ITaxonomy[] $taxonomies

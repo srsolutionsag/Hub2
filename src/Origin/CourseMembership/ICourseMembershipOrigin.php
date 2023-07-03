@@ -11,5 +11,4 @@ use srag\Plugins\Hub2\Origin\IOrigin;
  */
 interface ICourseMembershipOrigin extends IOrigin
 {
-
 }

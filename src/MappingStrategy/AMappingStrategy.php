@@ -13,9 +13,8 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AMappingStrategy implements IMappingStrategy
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 }

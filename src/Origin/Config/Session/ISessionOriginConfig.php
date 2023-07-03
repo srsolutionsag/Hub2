@@ -11,7 +11,6 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 interface ISessionOriginConfig extends IOriginConfig
 {
-
     //	const REF_ID_NO_PARENT_ID_FOUND = 'ref_id_no_parent_id_found';
     //	const EXT_ID_NO_PARENT_ID_FOUND = 'ext_id_no_parent_id_found';
     //

@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Object\IObject;
  */
 interface IUser extends IObject, IMetadataAwareObject
 {
-
 }

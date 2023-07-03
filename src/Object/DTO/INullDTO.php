@@ -12,5 +12,4 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 interface INullDTO extends IDataTransferObject
 {
-
 }

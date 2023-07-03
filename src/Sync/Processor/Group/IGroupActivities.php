@@ -11,7 +11,6 @@ use ilObjGroup;
  */
 interface IGroupActivities
 {
-
     /**
      * Returns true if any activities happened in the given group, false otherwise.
      * @param ilObjGroup $ilObjGroup

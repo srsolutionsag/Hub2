@@ -33,11 +33,10 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class SyncProcessorFactory implements ISyncProcessorFactory
 {
-
     use DICTrait;
     use Hub2Trait;
 
-    const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin
      */
@@ -55,7 +54,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory
      * @var \ilDBInterface
      */
     protected $database;
-    
+
     /**
      * @param IOrigin                 $origin
      * @param IOriginImplementation   $implementation
@@ -170,7 +169,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     /**
      * @inheritdoc
      */
-    public function orgUnit() : IOrgUnitSyncProcessor
+    public function orgUnit(): IOrgUnitSyncProcessor
     {
         return new OrgUnitSyncProcessor(
             $this->origin,
@@ -182,7 +181,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     /**
      * @inheritdoc
      */
-    public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor
+    public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor
     {
         return new OrgUnitMembershipSyncProcessor(
             $this->origin,
@@ -194,11 +193,11 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     /**
      * @inheritdoc
      */
-    public function competenceManagement() : ICompetenceManagementSyncProcessor
+    public function competenceManagement(): ICompetenceManagementSyncProcessor
     {
         return new CompetenceManagementSyncProcessor(
             $this->origin,
-            $this->implementation, 
+            $this->implementation,
             $this->statusTransition
         );
     }

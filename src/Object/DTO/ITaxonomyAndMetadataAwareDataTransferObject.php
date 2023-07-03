@@ -9,5 +9,4 @@ namespace srag\Plugins\Hub2\Object\DTO;
  */
 interface ITaxonomyAndMetadataAwareDataTransferObject extends IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject
 {
-
 }

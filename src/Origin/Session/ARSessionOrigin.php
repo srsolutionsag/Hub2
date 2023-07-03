@@ -13,7 +13,6 @@ use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
  */
 class ARSessionOrigin extends AROrigin implements ISessionOrigin
 {
-
     /**
      * @inheritdoc
      */

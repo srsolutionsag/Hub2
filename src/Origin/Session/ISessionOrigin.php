@@ -9,5 +9,4 @@ use srag\Plugins\Hub2\Origin\IOrigin;
  */
 interface ISessionOrigin extends IOrigin
 {
-
 }

@@ -9,7 +9,6 @@ namespace srag\Plugins\Hub2\Object;
  */
 interface IDidacticTemplateAwareObject
 {
-
     /**
      * @var string key for associative arrays
      */
@@ -23,5 +22,5 @@ interface IDidacticTemplateAwareObject
     /**
      * @return int
      */
-    public function getDidacticTemplateId() : ?int;
+    public function getDidacticTemplateId(): ?int;
 }

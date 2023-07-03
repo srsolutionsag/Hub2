@@ -12,7 +12,6 @@ use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObje
  */
 class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembershipDTO
 {
-
     /**
      * @var string
      */
@@ -46,7 +45,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function getOrgUnitId() : string
+    public function getOrgUnitId(): string
     {
         return $this->org_unit_id;
     }
@@ -54,7 +53,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function setOrgUnitId(string $org_unit_id) : IOrgUnitMembershipDTO
+    public function setOrgUnitId(string $org_unit_id): IOrgUnitMembershipDTO
     {
         $this->org_unit_id = $org_unit_id;
 
@@ -64,7 +63,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function getOrgUnitIdType() : int
+    public function getOrgUnitIdType(): int
     {
         return $this->org_unit_id_type;
     }
@@ -72,7 +71,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function setOrgUnitIdType(int $org_unit_id_type) : IOrgUnitMembershipDTO
+    public function setOrgUnitIdType(int $org_unit_id_type): IOrgUnitMembershipDTO
     {
         $this->org_unit_id_type = $org_unit_id_type;
 
@@ -82,7 +81,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function getUserId() : int
+    public function getUserId(): int
     {
         return $this->user_id;
     }
@@ -90,7 +89,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function setUserId(int $user_id) : IOrgUnitMembershipDTO
+    public function setUserId(int $user_id): IOrgUnitMembershipDTO
     {
         $this->user_id = $user_id;
 
@@ -100,7 +99,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function getPosition() : int
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -108,7 +107,7 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
     /**
      * @inheritdoc
      */
-    public function setPosition(int $position) : IOrgUnitMembershipDTO
+    public function setPosition(int $position): IOrgUnitMembershipDTO
     {
         $this->position = $position;
 

@@ -9,8 +9,8 @@ namespace srag\Plugins\Hub2\Version;
  */
 class Version
 {
-    const GREATER_THAN = ">";
-    const SMALLER_THAN = "<";
+    public const GREATER_THAN = ">";
+    public const SMALLER_THAN = "<";
 
     protected $version = '';
 
