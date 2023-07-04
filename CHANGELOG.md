@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.3.1]
+- [FIX] Empty ILIAS-Links in LogsTable 
+
 ## [3.3.0]
 - Removed DICTrait, HUB2Trait and external libraries 
 

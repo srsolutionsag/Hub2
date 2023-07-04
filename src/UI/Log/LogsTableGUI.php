@@ -115,11 +115,14 @@ class LogsTableGUI extends \ilTable2GUI
         $this->tpl->parseCurrentBlock();
 
         $this->tpl->setCurrentBlock('cell');
-        $url = $this->link_factory->findByExtId($a_set->getObjectExtId())->getAccessGrantedInternalLink();
+        $ilias_id = $a_set->getObjectIliasId();
         $this->tpl->setVariable(
             'VALUE',
-            $this->ui->renderer()->render(
-                $this->ui->factory()->link()->standard($a_set->getObjectIliasId(), $url)->withOpenInNewViewport(true)
+            $ilias_id === null ? '' : $this->ui->renderer()->render(
+                $this->ui->factory()->link()->standard(
+                    $ilias_id,
+                    $this->link_factory->findByExtId($a_set->getObjectExtId())->getAccessGrantedInternalLink()
+                )->withOpenInNewViewport(true)
             )
         );
         $this->tpl->parseCurrentBlock();
