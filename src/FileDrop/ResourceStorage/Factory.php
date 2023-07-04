@@ -21,19 +21,13 @@ class Factory
         $this->ilias_version = new ILIASVersion(ILIAS_VERSION_NUMERIC);
     }
 
-    public function storage(): ResourceStorage
+    public function storage() : ResourceStorage
     {
-        if ($this->ilias_version->lessThanSeven()) {
-            return new ResourceStorage6();
-        }
         return new ResourceStorage7();
     }
 
     public function stakeholder()
     {
-        if ($this->ilias_version->lessThanSeven()) {
-            return new Stakeholder6();
-        }
         return new Stakeholder7();
     }
 }
