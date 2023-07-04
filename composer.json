@@ -40,6 +40,6 @@
     "classmap-authoritative": true
   },
   "scripts": {
-    "pre-autoload-dump": "srag\\LibrariesNamespaceChanger\\LibrariesNamespaceChanger::rewriteLibrariesNamespaces"
+
   }
 }

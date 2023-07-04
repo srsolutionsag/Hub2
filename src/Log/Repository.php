@@ -288,7 +288,7 @@ final class Repository implements IRepository
 
         if (!empty($date_end)) {
             $wheres[] = 'date<=' . $this->db->quote(
-                $date_start->get(IL_CAL_DATETIME),
+                $date_end->get(IL_CAL_DATETIME),
                 ilDBConstants::T_TEXT
             );
         }
@@ -341,9 +341,9 @@ final class Repository implements IRepository
                 $limit_start,
                 ilDBConstants::T_INTEGER
             ) . ',' . $this->db->quote(
-                    $limit_end,
-                    ilDBConstants::T_INTEGER
-                );
+                $limit_end,
+                ilDBConstants::T_INTEGER
+            );
         }
 
         return $sql;

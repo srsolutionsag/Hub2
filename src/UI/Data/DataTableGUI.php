@@ -13,7 +13,6 @@ use ilTable2GUI;
 use ilTemplateException;
 use ilTextInputGUI;
 use ReflectionException;
-use srag\DIC\Hub2\Exception\DICException;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
@@ -39,7 +38,6 @@ use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
  */
 class DataTableGUI extends ilTable2GUI
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const F_ORIGIN_ID = 'origin_id';
     public const F_EXT_ID = 'ext_id';
     /**
@@ -145,8 +143,8 @@ class DataTableGUI extends ilTable2GUI
 
         $options = ["" => ""] + array_map(
             function (string $txt) : string {
-                    return $this->plugin->txt("data_table_status_" . $txt);
-                },
+                return $this->plugin->txt("data_table_status_" . $txt);
+            },
             ARObject::$available_status
         ) + [
                 "!" . IObject::STATUS_IGNORED => $this->plugin->txt("data_table_status_not_ignored"),
