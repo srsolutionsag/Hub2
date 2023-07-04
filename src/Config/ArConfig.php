@@ -3,14 +3,13 @@
 namespace srag\Plugins\Hub2\Config;
 
 use ilHub2Plugin;
-use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 
 /**
  * Class ArConfig
  * @package srag\Plugins\Hub2\Config
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ArConfig extends ActiveRecordConfig
+class ArConfig extends \srag\Plugins\Hub2\Config\ActiveRecordConfig
 {
     public const TABLE_NAME = 'sr_hub2_config_n';
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;

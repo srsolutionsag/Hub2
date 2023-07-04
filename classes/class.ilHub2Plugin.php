@@ -32,8 +32,6 @@ use srag\Plugins\Hub2\Jobs\Notifier;
  */
 class ilHub2Plugin extends ilCronHookPlugin
 {
-    use PluginUninstallTrait;
-
     public const PLUGIN_ID = 'hub2';
     public const PLUGIN_NAME = 'Hub2';
     public const PLUGIN_CLASS_NAME = self::class;
@@ -54,8 +52,8 @@ class ilHub2Plugin extends ilCronHookPlugin
     public function __construct(Notifier $notifier = null)
     {
         global $DIC;
-        $this->db = $DIC->database();
         parent::__construct();
+        $this->db = $DIC->database();
         $this->notifier = $notifier ?? new CronNotifier();
     }
 
@@ -111,13 +109,14 @@ class ilHub2Plugin extends ilCronHookPlugin
      */
     public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
     {
-        return new Menu(self::dic()->dic(), $this);
+        global $DIC;
+        return new Menu($DIC, $this);
     }
 
     /**
      * @inheritdoc
      */
-    protected function deleteData()/*: void*/
+    protected function afterUninstall()/*: void*/
     {
         $this->db->dropTable(ARUserOrigin::TABLE_NAME, false);
         $this->db->dropTable(ARUser::TABLE_NAME, false);
@@ -139,11 +138,5 @@ class ilHub2Plugin extends ilCronHookPlugin
         ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function shouldUseOneUpdateStepOnly() : bool
-    {
-        return false;
-    }
+
 }

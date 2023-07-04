@@ -17,11 +17,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
-    "srag/activerecordconfig": ">=0.1.0",
-    "srag/dic": ">=0.1.0",
-    "srag/librariesnamespacechanger": ">=0.1.0",
-    "srag/removeplugindataconfirm": ">=0.1.0"
+    "php": ">=7.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
