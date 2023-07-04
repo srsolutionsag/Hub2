@@ -59,7 +59,9 @@ final class GlobalHook implements IGlobalHook
 
         $class_name = ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_CLASS);
         if (!class_exists($class_name)) {
-            throw new HubException("Class " . $class_name . " not found. Note that namespaces need to be entered completely");
+            throw new HubException(
+                "Class " . $class_name . " not found. Note that namespaces need to be entered completely"
+            );
         }
 
         $global_hook = new $class_name();

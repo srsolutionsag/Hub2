@@ -77,6 +77,18 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      */
     protected static $ildate_fields
         = ["cancellationEnd", "start", "end", "registrationStart", "registrationEnd"];
+    /**
+     * @var \ilTree
+     */
+    private $tree;
+    /**
+     * @var \ilObjectDataCache
+     */
+    private $obj_data_cache;
+    /**
+     * @var \ilRbacAdmin
+     */
+    private $rbacadmin;
 
     /**
      * @param IOrigin                 $origin
@@ -90,6 +102,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         IObjectStatusTransition $transition,
         IGroupActivities $groupActivities
     ) {
+        global $DIC;
+        $this->tree = $DIC['tree'];
+        $this->obj_data_cache = $DIC['ilObjDataCache'];
+        $this->rbacadmin = $DIC->rbac()->admin();
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
@@ -218,7 +234,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             $this->handleAppointementsColor($ilObjGroup, $dto);
         }
 
-        if (!self::dic()->tree()->isInTree($ilObjGroup->getRefId())) {
+        if (!$this->tree->isInTree($ilObjGroup->getRefId())) {
             $parentRefId = $this->determineParentRefId($dto);
 
             $ilObjGroup->putInTree($parentRefId);
@@ -237,7 +253,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     protected function handleAppointementsColor(ilObjGroup $ilObjGroup, GroupDTO $dto)
     {
         if ($dto->getAppointementsColor()) {
-            self::dic()->objDataCache()->deleteCachedEntry($ilObjGroup->getId());
+            $this->obj_data_cache->deleteCachedEntry($ilObjGroup->getId());
             /**
              * @var $cal_cat ilCalendarCategory
              */
@@ -269,14 +285,14 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
                 $ilObjGroup->delete();
                 break;
             case GroupProperties::DELETE_MODE_MOVE_TO_TRASH:
-                self::dic()->tree()->moveToTrash($ilObjGroup->getRefId(), true);
+                $this->tree->moveToTrash($ilObjGroup->getRefId(), true);
                 break;
             case GroupProperties::DELETE_MODE_DELETE_OR_CLOSE:
                 if ($this->groupActivities->hasActivities($ilObjGroup)) {
                     $ilObjGroup->setGroupStatus(2);
                     $ilObjGroup->update();
                 } else {
-                    self::dic()->tree()->moveToTrash($ilObjGroup->getRefId(), true);
+                    $this->tree->moveToTrash($ilObjGroup->getRefId(), true);
                 }
                 break;
         }
@@ -290,12 +306,12 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     protected function determineParentRefId(GroupDTO $group)
     {
         if ($group->getParentIdType() == GroupDTO::PARENT_ID_TYPE_REF_ID) {
-            if (self::dic()->tree()->isInTree($group->getParentId())) {
+            if ($this->tree->isInTree($group->getParentId())) {
                 return $group->getParentId();
             }
             // The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
             $parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-            if (!self::dic()->tree()->isInTree($parentRefId)) {
+            if (!$this->tree->isInTree($parentRefId)) {
                 throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
             }
 
@@ -338,8 +354,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             if (!$parent->getILIASId()) {
                 throw new HubException("The linked category or course does not (yet) exist in ILIAS");
             }
-            if (!self::dic()->tree()->isInTree($parent->getILIASId())) {
-                throw new HubException("Could not find the ref-ID of the parent category or course in the tree: '{$parent->getILIASId()}'");
+            if (!$this->tree->isInTree($parent->getILIASId())) {
+                throw new HubException(
+                    "Could not find the ref-ID of the parent category or course in the tree: '{$parent->getILIASId()}'"
+                );
             }
 
             return $parent->getILIASId();
@@ -370,15 +388,15 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     protected function moveGroup(ilObjGroup $ilObjGroup, GroupDTO $group)
     {
         $parentRefId = $this->determineParentRefId($group);
-        if (self::dic()->tree()->isDeleted($ilObjGroup->getRefId())) {
+        if ($this->tree->isDeleted($ilObjGroup->getRefId())) {
             $ilRepUtil = new ilRepUtil();
             $ilRepUtil->restoreObjects($parentRefId, [$ilObjGroup->getRefId()]);
         }
-        $oldParentRefId = self::dic()->tree()->getParentId($ilObjGroup->getRefId());
+        $oldParentRefId = $this->tree->getParentId($ilObjGroup->getRefId());
         if ($oldParentRefId == $parentRefId) {
             return;
         }
-        self::dic()->tree()->moveTree($ilObjGroup->getRefId(), $parentRefId);
-        self::dic()->rbacadmin()->adjustMovedObjectPermissions($ilObjGroup->getRefId(), $oldParentRefId);
+        $this->tree->moveTree($ilObjGroup->getRefId(), $parentRefId);
+        $this->rbacadmin->adjustMovedObjectPermissions($ilObjGroup->getRefId(), $oldParentRefId);
     }
 }

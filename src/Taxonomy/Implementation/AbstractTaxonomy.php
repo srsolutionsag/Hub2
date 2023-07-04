@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 use ilHub2Plugin;
 use ilObjTaxonomy;
 use ilTaxonomyTree;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
@@ -17,7 +16,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractTaxonomy implements ITaxonomyImplementation
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -52,6 +50,8 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
      */
     public function __construct(ITaxonomy $taxonomy, int $ilias_parent_id)
     {
+        global $DIC;
+        $this->tree = $DIC['tree'];
         $this->taxonomy = $taxonomy;
         $this->ilias_parent_id = $ilias_parent_id;
     }
@@ -59,9 +59,9 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @return bool
      */
-    protected function taxonomyExists(): bool
+    protected function taxonomyExists() : bool
     {
-        $childsByType = self::dic()->tree()->getChildsByType($this->getILIASParentId(), 'tax');
+        $childsByType = $this->tree->getChildsByType($this->getILIASParentId(), 'tax');
         if (!count($childsByType)) {
             return false;
         }
@@ -101,7 +101,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
      * @param INode $node
      * @return bool
      */
-    protected function nodeExists(INode $node): bool
+    protected function nodeExists(INode $node) : bool
     {
         return in_array($node->getTitle(), $this->childs);
     }
@@ -114,7 +114,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @inheritdoc
      */
-    public function getTaxonomy(): ITaxonomy
+    public function getTaxonomy() : ITaxonomy
     {
         return $this->taxonomy;
     }
@@ -122,7 +122,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @inheritdoc
      */
-    public function getILIASParentId(): int
+    public function getILIASParentId() : int
     {
         return $this->ilias_parent_id;
     }

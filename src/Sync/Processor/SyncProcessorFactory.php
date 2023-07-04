@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
@@ -33,7 +32,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class SyncProcessorFactory implements ISyncProcessorFactory
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -169,7 +167,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     /**
      * @inheritdoc
      */
-    public function orgUnit(): IOrgUnitSyncProcessor
+    public function orgUnit() : IOrgUnitSyncProcessor
     {
         return new OrgUnitSyncProcessor(
             $this->origin,
@@ -181,7 +179,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     /**
      * @inheritdoc
      */
-    public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor
+    public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor
     {
         return new OrgUnitMembershipSyncProcessor(
             $this->origin,
@@ -193,7 +191,7 @@ class SyncProcessorFactory implements ISyncProcessorFactory
     /**
      * @inheritdoc
      */
-    public function competenceManagement(): ICompetenceManagementSyncProcessor
+    public function competenceManagement() : ICompetenceManagementSyncProcessor
     {
         return new CompetenceManagementSyncProcessor(
             $this->origin,

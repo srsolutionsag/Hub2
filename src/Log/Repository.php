@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Log;
 use ilDateTime;
 use ilDBConstants;
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\DIC\Hub2\Exception\DICException;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
@@ -156,7 +155,6 @@ final class Repository implements IRepository
         string $additional_data = null,
         int $status = null
     ): array {
-
         $sql = 'SELECT *';
 
         $sql .= $this->getLogsQuery(
@@ -188,7 +186,6 @@ final class Repository implements IRepository
 
         $logs = array_map([$this->factory(), "fromDB"], $logs);
 
-
         return $logs;
     }
 
@@ -208,7 +205,6 @@ final class Repository implements IRepository
         string $additional_data = null,
         int $status = null
     ): int {
-
         $sql = 'SELECT COUNT(log_id) AS count';
 
         $sql .= $this->getLogsQuery(
@@ -239,21 +235,21 @@ final class Repository implements IRepository
     }
 
     /**
-     * @param string|null $sort_by
-     * @param string|null $sort_by_direction
-     * @param int|null $limit_start
-     * @param int|null $limit_end
-     * @param string|null $title
-     * @param string|null $message
+     * @param string|null     $sort_by
+     * @param string|null     $sort_by_direction
+     * @param int|null        $limit_start
+     * @param int|null        $limit_end
+     * @param string|null     $title
+     * @param string|null     $message
      * @param ilDateTime|null $date_start
      * @param ilDateTime|null $date_end
-     * @param int|null $level
-     * @param int|null $origin_id
-     * @param string|null $origin_object_type
-     * @param string|null $object_ext_id
-     * @param int|null $object_ilias_id
-     * @param string|null $additional_data
-     * @param int $status
+     * @param int|null        $level
+     * @param int|null        $origin_id
+     * @param string|null     $origin_object_type
+     * @param string|null     $object_ext_id
+     * @param int|null        $object_ilias_id
+     * @param string|null     $additional_data
+     * @param int             $status
      * @return string
      * @throws DICException
      */
@@ -274,7 +270,6 @@ final class Repository implements IRepository
         string $additional_data = null,
         int $status = null
     ): string {
-
         $sql = ' FROM ' . $this->db->quoteIdentifier(Log::TABLE_NAME);
 
         $wheres = [];
@@ -289,16 +284,16 @@ final class Repository implements IRepository
 
         if (!empty($date_start)) {
             $wheres[] = 'date>=' . $this->db->quote(
-                $date_start->get(IL_CAL_DATETIME),
-                ilDBConstants::T_TEXT
-            );
+                    $date_start->get(IL_CAL_DATETIME),
+                    ilDBConstants::T_TEXT
+                );
         }
 
         if (!empty($date_end)) {
             $wheres[] = 'date<=' . $this->db->quote(
-                $date_start->get(IL_CAL_DATETIME),
-                ilDBConstants::T_TEXT
-            );
+                    $date_start->get(IL_CAL_DATETIME),
+                    ilDBConstants::T_TEXT
+                );
         }
 
         if (!empty($level)) {
@@ -311,9 +306,9 @@ final class Repository implements IRepository
 
         if (!empty($origin_object_type)) {
             $wheres[] = 'origin_object_type=' . $this->db->quote(
-                $origin_object_type,
-                ilDBConstants::T_TEXT
-            );
+                    $origin_object_type,
+                    ilDBConstants::T_TEXT
+                );
         }
 
         if (!empty($object_ext_id)) {
@@ -346,12 +341,12 @@ final class Repository implements IRepository
 
         if ($limit_start !== null && $limit_end !== null) {
             $sql .= ' LIMIT ' . $this->db->quote(
-                $limit_start,
-                ilDBConstants::T_INTEGER
-            ) . ',' . $this->db->quote(
-                $limit_end,
-                ilDBConstants::T_INTEGER
-            );
+                    $limit_start,
+                    ilDBConstants::T_INTEGER
+                ) . ',' . $this->db->quote(
+                    $limit_end,
+                    ilDBConstants::T_INTEGER
+                );
         }
 
         return $sql;

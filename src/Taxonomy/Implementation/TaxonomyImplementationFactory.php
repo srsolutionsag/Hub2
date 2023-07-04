@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilHub2Plugin;
 use ilObject;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -15,7 +14,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -23,7 +21,7 @@ class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory
     /**
      * @inheritdoc
      */
-    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object): ITaxonomyImplementation
+    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object) : ITaxonomyImplementation
     {
         switch ($Taxonomy->getMode()) {
             case ITaxonomy::MODE_CREATE:

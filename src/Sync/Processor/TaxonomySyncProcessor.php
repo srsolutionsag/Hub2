@@ -30,7 +30,6 @@ trait TaxonomySyncProcessor
         ilObject $ilias_object
     ) {
         if (count($dto->getTaxonomies()) > 0) {
-
             $this->handleDTOSpecificTaxonomySettings($dto, $ilias_object);
 
             $f = new TaxonomyImplementationFactory();

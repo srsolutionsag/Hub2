@@ -14,7 +14,9 @@ use srag\Plugins\Hub2\Object\DTO\INewsSettingsAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICourseDTO extends IDataTransferObject, ITaxonomyAndMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject, INewsSettingsAwareDataTransferObject
+interface ICourseDTO extends IDataTransferObject, ITaxonomyAndMetadataAwareDataTransferObject,
+                             IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject,
+                             INewsSettingsAwareDataTransferObject
 {
     // @see ilCourseConstants
     public const SUBSCRIPTION_TYPE_DEACTIVATED = 0;

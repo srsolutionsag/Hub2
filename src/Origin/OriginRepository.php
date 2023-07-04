@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use srag\Plugins\Hub2\Origin\CompetenceManagement\ARCompetenceManagementOrigin;
 use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
@@ -24,7 +23,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginRepository implements IOriginRepository
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -130,7 +128,7 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function orgUnits(): array
+    public function orgUnits() : array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT])->get();
     }
@@ -138,7 +136,7 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function orgUnitMemberships(): array
+    public function orgUnitMemberships() : array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP])->get();
     }
@@ -146,8 +144,9 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function competenceManagements(): array
+    public function competenceManagements() : array
     {
-        return ARCompetenceManagementOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT])->get();
+        return ARCompetenceManagementOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT])->get(
+        );
     }
 }

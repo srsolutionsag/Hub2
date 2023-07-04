@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Access;
 
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
@@ -13,7 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 final class Access
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -25,7 +23,7 @@ final class Access
     /**
      * @return self
      */
-    public static function getInstance(): self
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -39,6 +37,5 @@ final class Access
      */
     private function __construct()
     {
-
     }
 }

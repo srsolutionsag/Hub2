@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Origin;
 
 use ActiveRecord;
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -16,17 +15,21 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginFactory implements IOriginFactory
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var \ilDBInterface
+     */
+    private $db;
 
     /**
      *
      */
     public function __construct()
     {
-
+        global $DIC;
+        $this->db = $DIC->database();
     }
 
     /**
@@ -35,8 +38,8 @@ class OriginFactory implements IOriginFactory
     public function getById($id)
     {
         $sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
-        $set = self::dic()->database()->queryF($sql, ['integer'], [$id]);
-        $type = self::dic()->database()->fetchObject($set)->object_type;
+        $set = $this->db->queryF($sql, ['integer'], [$id]);
+        $type = $this->db->fetchObject($set)->object_type;
         if (!$type) {
             //throw new HubException("Can not get type of origin id (probably deleted): ".$id);
             return null;
@@ -49,7 +52,7 @@ class OriginFactory implements IOriginFactory
     /**
      * @inheritdoc
      */
-    public function createByType(string $type): IOrigin
+    public function createByType(string $type) : IOrigin
     {
         $class = $this->getClass($type);
 
@@ -59,12 +62,12 @@ class OriginFactory implements IOriginFactory
     /**
      * @inheritdoc
      */
-    public function getAllActive(): array
+    public function getAllActive() : array
     {
         $sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s ORDER BY sort';
-        $set = self::dic()->database()->queryF($sql, ['integer'], [1]);
+        $set = $this->db->queryF($sql, ['integer'], [1]);
         $origins = [];
-        while ($data = self::dic()->database()->fetchObject($set)) {
+        while ($data = $this->db->fetchObject($set)) {
             $origins[] = $this->getById($data->id);
         }
 
@@ -74,13 +77,13 @@ class OriginFactory implements IOriginFactory
     /**
      * @inheritdoc
      */
-    public function getAll(): array
+    public function getAll() : array
     {
         $origins = [];
 
         $sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' ORDER BY sort';
-        $set = self::dic()->database()->query($sql);
-        while ($data = self::dic()->database()->fetchObject($set)) {
+        $set = $this->db->query($sql);
+        while ($data = $this->db->fetchObject($set)) {
             $origins[] = $this->getById($data->id);
         }
 

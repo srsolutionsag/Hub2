@@ -2,8 +2,6 @@
 
 namespace srag\Plugins\Hub2\Origin\Hook;
 
-use srag\Plugins\Hub2\Origin\IOrigin;
-
 class Config
 {
     protected $all_object_hook = true;

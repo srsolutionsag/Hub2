@@ -89,6 +89,26 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @var CourseParentResolver
      */
     protected $parent_resolver;
+    /**
+     * @var \ilTree
+     */
+    private $tree;
+    /**
+     * @var \ilObjectDefinition
+     */
+    private $object_definition;
+    /**
+     * @var \ilObjUser
+     */
+    private $user;
+    /**
+     * @var \ilSetting
+     */
+    private $settings;
+    /**
+     * @var \ilObjectDataCache
+     */
+    private $obj_data_cache;
 
     /**
      * @param IOrigin                 $origin
@@ -102,6 +122,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         IObjectStatusTransition $transition,
         ICourseActivities $courseActivities
     ) {
+        global $DIC;
+        $this->tree = $DIC['tree'];
+        $this->object_definition = $DIC['objDefinition'];
+        $this->user = $DIC->user();
+        $this->settings = $DIC->settings();
+        $this->obj_data_cache = $DIC['ilObjDataCache'];
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
@@ -238,19 +264,18 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     protected function getCloneOptions($source_id)
     {
         $options = [];
-        foreach (self::dic()->tree()->getSubTree($root = self::dic()->tree()->getNodeData($source_id)) as $node) {
+        foreach ($this->tree->getSubTree($root = $this->tree->getNodeData($source_id)) as $node) {
             if ($node['type'] == 'rolf') {
                 continue;
             }
 
-            if (self::dic()->objDefinition()->allowCopy($node['type'])) {
+            if ($this->object_definition->allowCopy($node['type'])) {
                 $options[$node['ref_id']] = ['type' => ilCopyWizardOptions::COPY_WIZARD_COPY];
             }
             // this should be a config
             //            else if (self::LINK_IF_COPY_NOT_POSSIBLE && self::dic()->objDefinition()->allowLink($node['type'])) {
             //                $options[$node['ref_id']] = ['type' => ilCopyWizardOptions::COPY_WIZARD_LINK];
             //            }
-
         }
 
         return $options;
@@ -263,12 +288,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param array $options
      * @return int $ref_id
      */
-    public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options): int
+    public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options) : int
     {
         // Save wizard options
         $copy_id = ilCopyWizardOptions::_allocateCopyId();
         $wizard_options = ilCopyWizardOptions::_getInstance($copy_id);
-        $wizard_options->saveOwner(self::dic()->user()->getId());
+        $wizard_options->saveOwner($this->user->getId());
         $wizard_options->saveRoot($clone_source);
 
         // add entry for source container
@@ -330,20 +355,24 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     protected function sendMailNotifications(CourseDTO $dto, ilObjCourse $ilObjCourse)
     {
         $mail = new ilMimeMail();
-        $sender_factory = new ilMailMimeSenderFactory(self::dic()->settings());
+        $sender_factory = new ilMailMimeSenderFactory($this->settings);
         $sender = null;
         if ($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)) {
-            $sender = $sender_factory->userByEmailAddress($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM));
+            $sender = $sender_factory->userByEmailAddress(
+                $this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)
+            );
         } else {
             $sender = $sender_factory->system();
         }
         $mail->From($sender);
         $mail->To($dto->getNotificationEmails());
         $mail->Subject($this->props->get(CourseProperties::CREATE_NOTIFICATION_SUBJECT));
-        $mail->Body($this->replaceBodyTextForMail(
-            $this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY),
-            $ilObjCourse
-        ));
+        $mail->Body(
+            $this->replaceBodyTextForMail(
+                $this->props->get(CourseProperties::CREATE_NOTIFICATION_BODY),
+                $ilObjCourse
+            )
+        );
         $mail->Send();
     }
 
@@ -401,7 +430,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             }
         }
         if ($this->props->updateDTOProperty("courseStart") || $this->props->updateDTOProperty("courseEnd")) {
-            $start = $this->props->updateDTOProperty("courseStart") ? $dto->getCourseStart() : $ilObjCourse->getCourseStart();
+            $start = $this->props->updateDTOProperty("courseStart") ? $dto->getCourseStart(
+            ) : $ilObjCourse->getCourseStart();
             $end = $this->props->updateDTOProperty("courseEnd") ? $dto->getCourseEnd() : $ilObjCourse->getCourseEnd();
             if ($this->isMinVersion('6.0')) {
                 $ilObjCourse->setCoursePeriod($start, $end);
@@ -468,7 +498,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto)
     {
         if (!empty($dto->getAppointementsColor())) {
-            self::dic()->objDataCache()->deleteCachedEntry($ilObjCourse->getId());
+            $this->obj_data_cache->deleteCachedEntry($ilObjCourse->getId());
             /**
              * @var $cal_cat ilCalendarCategory
              */
@@ -500,14 +530,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 $ilObjCourse->delete();
                 break;
             case CourseProperties::DELETE_MODE_MOVE_TO_TRASH:
-                self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
+                $this->tree->moveToTrash($ilObjCourse->getRefId(), true);
                 break;
             case CourseProperties::DELETE_MODE_DELETE_OR_OFFLINE:
                 if ($this->courseActivities->hasActivities($ilObjCourse)) {
                     $ilObjCourse->setOfflineStatus(true);
                     $ilObjCourse->update();
                 } else {
-                    self::dic()->tree()->moveToTrash($ilObjCourse->getRefId(), true);
+                    $this->tree->moveToTrash($ilObjCourse->getRefId(), true);
                 }
                 break;
         }
@@ -574,7 +604,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if (isset($cache[$cacheKey])) {
             return $cache[$cacheKey];
         }
-        $categories = self::dic()->tree()->getChildsByType($parent_ref_id, 'cat');
+        $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
         $matches = array_filter($categories, static function ($category) use ($title) {
             return $category['title'] === $title;
         });
@@ -623,7 +653,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     /**
      * @inheritDoc
      */
-    protected function isMinVersion(string $version): bool
+    protected function isMinVersion(string $version) : bool
     {
         return (version_compare(ILIAS_VERSION_NUMERIC, $version) >= 0);
     }

@@ -9,7 +9,6 @@ use Exception;
 use ilHub2Plugin;
 use InvalidArgumentException;
 use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Metadata\IMetadata;
 use srag\Plugins\Hub2\Metadata\Metadata;
 use srag\Plugins\Hub2\Origin\OriginFactory;
@@ -27,7 +26,6 @@ use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
  */
 abstract class ARObject extends ActiveRecord implements IObject
 {
-    use DICTrait;
     use Hub2Trait;
     use HashCodeComputer;
 
@@ -349,7 +347,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getDeliveryDate(): DateTime
+    public function getDeliveryDate() : DateTime
     {
         return new DateTime($this->delivery_date);
     }
@@ -357,7 +355,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getProcessedDate(): DateTime
+    public function getProcessedDate() : DateTime
     {
         return new DateTime($this->processed_date);
     }
@@ -399,7 +397,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getStatus(): int
+    public function getStatus() : int
     {
         return $this->status;
     }

@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Sync\Processor\Category;
 use ilContainerSortingSettings;
 use ilObjCategory;
 use ilObjectServiceSettingsGUI;
-use ilRepUtil;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -58,6 +57,14 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      * @var CategoryParentResolver
      */
     protected $parent_resolver;
+    /**
+     * @var \ilLanguage
+     */
+    private $language;
+    /**
+     * @var \ilTree
+     */
+    private $tree;
 
     /**
      * @param IOrigin                 $origin
@@ -69,6 +76,9 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         IOriginImplementation $implementation,
         IObjectStatusTransition $transition
     ) {
+        global $DIC;
+        $this->language = $DIC->language();
+        $this->tree = $DIC['tree'];
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
@@ -130,7 +140,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         $ilObjCategory->addTranslation(
             $dto->getTitle(),
             $dto->getDescription(),
-            self::dic()->language()->getDefaultLanguage(),
+            $this->language->getDefaultLanguage(),
             true
         );
     }
@@ -161,7 +171,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             $ilObjCategory->addTranslation(
                 $dto->getTitle(),
                 $dto->getDescription(),
-                self::dic()->language()->getDefaultLanguage(),
+                $this->language->getDefaultLanguage(),
                 true
             );
         }
@@ -216,7 +226,9 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         }
         switch ($this->props->get(CategoryProperties::DELETE_MODE)) {
             case CategoryProperties::DELETE_MODE_MARK:
-                $ilObjCategory->setTitle($ilObjCategory->getTitle() . ' ' . $this->props->get(CategoryProperties::DELETE_MODE_MARK_TEXT));
+                $ilObjCategory->setTitle(
+                    $ilObjCategory->getTitle() . ' ' . $this->props->get(CategoryProperties::DELETE_MODE_MARK_TEXT)
+                );
                 $ilObjCategory->update();
                 break;
             case CourseProperties::DELETE_MODE_DELETE:
@@ -235,9 +247,9 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         return $this->parent_resolver->resolveParentRefId($category);
     }
 
-    private function checkAndReturnRefId(int $ref_id): int
+    private function checkAndReturnRefId(int $ref_id) : int
     {
-        if (!self::dic()->tree()->isInTree($ref_id)) {
+        if (!$this->tree->isInTree($ref_id)) {
             // TODO try to restore
             throw new HubException("Could not find the fallback parent ref-ID in tree: '{$ref_id}'");
         }
@@ -269,7 +281,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     /**
      * @inheritdoc
      */
-    public function handleSort(array $sort_dtos): bool
+    public function handleSort(array $sort_dtos) : bool
     {
         array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto) {
             /** @var ICategoryDTO $object_a */
@@ -278,5 +290,4 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
         return true;
     }
-
 }

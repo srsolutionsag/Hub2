@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Object\DTO;
 use ArrayObject;
 use ilHub2Plugin;
 use Serializable;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 
@@ -18,7 +17,6 @@ use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 abstract class DataTransferObject implements IDataTransferObject
 {
     use HashCodeComputer;
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -107,7 +105,7 @@ abstract class DataTransferObject implements IDataTransferObject
     {
         return array_filter(
             array_keys(get_class_vars(get_class($this))),
-            function (string $property): bool {
+            function (string $property) : bool {
                 return ($property !== "should_deleted");
             }
         );
@@ -130,7 +128,7 @@ abstract class DataTransferObject implements IDataTransferObject
     /**
      * @inheritdoc
      */
-    public function shouldDeleted(): bool
+    public function shouldDeleted() : bool
     {
         return $this->should_deleted;
     }
@@ -148,7 +146,7 @@ abstract class DataTransferObject implements IDataTransferObject
     /**
      * @inheritdoc
      */
-    public function getAdditionalData(): Serializable
+    public function getAdditionalData() : Serializable
     {
         $object = unserialize($this->additionalData);
         if (!$object) {
@@ -172,7 +170,7 @@ abstract class DataTransferObject implements IDataTransferObject
      * @param array  $data
      * @param string $key
      */
-    protected function sleepValue(array &$data, string $key)
+    protected function sleepValue(array & $data, string $key)
     {
         switch ($key) {
             default:

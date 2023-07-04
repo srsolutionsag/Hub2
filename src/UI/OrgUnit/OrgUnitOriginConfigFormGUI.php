@@ -31,11 +31,10 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addSyncConfig();
 
         $ref_id_if_no_parent_id = new ilTextInputGUI(
-            self::plugin()
-                ->translate("orgunit_ref_id_if_no_parent_id"),
+            $this->plugin->txt("orgunit_ref_id_if_no_parent_id"),
             $this->conf(IOrgUnitOriginConfig::REF_ID_IF_NO_PARENT_ID)
         );
-        $ref_id_if_no_parent_id->setInfo(self::plugin()->translate("orgunit_ref_id_if_no_parent_id_info"));
+        $ref_id_if_no_parent_id->setInfo($this->plugin->txt("orgunit_ref_id_if_no_parent_id_info"));
         $ref_id_if_no_parent_id->setValue($this->origin->config()->getRefIdIfNoParentId());
         $this->addItem($ref_id_if_no_parent_id);
     }
@@ -55,7 +54,7 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
     {
         parent::addPropertiesUpdate();
 
-        $cb = new ilCheckboxInputGUI(self::plugin()->translate("orgunit_move"), $this->prop(IOrgUnitProperties::MOVE));
+        $cb = new ilCheckboxInputGUI($this->plugin->txt("orgunit_move"), $this->prop(IOrgUnitProperties::MOVE));
         $cb->setChecked($this->origin->properties()->get(IOrgUnitProperties::MOVE));
         $this->addItem($cb);
     }
@@ -68,16 +67,16 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addPropertiesDelete();
 
         $delete = new ilRadioGroupInputGUI(
-            self::plugin()->translate("orgunit_delete_mode"),
+            $this->plugin->txt("orgunit_delete_mode"),
             $this->prop(IOrgUnitProperties::DELETE_MODE)
         );
         $opt = new ilRadioOption(
-            self::plugin()->translate("orgunit_delete_mode_none"),
+            $this->plugin->txt("orgunit_delete_mode_none"),
             IOrgUnitProperties::DELETE_MODE_NONE
         );
         $delete->addOption($opt);
         $opt = new ilRadioOption(
-            self::plugin()->translate("orgunit_delete_mode_delete"),
+            $this->plugin->txt("orgunit_delete_mode_delete"),
             IOrgUnitProperties::DELETE_MODE_DELETE
         );
         $delete->addOption($opt);

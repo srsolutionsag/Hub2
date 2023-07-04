@@ -2,21 +2,6 @@
 
 namespace srag\Plugins\Hub2\FileDrop;
 
-use ilContext;
-use ilHub2Plugin;
-use ilInitialisation;
-use srag\Plugins\Hub2\Exception\ShortlinkException;
-use ILIAS\DI\HTTPServices;
-use srag\Plugins\Hub2\Origin\OriginRepository;
-use srag\Plugins\Hub2\Origin\OriginFactory;
-use srag\Plugins\Hub2\Origin\IOrigin;
-use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
-use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
-use srag\Plugins\Hub2\FileDrop\Exceptions\InternalError;
-use srag\Plugins\Hub2\FileDrop\Exceptions\AccessDenied;
-use srag\Plugins\Hub2\FileDrop\Exceptions\NotFound;
-use srag\Plugins\Hub2\FileDrop\Exceptions\Success;
-use ILIAS\Filesystem\Stream\Streams;
 use Psr\Http\Message\RequestInterface;
 
 /**

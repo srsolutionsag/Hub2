@@ -48,9 +48,15 @@ class ilHub2Plugin extends ilCronHookPlugin
      * @var CronNotifier
      */
     protected $notifier;
+    /**
+     * @var \ilDBInterface
+     */
+    private $db;
 
     public function __construct(Notifier $notifier = null)
     {
+        global $DIC;
+        $this->db = $DIC->database();
         parent::__construct();
         $this->notifier = $notifier ?? new CronNotifier();
     }
@@ -58,7 +64,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return string
      */
-    public function getPluginName(): string
+    public function getPluginName() : string
     {
         return self::PLUGIN_NAME;
     }
@@ -66,7 +72,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return self
      */
-    public static function getInstance(): self
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -78,7 +84,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return ilCronJob[]
      */
-    public function getCronJobInstances(): array
+    public function getCronJobInstances() : array
     {
         return [new RunSync(new CronNotifier()), new DeleteOldLogsJob()];
     }
@@ -105,7 +111,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritdoc
      */
-    public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
+    public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
     {
         return new Menu(self::dic()->dic(), $this);
     }
@@ -115,22 +121,22 @@ class ilHub2Plugin extends ilCronHookPlugin
      */
     protected function deleteData()/*: void*/
     {
-        self::dic()->database()->dropTable(ARUserOrigin::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARUser::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARCourse::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARCourseMembership::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARCategory::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARSession::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARGroup::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARGroupMembership::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ARSessionMembership::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ArConfig::TABLE_NAME, false);
-        self::dic()->database()->dropTable(ArConfigOld::TABLE_NAME, false);
-        self::dic()->database()->dropTable(AROrgUnit::TABLE_NAME, false);
-        self::dic()->database()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
-        self::dic()->database()->dropTable(Log::TABLE_NAME, false);
-        self::dic()->database()->dropAutoIncrementTable(Log::TABLE_NAME);
-        self::dic()->database()->dropTable(ARCompetenceManagement::TABLE_NAME, false);
+        $this->db->dropTable(ARUserOrigin::TABLE_NAME, false);
+        $this->db->dropTable(ARUser::TABLE_NAME, false);
+        $this->db->dropTable(ARCourse::TABLE_NAME, false);
+        $this->db->dropTable(ARCourseMembership::TABLE_NAME, false);
+        $this->db->dropTable(ARCategory::TABLE_NAME, false);
+        $this->db->dropTable(ARSession::TABLE_NAME, false);
+        $this->db->dropTable(ARGroup::TABLE_NAME, false);
+        $this->db->dropTable(ARGroupMembership::TABLE_NAME, false);
+        $this->db->dropTable(ARSessionMembership::TABLE_NAME, false);
+        $this->db->dropTable(ArConfig::TABLE_NAME, false);
+        $this->db->dropTable(ArConfigOld::TABLE_NAME, false);
+        $this->db->dropTable(AROrgUnit::TABLE_NAME, false);
+        $this->db->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+        $this->db->dropTable(Log::TABLE_NAME, false);
+        $this->db->dropAutoIncrementTable(Log::TABLE_NAME);
+        $this->db->dropTable(ARCompetenceManagement::TABLE_NAME, false);
 
         ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
     }
@@ -138,7 +144,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritDoc
      */
-    protected function shouldUseOneUpdateStepOnly(): bool
+    protected function shouldUseOneUpdateStepOnly() : bool
     {
         return false;
     }

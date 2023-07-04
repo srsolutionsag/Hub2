@@ -2,14 +2,8 @@
 
 namespace srag\Plugins\Hub2\Origin;
 
-use InvalidArgumentException;
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
-use srag\Plugins\Hub2\Exception\ConnectionFailedException;
-use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Exception\ParseDataFailedException;
-use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use srag\Plugins\Hub2\Object\HookObject;
 
 /**
  * Interface IOriginArrayImplementation

@@ -31,10 +31,10 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addSyncConfig();
 
         $te = new ilTextInputGUI(
-            self::plugin()->translate('grp_prop_node_noparent'),
+            $this->plugin->txt('grp_prop_node_noparent'),
             $this->conf(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND)
         );
-        $te->setInfo(self::plugin()->translate('grp_prop_node_noparent_info'));
+        $te->setInfo($this->plugin->txt('grp_prop_node_noparent_info'));
         $te->setValue($this->origin->config()->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
         $this->addItem($te);
     }
@@ -55,10 +55,10 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addPropertiesUpdate();
 
         $cb = new ilCheckboxInputGUI(
-            self::plugin()->translate('grp_prop_move'),
+            $this->plugin->txt('grp_prop_move'),
             $this->prop(GroupProperties::MOVE_GROUP)
         );
-        $cb->setInfo(self::plugin()->translate('grp_prop_move_info'));
+        $cb->setInfo($this->plugin->txt('grp_prop_move_info'));
         $this->addItem($cb);
     }
 
@@ -70,38 +70,38 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addPropertiesDelete();
 
         $delete = new ilRadioGroupInputGUI(
-            self::plugin()->translate('grp_prop_delete_mode'),
+            $this->plugin->txt('grp_prop_delete_mode'),
             $this->prop(GroupProperties::DELETE_MODE)
         );
         $delete->setValue($this->origin->properties()->get(GroupProperties::DELETE_MODE));
 
         $opt = new ilRadioOption(
-            self::plugin()->translate('grp_prop_delete_mode_none'),
+            $this->plugin->txt('grp_prop_delete_mode_none'),
             GroupProperties::DELETE_MODE_NONE
         );
         $delete->addOption($opt);
 
         $opt = new ilRadioOption(
-            self::plugin()->translate('grp_prop_delete_mode_close'),
+            $this->plugin->txt('grp_prop_delete_mode_close'),
             GroupProperties::DELETE_MODE_CLOSED
         );
         $delete->addOption($opt);
 
         $opt = new ilRadioOption(
-            self::plugin()->translate('grp_prop_delete_mode_delete'),
+            $this->plugin->txt('grp_prop_delete_mode_delete'),
             GroupProperties::DELETE_MODE_DELETE
         );
         $delete->addOption($opt);
 
         $opt = new ilRadioOption(
-            self::plugin()->translate('grp_prop_delete_mode_delete_or_close'),
+            $this->plugin->txt('grp_prop_delete_mode_delete_or_close'),
             GroupProperties::DELETE_MODE_DELETE_OR_CLOSE
         );
-        $opt->setInfo(self::plugin()->translate('grp_prop_delete_mode_delete_or_close_info'));
+        $opt->setInfo($this->plugin->txt('grp_prop_delete_mode_delete_or_close_info'));
         $delete->addOption($opt);
 
         $opt = new ilRadioOption(
-            self::plugin()->translate('grp_prop_delete_mode_trash'),
+            $this->plugin->txt('grp_prop_delete_mode_trash'),
             GroupProperties::DELETE_MODE_MOVE_TO_TRASH
         );
         $delete->addOption($opt);

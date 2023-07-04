@@ -39,7 +39,42 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      * @var array
      */
     protected static $properties
-        = ['authMode', 'externalAccount', 'firstname', 'lastname', 'email', 'secondEmail', 'institution', 'street', 'city', 'zipcode', 'country', 'selectedCountry', 'phoneOffice', 'phoneHome', 'phoneMobile', 'department', 'fax', 'timeLimitOwner', 'timeLimitUnlimited', 'timeLimitFrom', 'timeLimitUntil', 'matriculation', 'gender', 'birthday', 'language', 'passwd'];
+        = [
+            'authMode',
+            'externalAccount',
+            'firstname',
+            'lastname',
+            'email',
+            'secondEmail',
+            'institution',
+            'street',
+            'city',
+            'zipcode',
+            'country',
+            'selectedCountry',
+            'phoneOffice',
+            'phoneHome',
+            'phoneMobile',
+            'department',
+            'fax',
+            'timeLimitOwner',
+            'timeLimitUnlimited',
+            'timeLimitFrom',
+            'timeLimitUntil',
+            'matriculation',
+            'gender',
+            'birthday',
+            'language',
+            'passwd'
+        ];
+    /**
+     * @var \ilMailMimeSenderFactory
+     */
+    private $sender_factory;
+    /**
+     * @var \ilRbacAdmin
+     */
+    private $rbacadmin;
 
     /**
      * @param IOrigin                 $origin
@@ -51,6 +86,9 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         IOriginImplementation $implementation,
         IObjectStatusTransition $transition
     ) {
+        global $DIC;
+        $this->sender_factory = $DIC['mail.mime.sender.factory'];
+        $this->rbacadmin = $DIC->rbac()->admin();
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
@@ -162,7 +200,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         }
 
         // Update Password?
-        if ($this->props->get(UserProperties::UPDATE_PASSWORD) && $dto->getPasswd() !== null && $dto->getPasswd() !== '') {
+        if ($this->props->get(UserProperties::UPDATE_PASSWORD) && $dto->getPasswd() !== null && $dto->getPasswd(
+            ) !== '') {
             $ilObjUser->resetPassword($dto->getPasswd(), $dto->getPasswd());
         }
 
@@ -181,7 +220,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         $mail_field = $dto->getEmail();
         if ($mail_field) {
             $mail = new ilMimeMail();
-            $mail->From(self::dic()->mailMimeSenderFactory()->system());
+            $mail->From($this->sender_factory->system());
             $mail->To($dto->getEmail());
             $body = $this->props->get(UserProperties::PASSWORD_MAIL_BODY);
 
@@ -226,7 +265,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
     protected function assignILIASRoles(UserDTO $user, ilObjUser $ilObjUser)
     {
         foreach ($user->getIliasRoles() as $role_id) {
-            self::dic()->rbacadmin()->assignUser($role_id, $ilObjUser->getId());
+            $this->rbacadmin->assignUser($role_id, $ilObjUser->getId());
         }
     }
 

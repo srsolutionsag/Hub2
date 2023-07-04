@@ -24,7 +24,6 @@ class CourseLink extends AbstractRepositoryLink implements IObjectLink
             $uri .= '?' . $query;
         }
 
-
         return $uri;
     }
 }

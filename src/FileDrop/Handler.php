@@ -3,11 +3,9 @@
 namespace srag\Plugins\Hub2\FileDrop;
 
 use ilContext;
-use ilHub2Plugin;
 use ilInitialisation;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
 use ILIAS\DI\HTTPServices;
-use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -126,7 +124,8 @@ class Handler
 
                 $result = end($this->uploaded_files);
 
-                if (null === $result || $result->getStatus()->getCode() !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
+                if (null === $result || $result->getStatus()->getCode(
+                    ) !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
                     $message = $result === null ? 'no file uploaded' : $result->getStatus()->getMessage();
                     throw new InternalError('Upload failed: ' . $message);
                 }
@@ -148,7 +147,6 @@ class Handler
                 $rid = $this->storage->replaceFromString($current_rid ?? '', $file_content, $content_type);
                 break;
         }
-
 
         $origin->config()->setData([IOriginConfig::FILE_DROP_RID => $rid]);
         $origin->store();

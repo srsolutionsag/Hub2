@@ -30,6 +30,17 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
      * @var array
      */
     protected $selectable_taxonomies = [];
+    /**
+     * @var \ilTree
+     */
+    private $tree;
+
+    public function __construct()
+    {
+        global $DIC;
+        $this->tree = $DIC['tree'];
+        parent::__construct();
+    }
 
     /**
      * @inheritdoc
@@ -92,7 +103,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @inheritdoc
      */
-    protected function taxonomyExists(): bool
+    protected function taxonomyExists() : bool
     {
         return in_array($this->getTaxonomy()->getTitle(), $this->selectable_taxonomies);
     }
@@ -103,7 +114,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     private function initSelectableTaxonomies()
     {
         $res = [];
-        foreach (self::dic()->tree()->getPathFull((int) $this->getILIASParentId()) as $node) {
+        foreach ($this->tree->getPathFull((int) $this->getILIASParentId()) as $node) {
             if ($node["ref_id"] != (int) $this->getILIASParentId()) {
                 if ($node["type"] == "cat") {
                     if (ilContainer::_lookupContainerSetting(

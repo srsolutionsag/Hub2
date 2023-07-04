@@ -193,7 +193,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      */
     protected $activationEnd = null;
 
-
     /**
      * @return string
      */

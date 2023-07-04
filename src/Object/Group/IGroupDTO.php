@@ -13,7 +13,8 @@ use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
  * @package srag\Plugins\Hub2\Object\Group
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IGroupDTO extends IDataTransferObject, IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject, IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject
+interface IGroupDTO extends IDataTransferObject, IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject,
+                            IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject
 {
     // View
     public const VIEW_BY_TYPE = 5;

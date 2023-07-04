@@ -3,9 +3,7 @@
 namespace srag\Plugins\Hub2\Origin\OrgUnit;
 
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Origin\Config\OrgUnit\IOrgUnitOriginConfig;
 use srag\Plugins\Hub2\Origin\Config\OrgUnit\OrgUnitOriginConfig;
-use srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties;
 use srag\Plugins\Hub2\Origin\Properties\OrgUnit\OrgUnitProperties;
 
 /**

@@ -3,7 +3,6 @@
 //namespace srag\Plugins\Hub2\UI;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Origin\OriginRepository;
@@ -118,14 +117,14 @@ class hub2MainGUI
             self::TAB_ORIGINS,
             $this->plugin->txt(self::TAB_ORIGINS),
             $this->ctrl
-                                                                                 ->getLinkTargetByClass(hub2ConfigOriginsGUI::class)
+                ->getLinkTargetByClass(hub2ConfigOriginsGUI::class)
         );
 
         $this->tabs->addTab(
             self::TAB_PLUGIN_CONFIG,
             $this->plugin->txt(self::TAB_PLUGIN_CONFIG),
             $this->ctrl
-                                                                                             ->getLinkTargetByClass(hub2ConfigGUI::class)
+                ->getLinkTargetByClass(hub2ConfigGUI::class)
         );
 
         if (ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_ACTIVE)) {
@@ -133,7 +132,7 @@ class hub2MainGUI
                 self::TAB_CUSTOM_VIEWS,
                 $this->plugin->txt(self::TAB_CUSTOM_VIEWS),
                 $this->ctrl
-                                                                                               ->getLinkTargetByClass(hub2CustomViewGUI::class)
+                    ->getLinkTargetByClass(hub2CustomViewGUI::class)
             );
         }
     }

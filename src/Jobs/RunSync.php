@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Jobs;
 
 use ilCronJob;
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
@@ -26,7 +25,6 @@ use Throwable;
  */
 class RunSync extends ilCronJob
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID;
@@ -69,7 +67,7 @@ class RunSync extends ilCronJob
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId() : string
     {
         return self::CRON_JOB_ID;
     }
@@ -77,7 +75,7 @@ class RunSync extends ilCronJob
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle() : string
     {
         return ilHub2Plugin::PLUGIN_NAME;
     }
@@ -85,7 +83,7 @@ class RunSync extends ilCronJob
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription() : string
     {
         return "";
     }
@@ -93,7 +91,7 @@ class RunSync extends ilCronJob
     /**
      * @return bool
      */
-    public function hasAutoActivation(): bool
+    public function hasAutoActivation() : bool
     {
         return true;
     }
@@ -101,7 +99,7 @@ class RunSync extends ilCronJob
     /**
      * @return bool
      */
-    public function hasFlexibleSchedule(): bool
+    public function hasFlexibleSchedule() : bool
     {
         return true;
     }
@@ -109,7 +107,7 @@ class RunSync extends ilCronJob
     /**
      * @return int
      */
-    public function getDefaultScheduleType(): int
+    public function getDefaultScheduleType() : int
     {
         return ilCronJob::SCHEDULE_TYPE_DAILY;
     }
@@ -125,7 +123,7 @@ class RunSync extends ilCronJob
     /**
      * @return AbstractResult
      */
-    public function run(): \ilCronJobResult
+    public function run() : \ilCronJobResult
     {
         try {
             $skip_object_type = '';

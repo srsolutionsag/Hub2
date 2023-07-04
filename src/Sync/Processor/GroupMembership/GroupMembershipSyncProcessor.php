@@ -33,6 +33,10 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
      * @var GroupOriginConfig
      */
     protected $config;
+    /**
+     * @var \ilTree
+     */
+    private $tree;
 
     /**
      * @param IOrigin                 $origin
@@ -44,6 +48,8 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         IOriginImplementation $implementation,
         IObjectStatusTransition $transition
     ) {
+        global $DIC;
+        $this->tree = $DIC['tree'];
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
@@ -135,7 +141,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     protected function buildParentRefId(GroupMembershipDTO $dto)
     {
         if ($dto->getGroupIdType() == GroupMembershipDTO::PARENT_ID_TYPE_REF_ID) {
-            if (self::dic()->tree()->isInTree($dto->getGroupId())) {
+            if ($this->tree->isInTree($dto->getGroupId())) {
                 return (int) $dto->getGroupId();
             }
             throw new HubException("Could not find the ref-ID of the parent group in the tree: '{$dto->getGroupId()}'");
@@ -168,8 +174,10 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
             if (!$group->getILIASId()) {
                 throw new HubException("The linked group does not (yet) exist in ILIAS");
             }
-            if (!self::dic()->tree()->isInTree($group->getILIASId())) {
-                throw new HubException("Could not find the ref-ID of the parent group in the tree: '{$group->getILIASId()}'");
+            if (!$this->tree->isInTree($group->getILIASId())) {
+                throw new HubException(
+                    "Could not find the ref-ID of the parent group in the tree: '{$group->getILIASId()}'"
+                );
             }
 
             return (int) $group->getILIASId();

@@ -2,13 +2,6 @@
 
 namespace srag\Plugins\Hub2\Object\General;
 
-use srag\Plugins\Hub2\Object\IDidacticTemplateAwareObject;
-use srag\Plugins\Hub2\Object\IMetadataAwareObject;
-use srag\Plugins\Hub2\Object\IObject;
-use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
-use srag\Plugins\Hub2\Object\General\IDependentSettings;
-use Exception;
-
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */

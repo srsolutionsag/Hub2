@@ -328,7 +328,6 @@ class UserDTO extends DataTransferObject implements IUserDTO
         return $this;
     }
 
-
     /**
      * @return string
      */

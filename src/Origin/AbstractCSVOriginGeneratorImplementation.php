@@ -2,19 +2,9 @@
 
 namespace srag\Plugins\Hub2\Origin;
 
-use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
-use srag\Plugins\Hub2\Metadata\IMetadataFactory;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\HookObject;
-use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
-use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
-use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
-use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Parser\Csv;
 

@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Parser;
 
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
-use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 
 /**
  * Class Csv
@@ -62,11 +61,11 @@ class Csv
     protected $header = [];
 
     /**
-     * @param string      $enclosure
-     * @param string      $separator
-     * @param string      $file_path
+     * @param string $enclosure
+     * @param string $separator
+     * @param string $file_path
      * @param string|null $unique_field
-     * @param array       $mandatory_columns
+     * @param array $mandatory_columns
      */
     public function __construct(
         string $file_path,
@@ -94,8 +93,6 @@ class Csv
         $this->header = $header;
     }
 
-
-
     public function addFilter(\Closure $filter): void
     {
         $this->filters[] = $filter;
@@ -110,13 +107,15 @@ class Csv
 
     protected function applyFilter(\Closure $closure): void
     {
-        $this->parsed_csv = array_filter($this->parsed_csv, ($closure ?? function ($v, $k): bool {
+        $this->parsed_csv = array_filter(
+            $this->parsed_csv, ($closure ?? function ($v, $k): bool {
             return !empty($v);
         }) ?? function ($v, $k): bool {
             return !empty($v);
         }, ($closure ?? function ($v, $k): bool {
             return !empty($v);
-        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0));
+        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0)
+        );
     }
 
     protected function filterMandatory(): void
@@ -176,7 +175,9 @@ class Csv
     protected function parseCSVFile(string $path_to_file): void
     {
         $this->parsed_csv = array_map(function (string $line): array {
-            return str_getcsv($this->sanitizeEnclosures($this->removeBOM($line)), $this->getSeparator(), $this->getEnclosure());
+            return str_getcsv(
+                $this->sanitizeEnclosures($this->removeBOM($line)), $this->getSeparator(), $this->getEnclosure()
+            );
         }, file($path_to_file));
     }
 

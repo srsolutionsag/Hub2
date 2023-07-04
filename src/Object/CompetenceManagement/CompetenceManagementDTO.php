@@ -351,9 +351,11 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
-                $data[$key] = json_decode(json_encode($this->{$key}, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
+                $data[$key] = json_decode(
+                    json_encode($this->{$key}, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR
+                );
 
-                // no break
+            // no break
             default:
                 parent::sleepValue($data, $key);
         }

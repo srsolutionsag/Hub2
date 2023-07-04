@@ -2,7 +2,6 @@
 
 //namespace srag\Plugins\Hub2\UI\CustomView;
 
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
@@ -14,7 +13,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class hub2CustomViewGUI
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -24,7 +22,6 @@ class hub2CustomViewGUI
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -42,7 +39,9 @@ class hub2CustomViewGUI
 
             $class_name = ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_CLASS);
             if (!class_exists($class_name)) {
-                throw new Exception("Class " . $class_name . " not found. Note that namespaces need to be entered completely");
+                throw new Exception(
+                    "Class " . $class_name . " not found. Note that namespaces need to be entered completely"
+                );
             }
 
             $class = new $class_name($this);
@@ -52,7 +51,9 @@ class hub2CustomViewGUI
         } catch (Throwable $e) {
             ilUtil::sendInfo(
                 self::plugin()->translate("admin_custom_view_class_not_found_1") . " '"
-                . ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH) . "' " . self::plugin()->translate("admin_custom_view_class_not_found_2")
+                . ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH) . "' " . self::plugin()->translate(
+                    "admin_custom_view_class_not_found_2"
+                )
                 . " Error: " . $e->getMessage()
             );
         }

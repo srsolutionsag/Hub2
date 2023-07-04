@@ -52,18 +52,18 @@ class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addPropertiesDelete();
 
         $delete = new ilRadioGroupInputGUI(
-            self::plugin()->translate('crs_prop_delete_mode'),
+            $this->plugin->txt('crs_prop_delete_mode'),
             $this->prop(CourseMembershipProperties::DELETE_MODE)
         );
         $delete->setValue($this->origin->properties()->get(CourseMembershipProperties::DELETE_MODE));
 
         $opt = new ilRadioOption(
-            self::plugin()->translate('crs_prop_delete_mode_none'),
+            $this->plugin->txt('crs_prop_delete_mode_none'),
             CourseMembershipProperties::DELETE_MODE_NONE
         );
         $delete->addOption($opt);
         $opt = new ilRadioOption(
-            self::plugin()->translate('crs_membership_prop_delete_mode_delete'),
+            $this->plugin->txt('crs_membership_prop_delete_mode_delete'),
             CourseMembershipProperties::DELETE_MODE_DELETE
         );
         $delete->addOption($opt);

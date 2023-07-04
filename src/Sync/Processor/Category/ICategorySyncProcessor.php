@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Sync\Processor\ITaxonomySyncProcessor;
  * @package srag\Plugins\Hub2\Sync\Processor\Category
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICategorySyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor, IDidacticTemplateSyncProcessor
+interface ICategorySyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor,
+                                         IDidacticTemplateSyncProcessor
 {
 }

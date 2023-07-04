@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Origin\Config;
 
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyFactory;
@@ -21,7 +20,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginImplementationFactory
 {
-    use DICTrait;
     use Hub2Trait;
 
     /**
@@ -56,7 +54,14 @@ class OriginImplementationFactory
         if (!class_exists($class)) {
             throw new HubException("Origin implementation namespace\\class does not exist, should be: $class");
         }
-        $instance = new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
+        $instance = new $class(
+            $this->origin->config(),
+            new DataTransferObjectFactory(),
+            new MetadataFactory(),
+            new TaxonomyFactory(),
+            new MappingStrategyFactory(),
+            $this->origin
+        );
 
         return $instance;
     }

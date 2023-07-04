@@ -9,9 +9,7 @@ use ilHub2Plugin;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\AbstractBaseItem;
 use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvider;
 use ILIAS\MainMenu\Provider\StandardTopItemsProvider;
-use ILIAS\UI\Component\Symbol\Icon\Standard;
 use ilObjComponentSettingsGUI;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -24,7 +22,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Menu extends AbstractStaticPluginMainMenuProvider
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -34,7 +31,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
     /**
      * @inheritdoc
      */
-    public function getStaticTopItems(): array
+    public function getStaticTopItems() : array
     {
         return [];
     }
@@ -58,7 +55,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
     /**
      * @inheritdoc
      */
-    public function getStaticSubItems(): array
+    public function getStaticSubItems() : array
     {
         $this->initPolyFill();
         $obj_id = array_key_first(\ilObject2::_getObjectsByType('cmps') ?? []);
@@ -75,13 +72,13 @@ class Menu extends AbstractStaticPluginMainMenuProvider
         }
 
         $ref_id = array_key_first(\ilObject2::_getAllReferences($obj_id) ?? []);
-        self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ref_id", $ref_id);
-        self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ctype", IL_COMP_SERVICE);
-        self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "cname", "Cron");
-        self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "slot_id", "crnhk");
-        self::dic()->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "pname", ilHub2Plugin::PLUGIN_NAME);
+        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ref_id", $ref_id);
+        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ctype", IL_COMP_SERVICE);
+        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "cname", "Cron");
+        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "slot_id", "crnhk");
+        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "pname", ilHub2Plugin::PLUGIN_NAME);
 
-        $action = self::dic()->ctrl()->getLinkTargetByClass(
+        $action = $this->dic->ctrl()->getLinkTargetByClass(
             [
                 ilAdministrationGUI::class,
                 ilObjComponentSettingsGUI::class,
@@ -96,12 +93,12 @@ class Menu extends AbstractStaticPluginMainMenuProvider
                                ->withTitle('HUB Sync')
                                ->withAction($action)
                                ->withAvailableCallable(
-                                   function (): bool {
-                                       return self::plugin()->getPluginObject()->isActive();
+                                   function () : bool {
+                                       return $this->plugin->isActive();
                                    }
                                )
                                ->withVisibilityCallable(
-                                   function (): bool {
+                                   function () : bool {
                                        $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
                                        if (null !== $config) {
                                            // replace outer brackets from array string and convert values to int
@@ -113,8 +110,8 @@ class Menu extends AbstractStaticPluginMainMenuProvider
                                            $roles = [2];
                                        }
 
-                                       return self::dic()->rbacreview()->isAssignedToAtLeastOneGivenRole(
-                                           self::dic()->user()->getId(),
+                                       return $this->dic->rbac()->review()->isAssignedToAtLeastOneGivenRole(
+                                           $this->dic->user()->getId(),
                                            $roles
                                        );
                                    }
@@ -127,17 +124,13 @@ class Menu extends AbstractStaticPluginMainMenuProvider
      * @param AbstractBaseItem $entry
      * @return AbstractBaseItem
      */
-    protected function symbol(AbstractBaseItem $entry): AbstractBaseItem
+    protected function symbol(AbstractBaseItem $entry) : AbstractBaseItem
     {
-        if (self::version()->is6()) {
-            $entry = $entry->withSymbol(
-                self::dic()->ui()->factory()->symbol()->icon()->custom(
-                    './Customizing/global/plugins/Services/Cron/CronHook/Hub2/templates/hub2_icon_outlined.svg',
-                    ilHub2Plugin::PLUGIN_NAME
-                )
-            );
-        }
-
-        return $entry;
+        return $entry->withSymbol(
+            $this->dic->ui()->factory()->symbol()->icon()->custom(
+                './Customizing/global/plugins/Services/Cron/CronHook/Hub2/templates/hub2_icon_outlined.svg',
+                ilHub2Plugin::PLUGIN_NAME
+            )
+        );
     }
 }

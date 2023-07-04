@@ -35,8 +35,9 @@ class ArConfig extends ActiveRecordConfig
      */
     protected static $fields
         = [
-            self::KEY_ORIGIN_IMPLEMENTATION_PATH => [self::TYPE_STRING,
-                                                     ILIAS_ABSOLUTE_PATH . "/Customizing/global/origins/"
+            self::KEY_ORIGIN_IMPLEMENTATION_PATH => [
+                self::TYPE_STRING,
+                ILIAS_ABSOLUTE_PATH . "/Customizing/global/origins/"
             ],
             self::KEY_SHORTLINK_OBJECT_NOT_FOUND => self::TYPE_STRING,
             self::KEY_SHORTLINK_OBJECT_NOT_ACCESSIBLE => self::TYPE_STRING,

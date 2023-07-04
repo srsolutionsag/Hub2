@@ -34,6 +34,5 @@ final class ResultFactory
      */
     private function __construct()
     {
-
     }
 }

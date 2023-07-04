@@ -22,9 +22,20 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
 class ByImportId extends AMappingStrategy implements IMappingStrategy
 {
     /**
+     * @var \ilDBInterface
+     */
+    private $db;
+
+    public function __construct()
+    {
+        global $DIC;
+        $this->db = $DIC->database();
+    }
+
+    /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto): int
+    public function map(IDataTransferObject $dto) : int
     {
         switch (true) {
             case $dto instanceof IUserDTO:
@@ -56,29 +67,31 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
                 break;
 
             default:
-                throw new HubException("Cannot find import id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!");
+                throw new HubException(
+                    "Cannot find import id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!"
+                );
                 break;
         }
 
         if ($dto instanceof ICompetenceManagementDTO) {
-            $result = self::dic()->database()->queryF(
-                'SELECT obj_id FROM skl_tree_node WHERE ' . self::dic()->database()
-                                                                ->like(
-                                                                    "import_id",
-                                                                    ilDBConstants::T_TEXT,
-                                                                    IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()
-                                                                ),
+            $result = $this->db->queryF(
+                'SELECT obj_id FROM skl_tree_node WHERE ' . $this->db
+                    ->like(
+                        "import_id",
+                        ilDBConstants::T_TEXT,
+                        IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()
+                    ),
                 [],
                 []
             );
         } else {
-            $result = self::dic()->database()->queryF(
-                'SELECT obj_id FROM object_data WHERE type=%s AND ' . self::dic()->database()
-                                                                          ->like(
-                                                                              "import_id",
-                                                                              ilDBConstants::T_TEXT,
-                                                                              IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()
-                                                                          ),
+            $result = $this->db->queryF(
+                'SELECT obj_id FROM object_data WHERE type=%s AND ' . $this->db
+                    ->like(
+                        "import_id",
+                        ilDBConstants::T_TEXT,
+                        IObjectSyncProcessor::IMPORT_PREFIX . "%%_" . $dto->getExtId()
+                    ),
                 [ilDBConstants::T_TEXT],
                 [$object_type]
             );
@@ -86,7 +99,9 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
 
         if ($result->rowCount() > 0) {
             if ($result->rowCount() > 1) {
-                throw new HubException("Multiple import id's for type=" . $object_type . ",ext_id=" . $dto->getExtId() . " found!");
+                throw new HubException(
+                    "Multiple import id's for type=" . $object_type . ",ext_id=" . $dto->getExtId() . " found!"
+                );
             }
 
             return intval($result->fetchAssoc()["obj_id"]);

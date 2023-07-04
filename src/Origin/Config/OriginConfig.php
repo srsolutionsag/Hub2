@@ -95,7 +95,7 @@ class OriginConfig implements IOriginConfig
     public function getPath(): string
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_PATH && $this->getConnectionType(
-        ) !== self::CONNECTION_TYPE_FILE_DROP) {
+            ) !== self::CONNECTION_TYPE_FILE_DROP) {
             throw new ConnectionFailedException("Please set connection type to path to use getPath");
         }
 

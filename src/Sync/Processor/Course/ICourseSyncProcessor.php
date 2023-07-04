@@ -12,6 +12,7 @@ use srag\Plugins\Hub2\Sync\Processor\IDidacticTemplateSyncProcessor;
  * @package srag\Plugins\Hub2\Sync\Processor\Course
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICourseSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor, IDidacticTemplateSyncProcessor
+interface ICourseSyncProcessor extends IObjectSyncProcessor, IMetadataSyncProcessor, ITaxonomySyncProcessor,
+                                       IDidacticTemplateSyncProcessor
 {
 }

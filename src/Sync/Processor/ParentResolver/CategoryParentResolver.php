@@ -2,10 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\ParentResolver;
 
-use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
-use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
-use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Category\ICategoryDTO;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -29,7 +26,6 @@ class CategoryParentResolver extends BasicParentResolver
         parent::__construct($fallback_ref_id);
         $this->factory = $factory;
         $this->fallback_ext_id = $fallback_ext_id;
-
     }
 
     public function resolveParentRefId(DataTransferObject $dto): int

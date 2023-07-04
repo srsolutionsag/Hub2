@@ -3,11 +3,9 @@
 namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
-use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\NullDTO;
 use srag\Plugins\Hub2\Object\HookObject;
@@ -21,7 +19,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Jobs\Notifier;
-use srag\Plugins\Hub2\Origin\IOriginGeneratorImplementation;
 
 /**
  * Class Sync
@@ -31,7 +28,6 @@ use srag\Plugins\Hub2\Origin\IOriginGeneratorImplementation;
  */
 class OriginSync implements IOriginSync
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -177,7 +173,7 @@ class OriginSync implements IOriginSync
         // ======================================================================================================
         if (!$this->origin->isAdHoc()) {
             foreach ($this->repository->getToDelete($ext_ids_delivered) as $item) {
-                if(!$objects_to_outdated_map->contains($item)) {
+                if (!$objects_to_outdated_map->contains($item)) {
                     $objects_to_outdated_map->attach($item);
                 }
             }
@@ -190,7 +186,7 @@ class OriginSync implements IOriginSync
                 );
 
                 foreach ($objects_in_parent_scope_not_delivered as $item) {
-                    if(!$objects_to_outdated_map->contains($item)) {
+                    if (!$objects_to_outdated_map->contains($item)) {
                         $objects_to_outdated_map->attach($item);
                     }
                 }
@@ -198,7 +194,9 @@ class OriginSync implements IOriginSync
         }
         $notifier->notify('start processing outdated DTOs');
         foreach ($objects_to_outdated_map as $object) {
-            $nullDTO = new NullDTO($object->getExtId()); // There is no DTO available / needed for the deletion process (data has not been delivered)
+            $nullDTO = new NullDTO(
+                $object->getExtId()
+            ); // There is no DTO available / needed for the deletion process (data has not been delivered)
             $object->setStatus(IObject::STATUS_TO_OUTDATED);
             $this->processObject($object, $nullDTO);
         }
@@ -236,11 +234,11 @@ class OriginSync implements IOriginSync
      * @param IDataTransferObject[] $dtos
      * @return IDataTransferObject[]
      */
-    protected function sortDtoObjects(array $dtos): array
+    protected function sortDtoObjects(array $dtos) : array
     {
         // Create IDataTransferObjectSort objects
         $sort_dtos = array_map(
-            function (IDataTransferObject $dto): IDataTransferObjectSort {
+            function (IDataTransferObject $dto) : IDataTransferObjectSort {
                 return new DataTransferObjectSort($dto);
             },
             $dtos
@@ -251,14 +249,14 @@ class OriginSync implements IOriginSync
             // Sort by level
             usort(
                 $sort_dtos,
-                function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int {
+                function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2) : int {
                     return ($sort_dto1->getLevel() - $sort_dto2->getLevel());
                 }
             );
 
             // Back to IDataTransferObject objects
             $dtos = array_map(
-                function (IDataTransferObjectSort $sort_dto): IDataTransferObject {
+                function (IDataTransferObjectSort $sort_dto) : IDataTransferObject {
                     return $sort_dto->getDtoObject();
                 },
                 $sort_dtos
@@ -354,7 +352,7 @@ class OriginSync implements IOriginSync
     /**
      * @return IObjectRepository
      */
-    public function getRepository(): IObjectRepository
+    public function getRepository() : IObjectRepository
     {
         return $this->repository;
     }
@@ -370,7 +368,7 @@ class OriginSync implements IOriginSync
     /**
      * @return IObjectFactory
      */
-    public function getFactory(): IObjectFactory
+    public function getFactory() : IObjectFactory
     {
         return $this->factory;
     }
@@ -386,7 +384,7 @@ class OriginSync implements IOriginSync
     /**
      * @return IObjectSyncProcessor
      */
-    public function getProcessor(): IObjectSyncProcessor
+    public function getProcessor() : IObjectSyncProcessor
     {
         return $this->processor;
     }
@@ -403,7 +401,7 @@ class OriginSync implements IOriginSync
      * @return IObjectStatusTransition
      * @deprecated
      */
-    public function getStatusTransition(): IObjectStatusTransition
+    public function getStatusTransition() : IObjectStatusTransition
     {
         return $this->statusTransition;
     }
@@ -420,7 +418,7 @@ class OriginSync implements IOriginSync
     /**
      * @return IOriginImplementation
      */
-    public function getImplementation(): IOriginImplementation
+    public function getImplementation() : IOriginImplementation
     {
         return $this->implementation;
     }

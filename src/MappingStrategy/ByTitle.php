@@ -23,9 +23,20 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
 class ByTitle extends AMappingStrategy implements IMappingStrategy
 {
     /**
+     * @var \ilTree
+     */
+    private $tree;
+
+    public function __construct()
+    {
+        global $DIC;
+        $this->tree = $DIC['tree'];
+    }
+
+    /**
      * @inheritdoc
      */
-    public function map(IDataTransferObject $dto): int
+    public function map(IDataTransferObject $dto) : int
     {
         switch (true) {
             case ($dto instanceof UserDTO):
@@ -52,7 +63,7 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
                 if (!ilObject2::_exists($parent_id)) {
                     return 0;
                 }
-                $children = self::dic()->tree()->getChildsByType($parent_id, $this->getTypeByDTO($dto));
+                $children = $this->tree->getChildsByType($parent_id, $this->getTypeByDTO($dto));
 
                 foreach ($children as $child) {
                     if ($child['title'] == $dto->getTitle()) {
@@ -69,7 +80,7 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
      * @param IDataTransferObject $dto
      * @return string
      */
-    private function getTypeByDTO(IDataTransferObject $dto): string
+    private function getTypeByDTO(IDataTransferObject $dto) : string
     {
         switch (true) {
             case ($dto instanceof GroupDTO):
@@ -80,8 +91,8 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
                 return "orgu";
             case ($dto instanceof CategoryDTO):
                 return "cat";
-                /*case ($dto instanceof ICompetenceManagementDTO):
-                    return "skmg";*/
+            /*case ($dto instanceof ICompetenceManagementDTO):
+                return "skmg";*/
         }
 
         return '';

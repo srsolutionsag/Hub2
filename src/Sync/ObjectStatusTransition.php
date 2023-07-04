@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
@@ -17,7 +16,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class ObjectStatusTransition implements IObjectStatusTransition
 {
-    use DICTrait;
     use Hub2Trait;
 
     /**
@@ -44,7 +42,7 @@ class ObjectStatusTransition implements IObjectStatusTransition
      * @inheritdoc
      * @deprecated
      */
-    public function finalToIntermediate(IObject $object): int
+    public function finalToIntermediate(IObject $object) : int
     {
         // If the config has defined an active period and the period of the object does not match,
         // we set the status to IGNORED. The sync won't process this object anymore.

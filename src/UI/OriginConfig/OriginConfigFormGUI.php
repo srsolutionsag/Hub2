@@ -17,7 +17,6 @@ use ilRepositorySelector2InputGUI;
 use ilSelectInputGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -43,7 +42,6 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
  */
 class OriginConfigFormGUI extends ilPropertyFormGUI
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -54,6 +52,10 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      * @var Token
      */
     private $token;
+    /**
+     * @var ilHub2Plugin
+     */
+    protected $plugin;
     /**
      * @var \srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage
      */
@@ -76,6 +78,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      */
     public function __construct($parent_gui, IOriginRepository $originRepository, IOrigin $origin)
     {
+        global $DIC;
+        $this->plugin = ilHub2Plugin::getInstance();
         parent::__construct();
         $this->parent_gui = $parent_gui;
         $this->lng =
@@ -83,7 +87,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->originRepository = $originRepository;
         $this->token = new Token();
         $this->file_storage = (new Factory())->storage();
-        $this->setFormAction(self::dic()->ctrl()->getFormAction($this->parent_gui));
+        $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
         $this->initForm();
         if (!$origin->getId()) {
             $this->addCommandButton(hub2ConfigOriginsGUI::CMD_CREATE_ORIGIN, $this->translate('button_save'));
@@ -98,9 +102,9 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     /**
      * @deprecated get rid of those self::plugin things
      */
-    private function translate(string $key, array $placeholders = []): string
+    private function translate(string $key, array $placeholders = []) : string
     {
-        return self::plugin()->translate($key, '', $placeholders);
+        return $this->plugin->txt($key, '', $placeholders);
     }
 
     /**
@@ -327,7 +331,11 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 );
                 $filedrop->addSubItem($auth_token);
 
-                $rid = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_rid'), "", true);
+                $rid = new ilNonEditableValueGUI(
+                    $this->translate('origin_form_field_conf_type_filedrop_rid'),
+                    "",
+                    true
+                );
                 $resource_identification = $this->origin->config()->get(IOriginConfig::FILE_DROP_RID);
                 $rid_link = $resource_identification === null
                     ? $this->translate(
@@ -338,13 +346,20 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 $filedrop->addSubItem($rid);
 
                 if ($resource_identification !== null) {
-                    $latest_file  = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_latest'), "", true);
+                    $latest_file = new ilNonEditableValueGUI(
+                        $this->translate('origin_form_field_conf_type_filedrop_latest'),
+                        "",
+                        true
+                    );
                     $resource_info = $this->file_storage->getRevisionInfo($resource_identification);
                     $latest_file->setValue($resource_info['creation_date'] ?? '');
                     $filedrop->addSubItem($latest_file);
 
                     // new fileupload-field for manual upload
-                    $file = new \ilFileInputGUI($this->translate('origin_form_field_conf_type_filedrop_file'), 'manual_file_drop');
+                    $file = new \ilFileInputGUI(
+                        $this->translate('origin_form_field_conf_type_filedrop_file'),
+                        'manual_file_drop'
+                    );
                     $file->setRequired(false);
                     $filedrop->addSubItem($file);
                 }
@@ -357,9 +372,9 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     /**
      * @return ilRepositorySelector2InputGUI
      */
-    public function getILIASFileRepositorySelector(): ilRepositorySelector2InputGUI
+    public function getILIASFileRepositorySelector() : ilRepositorySelector2InputGUI
     {
-        self::dic()->ctrl()->setParameterByClass(
+        $this->ctrl->setParameterByClass(
             hub2MainGUI::class,
             hub2ConfigOriginsGUI::ORIGIN_ID,
             $this->origin->getId()
@@ -566,7 +581,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         return 'config_' . $postVar;
     }
 
-    private function getLinkToResource(string $resource_identification): string
+    private function getLinkToResource(string $resource_identification) : string
     {
         $this->ctrl->setParameterByClass(hub2ConfigOriginsGUI::class, 'rid', $resource_identification);
         return "<a href=\"{$this->ctrl->getLinkTarget($this->parent_gui, hub2ConfigOriginsGUI::CMD_DOWNLOAD_RID)}\">{$resource_identification}</a>";

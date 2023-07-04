@@ -4,9 +4,7 @@ namespace srag\Plugins\Hub2\Origin\CompetenceManagement;
 
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\CompetenceManagement\CompetenceManagementOriginConfig;
-use srag\Plugins\Hub2\Origin\Config\CompetenceManagement\ICompetenceManagementOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\CompetenceManagementProperties;
-use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManagementProperties;
 
 /**
  * Class ARCompetenceManagementOrigin
@@ -42,7 +40,8 @@ class ARCompetenceManagementOrigin extends AROrigin implements ICompetenceManage
     /**
      * @inheritdoc
      */
-    public function properties(): \srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManagementProperties
+    public function properties(
+    ): \srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManagementProperties
     {
         return parent::properties();
     }

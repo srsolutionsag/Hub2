@@ -30,12 +30,22 @@ class LogsTableGUI extends TableGUI
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const LANG_MODULE = hub2LogsGUI::LANG_MODULE_LOGS;
+    /**
+     * @var ilHub2Plugin
+     */
+    protected $plugin;
+
+    public function __construct($parent, string $parent_cmd)
+    {
+        $this->plugin = ilHub2Plugin::getInstance();
+        parent::__construct($parent, $parent_cmd);
+    }
 
     /**
      * @inheritdoc
      * @param ILog $row
      */
-    protected function getColumnValue(string $column, /*array*/ $row, int $format = self::DEFAULT_FORMAT): string
+    protected function getColumnValue(string $column, /*array*/ $row, int $format = self::DEFAULT_FORMAT) : string
     {
         $value = Items::getter($row, $column);
 
@@ -45,11 +55,11 @@ class LogsTableGUI extends TableGUI
                 break;
 
             case "origin_object_type":
-                $value = self::plugin()->translate("origin_object_type_" . $value);
+                $value = $this->plugin->txt("origin_object_type_" . $value);
                 break;
 
             case "status":
-                $value = $value ? self::plugin()->translate("data_table_status_" . ARObject::$available_status[$value]) : '';
+                $value = $value ? $this->plugin->txt("data_table_status_" . ARObject::$available_status[$value]) : '';
                 break;
 
             case "additional_data":
@@ -64,7 +74,7 @@ class LogsTableGUI extends TableGUI
                 $value = implode(
                     "<br>",
                     array_map(
-                        function (string $key, $value): string {
+                        function (string $key, $value) : string {
                             return "$key: $value";
                         },
                         array_keys($value),
@@ -73,7 +83,7 @@ class LogsTableGUI extends TableGUI
                 );
 
                 if (empty($value)) {
-                    $value = self::plugin()->translate("no_additional_data", hub2LogsGUI::LANG_MODULE_LOGS);
+                    $value = $this->plugin->txt("no_additional_data", hub2LogsGUI::LANG_MODULE_LOGS);
                 }
                 break;
 
@@ -87,7 +97,7 @@ class LogsTableGUI extends TableGUI
     /**
      * @inheritdoc
      */
-    public function getSelectableColumns2(): array
+    public function getSelectableColumns2() : array
     {
         $columns = [
             "date" => "date",
@@ -103,7 +113,7 @@ class LogsTableGUI extends TableGUI
         ];
 
         $columns = array_map(
-            function (string $key): array {
+            function (string $key) : array {
                 return [
                     "id" => $key,
                     "default" => true,
@@ -129,7 +139,6 @@ class LogsTableGUI extends TableGUI
      */
     protected function initCommands()/*: void*/
     {
-
     }
 
     /**
@@ -238,7 +247,7 @@ class LogsTableGUI extends TableGUI
      */
     protected function initFilterFields()/*: void*/
     {
-        self::dic()->language()->loadLanguageModule("form");
+        $this->lng->loadLanguageModule("form");
 
         $this->filter_fields = [
             "date" => [
@@ -254,8 +263,8 @@ class LogsTableGUI extends TableGUI
                 PropertyFormGUI::PROPERTY_OPTIONS => [
                         "" => "",
                     ] + array_map(
-                        function (string $origin_object_type): string {
-                            return self::plugin()->translate("origin_object_type_" . $origin_object_type);
+                        function (string $origin_object_type) : string {
+                            return $this->plugin->txt("origin_object_type_" . $origin_object_type);
                         },
                         AROrigin::$object_types
                     ),
@@ -284,7 +293,7 @@ class LogsTableGUI extends TableGUI
                 PropertyFormGUI::PROPERTY_OPTIONS => [
                         "" => "",
                     ] + array_map(
-                        function (int $level): string {
+                        function (int $level) : string {
                             return $this->txt("level_" . $level);
                         },
                         Log::$levels

@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Log;
 
 use ilDateTime;
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\User\IUserDTO;
@@ -20,7 +19,6 @@ use Throwable;
  */
 final class Factory implements IFactory
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -32,7 +30,7 @@ final class Factory implements IFactory
     /**
      * @return IFactory
      */
-    public static function getInstance(): IFactory
+    public static function getInstance() : IFactory
     {
         if (self::$instance === null) {
             self::setInstance(new self());
@@ -54,13 +52,12 @@ final class Factory implements IFactory
      */
     private function __construct()
     {
-
     }
 
     /**
      * @inheritdoc
      */
-    public function log(): ILog
+    public function log() : ILog
     {
         $log = (new Log())->withAdditionalData(clone self::logs()->getGlobalAdditionalData());
 
@@ -70,7 +67,7 @@ final class Factory implements IFactory
     /**
      * @inheritdoc
      */
-    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog
+    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null) : ILog
     {
         $log = $this->log()->withOriginId($origin->getId())->withOriginObjectType($origin->getObjectType());
 
@@ -118,7 +115,7 @@ final class Factory implements IFactory
         IOrigin $origin = null,
         IObject $object = null,
         IDataTransferObject $dto = null
-    ): ILog {
+    ) : ILog {
         $log = $this->originLog($origin, $object, $dto);
 
         $log->withLevel(ILog::LEVEL_EXCEPTION);
@@ -145,19 +142,25 @@ final class Factory implements IFactory
     /**
      * @inheritdoc
      */
-    public function fromDB(stdClass $data): ILog
+    public function fromDB(stdClass $data) : ILog
     {
         $log = $this->log()->withLogId($data->log_id)->withTitle($data->title)->withMessage($data->message)
-                    ->withDate(new ilDateTime(
-                        $data->date,
-                        IL_CAL_DATETIME
-                    ))->withLevel($data->level)->withAdditionalData(json_decode(
-                        $data->additional_data,
-                        false,
-                        512,
-                        JSON_THROW_ON_ERROR
-                    ) ?? new stdClass())
-                    ->withOriginId($data->origin_id)->withOriginObjectType($data->origin_object_type)->withObjectExtId($data->object_ext_id)
+                    ->withDate(
+                        new ilDateTime(
+                            $data->date,
+                            IL_CAL_DATETIME
+                        )
+                    )->withLevel($data->level)->withAdditionalData(
+                        json_decode(
+                    $data->additional_data,
+                    false,
+                    512,
+                    JSON_THROW_ON_ERROR
+                ) ?? new stdClass()
+                    )
+                    ->withOriginId($data->origin_id)->withOriginObjectType($data->origin_object_type)->withObjectExtId(
+                        $data->object_ext_id
+                    )
                     ->withObjectIliasId($data->object_ilias_id)
                     ->withStatus(intval($data->status));
 

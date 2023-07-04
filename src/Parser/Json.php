@@ -2,9 +2,6 @@
 
 namespace srag\Plugins\Hub2\Parser;
 
-use srag\Plugins\Hub2\Exception\ParseDataFailedException;
-use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-
 /**
  * Class Json
  *
@@ -45,7 +42,8 @@ class Json
         ?string $unique_field,
         array $mandatory_columns = []
         //        array $column_mapping = []
-    ) {
+    )
+    {
         $this->file_path = $file_path;
         $this->unique_field = $unique_field;
         $this->mandatory_columns = $mandatory_columns;
@@ -66,13 +64,15 @@ class Json
 
     protected function applyFilter(\Closure $closure): void
     {
-        $this->parsed_json = array_filter($this->parsed_json, ($closure ?? function ($v, $k): bool {
+        $this->parsed_json = array_filter(
+            $this->parsed_json, ($closure ?? function ($v, $k): bool {
             return !empty($v);
         }) ?? function ($v, $k): bool {
             return !empty($v);
         }, ($closure ?? function ($v, $k): bool {
             return !empty($v);
-        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0));
+        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0)
+        );
     }
 
     protected function filterMandatory(): void
@@ -100,7 +100,6 @@ class Json
             }
         });
     }
-
 
     protected function removeBOM(string $text): string
     {

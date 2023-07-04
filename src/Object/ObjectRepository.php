@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Object\Group\GroupRepository;
 use srag\Plugins\Hub2\Object\Session\SessionRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
@@ -18,7 +17,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class ObjectRepository implements IObjectRepository
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -43,7 +41,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function all(): array
+    public function all() : array
     {
         $class = $this->getClass();
 
@@ -54,7 +52,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function getByStatus(int $status): array
+    public function getByStatus(int $status) : array
     {
         $class = $this->getClass();
 
@@ -70,7 +68,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array
+    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids) : array
     {
         $existing_ext_id_query = null;
         $glue = self::GLUE;
@@ -112,7 +110,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function getToDelete(array $ext_ids): array
+    public function getToDelete(array $ext_ids) : array
     {
         $class = $this->getClass();
 
@@ -145,7 +143,7 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function count(): int
+    public function count() : int
     {
         $class = $this->getClass();
 

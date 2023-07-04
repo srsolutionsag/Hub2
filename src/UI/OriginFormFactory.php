@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\UI;
 
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 
@@ -14,7 +13,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginFormFactory
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;

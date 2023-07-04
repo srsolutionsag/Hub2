@@ -12,7 +12,8 @@ use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface IUserDTO extends IDataTransferObject, IMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject
+interface IUserDTO extends IDataTransferObject, IMetadataAwareDataTransferObject,
+                           IMappingStrategyAwareDataTransferObject
 {
     public const GENDER_MALE = 'm';
     public const GENDER_FEMALE = 'f';

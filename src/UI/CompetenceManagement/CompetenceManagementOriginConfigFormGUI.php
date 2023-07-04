@@ -31,8 +31,7 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addSyncConfig();
 
         $id_if_no_parent_id = new ilTextInputGUI(
-            self::plugin()
-                ->translate("competencemanagement_id_if_no_parent_id"),
+            self::plugin()->translate("competencemanagement_id_if_no_parent_id"),
             $this->conf(ICompetenceManagementOriginConfig::ID_IF_NO_PARENT_ID)
         );
         $id_if_no_parent_id->setInfo(self::plugin()->translate("competencemanagement_id_if_no_parent_id_info"));

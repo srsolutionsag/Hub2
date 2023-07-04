@@ -38,6 +38,14 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
      * @var array
      */
     protected static $properties = [];
+    /**
+     * @var \ilTree
+     */
+    private $tree;
+    /**
+     * @var \ilDBInterface
+     */
+    private $db;
 
     /**
      * @param IOrigin                 $origin
@@ -49,6 +57,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
         IOriginImplementation $implementation,
         IObjectStatusTransition $transition
     ) {
+        global $DIC;
+        $this->tree = $DIC['tree'];
+        $this->db = $DIC->database();
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
@@ -129,10 +140,12 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
     protected function buildParentRefId(SessionMembershipDTO $dto)
     {
         if ($dto->getSessionIdType() == SessionMembershipDTO::PARENT_ID_TYPE_REF_ID) {
-            if (self::dic()->tree()->isInTree($dto->getSessionId())) {
+            if ($this->tree->isInTree($dto->getSessionId())) {
                 return (int) $dto->getSessionId();
             }
-            throw new HubException("Could not find the ref-ID of the parent session in the tree: '{$dto->getGroupId()}'");
+            throw new HubException(
+                "Could not find the ref-ID of the parent session in the tree: '{$dto->getGroupId()}'"
+            );
         }
         if ($dto->getSessionIdType() == SessionMembershipDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
             // The stored parent-ID is an external-ID from a category.
@@ -162,8 +175,10 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
             if (!$session->getILIASId()) {
                 throw new HubException("The linked session does not (yet) exist in ILIAS");
             }
-            if (!self::dic()->tree()->isInTree($session->getILIASId())) {
-                throw new HubException("Could not find the ref-ID of the parent session in the tree: '{$session->getILIASId()}'");
+            if (!$this->tree->isInTree($session->getILIASId())) {
+                throw new HubException(
+                    "Could not find the ref-ID of the parent session in the tree: '{$session->getILIASId()}'"
+                );
             }
 
             return (int) $session->getILIASId();
@@ -221,16 +236,16 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
          * $ilSessionParticipants->getEventParticipants()->updateUser();
          */
         $event_id = $ilSessionParticipants->getEventParticipants()->getEventId();
-        $query = "UPDATE event_participants " . "SET contact = " . self::dic()->database()->quote(
+        $query = "UPDATE event_participants " . "SET contact = " . $this->db->quote(
             $dto->isContact(),
             'integer'
         ) . " "
-            . "WHERE event_id = " . self::dic()->database()->quote(
+            . "WHERE event_id = " . $this->db->quote(
                 $event_id,
                 'integer'
-            ) . " " . "AND usr_id = " . self::dic()->database()
-                                                         ->quote($user_id, 'integer') . " ";
-        self::dic()->database()->manipulate($query);
+            ) . " " . "AND usr_id = " . $this->db
+                ->quote($user_id, 'integer') . " ";
+        $this->db->manipulate($query);
     }
 
     /**

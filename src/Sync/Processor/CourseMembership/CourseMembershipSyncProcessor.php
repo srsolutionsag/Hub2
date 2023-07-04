@@ -117,7 +117,9 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
-        if ((int)$this->props->get(CourseMembershipProperties::DELETE_MODE) === CourseMembershipProperties::DELETE_MODE_NONE) {
+        if ((int) $this->props->get(
+                CourseMembershipProperties::DELETE_MODE
+            ) === CourseMembershipProperties::DELETE_MODE_NONE) {
             return;
         }
 
@@ -182,7 +184,6 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
      */
     protected function determineCourseRefId(CourseMembershipDTO $course_membership)
     {
-
         if ($course_membership->getCourseIdType() == CourseMembershipDTO::COURSE_ID_TYPE_REF_ID) {
             return $course_membership->getCourseId();
         }
@@ -213,7 +214,10 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
             $objectFactory = new ObjectFactory($origin);
             $course = $objectFactory->course($course_membership->getCourseId());
             if (!$course->getILIASId()) {
-                throw new HubException("The linked course does not (yet) exist in ILIAS. Membership Ext-Id: " . $course_membership->getExtId());
+                throw new HubException(
+                    "The linked course does not (yet) exist in ILIAS. Membership Ext-Id: " . $course_membership->getExtId(
+                    )
+                );
             }
 
             return $course->getILIASId();

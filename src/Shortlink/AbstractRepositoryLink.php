@@ -13,9 +13,26 @@ use ilObject2;
 abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjectLink
 {
     /**
+     * @var \ilAccessHandler
+     */
+    private $access;
+    /**
+     * @var \ilTree
+     */
+    private $tree;
+
+    public function __construct()
+    {
+        global $DIC;
+        $this->access = $DIC->access();
+        $this->tree = $DIC['tree'];
+        parent::__construct();
+    }
+
+    /**
      * @inheritdoc
      */
-    public function doesObjectExist(): bool
+    public function doesObjectExist() : bool
     {
         if (!$this->getILIASId()) {
             return false;
@@ -27,15 +44,15 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     /**
      * @inheritdoc
      */
-    public function isAccessGranted(): bool
+    public function isAccessGranted() : bool
     {
-        return (bool) self::dic()->access()->checkAccess("read", '', $this->getILIASId());
+        return (bool) $this->access->checkAccess("read", '', $this->getILIASId());
     }
 
     /**
      * @inheritdoc
      */
-    public function getAccessGrantedInternalLink(): string
+    public function getAccessGrantedInternalLink() : string
     {
         if ($this->isAccessGranted()) {
             return $this->getAccessGrantedExternalLink();
@@ -47,7 +64,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     /**
      * @inheritdoc
      */
-    public function getAccessGrantedExternalLink(): string
+    public function getAccessGrantedExternalLink() : string
     {
         $ref_id = $this->getILIASId();
         $link = $this->generateLink($ref_id);
@@ -58,7 +75,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     /**
      * @inheritdoc
      */
-    public function getAccessDeniedLink(): string
+    public function getAccessDeniedLink() : string
     {
         $ref_id = $this->findReadableParent();
         if ($ref_id === 0) {
@@ -81,16 +98,16 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     /**
      * @return int
      */
-    protected function findReadableParent(): int
+    protected function findReadableParent() : int
     {
         $ref_id = $this->getILIASId();
 
-        while ($ref_id and !self::dic()->access()->checkAccess('read', '', $ref_id) and $ref_id != 1) {
-            $ref_id = (int) self::dic()->tree()->getParentId($ref_id);
+        while ($ref_id and !$this->access->checkAccess('read', '', $ref_id) and $ref_id != 1) {
+            $ref_id = (int) $this->tree->getParentId($ref_id);
         }
 
         if (!$ref_id || $ref_id === 1) {
-            if (!self::dic()->access()->checkAccess('read', '', $ref_id)) {
+            if (!$this->access->checkAccess('read', '', $ref_id)) {
                 return 0;
             }
         }

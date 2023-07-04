@@ -157,10 +157,10 @@ class ResourceStorage6 implements ResourceStorage
         $resource_builder->store($resource);
 
         $directory = rtrim(CLIENT_DATA_DIR, "/") . "/" . FileSystemStorageHandler::BASE . '/' . str_replace(
-            "-",
-            "/",
-            $rid->serialize()
-        ) . '/' . $new_version_number . '/';
+                "-",
+                "/",
+                $rid->serialize()
+            ) . '/' . $new_version_number . '/';
         $path = $directory . FileSystemStorageHandler::DATA;
         if (!@mkdir($directory, 0777, true) && !is_dir($directory)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
@@ -192,10 +192,10 @@ class ResourceStorage6 implements ResourceStorage
         $this->resource_builder->store($r);
 
         $directory = rtrim(CLIENT_DATA_DIR, "/") . "/" . FileSystemStorageHandler::BASE . '/' . str_replace(
-            "-",
-            "/",
-            $id->serialize()
-        ) . '/1/';
+                "-",
+                "/",
+                $id->serialize()
+            ) . '/1/';
         $path = $directory . FileSystemStorageHandler::DATA;
         if (!mkdir($directory, 0777, true) && !is_dir($directory)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
@@ -298,10 +298,10 @@ class ResourceStorage6 implements ResourceStorage
         $this->resource_builder->store($r);
 
         $directory = rtrim(CLIENT_DATA_DIR, "/") . "/" . FileSystemStorageHandler::BASE . '/' . str_replace(
-            "-",
-            "/",
-            $id->serialize()
-        ) . '/1/';
+                "-",
+                "/",
+                $id->serialize()
+            ) . '/1/';
         $path = $directory . FileSystemStorageHandler::DATA;
         if (!mkdir($directory, 0777, true) && !is_dir($directory)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));

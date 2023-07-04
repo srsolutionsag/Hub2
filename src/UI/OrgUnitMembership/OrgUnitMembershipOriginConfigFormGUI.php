@@ -52,16 +52,16 @@ class OrgUnitMembershipOriginConfigFormGUI extends OriginConfigFormGUI
         parent::addPropertiesDelete();
 
         $delete = new ilRadioGroupInputGUI(
-            self::plugin()->translate("orgunitmembership_delete_mode"),
+            $this->plugin->txt("orgunitmembership_delete_mode"),
             $this->prop(IOrgUnitMembershipProperties::DELETE_MODE)
         );
         $opt = new ilRadioOption(
-            self::plugin()->translate("orgunitmembership_delete_mode_none"),
+            $this->plugin->txt("orgunitmembership_delete_mode_none"),
             IOrgUnitMembershipProperties::DELETE_MODE_NONE
         );
         $delete->addOption($opt);
         $opt = new ilRadioOption(
-            self::plugin()->translate("orgunitmembership_delete_mode_delete"),
+            $this->plugin->txt("orgunitmembership_delete_mode_delete"),
             IOrgUnitMembershipProperties::DELETE_MODE_DELETE
         );
         $delete->addOption($opt);

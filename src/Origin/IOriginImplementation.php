@@ -3,12 +3,10 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use InvalidArgumentException;
-use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
 use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Origin\Hook\Config;
 
@@ -44,6 +42,7 @@ interface IOriginImplementation
     // ------------------------------------------------------------------------------------------------------------
 
     public function hookConfig(): Config;
+
     /**
      * Called if any exception occurs during processing the ILIAS objects. This hook can be used to
      * influence the further processing of the current origin sync or the global sync:

@@ -56,7 +56,6 @@ class ResourceStorage7 implements ResourceStorage
         return $rid_string;
     }
 
-
     public function fromPath(string $u, string $mime_type = null): string
     {
         $stream = Streams::ofResource(fopen($u, "r"));

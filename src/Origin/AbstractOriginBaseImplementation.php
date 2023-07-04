@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory;
 use srag\Plugins\Hub2\Metadata\IMetadataFactory;
@@ -24,7 +23,6 @@ use srag\Plugins\Hub2\Origin\Hook\Config;
  */
 abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -72,7 +70,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
         IMappingStrategyFactory $mapping_strategy,
         IOrigin $origin
     ) {
-        /** @noRector  include once for Origins*/
+        /** @noRector  include once for Origins */
         include_once "./Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/autoload.php";
         $this->originConfig = $config;
         $this->factory = $factory;
@@ -98,7 +96,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
         return $this->factory;
     }
 
-    public function hookConfig(): Config
+    public function hookConfig() : Config
     {
         return new Config(
             true
@@ -109,7 +107,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
      * @param IDataTransferObject $dto
      * @return ILog
      */
-    final protected function log(IDataTransferObject $dto = null): ILog
+    final protected function log(IDataTransferObject $dto = null) : ILog
     {
         return self::logs()->factory()->originLog($this->origin, null, $dto);
     }
@@ -117,7 +115,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     /**
      * @return IMappingStrategyFactory
      */
-    final protected function mapping(): IMappingStrategyFactory
+    final protected function mapping() : IMappingStrategyFactory
     {
         return $this->mapping_strategy_factory;
     }
@@ -151,7 +149,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     /**
      * @inheritdoc
      */
-    public function getAdHocParentScopesAsExtIds(): array
+    public function getAdHocParentScopesAsExtIds() : array
     {
         return [];
     }
@@ -166,9 +164,8 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
         // TODO: Implement handleAllObjects() method.
     }
 
-    public function canDroppedFileContentBestored(string $content): bool
+    public function canDroppedFileContentBestored(string $content) : bool
     {
         return true;
     }
-
 }

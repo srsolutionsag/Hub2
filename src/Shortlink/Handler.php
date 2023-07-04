@@ -7,7 +7,6 @@ use ilDBInterface;
 use ilHub2Plugin;
 use ilInitialisation;
 use ilUtil;
-use srag\DIC\Hub2\DICTrait;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
@@ -19,7 +18,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Handler
 {
-    use DICTrait;
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
@@ -36,6 +34,22 @@ class Handler
      * @var string
      */
     protected $ext_id = '';
+    /**
+     * @var \ilDBInterface
+     */
+    private $db;
+    /**
+     * @var \ilCtrlInterface
+     */
+    private $ctrl;
+    /**
+     * @var \ilAuthSession
+     */
+    private $auth_session;
+    /**
+     * @var \ilObjUser
+     */
+    private $user;
 
     /**
      * Handler constructor
@@ -43,6 +57,11 @@ class Handler
      */
     public function __construct(string $ext_id)
     {
+        global $DIC;
+        $this->db = $DIC->database();
+        $this->ctrl = $DIC->ctrl();
+        $this->auth_session = $DIC['ilAuthSession'];
+        $this->user = $DIC->user();
         $this->init = false;
         $this->ext_id = $ext_id;
     }
@@ -60,7 +79,7 @@ class Handler
      */
     public function process()
     {
-        if (!$this->init || !self::dic()->database() instanceof ilDBInterface) {
+        if (!$this->init || !$this->db instanceof ilDBInterface) {
             throw new ShortlinkException("ILIAS not initialized, aborting...");
         }
 
@@ -87,7 +106,7 @@ class Handler
     protected function doRedirect(string $link)
     {
         $link = $this->sanitizeLink($link);
-        self::dic()->ctrl()->redirectToURL($link);
+        $this->ctrl->redirectToURL($link);
     }
 
     /**
@@ -124,13 +143,13 @@ class Handler
         ilContext::init(ilContext::CONTEXT_WAC);
         require_once "Services/Init/classes/class.ilInitialisation.php";
         ilInitialisation::initILIAS();
-        $ilAuthSession = self::dic()->authSession();
+        $ilAuthSession = $this->auth_session;
         $ilAuthSession->init();
         $ilAuthSession->regenerateId();
         $a_id = (int) ANONYMOUS_USER_ID;
         $ilAuthSession->setUserId($a_id);
         $ilAuthSession->setAuthenticated(false, $a_id);
-        self::dic()->user()->setId($a_id);
+        $this->user->setId($a_id);
 
         $this->init = true;
     }

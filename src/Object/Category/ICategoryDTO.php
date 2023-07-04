@@ -13,7 +13,8 @@ use srag\Plugins\Hub2\Object\DTO\ITaxonomyAndMetadataAwareDataTransferObject;
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-interface ICategoryDTO extends IDataTransferObject, ITaxonomyAndMetadataAwareDataTransferObject, IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject
+interface ICategoryDTO extends IDataTransferObject, ITaxonomyAndMetadataAwareDataTransferObject,
+                               IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject
 {
     public const ORDER_TYPE_TITLE = 0;
     public const ORDER_TYPE_MANUAL = 1;

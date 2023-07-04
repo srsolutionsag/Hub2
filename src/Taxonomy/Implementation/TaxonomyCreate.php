@@ -15,6 +15,18 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 {
     /**
+     * @var \ilRbacReview
+     */
+    private $rbacreview;
+
+    public function __construct()
+    {
+        global $DIC;
+        $this->rbacreview = $DIC['rbacreview'];
+        parent::__construct();
+    }
+
+    /**
      * @inheritdoc
      */
     public function write()
@@ -41,7 +53,7 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
         $tax->setPermissions($this->getILIASParentId());
 
         // rbac log
-        $rbac_log_roles = self::dic()->rbacreview()->getParentRoleIds($tax->getRefId(), false);
+        $rbac_log_roles = $this->rbacreview->getParentRoleIds($tax->getRefId(), false);
         $rbac_log = ilRbacLog::gatherFaPa($tax->getRefId(), array_keys($rbac_log_roles), true);
         ilRbacLog::add(ilRbacLog::CREATE_OBJECT, $tax->getRefId(), $rbac_log);
 
