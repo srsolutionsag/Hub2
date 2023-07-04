@@ -8,6 +8,7 @@ use ilDateTime;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class Log
@@ -20,6 +21,10 @@ class Log extends ActiveRecord implements ILog
 
     public const TABLE_NAME = "sr_hub2_log";
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var IRepository
+     */
+    protected $log_repo;
 
     /**
      * @return string
@@ -142,6 +147,7 @@ class Log extends ActiveRecord implements ILog
         arConnector $connector = null
     ) {
         $this->additional_data = new stdClass();
+        $this->log_repo = LogRepository::getInstance();
         //parent::__construct($primary_key_value, $connector);
     }
 
@@ -361,6 +367,6 @@ class Log extends ActiveRecord implements ILog
      */
     public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/
     {
-        self::logs()->storeLog($this->withMessage($message)->withLevel($level));
+        $this->log_repo->storeLog($this->withMessage($message)->withLevel($level));
     }
 }

@@ -21,6 +21,15 @@ class DeleteOldLogsJob extends ilCronJob
 
     public const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID . "_delete_old_logs";
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var ilHub2Plugin
+     */
+    private $plugin;
+
+    public function __construct()
+    {
+        $this->plugin = ilHub2Plugin::getInstance();
+    }
 
     /**
      * Get id
@@ -36,7 +45,7 @@ class DeleteOldLogsJob extends ilCronJob
      */
     public function getTitle() : string
     {
-        return ilHub2Plugin::PLUGIN_NAME . ": " . self::plugin()->translate("cron", hub2LogsGUI::LANG_MODULE_LOGS);
+        return ilHub2Plugin::PLUGIN_NAME . ": " . $this->plugin->txt("logs_cron");
     }
 
     /**
@@ -44,7 +53,7 @@ class DeleteOldLogsJob extends ilCronJob
      */
     public function getDescription() : string
     {
-        return self::plugin()->translate("cron_description", hub2LogsGUI::LANG_MODULE_LOGS);
+        return $this->plugin->txt("logs_cron_description");
     }
 
     /**
@@ -93,6 +102,6 @@ class DeleteOldLogsJob extends ilCronJob
 
         $count = self::logs()->deleteOldLogs($keep_old_logs_time);
 
-        return ResultFactory::ok(self::plugin()->translate("deleted_status", hub2LogsGUI::LANG_MODULE_LOGS, [$count]));
+        return ResultFactory::ok(sprintf($this->plugin->txt("logs_deleted_status"), $count));
     }
 }

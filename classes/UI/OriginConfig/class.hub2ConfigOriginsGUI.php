@@ -137,7 +137,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
 
         $this->tabs->addSubTab(
             hub2LogsGUI::SUBTAB_LOGS,
-            $this->plugin->txt("logs", hub2LogsGUI::LANG_MODULE_LOGS),
+            $this->plugin->txt("logs"),
             $this->ctrl
                 ->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX)
         );
@@ -192,7 +192,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->tpl->setContent($form->getHTML());
     }
 
-    protected function downloadFileDrop() : void
+    protected function downloadFileDrop(): void
     {
         $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
         $rid = $this->http->request()->getQueryParams()['rid'] ?? null;

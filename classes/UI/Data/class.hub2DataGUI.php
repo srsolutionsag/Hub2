@@ -7,6 +7,7 @@ use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
+use ILIAS\Filesystem\Stream\Streams;
 
 /**
  * Class DataGUI
@@ -118,10 +119,6 @@ class hub2DataGUI extends hub2MainGUI
 
         ksort($filtered);
 
-        // Unfortunately the item suchs in rendering in Modals, therefore we take a descriptive listing
-        /*$data_table = $factory->item()->standard(self::plugin()->translate("data_table_ext_id", "", [ $object->getExtId() ]))
-            ->withProperties($filtered);*/
-
         $data_table = $factory->listing()->descriptive($filtered);
 
         $modal = $factory->modal()->roundtrip(
@@ -130,6 +127,12 @@ class hub2DataGUI extends hub2MainGUI
             $data_table
         )->withCancelButtonLabel("close");
 
-        $this->tpl->setContent($this->ui->renderer()->renderAsync($modal));
+        $this->http->saveResponse(
+            $this->http->response()->withBody(
+                Streams::ofString($this->ui->renderer()->renderAsync($modal))
+            )
+        );
+        $this->http->sendResponse();
+        $this->http->close();
     }
 }

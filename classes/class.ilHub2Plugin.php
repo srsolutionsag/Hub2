@@ -64,7 +64,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return string
      */
-    public function getPluginName() : string
+    public function getPluginName(): string
     {
         return self::PLUGIN_NAME;
     }
@@ -72,7 +72,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return self
      */
-    public static function getInstance() : self
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -84,7 +84,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return ilCronJob[]
      */
-    public function getCronJobInstances() : array
+    public function getCronJobInstances(): array
     {
         return [new RunSync(new CronNotifier()), new DeleteOldLogsJob()];
     }
@@ -111,7 +111,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritdoc
      */
-    public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
+    public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
     {
         return new Menu(self::dic()->dic(), $this);
     }
@@ -144,7 +144,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritDoc
      */
-    protected function shouldUseOneUpdateStepOnly() : bool
+    protected function shouldUseOneUpdateStepOnly(): bool
     {
         return false;
     }

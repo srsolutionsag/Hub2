@@ -17,6 +17,7 @@ use srag\Plugins\Hub2\Taxonomy\Node\Node;
 use srag\Plugins\Hub2\Taxonomy\Taxonomy;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class ARObject
@@ -35,6 +36,10 @@ abstract class ARObject extends ActiveRecord implements IObject
     public const TABLE_NAME = '';
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
+     * @var \srag\Plugins\Hub2\Log\IRepository
+     */
+    protected $log_repo;
+    /**
      * a clone of this object made before any changes happened; used to compare when persisting
      * @var static
      */
@@ -49,6 +54,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         parent::__construct($primary_key, $connector);
         $this->clone = clone $this;
+        $this->log_repo = LogRepository::getInstance();
     }
 
     /**
@@ -295,7 +301,7 @@ abstract class ARObject extends ActiveRecord implements IObject
             }
         }
         if (!empty($messages)) {
-            self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
+            $this->log_repo->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
                 ->write(implode('<br>', $messages));
         }
     }
@@ -314,7 +320,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->id = $this->origin_id . $this->ext_id;
         $this->hash_code = $this->computeHashCode();
         parent::create();
-        self::logs()->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
+        $this->log_repo->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
             ->write("Created");
     }
 

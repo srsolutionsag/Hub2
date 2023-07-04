@@ -96,20 +96,15 @@ class ConfigFormGUI extends ilPropertyFormGUI
         $this->addItem($cb);
 
         $item = new ilFormSectionHeaderGUI();
-        $item->setTitle($this->plugin->txt("logs", hub2LogsGUI::LANG_MODULE_LOGS));
+        $item->setTitle($this->plugin->txt("logs_logs"));
         $this->addItem($item);
 
         $item = new ilNumberInputGUI(
-            $this->plugin->txt(ArConfig::KEY_KEEP_OLD_LOGS_TIME, hub2LogsGUI::LANG_MODULE_LOGS),
+            $this->plugin->txt('logs_' . ArConfig::KEY_KEEP_OLD_LOGS_TIME),
             ArConfig::KEY_KEEP_OLD_LOGS_TIME
         );
-        $item->setSuffix($this->plugin->txt("days", hub2LogsGUI::LANG_MODULE_LOGS));
-        $item->setInfo(
-            $this->plugin->txt(
-                ArConfig::KEY_KEEP_OLD_LOGS_TIME . "_info",
-                hub2LogsGUI::LANG_MODULE_LOGS
-            )
-        );
+        $item->setSuffix($this->plugin->txt("logs_days"));
+        $item->setInfo($this->plugin->txt('logs_' . ArConfig::KEY_KEEP_OLD_LOGS_TIME . "_info"));
         $item->setMinValue(0);
         $item->setValue(ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME));
         $this->addItem($item);

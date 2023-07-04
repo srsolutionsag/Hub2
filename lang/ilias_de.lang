@@ -143,6 +143,7 @@ hub_conf#:#Einstellungen
 hub_courses#:#Kurse
 hub_memberships#:#Mitgliedschaften
 hub_origins#:#Anbindungen
+msg_origin_toggled#:#Status der Anbindung geändert
 hub_users#:#Benutzerkonten
 hub_categories_table_title#:#Kategorien
 hub_courses_table_title#:#Kurse
@@ -439,7 +440,9 @@ competencemanagement_delete_mode#:#Löschverhalten
 competencemanagement_delete_mode_none#:#Keine Aktion
 competencemanagement_delete_mode_delete#:#Löschen
 competencemanagement_move#:#Verschieben
+logs#:#Logs
 logs_additional_data#:#Zusätzliche Daten
+logs_clear_logs#:#Logs löschen
 logs_cron#:#Alte Logs löschen
 logs_cron_description#:#Nach den angegebenen konfigurierten Zeit werden alte Logs automatisch gelöscht. Der neuste Log pro Anbindung-ID und Ext-ID wird immer behalten
 logs_date#:#Datum / Zeit

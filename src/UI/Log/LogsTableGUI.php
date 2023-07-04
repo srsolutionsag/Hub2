@@ -83,7 +83,7 @@ class LogsTableGUI extends TableGUI
                 );
 
                 if (empty($value)) {
-                    $value = $this->plugin->txt("no_additional_data", hub2LogsGUI::LANG_MODULE_LOGS);
+                    $value = $this->plugin->txt("logs_no_additional_data");
                 }
                 break;
 

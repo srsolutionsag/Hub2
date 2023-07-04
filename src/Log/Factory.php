@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
 use Throwable;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class Factory
@@ -26,6 +27,10 @@ final class Factory implements IFactory
      * @var IFactory
      */
     protected static $instance = null;
+    /**
+     * @var IRepository
+     */
+    protected $log_repo;
 
     /**
      * @return IFactory
@@ -52,6 +57,7 @@ final class Factory implements IFactory
      */
     private function __construct()
     {
+        $this->log_repo = LogRepository::getInstance();
     }
 
     /**
@@ -59,7 +65,7 @@ final class Factory implements IFactory
      */
     public function log() : ILog
     {
-        $log = (new Log())->withAdditionalData(clone self::logs()->getGlobalAdditionalData());
+        $log = (new Log())->withAdditionalData(clone $this->log_repo->getGlobalAdditionalData());
 
         return $log;
     }

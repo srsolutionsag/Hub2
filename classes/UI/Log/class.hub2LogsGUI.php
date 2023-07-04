@@ -4,6 +4,7 @@
 
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class LogsGUI
@@ -18,6 +19,7 @@ class hub2LogsGUI extends hub2MainGUI
     public const SUBTAB_LOGS = "subtab_logs";
     public const LANG_MODULE_LOGS = "logs";
     public const CMD_CLEAR = 'clear';
+    private $log_repo;
     /**
      * @var ilToolbarGUI
      */
@@ -28,6 +30,7 @@ class hub2LogsGUI extends hub2MainGUI
         parent::__construct();
         global $DIC;
         $this->toolbar = $DIC['ilToolbar'];
+        $this->log_repo = LogRepository::getInstance();
     }
 
     /**
@@ -78,7 +81,7 @@ class hub2LogsGUI extends hub2MainGUI
     protected function index()/*: void*/
     {
         $this->toolbar->addButton(
-            $this->plugin->txt('clear_logs'),
+            $this->plugin->txt('logs_clear_logs'),
             $this->ctrl->getLinkTarget($this, self::CMD_CLEAR)
         );
 
@@ -89,7 +92,7 @@ class hub2LogsGUI extends hub2MainGUI
 
     protected function clear()
     {
-        self::logs()->deleteOldLogs(0);
+        $this->log_repo->deleteOldLogs(0);
         $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 

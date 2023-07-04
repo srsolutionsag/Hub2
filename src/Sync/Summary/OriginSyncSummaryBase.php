@@ -9,6 +9,7 @@ use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IOriginSync;
 use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class OriginSyncSummaryCron
@@ -20,6 +21,10 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var \srag\Plugins\Hub2\Log\IRepository
+     */
+    protected $log_repo;
     /**
      * @var ilHub2Plugin
      */
@@ -41,6 +46,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         global $DIC;
         $this->sender_factory = $DIC['mail.mime.sender.factory'];
         $this->plugin = ilHub2Plugin::getInstance();
+        $this->log_repo = LogRepository::getInstance();
     }
 
     /**
@@ -89,18 +95,14 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
             }
 
             if ($error_email) {
-                if ((count(self::logs()->getKeptLogs($originSync->getOrigin(), Log::LEVEL_EXCEPTION))
-                        + count(self::logs()->getKeptLogs($originSync->getOrigin(), Log::LEVEL_CRITICAL)))
+                if ((count($this->log_repo->getKeptLogs($originSync->getOrigin(), Log::LEVEL_EXCEPTION))
+                        + count($this->log_repo->getKeptLogs($originSync->getOrigin(), Log::LEVEL_CRITICAL)))
                     > 0
                 ) {
                     $mail->To($error_email);
 
                     $mail->Subject(
-                        $this->plugin->txt(
-                            "summary_logs_in",
-                            hub2LogsGUI::LANG_MODULE_LOGS,
-                            [$title]
-                        )
+                        sprintf($this->plugin->txt("logs_summary_logs_in"), $title)
                     );
 
                     $mail->Body($this->renderOneSync($originSync, true, true));
@@ -121,40 +123,42 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         IOriginSync $originSync,
         bool $only_logs = false,
         bool $output_message = null
-    ): string {
+    ) : string {
         $msg = "";
         if (!$only_logs) {
             // Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
-            $msg .= sprintf($this->plugin->txt("summary_for"), [$originSync->getOrigin()->getTitle()]) . "\n";
+            $msg .= sprintf($this->plugin->txt("summary_for"), $originSync->getOrigin()->getTitle()) . "\n";
             $msg .= sprintf($this->plugin->txt("summary_delivered_data_sets"), $originSync->getCountDelivered()) . "\n";
             $msg .= sprintf(
-                    $this->plugin->txt("summary_failed"), $originSync->getCountProcessedByStatus(IObject::STATUS_FAILED)
-                ) . "\n";
+                $this->plugin->txt("summary_failed"),
+                $originSync->getCountProcessedByStatus(IObject::STATUS_FAILED)
+            ) . "\n";
             $msg .= sprintf(
-                    $this->plugin->txt("summary_created"),
-                    $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)
-                ) . "\n";
+                $this->plugin->txt("summary_created"),
+                $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)
+            ) . "\n";
             $msg .= sprintf(
-                    $this->plugin->txt("summary_updated"),
-                    $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)
-                ) . "\n";
+                $this->plugin->txt("summary_updated"),
+                $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)
+            ) . "\n";
             $msg .= sprintf(
-                    $this->plugin->txt("summary_outdated"),
-                    $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED)
-                ) . "\n";
+                $this->plugin->txt("summary_outdated"),
+                $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED)
+            ) . "\n";
             $msg .= sprintf(
-                $this->plugin->txt("summary_ignored"), $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)
+                $this->plugin->txt("summary_ignored"),
+                $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)
             );
         }
 
-        if (count(self::logs()->getKeptLogs($originSync->getOrigin())) > 0) {
+        if (count($this->log_repo->getKeptLogs($originSync->getOrigin())) > 0) {
             $msg .= "\n" . $this->plugin->txt("summary") . "\n";
 
             $msg .= implode(
                 "\n",
                 array_map(
-                    function (int $level) use ($output_message, $originSync): string {
-                        $logs = self::logs()->getKeptLogs($originSync->getOrigin(), $level);
+                    function (int $level) use ($output_message, $originSync) : string {
+                        $logs = $this->log_repo->getKeptLogs($originSync->getOrigin(), $level);
 
                         return $this->plugin->txt("level_" . $level)
                             . ": " . count($logs) . ($output_message ? " - "
@@ -162,8 +166,8 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
                     },
                     array_filter(
                         Log::$levels,
-                        static function (int $level) use ($originSync): bool {
-                            return (count(self::logs()->getKeptLogs($originSync->getOrigin(), $level)) > 0);
+                        static function (int $level) use ($originSync) : bool {
+                            return (count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) > 0);
                         }
                     )
                 )

@@ -144,6 +144,7 @@ hub_conf#:#Settings
 hub_courses#:#Courses
 hub_memberships#:#Memberships
 hub_origins#:#Origins
+msg_origin_toggled#:#Activation State toggled
 hub_users#:#User accounts
 hub_categories_table_title#:#Categories
 hub_courses_table_title#:#Courses
@@ -440,7 +441,9 @@ competencemanagement_delete_mode#:#Delete behavior
 competencemanagement_delete_mode_none#:#No action
 competencemanagement_delete_mode_delete#:#Delete
 competencemanagement_move#:#Move
+logs#:#Logs
 logs_additional_data#:#Additional data
+logs_clear_logs#:#Clear logs
 logs_cron#:#Delete old logs
 logs_cron_description#:#After the specified config time, old logs will be deleted automatically. The newest log per origin id and ext id will always be kept
 logs_date#:#Date / Time

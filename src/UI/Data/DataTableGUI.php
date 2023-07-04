@@ -149,8 +149,8 @@ class DataTableGUI extends ilTable2GUI
 
         $options = ["" => ""] + array_map(
             function (string $txt) : string {
-                    return $this->plugin->txt("data_table_status_" . $txt);
-                },
+                return $this->plugin->txt("data_table_status_" . $txt);
+            },
             ARObject::$available_status
         ) + [
                 "!" . IObject::STATUS_IGNORED => $this->plugin->txt("data_table_status_not_ignored"),
@@ -310,40 +310,40 @@ class DataTableGUI extends ilTable2GUI
         $modal = $this->ui->factory()->modal()->roundtrip(
             $a_set[self::F_EXT_ID],
             $this->ui->factory()->legacy('')
-        )
-                          ->withAsyncRenderUrl(
-                              $this->ctrl->getLinkTarget(
-                                  $this->parent_obj,
-                                  'renderData',
-                                  '',
-                                  true
-                              )
-                          );
-
-        $actions = new ilAdvancedSelectionListGUI();
-        $actions->setListTitle($this->plugin->txt("data_table_header_actions"));
-        $actions->addItem($this->plugin->txt("data_table_header_data"), "view");
-        $actions->addItem(
-            $this->plugin->txt("show_logs", hub2LogsGUI::LANG_MODULE_LOGS),
-            "",
-            $this->ctrl
-                ->getLinkTargetByClass(
-                    [hub2LogsGUI::class,],
-                    hub2LogsGUI::CMD_SHOW_LOGS_OF_EXT_ID
-                )
+        )->withAsyncRenderUrl(
+            $this->ctrl->getLinkTarget(
+                $this->parent_obj,
+                'renderData',
+                '',
+                true
+            )
         );
-        $actions_html = $actions->getHTML();
+
+        $items = [
+            $this->ui->factory()->button()->shy(
+                $this->plugin->txt("data_table_header_data"),
+                $modal->getShowSignal()
+            ),
+            $this->ui->factory()->button()->shy(
+                $this->plugin->txt("logs_show_logs"),
+                $this->ctrl->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_SHOW_LOGS_OF_EXT_ID)
+            ),
+        ];
+        $actions_ = $this->ui->factory()->dropdown()->standard($items);
+
+
+        $actions_html = $this->ui->renderer()->render($actions_);
 
         // Use a fake button to use clickable open modal on selection list. Replace the id with the button id
         $button = $this->ui->factory()->button()->shy("", "#")->withOnClick($modal->getShowSignal());
         $button_html = $this->ui->renderer()->render($button);
         $button_id = [];
-        preg_match('/id="([a-z0-9_]+)"/', $button_html, $button_id);
+        /*preg_match('/id="([a-z0-9_]+)"/', $button_html, $button_id);
         if (is_array($button_id) && count($button_id) > 1) {
             $button_id = $button_id[1];
 
             $actions_html = str_replace('id="asl_view"', 'id="' . $button_id . '"', $actions_html);
-        }
+        }*/
 
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable('VALUE', implode('', [$actions_html, $this->ui->renderer()->render($modal)]));

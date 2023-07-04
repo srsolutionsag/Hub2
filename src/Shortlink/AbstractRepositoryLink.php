@@ -4,6 +4,7 @@ namespace srag\Plugins\Hub2\Shortlink;
 
 use ilLink;
 use ilObject2;
+use srag\Plugins\Hub2\Object\ARObject;
 
 /**
  * Class AbstractRepositoryLink
@@ -21,12 +22,12 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
      */
     private $tree;
 
-    public function __construct()
+    public function __construct(ARObject $object)
     {
         global $DIC;
         $this->access = $DIC->access();
         $this->tree = $DIC['tree'];
-        parent::__construct();
+        parent::__construct($object);
     }
 
     /**
