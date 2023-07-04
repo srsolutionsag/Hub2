@@ -9,7 +9,6 @@ use ilTable2GUI;
 use srag\DIC\Hub2\Exception\DICException;
 use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginsTableGUI
@@ -19,8 +18,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginsTableGUI extends ilTable2GUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var ilHub2Plugin

@@ -2,13 +2,12 @@
 
 namespace srag\Plugins\Hub2\Jobs\Log;
 
-use hub2LogsGUI;
 use ilCronJob;
 use ilCronJobResult;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class RunSync
@@ -17,18 +16,21 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class DeleteOldLogsJob extends ilCronJob
 {
-    use Hub2Trait;
-
     public const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID . "_delete_old_logs";
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var ilHub2Plugin
      */
     private $plugin;
+    /**
+     * @var \srag\Plugins\Hub2\Log\IRepository
+     */
+    private $log_repo;
 
     public function __construct()
     {
         $this->plugin = ilHub2Plugin::getInstance();
+        $this->log_repo = LogRepository::getInstance();
     }
 
     /**
@@ -100,7 +102,7 @@ class DeleteOldLogsJob extends ilCronJob
     {
         $keep_old_logs_time = ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME);
 
-        $count = self::logs()->deleteOldLogs($keep_old_logs_time);
+        $count = $this->log_repo->deleteOldLogs($keep_old_logs_time);
 
         return ResultFactory::ok(sprintf($this->plugin->txt("logs_deleted_status"), $count));
     }

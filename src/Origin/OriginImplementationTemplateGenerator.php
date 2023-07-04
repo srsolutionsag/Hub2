@@ -6,7 +6,6 @@ use ilHub2Plugin;
 use ilUtil;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginImplementationTemplateGenerator
@@ -16,8 +15,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginImplementationTemplateGenerator
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**

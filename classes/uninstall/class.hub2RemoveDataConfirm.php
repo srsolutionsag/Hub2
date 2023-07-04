@@ -2,7 +2,6 @@
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\RemovePluginDataConfirm\Hub2\AbstractRemovePluginDataConfirm;
 
 /**
@@ -11,7 +10,5 @@ use srag\RemovePluginDataConfirm\Hub2\AbstractRemovePluginDataConfirm;
  */
 class hub2RemoveDataConfirm extends AbstractRemovePluginDataConfirm
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 }

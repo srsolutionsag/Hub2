@@ -2,13 +2,11 @@
 
 namespace srag\Plugins\Hub2\Sync\Summary;
 
-use hub2LogsGUI;
 use ilHub2Plugin;
 use ilMimeMail;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Sync\IOriginSync;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
@@ -18,8 +16,6 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var \srag\Plugins\Hub2\Log\IRepository

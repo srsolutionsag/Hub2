@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
@@ -18,8 +17,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AROrigin extends ActiveRecord implements IOrigin
 {
-    use Hub2Trait;
-
     public const TABLE_NAME = 'sr_hub2_origin';
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**

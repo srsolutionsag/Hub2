@@ -11,7 +11,6 @@ use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvi
 use ILIAS\MainMenu\Provider\StandardTopItemsProvider;
 use ilObjComponentSettingsGUI;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Menu
@@ -22,8 +21,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Menu extends AbstractStaticPluginMainMenuProvider
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     protected static $polyfill_init = false;

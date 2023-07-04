@@ -61,11 +61,11 @@ class Csv
     protected $header = [];
 
     /**
-     * @param string $enclosure
-     * @param string $separator
-     * @param string $file_path
+     * @param string      $enclosure
+     * @param string      $separator
+     * @param string      $file_path
      * @param string|null $unique_field
-     * @param array $mandatory_columns
+     * @param array       $mandatory_columns
      */
     public function __construct(
         string $file_path,
@@ -88,44 +88,46 @@ class Csv
     /**
      * @param array $header
      */
-    public function setHeader(array $header): void
+    public function setHeader(array $header) : void
     {
         $this->header = $header;
     }
 
-    public function addFilter(\Closure $filter): void
+    public function addFilter(\Closure $filter) : void
     {
         $this->filters[] = $filter;
     }
 
-    protected function applyFilters(): void
+    protected function applyFilters() : void
     {
         foreach ($this->filters as $filter) {
             $this->applyFilter($filter);
         }
     }
 
-    protected function applyFilter(\Closure $closure): void
+    protected function applyFilter(\Closure $closure) : void
     {
         $this->parsed_csv = array_filter(
-            $this->parsed_csv, ($closure ?? function ($v, $k): bool {
-            return !empty($v);
-        }) ?? function ($v, $k): bool {
-            return !empty($v);
-        }, ($closure ?? function ($v, $k): bool {
-            return !empty($v);
-        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0)
+            $this->parsed_csv,
+            ($closure ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) ?? function ($v, $k) : bool {
+                return !empty($v);
+            },
+            ($closure ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0)
         );
     }
 
-    protected function filterMandatory(): void
+    protected function filterMandatory() : void
     {
         $mandatory = $this->mandatory_columns;
         if ($mandatory === []) {
             return;
         }
 
-        $this->applyFilter(function (array $item) use ($mandatory): bool {
+        $this->applyFilter(function (array $item) use ($mandatory) : bool {
             $isset = true;
             foreach ($mandatory as $column) {
                 $isset = $isset && isset($item[$column]) && $item[$column] !== '';
@@ -134,9 +136,9 @@ class Csv
         });
     }
 
-    protected function mapFieldsToTitle(): void
+    protected function mapFieldsToTitle() : void
     {
-        array_walk($this->parsed_csv, function (array &$item) {
+        array_walk($this->parsed_csv, function (array & $item) {
             foreach ($item as $k => $v) {
                 unset($item[$k]);
                 $item[$this->delivered_columns[$k]] = $this->sanitize($v);
@@ -147,7 +149,7 @@ class Csv
     /**
      * @return string
      */
-    protected function getEnclosure(): string
+    protected function getEnclosure() : string
     {
         return $this->enclosure;
     }
@@ -155,33 +157,35 @@ class Csv
     /**
      * @return string
      */
-    protected function getSeparator(): string
+    protected function getSeparator() : string
     {
         return $this->separator;
     }
 
-    protected function removeBOM(string $text): string
+    protected function removeBOM(string $text) : string
     {
         $bom = pack('H*', 'EFBBBF');
         return preg_replace("/^$bom/", '', $text);
     }
 
-    protected function parseCSVFileAndApplyHeaders(string $path_to_file): void
+    protected function parseCSVFileAndApplyHeaders(string $path_to_file) : void
     {
         $this->parseCSVFile($path_to_file);
         $this->mapFieldsToTitle();
     }
 
-    protected function parseCSVFile(string $path_to_file): void
+    protected function parseCSVFile(string $path_to_file) : void
     {
-        $this->parsed_csv = array_map(function (string $line): array {
+        $this->parsed_csv = array_map(function (string $line) : array {
             return str_getcsv(
-                $this->sanitizeEnclosures($this->removeBOM($line)), $this->getSeparator(), $this->getEnclosure()
+                $this->sanitizeEnclosures($this->removeBOM($line)),
+                $this->getSeparator(),
+                $this->getEnclosure()
             );
         }, file($path_to_file));
     }
 
-    public function parseData(): array
+    public function parseData() : array
     {
         $this->parseCSVFile($this->file_path);
         if ($this->header === []) {
@@ -210,7 +214,7 @@ class Csv
         if ($this->unique_field !== '') {
             $field = $this->unique_field;
             $unique = [];
-            $this->applyFilter(static function (array $item) use (&$unique, $field): bool {
+            $this->applyFilter(static function (array $item) use (&$unique, $field) : bool {
                 $isset = isset($unique[$item[$field]]);
                 $unique[$item[$field]] = true;
                 return !$isset;
@@ -219,7 +223,7 @@ class Csv
 
         if (count($this->columns_mapping) > 0) {
             $mapping = $this->columns_mapping;
-            $this->parsed_csv = array_map(function (array $item) use ($mapping): array {
+            $this->parsed_csv = array_map(function (array $item) use ($mapping) : array {
                 foreach ($mapping as $old_key => $new_key) {
                     if (isset($item[$old_key])) {
                         $item[$new_key] = $item[$old_key];
@@ -233,12 +237,12 @@ class Csv
         return $this->parsed_csv;
     }
 
-    protected function sanitize(string $s): string
+    protected function sanitize(string $s) : string
     {
         return utf8_encode(utf8_decode($s));
     }
 
-    protected function sanitizeEnclosures(string $s): string
+    protected function sanitizeEnclosures(string $s) : string
     {
         if ($this->bad_enclosures === []) {
             return $s;
@@ -252,9 +256,8 @@ class Csv
         return preg_replace($non_enclosures, self::BAD_ENCLOSURE_REPLACEMENT, $s);
     }
 
-    protected function getColumnMapping(): array
+    protected function getColumnMapping() : array
     {
         return $this->columns_mapping;
     }
-
 }

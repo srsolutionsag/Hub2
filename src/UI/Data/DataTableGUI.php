@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\UI\Data;
 
 use hub2DataGUI;
 use hub2LogsGUI;
-use ilAdvancedSelectionListGUI;
 use ilCheckboxInputGUI;
 use ilExcel;
 use ilFormPropertyGUI;
@@ -32,7 +31,6 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginsTableGUI
@@ -41,8 +39,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class DataTableGUI extends ilTable2GUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const F_ORIGIN_ID = 'origin_id';
     public const F_EXT_ID = 'ext_id';
@@ -149,8 +145,8 @@ class DataTableGUI extends ilTable2GUI
 
         $options = ["" => ""] + array_map(
             function (string $txt) : string {
-                return $this->plugin->txt("data_table_status_" . $txt);
-            },
+                    return $this->plugin->txt("data_table_status_" . $txt);
+                },
             ARObject::$available_status
         ) + [
                 "!" . IObject::STATUS_IGNORED => $this->plugin->txt("data_table_status_not_ignored"),
@@ -330,7 +326,6 @@ class DataTableGUI extends ilTable2GUI
             ),
         ];
         $actions_ = $this->ui->factory()->dropdown()->standard($items);
-
 
         $actions_html = $this->ui->renderer()->render($actions_);
 

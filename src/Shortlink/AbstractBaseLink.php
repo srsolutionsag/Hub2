@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Shortlink;
 
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Object\ARObject;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractBaseLink
@@ -13,8 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractBaseLink implements IObjectLink
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var ARObject

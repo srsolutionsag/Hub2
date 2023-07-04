@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\UI\Config;
 
 use hub2ConfigGUI;
-use hub2LogsGUI;
 use ilCheckboxInputGUI;
 use ilFormPropertyGUI;
 use ilFormSectionHeaderGUI;
@@ -14,7 +13,6 @@ use ilPropertyFormGUI;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ConfigFormGUI
@@ -24,8 +22,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class ConfigFormGUI extends ilPropertyFormGUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var ilHub2Plugin

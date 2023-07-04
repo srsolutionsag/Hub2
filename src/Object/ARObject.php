@@ -15,7 +15,6 @@ use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\Node;
 use srag\Plugins\Hub2\Taxonomy\Taxonomy;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
@@ -27,7 +26,6 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 abstract class ARObject extends ActiveRecord implements IObject
 {
-    use Hub2Trait;
     use HashCodeComputer;
 
     /**
@@ -302,7 +300,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         }
         if (!empty($messages)) {
             $this->log_repo->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
-                ->write(implode('<br>', $messages));
+                           ->write(implode('<br>', $messages));
         }
     }
 
@@ -321,7 +319,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->hash_code = $this->computeHashCode();
         parent::create();
         $this->log_repo->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
-            ->write("Created");
+                       ->write("Created");
     }
 
     /**

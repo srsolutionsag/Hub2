@@ -21,7 +21,6 @@ use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
 use srag\Plugins\Hub2\Jobs\CronNotifier;
 use srag\Plugins\Hub2\Jobs\Notifier;
@@ -34,7 +33,6 @@ use srag\Plugins\Hub2\Jobs\Notifier;
 class ilHub2Plugin extends ilCronHookPlugin
 {
     use PluginUninstallTrait;
-    use Hub2Trait;
 
     public const PLUGIN_ID = 'hub2';
     public const PLUGIN_NAME = 'Hub2';
@@ -64,7 +62,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return string
      */
-    public function getPluginName(): string
+    public function getPluginName() : string
     {
         return self::PLUGIN_NAME;
     }
@@ -72,7 +70,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return self
      */
-    public static function getInstance(): self
+    public static function getInstance() : self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -84,7 +82,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return ilCronJob[]
      */
-    public function getCronJobInstances(): array
+    public function getCronJobInstances() : array
     {
         return [new RunSync(new CronNotifier()), new DeleteOldLogsJob()];
     }
@@ -111,7 +109,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritdoc
      */
-    public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
+    public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
     {
         return new Menu(self::dic()->dic(), $this);
     }
@@ -144,7 +142,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritDoc
      */
-    protected function shouldUseOneUpdateStepOnly(): bool
+    protected function shouldUseOneUpdateStepOnly() : bool
     {
         return false;
     }

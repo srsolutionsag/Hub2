@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Origin;
 use ActiveRecord;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginFactory
@@ -15,8 +14,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginFactory implements IOriginFactory
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var \ilDBInterface

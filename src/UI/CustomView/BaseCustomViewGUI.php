@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\UI\CustomView;
 
 use hub2CustomViewGUI;
 use ilHub2Plugin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class BaseCustomViewGUI
@@ -13,8 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class BaseCustomViewGUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var hub2CustomViewGUI

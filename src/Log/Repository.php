@@ -8,7 +8,6 @@ use ilHub2Plugin;
 use srag\DIC\Hub2\Exception\DICException;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
 
 /**
@@ -19,8 +18,6 @@ use stdClass;
  */
 final class Repository implements IRepository
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IRepository
@@ -34,7 +31,7 @@ final class Repository implements IRepository
     /**
      * @return IRepository
      */
-    public static function getInstance(): IRepository
+    public static function getInstance() : IRepository
     {
         if (self::$instance === null) {
             self::setInstance(new self());
@@ -89,7 +86,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function deleteOldLogs(int $keep_old_logs_time): int
+    public function deleteOldLogs(int $keep_old_logs_time) : int
     {
         $time = time();
         $keep_old_logs_time_timestamp = ($time - ($keep_old_logs_time * 24 * 60 * 60));
@@ -130,7 +127,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function factory(): IFactory
+    public function factory() : IFactory
     {
         return Factory::getInstance();
     }
@@ -154,7 +151,7 @@ final class Repository implements IRepository
         int $object_ilias_id = null,
         string $additional_data = null,
         int $status = null
-    ): array {
+    ) : array {
         $sql = 'SELECT *';
 
         $sql .= $this->getLogsQuery(
@@ -204,7 +201,7 @@ final class Repository implements IRepository
         int $object_ilias_id = null,
         string $additional_data = null,
         int $status = null
-    ): int {
+    ) : int {
         $sql = 'SELECT COUNT(log_id) AS count';
 
         $sql .= $this->getLogsQuery(
@@ -269,7 +266,7 @@ final class Repository implements IRepository
         int $object_ilias_id = null,
         string $additional_data = null,
         int $status = null
-    ): string {
+    ) : string {
         $sql = ' FROM ' . $this->db->quoteIdentifier(Log::TABLE_NAME);
 
         $wheres = [];
@@ -284,16 +281,16 @@ final class Repository implements IRepository
 
         if (!empty($date_start)) {
             $wheres[] = 'date>=' . $this->db->quote(
-                    $date_start->get(IL_CAL_DATETIME),
-                    ilDBConstants::T_TEXT
-                );
+                $date_start->get(IL_CAL_DATETIME),
+                ilDBConstants::T_TEXT
+            );
         }
 
         if (!empty($date_end)) {
             $wheres[] = 'date<=' . $this->db->quote(
-                    $date_start->get(IL_CAL_DATETIME),
-                    ilDBConstants::T_TEXT
-                );
+                $date_start->get(IL_CAL_DATETIME),
+                ilDBConstants::T_TEXT
+            );
         }
 
         if (!empty($level)) {
@@ -306,9 +303,9 @@ final class Repository implements IRepository
 
         if (!empty($origin_object_type)) {
             $wheres[] = 'origin_object_type=' . $this->db->quote(
-                    $origin_object_type,
-                    ilDBConstants::T_TEXT
-                );
+                $origin_object_type,
+                ilDBConstants::T_TEXT
+            );
         }
 
         if (!empty($object_ext_id)) {
@@ -341,9 +338,9 @@ final class Repository implements IRepository
 
         if ($limit_start !== null && $limit_end !== null) {
             $sql .= ' LIMIT ' . $this->db->quote(
-                    $limit_start,
-                    ilDBConstants::T_INTEGER
-                ) . ',' . $this->db->quote(
+                $limit_start,
+                ilDBConstants::T_INTEGER
+            ) . ',' . $this->db->quote(
                     $limit_end,
                     ilDBConstants::T_INTEGER
                 );
@@ -376,7 +373,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function getGlobalAdditionalData(): stdClass
+    public function getGlobalAdditionalData() : stdClass
     {
         return $this->global_additional_data;
     }
@@ -384,7 +381,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function withGlobalAdditionalData(stdClass $global_additional_data): IRepository
+    public function withGlobalAdditionalData(stdClass $global_additional_data) : IRepository
     {
         $this->global_additional_data = $global_additional_data;
 
@@ -412,7 +409,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function getKeptLogs(IOrigin $origin, /*?*/ int $level = null): array
+    public function getKeptLogs(IOrigin $origin, /*?*/ int $level = null) : array
     {
         if (!isset($this->kept_logs[$origin->getId()])) {
             return [];
@@ -421,7 +418,7 @@ final class Repository implements IRepository
         if ($level === null) {
             return array_reduce(
                 $this->kept_logs[$origin->getId()],
-                function (array $logs1, array $logs2): array {
+                function (array $logs1, array $logs2) : array {
                     return array_merge($logs1, $logs2);
                 },
                 []
@@ -475,7 +472,7 @@ final class Repository implements IRepository
         array $values,
         string $primary_key_field,/*?*/
         int $primary_key_value = 0
-    ): int {
+    ) : int {
         if (empty($primary_key_value)) {
             $this->db->insert($table_name, $values);
 

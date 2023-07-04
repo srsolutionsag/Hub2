@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\UI\Log;
 
-use hub2LogsGUI;
 use ilDateTime;
 use ilHub2Plugin;
 use ilSelectInputGUI;
@@ -16,8 +15,8 @@ use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class LogsTableGUI
@@ -26,10 +25,11 @@ use stdClass;
  */
 class LogsTableGUI extends TableGUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    public const LANG_MODULE = hub2LogsGUI::LANG_MODULE_LOGS;
+    /**
+     * @var \srag\Plugins\Hub2\Log\IRepository
+     */
+    protected $log_repo;
     /**
      * @var ilHub2Plugin
      */
@@ -38,6 +38,7 @@ class LogsTableGUI extends TableGUI
     public function __construct($parent, string $parent_cmd)
     {
         $this->plugin = ilHub2Plugin::getInstance();
+        $this->log_repo = LogRepository::getInstance();
         parent::__construct($parent, $parent_cmd);
     }
 
@@ -196,7 +197,7 @@ class LogsTableGUI extends TableGUI
         $status = intval($filter["status"]);
 
         $this->setData(
-            self::logs()
+            $this->log_repo
                 ->getLogs(
                     $this->getOrderField(),
                     $this->getOrderDirection(),
@@ -217,7 +218,7 @@ class LogsTableGUI extends TableGUI
         );
 
         $this->setMaxCount(
-            self::logs()
+            $this->log_repo
                 ->getLogsCount(
                     $title,
                     $message,

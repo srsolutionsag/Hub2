@@ -497,7 +497,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param int $skill_id
+     * @param int           $skill_id
      * @param IProfileLevel $level
      * @return int
      * @throws HubException

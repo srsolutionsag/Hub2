@@ -11,8 +11,8 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Origin\Hook\Config;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class AbstractOriginBaseImplementation
@@ -23,8 +23,6 @@ use srag\Plugins\Hub2\Origin\Hook\Config;
  */
 abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IMappingStrategyFactory
@@ -109,7 +107,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
      */
     final protected function log(IDataTransferObject $dto = null) : ILog
     {
-        return self::logs()->factory()->originLog($this->origin, null, $dto);
+        return LogRepository::getInstance()->factory()->originLog($this->origin, null, $dto);
     }
 
     /**

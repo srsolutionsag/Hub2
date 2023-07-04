@@ -2,8 +2,6 @@
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use srag\Plugins\Hub2\Utils\Hub2Trait;
-
 /**
  * Class ilHub2ConfigGUI
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
@@ -11,8 +9,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class ilHub2ConfigGUI extends ilPluginConfigGUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var \ilCtrlInterface

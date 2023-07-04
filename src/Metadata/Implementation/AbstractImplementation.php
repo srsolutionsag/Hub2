@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Metadata\IMetadata;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class CustomMetadata
@@ -13,8 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractImplementation implements IMetadataImplementation
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int

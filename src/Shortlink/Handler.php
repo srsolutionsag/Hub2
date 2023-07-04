@@ -9,7 +9,6 @@ use ilInitialisation;
 use ilUtil;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Handler
@@ -18,8 +17,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Handler
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
     /**

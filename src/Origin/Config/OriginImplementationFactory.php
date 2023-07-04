@@ -10,7 +10,6 @@ use srag\Plugins\Hub2\Object\DTO\DataTransferObjectFactory;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Taxonomy\TaxonomyFactory;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginImplementationFactory
@@ -20,8 +19,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginImplementationFactory
 {
-    use Hub2Trait;
-
     /**
      * @var IOrigin
      */

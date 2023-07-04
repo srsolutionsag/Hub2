@@ -6,7 +6,6 @@ use ActiveRecord;
 use arConnector;
 use ilDateTime;
 use ilHub2Plugin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
@@ -17,8 +16,6 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 class Log extends ActiveRecord implements ILog
 {
-    use Hub2Trait;
-
     public const TABLE_NAME = "sr_hub2_log";
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**

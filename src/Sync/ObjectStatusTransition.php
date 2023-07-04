@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Sync;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectStatusTransition
@@ -16,8 +15,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class ObjectStatusTransition implements IObjectStatusTransition
 {
-    use Hub2Trait;
-
     /**
      * @var string
      * @deprecated

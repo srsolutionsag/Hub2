@@ -24,8 +24,8 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class ObjectProcessor
@@ -35,10 +35,13 @@ use Throwable;
  */
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 {
-    use Hub2Trait;
     use Helper;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var \srag\Plugins\Hub2\Log\IRepository
+     */
+    protected $log_repo;
 
     /**
      * @var IOrigin
@@ -76,6 +79,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         $this->origin = $origin;
         $this->transition = $transition;
         $this->implementation = $implementation;
+        $this->log_repo = LogRepository::getInstance();
     }
 
     /**
@@ -102,7 +106,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
             if ($ilias_id > 0) {
                 $hub_object->setStatus(IObject::STATUS_TO_UPDATE);
                 $hub_object->setILIASId($ilias_id);
-                self::logs()->factory()->originLog(
+                $this->log_repo->factory()->originLog(
                     (new OriginFactory())->getById($this->origin->getId()),
                     $hub_object
                 )->write(

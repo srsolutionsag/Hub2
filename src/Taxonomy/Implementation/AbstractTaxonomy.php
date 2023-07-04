@@ -7,7 +7,6 @@ use ilObjTaxonomy;
 use ilTaxonomyTree;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
 use srag\Plugins\Hub2\Taxonomy\Node\INode;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class AbstractTaxonomy
@@ -16,8 +15,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class AbstractTaxonomy implements ITaxonomyImplementation
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int

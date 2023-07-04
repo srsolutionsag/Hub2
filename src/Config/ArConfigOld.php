@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Config;
 
 use ActiveRecord;
 use ilHub2Plugin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ArConfigOld
@@ -14,8 +13,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class ArConfigOld extends ActiveRecord
 {
-    use Hub2Trait;
-
     /**
      * @var string
      * @deprecated

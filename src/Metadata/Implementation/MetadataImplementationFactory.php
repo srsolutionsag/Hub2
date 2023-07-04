@@ -10,7 +10,6 @@ use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
 use srag\Plugins\Hub2\Object\Session\SessionDTO;
 use srag\Plugins\Hub2\Object\User\UserDTO;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class IMetadataImplementationFactory
@@ -19,8 +18,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class MetadataImplementationFactory implements IMetadataImplementationFactory
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**

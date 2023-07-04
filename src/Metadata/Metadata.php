@@ -3,7 +3,6 @@
 namespace srag\Plugins\Hub2\Metadata;
 
 use ilHub2Plugin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class Metadata
@@ -12,8 +11,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class Metadata implements IMetadata
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int

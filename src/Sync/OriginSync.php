@@ -15,10 +15,10 @@ use srag\Plugins\Hub2\Object\IObjectRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
 use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use Throwable;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Jobs\Notifier;
+use srag\Plugins\Hub2\Log\Repository as LogRepository;
 
 /**
  * Class Sync
@@ -28,10 +28,12 @@ use srag\Plugins\Hub2\Jobs\Notifier;
  */
 class OriginSync implements IOriginSync
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const NOTIFY_ALL_X_DTOS = 500;
+    /**
+     * @var \srag\Plugins\Hub2\Log\IRepository
+     */
+    protected $log_repo;
     /**
      * @var IOrigin
      */
@@ -93,6 +95,7 @@ class OriginSync implements IOriginSync
         $this->repository = $repository;
         $this->factory = $factory;
         $this->statusTransition = $transition;
+        $this->log_repo = LogRepository::getInstance();
     }
 
     /**
@@ -315,8 +318,8 @@ class OriginSync implements IOriginSync
             $object->setStatus(IObject::STATUS_FAILED);
             $this->incrementProcessed($object->getStatus());
             $object->store();
-            $log = self::logs()->factory()->exceptionLog($ex, $this->origin, $object, $dto);
-            self::logs()->storeLog($log);
+            $log = $this->log_repo->factory()->exceptionLog($ex, $this->origin, $object, $dto);
+            $this->log_repo->storeLog($log);
 
             $this->implementation->handleLog($log);
         } finally {

@@ -7,7 +7,6 @@ use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class MainGUI
@@ -21,8 +20,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class hub2MainGUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const TAB_PLUGIN_CONFIG = 'tab_plugin_config';
     public const TAB_ORIGINS = 'tab_origins';

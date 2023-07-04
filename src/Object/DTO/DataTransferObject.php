@@ -5,7 +5,6 @@ namespace srag\Plugins\Hub2\Object\DTO;
 use ArrayObject;
 use ilHub2Plugin;
 use Serializable;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 
 /**
@@ -17,7 +16,6 @@ use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 abstract class DataTransferObject implements IDataTransferObject
 {
     use HashCodeComputer;
-    use Hub2Trait;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**

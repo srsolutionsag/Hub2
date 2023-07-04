@@ -7,7 +7,6 @@ use ilHub2Plugin;
 use srag\Plugins\Hub2\Object\Group\GroupRepository;
 use srag\Plugins\Hub2\Object\Session\SessionRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class ObjectRepository
@@ -17,8 +16,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 abstract class ObjectRepository implements IObjectRepository
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IOrigin

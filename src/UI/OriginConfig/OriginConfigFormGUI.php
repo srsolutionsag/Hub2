@@ -29,7 +29,6 @@ use srag\Plugins\Hub2\Origin\Properties\DTOPropertyParser;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 use srag\Plugins\Hub2\Origin\Session\ISessionOrigin;
 use srag\Plugins\Hub2\Origin\SessionMembership\ISessionMembershipOrigin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use srag\Plugins\Hub2\FileDrop\Handler;
 use srag\Plugins\Hub2\FileDrop\Token;
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
@@ -42,8 +41,6 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
  */
 class OriginConfigFormGUI extends ilPropertyFormGUI
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const POST_VAR_ADHOC = "adhoc";
     public const POST_VAR_SORT = "sort";

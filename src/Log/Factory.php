@@ -8,7 +8,6 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\IObject;
 use srag\Plugins\Hub2\Object\User\IUserDTO;
 use srag\Plugins\Hub2\Origin\IOrigin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 use stdClass;
 use Throwable;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
@@ -20,8 +19,6 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 final class Factory implements IFactory
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var IFactory

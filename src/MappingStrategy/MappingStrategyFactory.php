@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilHub2Plugin;
 use srag\DIC\Hub2\Version\Version;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class MappingStrategyFactory
@@ -13,8 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class MappingStrategyFactory implements IMappingStrategyFactory
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var Version

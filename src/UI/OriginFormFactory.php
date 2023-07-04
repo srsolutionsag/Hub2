@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\UI;
 
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class OriginFormFactory
@@ -13,8 +12,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class OriginFormFactory
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**

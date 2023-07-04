@@ -17,7 +17,6 @@ use srag\Plugins\Hub2\Object\OrgUnitMembership\OrgUnitMembershipDTO;
 use srag\Plugins\Hub2\Object\Session\SessionDTO;
 use srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO;
 use srag\Plugins\Hub2\Object\User\UserDTO;
-use srag\Plugins\Hub2\Utils\Hub2Trait;
 
 /**
  * Class DataTransferObjectFactory
@@ -27,8 +26,6 @@ use srag\Plugins\Hub2\Utils\Hub2Trait;
  */
 class DataTransferObjectFactory implements IDataTransferObjectFactory
 {
-    use Hub2Trait;
-
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
