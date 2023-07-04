@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.3.0]
+- Removed DICTrait, HUB2Trait and external libraries 
+
 ## [3.2.1]
 - Fixed Shortlinks to Courses if not logged in
 - Download FileDrops with Origin Name
