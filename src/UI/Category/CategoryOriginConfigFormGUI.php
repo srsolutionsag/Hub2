@@ -105,13 +105,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $delete->addOption($opt);
 
         $opt = new ilRadioOption(
-            $this->plugin->txt(
-                'cat_prop_delete_mode_inactive',
-                "",
-                [
-                    $this->plugin->txt('com_prop_mark_deleted_text'),
-                ]
-            ),
+            sprintf($this->plugin->txt('cat_prop_delete_mode_inactive'), $this->plugin->txt('com_prop_mark_deleted_text')),
             CategoryProperties::DELETE_MODE_MARK
         );
         $delete->addOption($opt);

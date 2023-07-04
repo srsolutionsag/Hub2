@@ -192,7 +192,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->tpl->setContent($form->getHTML());
     }
 
-    protected function downloadFileDrop(): void
+    protected function downloadFileDrop() : void
     {
         $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
         $rid = $this->http->request()->getQueryParams()['rid'] ?? null;
@@ -281,20 +281,18 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
                 $result = $generator->create($origin);
                 if ($result) {
                     ilUtil::sendInfo(
-                        $this->plugin->txt(
-                            "msg_created_class_implementation_file",
-                            "",
-                            [$generator->getClassFilePath($origin)]
+                        sprintf(
+                            $this->plugin->txt("msg_created_class_implementation_file"),
+                            $generator->getClassFilePath($origin)
                         ),
                         true
                     );
                 }
             } catch (HubException $e) {
                 ilUtil::sendInfo(
-                    $this->plugin->txt(
-                        "msg_created_class_implementation_file_failed",
-                        "",
-                        [$generator->getClassFilePath($origin)]
+                    sprintf(
+                        $this->plugin->txt("msg_created_class_implementation_file_failed"),
+                        $generator->getClassFilePath($origin)
                     ),
                     true
                 );
@@ -439,7 +437,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     {
         $roles = array_unique(array_merge(ArConfig::getField(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS), [2]));
         if (!$this->rbac_review->isAssignedToAtLeastOneGivenRole($this->user->getId(), $roles)) {
-            ilUtil::sendFailure($this->plugin->txt('permission_denied', "", [], false), true);
+            ilUtil::sendFailure($this->plugin->txt('permission_denied'), true);
             if (self::version()->is6()) {
                 $this->ctrl->redirectByClass(ilDashboardGUI::class);
             } else {

@@ -84,7 +84,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
             if ($summary_email) {
                 $mail->To($summary_email);
 
-                $mail->Subject($this->plugin->txt("summary_notification", "", [$title]));
+                $mail->Subject($this->plugin->txt("summary_notification"));
                 $mail->Body($this->renderOneSync($originSync));
 
                 $mail->Send();
@@ -163,7 +163,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
                     array_filter(
                         Log::$levels,
                         static function (int $level) use ($originSync) : bool {
-                            return (count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) > 0);
+                            return ((is_countable($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) ? count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) : 0) > 0);
                         }
                     )
                 )

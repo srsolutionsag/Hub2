@@ -101,7 +101,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      */
     private function translate(string $key, array $placeholders = []) : string
     {
-        return $this->plugin->txt($key, '', $placeholders);
+        return sprintf($this->plugin->txt($key), ...$placeholders);
     }
 
     /**
