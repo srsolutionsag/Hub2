@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.4.0]
+- [FEATURE] Support for Learning Progress Settings in Courses 
+
 ## [3.3.1]
 - [FIX] Empty ILIAS-Links in LogsTable 
 
