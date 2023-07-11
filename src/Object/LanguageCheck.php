@@ -157,17 +157,12 @@ trait LanguageCheck
             "zu",
         ];
 
-    /**
-     * @param string $languageCode
-     * @return bool
-     */
-    public static function isLanguageCode(string $languageCode): bool
+    public static function isLanguageCode(string $languageCode) : bool
     {
         return in_array($languageCode, self::$available_languages);
     }
 
     /**
-     * @param string $languageCode
      * @throws LanguageCodeException
      */
     public static function checkLanguageCode(string $languageCode)

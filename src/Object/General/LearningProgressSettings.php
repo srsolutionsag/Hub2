@@ -2,13 +2,6 @@
 
 namespace srag\Plugins\Hub2\Object\General;
 
-use srag\Plugins\Hub2\Object\IDidacticTemplateAwareObject;
-use srag\Plugins\Hub2\Object\IMetadataAwareObject;
-use srag\Plugins\Hub2\Object\IObject;
-use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
-use srag\Plugins\Hub2\Object\General\IDependentSettings;
-use Exception;
-
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
@@ -16,34 +9,30 @@ class LearningProgressSettings extends BaseDependentSetting implements IDependen
 {
     public const ACTIVATE_LEARNING_PROGRESS = 'lp_on';
     public const LP_MODE = 'mode';
-    
+
     public const LP_MODE_DEACTIVATED = \ilLPObjSettings::LP_MODE_DEACTIVATED;
     public const LP_MODE_BY_TUTOR = \ilLPObjSettings::LP_MODE_MANUAL_BY_TUTOR;
-    
-    private $activate_learning_progress = false;
-    
-    private $lp_mode = 1;
-    
+
     public function __construct(
         int $learning_progress_mode = self::LP_MODE_DEACTIVATED
     ) {
         $this->setLearningProgressMode($learning_progress_mode);
     }
-    
+
     public function isActivateLearningProgress() : bool
     {
         return $this->offsetGet(self::ACTIVATE_LEARNING_PROGRESS);
     }
-    
+
     public function activateLearningProgress(
         bool $activate_learning_progress,
         int $mode
     ) : LearningProgressSettings {
         $this->setLearningProgressMode($mode);
-        
+
         return $this->set(self::ACTIVATE_LEARNING_PROGRESS, $activate_learning_progress);
     }
-    
+
     public function setLearningProgressMode(int $mode) : LearningProgressSettings
     {
         // check if mode is implemented
@@ -57,10 +46,10 @@ class LearningProgressSettings extends BaseDependentSetting implements IDependen
         if ($mode !== self::LP_MODE_DEACTIVATED) {
             $this->set(self::ACTIVATE_LEARNING_PROGRESS, true);
         }
-        
+
         return $this->set(self::LP_MODE, $mode);
     }
-    
+
     public function getLearningProgressMode() : int
     {
         return $this->offsetGet(self::LP_MODE) ?? self::LP_MODE_DEACTIVATED;

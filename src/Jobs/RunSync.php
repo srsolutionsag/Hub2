@@ -38,7 +38,7 @@ class RunSync extends ilCronJob
     /**
      * @var IOriginSyncSummary
      */
-    protected $summary = null;
+    protected $summary;
     /**
      * @var IOriginSyncSummary
      */
@@ -52,7 +52,6 @@ class RunSync extends ilCronJob
      * RunSync constructor
      * @param IOrigin[]               $origins
      * @param IOriginSyncSummary|null $summary
-     * @param bool                    $force_update
      */
     public function __construct(
         Notifier $notifier,
@@ -67,49 +66,31 @@ class RunSync extends ilCronJob
         $this->log_repo = LogRepository::getInstance();
     }
 
-    /**
-     * @return string
-     */
     public function getId() : string
     {
         return self::CRON_JOB_ID;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle() : string
     {
         return ilHub2Plugin::PLUGIN_NAME;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription() : string
     {
         return "";
     }
 
-    /**
-     * @return bool
-     */
     public function hasAutoActivation() : bool
     {
         return true;
     }
 
-    /**
-     * @return bool
-     */
     public function hasFlexibleSchedule() : bool
     {
         return true;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultScheduleType() : int
     {
         return ilCronJob::SCHEDULE_TYPE_DAILY;
@@ -118,7 +99,7 @@ class RunSync extends ilCronJob
     /**
      * @return null
      */
-    public function getDefaultScheduleValue()
+    public function getDefaultScheduleValue() : int
     {
         return 1;
     }
@@ -133,11 +114,11 @@ class RunSync extends ilCronJob
 
             $global_hook = GlobalHook::getInstance();
 
-            if (empty($this->origins)) {
+            if ($this->origins === []) {
                 $this->origins = (new OriginFactory())->getAllActive();
             }
 
-            if (empty($this->summary)) {
+            if (!$this->summary instanceof \srag\Plugins\Hub2\Sync\Summary\IOriginSyncSummary) {
                 $this->summary = (new OriginSyncSummaryFactory())->mail();
             }
 
@@ -148,7 +129,7 @@ class RunSync extends ilCronJob
             foreach ($this->origins as $origin) {
                 $this->notifier->notify('Start Origin ' . $origin->getTitle());
 
-                if ($origin->getObjectType() == $skip_object_type) {
+                if ($origin->getObjectType() === $skip_object_type) {
                     continue;
                 }
 

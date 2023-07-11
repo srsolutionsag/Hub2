@@ -16,18 +16,9 @@ interface IDataTransferObjectSort
      */
     public const MAX_LEVEL = 100;
 
-    /**
-     * @return IDataTransferObject
-     */
-    public function getDtoObject(): IDataTransferObject;
+    public function getDtoObject() : IDataTransferObject;
 
-    /**
-     * @return int
-     */
-    public function getLevel(): int;
+    public function getLevel() : int;
 
-    /**
-     * @param int $level
-     */
     public function setLevel(int $level);
 }

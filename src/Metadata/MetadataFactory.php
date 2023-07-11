@@ -15,7 +15,6 @@ class MetadataFactory implements IMetadataFactory
 
     /**
      * @param int $id
-     * @return IMetadata
      */
     public function getDTOWithIliasId(int $ilias_field_id, int $record_id = IMetadata::DEFAULT_RECORD_ID) : IMetadata
     {

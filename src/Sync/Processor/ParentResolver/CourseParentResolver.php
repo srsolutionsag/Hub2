@@ -31,7 +31,7 @@ class CourseParentResolver extends BasicParentResolver
         }
     }
 
-    private function resolveLinkedOrigin(int $linked_origin_id): bool
+    private function resolveLinkedOrigin(int $linked_origin_id) : bool
     {
         if ($linked_origin_id === 0) {
             return false;
@@ -40,7 +40,7 @@ class CourseParentResolver extends BasicParentResolver
         $originRepository = new OriginRepository();
         $filtered = array_filter(
             $originRepository->categories(),
-            function ($origin) use ($linked_origin_id) {
+            function ($origin) use ($linked_origin_id) : bool {
                 /** @var IOrigin $origin */
                 return $origin->getId() === $linked_origin_id;
             }
@@ -55,7 +55,7 @@ class CourseParentResolver extends BasicParentResolver
         return true;
     }
 
-    public function resolveParentRefId(DataTransferObject $dto): int
+    public function resolveParentRefId(DataTransferObject $dto) : int
     {
         if (!$dto instanceof CourseDTO) {
             throw new \InvalidArgumentException();

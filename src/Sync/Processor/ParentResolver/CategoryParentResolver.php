@@ -12,7 +12,7 @@ class CategoryParentResolver extends BasicParentResolver
     /**
      * @var string|null
      */
-    protected $fallback_ext_id = null;
+    protected $fallback_ext_id;
     /**
      * @var ObjectFactory
      */
@@ -28,7 +28,7 @@ class CategoryParentResolver extends BasicParentResolver
         $this->fallback_ext_id = $fallback_ext_id;
     }
 
-    public function resolveParentRefId(DataTransferObject $dto): int
+    public function resolveParentRefId(DataTransferObject $dto) : int
     {
         if (!$dto instanceof CategoryDTO) {
             throw new \InvalidArgumentException();

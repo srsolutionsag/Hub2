@@ -22,15 +22,12 @@ final class Repository implements IRepository
     /**
      * @var IRepository
      */
-    protected static $instance = null;
+    protected static $instance;
     /**
      * @var \ilDBInterface
      */
     protected $db;
 
-    /**
-     * @return IRepository
-     */
     public static function getInstance() : IRepository
     {
         if (self::$instance === null) {
@@ -40,10 +37,7 @@ final class Repository implements IRepository
         return self::$instance;
     }
 
-    /**
-     * @param IRepository $instance
-     */
-    public static function setInstance(IRepository $instance)/*: void*/
+    public static function setInstance(IRepository $instance) : void/*: void*/
     {
         self::$instance = $instance;
     }
@@ -73,7 +67,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function deleteLog(ILog $log)/*: void*/
+    public function deleteLog(ILog $log) : void/*: void*/
     {
         $this->db->manipulateF(
             'DELETE FROM ' . $this->db->quoteIdentifier(Log::TABLE_NAME)
@@ -100,7 +94,7 @@ final class Repository implements IRepository
         );
 
         while ($row = $result->fetchAssoc()) {
-            $keep_log_ids[] = intval($row["log_id"]);
+            $keep_log_ids[] = (int) $row["log_id"];
         }
         // $keep_log_ids = [];
         $count = $this->db->manipulateF(
@@ -172,18 +166,15 @@ final class Repository implements IRepository
             $status
         );
 
-        /**
-         * @var ILog[] $logs
-         */
         $stm = $this->db->query($sql);
         $logs = [];
         while ($d = $this->db->fetchObject($stm)) {
             $logs[] = $d;
         }
 
-        $logs = array_map([$this->factory(), "fromDB"], $logs);
-
-        return $logs;
+        return array_map(function (\stdClass $data) : \srag\Plugins\Hub2\Log\ILog {
+            return $this->factory()->fromDB($data);
+        }, $logs);
     }
 
     /**
@@ -225,7 +216,7 @@ final class Repository implements IRepository
         $result = $this->db->query($sql);
 
         if ($row = $result->fetchAssoc()) {
-            return intval($row["count"]);
+            return (int) $row["count"];
         }
 
         return 0;
@@ -246,8 +237,6 @@ final class Repository implements IRepository
      * @param string|null     $object_ext_id
      * @param int|null        $object_ilias_id
      * @param string|null     $additional_data
-     * @param int             $status
-     * @return string
      * @throws DICException
      */
     private function getLogsQuery(
@@ -279,14 +268,14 @@ final class Repository implements IRepository
             $wheres[] = $this->db->like("message", ilDBConstants::T_TEXT, '%' . $message . '%');
         }
 
-        if (!empty($date_start)) {
+        if ($date_start instanceof \ilDateTime) {
             $wheres[] = 'date>=' . $this->db->quote(
                 $date_start->get(IL_CAL_DATETIME),
                 ilDBConstants::T_TEXT
             );
         }
 
-        if (!empty($date_end)) {
+        if ($date_end instanceof \ilDateTime) {
             $wheres[] = 'date<=' . $this->db->quote(
                 $date_end->get(IL_CAL_DATETIME),
                 ilDBConstants::T_TEXT
@@ -328,7 +317,7 @@ final class Repository implements IRepository
             $wheres[] = 'status=' . $this->db->quote($status, ilDBConstants::T_INTEGER);
         }
 
-        if (count($wheres) > 0) {
+        if ($wheres !== []) {
             $sql .= ' WHERE ' . implode(" AND ", $wheres);
         }
 
@@ -364,7 +353,9 @@ final class Repository implements IRepository
                 [ilDBConstants::T_INTEGER],
                 [$log_id]
             ),
-            [$this->factory(), "fromDB"]
+            function (\stdClass $data) : \srag\Plugins\Hub2\Log\ILog {
+                return $this->factory()->fromDB($data);
+            }
         );
 
         return $log;
@@ -391,7 +382,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function keepLog(ILog $log)/*:void*/
+    public function keepLog(ILog $log) : void/*:void*/
     {
         if (!isset($this->kept_logs[$log->getOriginId()])) {
             $this->kept_logs[$log->getOriginId()] = [];
@@ -435,7 +426,7 @@ final class Repository implements IRepository
     /**
      * @inheritdoc
      */
-    public function storeLog(ILog $log)/*: void*/
+    public function storeLog(ILog $log) : void/*: void*/
     {
         $date = new ilDateTime(time(), IL_CAL_UNIX);
 

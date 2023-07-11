@@ -28,47 +28,19 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject
      */
     public const POSITION_SUPERIOR = 2;
 
-    /**
-     * @return string
-     */
-    public function getOrgUnitId(): string;
+    public function getOrgUnitId() : string;
 
-    /**
-     * @param string $org_unit_id
-     * @return self
-     */
-    public function setOrgUnitId(string $org_unit_id): self;
+    public function setOrgUnitId(string $org_unit_id) : self;
 
-    /**
-     * @return int
-     */
-    public function getOrgUnitIdType(): int;
+    public function getOrgUnitIdType() : int;
 
-    /**
-     * @param int $org_unit_id_type
-     * @return self
-     */
-    public function setOrgUnitIdType(int $org_unit_id_type): self;
+    public function setOrgUnitIdType(int $org_unit_id_type) : self;
 
-    /**
-     * @return int
-     */
-    public function getUserId(): int;
+    public function getUserId() : int;
 
-    /**
-     * @param int $user_id
-     * @return self
-     */
-    public function setUserId(int $user_id): self;
+    public function setUserId(int $user_id) : self;
 
-    /**
-     * @return int
-     */
-    public function getPosition(): int;
+    public function getPosition() : int;
 
-    /**
-     * @param int $position
-     * @return self
-     */
-    public function setPosition(int $position): self;
+    public function setPosition(int $position) : self;
 }

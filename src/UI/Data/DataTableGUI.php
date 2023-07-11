@@ -92,8 +92,7 @@ class DataTableGUI extends ilTable2GUI
 
     /**
      * DataTableGUI constructor
-     * @param hub2DataGUI $a_parent_obj
-     * @param string      $a_parent_cmd
+     * @param string $a_parent_cmd
      */
     public function __construct(hub2DataGUI $a_parent_obj, $a_parent_cmd)
     {
@@ -130,7 +129,7 @@ class DataTableGUI extends ilTable2GUI
     /**
      * @inheritdoc
      */
-    public function initFilter()
+    public function initFilter() : void
     {
         $this->setDisableFilterHiding(true);
 
@@ -161,10 +160,6 @@ class DataTableGUI extends ilTable2GUI
         $this->addAndReadFilterItem($data);
     }
 
-    /**
-     * @param string $field_id
-     * @return bool
-     */
     protected function hasSessionValue(string $field_id) : bool
     {
         // Not set on first visit, false on reset filter, string if is set
@@ -172,20 +167,14 @@ class DataTableGUI extends ilTable2GUI
             )][$field_id] !== false);
     }
 
-    /**
-     * @param ilFormPropertyGUI $item
-     */
     protected function addAndReadFilterItem(ilFormPropertyGUI $item)
     {
         $this->addFilterItem($item);
         if ($this->hasSessionValue($item->getFieldId())) { // Supports filter default values
             $item->readFromSession();
         }
-        if ($item instanceof ilCheckboxInputGUI) {
-            $this->filtered[$item->getPostVar()] = $item->getChecked();
-        } else {
-            $this->filtered[$item->getPostVar()] = $item->getValue();
-        }
+        $this->filtered[$item->getPostVar()] = $item instanceof ilCheckboxInputGUI ? $item->getChecked(
+        ) : $item->getValue();
     }
 
     /**
@@ -287,7 +276,7 @@ class DataTableGUI extends ilTable2GUI
                     );
                     break;
                 case self::F_ORIGIN_ID:
-                    if (!$origin) {
+                    if (!$origin instanceof \srag\Plugins\Hub2\Origin\IOrigin) {
                         $this->tpl->setVariable('VALUE', " " . $this->plugin->txt("origin_deleted"));
                     } else {
                         $this->tpl->setVariable('VALUE', $origin->getTitle());
@@ -329,8 +318,7 @@ class DataTableGUI extends ilTable2GUI
 
         // Use a fake button to use clickable open modal on selection list. Replace the id with the button id
         $button = $this->ui->factory()->button()->shy("", "#")->withOnClick($modal->getShowSignal());
-        $button_html = $this->ui->renderer()->render($button);
-        $button_id = [];
+        $this->ui->renderer()->render($button);
         /*preg_match('/id="([a-z0-9_]+)"/', $button_html, $button_id);
         if (is_array($button_id) && count($button_id) > 1) {
             $button_id = $button_id[1];
@@ -346,10 +334,9 @@ class DataTableGUI extends ilTable2GUI
     }
 
     /**
-     * @param ilExcel $a_excel
-     * @param int     $a_row
+     * @param int $a_row
      */
-    protected function fillHeaderExcel(ilExcel $a_excel, & $a_row)
+    protected function fillHeaderExcel(ilExcel $a_excel, &$a_row)
     {
         $col = 0;
 
@@ -362,13 +349,12 @@ class DataTableGUI extends ilTable2GUI
     }
 
     /**
-     * @param ilExcel $excel
-     * @param int     $row
-     * @param array   $result
+     * @param int   $row
+     * @param array $result
      */
     protected function fillRowExcel(
         ilExcel $excel, /*int*/
-        & $row, /*array*/
+        &$row, /*array*/
         $result
     ) {/*: void*/
 
@@ -392,14 +378,12 @@ class DataTableGUI extends ilTable2GUI
 
     /**
      * @param int          $ilias_id
-     * @param string       $ext_id
      * @param IOrigin|null $origin
-     * @return string
      */
-    protected function renderILIASLinkForIliasId($ilias_id, $ext_id, IOrigin $origin = null) : string
+    protected function renderILIASLinkForIliasId($ilias_id, string $ext_id, IOrigin $origin = null) : string
     {
-        if (!$origin) {
-            return strval($ilias_id);
+        if (!$origin instanceof \srag\Plugins\Hub2\Origin\IOrigin) {
+            return (string) $ilias_id;
         }
 
         $link = $this->originLinkfactory->findByExtIdAndOrigin($ext_id, $origin);
@@ -413,16 +397,13 @@ class DataTableGUI extends ilTable2GUI
                 )->withOpenInNewViewport(true)
             );
         } else {
-            return strval($ilias_id);
+            return (string) $ilias_id;
         }
     }
 
-    /**
-     * @return array
-     */
-    protected function getFields()
+    protected function getFields() : array
     {
-        $fields = [
+        return [
             self::F_ORIGIN_ID,
             self::F_EXT_ID,
             'delivery_date',
@@ -431,8 +412,6 @@ class DataTableGUI extends ilTable2GUI
             'status',
             'period',
         ];
-
-        return $fields;
     }
 
     /**

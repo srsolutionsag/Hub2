@@ -9,17 +9,17 @@ abstract class BaseDependentSetting implements IDependentSettings
 {
     protected $data = [];
 
-    public function __toArray(): array
+    public function __toArray() : array
     {
         return $this->data;
     }
 
-    public function __fromArray(array $data): void
+    public function __fromArray(array $data) : void
     {
         $this->data = $data;
     }
 
-    protected function set(string $key, $value): self
+    protected function set(string $key, $value) : self
     {
         $this->data[$key] = $value;
 
@@ -31,17 +31,17 @@ abstract class BaseDependentSetting implements IDependentSettings
         return serialize($this->__toArray());
     }
 
-    public function unserialize($data)
+    public function unserialize($data) : void
     {
         $this->__fromArray(unserialize($data));
     }
 
-    public function __toString(): string
+    public function __toString() : string
     {
         return $this->serialize();
     }
 
-    public function __fromString(string $data): void
+    public function __fromString(string $data) : void
     {
         $this->unserialize($data);
     }
@@ -56,12 +56,12 @@ abstract class BaseDependentSetting implements IDependentSettings
         return $this->data[$offset] ?? null;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value) : void
     {
         $this->data[$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset) : void
     {
         unset($this->data[$offset]);
     }
@@ -70,5 +70,4 @@ abstract class BaseDependentSetting implements IDependentSettings
     {
         return $this->__toArray();
     }
-
 }

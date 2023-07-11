@@ -19,17 +19,12 @@ use srag\Plugins\Hub2\Taxonomy\Implementation\TaxonomyImplementationFactory;
  */
 trait TaxonomySyncProcessor
 {
-    /**
-     * @param ITaxonomyAwareDataTransferObject $dto
-     * @param ITaxonomyAwareObject             $iobject
-     * @param ilObject                         $ilias_object
-     */
     public function handleTaxonomies(
         ITaxonomyAwareDataTransferObject $dto,
         ITaxonomyAwareObject $iobject,
         ilObject $ilias_object
-    ) {
-        if (count($dto->getTaxonomies()) > 0) {
+    ) : void {
+        if ($dto->getTaxonomies() !== []) {
             $this->handleDTOSpecificTaxonomySettings($dto, $ilias_object);
 
             $f = new TaxonomyImplementationFactory();
@@ -39,11 +34,7 @@ trait TaxonomySyncProcessor
         }
     }
 
-    /**
-     * @param ITaxonomyAwareDataTransferObject $dto
-     * @param ilObject                         $object
-     */
-    private function handleDTOSpecificTaxonomySettings(ITaxonomyAwareDataTransferObject $dto, ilObject $object)
+    private function handleDTOSpecificTaxonomySettings(ITaxonomyAwareDataTransferObject $dto, ilObject $object) : void
     {
         switch (true) {
             case $dto instanceof CourseDTO:

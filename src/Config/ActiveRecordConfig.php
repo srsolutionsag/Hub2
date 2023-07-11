@@ -3,9 +3,6 @@
 namespace srag\Plugins\Hub2\Config;
 
 use arConnector;
-use srag\Plugins\Hub2\Config\AbstractFactory;
-use srag\Plugins\Hub2\Config\AbstractRepository;
-use srag\Plugins\Hub2\Config\Config;
 use srag\Plugins\Hub2\Exception\ActiveRecordConfigException;
 
 /**
@@ -37,7 +34,6 @@ class ActiveRecordConfig extends Config
      */
     protected static $fields = [];
 
-
     /**
      * @deprecated
      */
@@ -46,9 +42,8 @@ class ActiveRecordConfig extends Config
         return ActiveRecordConfigRepository::getInstance(static::TABLE_NAME, static::$fields);
     }
 
-
     /**
-     * @param mixed  $default_value
+     * @param mixed $default_value
      *
      * @return never
      *
@@ -56,12 +51,13 @@ class ActiveRecordConfig extends Config
      *
      * @deprecated
      */
-    protected static final function getDefaultValue(string $name, int $type, $default_value)
+    final protected static function getDefaultValue(string $name, int $type, $default_value)
     {
-        throw new ActiveRecordConfigException("getDefaultValue is not supported anymore - please try to use the second parameter in the fields array instead!",
-            ActiveRecordConfigException::CODE_INVALID_FIELD);
+        throw new ActiveRecordConfigException(
+            "getDefaultValue is not supported anymore - please try to use the second parameter in the fields array instead!",
+            ActiveRecordConfigException::CODE_INVALID_FIELD
+        );
     }
-
 
     /**
      *
@@ -72,7 +68,6 @@ class ActiveRecordConfig extends Config
     {
         return self::config()->getValue($name);
     }
-
 
     /**
      * Get all values
@@ -86,7 +81,6 @@ class ActiveRecordConfig extends Config
         return self::config()->getValues();
     }
 
-
     /**
      * Remove a field
      *
@@ -94,21 +88,19 @@ class ActiveRecordConfig extends Config
      *
      * @deprecated
      */
-    public static function removeField(string $name): void/*: void*/
+    public static function removeField(string $name) : void/*: void*/
     {
         self::config()->removeValue($name);
     }
 
-
     /**
-     * @param mixed  $value
+     * @param mixed $value
      * @deprecated
      */
-    public static function setField(string $name, $value): void/*: void*/
+    public static function setField(string $name, $value) : void/*: void*/
     {
         self::config()->setValue($name, $value);
     }
-
 
     /**
      * Set all values
@@ -118,11 +110,10 @@ class ActiveRecordConfig extends Config
      *
      * @deprecated
      */
-    public static function setFields(array $fields, bool $remove_exists = false): void/*: void*/
+    public static function setFields(array $fields, bool $remove_exists = false) : void/*: void*/
     {
         self::config()->setValues($fields, $remove_exists);
     }
-
 
     /**
      * ActiveRecordConfig constructor

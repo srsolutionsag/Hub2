@@ -29,7 +29,7 @@ class DTOPropertyParser
     /**
      * @return DTOProperty[]
      */
-    public function getProperties()
+    public function getProperties() : array
     {
         $reflection = new ReflectionClass($this->dtoClass);
         $reflectionProperties = $reflection->getProperties(ReflectionProperty::IS_PROTECTED);

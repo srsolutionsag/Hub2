@@ -16,8 +16,5 @@ interface ICompetenceManagementOriginConfig extends IOriginConfig
      */
     public const ID_IF_NO_PARENT_ID = "id_if_no_parent_id";
 
-    /**
-     * @return int
-     */
-    public function getIdIfNoParentId(): int;
+    public function getIdIfNoParentId() : int;
 }

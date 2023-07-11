@@ -49,11 +49,7 @@ class ObjectLinkFactory
         $this->origin_factory = new OriginFactory();
     }
 
-    /**
-     * @param string $ext_id
-     * @return IObjectLink
-     */
-    public function findByExtId(string $ext_id): IObjectLink
+    public function findByExtId(string $ext_id) : IObjectLink
     {
         foreach ($this->origin_factory->getAllActive() as $origin) {
             $l = $this->findByExtIdAndOrigin($ext_id, $origin);
@@ -66,12 +62,7 @@ class ObjectLinkFactory
         return new NullLink();
     }
 
-    /**
-     * @param string  $ext_id
-     * @param IOrigin $origin
-     * @return IObjectLink
-     */
-    public function findByExtIdAndOrigin(string $ext_id, IOrigin $origin): IObjectLink
+    public function findByExtIdAndOrigin(string $ext_id, IOrigin $origin) : IObjectLink
     {
         $f = new ObjectFactory($origin);
 
@@ -80,11 +71,7 @@ class ObjectLinkFactory
         return $this->findByObject($object);
     }
 
-    /**
-     * @param ARObject $object
-     * @return IObjectLink
-     */
-    public function findByObject(ARObject $object): IObjectLink
+    public function findByObject(ARObject $object) : IObjectLink
     {
         $ilias_id = $object->getILIASId();
 

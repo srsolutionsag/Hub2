@@ -16,16 +16,18 @@ class ARCourseMembershipOrigin extends AROrigin implements ICourseMembershipOrig
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data)
-    {
+    protected function getOriginConfig(
+        array $data
+    ) : \srag\Plugins\Hub2\Origin\Config\CourseMembership\CourseMembershipOriginConfig {
         return new CourseMembershipOriginConfig($data);
     }
 
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data)
-    {
+    protected function getOriginProperties(
+        array $data
+    ) : \srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipProperties {
         return new CourseMembershipProperties($data);
     }
 }

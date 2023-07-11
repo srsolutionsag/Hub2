@@ -41,13 +41,8 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
     /**
      * @var FakeOrgUnitMembershipObject|null
      */
-    protected $current_ilias_object = null;
+    protected $current_ilias_object;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -58,10 +53,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
         $this->config = $origin->config();
     }
 
-    /**
-     * @return array
-     */
-    public static function getProperties(): array
+    public static function getProperties() : array
     {
         return self::$properties;
     }
@@ -112,9 +104,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
                     ]
                 )->first();
 
-                if ($assignment !== null) {
-                    $assignment->delete();
-                }
+                $assignment->delete();
                 break;
 
             case IOrgUnitMembershipProperties::DELETE_MODE_NONE:
@@ -124,11 +114,9 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
     }
 
     /**
-     * @param IOrgUnitMembershipDTO $dto
-     * @return ilOrgUnitUserAssignment
      * @throws HubException
      */
-    protected function assignToOrgUnit(IOrgUnitMembershipDTO $dto): ilOrgUnitUserAssignment
+    protected function assignToOrgUnit(IOrgUnitMembershipDTO $dto) : ilOrgUnitUserAssignment
     {
         switch ($dto->getPosition()) {
             case IOrgUnitMembershipDTO::POSITION_EMPLOYEE:
@@ -141,7 +129,6 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
             default:
                 throw new HubException("Invalid position {$dto->getPosition()}!");
-                break;
         }
 
         return ilOrgUnitUserAssignment::findOrCreateAssignment(
@@ -152,11 +139,9 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
     }
 
     /**
-     * @param ilOrgUnitUserAssignment $assignment
-     * @return FakeIliasObject
      * @throws HubException
      */
-    protected function getFakeIliasObject(ilOrgUnitUserAssignment $assignment): FakeIliasObject
+    protected function getFakeIliasObject(ilOrgUnitUserAssignment $assignment) : FakeIliasObject
     {
         return new FakeOrgUnitMembershipObject(
             $assignment->getOrguId(),
@@ -166,18 +151,16 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
     }
 
     /**
-     * @param IOrgUnitMembershipDTO $dto
-     * @return int
      * @throws HubException
      */
-    protected function getOrgUnitId(IOrgUnitMembershipDTO $dto): int
+    protected function getOrgUnitId(IOrgUnitMembershipDTO $dto) : int
     {
         switch ($dto->getOrgUnitIdType()) {
             case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_EXTERNAL_EXT_ID:
                 $ext_id = $dto->getOrgUnitId();
 
                 $linkedOriginId = $this->config->getLinkedOriginId();
-                if (!$linkedOriginId) {
+                if ($linkedOriginId === 0) {
                     throw new HubException("Unable to lookup external ref-ID because there is no origin linked");
                 }
 
@@ -197,12 +180,12 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 
             case IOrgUnitMembershipDTO::ORG_UNIT_ID_TYPE_OBJ_ID:
             default:
-                $org_unit_id = intval($dto->getOrgUnitId());
+                $org_unit_id = (int) $dto->getOrgUnitId();
                 break;
         }
 
         $org_unit = $this->getOrgUnitObject($org_unit_id);
-        if (empty($org_unit)) {
+        if (!$org_unit instanceof \ilObjOrgUnit) {
             throw new HubException("Org Unit {$org_unit_id} not found!");
         }
 
@@ -210,7 +193,6 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
     }
 
     /**
-     * @param int $obj_id
      * @return ilObjOrgUnit|null
      */
     protected function getOrgUnitObject(int $obj_id)

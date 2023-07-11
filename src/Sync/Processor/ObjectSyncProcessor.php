@@ -58,17 +58,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
     /**
      * @var ilObject|FakeIliasObject|null
      */
-    protected $current_ilias_object = null;
+    protected $current_ilias_object;
     /**
      * @var \ilRbacReview
      */
     private $rbacreview;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -160,7 +155,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
             case IObject::STATUS_TO_UPDATE:
             case IObject::STATUS_TO_RESTORE:
                 // Updating the ILIAS object is only needed if some properties were changed
-                if (($dto->computeHashCode() != $hub_object->getHashCode()) || $force || $hub_object->getStatus(
+                if (($dto->computeHashCode() !== $hub_object->getHashCode()) || $force || $hub_object->getStatus(
                     ) === iObject::STATUS_TO_RESTORE) {
                     $this->implementation->beforeUpdateILIASObject($hook_object);
 
@@ -269,7 +264,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
     /**
      * The import ID is set on the ILIAS object.
-     * @param IDataTransferObject $object
      * @return string
      */
     protected function getImportId(IDataTransferObject $object)
@@ -279,7 +273,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
     /**
      * use this every time a new repository object is created
-     * @param int $ref_id
      */
     protected function writeRBACLog(int $ref_id)/*: void*/
     {
@@ -299,7 +292,6 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
     /**
      * Create a new ILIAS object from the given data transfer object.
-     * @param IDataTransferObject $dto
      * @return void
      * @throws HubException
      */
@@ -310,8 +302,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
      * Update the corresponding ILIAS object.
      * Return the processed ILIAS object or null if the object was not found, e.g. it is deleted in
      * ILIAS.
-     * @param IDataTransferObject $dto
-     * @param int                 $iliasId
+     * @param int $iliasId
      * @return void
      * @throws HubException
      */
@@ -321,8 +312,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
     /**
      * Delete the corresponding ILIAS object.
      * Return the deleted ILIAS object or null if the object was not found in ILIAS.
-     * @param IDataTransferObject $dto
-     * @param int                 $ilias_id
+     * @param int $ilias_id
      * @return void
      * @throws HubException
      */

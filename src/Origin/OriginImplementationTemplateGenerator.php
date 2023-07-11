@@ -18,20 +18,12 @@ class OriginImplementationTemplateGenerator
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
-     * OriginImplementationTemplateGenerator constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Create the implementation class file from a given template at the correct location
      * based on the hub config.
-     * @param IOrigin $origin
      * @return bool False if file exists, true if created
      * @throws HubException
      */
-    public function create(IOrigin $origin)
+    public function create(IOrigin $origin) : bool
     {
         $classFile = $this->getClassFilePath($origin);
         if ($this->classFileExists($origin)) {
@@ -47,9 +39,7 @@ class OriginImplementationTemplateGenerator
                 throw new HubException("Could not create directory: $path");
             }
         }
-        if (!is_writable(basename($classFile))) {
-            throw new HubException("Class file not writable: $classFile");
-        }
+
         $template = file_get_contents(__DIR__ . '/../../templates/OriginImplementationTemplate.tpl');
         if ($template === false) {
             throw new HubException("Could not load template: $template");
@@ -66,35 +56,25 @@ class OriginImplementationTemplateGenerator
         return true;
     }
 
-    public function classFileExists(IOrigin $origin)
+    public function classFileExists(IOrigin $origin) : bool
     {
         $classFile = $this->getClassFilePath($origin);
 
         return is_file($classFile);
     }
 
-    /**
-     * @param IOrigin $origin
-     * @return string
-     */
-    public function getClassFilePath(IOrigin $origin)
+    public function getClassFilePath(IOrigin $origin) : string
     {
         $path = $this->getPath($origin);
         $className = $origin->getImplementationClassName();
-        $classFile = $path . $className . '.php';
 
-        return $classFile;
+        return $path . $className . '.php';
     }
 
-    /**
-     * @param IOrigin $origin
-     * @return string
-     */
-    protected function getPath(IOrigin $origin)
+    protected function getPath(IOrigin $origin) : string
     {
         $basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
-        $path = $basePath . $origin->getObjectType() . '/';
 
-        return $path;
+        return $basePath . $origin->getObjectType() . '/';
     }
 }

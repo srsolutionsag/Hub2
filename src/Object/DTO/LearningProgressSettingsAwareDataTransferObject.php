@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\Hub2\Object\DTO;
 
-use srag\Plugins\Hub2\Object\General\NewsSettings;
 use srag\Plugins\Hub2\Object\General\LearningProgressSettings;
 
 /**
@@ -13,13 +12,13 @@ trait LearningProgressSettingsAwareDataTransferObject
     /**
      * @var LearningProgressSettings|null
      */
-    protected $learningProgressSettings = null;
-    
+    protected $learningProgressSettings;
+
     public function getLPSettings() : ?LearningProgressSettings
     {
         return $this->learningProgressSettings;
     }
-    
+
     public function setLPSettings(
         ?LearningProgressSettings $learningProgressSettings
     ) : ILearningProgressSettingsAwareDataTransferObject {

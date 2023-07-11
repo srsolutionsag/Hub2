@@ -21,9 +21,7 @@ use srag\Plugins\Hub2\Object\Session\ARSession;
 use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
-use srag\RemovePluginDataConfirm\Hub2\PluginUninstallTrait;
 use srag\Plugins\Hub2\Jobs\CronNotifier;
-use srag\Plugins\Hub2\Jobs\Notifier;
 
 /**
  * Class ilHub2Plugin
@@ -34,43 +32,19 @@ class ilHub2Plugin extends ilCronHookPlugin
 {
     public const PLUGIN_ID = 'hub2';
     public const PLUGIN_NAME = 'Hub2';
-    public const PLUGIN_CLASS_NAME = self::class;
-    public const REMOVE_PLUGIN_DATA_CONFIRM_CLASS_NAME = hub2RemoveDataConfirm::class;
     /**
-     * @var self
+     * @var ilHub2Plugin|null
      */
-    protected static $instance;
-    /**
-     * @var CronNotifier
-     */
-    protected $notifier;
-    /**
-     * @var \ilDBInterface
-     */
-    private $db;
+    protected static $instance = null;
 
-    public function __construct(Notifier $notifier = null)
-    {
-        global $DIC;
-        parent::__construct();
-        $this->db = $DIC->database();
-        $this->notifier = $notifier ?? new CronNotifier();
-    }
-
-    /**
-     * @return string
-     */
     public function getPluginName() : string
     {
         return self::PLUGIN_NAME;
     }
 
-    /**
-     * @return self
-     */
     public static function getInstance() : self
     {
-        if (self::$instance === null) {
+        if (!self::$instance instanceof \ilHub2Plugin) {
             self::$instance = new self();
         }
 
@@ -118,25 +92,30 @@ class ilHub2Plugin extends ilCronHookPlugin
      */
     protected function afterUninstall()/*: void*/
     {
-        $this->db->dropTable(ARUserOrigin::TABLE_NAME, false);
-        $this->db->dropTable(ARUser::TABLE_NAME, false);
-        $this->db->dropTable(ARCourse::TABLE_NAME, false);
-        $this->db->dropTable(ARCourseMembership::TABLE_NAME, false);
-        $this->db->dropTable(ARCategory::TABLE_NAME, false);
-        $this->db->dropTable(ARSession::TABLE_NAME, false);
-        $this->db->dropTable(ARGroup::TABLE_NAME, false);
-        $this->db->dropTable(ARGroupMembership::TABLE_NAME, false);
-        $this->db->dropTable(ARSessionMembership::TABLE_NAME, false);
-        $this->db->dropTable(ArConfig::TABLE_NAME, false);
-        $this->db->dropTable(ArConfigOld::TABLE_NAME, false);
-        $this->db->dropTable(AROrgUnit::TABLE_NAME, false);
-        $this->db->dropTable(AROrgUnitMembership::TABLE_NAME, false);
-        $this->db->dropTable(Log::TABLE_NAME, false);
-        $this->db->dropAutoIncrementTable(Log::TABLE_NAME);
-        $this->db->dropTable(ARCompetenceManagement::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARUserOrigin::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARUser::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARCourse::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARCourseMembership::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARCategory::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARSession::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARGroup::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARGroupMembership::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARSessionMembership::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ArConfig::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ArConfigOld::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(AROrgUnit::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(AROrgUnitMembership::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(Log::TABLE_NAME, false);
+        $this->getDBInstance()->dropTable(ARCompetenceManagement::TABLE_NAME, false);
 
         ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
     }
 
-
+    protected function getDBInstance() : ilDBInterface
+    {
+        return property_exists(
+            $this,
+            'db'
+        ) && $this->db !== null && $this->db instanceof ilDBInterface ? $this->db : $GLOBALS['DIC']->database();
+    }
 }

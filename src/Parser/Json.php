@@ -18,17 +18,9 @@ class Json
      */
     private $file_path;
     /**
-     * @var string|null
-     */
-    private $unique_field;
-    /**
      * @var array
      */
     private $mandatory_columns = [];
-    /**
-     * @var array
-     */
-    private $columns_mapping = [];
     /**
      * @var array
      */
@@ -42,47 +34,52 @@ class Json
         ?string $unique_field,
         array $mandatory_columns = []
         //        array $column_mapping = []
-    )
-    {
+    ) {
         $this->file_path = $file_path;
-        $this->unique_field = $unique_field;
         $this->mandatory_columns = $mandatory_columns;
-        $this->columns_mapping = $column_mapping ?? [];
     }
 
-    public function addFilter(\Closure $filter): void
+    public function addFilter(\Closure $filter) : void
     {
         $this->filters[] = $filter;
     }
 
-    protected function applyFilters(): void
+    protected function applyFilters() : void
     {
         foreach ($this->filters as $filter) {
             $this->applyFilter($filter);
         }
     }
 
-    protected function applyFilter(\Closure $closure): void
+    protected function applyFilter(\Closure $closure) : void
     {
         $this->parsed_json = array_filter(
-            $this->parsed_json, ($closure ?? function ($v, $k): bool {
-            return !empty($v);
-        }) ?? function ($v, $k): bool {
-            return !empty($v);
-        }, ($closure ?? function ($v, $k): bool {
-            return !empty($v);
-        }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0)
+            $this->parsed_json,
+            (($closure ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) ?? function ($v, $k) : bool {
+                return !empty($v);
+            },
+            (($closure ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
         );
     }
 
-    protected function filterMandatory(): void
+    protected function filterMandatory() : void
     {
         $mandatory = $this->mandatory_columns;
         if ($mandatory === []) {
             return;
         }
 
-        $this->applyFilter(function (array $item) use ($mandatory): bool {
+        $this->applyFilter(function (array $item) use ($mandatory) : bool {
             $isset = true;
             foreach ($mandatory as $column) {
                 $isset = $isset && isset($item[$column]) && $item[$column] !== '';
@@ -91,9 +88,9 @@ class Json
         });
     }
 
-    protected function mapFieldsToTitle(): void
+    protected function mapFieldsToTitle() : void
     {
-        array_walk($this->parsed_json, function (array &$item) {
+        array_walk($this->parsed_json, function (array &$item) : void {
             foreach ($item as $k => $v) {
                 unset($item[$k]);
                 $item[$this->delivered_columns[$k]] = $this->sanitize($v);
@@ -101,30 +98,30 @@ class Json
         });
     }
 
-    protected function removeBOM(string $text): string
+    protected function removeBOM(string $text) : string
     {
         $bom = pack('H*', 'EFBBBF');
         return preg_replace("/^$bom/", '', $text);
     }
 
-    protected function parseCSVFileAndApplyHeaders(string $path_to_file): void
+    protected function parseCSVFileAndApplyHeaders(string $path_to_file) : void
     {
         $this->parseJSONFile($path_to_file);
         $this->mapFieldsToTitle();
     }
 
-    protected function parseJSONFile(string $path_to_file): void
+    protected function parseJSONFile(string $path_to_file) : void
     {
         $raw_json = json_decode(file_get_contents($path_to_file), true, 512, JSON_THROW_ON_ERROR);
 
-        $recursive_string_sanitizer = function (array $item) use (&$recursive_string_sanitizer): array {
+        $recursive_string_sanitizer = function (array $item) use (&$recursive_string_sanitizer) : array {
             foreach ($item as $k => $v) {
                 if (is_array($v)) {
                     $item[$k] = $recursive_string_sanitizer($v);
                 } elseif (is_string($v)) {
                     $item[$k] = $this->sanitize($v);
                 } elseif (is_int($v)) {
-                    $item[$k] = (int) $v;
+                    $item[$k] = $v;
                 } else {
                     $item[$k] = $v;
                 }
@@ -135,7 +132,7 @@ class Json
         $this->parsed_json = array_map($recursive_string_sanitizer, $raw_json);
     }
 
-    public function parseData(): array
+    public function parseData() : array
     {
         $this->parseJSONFile($this->file_path);
 
@@ -160,7 +157,7 @@ class Json
         return $this->parsed_json;
     }
 
-    protected function sanitize(string $s): string
+    protected function sanitize(string $s) : string
     {
         return utf8_encode(utf8_decode($s));
     }

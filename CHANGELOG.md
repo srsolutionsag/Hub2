@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.5.0]
+- [IMPROVEMENT] Several Refactorings before first Version for ILIAS 8
+- [FIX] Removed non working Icon implementation
+
 ## [3.4.1]
 - [FIX] Fixed Sorting in Origins Table
 

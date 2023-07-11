@@ -106,11 +106,7 @@ class hub2DataGUI extends hub2MainGUI
         $filtered = [];
         foreach ($properties as $key => $property) {
             if (!is_null($property)) {
-                if (is_array($property)) {
-                    $filtered[$key] = implode(',', $property);
-                } else {
-                    $filtered[$key] = (string) $property;
-                }
+                $filtered[$key] = is_array($property) ? implode(',', $property) : (string) $property;
             }
             if ($property === '') {
                 $filtered[$key] = "&nbsp;";

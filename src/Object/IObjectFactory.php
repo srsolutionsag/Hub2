@@ -94,44 +94,32 @@ interface IObjectFactory
      */
     public function sessionMembership($ext_id);
 
-    /**
-     * @param string $ext_id
-     * @return IOrgUnit
-     */
-    public function orgUnit(string $ext_id): IOrgUnit;
+    public function orgUnit(string $ext_id) : IOrgUnit;
 
-    /**
-     * @param string $ext_id
-     * @return IOrgUnitMembership
-     */
-    public function orgUnitMembership(string $ext_id): IOrgUnitMembership;
+    public function orgUnitMembership(string $ext_id) : IOrgUnitMembership;
 
-    /**
-     * @param string $ext_id
-     * @return ICompetenceManagement
-     */
-    public function competenceManagement(string $ext_id): ICompetenceManagement;
+    public function competenceManagement(string $ext_id) : ICompetenceManagement;
 
     /**
      * @return IUser[]
      */
-    public function users(): array;
+    public function users() : array;
 
-    public function usersExtIds(): array;
+    public function usersExtIds() : array;
 
     /**
      * @return ICourse[]
      */
-    public function courses(): array;
+    public function courses() : array;
 
-    public function coursesExtIds(): array;
+    public function coursesExtIds() : array;
 
     /**
      * @return ICategory[]
      */
-    public function categories(): array;
+    public function categories() : array;
 
-    public function categoriesExtIds(): array;
+    public function categoriesExtIds() : array;
 
     /**
      * Since there are places where the code makes the plural of a type
@@ -140,63 +128,63 @@ interface IObjectFactory
      * @return ICategory[]
      * @see categories()
      */
-    public function categorys(): array;
+    public function categorys() : array;
 
-    public function categorysExtIds(): array;
+    public function categorysExtIds() : array;
 
     /**
      * @return IGroup[]
      */
-    public function groups(): array;
+    public function groups() : array;
 
-    public function groupsExtIds(): array;
+    public function groupsExtIds() : array;
 
     /**
      * @return ISession[]
      */
-    public function sessions(): array;
+    public function sessions() : array;
 
-    public function sessionsExtIds(): array;
+    public function sessionsExtIds() : array;
 
     /**
      * @return ICourseMembership[]
      */
-    public function courseMemberships(): array;
+    public function courseMemberships() : array;
 
-    public function courseMembershipsExtIds(): array;
+    public function courseMembershipsExtIds() : array;
 
     /**
      * @return IGroupMembership[]
      */
-    public function groupMemberships(): array;
+    public function groupMemberships() : array;
 
-    public function groupMembershipsExtIds(): array;
+    public function groupMembershipsExtIds() : array;
 
     /**
      * @return ISessionMembership[]
      */
-    public function sessionMemberships(): array;
+    public function sessionMemberships() : array;
 
-    public function sessionMembershipsExtIds(): array;
+    public function sessionMembershipsExtIds() : array;
 
     /**
      * @return IOrgUnit[]
      */
-    public function orgUnits(): array;
+    public function orgUnits() : array;
 
-    public function orgUnitsExtIds(): array;
+    public function orgUnitsExtIds() : array;
 
     /**
      * @return IOrgUnitMembership[]
      */
-    public function orgUnitMemberships(): array;
+    public function orgUnitMemberships() : array;
 
-    public function orgUnitMembershipsExtIds(): array;
+    public function orgUnitMembershipsExtIds() : array;
 
     /**
      * @return ICompetenceManagement[]
      */
-    public function competenceManagements(): array;
+    public function competenceManagements() : array;
 
-    public function competenceManagementsExtIds(): array;
+    public function competenceManagementsExtIds() : array;
 }

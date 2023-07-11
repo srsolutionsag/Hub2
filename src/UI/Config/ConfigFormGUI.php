@@ -34,7 +34,6 @@ class ConfigFormGUI extends ilPropertyFormGUI
 
     /**
      * ConfigFormGUI constructor
-     * @param hub2ConfigGUI $parent_gui
      */
     public function __construct(hub2ConfigGUI $parent_gui)
     {
@@ -228,7 +227,7 @@ class ConfigFormGUI extends ilPropertyFormGUI
     /**
      *
      */
-    public function updateConfig()/*: void*/
+    public function updateConfig() : void/*: void*/
     {
         foreach ($this->getInputItemsRecursive() as $item) {
             /** @var ilFormPropertyGUI $item */

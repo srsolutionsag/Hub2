@@ -18,7 +18,6 @@ class GroupProperties extends OriginProperties implements IGroupProperties
         = [
             self::SET_ONLINE => false,
             self::SET_ONLINE_AGAIN => false,
-            self::CREATE_ICON => false,
             self::MOVE_GROUP => false,
             self::DELETE_MODE => self::DELETE_MODE_NONE,
         ];
@@ -26,7 +25,7 @@ class GroupProperties extends OriginProperties implements IGroupProperties
     /**
      * @inheritdoc
      */
-    public static function getAvailableDeleteModes(): array
+    public static function getAvailableDeleteModes() : array
     {
         return [
             self::DELETE_MODE_NONE,

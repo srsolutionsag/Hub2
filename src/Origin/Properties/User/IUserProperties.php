@@ -29,8 +29,5 @@ interface IUserProperties extends IOriginProperties
     public const DELETE_MODE_DELETE = 1;
     public const DELETE_MODE_INACTIVE = 2;
 
-    /**
-     * @return array
-     */
-    public static function getAvailableDeleteModes(): array;
+    public static function getAvailableDeleteModes() : array;
 }

@@ -76,11 +76,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      */
     private $rbacadmin;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -158,10 +153,10 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
-        if ($ilObjUser === null) {
+        if (!$ilObjUser instanceof \ilObjUser) {
             // Recreate deleted users
             $mapped_id = $dto->getMappingStrategy()->map($dto);
-            if ($mapped_id === 0 || $this->findILIASUser($mapped_id) === null) {
+            if ($mapped_id === 0 || !$this->findILIASUser($mapped_id) instanceof \ilObjUser) {
                 $this->handleCreate($dto);
             } else {
                 $this->handleUpdate($dto, $mapped_id);
@@ -213,12 +208,12 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         $ilObjUser->update();
     }
 
-    private function sendPasswordMail(IDataTransferObject $dto)
+    private function sendPasswordMail(IDataTransferObject $dto) : void
     {
         /** @var UserDTO $dto */
 
         $mail_field = $dto->getEmail();
-        if ($mail_field) {
+        if ($mail_field !== '' && $mail_field !== '0') {
             $mail = new ilMimeMail();
             $mail->From($this->sender_factory->system());
             $mail->To($dto->getEmail());
@@ -241,7 +236,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
-        if ($ilObjUser === null) {
+        if (!$ilObjUser instanceof \ilObjUser) {
             return;
         }
         if ($this->props->get(UserProperties::DELETE) == UserProperties::DELETE_MODE_NONE) {
@@ -258,10 +253,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         }
     }
 
-    /**
-     * @param UserDTO   $user
-     * @param ilObjUser $ilObjUser
-     */
     protected function assignILIASRoles(UserDTO $user, ilObjUser $ilObjUser)
     {
         foreach ($user->getIliasRoles() as $role_id) {
@@ -271,8 +262,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
     /**
      * Build the login name depending on the origin properties
-     * @param UserDTO   $user
-     * @param ilObjUser $ilObjUser
      * @return string
      */
     protected function buildLogin(UserDTO $user, ilObjUser $ilObjUser)

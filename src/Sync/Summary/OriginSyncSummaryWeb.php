@@ -2,8 +2,6 @@
 
 namespace srag\Plugins\Hub2\Sync\Summary;
 
-use srag\Plugins\Hub2\Sync\IOriginSync;
-
 /**
  * Class OriginSyncSummary
  * @package srag\Plugins\Hub2\Sync\Summary
@@ -11,14 +9,4 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
  */
 class OriginSyncSummaryWeb extends OriginSyncSummaryBase implements IOriginSyncSummary
 {
-    /**
-     * @inheritdoc
-     */
-    protected function renderOneSync(
-        IOriginSync $originSync,
-        bool $only_logs = false,
-        bool $output_message = null
-    ): string {
-        return parent::renderOneSync($originSync, $only_logs, $output_message);
-    }
 }

@@ -26,7 +26,7 @@ class Factory
         return new ResourceStorage7();
     }
 
-    public function stakeholder()
+    public function stakeholder() : \srag\Plugins\Hub2\FileDrop\ResourceStorage\Stakeholder7
     {
         return new Stakeholder7();
     }

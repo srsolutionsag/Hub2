@@ -23,16 +23,12 @@ class Log extends ActiveRecord implements ILog
      */
     protected $log_repo;
 
-    /**
-     * @return string
-     */
     final public function getConnectorContainerName() : string
     {
         return static::TABLE_NAME;
     }
 
     /**
-     * @return string
      * @deprecated
      */
     final public static function returnDbTableName() : string
@@ -86,7 +82,7 @@ class Log extends ActiveRecord implements ILog
      * @con_fieldtype    timestamp
      * @con_is_notnull   true
      */
-    protected $date = null;
+    protected $date;
     /**
      * @var int
      * @con_has_field    true
@@ -109,7 +105,7 @@ class Log extends ActiveRecord implements ILog
      * @con_length       8
      * @con_is_notnull   false
      */
-    protected $origin_id = null;
+    protected $origin_id;
     /**
      * @var string
      * @con_has_field    true
@@ -124,7 +120,7 @@ class Log extends ActiveRecord implements ILog
      * @con_length       255
      * @con_is_notnull   false
      */
-    protected $object_ext_id = null;
+    protected $object_ext_id;
     /**
      * @var int|null
      * @con_has_field    true
@@ -132,17 +128,15 @@ class Log extends ActiveRecord implements ILog
      * @con_length       8
      * @con_is_notnull   false
      */
-    protected $object_ilias_id = null;
+    protected $object_ilias_id;
 
     /**
      * Log constructor
      * @param int              $primary_key_value
      * @param arConnector|null $connector
      */
-    final public function __construct(/*int*/
-        $primary_key_value = 0,
-        arConnector $connector = null
-    ) {
+    final public function __construct()
+    {
         $this->additional_data = new stdClass();
         $this->log_repo = LogRepository::getInstance();
         //parent::__construct($primary_key_value, $connector);
@@ -220,16 +214,12 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getStatus() : int
     {
         return $this->status;
     }
 
     /**
-     * @param int $status
      * @return $this
      */
     public function withStatus(int $status) : ILog
@@ -362,7 +352,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @inheritdoc
      */
-    public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/
+    public function write(string $message, int $level = self::LEVEL_INFO) : void/*: void*/
     {
         $this->log_repo->storeLog($this->withMessage($message)->withLevel($level));
     }

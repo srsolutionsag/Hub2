@@ -15,7 +15,6 @@ use ilObjCategory;
 use ilObjCourse;
 use ilSession;
 use ilSoapFunctions;
-use srag\DIC\Hub2\Version\Version;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -84,10 +83,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             'targetGroup',
         ];
     /**
-     * @var Version
-     */
-    protected $version;
-    /**
      * @var CourseParentResolver
      */
     protected $parent_resolver;
@@ -112,12 +107,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      */
     private $obj_data_cache;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     * @param ICourseActivities       $courseActivities
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -134,7 +123,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $this->props = $origin->properties();
         $this->config = $origin->config();
         $this->courseActivities = $courseActivities;
-        $this->version = new Version();
         $this->parent_resolver = new CourseParentResolver(
             $this->config->getParentRefIdIfNoParentIdFound(),
             $this->config->getLinkedOriginId()
@@ -160,7 +148,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         // Check if we should create some dependence categories
         $parentRefId = $this->buildDependenceCategories($dto, $parentRefId);
 
-        if ($template_id = $dto->getTemplateId()) {
+        if (($template_id = $dto->getTemplateId()) !== 0) {
             // copy from template
             if (!ilObjCourse::_exists($template_id, true)) {
                 throw new HubException(
@@ -196,28 +184,15 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         // Course Start and Ane are handled differently in ILIAS 5.4 and 6
         if ($dto->getCourseStart() && $dto->getCourseEnd()) {
-            if ($this->version->isLower('6.0')) {
-                $ilObjCourse->setCourseStart($dto->getCourseStart());
-                $ilObjCourse->setCourseEnd($dto->getCourseEnd());
-            } else {
-                $ilObjCourse->setCoursePeriod($dto->getCourseStart(), $dto->getCourseEnd());
-            }
+            $ilObjCourse->setCoursePeriod($dto->getCourseStart(), $dto->getCourseEnd());
         }
 
-        if ($dto->getIcon() !== '') {
-            $ilObjCourse->saveIcons($dto->getIcon());
-        }
         if ($this->props->get(CourseProperties::SET_ONLINE)) {
             $ilObjCourse->setOfflineStatus(false);
             //Does not exist in 5.4
             //$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
         }
 
-        if ($this->props->get(CourseProperties::CREATE_ICON)) {
-            // TODO
-            //			$this->updateIcon($this->ilias_object);
-            //			$this->ilias_object->update();
-        }
         if ($this->props->get(CourseProperties::SEND_CREATE_NOTIFICATION)) {
             $this->sendMailNotifications($dto, $ilObjCourse);
         }
@@ -227,9 +202,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 
         $this->handleNewsSettings($dto, $ilObjCourse);
-        
+
         $this->handleLPSettings($dto, $ilObjCourse);
-        
+
         $ilObjCourse->update();
 
         $this->handleOrdering($dto, $ilObjCourse);
@@ -237,9 +212,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $this->handleAppointementsColor($ilObjCourse, $dto);
     }
 
-    /**
-     * @param IDataTransferObject $dto
-     */
     protected function handleOrdering(IDataTransferObject $dto, ilObjCourse $ilObjCourse)
     {
         $settings = new ilContainerSortingSettings($ilObjCourse->getId());
@@ -263,9 +235,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
     /**
      * @param $source_id
-     * @return array
+     * @return array<int|string, array{type: int}>
      */
-    protected function getCloneOptions($source_id)
+    protected function getCloneOptions($source_id) : array
     {
         $options = [];
         foreach ($this->tree->getSubTree($root = $this->tree->getNodeData($source_id)) as $node) {
@@ -287,9 +259,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
     /**
      * This is a leaner version of ilContainer::cloneAllObject, which doens't use soap
-     * @param int   $parent_ref_id
-     * @param int   $clone_source
-     * @param array $options
      * @return int $ref_id
      */
     public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options) : int
@@ -315,16 +284,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $wizard_options->disableSOAP();
         $wizard_options->read();
 
-        require_once 'webservice/soap/include/inc.soap_functions.php';
-        $parent_ref_id = ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
+        require_once __DIR__ . '/webservice/soap/include/inc.soap_functions.php';
 
-        return $parent_ref_id;
+        return ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
     }
 
-    /**
-     * @param CourseDTO   $dto
-     * @param ilObjCourse $ilObjCourse
-     */
     protected function setLanguage(CourseDTO $dto, ilObjCourse $ilObjCourse)
     {
         $md_general = (new ilMD($ilObjCourse->getId()))->getGeneral();
@@ -334,14 +298,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         //support however, not through the GUI. Maybe there is some bug in the generation
         //of the respective metadata form. See: initQuickEditForm() in ilMDEditorGUI
         $language = $md_general->getLanguage(array_pop($getLanguageIds));
-        $language->setLanguage(new ilMDLanguageItem($dto->getLanguageCode()));
+        $lng_obj = new ilMDLanguageItem($dto->getLanguageCode());
+        $language->setLanguage($lng_obj);
         $language->update();
     }
 
-    /**
-     * @param CourseDTO   $dto
-     * @param ilObjCourse $ilObjCourse
-     */
     protected function setSubscriptionType(CourseDTO $dto, ilObjCourse $ilObjCourse)
     {
         //There is some weird connection between subscription limitation type ond subscription type, see e.g. ilObjCourseGUI
@@ -353,14 +314,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
     }
 
-    /**
-     * @param CourseDTO $dto
-     */
     protected function sendMailNotifications(CourseDTO $dto, ilObjCourse $ilObjCourse)
     {
         $mail = new ilMimeMail();
         $sender_factory = new ilMailMimeSenderFactory($this->settings);
-        $sender = null;
         if ($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)) {
             $sender = $sender_factory->userByEmailAddress(
                 $this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)
@@ -415,7 +372,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
-        if ($ilObjCourse === null) {
+        if (!$ilObjCourse instanceof \ilObjCourse) {
             return;
         }
         // Update some properties if they should be updated depending on the origin config
@@ -433,23 +390,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 }
             }
         }
-        if ($this->props->updateDTOProperty("courseStart") || $this->props->updateDTOProperty("courseEnd")) {
-            $start = $this->props->updateDTOProperty("courseStart") ? $dto->getCourseStart(
-            ) : $ilObjCourse->getCourseStart();
-            $end = $this->props->updateDTOProperty("courseEnd") ? $dto->getCourseEnd() : $ilObjCourse->getCourseEnd();
-            if ($this->isMinVersion('6.0')) {
-                $ilObjCourse->setCoursePeriod($start, $end);
-            } else {
-                $ilObjCourse->setCourseStart($start);
-                $ilObjCourse->setCourseEnd($end);
-            }
-        }
-        if ($this->props->updateDTOProperty("icon")) {
-            if ($dto->getIcon() !== '') {
-                $ilObjCourse->saveIcons($dto->getIcon());
-            } else {
-                $ilObjCourse->removeCustomIcon();
-            }
+        $courseStart = $this->props->updateDTOProperty("courseStart");
+        $courseEnd = $this->props->updateDTOProperty("courseEnd");
+        if ($courseStart || $courseEnd) {
+            $start = $courseStart
+                ? $dto->getCourseStart()
+                : $ilObjCourse->getCourseStart();
+            $end = $courseEnd
+                ? $dto->getCourseEnd()
+                : $ilObjCourse->getCourseEnd();
+            $ilObjCourse->setCoursePeriod($start, $end);
         }
         if ($this->props->updateDTOProperty("enableSessionLimit")) {
             $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
@@ -474,12 +424,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if ($this->props->updateDTOProperty("newsSettings")) {
             $this->handleNewsSettings($dto, $ilObjCourse);
         }
-        
+
         // LP Settings
         if ($this->props->updateDTOProperty("learningProgressSettings")) {
             $this->handleLPSettings($dto, $ilObjCourse);
         }
-    
+
         // move/put in tree
         // Find the refId under which this course should be created
         $parent_ref_id = $this->determineParentRefId($dto);
@@ -500,10 +450,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $ilObjCourse->update();
     }
 
-    /**
-     * @param ilObjCourse $ilObjCourse
-     * @param CourseDTO   $dto
-     */
     protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto)
     {
         if (!empty($dto->getAppointementsColor())) {
@@ -524,7 +470,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
-        if ($ilObjCourse === null) {
+        if (!$ilObjCourse instanceof \ilObjCourse) {
             return;
         }
         if ($this->props->get(CourseProperties::DELETE_MODE) == CourseProperties::DELETE_MODE_NONE) {
@@ -553,18 +499,15 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     }
 
     /**
-     * @param CourseDTO $course
-     * @return int
      * @throws HubException
      */
-    protected function determineParentRefId(CourseDTO $course)
+    protected function determineParentRefId(CourseDTO $course) : int
     {
         return $this->parent_resolver->resolveParentRefId($course);
     }
 
     /**
-     * @param CourseDTO $object
-     * @param int       $parentRefId
+     * @param int $parentRefId
      * @return int
      */
     protected function buildDependenceCategories(CourseDTO $object, $parentRefId)
@@ -614,10 +557,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $cache[$cacheKey];
         }
         $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
-        $matches = array_filter($categories, static function ($category) use ($title) {
+        $matches = array_filter($categories, static function ($category) use ($title) : bool {
             return $category['title'] === $title;
         });
-        if (count($matches) > 0) {
+        if ($matches !== []) {
             $category = array_pop($matches);
             $cache[$cacheKey] = $category['ref_id'];
 
@@ -657,13 +600,5 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         }
 
         return new ilObjCourse($iliasId);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function isMinVersion(string $version) : bool
-    {
-        return (version_compare(ILIAS_VERSION_NUMERIC, $version) >= 0);
     }
 }

@@ -16,11 +16,11 @@ use srag\Plugins\Hub2\Object\DTO\ILearningProgressSettingsAwareDataTransferObjec
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface ICourseDTO extends IDataTransferObject,
-    ITaxonomyAndMetadataAwareDataTransferObject,
-    IMappingStrategyAwareDataTransferObject,
-    IDidacticTemplateAwareDataTransferObject,
-    INewsSettingsAwareDataTransferObject,
-    ILearningProgressSettingsAwareDataTransferObject
+                             ITaxonomyAndMetadataAwareDataTransferObject,
+                             IMappingStrategyAwareDataTransferObject,
+                             IDidacticTemplateAwareDataTransferObject,
+                             INewsSettingsAwareDataTransferObject,
+                             ILearningProgressSettingsAwareDataTransferObject
 {
     // @see ilCourseConstants
     public const SUBSCRIPTION_TYPE_DEACTIVATED = 0;

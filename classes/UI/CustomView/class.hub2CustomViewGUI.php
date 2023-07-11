@@ -15,13 +15,6 @@ class hub2CustomViewGUI
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
-     * hub2CustomViewGUI constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      *
      */
     public function executeCommand()/*: void*/

@@ -3,9 +3,9 @@
 require_once __DIR__ . "/vendor/autoload.php";
 
 $id = 'hub2';
-$version = '3.4.1';
+$version = '3.5.0';
 $ilias_min_version = '7.0.0';
 $ilias_max_version = '7.999';
 $responsible = 'sr.solutions';
 $responsible_mail = 'support@sr.solutions';
-$supports_cli_setup = false;
+$supports_cli_setup = true;

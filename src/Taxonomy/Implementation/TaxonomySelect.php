@@ -86,7 +86,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     }
 
     /**
-     * @param INode $node
      * @throws TaxonomyNodeNotFoundException
      * @throws ilTaxonomyException
      */
@@ -111,21 +110,23 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     /**
      *
      */
-    private function initSelectableTaxonomies()
+    private function initSelectableTaxonomies() : void
     {
         $res = [];
-        foreach ($this->tree->getPathFull((int) $this->getILIASParentId()) as $node) {
-            if ($node["ref_id"] != (int) $this->getILIASParentId()) {
-                if ($node["type"] == "cat") {
-                    if (ilContainer::_lookupContainerSetting(
-                        $node["obj_id"],
-                        ilObjectServiceSettingsGUI::TAXONOMIES,
-                        false
-                    )) {
-                        $tax_ids = ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
-                        if (sizeof($tax_ids)) {
-                            $res = array_merge($res, $tax_ids);
-                        }
+        foreach ($this->tree->getPathFull($this->getILIASParentId()) as $node) {
+            if ($node["ref_id"] != $this->getILIASParentId() && $node["type"] == "cat") {
+                if (ilContainer::_lookupContainerSetting(
+                    $node["obj_id"],
+                    ilObjectServiceSettingsGUI::TAXONOMIES,
+                    false
+                ) !== '' && ilContainer::_lookupContainerSetting(
+                    $node["obj_id"],
+                    ilObjectServiceSettingsGUI::TAXONOMIES,
+                    false
+                ) !== '0') {
+                    $tax_ids = ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
+                    if ($tax_ids !== []) {
+                        $res = array_merge($res, $tax_ids);
                     }
                 }
             }

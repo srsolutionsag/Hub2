@@ -31,7 +31,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function user($ext_id)
+    public function user($ext_id) : \srag\Plugins\Hub2\Object\User\UserDTO
     {
         return new UserDTO($ext_id);
     }
@@ -39,7 +39,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function course($ext_id)
+    public function course($ext_id) : \srag\Plugins\Hub2\Object\Course\CourseDTO
     {
         return new CourseDTO($ext_id);
     }
@@ -47,7 +47,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function category($ext_id)
+    public function category($ext_id) : \srag\Plugins\Hub2\Object\Category\CategoryDTO
     {
         return new CategoryDTO($ext_id);
     }
@@ -55,7 +55,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function group($ext_id)
+    public function group($ext_id) : \srag\Plugins\Hub2\Object\Group\GroupDTO
     {
         return new GroupDTO($ext_id);
     }
@@ -63,7 +63,7 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function session($ext_id)
+    public function session($ext_id) : \srag\Plugins\Hub2\Object\Session\SessionDTO
     {
         return new SessionDTO($ext_id);
     }
@@ -71,15 +71,17 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function courseMembership($course_id, $user_id)
-    {
+    public function courseMembership(
+        $course_id,
+        $user_id
+    ) : \srag\Plugins\Hub2\Object\CourseMembership\CourseMembershipDTO {
         return new CourseMembershipDTO($course_id, $user_id);
     }
 
     /**
      * @inheritdoc
      */
-    public function groupMembership($group_id, $user_id)
+    public function groupMembership($group_id, $user_id) : \srag\Plugins\Hub2\Object\GroupMembership\GroupMembershipDTO
     {
         return new GroupMembershipDTO($group_id, $user_id);
     }
@@ -87,8 +89,10 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
     /**
      * @inheritdoc
      */
-    public function sessionMembership($session_id, $user_id)
-    {
+    public function sessionMembership(
+        $session_id,
+        $user_id
+    ) : \srag\Plugins\Hub2\Object\SessionMembership\SessionMembershipDTO {
         return new SessionMembershipDTO($session_id, $user_id);
     }
 

@@ -50,7 +50,6 @@ class Handler
 
     /**
      * Handler constructor
-     * @param string $ext_id
      */
     public function __construct(string $ext_id)
     {
@@ -66,9 +65,9 @@ class Handler
     /**
      *
      */
-    public function storeQuery()
+    public function storeQuery() : void
     {
-        $return = setcookie('xhub_query', $this->ext_id, ['expires' => time() + 10]);
+        setcookie('xhub_query', $this->ext_id, ['expires' => time() + 10]);
     }
 
     /**
@@ -97,18 +96,12 @@ class Handler
         $this->doRedirect($link->getAccessGrantedExternalLink());
     }
 
-    /**
-     * @param string $link
-     */
     protected function doRedirect(string $link)
     {
         $link = $this->sanitizeLink($link);
         $this->ctrl->redirectToURL($link);
     }
 
-    /**
-     * @param string $message
-     */
     protected function sendMessage(string $message)
     {
         if ($message !== '') {
@@ -119,11 +112,11 @@ class Handler
     /**
      *
      */
-    public function tryILIASInit()
+    public function tryILIASInit() : void
     {
         $this->prepareILIASInit();
 
-        require_once("Services/Init/classes/class.ilInitialisation.php");
+        require_once(__DIR__ . "/Services/Init/classes/class.ilInitialisation.php");
         ilInitialisation::initILIAS();
 
         $this->init = true;
@@ -132,13 +125,13 @@ class Handler
     /**
      *
      */
-    public function tryILIASInitPublic()
+    public function tryILIASInitPublic() : void
     {
         $this->prepareILIASInit();
 
-        require_once 'Services/Context/classes/class.ilContext.php';
+        require_once __DIR__ . '/Services/Context/classes/class.ilContext.php';
         ilContext::init(ilContext::CONTEXT_WAC);
-        require_once "Services/Init/classes/class.ilInitialisation.php";
+        require_once __DIR__ . "/Services/Init/classes/class.ilInitialisation.php";
         ilInitialisation::initILIAS();
         $ilAuthSession = $this->auth_session;
         $ilAuthSession->init();
@@ -152,16 +145,14 @@ class Handler
     }
 
     /**
-     * @param string $link
      * @return mixed|string
      */
     protected function sanitizeLink(string $link)
     {
         $link = str_replace(self::PLUGIN_BASE, "", $link);
         $link = ltrim($link, "/");
-        $link = "/{$link}";
 
-        return $link;
+        return "/{$link}";
     }
 
     /**

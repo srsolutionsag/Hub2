@@ -17,9 +17,7 @@ interface IObjectStatusTransition
      * If the current status is not a final one (e.g. CREATED, UPDATED, OUTDATED, IGNORED...), the
      * same final status is returned.
      * Note that this method returns the new status but does NOT set it on the passed object.
-     * @param IObject $object
-     * @return int
      * @deprecated
      */
-    public function finalToIntermediate(IObject $object): int;
+    public function finalToIntermediate(IObject $object) : int;
 }

@@ -17,13 +17,7 @@ interface ITaxonomyImplementation
      */
     public function write();
 
-    /**
-     * @return ITaxonomy
-     */
-    public function getTaxonomy(): ITaxonomy;
+    public function getTaxonomy() : ITaxonomy;
 
-    /**
-     * @return int
-     */
-    public function getILIASParentId(): int;
+    public function getILIASParentId() : int;
 }

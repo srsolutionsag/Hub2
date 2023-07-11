@@ -236,7 +236,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             $origin->setSort($form->getInput(OriginConfigFormGUI::POST_VAR_SORT));
             $origin->setDescription($form->getInput('description'));
             $origin->setAdHoc($form->getInput(OriginConfigFormGUI::POST_VAR_ADHOC));
-            $origin->setAdhocParentScope($form->getInput("adhoc_parent_scope") ? 1 : 0);
+            $origin->setAdhocParentScope(
+                $form->getInput("adhoc_parent_scope") !== '' && $form->getInput("adhoc_parent_scope") !== '0' ? 1 : 0
+            );
             $origin->setActive($form->getInput('active'));
             $origin->setImplementationClassName($form->getInput('implementation_class_name'));
             $origin->setImplementationNamespace($form->getInput('implementation_namespace'));
@@ -353,9 +355,8 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
 
     /**
      * @param IOrigin $origins
-     * @param bool    $force_update
      */
-    protected function execute(array $origins, bool $force_update = false)
+    protected function execute(array $origins, bool $force_update = false) : void
     {
         $summary = $this->summaryFactory->web();
 
@@ -366,9 +367,6 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->ctrl->redirect($this);
     }
 
-    /**
-     * @param bool $force_update
-     */
     protected function run(bool $force_update = false)/*: void*/
     {
         $this->execute($this->originFactory->getAllActive(), $force_update);
@@ -382,12 +380,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->run(true);
     }
 
-    /**
-     * @param bool $force_update
-     */
     protected function runOriginSync(bool $force_update = false)/*: void*/
     {
-        $origin = $this->getOrigin(intval(filter_input(INPUT_GET, self::ORIGIN_ID)));
+        $origin = $this->getOrigin((int) filter_input(INPUT_GET, self::ORIGIN_ID));
 
         $this->execute([$origin], $force_update);
     }
@@ -421,7 +416,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
      */
     protected function delete()
     {
-        $origin_id = intval($this->http->request()->getParsedBody()[self::ORIGIN_ID]);
+        $origin_id = (int) $this->http->request()->getParsedBody()[self::ORIGIN_ID];
 
         $f = new OriginFactory();
         $f->delete($origin_id);
@@ -447,16 +442,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     }
 
     /**
-     * @param AROrigin $origin
      * @return OriginConfigFormGUI
      */
     protected function getForm(AROrigin $origin)
     {
         $formFactory = new OriginFormFactory();
         $formClass = $formFactory->getFormClassNameByOrigin($origin);
-        $form = new $formClass($this, new OriginRepository(), $origin);
 
-        return $form;
+        return new $formClass($this, new OriginRepository(), $origin);
     }
 
     /**

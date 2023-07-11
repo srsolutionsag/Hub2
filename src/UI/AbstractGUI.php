@@ -13,11 +13,4 @@ use ilHub2Plugin;
 abstract class AbstractGUI
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
-    /**
-     * AbstractGUI constructor
-     */
-    public function __construct()
-    {
-    }
 }

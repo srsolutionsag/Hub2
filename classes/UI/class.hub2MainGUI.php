@@ -150,7 +150,7 @@ class hub2MainGUI
         (new OriginConfigFormGUI(
             new hub2ConfigOriginsGUI(),
             new OriginRepository(),
-            (new OriginFactory())->getById(intval(filter_input(INPUT_GET, hub2ConfigOriginsGUI::ORIGIN_ID)))
+            (new OriginFactory())->getById((int) filter_input(INPUT_GET, hub2ConfigOriginsGUI::ORIGIN_ID))
         ))->getILIASFileRepositorySelector()
           ->handleExplorerCommand();
     }

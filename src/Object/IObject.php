@@ -77,12 +77,10 @@ interface IObject
     /**
      * Get the date where the data of this object was delivered from the external system, e.g. via
      * CSV.
-     * @return DateTime
      */
-    public function getDeliveryDate(): DateTime;
+    public function getDeliveryDate() : DateTime;
 
     /**
-     * @param int $unix_timestamp
      * @return $this
      */
     public function setDeliveryDate(int $unix_timestamp);
@@ -95,7 +93,6 @@ interface IObject
     public function getProcessedDate();
 
     /**
-     * @param int $unix_timestamp
      * @return $this
      */
     public function setProcessedDate(int $unix_timestamp);
@@ -115,12 +112,10 @@ interface IObject
 
     /**
      * Get the status of this object.
-     * @return int
      */
-    public function getStatus(): int;
+    public function getStatus() : int;
 
     /**
-     * @param int $status
      * @return $this
      */
     public function setStatus(int $status);
@@ -145,9 +140,8 @@ interface IObject
      * current hashcode is identical to the one in the database, no properties of the object were
      * changed. This means that the sync can skip processing the ILIAS object.
      * Note: Different objects MAY have identical hashcodes.
-     * @return string
      */
-    public function computeHashCode(): string;
+    public function computeHashCode() : string;
 
     /**
      * Get the current hash code of this object, e.g. the hash stored in db. May not be up to date!
@@ -163,7 +157,6 @@ interface IObject
 
     /**
      * Set properties from an associative array.
-     * @param array $data
      * @return $this
      */
     public function setData(array $data);

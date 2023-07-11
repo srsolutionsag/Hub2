@@ -21,80 +21,31 @@ interface IOrgUnitDTO extends IDataTransferObject, IMappingStrategyAwareDataTran
      */
     public const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string;
+    public function getTitle() : string;
 
-    /**
-     * @param string $title
-     * @return self
-     */
-    public function setTitle(string $title): self;
+    public function setTitle(string $title) : self;
 
-    /**
-     * @return string
-     */
-    public function getDescription(): string;
+    public function getDescription() : string;
 
-    /**
-     * @param string $description
-     * @return self
-     */
-    public function setDescription(string $description): self;
+    public function setDescription(string $description) : self;
 
-    /**
-     * @return int
-     */
-    public function getOwner(): int;
+    public function getOwner() : int;
 
-    /**
-     * @param int $owner
-     * @return self
-     */
-    public function setOwner(int $owner): self;
+    public function setOwner(int $owner) : self;
 
-    /**
-     * @return string
-     */
-    public function getParentId(): string;
+    public function getParentId() : string;
 
-    /**
-     * @param string $parent_id
-     * @return self
-     */
-    public function setParentId(string $parent_id): self;
+    public function setParentId(string $parent_id) : self;
 
-    /**
-     * @return int
-     */
-    public function getParentIdType(): int;
+    public function getParentIdType() : int;
 
-    /**
-     * @param int $parent_id_type
-     * @return self
-     */
-    public function setParentIdType(int $parent_id_type): self;
+    public function setParentIdType(int $parent_id_type) : self;
 
-    /**
-     * @return string
-     */
-    public function getOrgUnitType(): string;
+    public function getOrgUnitType() : string;
 
-    /**
-     * @param string $org_unit_type
-     * @return self
-     */
-    public function setOrgUnitType(string $org_unit_type): self;
+    public function setOrgUnitType(string $org_unit_type) : self;
 
-    /**
-     * @return string
-     */
-    public function getExtId(): string;
+    public function getExtId() : string;
 
-    /**
-     * @param string $ext_id
-     * @return self
-     */
-    public function setExtId(string $ext_id): self;
+    public function setExtId(string $ext_id) : self;
 }

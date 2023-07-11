@@ -646,17 +646,11 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAppointementsColor(): string
+    public function getAppointementsColor() : string
     {
         return $this->appointementsColor;
     }
 
-    /**
-     * @param string $appointementsColor
-     */
     public function setAppointementsColor(string $appointementsColor)
     {
         $this->appointementsColor = $appointementsColor;

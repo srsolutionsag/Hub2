@@ -35,24 +35,17 @@ class DeleteOldLogsJob extends ilCronJob
 
     /**
      * Get id
-     * @return string
      */
     public function getId() : string
     {
         return self::CRON_JOB_ID;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle() : string
     {
         return ilHub2Plugin::PLUGIN_NAME . ": " . $this->plugin->txt("logs_cron");
     }
 
-    /**
-     * @return string
-     */
     public function getDescription() : string
     {
         return $this->plugin->txt("logs_cron_description");
@@ -60,7 +53,6 @@ class DeleteOldLogsJob extends ilCronJob
 
     /**
      * Is to be activated on "installation"
-     * @return boolean
      */
     public function hasAutoActivation() : bool
     {
@@ -69,7 +61,6 @@ class DeleteOldLogsJob extends ilCronJob
 
     /**
      * Can the schedule be configured?
-     * @return boolean
      */
     public function hasFlexibleSchedule() : bool
     {
@@ -78,7 +69,6 @@ class DeleteOldLogsJob extends ilCronJob
 
     /**
      * Get schedule type
-     * @return int
      */
     public function getDefaultScheduleType() : int
     {
@@ -96,7 +86,6 @@ class DeleteOldLogsJob extends ilCronJob
 
     /**
      * Run job
-     * @return ilCronJobResult
      */
     public function run() : ilCronJobResult
     {

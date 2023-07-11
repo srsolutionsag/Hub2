@@ -15,11 +15,8 @@ final class Ilias
     /**
      * @var self
      */
-    protected static $instance = null;
+    protected static $instance;
 
-    /**
-     * @return self
-     */
     public static function getInstance() : self
     {
         if (self::$instance === null) {

@@ -20,7 +20,6 @@ abstract class BaseCustomViewGUI
 
     /**
      * BaseCustomViewGUI constructor
-     * @param hub2CustomViewGUI $parent_gui
      */
     public function __construct(hub2CustomViewGUI $parent_gui)
     {

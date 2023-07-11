@@ -22,9 +22,7 @@ interface IObjectSyncProcessor
      * 1. Depending on the status: Create, Update or Delete corresponding ILIAS object
      * 2. Execute other actions based on the configuration of the origin.
      * 3. Pass the DTO to the hooks of the origin
-     * @param IObject             $hub_object
-     * @param IDataTransferObject $dto
-     * @param bool                $force Update all Objects without Hash comparison
+     * @param bool $force Update all Objects without Hash comparison
      * @throws Throwable
      */
     public function process(IObject $hub_object, IDataTransferObject $dto, bool $force = false);
@@ -34,5 +32,5 @@ interface IObjectSyncProcessor
      * @param IDataTransferObjectSort[] $sort_dtos
      * @return bool Should sort?
      */
-    public function handleSort(array $sort_dtos): bool;
+    public function handleSort(array $sort_dtos) : bool;
 }

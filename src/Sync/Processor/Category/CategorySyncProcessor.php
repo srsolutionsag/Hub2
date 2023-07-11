@@ -20,7 +20,6 @@ use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 use srag\Plugins\Hub2\Sync\IDataTransferObjectSort;
-use srag\Plugins\Hub2\Object\Category\ICategoryDTO;
 use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CategoryParentResolver;
 
 /**
@@ -61,16 +60,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      * @var \ilLanguage
      */
     private $language;
-    /**
-     * @var \ilTree
-     */
-    private $tree;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -78,7 +68,6 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     ) {
         global $DIC;
         $this->language = $DIC->language();
-        $this->tree = $DIC['tree'];
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
@@ -152,7 +141,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
-        if ($ilObjCategory === null) {
+        if (!$ilObjCategory instanceof \ilObjCategory) {
             return;
         }
         // Update some properties if they should be updated depending on the origin config
@@ -218,7 +207,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
-        if ($ilObjCategory === null) {
+        if (!$ilObjCategory instanceof \ilObjCategory) {
             return;
         }
         if ($this->props->get(CategoryProperties::DELETE_MODE) == CategoryProperties::DELETE_MODE_NONE) {
@@ -238,23 +227,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     }
 
     /**
-     * @param CategoryDTO $category
-     * @return int
      * @throws HubException
      */
-    protected function determineParentRefId(CategoryDTO $category)
+    protected function determineParentRefId(CategoryDTO $category) : int
     {
         return $this->parent_resolver->resolveParentRefId($category);
-    }
-
-    private function checkAndReturnRefId(int $ref_id) : int
-    {
-        if (!$this->tree->isInTree($ref_id)) {
-            // TODO try to restore
-            throw new HubException("Could not find the fallback parent ref-ID in tree: '{$ref_id}'");
-        }
-
-        return $ref_id;
     }
 
     /**
@@ -283,8 +260,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      */
     public function handleSort(array $sort_dtos) : bool
     {
-        array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto) {
-            /** @var ICategoryDTO $object_a */
+        array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto) : void {
             $sort_dto->setLevel((int) $sort_dto->getDtoObject()->getPeriod());
         });
 

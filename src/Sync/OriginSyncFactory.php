@@ -26,37 +26,30 @@ class OriginSyncFactory
      */
     protected $origin;
 
-    /**
-     * @param IOrigin $origin
-     */
     public function __construct(IOrigin $origin)
     {
         $this->origin = $origin;
     }
 
     /**
-     * @return OriginSync
      * @throws HubException
      */
     public function instance() : OriginSync
     {
         $statusTransition = new ObjectStatusTransition($this->origin->config());
 
-        $originSync = new OriginSync(
+        return new OriginSync(
             $this->origin,
             $this->getObjectRepository(),
             new ObjectFactory($this->origin),
             $statusTransition
         );
-
-        return $originSync;
     }
 
     /**
-     * @param OriginSync $originSync
      * @throws HubException
      */
-    public function initImplementation(OriginSync $originSync)
+    public function initImplementation(OriginSync $originSync) : void
     {
         $implementationFactory = new OriginImplementationFactory($this->origin);
 
@@ -85,9 +78,6 @@ class OriginSyncFactory
     }
 
     /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $statusTransition
      * @return IObjectSyncProcessor
      */
     protected function getSyncProcessor(

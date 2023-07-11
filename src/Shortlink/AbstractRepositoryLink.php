@@ -35,7 +35,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
      */
     public function doesObjectExist() : bool
     {
-        if (!$this->getILIASId()) {
+        if ($this->getILIASId() === 0) {
             return false;
         }
 
@@ -68,9 +68,8 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     public function getAccessGrantedExternalLink() : string
     {
         $ref_id = $this->getILIASId();
-        $link = $this->generateLink($ref_id);
 
-        return $link;
+        return $this->generateLink($ref_id);
     }
 
     /**
@@ -83,9 +82,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
             return "index.php";
         }
 
-        $link = $this->generateLink($ref_id);
-
-        return $link;
+        return $this->generateLink($ref_id);
     }
 
     /**
@@ -96,24 +93,19 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return $this->object->getILIASId();
     }
 
-    /**
-     * @return int
-     */
     protected function findReadableParent() : int
     {
         $ref_id = $this->getILIASId();
 
-        while ($ref_id and !$this->access->checkAccess('read', '', $ref_id) and $ref_id != 1) {
+        while ($ref_id && !$this->access->checkAccess('read', '', $ref_id) && $ref_id != 1) {
             $ref_id = (int) $this->tree->getParentId($ref_id);
         }
 
-        if (!$ref_id || $ref_id === 1) {
-            if (!$this->access->checkAccess('read', '', $ref_id)) {
-                return 0;
-            }
+        if ((!$ref_id || $ref_id === 1) && !$this->access->checkAccess('read', '', $ref_id)) {
+            return 0;
         }
 
-        return (int) $ref_id;
+        return $ref_id;
     }
 
     /**
@@ -123,8 +115,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
     private function generateLink($ref_id)
     {
         $link = ilLink::_getLink($ref_id);
-        $link = str_replace(ILIAS_HTTP_PATH, "", $link);
 
-        return $link;
+        return str_replace(ILIAS_HTTP_PATH, "", $link);
     }
 }

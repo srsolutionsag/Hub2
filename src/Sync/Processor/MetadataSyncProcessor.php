@@ -19,17 +19,12 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
  */
 trait MetadataSyncProcessor
 {
-    /**
-     * @param IMetadataAwareDataTransferObject $dto
-     * @param IMetadataAwareObject             $iobject
-     * @param ilObject                         $ilias_object
-     */
     public function handleMetadata(
         IMetadataAwareDataTransferObject $dto,
         IMetadataAwareObject $iobject,
         ilObject $ilias_object
-    ) {
-        if (count($dto->getMetaData()) > 0) {
+    ) : void {
+        if ($dto->getMetaData() !== []) {
             $this->handleDTOSpecificMetadataSettings($dto, $ilias_object);
             $f = new MetadataImplementationFactory();
             $flat_existing_md = [];
@@ -44,17 +39,13 @@ trait MetadataSyncProcessor
                 }*/
                 if ($flat_existing_md[$metaDatum->getRecordId()][$metaDatum->getIdentifier()] !== $metaDatum->getValue(
                     )) {
-                    $f->getImplementationForDTO($dto, $metaDatum, (int) $ilias_object->getId())->write();
+                    $f->getImplementationForDTO($dto, $metaDatum, $ilias_object->getId())->write();
                 }
             }
         }
     }
 
-    /**
-     * @param IMetadataAwareDataTransferObject $dto
-     * @param ilObject                         $object
-     */
-    private function handleDTOSpecificMetadataSettings(IMetadataAwareDataTransferObject $dto, ilObject $object)
+    private function handleDTOSpecificMetadataSettings(IMetadataAwareDataTransferObject $dto, ilObject $object) : void
     {
         switch (true) {
             case $dto instanceof CourseDTO:

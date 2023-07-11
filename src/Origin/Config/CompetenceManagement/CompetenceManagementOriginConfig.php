@@ -19,9 +19,6 @@ class CompetenceManagementOriginConfig extends OriginConfig implements ICompeten
             self::ID_IF_NO_PARENT_ID => 0,
         ];
 
-    /**
-     * @param array $data
-     */
     public function __construct(array $data = [])
     {
         parent::__construct(array_merge($this->competenceManagementConfig, $data));
@@ -30,8 +27,8 @@ class CompetenceManagementOriginConfig extends OriginConfig implements ICompeten
     /**
      * @inheritdoc
      */
-    public function getIdIfNoParentId(): int
+    public function getIdIfNoParentId() : int
     {
-        return intval($this->get(self::ID_IF_NO_PARENT_ID));
+        return (int) $this->get(self::ID_IF_NO_PARENT_ID);
     }
 }

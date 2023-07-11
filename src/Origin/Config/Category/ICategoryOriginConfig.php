@@ -18,17 +18,14 @@ interface ICategoryOriginConfig extends IOriginConfig
      * Get the ILIAS ref-ID acting as parent, only if hub was not able to find
      * the correct parent ref-ID. By default, the category will be created directly
      * in the repository (refId = 1).
-     * @return int
      */
-    public function getParentRefIdIfNoParentIdFound(): int;
+    public function getParentRefIdIfNoParentIdFound() : int;
 
     /**
      * Get an external ID of another category from the same origin acting as parent,
      * only if hub was not able to find the "correct" parent category given by the parent id. If
      * there is no "fallback category" found with the ext-ID returned here, the category
      * will be created directly in the repository (refId = 1)
-     *
-     * @return string
      */
-    public function getExternalParentIdIfNoParentIdFound(): string;
+    public function getExternalParentIdIfNoParentIdFound() : string;
 }

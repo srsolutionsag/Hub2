@@ -17,13 +17,7 @@ interface IMetadataImplementation
      */
     public function write();
 
-    /**
-     * @return IMetadata
-     */
-    public function getMetadata(): IMetadata;
+    public function getMetadata() : IMetadata;
 
-    /**
-     * @return int
-     */
-    public function getIliasId(): int;
+    public function getIliasId() : int;
 }

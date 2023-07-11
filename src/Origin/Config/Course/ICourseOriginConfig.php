@@ -17,7 +17,6 @@ interface ICourseOriginConfig extends IOriginConfig
      * Get the ILIAS ref-ID acting as parent, only if hub was not able to find
      * the correct parent ref-ID. By default, the course will be created directly
      * in the repository (refId = 1).
-     * @return int
      */
-    public function getParentRefIdIfNoParentIdFound(): int;
+    public function getParentRefIdIfNoParentIdFound() : int;
 }

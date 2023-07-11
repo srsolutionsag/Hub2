@@ -11,7 +11,7 @@ use srag\Plugins\Hub2\Object\DTO\ILearningProgressSettingsAwareDataTransferObjec
 interface ILearningProgressSettingsAwareObject
 {
     public function getLPSettings() : ?LearningProgressSettings;
-    
+
     public function setLPSettings(
         ?LearningProgressSettings $learningProgressSettings
     ) : ILearningProgressSettingsAwareDataTransferObject;

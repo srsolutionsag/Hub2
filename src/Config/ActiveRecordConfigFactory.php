@@ -2,12 +2,6 @@
 
 namespace srag\Plugins\Hub2\Config;
 
-use arConnector;
-use srag\ActiveRecordConfig\Hub2\Config\AbstractFactory;
-use srag\ActiveRecordConfig\Hub2\Config\AbstractRepository;
-use srag\ActiveRecordConfig\Hub2\Config\Config;
-use srag\ActiveRecordConfig\Hub2\Exception\ActiveRecordConfigException;
-
 /**
  * Class ActiveRecordConfigFactory
  *
@@ -30,7 +24,7 @@ final class ActiveRecordConfigFactory extends AbstractFactory
     /**
      * @deprecated
      */
-    public static function getInstance(): self
+    public static function getInstance() : self
     {
         if (!self::$instance instanceof \srag\Plugins\Hub2\Config\ActiveRecordConfigFactory) {
             self::$instance = new self();

@@ -603,7 +603,6 @@ class UserDTO extends DataTransferObject implements IUserDTO
     }
 
     /**
-     * @param DateTime $timeLimitFrom
      * @return UserDTO
      */
     public function setTimeLimitFrom(DateTime $timeLimitFrom)
@@ -622,7 +621,6 @@ class UserDTO extends DataTransferObject implements IUserDTO
     }
 
     /**
-     * @param DateTime $timeLimitUntil
      * @return UserDTO
      */
     public function setTimeLimitUntil(DateTime $timeLimitUntil)
@@ -660,7 +658,6 @@ class UserDTO extends DataTransferObject implements IUserDTO
     }
 
     /**
-     * @param DateTime $birthday
      * @return UserDTO
      */
     public function setBirthday(DateTime $birthday)
@@ -743,7 +740,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @throws LanguageCodeException if the passed $language is not a valid
      *                  ILIAS language code
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language)
     {
         self::checkLanguageCode($language);
 

@@ -29,15 +29,15 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
     /**
      * @inheritdoc
      */
-    public function getParentRefIdIfNoParentIdFound(): int
+    public function getParentRefIdIfNoParentIdFound() : int
     {
-        return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
+        return (int) $this->get(self::REF_ID_NO_PARENT_ID_FOUND);
     }
 
     /**
      * @inheritdoc
      */
-    public function getExternalParentIdIfNoParentIdFound(): string
+    public function getExternalParentIdIfNoParentIdFound() : string
     {
         return (string) $this->get(self::EXT_ID_NO_PARENT_ID_FOUND);
     }

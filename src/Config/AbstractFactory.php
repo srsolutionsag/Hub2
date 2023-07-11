@@ -15,9 +15,7 @@ abstract class AbstractFactory
      */
     protected function __construct()
     {
-
     }
-
 
     public function newInstance() : Config
     {

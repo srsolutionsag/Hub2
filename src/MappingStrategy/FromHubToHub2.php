@@ -23,10 +23,6 @@ class FromHubToHub2 extends AMappingStrategy implements IMappingStrategy
      */
     protected $former_origin_id;
 
-    /**
-     * @param \ilDBInterface $database
-     * @param int            $former_origin_id
-     */
     public function __construct(\ilDBInterface $database, int $former_origin_id)
     {
         $this->database = $database;
@@ -34,7 +30,7 @@ class FromHubToHub2 extends AMappingStrategy implements IMappingStrategy
         $this->hub1_table_exists = (bool) $this->database->tableExists('sr_hub_sync_history');
     }
 
-    public function map(IDataTransferObject $dto): int
+    public function map(IDataTransferObject $dto) : int
     {
         if (!$this->hub1_table_exists) {
             return 0;

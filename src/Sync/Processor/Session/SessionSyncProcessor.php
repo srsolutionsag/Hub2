@@ -6,7 +6,6 @@ use ilDateTime;
 use ilObject2;
 use ilObjSession;
 use ilRepUtil;
-use ilSessionAppointment;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -67,11 +66,6 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
      */
     private $rbacadmin;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -139,7 +133,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
-        if ($ilObjSession === null) {
+        if (!$ilObjSession instanceof \ilObjSession) {
             return;
         }
 
@@ -160,12 +154,9 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
         if (!$this->tree->isInTree($ilObjSession->getRefId())) {
             $a_parent_ref = $this->buildParentRefId($dto);
-
             $ilObjSession->putInTree($a_parent_ref);
-        } else {
-            if ($this->props->get(SessionProperties::MOVE_SESSION)) {
-                $this->moveSession($ilObjSession, $dto);
-            }
+        } elseif ($this->props->get(SessionProperties::MOVE_SESSION)) {
+            $this->moveSession($ilObjSession, $dto);
         }
     }
 
@@ -176,7 +167,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
-        if ($ilObjSession === null) {
+        if (!$ilObjSession instanceof \ilObjSession) {
             return;
         }
 
@@ -207,30 +198,28 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
     }
 
     /**
-     * @param SessionDTO $session
-     * @return int
      * @throws HubException
      */
-    protected function buildParentRefId(SessionDTO $session)
+    protected function buildParentRefId(SessionDTO $session) : int
     {
-        if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_REF_ID) {
-            if ($this->tree->isInTree($session->getParentId())) {
-                return (int) $session->getParentId();
-            }
+        if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_REF_ID && $this->tree->isInTree(
+            $session->getParentId()
+        )) {
+            return (int) $session->getParentId();
         }
         if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
             // The stored parent-ID is an external-ID from a category.
             // We must search the parent ref-ID from a category object synced by a linked origin.
             // --> Get an instance of the linked origin and lookup the category by the given external ID.
             $linkedOriginId = $this->config->getLinkedOriginId();
-            if (!$linkedOriginId) {
+            if ($linkedOriginId === 0) {
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
             $possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
             $arrayFilter = array_filter(
                 $possible_parents,
-                function ($origin) use ($linkedOriginId) {
+                function ($origin) use ($linkedOriginId) : bool {
                     /** @var IOrigin $origin */
                     return (int) $origin->getId() == $linkedOriginId;
                 }
@@ -266,16 +255,11 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
     }
 
     /**
-     * @param SessionDTO   $object
-     * @param ilObjSession $ilObjSession
-     * @param bool         $force
+     * @param bool $force
      * @return ilObjSession
      */
     protected function setDataForFirstAppointment(SessionDTO $object, ilObjSession $ilObjSession, $force = false)
     {
-        /**
-         * @var ilSessionAppointment $first
-         */
         $appointments = $ilObjSession->getAppointments();
         $first = $ilObjSession->getFirstAppointment();
         if ($this->props->updateDTOProperty('start') || $force) {
@@ -300,7 +284,6 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
     /**
      * @param            $ilObjSession $ilObjCourse
-     * @param SessionDTO $session
      */
     protected function moveSession(ilObjSession $ilObjSession, SessionDTO $session)
     {
@@ -310,7 +293,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             $ilRepUtil->restoreObjects($a_parent_ref, [$ilObjSession->getRefId()]);
         }
         $oldParentRefId = $this->tree->getParentId($ilObjSession->getRefId());
-        if ($oldParentRefId == $a_parent_ref) {
+        if ($oldParentRefId === $a_parent_ref) {
             return;
         }
         $this->tree->moveTree($ilObjSession->getRefId(), $a_parent_ref);

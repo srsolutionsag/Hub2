@@ -42,7 +42,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     /**
      * @var ilObjOrgUnit|null
      */
-    protected $current_ilias_object = null;
+    protected $current_ilias_object;
     /**
      * @var \ilTree
      */
@@ -53,9 +53,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     private $rbacadmin;
 
     /**
-     * @param IOrgUnitOrigin          $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
+     * @param IOrgUnitOrigin $origin
      */
     public function __construct(
         IOrigin $origin,
@@ -70,24 +68,18 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         $this->config = $origin->config();
     }
 
-    /**
-     * @return array
-     */
     public static function getProperties() : array
     {
         return self::$properties;
     }
 
-    /**
-     * @return int
-     */
     protected function getParentRefIdFallback() : int
     {
         static $ref_id_fallback;
         if (!isset($ref_id_fallback)) {
             $ref_id_fallback = $this->config->getRefIdIfNoParentId();
             if ($ref_id_fallback === 0) {
-                $ref_id_fallback = (int) ilObjOrgUnit::getRootOrgRefId();
+                $ref_id_fallback = ilObjOrgUnit::getRootOrgRefId();
                 ;
             }
         }
@@ -96,7 +88,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
     /**
      * @param IDataTransferObjectSort[] $sort_dtos
-     * @return bool
      * @throws HubException
      */
     public function handleSort(array $sort_dtos) : bool
@@ -146,8 +137,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     }
 
     /**
-     * @param IOrgUnitDTO $dto
-     * @return bool
      * @throws HubException
      */
     private function isRootId(IOrgUnitDTO $dto) : bool
@@ -195,7 +184,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     {
         $this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
 
-        if (empty($this->current_ilias_object)) {
+        if (!$this->current_ilias_object instanceof \ilObjOrgUnit) {
             return;
         }
 
@@ -232,7 +221,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
             case IOrgUnitProperties::DELETE_MODE_DELETE:
                 $this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
 
-                if (empty($this->current_ilias_object)) {
+                if (!$this->current_ilias_object instanceof \ilObjOrgUnit) {
                     return;
                 }
 
@@ -247,7 +236,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     }
 
     /**
-     * @param int $obj_id
      * @return ilObjOrgUnit|null
      */
     protected function getOrgUnitObject(int $obj_id)
@@ -266,10 +254,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         }
     }
 
-    /**
-     * @param IOrgUnitDTO $dto
-     * @return int
-     */
     protected function getOrgUnitTypeId(IOrgUnitDTO $dto) : int
     {
         $orgu_type_id = 0;
@@ -293,8 +277,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     }
 
     /**
-     * @param IOrgUnitDTO $dto
-     * @return int
      * @throws HubException
      */
     protected function getParentId(IOrgUnitDTO $dto) : int
@@ -311,7 +293,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
                     $parent_id = $parent_org_unit->getILIASId();
 
-                    if (empty($parent_id) || $this->getOrgUnitObject($parent_id) === null) {
+                    if (empty($parent_id) || !$this->getOrgUnitObject($parent_id) instanceof \ilObjOrgUnit) {
                         // throw new HubException("External ID {$ext_id} not found!");
                         return $ref_id_fallback;
                     }
@@ -334,13 +316,12 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     }
 
     /**
-     * @param IOrgUnitDTO $dto
      * @throws HubException
      */
     protected function moveOrgUnit(IOrgUnitDTO $dto)
     {
         $parent_ref_id = $this->getParentId($dto);
-        $current_ilias_ref_id = (int) $this->current_ilias_object->getRefId();
+        $current_ilias_ref_id = $this->current_ilias_object->getRefId();
         if ($this->tree->isDeleted($current_ilias_ref_id)) {
             $ilRepUtil = new ilRepUtil();
             $node_data = $this->tree->getNodeTreeData($current_ilias_ref_id);

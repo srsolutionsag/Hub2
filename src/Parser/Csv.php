@@ -61,11 +61,7 @@ class Csv
     protected $header = [];
 
     /**
-     * @param string      $enclosure
-     * @param string      $separator
-     * @param string      $file_path
      * @param string|null $unique_field
-     * @param array       $mandatory_columns
      */
     public function __construct(
         string $file_path,
@@ -85,9 +81,6 @@ class Csv
         $this->bad_enclosures = $bad_enclosures;
     }
 
-    /**
-     * @param array $header
-     */
     public function setHeader(array $header) : void
     {
         $this->header = $header;
@@ -109,14 +102,20 @@ class Csv
     {
         $this->parsed_csv = array_filter(
             $this->parsed_csv,
-            ($closure ?? function ($v, $k) : bool {
+            (($closure ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) ?? function ($v, $k) : bool {
                 return !empty($v);
             }) ?? function ($v, $k) : bool {
                 return !empty($v);
             },
-            ($closure ?? function ($v, $k) : bool {
+            (($closure ?? function ($v, $k) : bool {
                 return !empty($v);
-            }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0)
+            }) ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? function ($v, $k) : bool {
+                return !empty($v);
+            }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
         );
     }
 
@@ -138,7 +137,7 @@ class Csv
 
     protected function mapFieldsToTitle() : void
     {
-        array_walk($this->parsed_csv, function (array & $item) {
+        array_walk($this->parsed_csv, function (array &$item) : void {
             foreach ($item as $k => $v) {
                 unset($item[$k]);
                 $item[$this->delivered_columns[$k]] = $this->sanitize($v);
@@ -146,17 +145,11 @@ class Csv
         });
     }
 
-    /**
-     * @return string
-     */
     protected function getEnclosure() : string
     {
         return $this->enclosure;
     }
 
-    /**
-     * @return string
-     */
     protected function getSeparator() : string
     {
         return $this->separator;
@@ -188,14 +181,10 @@ class Csv
     public function parseData() : array
     {
         $this->parseCSVFile($this->file_path);
-        if ($this->header === []) {
-            $this->delivered_columns = array_shift($this->parsed_csv);
-        } else {
-            $this->delivered_columns = $this->header;
-        }
+        $this->delivered_columns = $this->header === [] ? array_shift($this->parsed_csv) : $this->header;
 
         if (!is_array($this->delivered_columns)
-            || count(array_diff($this->mandatory_columns, $this->delivered_columns)) > 0) {
+            || array_diff($this->mandatory_columns, $this->delivered_columns) !== []) {
             throw new ParseDataFailedException(
                 "Not all mandatory colums in csv available. received '" . implode(
                     "|",
@@ -221,7 +210,7 @@ class Csv
             });
         }
 
-        if (count($this->columns_mapping) > 0) {
+        if ($this->columns_mapping !== []) {
             $mapping = $this->columns_mapping;
             $this->parsed_csv = array_map(function (array $item) use ($mapping) : array {
                 foreach ($mapping as $old_key => $new_key) {

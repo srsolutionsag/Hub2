@@ -24,9 +24,6 @@ class OriginImplementationFactory
      */
     protected $origin;
 
-    /**
-     * @param IOrigin $origin
-     */
     public function __construct(IOrigin $origin)
     {
         $this->origin = $origin;
@@ -51,7 +48,8 @@ class OriginImplementationFactory
         if (!class_exists($class)) {
             throw new HubException("Origin implementation namespace\\class does not exist, should be: $class");
         }
-        $instance = new $class(
+
+        return new $class(
             $this->origin->config(),
             new DataTransferObjectFactory(),
             new MetadataFactory(),
@@ -59,7 +57,5 @@ class OriginImplementationFactory
             new MappingStrategyFactory(),
             $this->origin
         );
-
-        return $instance;
     }
 }

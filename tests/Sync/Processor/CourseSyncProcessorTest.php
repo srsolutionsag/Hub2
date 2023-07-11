@@ -46,9 +46,15 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests
     protected function initDTO()
     {
         $this->dto = new CourseDTO('extIdOfCourse');
-        $this->dto->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->setParentId(1)->setDescription("Description")->setTitle("Title")
-                  ->setContactEmail("contact@email.com")->setContactResponsibility("Responsibility")->setImportantInformation("Important Information")
-                  ->setNotificationEmails(["notification@email.com"])->setOwner(6)->setSubscriptionLimitationType(CourseDTO::SUBSCRIPTION_TYPE_PASSWORD)
+        $this->dto->setParentIdType(CourseDTO::PARENT_ID_TYPE_REF_ID)->setParentId(1)->setDescription(
+            "Description"
+        )->setTitle("Title")
+                  ->setContactEmail("contact@email.com")->setContactResponsibility(
+                      "Responsibility"
+                  )->setImportantInformation("Important Information")
+                  ->setNotificationEmails(["notification@email.com"])->setOwner(6)->setSubscriptionLimitationType(
+                      CourseDTO::SUBSCRIPTION_TYPE_PASSWORD
+                  )
                   ->setViewMode(CourseDTO::VIEW_MODE_BY_TYPE)->setContactName("Contact Name")->setSyllabus('Syllabus')
                   ->setContactConsultation('1 2 3 4 5 6')->setContactPhone('+41 123 456 789');
     }
@@ -160,10 +166,14 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests
         $this->ilObject->shouldReceive('setTitle')->once()->with($this->dto->getTitle());
         $this->ilObject->shouldReceive('setDescription')->once()->with($this->dto->getDescription());
         $this->ilObject->shouldReceive('setImportantInformation')->once()->with($this->dto->getImportantInformation());
-        $this->ilObject->shouldReceive('setContactResponsibility')->once()->with($this->dto->getContactResponsibility());
+        $this->ilObject->shouldReceive('setContactResponsibility')->once()->with(
+            $this->dto->getContactResponsibility()
+        );
         $this->ilObject->shouldReceive('setContactEmail')->once()->with($this->dto->getContactEmail());
         $this->ilObject->shouldReceive('setOwner')->once()->with($this->dto->getOwner());
-        $this->ilObject->shouldReceive('setSubscriptionLimitationType')->once()->with($this->dto->getSubscriptionLimitationType());
+        $this->ilObject->shouldReceive('setSubscriptionLimitationType')->once()->with(
+            $this->dto->getSubscriptionLimitationType()
+        );
         $this->ilObject->shouldReceive('setViewMode')->once()->with($this->dto->getViewMode());
         $this->ilObject->shouldReceive('setContactName')->once()->with($this->dto->getContactName());
         $this->ilObject->shouldReceive('setSyllabus')->once()->with($this->dto->getSyllabus());

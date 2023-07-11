@@ -8,8 +8,7 @@ use DateTime;
 use Exception;
 use ilHub2Plugin;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
-use srag\Plugins\Hub2\Metadata\IMetadata;
+use srag\Plugins\Hub2\Config\ActiveRecordConfig;
 use srag\Plugins\Hub2\Metadata\Metadata;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Taxonomy\ITaxonomy;
@@ -177,7 +176,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      *
      */
-    public function afterObjectLoad()
+    public function afterObjectLoad() : void
     {
         $this->clone = clone $this;
     }
@@ -191,23 +190,14 @@ abstract class ARObject extends ActiveRecord implements IObject
             case 'data':
                 return json_encode($this->getData(), JSON_THROW_ON_ERROR);
             case "meta_data":
-                /**
-                 * @var IMetadataAwareObject $this
-                 * @var IMetadata[]          $metadata
-                 */
                 $metadataObjects = [];
                 $metadata = $this->getMetaData();
                 foreach ($metadata as $metadatum) {
                     $metadataObjects[$metadatum->getRecordId()][$metadatum->getIdentifier()] = $metadatum->getValue();
                 }
 
-                $json_encode = json_encode($metadataObjects, JSON_THROW_ON_ERROR);
-
-                return $json_encode;
+                return json_encode($metadataObjects, JSON_THROW_ON_ERROR);
             case "taxonomies":
-                /**
-                 * @var ITaxonomyAwareObject $this
-                 */
                 $taxonomyObjects = [];
                 $taxonomies = $this->getTaxonomies();
                 foreach ($taxonomies as $tax) {
@@ -218,9 +208,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                     $taxonomyObjects[$tax->getTitle()] = $nodes;
                 }
 
-                $json_encode = json_encode($taxonomyObjects, JSON_THROW_ON_ERROR);
-
-                return $json_encode;
+                return json_encode($taxonomyObjects, JSON_THROW_ON_ERROR);
         }
 
         return parent::sleep($field_name);
@@ -250,7 +238,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                         if (!is_array($records)) {
                             continue;
                         }
-                        foreach ($records as $mid => $record) {
+                        foreach (array_keys($records) as $mid) {
                             $IMetadata[] = (new Metadata($mid, $record_id))->setValue($records);
                         }
                     }
@@ -280,7 +268,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function update()
+    public function update() : void
     {
         $this->hash_code = $this->computeHashCode();
         parent::update();
@@ -298,7 +286,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                 $messages[] = $title . " updated";
             }
         }
-        if (!empty($messages)) {
+        if ($messages !== []) {
             $this->log_repo->factory()->originLog((new OriginFactory())->getById($this->origin_id), $this)
                            ->write(implode('<br>', $messages));
         }
@@ -309,10 +297,10 @@ abstract class ARObject extends ActiveRecord implements IObject
      */
     public function create()
     {
-        if (!$this->origin_id) {
+        if ($this->origin_id === 0) {
             throw new Exception("Origin-ID is missing, cannot construct the primary key");
         }
-        if (!$this->ext_id) {
+        if ($this->ext_id === '' || $this->ext_id === '0') {
             throw new Exception("External-ID is missing");
         }
         $this->id = $this->origin_id . $this->ext_id;
@@ -367,7 +355,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function setDeliveryDate(int $unix_timestamp)
+    public function setDeliveryDate(int $unix_timestamp) : void
     {
         $this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
@@ -375,7 +363,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function setProcessedDate(int $unix_timestamp)
+    public function setProcessedDate(int $unix_timestamp) : void
     {
         $this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
@@ -468,7 +456,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function setData(array $data)
+    public function setData(array $data) : void
     {
         $this->data = $data;
         if (isset($data['period'])) {
