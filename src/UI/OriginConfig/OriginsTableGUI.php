@@ -88,7 +88,7 @@ class OriginsTableGUI extends ilTable2GUI
             $objectRepository = new $class($origin);
             $row = [];
             $row['id'] = $origin->getId();
-            $row['sort'] = $origin->getSort();
+            $row['sort'] = sprintf("%02d", $origin->getSort());
             $row['active'] = self::plugin()->translate("common_" . ($origin->isActive() ? "yes" : "no"));
             $linked_title = self::dic()->ui()->renderer()->render(
                 self::dic()->ui()->factory()->link()->standard(
