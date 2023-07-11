@@ -12,16 +12,16 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  */
 class CourseProperties extends OriginProperties implements ICourseProperties
 {
-    /**
-     * @var array
-     */
-    public static $mail_notification_placeholder
-        = ['title', 'description', 'responsible', 'notification_email', 'shortlink'];
+    public static array $mail_notification_placeholder = [
+        'title',
+        'description',
+        'responsible',
+        'notification_email',
+        'shortlink'
+    ];
 
-    /**
-     * @inheritdoc
-     */
-    public static function getPlaceHolderStrings() : string
+
+    public static function getPlaceHolderStrings(): string
     {
         $return = '[';
         $return .= implode('], [', self::$mail_notification_placeholder);
@@ -30,10 +30,7 @@ class CourseProperties extends OriginProperties implements ICourseProperties
         return strtoupper($return);
     }
 
-    /**
-     * @var array
-     */
-    protected $data
+    protected array $data
         = [
             self::SET_ONLINE => false,
             self::SET_ONLINE_AGAIN => false,
@@ -45,10 +42,8 @@ class CourseProperties extends OriginProperties implements ICourseProperties
             self::DELETE_MODE => self::DELETE_MODE_NONE,
         ];
 
-    /**
-     * @inheritdoc
-     */
-    public static function getAvailableDeleteModes() : array
+
+    public static function getAvailableDeleteModes(): array
     {
         return [
             self::DELETE_MODE_NONE,

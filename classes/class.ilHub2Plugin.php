@@ -37,15 +37,27 @@ class ilHub2Plugin extends ilCronHookPlugin
      */
     protected static $instance = null;
 
-    public function getPluginName() : string
+    public function getPluginName(): string
     {
         return self::PLUGIN_NAME;
     }
 
-    public static function getInstance() : self
+    public function __construct(
+        ilDBInterface $db,
+        ilComponentRepositoryWrite $component_repository,
+        string $id
+    ) {
+        parent::__construct($db, $component_repository, $id);
+        global $DIC;
+        $this->provider_collection->setMainBarProvider(new Menu($DIC, $this));
+    }
+
+    public static function getInstance(): self
     {
         if (!self::$instance instanceof \ilHub2Plugin) {
-            self::$instance = new self();
+            global $DIC;
+            $component_factory = $DIC['component.factory'];
+            self::$instance = $component_factory->getPlugin(self::PLUGIN_ID);
         }
 
         return self::$instance;
@@ -54,18 +66,14 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @return ilCronJob[]
      */
-    public function getCronJobInstances() : array
+    public function getCronJobInstances(): array
     {
         return [new RunSync(new CronNotifier()), new DeleteOldLogsJob()];
     }
 
-    /**
-     * @param string $a_job_id
-     * @return ilCronJob
-     */
-    public function getCronJobInstance(/*string*/
-        $a_job_id
-    ) {/*: ?ilCronJob*/
+    public function getCronJobInstance(
+        string $a_job_id
+    ): ilCronJob {
         switch ($a_job_id) {
             case RunSync::CRON_JOB_ID:
                 return new RunSync(new CronNotifier());
@@ -74,14 +82,14 @@ class ilHub2Plugin extends ilCronHookPlugin
                 return new DeleteOldLogsJob();
 
             default:
-                return null;
+                throw new InvalidArgumentException("Unknown cron job id: " . $a_job_id);
         }
     }
 
     /**
      * @inheritdoc
      */
-    public function promoteGlobalScreenProvider() : AbstractStaticPluginMainMenuProvider
+    public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
     {
         global $DIC;
         return new Menu($DIC, $this);
@@ -90,7 +98,7 @@ class ilHub2Plugin extends ilCronHookPlugin
     /**
      * @inheritdoc
      */
-    protected function afterUninstall()/*: void*/
+    protected function afterUninstall(): void
     {
         $this->getDBInstance()->dropTable(ARUserOrigin::TABLE_NAME, false);
         $this->getDBInstance()->dropTable(ARUser::TABLE_NAME, false);
@@ -111,7 +119,7 @@ class ilHub2Plugin extends ilCronHookPlugin
         ilUtil::delDir(ILIAS_DATA_DIR . "/hub/");
     }
 
-    protected function getDBInstance() : ilDBInterface
+    protected function getDBInstance(): ilDBInterface
     {
         return property_exists(
             $this,

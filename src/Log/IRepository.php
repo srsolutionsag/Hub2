@@ -15,28 +15,11 @@ interface IRepository
 {
     public function deleteLog(ILog $log)/*: void*/ ;
 
-    public function deleteOldLogs(int $keep_old_logs_time) : int;
+    public function deleteOldLogs(int $keep_old_logs_time): int;
 
-    public function factory() : IFactory;
+    public function factory(): IFactory;
 
-    /**
-     * @param string|null     $sort_by
-     * @param string|null     $sort_by_direction
-     * @param int|null        $limit_start
-     * @param int|null        $limit_end
-     * @param string|null     $title
-     * @param string|null     $message
-     * @param ilDateTime|null $date_start
-     * @param ilDateTime|null $date_end
-     * @param int|null        $level
-     * @param int|null        $origin_id
-     * @param string|null     $origin_object_type
-     * @param string|null     $object_ext_id
-     * @param int|null        $object_ilias_id
-     * @param string|null     $additional_data
-     * @param int|null        $status
-     * @return ILog[]
-     */
+
     public function getLogs(
         string $sort_by = null,
         string $sort_by_direction = null,
@@ -53,7 +36,7 @@ interface IRepository
         int $object_ilias_id = null,
         string $additional_data = null,
         int $status = null
-    ) : array;
+    ): array;
 
     /**
      * @param string|null     $title
@@ -80,16 +63,16 @@ interface IRepository
         int $object_ilias_id = null,
         string $additional_data = null,
         int $status = null
-    ) : int;
+    ): int;
 
     /**
      * @return ILog|null
      */
     public function getLogById(int $log_id)/*: ?ILog*/ ;
 
-    public function getGlobalAdditionalData() : stdClass;
+    public function getGlobalAdditionalData(): stdClass;
 
-    public function withGlobalAdditionalData(stdClass $global_additional_data) : self;
+    public function withGlobalAdditionalData(stdClass $global_additional_data): self;
 
     public function keepLog(ILog $log)/*:void*/ ;
 
@@ -97,7 +80,7 @@ interface IRepository
      * @param int|null $level
      * @return ILog[]
      */
-    public function getKeptLogs(IOrigin $origin, /*?*/ int $level = null) : array;
+    public function getKeptLogs(IOrigin $origin, /*?*/ int $level = null): array;
 
     public function storeLog(ILog $log)/*: void*/ ;
 }

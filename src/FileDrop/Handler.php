@@ -74,14 +74,14 @@ class Handler
         $this->token = new Token();
     }
 
-    public static function getURL(string $file_drop_container) : string
+    public static function getURL(string $file_drop_container): string
     {
         return ILIAS_HTTP_PATH
             . '/' . self::PLUGIN_BASE . self::DROP_FILE
             . '?' . self::FD_CONTAINER . '=' . $file_drop_container;
     }
 
-    private function getOriginByFileDropContainer(string $file_drop_container) : IOrigin
+    private function getOriginByFileDropContainer(string $file_drop_container): IOrigin
     {
         // currently we map the file drop container to the origin id
         $origin_id = (int) ltrim($file_drop_container, 'o');
@@ -96,7 +96,7 @@ class Handler
     /**
      * @throws \ILIAS\FileUpload\Exception\IllegalStateException
      */
-    protected function processFiles() : void
+    protected function processFiles(): void
     {
         $origin = $this->getOriginByFileDropContainer($this->file_drop_container);
         $implementation_factory = new OriginImplementationFactory($origin);
@@ -118,7 +118,7 @@ class Handler
                 $result = end($this->uploaded_files);
 
                 if (null === $result || $result->getStatus()->getCode(
-                    ) !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
+                ) !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
                     $message = $result === null ? 'no file uploaded' : $result->getStatus()->getMessage();
                     throw new InternalError('Upload failed: ' . $message);
                 }
@@ -150,7 +150,7 @@ class Handler
      * @param $DIC
      * @return void
      */
-    protected function checkAuth(string $file_drop_token) : bool
+    protected function checkAuth(string $file_drop_token): bool
     {
         $origin = $this->getOriginByFileDropContainer($this->file_drop_container);
         $auth_token = $origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN);
@@ -173,12 +173,12 @@ class Handler
     /**
      * @return never
      */
-    private function throwException(\Exception $e) : void
+    private function throwException(\Exception $e): void
     {
         throw $e;
     }
 
-    private function handleException(\Throwable $e) : void
+    private function handleException(\Throwable $e): void
     {
         switch (true) {
             case $e instanceof AccessDenied:
@@ -226,7 +226,7 @@ class Handler
         }
     }
 
-    public function tryILIASInit() : void
+    public function tryILIASInit(): void
     {
         $this->prepareILIASInit();
         /** @noRector */
@@ -241,7 +241,7 @@ class Handler
     /**
      *
      */
-    public function tryILIASInitPublic() : void
+    public function tryILIASInitPublic(): void
     {
         $this->prepareILIASInit();
         global $DIC;
@@ -253,7 +253,7 @@ class Handler
         require_once "Services/Init/classes/class.ilInitialisation.php";
         ilInitialisation::initILIAS();
         $ilAuthSession = $DIC["ilAuthSession"];
-        $ilAuthSession->init();
+        //        $ilAuthSession->init();
         $ilAuthSession->regenerateId();
         $a_id = (int) ANONYMOUS_USER_ID;
         $ilAuthSession->setUserId($a_id);

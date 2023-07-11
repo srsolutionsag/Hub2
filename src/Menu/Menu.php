@@ -21,40 +21,20 @@ use srag\Plugins\Hub2\Config\ArConfig;
  */
 class Menu extends AbstractStaticPluginMainMenuProvider
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-
-    protected static $polyfill_init = false;
-
     /**
      * @inheritdoc
      */
-    public function getStaticTopItems() : array
+    public function getStaticTopItems(): array
     {
         return [];
     }
 
-    protected function initPolyfill()
-    {
-        if (!self::$polyfill_init) {
-            // Polyfill
-            if (!function_exists('array_key_first')) {
-                function array_key_first(array $array)
-                {
-                    foreach (array_keys($array) as $key) {
-                        return $key;
-                    }
-                }
-            }
-            self::$polyfill_init = true;
-        }
-    }
 
     /**
      * @inheritdoc
      */
-    public function getStaticSubItems() : array
+    public function getStaticSubItems(): array
     {
-        $this->initPolyFill();
         $obj_id = array_key_first(\ilObject2::_getObjectsByType('cmps') ?? []);
         if (!$obj_id) {
             return [];
@@ -70,10 +50,11 @@ class Menu extends AbstractStaticPluginMainMenuProvider
 
         $ref_id = array_key_first(\ilObject2::_getAllReferences($obj_id) ?? []);
         $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ref_id", $ref_id);
-        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ctype", IL_COMP_SERVICE);
+        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "ctype", 'Service');
         $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "cname", "Cron");
         $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "slot_id", "crnhk");
         $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "pname", ilHub2Plugin::PLUGIN_NAME);
+        $this->dic->ctrl()->setParameterByClass(ilHub2ConfigGUI::class, "plugin_id", ilHub2Plugin::PLUGIN_ID);
 
         $action = $this->dic->ctrl()->getLinkTargetByClass(
             [
@@ -90,12 +71,12 @@ class Menu extends AbstractStaticPluginMainMenuProvider
                                ->withTitle('HUB Sync')
                                ->withAction($action)
                                ->withAvailableCallable(
-                                   function () : bool {
+                                   function (): bool {
                                        return $this->plugin->isActive();
                                    }
                                )
                                ->withVisibilityCallable(
-                                   function () : bool {
+                                   function (): bool {
                                        $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
                                        if (null !== $config) {
                                            // replace outer brackets from array string and convert values to int
@@ -117,7 +98,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
         ];
     }
 
-    protected function symbol(AbstractBaseItem $entry) : AbstractBaseItem
+    protected function symbol(AbstractBaseItem $entry): AbstractBaseItem
     {
         return $entry->withSymbol(
             $this->dic->ui()->factory()->symbol()->icon()->custom(

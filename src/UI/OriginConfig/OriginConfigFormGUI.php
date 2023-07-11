@@ -77,7 +77,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->plugin = ilHub2Plugin::getInstance();
         parent::__construct();
         $this->parent_gui = $parent_gui;
-        $this->lng =
         $this->origin = $origin;
         $this->originRepository = $originRepository;
         $this->token = new Token();
@@ -97,7 +96,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     /**
      * @deprecated get rid of those self::plugin things
      */
-    private function translate(string $key, array $placeholders = []) : string
+    private function translate(string $key, array $placeholders = []): string
     {
         return sprintf($this->plugin->txt($key), ...$placeholders);
     }
@@ -171,7 +170,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             if ($property->descriptionKey !== '' && $property->descriptionKey !== '0') {
                 $cb->setInfo($this->translate($property->descriptionKey));
             }
-            $cb->setChecked($this->origin->properties()->updateDTOProperty($property->name));
+            $cb->setChecked((bool) $this->origin->properties()->updateDTOProperty($property->name));
             $this->addItem($cb);
         }
     }
@@ -364,7 +363,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->addItem($ro);
     }
 
-    public function getILIASFileRepositorySelector() : ilRepositorySelector2InputGUI
+    public function getILIASFileRepositorySelector(): ilRepositorySelector2InputGUI
     {
         $this->ctrl->setParameterByClass(
             hub2MainGUI::class,
@@ -573,7 +572,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         return 'config_' . $postVar;
     }
 
-    private function getLinkToResource(string $resource_identification) : string
+    private function getLinkToResource(string $resource_identification): string
     {
         $this->ctrl->setParameterByClass(hub2ConfigOriginsGUI::class, 'rid', $resource_identification);
         return "<a href=\"{$this->ctrl->getLinkTarget($this->parent_gui, hub2ConfigOriginsGUI::CMD_DOWNLOAD_RID)}\">{$resource_identification}</a>";

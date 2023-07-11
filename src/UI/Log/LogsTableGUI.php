@@ -11,6 +11,7 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
 use srag\Plugins\Hub2\UI\Table\TableGUI\TableGUI;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
+use srag\Plugins\Hub2\Log\ILog;
 
 /**
  *
@@ -67,7 +68,7 @@ class LogsTableGUI extends \ilTable2GUI
         $this->initTableData();
     }
 
-    protected function initColumns() : void
+    protected function initColumns(): void
     {
         $this->addColumn($this->plugin->txt('logs_date'), 'date');
         $this->addColumn($this->plugin->txt('logs_origin_id')); //, 'origin_id');
@@ -77,11 +78,13 @@ class LogsTableGUI extends \ilTable2GUI
         $this->addColumn($this->plugin->txt('logs_object_ilias_id')); //, 'object_ilias_id');
         $this->addColumn($this->plugin->txt('logs_level')); //, 'level');
         $this->addColumn($this->plugin->txt('logs_additional_data')); //, 'additional_data');
-//        $this->addColumn($this->plugin->txt('data_table_header_actions')); //TODO
+        //        $this->addColumn($this->plugin->txt('data_table_header_actions')); //TODO
     }
 
-    protected function fillRow($a_set)
+    protected function fillRow(array $a_set): void
     {
+        $a_set = $a_set['object'];
+
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable('VALUE', $a_set->getDate()->get(IL_CAL_DATETIME));
         $this->tpl->parseCurrentBlock();
@@ -131,7 +134,7 @@ class LogsTableGUI extends \ilTable2GUI
         // stClass to list of key value pairs, seperated by : and newlines
         $value = implode(
             "\n",
-            array_map(function ($k, $v) : string {
+            array_map(function ($k, $v): string {
                 return $k . ': ' . $v;
             }, array_keys($value), $value)
         );
@@ -142,7 +145,7 @@ class LogsTableGUI extends \ilTable2GUI
         // TODO
     }
 
-    public function initFilter() : void
+    public function initFilter(): void
     {
         $this->setDisableFilterHiding(true);
 
@@ -187,7 +190,7 @@ class LogsTableGUI extends \ilTable2GUI
         // Level
         $level_select = new \ilSelectInputGUI($this->plugin->txt('logs_level'), 'level');
         $level_select->setOptions(
-            [null => null] + array_map(function ($level) : string {
+            [null => null] + array_map(function ($level): string {
                 return $this->plugin->txt('logs_level_' . $level);
             }, Log::$levels)
         );
@@ -198,14 +201,14 @@ class LogsTableGUI extends \ilTable2GUI
         $this->addAndReadFilterItem($additional_data);
     }
 
-    protected function hasSessionValue(string $field_id) : bool
+    protected function hasSessionValue(string $field_id): bool
     {
         // Not set on first visit, false on reset filter, string if is set
         return (isset($_SESSION["form_" . $this->getId()][$field_id]) && $_SESSION["form_" . $this->getId(
-            )][$field_id] !== false);
+        )][$field_id] !== false);
     }
 
-    protected function addAndReadFilterItem(\ilFormPropertyGUI $item) : void
+    protected function addAndReadFilterItem(\ilFormPropertyGUI $item): void
     {
         $this->addFilterItem($item);
         if ($this->hasSessionValue($item->getFieldId())) { // Supports filter default values
@@ -230,7 +233,7 @@ class LogsTableGUI extends \ilTable2GUI
         }
     }
 
-    private function initTableData() : void
+    private function initTableData(): void
     {
         $this->setExternalSegmentation(true);
         $this->setExternalSorting(true);
@@ -244,42 +247,39 @@ class LogsTableGUI extends \ilTable2GUI
 
         $filter = $this->filtered;
 
-        $title = $filter["title"];
-        $message = $filter["message"];
-        $date_start = $filter["date"]["start"];
+        $title = $filter["title"] ?? null;
+        $message = $filter["message"] ?? null;
+        $date_start = $filter["date"]["start"] ?? null;
         $date_start = empty($date_start) ? null : new ilDateTime((int) $date_start, IL_CAL_UNIX);
-        $date_end = $filter["date"]["end"];
+        $date_end = $filter["date"]["end"] ?? null;
         $date_end = empty($date_end) ? null : new ilDateTime((int) $date_end, IL_CAL_UNIX);
-        $level = $filter["level"];
+        $level = $filter["level"] ?? null;
         $level = empty($level) ? null : (int) $level;
-        $origin_id = $filter["origin_id"];
+        $origin_id = $filter["origin_id"] ?? null;
         $origin_id = empty($origin_id) ? null : (int) $origin_id;
-        $origin_object_type = $filter["origin_object_type"];
-        $object_ext_id = $filter["object_ext_id"];
-        $object_ilias_id = $filter["object_ilias_id"];
+        $origin_object_type = $filter["origin_object_type"] ?? null;
+        $object_ext_id = $filter["object_ext_id"] ?? null;
+        $object_ilias_id = $filter["object_ilias_id"] ?? null;
         $object_ilias_id = empty($object_ilias_id) ? null : (int) $object_ilias_id;
         $additional_data = $filter["additional_data"] ?? '';
-        $status = (int) $filter["status"];
+        $status = (int) ($filter["status"] ?? null);
 
+        $sort_by = $this->getOrderField() === '' ? 'date' : $this->getOrderField();
         $this->setData(
-            $this->log_repo
-                ->getLogs(
-                    $this->getOrderField(),
-                    $this->getOrderDirection(),
-                    $this->getOffset(),
-                    $this->getLimit(),
-                    $title,
-                    $message,
-                    $date_start,
-                    $date_end,
-                    $level,
-                    $origin_id,
-                    $origin_object_type,
-                    $object_ext_id,
-                    $object_ilias_id,
-                    $additional_data,
-                    $status
-                )
+            $this->buildTableDataArray(
+                $sort_by,
+                $title,
+                $message,
+                $date_start,
+                $date_end,
+                $level,
+                $origin_id,
+                $origin_object_type,
+                $object_ext_id,
+                $object_ilias_id,
+                $additional_data,
+                $status
+            )
         );
 
         $this->setMaxCount(
@@ -298,5 +298,43 @@ class LogsTableGUI extends \ilTable2GUI
                     $status
                 )
         );
+    }
+
+    protected function buildTableDataArray(
+        string $sort_by,
+        mixed $title,
+        mixed $message,
+        ?ilDateTime $date_start,
+        ?ilDateTime $date_end,
+        ?int $level,
+        ?int $origin_id,
+        mixed $origin_object_type,
+        mixed $object_ext_id,
+        ?int $object_ilias_id,
+        mixed $additional_data,
+        int $status
+    ): array {
+        return array_map(function (ILog $log): array {
+            return [
+                'object' => $log,
+            ];
+        }, $this->log_repo
+            ->getLogs(
+                $sort_by,
+                $this->getOrderDirection(),
+                $this->getOffset(),
+                $this->getLimit(),
+                $title,
+                $message,
+                $date_start,
+                $date_end,
+                $level,
+                $origin_id,
+                $origin_object_type,
+                $object_ext_id,
+                $object_ilias_id,
+                $additional_data,
+                $status
+            ));
     }
 }

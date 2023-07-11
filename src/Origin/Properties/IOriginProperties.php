@@ -16,7 +16,7 @@ interface IOriginProperties
      * @param string $key
      * @return mixed
      */
-    public function get($key);
+    public function get(string $key);
 
     /**
      * Checks if the given property of a DTO object should be updated on the ILIAS object,
@@ -24,17 +24,17 @@ interface IOriginProperties
      * @param string $property
      * @return bool
      */
-    public function updateDTOProperty($property);
+    public function updateDTOProperty(string $property): bool;
 
     /**
      * Get all properties as associative array
      * @return array
      */
-    public function getData();
+    public function getData(): array;
 
     /**
      * Set all properties as associative array
      * @return $this
      */
-    public function setData(array $data);
+    public function setData(array $data): static;
 }

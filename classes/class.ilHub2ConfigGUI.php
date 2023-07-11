@@ -6,6 +6,8 @@ require_once __DIR__ . "/../vendor/autoload.php";
  * Class ilHub2ConfigGUI
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
+ *
+ * @ilCtrl_isCalledBy ilHub2ConfigGUI: ilObjComponentSettingsGUI
  */
 class ilHub2ConfigGUI extends ilPluginConfigGUI
 {
@@ -24,7 +26,7 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI
     /**
      * @param string $cmd
      */
-    public function performCommand($cmd)
+    public function performCommand(string $cmd): void
     {
         switch ($this->ctrl->getNextClass()) {
             case strtolower(hub2MainGUI::class):

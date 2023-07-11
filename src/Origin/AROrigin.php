@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use srag\Plugins\Hub2\Config\ActiveRecordConfig;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
@@ -18,7 +19,8 @@ use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 abstract class AROrigin extends ActiveRecord implements IOrigin
 {
     public const TABLE_NAME = 'sr_hub2_origin';
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
+
     /**
      * @var array
      */
@@ -37,19 +39,15 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
             IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT => IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT,
         ];
 
-    /**
-     * @return string
-     */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName(): string
     {
         return self::TABLE_NAME;
     }
 
     /**
-     * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName(): string
     {
         return self::TABLE_NAME;
     }
@@ -63,7 +61,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      * @db_length             8
      * @db_sequence           true
      */
-    protected $id = 0;
+    protected ?int $id = null;
     /**
      * @var string
      * @db_has_field           true
@@ -71,29 +69,28 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      * @db_length              32
      * @db_is_notnull
      */
-    protected $object_type;
+    protected ?string $object_type = '';
     /**
      * @var bool
      * @db_has_field           true
      * @db_fieldtype           integer
      * @db_length              1
      */
-    protected $active = 0;
+    protected ?bool $active = false;
     /**
-     * @var string
      * @db_has_field           true
      * @db_is_notnull          true
      * @db_fieldtype           text
      * @db_length              2048
      */
-    protected $title;
+    protected ?string $title = '';
     /**
      * @var string
      * @db_has_field        true
      * @db_fieldtype        text
      * @db_length           2048
      */
-    protected $description;
+    protected ?string $description = '';
     /**
      * @var string
      * @db_has_field           true
@@ -101,14 +98,14 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      * @db_length              256
      * @db_is_notnull          true
      */
-    protected $implementation_class_name = '';
+    protected ?string $implementation_class_name = '';
     /**
      * @var string
      * @db_has_field           true
      * @db_fieldtype           text
      * @db_length              256
      */
-    protected $implementation_namespace = IOrigin::ORIGIN_MAIN_NAMESPACE;
+    protected ?string $implementation_namespace = IOrigin::ORIGIN_MAIN_NAMESPACE;
     /**
      * @var string
      * @db_has_field           true
@@ -181,7 +178,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      *
      */
-    public function create() : void
+    public function create(): void
     {
         $this->created_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
         $this->setObjectType($this->parseObjectType());
@@ -197,7 +194,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      *
      */
-    public function update() : void
+    public function update(): void
     {
         $this->updated_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
         parent::update();
@@ -220,7 +217,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
                     return json_encode($this->config()->getData(), JSON_THROW_ON_ERROR);
                 }
 
-            // no break
+                // no break
             case 'properties':
                 if ($this->_properties === null) {
                     $properties = $this->getOriginProperties([]);
@@ -230,7 +227,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
                     return json_encode($this->properties()->getData(), JSON_THROW_ON_ERROR);
                 }
 
-            // no break
+                // no break
             case "adhoc":
             case "adhoc_parent_scope":
                 return ($field_value ? 1 : 0);
@@ -262,19 +259,15 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         }
     }
 
-    /**
-     *
-     */
-    public function afterObjectLoad() : void
+
+    public function afterObjectLoad(): void
     {
         $this->_config = $this->getOriginConfig($this->getConfigData());
         $this->_properties = $this->getOriginProperties($this->getPropertiesData());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getId()
+
+    public function getId(): int
     {
         return (int) $this->id;
     }
@@ -282,7 +275,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -308,7 +301,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function setDescription($description) : void
+    public function setDescription($description): void
     {
         $this->description = $description;
     }
@@ -360,7 +353,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @param string $implementation_namespace
      */
-    public function setImplementationNamespace($implementation_namespace) : void
+    public function setImplementationNamespace($implementation_namespace): void
     {
         $this->implementation_namespace = $implementation_namespace;
     }
@@ -400,7 +393,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @param string $last_run
      */
-    public function setLastRun($last_run) : void
+    public function setLastRun($last_run): void
     {
         $this->last_run = $last_run;
     }
@@ -418,38 +411,29 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function config() : \srag\Plugins\Hub2\Origin\Config\IOriginConfig
+
+    public function config(): IOriginConfig
     {
-        return $this->_config;
+        return $this->_config ?? ($this->_config = $this->getOriginConfig($this->config));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function properties() : \srag\Plugins\Hub2\Origin\Properties\IOriginProperties
+
+    public function properties(): IOriginProperties
     {
-        return $this->_properties;
+        return $this->_properties ?? ($this->_properties = $this->getOriginProperties($this->properties));
     }
 
     /**
      * Return the concrete implementation of the IOriginConfig.
-     * @return IOriginConfig
      */
-    abstract protected function getOriginConfig(array $data);
+    abstract protected function getOriginConfig(array $data): IOriginConfig;
 
     /**
      * Return the concrete implementation of the origin properties.
-     * @return IOriginProperties
      */
-    abstract protected function getOriginProperties(array $data);
+    abstract protected function getOriginProperties(array $data): IOriginProperties;
 
-    /**
-     * @return string
-     */
-    private function parseObjectType()
+    private function parseObjectType(): string
     {
         $out = [];
         preg_match('%AR(.*)Origin$%', get_class($this), $out);
@@ -457,18 +441,12 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return lcfirst($out[1]);
     }
 
-    /**
-     * @return array
-     */
-    protected function getConfigData()
+    protected function getConfigData(): array
     {
         return $this->config;
     }
 
-    /**
-     * @return array
-     */
-    protected function getPropertiesData()
+    protected function getPropertiesData(): array
     {
         return $this->properties;
     }
@@ -476,12 +454,12 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * Run Sync without Hash comparison
      */
-    public function forceUpdate() : void
+    public function forceUpdate(): void
     {
         $this->force_update = true;
     }
 
-    public function isUpdateForced() : bool
+    public function isUpdateForced(): bool
     {
         return $this->force_update;
     }
@@ -489,7 +467,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function isAdHoc() : bool
+    public function isAdHoc(): bool
     {
         return $this->adhoc;
     }
@@ -497,7 +475,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function setAdHoc(bool $adhoc) : void/*: void*/
+    public function setAdHoc(bool $adhoc): void/*: void*/
     {
         $this->adhoc = $adhoc;
     }
@@ -505,7 +483,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function isAdhocParentScope() : bool
+    public function isAdhocParentScope(): bool
     {
         return $this->adhoc_parent_scope;
     }
@@ -513,7 +491,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function setAdhocParentScope(bool $adhoc_parent_scope) : void/*: void*/
+    public function setAdhocParentScope(bool $adhoc_parent_scope): void/*: void*/
     {
         $this->adhoc_parent_scope = $adhoc_parent_scope;
     }
@@ -521,7 +499,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function getSort() : int
+    public function getSort(): int
     {
         return $this->sort;
     }
@@ -529,7 +507,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     /**
      * @inheritdoc
      */
-    public function setSort(int $sort) : void/*: void*/
+    public function setSort(int $sort): void/*: void*/
     {
         $this->sort = $sort;
     }

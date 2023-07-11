@@ -14,7 +14,7 @@ class hub2ConfigGUI extends hub2MainGUI
     public const CMD_SAVE_CONFIG = 'saveConfig';
     public const CMD_CANCEL = 'cancel';
 
-    protected function getConfigForm() : ConfigFormGUI
+    protected function getConfigForm(): ConfigFormGUI
     {
         return new ConfigFormGUI($this);
     }
@@ -37,7 +37,7 @@ class hub2ConfigGUI extends hub2MainGUI
 
         if ($form->checkInput()) {
             $form->updateConfig();
-            ilUtil::sendSuccess($this->plugin->txt('msg_successfully_saved'), true);
+            $this->tpl->setOnScreenMessage('success', $this->plugin->txt('msg_successfully_saved'), true);
             $this->ctrl->redirect($this);
         }
         $form->setValuesByPost();

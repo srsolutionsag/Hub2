@@ -4,7 +4,7 @@ namespace srag\Plugins\Hub2\Origin\Hook;
 
 class Config
 {
-    protected $all_object_hook = true;
+    protected bool $all_object_hook;
 
     public function __construct(
         bool $all_object_hook
@@ -12,7 +12,7 @@ class Config
         $this->all_object_hook = $all_object_hook;
     }
 
-    public function hasAllObjectHook() : bool
+    public function hasAllObjectHook(): bool
     {
         return $this->all_object_hook;
     }

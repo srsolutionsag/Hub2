@@ -129,7 +129,7 @@ class DataTableGUI extends ilTable2GUI
     /**
      * @inheritdoc
      */
-    public function initFilter() : void
+    public function initFilter(): void
     {
         $this->setDisableFilterHiding(true);
 
@@ -141,7 +141,7 @@ class DataTableGUI extends ilTable2GUI
         $status = new ilSelectInputGUI($this->plugin->txt('data_table_header_status'), 'status');
 
         $options = ["" => ""] + array_map(
-            function (string $txt) : string {
+            function (string $txt): string {
                 return $this->plugin->txt("data_table_status_" . $txt);
             },
             ARObject::$available_status
@@ -160,11 +160,11 @@ class DataTableGUI extends ilTable2GUI
         $this->addAndReadFilterItem($data);
     }
 
-    protected function hasSessionValue(string $field_id) : bool
+    protected function hasSessionValue(string $field_id): bool
     {
         // Not set on first visit, false on reset filter, string if is set
         return (isset($_SESSION["form_" . $this->getId()][$field_id]) && $_SESSION["form_" . $this->getId(
-            )][$field_id] !== false);
+        )][$field_id] !== false);
     }
 
     protected function addAndReadFilterItem(ilFormPropertyGUI $item)
@@ -247,7 +247,7 @@ class DataTableGUI extends ilTable2GUI
      * @throws ilTemplateException
      * @throws DICException
      */
-    protected function fillRow($a_set)
+    protected function fillRow(array $a_set): void
     {
         $this->ctrl->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
         $this->ctrl->setParameter($this->parent_obj, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
@@ -336,7 +336,7 @@ class DataTableGUI extends ilTable2GUI
     /**
      * @param int $a_row
      */
-    protected function fillHeaderExcel(ilExcel $a_excel, &$a_row)
+    protected function fillHeaderExcel(ilExcel $a_excel, int &$a_row): void
     {
         $col = 0;
 
@@ -352,12 +352,8 @@ class DataTableGUI extends ilTable2GUI
      * @param int   $row
      * @param array $result
      */
-    protected function fillRowExcel(
-        ilExcel $excel, /*int*/
-        &$row, /*array*/
-        $result
-    ) {/*: void*/
-
+    protected function fillRowExcel(ilExcel $a_excel, int &$row, array $result): void
+    {
         $col = 0;
         foreach ($result as $key => $value) {
             switch ($key) {
@@ -380,7 +376,7 @@ class DataTableGUI extends ilTable2GUI
      * @param int          $ilias_id
      * @param IOrigin|null $origin
      */
-    protected function renderILIASLinkForIliasId($ilias_id, string $ext_id, IOrigin $origin = null) : string
+    protected function renderILIASLinkForIliasId($ilias_id, string $ext_id, IOrigin $origin = null): string
     {
         if (!$origin instanceof \srag\Plugins\Hub2\Origin\IOrigin) {
             return (string) $ilias_id;
@@ -401,7 +397,7 @@ class DataTableGUI extends ilTable2GUI
         }
     }
 
-    protected function getFields() : array
+    protected function getFields(): array
     {
         return [
             self::F_ORIGIN_ID,

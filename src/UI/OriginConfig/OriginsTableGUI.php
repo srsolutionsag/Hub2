@@ -125,7 +125,7 @@ class OriginsTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    protected function fillRow($a_set)
+    protected function fillRow(array $a_set): void
     {
         foreach ($a_set as $value) {
             $this->tpl->setCurrentBlock('cell');

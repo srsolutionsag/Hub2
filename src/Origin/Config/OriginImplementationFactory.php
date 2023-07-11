@@ -19,10 +19,7 @@ use srag\Plugins\Hub2\Taxonomy\TaxonomyFactory;
  */
 class OriginImplementationFactory
 {
-    /**
-     * @var IOrigin
-     */
-    protected $origin;
+    protected \srag\Plugins\Hub2\Origin\IOrigin $origin;
 
     public function __construct(IOrigin $origin)
     {
@@ -49,13 +46,6 @@ class OriginImplementationFactory
             throw new HubException("Origin implementation namespace\\class does not exist, should be: $class");
         }
 
-        return new $class(
-            $this->origin->config(),
-            new DataTransferObjectFactory(),
-            new MetadataFactory(),
-            new TaxonomyFactory(),
-            new MappingStrategyFactory(),
-            $this->origin
-        );
+        return new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
     }
 }

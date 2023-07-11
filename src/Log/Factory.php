@@ -29,7 +29,7 @@ final class Factory implements IFactory
      */
     protected $log_repo;
 
-    public static function getInstance() : IFactory
+    public static function getInstance(): IFactory
     {
         if (self::$instance === null) {
             self::setInstance(new self());
@@ -38,7 +38,7 @@ final class Factory implements IFactory
         return self::$instance;
     }
 
-    public static function setInstance(IFactory $instance) : void/*: void*/
+    public static function setInstance(IFactory $instance): void/*: void*/
     {
         self::$instance = $instance;
     }
@@ -54,7 +54,7 @@ final class Factory implements IFactory
     /**
      * @inheritdoc
      */
-    public function log() : ILog
+    public function log(): ILog
     {
         return (new Log())->withAdditionalData(clone $this->log_repo->getGlobalAdditionalData());
     }
@@ -62,7 +62,7 @@ final class Factory implements IFactory
     /**
      * @inheritdoc
      */
-    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null) : ILog
+    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog
     {
         $log = $this->log()->withOriginId($origin->getId())->withOriginObjectType($origin->getObjectType());
 
@@ -70,7 +70,7 @@ final class Factory implements IFactory
             $log->withObjectExtId($object->getExtId())
                 ->withObjectIliasId($object->getILIASId())
                 ->withStatus($object->getStatus())
-                ->withAdditionalData((object) $object->getData()['additionalData']);
+                ->withAdditionalData((object) ($object->getData()['additionalData']?? new stdClass()));
         }
 
         if ($dto instanceof \srag\Plugins\Hub2\Object\DTO\IDataTransferObject) {
@@ -102,13 +102,13 @@ final class Factory implements IFactory
         IOrigin $origin = null,
         IObject $object = null,
         IDataTransferObject $dto = null
-    ) : ILog {
+    ): ILog {
         $log = $this->originLog($origin, $object, $dto);
 
         $log->withLevel(ILog::LEVEL_EXCEPTION);
         $log->withMessage($ex->getMessage());
         $relevant = true;
-        $filter = static function (array $stack) use (&$relevant) : bool {
+        $filter = static function (array $stack) use (&$relevant): bool {
             $relevant = strpos($stack["file"], 'OriginSync.php') === false && $relevant;
             return $relevant;
         };
@@ -129,7 +129,7 @@ final class Factory implements IFactory
     /**
      * @inheritdoc
      */
-    public function fromDB(stdClass $data) : ILog
+    public function fromDB(stdClass $data): ILog
     {
         return $this->log()->withLogId($data->log_id)->withTitle($data->title)->withMessage($data->message)
                     ->withDate(

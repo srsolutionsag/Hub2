@@ -25,15 +25,9 @@ interface IOrigin
     public const OBJECT_TYPE_COMPETENCE_MANAGEMENT = "competenceManagement";
     public const ORIGIN_MAIN_NAMESPACE = "srag\\Plugins\\Hub2\\Origin";
 
-    /**
-     * @return int
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @return string
-     */
-    public function getTitle();
+    public function getTitle(): string;
 
     /**
      * @param string $title
@@ -109,15 +103,13 @@ interface IOrigin
 
     /**
      * Get access to all configuration data of this origin.
-     * @return IOriginConfig
      */
-    public function config();
+    public function config(): IOriginConfig;
 
     /**
      * Get access to all properties data of this origin.
-     * @return IOriginProperties
      */
-    public function properties();
+    public function properties(): IOriginProperties;
 
     /**
      * @return string
@@ -144,9 +136,9 @@ interface IOrigin
      */
     public function forceUpdate();
 
-    public function isUpdateForced() : bool;
+    public function isUpdateForced(): bool;
 
-    public function isAdHoc() : bool;
+    public function isAdHoc(): bool;
 
     /**
      * @param bool $active
@@ -154,12 +146,12 @@ interface IOrigin
     public function setAdHoc(bool $adhoc)/*: void*/
     ;
 
-    public function isAdhocParentScope() : bool;
+    public function isAdhocParentScope(): bool;
 
     public function setAdhocParentScope(bool $adhoc_parent_scope)/*: void*/
     ;
 
-    public function getSort() : int;
+    public function getSort(): int;
 
     public function setSort(int $sort)/*: void*/
     ;

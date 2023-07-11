@@ -13,6 +13,12 @@ use srag\Plugins\Hub2\UI\CustomView\BaseCustomViewGUI;
 class hub2CustomViewGUI
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    private \ilGlobalTemplateInterface $main_tpl;
+    public function __construct()
+    {
+        global $DIC;
+        $this->main_tpl = $DIC->ui()->mainTemplate();
+    }
 
     /**
      *
@@ -39,13 +45,11 @@ class hub2CustomViewGUI
                 throw new Exception("Class " . $class_name . " is not an instance of BaseCustomViewGUI");
             }
         } catch (Throwable $e) {
-            ilUtil::sendInfo(
-                self::plugin()->translate("admin_custom_view_class_not_found_1") . " '"
-                . ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH) . "' " . self::plugin()->translate(
-                    "admin_custom_view_class_not_found_2"
-                )
-                . " Error: " . $e->getMessage()
-            );
+            $this->main_tpl->setOnScreenMessage('info', self::plugin()->translate("admin_custom_view_class_not_found_1") . " '"
+            . ArConfig::getField(ArConfig::KEY_CUSTOM_VIEWS_PATH) . "' " . self::plugin()->translate(
+                "admin_custom_view_class_not_found_2"
+            )
+            . " Error: " . $e->getMessage());
         }
         $class->executeCommand();
     }

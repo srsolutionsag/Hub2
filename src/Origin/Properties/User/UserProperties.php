@@ -12,12 +12,7 @@ use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
  */
 class UserProperties extends OriginProperties implements IUserProperties
 {
-    /**
-     * Default values
-     * @var array
-     */
-    protected $data
-        = [
+    protected array $data = [
             self::ACTIVATE_ACCOUNT => true,
             self::CREATE_PASSWORD => false,
             self::SEND_PASSWORD => false,
@@ -29,9 +24,6 @@ class UserProperties extends OriginProperties implements IUserProperties
             self::DELETE => self::DELETE_MODE_NONE,
         ];
 
-    /**
-     * @inheritdoc
-     */
     public static function getAvailableDeleteModes(): array
     {
         return [

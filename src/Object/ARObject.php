@@ -57,7 +57,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName(): string
     {
         return static::TABLE_NAME;
     }
@@ -66,7 +66,7 @@ abstract class ARObject extends ActiveRecord implements IObject
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName(): string
     {
         return static::TABLE_NAME;
     }
@@ -176,7 +176,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      *
      */
-    public function afterObjectLoad() : void
+    public function afterObjectLoad(): void
     {
         $this->clone = clone $this;
     }
@@ -268,7 +268,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function update() : void
+    public function update(): void
     {
         $this->hash_code = $this->computeHashCode();
         parent::update();
@@ -295,7 +295,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function create()
+    public function create(): void
     {
         if ($this->origin_id === 0) {
             throw new Exception("Origin-ID is missing, cannot construct the primary key");
@@ -339,7 +339,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getDeliveryDate() : DateTime
+    public function getDeliveryDate(): DateTime
     {
         return new DateTime($this->delivery_date);
     }
@@ -347,7 +347,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getProcessedDate() : DateTime
+    public function getProcessedDate(): DateTime
     {
         return new DateTime($this->processed_date);
     }
@@ -355,7 +355,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function setDeliveryDate(int $unix_timestamp) : void
+    public function setDeliveryDate(int $unix_timestamp): void
     {
         $this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
@@ -363,7 +363,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function setProcessedDate(int $unix_timestamp) : void
+    public function setProcessedDate(int $unix_timestamp): void
     {
         $this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
@@ -389,7 +389,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function getStatus() : int
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -456,7 +456,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @inheritdoc
      */
-    public function setData(array $data) : void
+    public function setData(array $data): void
     {
         $this->data = $data;
         if (isset($data['period'])) {

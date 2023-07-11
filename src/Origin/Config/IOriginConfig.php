@@ -41,12 +41,12 @@ interface IOriginConfig
     /**
      * Returns all the config data as associative array
      */
-    public function getData() : array;
+    public function getData(): array;
 
     /**
      * @return $this
      */
-    public function setData(array $data);
+    public function setData(array $data): static;
 
     /**
      * @return mixed
@@ -62,69 +62,69 @@ interface IOriginConfig
     /**
      * @throws ConnectionFailedException
      */
-    public function getConnectionType() : int;
+    public function getConnectionType(): int;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getPath() : string;
+    public function getPath(): string;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getServerHost() : string;
+    public function getServerHost(): string;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getServerPort() : int;
+    public function getServerPort(): int;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getServerUsername() : string;
+    public function getServerUsername(): string;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getServerPassword() : string;
+    public function getServerPassword(): string;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getServerDatabase() : string;
+    public function getServerDatabase(): string;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getServerSearchBase() : string;
+    public function getServerSearchBase(): string;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getIliasFileRefId() : int;
+    public function getIliasFileRefId(): int;
 
     /**
      * @throws ConnectionFailedException
      */
-    public function getIliasFilePath() : string;
+    public function getIliasFilePath(): string;
 
-    public function getActivePeriod() : string;
+    public function getActivePeriod(): string;
 
-    public function getCheckAmountData() : bool;
+    public function getCheckAmountData(): bool;
 
-    public function getCheckAmountDataPercentage() : int;
+    public function getCheckAmountDataPercentage(): int;
 
-    public function useShortLink() : bool;
+    public function useShortLink(): bool;
 
-    public function useShortLinkForcedLogin() : bool;
+    public function useShortLinkForcedLogin(): bool;
 
     /**
      * Get the ID of another origin which has been selected over the configuration GUI
      */
-    public function getLinkedOriginId() : int;
+    public function getLinkedOriginId(): int;
 
-    public function getNotificationsSummary() : array;
+    public function getNotificationsSummary(): array;
 
-    public function getNotificationsErrors() : array;
+    public function getNotificationsErrors(): array;
 }

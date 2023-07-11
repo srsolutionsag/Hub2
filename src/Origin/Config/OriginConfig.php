@@ -14,63 +14,30 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
  */
 class OriginConfig implements IOriginConfig
 {
-    /**
-     * @var array
-     */
-    protected $data
-        = [
-            self::CHECK_AMOUNT => false,
-            self::CHECK_AMOUNT_PERCENTAGE => 10,
-            self::SHORT_LINK => false,
-            self::SHORT_LINK_FORCE_LOGIN => false,
-            self::NOTIFICATION_ERRORS => '',
-            self::NOTIFICATION_SUMMARY => '',
-            self::CONNECTION_TYPE => IOriginConfig::CONNECTION_TYPE_FILE_DROP,
-            self::PATH => '',
-            self::SERVER_HOST => '',
-            self::SERVER_PORT => '',
-            self::SERVER_USERNAME => '',
-            self::SERVER_PASSWORD => '',
-            self::SERVER_DATABASE => '',
-            self::SERVER_SEARCH_BASE => '',
-            self::ACTIVE_PERIOD => '',
-            self::LINKED_ORIGIN_ID => 0,
-            self::ILIAS_FILE_REF_ID => 0,
-            self::FILE_DROP_AUTH_TOKEN => null
-        ];
+    protected array $data = [];
 
     public function __construct(array $data)
     {
         $this->data = array_merge($this->data, $data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getData() : array
+    public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setData(array $data) : void
+    public function setData(array $data): static
     {
         $this->data = array_merge($this->data, $data);
+
+        return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function get(string $key)
     {
         return $this->data[$key] ?? null;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getCustom(string $key)
     {
         $key = self::CUSTOM_PREFIX . $key;
@@ -78,21 +45,17 @@ class OriginConfig implements IOriginConfig
         return $this->get($key);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getConnectionType() : int
+    public function getConnectionType(): int
     {
         return (int) $this->get(self::CONNECTION_TYPE);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPath() : string
+    public function getPath(): string
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_PATH && $this->getConnectionType(
-            ) !== self::CONNECTION_TYPE_FILE_DROP) {
+        if (
+            $this->getConnectionType() !== self::CONNECTION_TYPE_PATH
+            && $this->getConnectionType() !== self::CONNECTION_TYPE_FILE_DROP
+        ) {
             throw new ConnectionFailedException("Please set connection type to path to use getPath");
         }
 
@@ -118,10 +81,7 @@ class OriginConfig implements IOriginConfig
         return $path;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServerHost() : string
+    public function getServerHost(): string
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerHost");
@@ -130,10 +90,7 @@ class OriginConfig implements IOriginConfig
         return $this->get(self::SERVER_HOST);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServerPort() : int
+    public function getServerPort(): int
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerPort");
@@ -142,10 +99,7 @@ class OriginConfig implements IOriginConfig
         return (int) $this->get(self::SERVER_PORT);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServerUsername() : string
+    public function getServerUsername(): string
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerUsername");
@@ -154,10 +108,7 @@ class OriginConfig implements IOriginConfig
         return $this->get(self::SERVER_USERNAME);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServerPassword() : string
+    public function getServerPassword(): string
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerPassword");
@@ -166,10 +117,7 @@ class OriginConfig implements IOriginConfig
         return $this->get(self::SERVER_PASSWORD);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServerDatabase() : string
+    public function getServerDatabase(): string
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerDatabase");
@@ -178,10 +126,7 @@ class OriginConfig implements IOriginConfig
         return $this->get(self::SERVER_DATABASE);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getServerSearchBase() : string
+    public function getServerSearchBase(): string
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerSearchBase");
@@ -190,10 +135,7 @@ class OriginConfig implements IOriginConfig
         return $this->get(self::SERVER_SEARCH_BASE);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIliasFileRefId() : int
+    public function getIliasFileRefId(): int
     {
         if ($this->getConnectionType() !== self::CONNECTION_TYPE_ILIAS_FILE) {
             throw new ConnectionFailedException("Please set connection type to ILIAS file to use getIliasFileRefId");
@@ -208,10 +150,7 @@ class OriginConfig implements IOriginConfig
         return $ilias_file_ref_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIliasFilePath() : string
+    public function getIliasFilePath(): string
     {
         $ilias_file_ref_id = $this->getIliasFileRefId();
 
@@ -226,66 +165,42 @@ class OriginConfig implements IOriginConfig
         return $path;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getActivePeriod() : string
+    public function getActivePeriod(): string
     {
         return $this->get(self::ACTIVE_PERIOD);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCheckAmountData() : bool
+    public function getCheckAmountData(): bool
     {
         return (bool) $this->get(self::CHECK_AMOUNT);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getCheckAmountDataPercentage() : int
+    public function getCheckAmountDataPercentage(): int
     {
         return (int) $this->get(self::CHECK_AMOUNT_PERCENTAGE);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function useShortLink() : bool
+    public function useShortLink(): bool
     {
         return (bool) $this->get(self::SHORT_LINK);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function useShortLinkForcedLogin() : bool
+    public function useShortLinkForcedLogin(): bool
     {
         return (bool) $this->get(self::SHORT_LINK_FORCE_LOGIN);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getLinkedOriginId() : int
+    public function getLinkedOriginId(): int
     {
         return (int) $this->get(self::LINKED_ORIGIN_ID);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNotificationsSummary() : array
+    public function getNotificationsSummary(): array
     {
         return explode(',', $this->get(self::NOTIFICATION_SUMMARY));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNotificationsErrors() : array
+    public function getNotificationsErrors(): array
     {
         return explode(',', $this->get(self::NOTIFICATION_ERRORS));
     }

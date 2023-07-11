@@ -24,34 +24,16 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
 abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var IMappingStrategyFactory
-     */
-    private $mapping_strategy_factory;
-    /**
-     * @var ITaxonomyFactory
-     */
-    private $taxonomyFactory;
-    /**
-     * @var IMetadataFactory
-     */
-    private $metadataFactory;
-    /**
-     * @var IOriginConfig
-     */
-    private $originConfig;
-    /**
-     * @var IDataTransferObjectFactory
-     */
-    private $factory;
+    private \srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory $mapping_strategy_factory;
+    private \srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory $taxonomyFactory;
+    private \srag\Plugins\Hub2\Metadata\IMetadataFactory $metadataFactory;
+    private \srag\Plugins\Hub2\Origin\Config\IOriginConfig $originConfig;
+    private \srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory $factory;
     /**
      * @var array
      */
     protected $data = [];
-    /**
-     * @var IOrigin
-     */
-    protected $origin;
+    protected \srag\Plugins\Hub2\Origin\IOrigin $origin;
 
     /**
      * AbstractOriginImplementation constructor
@@ -90,19 +72,19 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
         return $this->factory;
     }
 
-    public function hookConfig() : Config
+    public function hookConfig(): Config
     {
         return new Config(
             true
         );
     }
 
-    final protected function log(IDataTransferObject $dto = null) : ILog
+    final protected function log(IDataTransferObject $dto = null): ILog
     {
         return LogRepository::getInstance()->factory()->originLog($this->origin, null, $dto);
     }
 
-    final protected function mapping() : IMappingStrategyFactory
+    final protected function mapping(): IMappingStrategyFactory
     {
         return $this->mapping_strategy_factory;
     }
@@ -128,7 +110,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     /**
      * @inheritdoc
      */
-    public function overrideStatus(HookObject $hook) : void
+    public function overrideStatus(HookObject $hook): void
     {
         // TODO: Implement overrideStatus() method.
     }
@@ -136,22 +118,22 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     /**
      * @inheritdoc
      */
-    public function getAdHocParentScopesAsExtIds() : array
+    public function getAdHocParentScopesAsExtIds(): array
     {
         return [];
     }
 
-    public function handleNoLongerDeliveredObject(HookObject $hook) : void
+    public function handleNoLongerDeliveredObject(HookObject $hook): void
     {
         // TODO: Implement handleOutdated() method.
     }
 
-    public function handleAllObjects(HookObject $hook) : void
+    public function handleAllObjects(HookObject $hook): void
     {
         // TODO: Implement handleAllObjects() method.
     }
 
-    public function canDroppedFileContentBestored(string $content) : bool
+    public function canDroppedFileContentBestored(string $content): bool
     {
         return true;
     }

@@ -237,7 +237,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param $source_id
      * @return array<int|string, array{type: int}>
      */
-    protected function getCloneOptions($source_id) : array
+    protected function getCloneOptions($source_id): array
     {
         $options = [];
         foreach ($this->tree->getSubTree($root = $this->tree->getNodeData($source_id)) as $node) {
@@ -261,7 +261,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * This is a leaner version of ilContainer::cloneAllObject, which doens't use soap
      * @return int $ref_id
      */
-    public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options) : int
+    public function cloneAllObject(int $parent_ref_id, int $clone_source, array $options): int
     {
         // Save wizard options
         $copy_id = ilCopyWizardOptions::_allocateCopyId();
@@ -308,9 +308,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         //There is some weird connection between subscription limitation type ond subscription type, see e.g. ilObjCourseGUI
         $ilObjCourse->setSubscriptionType($dto->getSubscriptionLimitationType());
         if ($dto->getSubscriptionLimitationType() == CourseDTO::SUBSCRIPTION_TYPE_DEACTIVATED) {
-            $ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_DEACTIVATED);
+            $ilObjCourse->setSubscriptionLimitationType(\ilCourseConstants::IL_CRS_SUBSCRIPTION_DEACTIVATED);
         } else {
-            $ilObjCourse->setSubscriptionLimitationType(IL_CRS_SUBSCRIPTION_UNLIMITED);
+            $ilObjCourse->setSubscriptionLimitationType(\ilCourseConstants::IL_CRS_SUBSCRIPTION_UNLIMITED);
         }
     }
 
@@ -501,7 +501,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     /**
      * @throws HubException
      */
-    protected function determineParentRefId(CourseDTO $course) : int
+    protected function determineParentRefId(CourseDTO $course): int
     {
         return $this->parent_resolver->resolveParentRefId($course);
     }
@@ -557,7 +557,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $cache[$cacheKey];
         }
         $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
-        $matches = array_filter($categories, static function ($category) use ($title) : bool {
+        $matches = array_filter($categories, static function ($category) use ($title): bool {
             return $category['title'] === $title;
         });
         if ($matches !== []) {

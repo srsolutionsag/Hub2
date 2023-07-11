@@ -36,17 +36,17 @@ class DeleteOldLogsJob extends ilCronJob
     /**
      * Get id
      */
-    public function getId() : string
+    public function getId(): string
     {
         return self::CRON_JOB_ID;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return ilHub2Plugin::PLUGIN_NAME . ": " . $this->plugin->txt("logs_cron");
     }
 
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->plugin->txt("logs_cron_description");
     }
@@ -54,7 +54,7 @@ class DeleteOldLogsJob extends ilCronJob
     /**
      * Is to be activated on "installation"
      */
-    public function hasAutoActivation() : bool
+    public function hasAutoActivation(): bool
     {
         return true;
     }
@@ -62,7 +62,7 @@ class DeleteOldLogsJob extends ilCronJob
     /**
      * Can the schedule be configured?
      */
-    public function hasFlexibleSchedule() : bool
+    public function hasFlexibleSchedule(): bool
     {
         return true;
     }
@@ -70,7 +70,7 @@ class DeleteOldLogsJob extends ilCronJob
     /**
      * Get schedule type
      */
-    public function getDefaultScheduleType() : int
+    public function getDefaultScheduleType(): int
     {
         return self::SCHEDULE_TYPE_DAILY;
     }
@@ -79,7 +79,7 @@ class DeleteOldLogsJob extends ilCronJob
      * Get schedule value
      * @return int|array
      */
-    public function getDefaultScheduleValue()
+    public function getDefaultScheduleValue(): ?int
     {
         return null;
     }
@@ -87,7 +87,7 @@ class DeleteOldLogsJob extends ilCronJob
     /**
      * Run job
      */
-    public function run() : ilCronJobResult
+    public function run(): ilCronJobResult
     {
         $keep_old_logs_time = ArConfig::getField(ArConfig::KEY_KEEP_OLD_LOGS_TIME);
 
