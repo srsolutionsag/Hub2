@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.4.1]
+- [FIX] Fixed Sorting in Origins Table
+
 ## [3.4.0]
 - [FEATURE] Support for Learning Progress Settings in Courses 
 
