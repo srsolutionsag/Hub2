@@ -3,7 +3,7 @@
         'name' => 'srsolutions/hub2',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => '05e196834ecf4932c00413825433abae35acde30',
+        'reference' => '16af15e8036e839ab2a729b78b9a57184a7d62ff',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -274,7 +274,7 @@
         'srsolutions/hub2' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => '05e196834ecf4932c00413825433abae35acde30',
+            'reference' => '16af15e8036e839ab2a729b78b9a57184a7d62ff',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

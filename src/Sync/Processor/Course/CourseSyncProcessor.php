@@ -30,6 +30,7 @@ use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CourseParentResolver;
 use srag\Plugins\Hub2\Sync\Processor\General\NewsSettingsSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\General\LearningProgressSettingsSyncProcessor;
 
 /**
  * Class CourseSyncProcessor
@@ -43,6 +44,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
     use NewsSettingsSyncProcessor;
+    use LearningProgressSettingsSyncProcessor;
 
     /**
      * @var CourseProperties
@@ -225,7 +227,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 
         $this->handleNewsSettings($dto, $ilObjCourse);
-
+        
+        $this->handleLPSettings($dto, $ilObjCourse);
+        
         $ilObjCourse->update();
 
         $this->handleOrdering($dto, $ilObjCourse);
@@ -470,7 +474,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if ($this->props->updateDTOProperty("newsSettings")) {
             $this->handleNewsSettings($dto, $ilObjCourse);
         }
-
+        
+        // LP Settings
+        if ($this->props->updateDTOProperty("learningProgressSettings")) {
+            $this->handleLPSettings($dto, $ilObjCourse);
+        }
+    
         // move/put in tree
         // Find the refId under which this course should be created
         $parent_ref_id = $this->determineParentRefId($dto);
