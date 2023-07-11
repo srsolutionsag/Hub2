@@ -121,7 +121,9 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests
     protected function initDTO()
     {
         $this->dto = new SessionDTO('extIdOfSession');
-        $this->dto->setParentId(1)->setParentIdType(SessionDTO::PARENT_ID_TYPE_REF_ID)->setTitle('Title')->setDescription('Description')
+        $this->dto->setParentId(1)->setParentIdType(SessionDTO::PARENT_ID_TYPE_REF_ID)->setTitle(
+            'Title'
+        )->setDescription('Description')
                   ->setLocation('Location');
     }
 

@@ -13,7 +13,6 @@ interface IGroupActivities
 {
     /**
      * Returns true if any activities happened in the given group, false otherwise.
-     * @param ilObjGroup $ilObjGroup
      * @return bool
      */
     public function hasActivities(ilObjGroup $ilObjGroup);

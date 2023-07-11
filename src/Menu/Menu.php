@@ -40,7 +40,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
             if (!function_exists('array_key_first')) {
                 function array_key_first(array $array)
                 {
-                    foreach ($array as $key => $value) {
+                    foreach (array_keys($array) as $key) {
                         return $key;
                     }
                 }
@@ -117,10 +117,6 @@ class Menu extends AbstractStaticPluginMainMenuProvider
         ];
     }
 
-    /**
-     * @param AbstractBaseItem $entry
-     * @return AbstractBaseItem
-     */
     protected function symbol(AbstractBaseItem $entry) : AbstractBaseItem
     {
         return $entry->withSymbol(

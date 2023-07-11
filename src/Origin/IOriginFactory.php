@@ -17,25 +17,18 @@ interface IOriginFactory
      */
     public function getById($id); //Correct return type would by : ?IOrigin, but this is PHP7.1+
 
-    /**
-     * @param string $type
-     * @return IOrigin
-     */
-    public function createByType(string $type): IOrigin;
+    public function createByType(string $type) : IOrigin;
 
     /**
      * @return IOrigin[]
      */
-    public function getAllActive(): array;
+    public function getAllActive() : array;
 
     /**
      * @return IOrigin[]
      */
-    public function getAll(): array;
+    public function getAll() : array;
 
-    /**
-     * @param int $origin_id
-     */
     public function delete(int $origin_id)/*: void*/
     ;
 }

@@ -4,18 +4,13 @@ namespace srag\Plugins\Hub2\UI\Log;
 
 use ilDateTime;
 use ilHub2Plugin;
-use ilSelectInputGUI;
-use ilTextInputGUI;
-use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Origin\AROrigin;
-use stdClass;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
 use srag\Plugins\Hub2\UI\Table\TableGUI\TableGUI;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
-use srag\Plugins\Hub2\Object\IObject;
 
 /**
  *
@@ -87,7 +82,6 @@ class LogsTableGUI extends \ilTable2GUI
 
     protected function fillRow($a_set)
     {
-        /** @var Log $a_set */
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable('VALUE', $a_set->getDate()->get(IL_CAL_DATETIME));
         $this->tpl->parseCurrentBlock();
@@ -133,13 +127,14 @@ class LogsTableGUI extends \ilTable2GUI
 
         $this->tpl->setCurrentBlock('cell');
         $value = $a_set->getAdditionalData();
+        $value = get_object_vars($value);
         // stClass to list of key value pairs, seperated by : and newlines
-        if (is_object($value)) {
-            $value = get_object_vars($value);
-            $value = implode("\n", array_map(function ($k, $v) {
+        $value = implode(
+            "\n",
+            array_map(function ($k, $v) : string {
                 return $k . ': ' . $v;
-            }, array_keys($value), $value));
-        }
+            }, array_keys($value), $value)
+        );
         $this->tpl->setVariable('VALUE', $value);
         $this->tpl->parseCurrentBlock();
 
@@ -147,7 +142,7 @@ class LogsTableGUI extends \ilTable2GUI
         // TODO
     }
 
-    public function initFilter()
+    public function initFilter() : void
     {
         $this->setDisableFilterHiding(true);
 
@@ -192,7 +187,7 @@ class LogsTableGUI extends \ilTable2GUI
         // Level
         $level_select = new \ilSelectInputGUI($this->plugin->txt('logs_level'), 'level');
         $level_select->setOptions(
-            [null => null] + array_map(function ($level) {
+            [null => null] + array_map(function ($level) : string {
                 return $this->plugin->txt('logs_level_' . $level);
             }, Log::$levels)
         );
@@ -203,10 +198,6 @@ class LogsTableGUI extends \ilTable2GUI
         $this->addAndReadFilterItem($additional_data);
     }
 
-    /**
-     * @param string $field_id
-     * @return bool
-     */
     protected function hasSessionValue(string $field_id) : bool
     {
         // Not set on first visit, false on reset filter, string if is set
@@ -214,9 +205,6 @@ class LogsTableGUI extends \ilTable2GUI
             )][$field_id] !== false);
     }
 
-    /**
-     * @param ilFormPropertyGUI $item
-     */
     protected function addAndReadFilterItem(\ilFormPropertyGUI $item) : void
     {
         $this->addFilterItem($item);
@@ -228,10 +216,13 @@ class LogsTableGUI extends \ilTable2GUI
                 $this->filtered[$item->getPostVar()] = $item->getChecked();
                 break;
             case ($item instanceof \ilDateDurationInputGUI):
-                if ($item->getStart() !== null && $item->getEnd() !== null) {
-                    $this->filtered[$item->getPostVar()]["start"] = $item->getStart()->get(IL_CAL_UNIX);
-                    $this->filtered[$item->getPostVar()]["end"] = $item->getEnd()->get(IL_CAL_UNIX);
-                }
+                $this->filtered[$item->getPostVar()]["start"] = $item->getStart() === null
+                    ? null
+                    : $item->getStart()->get(IL_CAL_UNIX);
+
+                $this->filtered[$item->getPostVar()]["end"] = $item->getEnd() === null
+                    ? null
+                    : $item->getEnd()->get(IL_CAL_UNIX);
                 break;
             default:
                 $this->filtered[$item->getPostVar()] = $item->getValue();
@@ -256,37 +247,17 @@ class LogsTableGUI extends \ilTable2GUI
         $title = $filter["title"];
         $message = $filter["message"];
         $date_start = $filter["date"]["start"];
-        if (!empty($date_start)) {
-            $date_start = new ilDateTime((int) $date_start, IL_CAL_UNIX);
-        } else {
-            $date_start = null;
-        }
+        $date_start = empty($date_start) ? null : new ilDateTime((int) $date_start, IL_CAL_UNIX);
         $date_end = $filter["date"]["end"];
-        if (!empty($date_end)) {
-            $date_end = new ilDateTime((int) $date_end, IL_CAL_UNIX);
-        } else {
-            $date_end = null;
-        }
+        $date_end = empty($date_end) ? null : new ilDateTime((int) $date_end, IL_CAL_UNIX);
         $level = $filter["level"];
-        if (!empty($level)) {
-            $level = (int) $level;
-        } else {
-            $level = null;
-        }
+        $level = empty($level) ? null : (int) $level;
         $origin_id = $filter["origin_id"];
-        if (!empty($origin_id)) {
-            $origin_id = (int) $origin_id;
-        } else {
-            $origin_id = null;
-        }
+        $origin_id = empty($origin_id) ? null : (int) $origin_id;
         $origin_object_type = $filter["origin_object_type"];
         $object_ext_id = $filter["object_ext_id"];
         $object_ilias_id = $filter["object_ilias_id"];
-        if (!empty($object_ilias_id)) {
-            $object_ilias_id = (int) $object_ilias_id;
-        } else {
-            $object_ilias_id = null;
-        }
+        $object_ilias_id = empty($object_ilias_id) ? null : (int) $object_ilias_id;
         $additional_data = $filter["additional_data"] ?? '';
         $status = (int) $filter["status"];
 

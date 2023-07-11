@@ -21,8 +21,5 @@ interface ICategoryProperties extends IOriginProperties
     public const DELETE_MODE_MARK = 1;
     public const DELETE_MODE_DELETE = 2;
 
-    /**
-     * @return array
-     */
-    public static function getAvailableDeleteModes(): array;
+    public static function getAvailableDeleteModes() : array;
 }

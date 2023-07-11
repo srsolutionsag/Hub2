@@ -79,12 +79,6 @@ class OriginSync implements IOriginSync
             IObject::STATUS_FAILED => 0,
         ];
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IObjectRepository       $repository
-     * @param IObjectFactory          $factory
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IObjectRepository $repository,
@@ -148,7 +142,6 @@ class OriginSync implements IOriginSync
 
         $objects_to_outdated_map = new \SplObjectStorage();
         $ext_ids_delivered = [];
-        $counter = 0;
         $notifier->notify('start looping DTOs');
         foreach ($this->dtoObjects as $dto) {
             $notifier->notifySometimes('processed DTOs');
@@ -180,18 +173,15 @@ class OriginSync implements IOriginSync
                     $objects_to_outdated_map->attach($item);
                 }
             }
-        } else {
-            if ($this->origin->isAdHoc() && $this->origin->isAdhocParentScope()) {
-                $adhoc_parent_ids = $this->implementation->getAdHocParentScopesAsExtIds();
-                $objects_in_parent_scope_not_delivered = $this->repository->getToDeleteByParentScope(
-                    $ext_ids_delivered,
-                    $adhoc_parent_ids
-                );
-
-                foreach ($objects_in_parent_scope_not_delivered as $item) {
-                    if (!$objects_to_outdated_map->contains($item)) {
-                        $objects_to_outdated_map->attach($item);
-                    }
+        } elseif ($this->origin->isAdHoc() && $this->origin->isAdhocParentScope()) {
+            $adhoc_parent_ids = $this->implementation->getAdHocParentScopesAsExtIds();
+            $objects_in_parent_scope_not_delivered = $this->repository->getToDeleteByParentScope(
+                $ext_ids_delivered,
+                $adhoc_parent_ids
+            );
+            foreach ($objects_in_parent_scope_not_delivered as $item) {
+                if (!$objects_to_outdated_map->contains($item)) {
+                    $objects_to_outdated_map->attach($item);
                 }
             }
         }
@@ -294,8 +284,6 @@ class OriginSync implements IOriginSync
     }
 
     /**
-     * @param IObject             $object
-     * @param IDataTransferObject $dto
      * @throws Throwable
      */
     protected function processObject(IObject $object, IDataTransferObject $dto)
@@ -328,9 +316,6 @@ class OriginSync implements IOriginSync
         }
     }
 
-    /**
-     * @param int $status
-     */
     protected function incrementProcessed(int $status)
     {
         $this->countProcessed[$status]++;
@@ -344,64 +329,42 @@ class OriginSync implements IOriginSync
         return $this->origin;
     }
 
-    /**
-     * @param IOrigin $origin
-     */
-    public function setOrigin(IOrigin $origin)
+    public function setOrigin(IOrigin $origin) : void
     {
         $this->origin = $origin;
     }
 
-    /**
-     * @return IObjectRepository
-     */
     public function getRepository() : IObjectRepository
     {
         return $this->repository;
     }
 
-    /**
-     * @param IObjectRepository $repository
-     */
-    public function setRepository(IObjectRepository $repository)
+    public function setRepository(IObjectRepository $repository) : void
     {
         $this->repository = $repository;
     }
 
-    /**
-     * @return IObjectFactory
-     */
     public function getFactory() : IObjectFactory
     {
         return $this->factory;
     }
 
-    /**
-     * @param IObjectFactory $factory
-     */
-    public function setFactory(IObjectFactory $factory)
+    public function setFactory(IObjectFactory $factory) : void
     {
         $this->factory = $factory;
     }
 
-    /**
-     * @return IObjectSyncProcessor
-     */
     public function getProcessor() : IObjectSyncProcessor
     {
         return $this->processor;
     }
 
-    /**
-     * @param IObjectSyncProcessor $processor
-     */
-    public function setProcessor(IObjectSyncProcessor $processor)
+    public function setProcessor(IObjectSyncProcessor $processor) : void
     {
         $this->processor = $processor;
     }
 
     /**
-     * @return IObjectStatusTransition
      * @deprecated
      */
     public function getStatusTransition() : IObjectStatusTransition
@@ -410,26 +373,19 @@ class OriginSync implements IOriginSync
     }
 
     /**
-     * @param IObjectStatusTransition $statusTransition
      * @deprecated
      */
-    public function setStatusTransition(IObjectStatusTransition $statusTransition)
+    public function setStatusTransition(IObjectStatusTransition $statusTransition) : void
     {
         $this->statusTransition = $statusTransition;
     }
 
-    /**
-     * @return IOriginImplementation
-     */
     public function getImplementation() : IOriginImplementation
     {
         return $this->implementation;
     }
 
-    /**
-     * @param IOriginImplementation $implementation
-     */
-    public function setImplementation(IOriginImplementation $implementation)
+    public function setImplementation(IOriginImplementation $implementation) : void
     {
         $this->implementation = $implementation;
     }

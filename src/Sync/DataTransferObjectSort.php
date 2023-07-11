@@ -22,9 +22,6 @@ final class DataTransferObjectSort implements IDataTransferObjectSort
      */
     private $level = 1;
 
-    /**
-     * @param IDataTransferObject $dto_object
-     */
     public function __construct(IDataTransferObject $dto_object)
     {
         $this->dto_object = $dto_object;
@@ -41,7 +38,7 @@ final class DataTransferObjectSort implements IDataTransferObjectSort
     /**
      * @inheritdoc
      */
-    public function setDtoObject(IDataTransferObject $dto_object)
+    public function setDtoObject(IDataTransferObject $dto_object) : void
     {
         $this->dto_object = $dto_object;
     }
@@ -57,7 +54,7 @@ final class DataTransferObjectSort implements IDataTransferObjectSort
     /**
      * @inheritdoc
      */
-    public function setLevel(int $level)
+    public function setLevel(int $level) : void
     {
         $this->level = $level;
     }

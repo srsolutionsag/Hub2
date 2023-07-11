@@ -12,19 +12,17 @@ use ilCronJobResult;
 final class ResultFactory
 {
     /**
-     * @param string $message
      * @return AbstractResult
      */
-    public static function ok(string $message): ilCronJobResult
+    public static function ok(string $message) : ilCronJobResult
     {
         return new OK($message);
     }
 
     /**
-     * @param string $message
      * @return AbstractResult
      */
-    public static function error(string $message): ilCronJobResult
+    public static function error(string $message) : ilCronJobResult
     {
         return new Error($message);
     }

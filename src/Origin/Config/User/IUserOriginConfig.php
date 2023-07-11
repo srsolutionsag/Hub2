@@ -22,23 +22,11 @@ interface IUserOriginConfig extends IOriginConfig
     public const LOGIN_FIELD_FIRSTNAME_LASTNAME = 5; // John Doe => john.doe
     public const LOGIN_FIELD_HUB_LOGIN = 6; // Login is picked from the login property on the UserDTO object
     public const LOGIN_KEEP_CASE = 'login_keep_case';
-    /**
-     * @return int
-     */
+
     //	public function getSyncField():int;
+    public function getILIASLoginField() : int;
 
-    /**
-     * @return int
-     */
-    public function getILIASLoginField(): int;
+    public function isKeepCase() : bool;
 
-    /**
-     * @return bool
-     */
-    public function isKeepCase(): bool;
-
-    /**
-     * @return array
-     */
-    public static function getAvailableLoginFields(): array;
+    public static function getAvailableLoginFields() : array;
 }

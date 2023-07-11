@@ -14,11 +14,7 @@ class OriginFormFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-    /**
-     * @param AROrigin $origin
-     * @return string
-     */
-    public function getFormClassNameByOrigin(AROrigin $origin)
+    public function getFormClassNameByOrigin(AROrigin $origin) : string
     {
         $type = $origin->getObjectType();
 

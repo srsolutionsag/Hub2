@@ -70,8 +70,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
 
     /**
      * @param hub2ConfigOriginsGUI $parent_gui
-     * @param IOriginRepository    $originRepository
-     * @param IOrigin              $origin
      */
     public function __construct($parent_gui, IOriginRepository $originRepository, IOrigin $origin)
     {
@@ -86,7 +84,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->file_storage = (new Factory())->storage();
         $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
         $this->initForm();
-        if (!$origin->getId()) {
+        if ($origin->getId() === 0) {
             $this->addCommandButton(hub2ConfigOriginsGUI::CMD_CREATE_ORIGIN, $this->translate('button_save'));
             $this->setTitle($this->translate('origin_form_title_add'));
         } else {
@@ -110,7 +108,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     protected function initForm()
     {
         $this->addGeneral();
-        if ($this->origin->getId()) {
+        if ($this->origin->getId() !== 0) {
             $this->addConnectionConfig();
             $this->addSyncConfig();
             $this->addNotificationConfig();
@@ -170,7 +168,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             $postVar = IOriginProperties::PREFIX_UPDATE_DTO . $property->name;
             $title = $this->translate('origin_form_field_update_dto', [ucfirst($property->name)]);
             $cb = new ilCheckboxInputGUI($title, $this->prop($postVar));
-            if ($property->descriptionKey) {
+            if ($property->descriptionKey !== '' && $property->descriptionKey !== '0') {
                 $cb->setInfo($this->translate($property->descriptionKey));
             }
             $cb->setChecked($this->origin->properties()->updateDTOProperty($property->name));
@@ -312,7 +310,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             );
             {
                 $url_info = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_url'));
-                $url_info->setValue(Handler::getURL((string) 'o' . $this->origin->getId()));
+                $url_info->setValue(Handler::getURL('o' . $this->origin->getId()));
                 $filedrop->addSubItem($url_info);
 
                 $method = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_method'));
@@ -366,9 +364,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->addItem($ro);
     }
 
-    /**
-     * @return ilRepositorySelector2InputGUI
-     */
     public function getILIASFileRepositorySelector() : ilRepositorySelector2InputGUI
     {
         $this->ctrl->setParameterByClass(
@@ -431,7 +426,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         );
         $options = ['' => ''];
         foreach ($this->originRepository->all() as $origin) {
-            if ($origin->getId() == $this->origin->getId()) {
+            if ($origin->getId() === $this->origin->getId()) {
                 continue;
             }
             $options[$origin->getId()] = $origin->getTitle();
@@ -487,7 +482,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      */
     protected function addGeneral()
     {
-        if ($this->origin->getId()) {
+        if ($this->origin->getId() !== 0) {
             $item = new ilNonEditableValueGUI();
             $item->setTitle($this->translate("origin_id"));
             $item->setValue($this->origin->getId());
@@ -508,7 +503,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $item->setValue($this->origin->getDescription());
         $item->setRequired(true);
         $this->addItem($item);
-        if ($this->origin->getId()) {
+        if ($this->origin->getId() !== 0) {
             $item = new ilNonEditableValueGUI();
             $item->setTitle($this->translate('origin_form_field_usage_type'));
             $item->setValue($this->translate("origin_object_type_" . $this->origin->getObjectType()));

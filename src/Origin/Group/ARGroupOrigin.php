@@ -16,7 +16,7 @@ class ARGroupOrigin extends AROrigin implements IGroupOrigin
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data)
+    protected function getOriginConfig(array $data) : \srag\Plugins\Hub2\Origin\Config\Group\GroupOriginConfig
     {
         return new GroupOriginConfig($data);
     }
@@ -24,7 +24,7 @@ class ARGroupOrigin extends AROrigin implements IGroupOrigin
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data)
+    protected function getOriginProperties(array $data) : \srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties
     {
         return new GroupProperties($data);
     }

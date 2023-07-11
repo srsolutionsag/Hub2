@@ -43,92 +43,60 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
         $this->userId = $user_id;
     }
 
-    /**
-     * @return string
-     */
-    public function getSessionId(): string
+    public function getSessionId() : string
     {
         return $this->sessionId;
     }
 
-    /**
-     * @param string $sessionId
-     * @return SessionMembershipDTO
-     */
-    public function setSessionId(string $sessionId): SessionMembershipDTO
+    public function setSessionId(string $sessionId) : SessionMembershipDTO
     {
         $this->sessionId = $sessionId;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSessionIdType(): int
+    public function getSessionIdType() : int
     {
         return $this->sessionIdType;
     }
 
-    /**
-     * @param int $sessionIdType
-     * @return SessionMembershipDTO
-     */
-    public function setSessionIdType(int $sessionIdType): SessionMembershipDTO
+    public function setSessionIdType(int $sessionIdType) : SessionMembershipDTO
     {
         $this->sessionIdType = $sessionIdType;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getRole(): int
+    public function getRole() : int
     {
         return $this->role;
     }
 
-    /**
-     * @param int $role
-     * @return SessionMembershipDTO
-     */
-    public function setRole(int $role): SessionMembershipDTO
+    public function setRole(int $role) : SessionMembershipDTO
     {
         $this->role = $role;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getUserId(): int
+    public function getUserId() : int
     {
         return $this->userId;
     }
 
-    /**
-     * @param int $userId
-     * @return SessionMembershipDTO
-     */
-    public function setUserId(int $userId): SessionMembershipDTO
+    public function setUserId(int $userId) : SessionMembershipDTO
     {
         $this->userId = $userId;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isContact(): bool
+    public function isContact() : bool
     {
         return $this->isContact;
     }
 
     /**
-     * @param bool $isContact
      * @return $this
      */
     public function setIsContact(bool $isContact)

@@ -164,27 +164,13 @@ abstract class DataTransferObject implements IDataTransferObject
         return $this;
     }
 
-    /**
-     * @param array  $data
-     * @param string $key
-     */
-    protected function sleepValue(array & $data, string $key)
+    protected function sleepValue(array &$data, string $key)
     {
-        switch ($key) {
-            default:
-                $data[$key] = $this->{$key};
-        }
+        $data[$key] = $this->{$key};
     }
 
-    /**
-     * @param array  $data
-     * @param string $key
-     */
     protected function wakeUpValue(array $data, string $key)
     {
-        switch ($key) {
-            default:
-                $this->{$key} = $data[$key];
-        }
+        $this->{$key} = $data[$key];
     }
 }

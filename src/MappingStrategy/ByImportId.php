@@ -70,7 +70,6 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
                 throw new HubException(
                     "Cannot find import id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!"
                 );
-                break;
         }
 
         if ($dto instanceof ICompetenceManagementDTO) {
@@ -104,7 +103,7 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
                 );
             }
 
-            return intval($result->fetchAssoc()["obj_id"]);
+            return (int) $result->fetchAssoc()["obj_id"];
         }
 
         return 0;

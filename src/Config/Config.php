@@ -70,7 +70,6 @@ class Config extends ActiveRecord
      */
     protected $value;
 
-
     /**
      * Config constructor
      *
@@ -82,7 +81,6 @@ class Config extends ActiveRecord
         parent::__construct($primary_name_value, $connector);
     }
 
-
     public static function getTableName() : string
     {
         if (empty(self::$table_name)) {
@@ -92,12 +90,10 @@ class Config extends ActiveRecord
         return self::$table_name;
     }
 
-
     public static function setTableName(string $table_name) : void
     {
         self::$table_name = $table_name;
     }
-
 
     /**
      * @inheritDoc
@@ -109,7 +105,6 @@ class Config extends ActiveRecord
         return self::getTableName();
     }
 
-
     /**
      * @inheritDoc
      */
@@ -118,18 +113,15 @@ class Config extends ActiveRecord
         return self::getTableName();
     }
 
-
     public function getName() : string
     {
         return $this->name;
     }
 
-
     public function setName(string $name) : void
     {
         $this->name = $name;
     }
-
 
     /**
      * @return mixed
@@ -138,7 +130,6 @@ class Config extends ActiveRecord
     {
         return $this->value;
     }
-
 
     /**
      * @param mixed $value

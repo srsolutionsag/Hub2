@@ -15,7 +15,7 @@ trait DidacticTemplateAwareDataTransferObject
      */
     protected $didactic_template_id;
 
-    public function setDidacticTemplateId(int $id): IDidacticTemplateAwareDataTransferObject
+    public function setDidacticTemplateId(int $id) : IDidacticTemplateAwareDataTransferObject
     {
         $this->didactic_template_id = $id;
 
@@ -23,9 +23,9 @@ trait DidacticTemplateAwareDataTransferObject
     }
 
     /**
-     * @return int $id
+     * @return int|null $id
      */
-    public function getDidacticTemplateId(): ?int
+    public function getDidacticTemplateId() : ?int
     {
         return $this->didactic_template_id;
     }

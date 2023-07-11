@@ -42,10 +42,6 @@ class Handler
      */
     private $storage;
     /**
-     * @var ResourceStorage\Stakeholder6|ResourceStorage\Stakeholder7
-     */
-    private $stakeholder;
-    /**
      * @var Token
      */
     protected $token;
@@ -60,7 +56,7 @@ class Handler
     /**
      * @var null|HTTPServices
      */
-    private $http = null;
+    private $http;
 
     /**
      * Handler constructor
@@ -68,7 +64,6 @@ class Handler
      */
     public function __construct()
     {
-        $this->init = false;
         $this->tryILIASInitPublic();
         global $DIC;
         $this->http = $DIC->http();
@@ -76,34 +71,32 @@ class Handler
         $this->file_drop_container = '';
         $f = new Factory();
         $this->storage = $f->storage();
-        $this->stakeholder = $f->stakeholder();
         $this->token = new Token();
     }
 
-    public static function getURL(string $file_drop_container): string
+    public static function getURL(string $file_drop_container) : string
     {
         return ILIAS_HTTP_PATH
             . '/' . self::PLUGIN_BASE . self::DROP_FILE
             . '?' . self::FD_CONTAINER . '=' . $file_drop_container;
     }
 
-    private function getOriginByFileDropContainer(string $file_drop_container): IOrigin
+    private function getOriginByFileDropContainer(string $file_drop_container) : IOrigin
     {
         // currently we map the file drop container to the origin id
         $origin_id = (int) ltrim($file_drop_container, 'o');
         $repo = new OriginFactory();
         $origin = $repo->getById($origin_id);
-        if ($origin === null) {
+        if (!$origin instanceof \srag\Plugins\Hub2\Origin\IOrigin) {
             throw new NotFound("FileDrop '$file_drop_container' not Found");
         }
         return $origin;
     }
 
     /**
-     * @return void
      * @throws \ILIAS\FileUpload\Exception\IllegalStateException
      */
-    protected function processFiles(): void
+    protected function processFiles() : void
     {
         $origin = $this->getOriginByFileDropContainer($this->file_drop_container);
         $implementation_factory = new OriginImplementationFactory($origin);
@@ -137,7 +130,7 @@ class Handler
                 break;
             default:
                 $file_content = $this->http->request()->getBody()->getContents();
-                if (!$file_content) {
+                if ($file_content === '' || $file_content === '0') {
                     throw new InternalError('no file uploaded');
                 }
                 if (!$implementation->canDroppedFileContentBestored($file_content)) {
@@ -157,29 +150,35 @@ class Handler
      * @param $DIC
      * @return void
      */
-    protected function checkAuth(string $file_drop_token): bool
+    protected function checkAuth(string $file_drop_token) : bool
     {
         $origin = $this->getOriginByFileDropContainer($this->file_drop_container);
         $auth_token = $origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN);
 
-        $this->http->request()->getMethod() === self::METHOD || $this->throwException(
-            new InternalError('Method not allowed')
-        );
+        if ($this->http->request()->getMethod() !== self::METHOD) {
+            $this->throwException(
+                new InternalError('Method not allowed')
+            );
+        }
 
         $request_token = $this->token->fromRequest($this->http->request());
 
-        $request_token === $auth_token
-        || $this->throwException(new AccessDenied('Auth failed'));
+        if ($request_token !== $auth_token) {
+            $this->throwException(new AccessDenied('Auth failed'));
+        }
 
         return true;
     }
 
-    private function throwException(\Exception $e): void
+    /**
+     * @return never
+     */
+    private function throwException(\Exception $e) : void
     {
         throw $e;
     }
 
-    private function handleException(\Throwable $e): void
+    private function handleException(\Throwable $e) : void
     {
         switch (true) {
             case $e instanceof AccessDenied:
@@ -227,10 +226,10 @@ class Handler
         }
     }
 
-    public function tryILIASInit()
+    public function tryILIASInit() : void
     {
         $this->prepareILIASInit();
-
+        /** @noRector */
         require_once("Services/Init/classes/class.ilInitialisation.php");
         ilInitialisation::initILIAS();
 
@@ -242,13 +241,15 @@ class Handler
     /**
      *
      */
-    public function tryILIASInitPublic()
+    public function tryILIASInitPublic() : void
     {
         $this->prepareILIASInit();
         global $DIC;
 
+        /** @noRector */
         require_once 'Services/Context/classes/class.ilContext.php';
         ilContext::init(ilContext::CONTEXT_WAC);
+        /** @noRector */
         require_once "Services/Init/classes/class.ilInitialisation.php";
         ilInitialisation::initILIAS();
         $ilAuthSession = $DIC["ilAuthSession"];

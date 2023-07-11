@@ -19,9 +19,6 @@ class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig
             self::REF_ID_IF_NO_PARENT_ID => 0,
         ];
 
-    /**
-     * @param array $data
-     */
     public function __construct(array $data = [])
     {
         parent::__construct(array_merge($this->orgUnitConfig, $data));
@@ -30,8 +27,8 @@ class OrgUnitOriginConfig extends OriginConfig implements IOrgUnitOriginConfig
     /**
      * @inheritdoc
      */
-    public function getRefIdIfNoParentId(): int
+    public function getRefIdIfNoParentId() : int
     {
-        return intval($this->get(self::REF_ID_IF_NO_PARENT_ID));
+        return (int) $this->get(self::REF_ID_IF_NO_PARENT_ID);
     }
 }

@@ -19,9 +19,6 @@ class GroupActivities implements IGroupActivities
      */
     protected $db;
 
-    /**
-     * @param ilDBInterface $db
-     */
     public function __construct(ilDBInterface $db)
     {
         $this->db = $db;

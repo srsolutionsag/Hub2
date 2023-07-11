@@ -45,7 +45,6 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
             case ($dto instanceof IOrgUnitMembershipDTO):
             case ($dto instanceof ICompetenceManagementDTO):
                 throw new HubException("Mapping using Title not supported for this type of DTO");
-                break;
             case ($dto instanceof IOrgUnitDTO):
                 $orgu_ids = ilObject2::_getIdsForTitle($dto->getTitle(), 'orgu');
                 foreach ($orgu_ids as $orgu_id) {
@@ -76,25 +75,20 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
         return 0;
     }
 
-    /**
-     * @param IDataTransferObject $dto
-     * @return string
-     */
-    private function getTypeByDTO(IDataTransferObject $dto) : string
+    private function getTypeByDTO(\srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject $dto) : string
     {
-        switch (true) {
-            case ($dto instanceof GroupDTO):
-                return "grp";
-            case ($dto instanceof CourseDTO):
-                return "crs";
-            case ($dto instanceof IOrgUnitDTO):
-                return "orgu";
-            case ($dto instanceof CategoryDTO):
-                return "cat";
-            /*case ($dto instanceof ICompetenceManagementDTO):
-                return "skmg";*/
+        if ($dto instanceof GroupDTO) {
+            return "grp";
         }
-
+        if ($dto instanceof CourseDTO) {
+            return "crs";
+        }
+        if ($dto instanceof IOrgUnitDTO) {
+            return "orgu";
+        }
+        if ($dto instanceof CategoryDTO) {
+            return "cat";
+        }
         return '';
     }
 }

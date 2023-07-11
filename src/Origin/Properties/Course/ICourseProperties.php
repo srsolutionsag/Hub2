@@ -14,7 +14,7 @@ interface ICourseProperties extends IOriginProperties
 {
     public const SET_ONLINE = 'set_online';
     public const SET_ONLINE_AGAIN = 'set_online_again';
-    public const CREATE_ICON = 'create_icon';
+
     public const SEND_CREATE_NOTIFICATION = 'send_create_notification';
     public const CREATE_NOTIFICATION_SUBJECT = 'create_notification_subject';
     public const CREATE_NOTIFICATION_BODY = 'create_notification_body';
@@ -27,13 +27,7 @@ interface ICourseProperties extends IOriginProperties
     public const DELETE_MODE_DELETE_OR_OFFLINE = 3; // Set offline if there were any activities in the course, delete otherwise
     public const DELETE_MODE_MOVE_TO_TRASH = 4;
 
-    /**
-     * @return string
-     */
-    public static function getPlaceHolderStrings(): string;
+    public static function getPlaceHolderStrings() : string;
 
-    /**
-     * @return array
-     */
-    public static function getAvailableDeleteModes(): array;
+    public static function getAvailableDeleteModes() : array;
 }

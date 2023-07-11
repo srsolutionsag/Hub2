@@ -16,7 +16,7 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data): \srag\Plugins\Hub2\Origin\Config\IOriginConfig
+    protected function getOriginConfig(array $data) : \srag\Plugins\Hub2\Origin\Config\IOriginConfig
     {
         return new OrgUnitMembershipOriginConfig($data);
     }
@@ -24,24 +24,8 @@ class AROrgUnitMembershipOrigin extends AROrigin implements IOrgUnitMembershipOr
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data): \srag\Plugins\Hub2\Origin\Properties\IOriginProperties
+    protected function getOriginProperties(array $data) : \srag\Plugins\Hub2\Origin\Properties\IOriginProperties
     {
         return new OrgUnitMembershipProperties($data);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function config(): \srag\Plugins\Hub2\Origin\Config\OrgUnitMembership\IOrgUnitMembershipOriginConfig
-    {
-        return parent::config();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function properties(): \srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\IOrgUnitMembershipProperties
-    {
-        return parent::properties();
     }
 }

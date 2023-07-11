@@ -24,22 +24,6 @@ class SessionOriginConfigFormGUI extends OriginConfigFormGUI
     /**
      * @inheritdoc
      */
-    protected function addSyncConfig()
-    {
-        parent::addSyncConfig();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function addPropertiesNew()
-    {
-        parent::addPropertiesNew();
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();

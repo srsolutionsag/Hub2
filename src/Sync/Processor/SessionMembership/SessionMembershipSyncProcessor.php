@@ -47,11 +47,6 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
      */
     private $db;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -120,10 +115,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
 
     /**
      * @param int $ilias_id
-     * @return ilObjSession
      * @throws HubException
      */
-    protected function findILIASObject($ilias_id)
+    protected function findILIASObject($ilias_id) : \ilObjSession
     {
         if (!ilObject2::_exists($ilias_id, true)) {
             throw new HubException("Session not found with ref_id {$ilias_id}");
@@ -133,11 +127,9 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
     }
 
     /**
-     * @param SessionMembershipDTO $dto
-     * @return int
      * @throws HubException
      */
-    protected function buildParentRefId(SessionMembershipDTO $dto)
+    protected function buildParentRefId(SessionMembershipDTO $dto) : int
     {
         if ($dto->getSessionIdType() == SessionMembershipDTO::PARENT_ID_TYPE_REF_ID) {
             if ($this->tree->isInTree($dto->getSessionId())) {
@@ -152,13 +144,13 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
             // We must search the parent ref-ID from a category object synced by a linked origin.
             // --> Get an instance of the linked origin and lookup the category by the given external ID.
             $linkedOriginId = $this->config->getLinkedOriginId();
-            if (!$linkedOriginId) {
+            if ($linkedOriginId === 0) {
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
             $arrayFilter = array_filter(
                 $originRepository->sessions(),
-                function ($origin) use ($linkedOriginId) {
+                function ($origin) use ($linkedOriginId) : bool {
                     /** @var IOrigin $origin */
                     return (int) $origin->getId() == $linkedOriginId;
                 }
@@ -166,7 +158,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
             $origin = array_pop(
                 $arrayFilter
             );
-            if ($origin === null) {
+            if (!$origin instanceof \srag\Plugins\Hub2\Origin\Session\ISessionOrigin) {
                 $msg = "The linked origin syncing sessions was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
             }
@@ -188,8 +180,6 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
     }
 
     /**
-     * @param ilObjSession         $ilObjSession
-     * @param SessionMembershipDTO $dto
      * @throws HubException
      */
     protected function handleMembership(ilObjSession $ilObjSession, SessionMembershipDTO $dto)
@@ -204,12 +194,10 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
             throw new HubException("user with id {$user_id} does not exist");
         }
 
-        $ilSessionParticipants->register((int) $user_id);
+        $ilSessionParticipants->register($user_id);
     }
 
     /**
-     * @param ilObjSession         $ilObjSession
-     * @param SessionMembershipDTO $dto
      * @throws HubException
      */
     protected function handleContact(ilObjSession $ilObjSession, SessionMembershipDTO $dto)
@@ -249,8 +237,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
     }
 
     /**
-     * @param ilObjSession $ilObjSession
-     * @param int          $user_id
+     * @param int $user_id
      * @throws HubException
      */
     protected function removeMembership(ilObjSession $ilObjSession, $user_id)

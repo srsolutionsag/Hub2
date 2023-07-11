@@ -43,7 +43,6 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
 
     /**
      * Taxonomy constructor
-     * @param ITaxonomy $taxonomy
      */
     public function __construct(ITaxonomy $taxonomy, int $ilias_parent_id)
     {
@@ -53,13 +52,10 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         $this->ilias_parent_id = $ilias_parent_id;
     }
 
-    /**
-     * @return bool
-     */
     protected function taxonomyExists() : bool
     {
         $childsByType = $this->tree->getChildsByType($this->getILIASParentId(), 'tax');
-        if (!count($childsByType)) {
+        if ($childsByType === []) {
             return false;
         }
         foreach ($childsByType as $value) {
@@ -94,10 +90,6 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         }
     }
 
-    /**
-     * @param INode $node
-     * @return bool
-     */
     protected function nodeExists(INode $node) : bool
     {
         return in_array($node->getTitle(), $this->childs);

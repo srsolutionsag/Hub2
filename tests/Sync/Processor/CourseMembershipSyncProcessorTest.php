@@ -52,7 +52,9 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
     protected function initDTO()
     {
         $this->dto = new CourseMembershipDTO('extIdOfCourse', 'extIdOfUser');
-        $this->dto->setRole(CourseMembershipDTO::ROLE_TUTOR)->setUserId(self::USER_ID)->setCourseId(self::COURSE_REF_ID);
+        $this->dto->setRole(CourseMembershipDTO::ROLE_TUTOR)->setUserId(self::USER_ID)->setCourseId(
+            self::COURSE_REF_ID
+        );
     }
 
     protected function initHubObject()
@@ -67,7 +69,9 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
     protected function initILIASObject()
     {
         $this->ilObject = Mockery::mock(FakeIliasObject::class);
-        $this->ilObject->shouldReceive('getId')->andReturn(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
+        $this->ilObject->shouldReceive('getId')->andReturn(
+            self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID
+        );
 
         Mockery::mock('alias:' . ilObject2::class)->shouldReceive("_exists")->withArgs(
             [
@@ -121,7 +125,9 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
             [$this->dto->getUserId(), $this->dto->getRole()]
         );
 
-        $this->iobject->shouldReceive('setILIASId')->once()->with(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
+        $this->iobject->shouldReceive('setILIASId')->once()->with(
+            self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID
+        );
 
         $processor->process($this->iobject, $this->dto);
     }
@@ -138,8 +144,12 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
         $this->iobject->shouldReceive('setData')->once()->with($this->dto->getData());
         $this->iobject->shouldReceive('computeHashCode')->once()->andReturn("newHash");
         $this->iobject->shouldReceive('getHashCode')->once()->andReturn("oldHash");
-        $this->iobject->shouldReceive('setILIASId')->once()->with(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
-        $this->iobject->shouldReceive('getILIASId')->once()->andReturn(self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID);
+        $this->iobject->shouldReceive('setILIASId')->once()->with(
+            self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID
+        );
+        $this->iobject->shouldReceive('getILIASId')->once()->andReturn(
+            self::COURSE_REF_ID . FakeIliasMembershipObject::GLUE . self::USER_ID
+        );
 
         $this->originImplementation->shouldReceive('beforeUpdateILIASObject')->once();
         $this->originImplementation->shouldReceive('afterUpdateILIASObject')->once();
@@ -157,6 +167,5 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
 
     protected function initDataExpectations()
     {
-
     }
 }

@@ -47,38 +47,24 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         $this->setUserId($user_id);
     }
 
-    /**
-     * @return string
-     */
-    public function getGroupId(): string
+    public function getGroupId() : string
     {
         return $this->groupId;
     }
 
-    /**
-     * @param string $groupId
-     * @return GroupMembershipDTO
-     */
-    public function setGroupId(string $groupId): GroupMembershipDTO
+    public function setGroupId(string $groupId) : GroupMembershipDTO
     {
         $this->groupId = $groupId;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getGroupIdType(): int
+    public function getGroupIdType() : int
     {
         return $this->groupIdType;
     }
 
-    /**
-     * @param int $groupIdType
-     * @return GroupMembershipDTO
-     */
-    public function setGroupIdType(int $groupIdType): GroupMembershipDTO
+    public function setGroupIdType(int $groupIdType) : GroupMembershipDTO
     {
         $this->groupIdType = $groupIdType;
 
@@ -93,11 +79,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this->user_id;
     }
 
-    /**
-     * @param int $user_id
-     * @return GroupMembershipDTO
-     */
-    public function setUserId(int $user_id): GroupMembershipDTO
+    public function setUserId(int $user_id) : GroupMembershipDTO
     {
         $this->user_id = $user_id;
 
@@ -123,16 +105,12 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isContact(): bool
+    public function isContact() : bool
     {
         return $this->isContact;
     }
 
     /**
-     * @param bool $isContact
      * @return $this
      */
     public function setIsContact(bool $isContact)

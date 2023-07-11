@@ -20,9 +20,6 @@ class CourseActivities implements ICourseActivities
      */
     protected $db;
 
-    /**
-     * @param ilDBInterface $db
-     */
     public function __construct(ilDBInterface $db)
     {
         $this->db = $db;

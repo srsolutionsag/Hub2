@@ -14,14 +14,9 @@ class hub2ConfigGUI extends hub2MainGUI
     public const CMD_SAVE_CONFIG = 'saveConfig';
     public const CMD_CANCEL = 'cancel';
 
-    /**
-     * @return ConfigFormGUI
-     */
-    protected function getConfigForm(): ConfigFormGUI
+    protected function getConfigForm() : ConfigFormGUI
     {
-        $form = new ConfigFormGUI($this);
-
-        return $form;
+        return new ConfigFormGUI($this);
     }
 
     /**

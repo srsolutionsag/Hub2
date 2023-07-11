@@ -14,9 +14,6 @@ use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 interface IMetadataSyncProcessor
 {
     /**
-     * @param IMetadataAwareDataTransferObject $dto
-     * @param IMetadataAwareObject             $iobject
-     * @param ilObject                         $ilias_object
      * @return void
      */
     public function handleMetadata(

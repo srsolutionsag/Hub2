@@ -55,10 +55,6 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 
     /**
      * AbstractOriginImplementation constructor
-     * @param IOriginConfig              $config
-     * @param IDataTransferObjectFactory $factory
-     * @param IMetadataFactory           $metadataFactory
-     * @param ITaxonomyFactory           $taxonomyFactory
      */
     public function __construct(
         IOriginConfig $config,
@@ -101,18 +97,11 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
         );
     }
 
-    /**
-     * @param IDataTransferObject $dto
-     * @return ILog
-     */
     final protected function log(IDataTransferObject $dto = null) : ILog
     {
         return LogRepository::getInstance()->factory()->originLog($this->origin, null, $dto);
     }
 
-    /**
-     * @return IMappingStrategyFactory
-     */
     final protected function mapping() : IMappingStrategyFactory
     {
         return $this->mapping_strategy_factory;
@@ -139,7 +128,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     /**
      * @inheritdoc
      */
-    public function overrideStatus(HookObject $hook)
+    public function overrideStatus(HookObject $hook) : void
     {
         // TODO: Implement overrideStatus() method.
     }
@@ -152,12 +141,12 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
         return [];
     }
 
-    public function handleNoLongerDeliveredObject(HookObject $hook)
+    public function handleNoLongerDeliveredObject(HookObject $hook) : void
     {
         // TODO: Implement handleOutdated() method.
     }
 
-    public function handleAllObjects(HookObject $hook)
+    public function handleAllObjects(HookObject $hook) : void
     {
         // TODO: Implement handleAllObjects() method.
     }

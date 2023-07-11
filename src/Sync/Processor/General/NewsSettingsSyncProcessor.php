@@ -45,7 +45,7 @@ trait NewsSettingsSyncProcessor
         // Timeline Block
         $show_news_after_input = $news_settings->getShowNewsAfter();
 
-        if ($show_news_after_input !== null) {
+        if ($show_news_after_input instanceof \DateTimeImmutable) {
             $show_news_after = $show_news_after_input->format('Y-m-d H:i:s');
             if ($show_news_after === $show_news_after_input) {
                 \ilBlockSetting::_write('news', 'hide_news_per_date', $show_news_after ? 1 : 0, 0, $course_obj_id);

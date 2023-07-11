@@ -15,7 +15,7 @@ use srag\Plugins\Hub2\Object\General\IDependentSettings;
  */
 trait HashCodeComputer
 {
-    public function computeHashCode(): string
+    public function computeHashCode() : string
     {
         switch (true) {
             case $this instanceof IDataTransferObject:
@@ -29,26 +29,25 @@ trait HashCodeComputer
                 break;
             case $this instanceof IObject:
                 $data = $this->data;
-                if (isset($this->meta_data)) {
+                if (property_exists($this, 'meta_data') && $this->meta_data !== null) {
                     $data = array_merge($data, $this->meta_data);
                 }
-                if (isset($this->taxonomies)) {
+                if (property_exists($this, 'taxonomies') && $this->taxonomies !== null) {
                     $data = array_merge($data, $this->taxonomies);
                 }
                 break;
             default:
                 throw new \LogicException("Cannot compute hash code for " . get_class($this));
-                break;
         }
         $stringified_data = $this->flattenArray($data);
 
         return md5($stringified_data);
     }
 
-    private function flattenArray(array $array): string
+    private function flattenArray(array $array) : string
     {
         $flat = '';
-        foreach ($array as $key => $value) {
+        foreach ($array as $value) {
             if ($value instanceof IDependentSettings) {
                 $value = $value->__toArray();
             }

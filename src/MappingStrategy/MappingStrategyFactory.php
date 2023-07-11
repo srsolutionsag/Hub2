@@ -2,9 +2,6 @@
 
 namespace srag\Plugins\Hub2\MappingStrategy;
 
-use ilHub2Plugin;
-use srag\DIC\Hub2\Version\Version;
-
 /**
  * Class MappingStrategyFactory
  * @package srag\Plugins\Hub2\MappingStrategy
@@ -12,26 +9,13 @@ use srag\DIC\Hub2\Version\Version;
  */
 class MappingStrategyFactory implements IMappingStrategyFactory
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var Version
-     */
-    protected $version;
-
-    /**
-     * MappingStrategyFactory constructor.
-     */
-    public function __construct()
-    {
-        $this->version = new Version();
-    }
 
     /**
      * @inheritdoc
      */
     public function byEmail() : IMappingStrategy
     {
-        return new ByEmail($this->version);
+        return new ByEmail();
     }
 
     /**

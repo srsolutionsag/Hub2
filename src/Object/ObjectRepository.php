@@ -28,7 +28,6 @@ abstract class ObjectRepository implements IObjectRepository
 
     /**
      * ObjectRepository constructor
-     * @param IOrigin $origin
      */
     public function __construct(IOrigin $origin)
     {
@@ -57,7 +56,7 @@ abstract class ObjectRepository implements IObjectRepository
         return $class::where(
             [
                 'origin_id' => $this->origin->getId(),
-                'status' => (int) $status,
+                'status' => $status,
             ]
         )->get();
     }
@@ -71,8 +70,8 @@ abstract class ObjectRepository implements IObjectRepository
         $glue = self::GLUE;
         $class = $this->getClass();
 
-        if (count($parent_ext_ids) > 0) {
-            if (count($ext_ids) > 0) {
+        if ($parent_ext_ids !== []) {
+            if ($ext_ids !== []) {
                 $existing_ext_id_query = " AND ext_id NOT IN ('" . implode("','", $ext_ids) . "') ";
             }
             if ($this instanceof GroupRepository || $this instanceof SessionRepository) {
@@ -111,7 +110,7 @@ abstract class ObjectRepository implements IObjectRepository
     {
         $class = $this->getClass();
 
-        if (count($ext_ids) > 0) {
+        if ($ext_ids !== []) {
             /** @var ActiveRecord $class */
             return $class::where(
                 [

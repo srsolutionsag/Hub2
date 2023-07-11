@@ -27,8 +27,8 @@ class GroupOriginConfig extends OriginConfig implements IGroupOriginConfig
     /**
      * @inheritdoc
      */
-    public function getParentRefIdIfNoParentIdFound(): int
+    public function getParentRefIdIfNoParentIdFound() : int
     {
-        return intval($this->get(self::REF_ID_NO_PARENT_ID_FOUND));
+        return (int) $this->get(self::REF_ID_NO_PARENT_ID_FOUND);
     }
 }

@@ -23,7 +23,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
     /**
      * @inheritdoc
      */
-    public function write()
+    public function write() : void
     {
         $field_id = $this->getMetadata()->getIdentifier();
         $object_id = $this->getIliasId();

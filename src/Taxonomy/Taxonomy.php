@@ -32,8 +32,6 @@ class Taxonomy implements ITaxonomy
 
     /**
      * Taxonomy constructor
-     * @param string $title
-     * @param int    $mode
      */
     public function __construct(string $title, int $mode)
     {
@@ -41,9 +39,6 @@ class Taxonomy implements ITaxonomy
         $this->mode = $mode;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle() : string
     {
         return $this->title;

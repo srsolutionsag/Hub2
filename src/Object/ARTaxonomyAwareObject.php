@@ -21,7 +21,7 @@ trait ARTaxonomyAwareObject
     /**
      * @return ITaxonomy[]
      */
-    public function getTaxonomies(): array
+    public function getTaxonomies() : array
     {
         return $this->taxonomies;
     }
@@ -29,7 +29,7 @@ trait ARTaxonomyAwareObject
     /**
      * @param ITaxonomy[] $taxonomies
      */
-    public function setTaxonomies(array $taxonomies)
+    public function setTaxonomies(array $taxonomies) : void
     {
         $this->taxonomies = $taxonomies;
     }

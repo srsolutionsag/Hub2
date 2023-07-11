@@ -90,12 +90,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      */
     private $rbacadmin;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     * @param IGroupActivities        $groupActivities
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -145,21 +139,13 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             }
         }
 
-        if ($dto->getRegUnlimited() !== null) {
-            $ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
-        }
+        $ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
 
-        if ($dto->getRegMembershipLimitation() !== null) {
-            $ilObjGroup->enableMembershipLimitation($dto->getRegMembershipLimitation());
-        }
+        $ilObjGroup->enableMembershipLimitation($dto->getRegMembershipLimitation());
 
-        if ($dto->getWaitingList() !== null) {
-            $ilObjGroup->enableWaitingList($dto->getWaitingList());
-        }
+        $ilObjGroup->enableWaitingList($dto->getWaitingList());
 
-        if ($dto->getRegAccessCodeEnabled() !== null) {
-            $ilObjGroup->enableRegistrationAccessCode($dto->getRegAccessCodeEnabled());
-        }
+        $ilObjGroup->enableRegistrationAccessCode($dto->getRegAccessCodeEnabled());
 
         $ilObjGroup->create();
         $ilObjGroup->createReference();
@@ -177,7 +163,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
-        if ($ilObjGroup === null) {
+        if (!$ilObjGroup instanceof \ilObjGroup) {
             return;
         }
         // Update some properties if they should be updated depending on the origin config
@@ -236,23 +222,16 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
         if (!$this->tree->isInTree($ilObjGroup->getRefId())) {
             $parentRefId = $this->determineParentRefId($dto);
-
             $ilObjGroup->putInTree($parentRefId);
-        } else {
-            if ($this->props->get(GroupProperties::MOVE_GROUP)) {
-                $this->moveGroup($ilObjGroup, $dto);
-            }
+        } elseif ($this->props->get(GroupProperties::MOVE_GROUP)) {
+            $this->moveGroup($ilObjGroup, $dto);
         }
         $ilObjGroup->update();
     }
 
-    /**
-     * @param ilObjGroup $ilObjGroup
-     * @param GroupDTO   $dto
-     */
     protected function handleAppointementsColor(ilObjGroup $ilObjGroup, GroupDTO $dto)
     {
-        if ($dto->getAppointementsColor()) {
+        if ($dto->getAppointementsColor() !== '' && $dto->getAppointementsColor() !== '0') {
             $this->obj_data_cache->deleteCachedEntry($ilObjGroup->getId());
             /**
              * @var $cal_cat ilCalendarCategory
@@ -270,7 +249,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
     {
         $this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
-        if ($ilObjGroup === null) {
+        if (!$ilObjGroup instanceof \ilObjGroup) {
             return;
         }
         if ($this->props->get(GroupProperties::DELETE_MODE) == GroupProperties::DELETE_MODE_NONE) {
@@ -299,7 +278,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     }
 
     /**
-     * @param GroupDTO $group
      * @return int
      * @throws HubException
      */
@@ -322,14 +300,14 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             // We must search the parent ref-ID from a category object synced by a linked origin.
             // --> Get an instance of the linked origin and lookup the category by the given external ID.
             $linkedOriginId = $this->config->getLinkedOriginId();
-            if (!$linkedOriginId) {
+            if ($linkedOriginId === 0) {
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
             $possible_parents = array_merge($originRepository->categories(), $originRepository->courses());
             $arrayFilter = array_filter(
                 $possible_parents,
-                function ($origin) use ($linkedOriginId) {
+                function ($origin) use ($linkedOriginId) : bool {
                     /** @var IOrigin $origin */
                     return $origin->getId() == $linkedOriginId;
                 }
@@ -382,8 +360,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     /**
      * Move the group to a new parent.
      * Note: May also create the dependence categories
-     * @param ilObjGroup $ilObjGroup
-     * @param GroupDTO   $group
      */
     protected function moveGroup(ilObjGroup $ilObjGroup, GroupDTO $group)
     {
@@ -393,7 +369,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             $ilRepUtil->restoreObjects($parentRefId, [$ilObjGroup->getRefId()]);
         }
         $oldParentRefId = $this->tree->getParentId($ilObjGroup->getRefId());
-        if ($oldParentRefId == $parentRefId) {
+        if ($oldParentRefId === $parentRefId) {
             return;
         }
         $this->tree->moveTree($ilObjGroup->getRefId(), $parentRefId);

@@ -30,9 +30,6 @@ class HookObject
      */
     private $ilias_object;
 
-    /**
-     * @param IObject $object
-     */
     public function __construct(IObject $object, IDataTransferObject $dto)
     {
         $this->object = $object;
@@ -50,18 +47,16 @@ class HookObject
 
     /**
      * Get the current status, see constants in IObject
-     * @return int
      */
-    public function getStatus()
+    public function getStatus() : int
     {
         return $this->object->getStatus();
     }
 
     /**
-     * @param int $status
      * @throws HubException
      */
-    public function overrideStatus(int $status)
+    public function overrideStatus(int $status) : void
     {
         $this->object->setStatus($status);
     }
@@ -102,9 +97,6 @@ class HookObject
         return $this->object->getILIASId();
     }
 
-    /**
-     * @return IDataTransferObject
-     */
     public function getDTO() : IDataTransferObject
     {
         return $this->dto;

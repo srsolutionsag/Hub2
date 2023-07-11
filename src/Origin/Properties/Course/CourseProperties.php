@@ -21,7 +21,7 @@ class CourseProperties extends OriginProperties implements ICourseProperties
     /**
      * @inheritdoc
      */
-    public static function getPlaceHolderStrings(): string
+    public static function getPlaceHolderStrings() : string
     {
         $return = '[';
         $return .= implode('], [', self::$mail_notification_placeholder);
@@ -37,7 +37,6 @@ class CourseProperties extends OriginProperties implements ICourseProperties
         = [
             self::SET_ONLINE => false,
             self::SET_ONLINE_AGAIN => false,
-            self::CREATE_ICON => false,
             self::SEND_CREATE_NOTIFICATION => false,
             self::CREATE_NOTIFICATION_SUBJECT => '',
             self::CREATE_NOTIFICATION_BODY => '',
@@ -49,7 +48,7 @@ class CourseProperties extends OriginProperties implements ICourseProperties
     /**
      * @inheritdoc
      */
-    public static function getAvailableDeleteModes(): array
+    public static function getAvailableDeleteModes() : array
     {
         return [
             self::DELETE_MODE_NONE,

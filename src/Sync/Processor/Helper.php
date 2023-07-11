@@ -11,9 +11,8 @@ trait Helper
 {
     /**
      * @param string $string
-     * @return string
      */
-    protected function clearString($string)
+    protected function clearString($string) : string
     {
         $replaces = [
             'ä' => 'ae',

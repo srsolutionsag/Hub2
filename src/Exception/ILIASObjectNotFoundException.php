@@ -17,9 +17,6 @@ class ILIASObjectNotFoundException extends HubException
      */
     protected $object;
 
-    /**
-     * @param IObject $object
-     */
     public function __construct(IObject $object)
     {
         parent::__construct("ILIAS object not found for: {$object}");

@@ -14,13 +14,10 @@ interface IDidacticTemplateAwareObject
      */
     public const F_NAME_TEMPLATE_ID = 'id';
 
-    /**
-     * @param int $id
-     */
     public function setDidacticTemplateId(int $id);
 
     /**
      * @return int
      */
-    public function getDidacticTemplateId(): ?int;
+    public function getDidacticTemplateId() : ?int;
 }

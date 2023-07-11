@@ -4,12 +4,7 @@ namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Metadata\IMetadata;
-use srag\Plugins\Hub2\Object\Category\CategoryDTO;
-use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
-use srag\Plugins\Hub2\Object\Group\GroupDTO;
-use srag\Plugins\Hub2\Object\Session\SessionDTO;
-use srag\Plugins\Hub2\Object\User\UserDTO;
 
 /**
  * Class IMetadataImplementationFactory
@@ -45,12 +40,12 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory
         int $ilias_id
     ) : IMetadataImplementation {
         switch (true) {
-            case is_a($dto, GroupDTO::class):
-            case is_a($dto, CourseDTO::class):
-            case is_a($dto, CategoryDTO::class):
-            case is_a($dto, SessionDTO::class):
+            case $dto instanceof \srag\Plugins\Hub2\Object\Group\GroupDTO:
+            case $dto instanceof \srag\Plugins\Hub2\Object\Course\CourseDTO:
+            case $dto instanceof \srag\Plugins\Hub2\Object\Category\CategoryDTO:
+            case $dto instanceof \srag\Plugins\Hub2\Object\Session\SessionDTO:
                 return $this->customMetadata($metadata, $ilias_id);
-            case is_a($dto, UserDTO::class):
+            case $dto instanceof \srag\Plugins\Hub2\Object\User\UserDTO:
                 return $this->userDefinedField($metadata, $ilias_id);
         }
     }

@@ -39,7 +39,6 @@ class OriginsTableGUI extends ilTable2GUI
     /**
      * @param hub2ConfigOriginsGUI $a_parent_obj
      * @param string               $a_parent_cmd
-     * @param IOriginRepository    $originRepository
      * @throws DICException
      * @internal param
      */
@@ -128,9 +127,9 @@ class OriginsTableGUI extends ilTable2GUI
      */
     protected function fillRow($a_set)
     {
-        foreach ($a_set as $key => $value) {
+        foreach ($a_set as $value) {
             $this->tpl->setCurrentBlock('cell');
-            $this->tpl->setVariable('VALUE', !is_null($value) ? $value : "&nbsp;");
+            $this->tpl->setVariable('VALUE', is_null($value) ? "&nbsp;" : $value);
             $this->tpl->parseCurrentBlock();
         }
         $actions = new ilAdvancedSelectionListGUI();

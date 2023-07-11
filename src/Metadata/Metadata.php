@@ -100,11 +100,9 @@ class Metadata implements IMetadata
      */
     public function __toString() : string
     {
-        $json_encode = json_encode(
+        return json_encode(
             [$this->getRecordId() => [$this->getIdentifier() => $this->getValue()]],
             JSON_THROW_ON_ERROR
         );
-
-        return $json_encode;
     }
 }

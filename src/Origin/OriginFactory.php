@@ -43,7 +43,7 @@ class OriginFactory implements IOriginFactory
         }
         $class = $this->getClass($type);
 
-        return $class::find((int) $id);
+        return $class::find($id);
     }
 
     /**
@@ -94,15 +94,11 @@ class OriginFactory implements IOriginFactory
     protected function getClass($type)
     {
         $ucfirst = ucfirst($type);
-        $class = "srag\\Plugins\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
 
-        return $class;
+        return "srag\\Plugins\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
     }
 
-    /**
-     * @param int $origin_id
-     */
-    public function delete(int $origin_id)/*: void*/
+    public function delete(int $origin_id) : void/*: void*/
     {
         /**
          * @var ActiveRecord $object

@@ -61,18 +61,9 @@ interface ISyncProcessorFactory
      */
     public function sessionMembership();
 
-    /**
-     * @return IOrgUnitSyncProcessor
-     */
-    public function orgUnit(): IOrgUnitSyncProcessor;
+    public function orgUnit() : IOrgUnitSyncProcessor;
 
-    /**
-     * @return IOrgUnitMembershipSyncProcessor
-     */
-    public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor;
+    public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor;
 
-    /**
-     * @return ICompetenceManagementSyncProcessor
-     */
-    public function competenceManagement(): ICompetenceManagementSyncProcessor;
+    public function competenceManagement() : ICompetenceManagementSyncProcessor;
 }

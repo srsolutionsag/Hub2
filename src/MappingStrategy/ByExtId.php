@@ -77,7 +77,6 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
                 throw new HubException(
                     "Cannot find ILIAS id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!"
                 );
-                break;
         }
 
         $result = $this->db->queryF(
@@ -93,7 +92,7 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
                 );
             }
 
-            return intval($result->fetchAssoc()["ilias_id"]);
+            return (int) $result->fetchAssoc()["ilias_id"];
         }
 
         return 0;

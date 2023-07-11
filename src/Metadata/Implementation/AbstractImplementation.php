@@ -24,7 +24,6 @@ abstract class AbstractImplementation implements IMetadataImplementation
 
     /**
      * UDF constructor
-     * @param IMetadata $metadata
      */
     public function __construct(IMetadata $metadata, int $ilias_id)
     {

@@ -24,9 +24,6 @@ class SkillLevel implements ISkillLevel
 
     /**
      * SkillLevel constructor
-     * @param string $ext_id
-     * @param string $title
-     * @param string $description
      */
     public function __construct(string $ext_id, string $title = "", string $description = "")
     {
@@ -38,7 +35,7 @@ class SkillLevel implements ISkillLevel
     /**
      * @inheritdoc
      */
-    public function getExtId(): string
+    public function getExtId() : string
     {
         return $this->ext_id;
     }
@@ -46,7 +43,7 @@ class SkillLevel implements ISkillLevel
     /**
      * @inheritdoc
      */
-    public function setExtId(string $ext_id): ISkillLevel
+    public function setExtId(string $ext_id) : ISkillLevel
     {
         $this->ext_id = $ext_id;
 
@@ -56,7 +53,7 @@ class SkillLevel implements ISkillLevel
     /**
      * @inheritdoc
      */
-    public function getTitle(): string
+    public function getTitle() : string
     {
         return $this->title;
     }
@@ -64,7 +61,7 @@ class SkillLevel implements ISkillLevel
     /**
      * @inheritdoc
      */
-    public function setTitle(string $title): ISkillLevel
+    public function setTitle(string $title) : ISkillLevel
     {
         $this->title = $title;
 
@@ -74,7 +71,7 @@ class SkillLevel implements ISkillLevel
     /**
      * @inheritdoc
      */
-    public function getDescription(): string
+    public function getDescription() : string
     {
         return $this->description;
     }
@@ -82,7 +79,7 @@ class SkillLevel implements ISkillLevel
     /**
      * @inheritdoc
      */
-    public function setDescription(string $description): ISkillLevel
+    public function setDescription(string $description) : ISkillLevel
     {
         $this->description = $description;
 
@@ -91,8 +88,9 @@ class SkillLevel implements ISkillLevel
 
     /**
      * @inheritdoc
+     * @return array{ext_id: string, title: string, description: string}
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize() : array
     {
         return [
             "ext_id" => $this->ext_id,

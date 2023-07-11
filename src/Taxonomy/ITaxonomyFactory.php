@@ -11,21 +11,9 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
  */
 interface ITaxonomyFactory
 {
-    /**
-     * @param string $title
-     * @return ITaxonomy
-     */
-    public function select(string $title): ITaxonomy;
+    public function select(string $title) : ITaxonomy;
 
-    /**
-     * @param string $title
-     * @return ITaxonomy
-     */
-    public function create(string $title): ITaxonomy;
+    public function create(string $title) : ITaxonomy;
 
-    /**
-     * @param string $node_title
-     * @return INode
-     */
-    public function node(string $node_title): INode;
+    public function node(string $node_title) : INode;
 }

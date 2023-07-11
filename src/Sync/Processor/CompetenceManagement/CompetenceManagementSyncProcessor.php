@@ -49,7 +49,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     /**
      * @var ilSkillTreeNode|ilSkillProfile|null
      */
-    protected $current_ilias_object = null;
+    protected $current_ilias_object;
     /**
      * @var ilSkillTree
      */
@@ -61,8 +61,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
     /**
      * @param ICompetenceManagementOrigin $origin
-     * @param IOriginImplementation       $implementation
-     * @param IObjectStatusTransition     $transition
      */
     public function __construct(
         IOrigin $origin,
@@ -78,9 +76,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         $this->skill_tree = new ilSkillTree();
     }
 
-    /**
-     * @return array
-     */
     public static function getProperties() : array
     {
         return self::$properties;
@@ -88,7 +83,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
     /**
      * @param IDataTransferObjectSort[] $sort_dtos
-     * @return bool
      * @throws HubException
      */
     public function handleSort(array $sort_dtos) : bool
@@ -137,8 +131,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param ICompetenceManagementDTO $dto
-     * @return bool
      * @throws HubException
      */
     private function isRootId(ICompetenceManagementDTO $dto) : bool
@@ -252,7 +244,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
             default:
                 $this->current_ilias_object = $this->getSkillObject($ilias_id);
 
-                if (empty($this->current_ilias_object)) {
+                if (!$this->current_ilias_object instanceof \ilSkillTreeNode) {
                     return;
                 }
 
@@ -270,21 +262,17 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
                 $this->current_ilias_object->update();
 
-                if ($this->props->get(ICompetenceManagementProperties::MOVE)) {
-                    if ($this->props->updateDTOProperty(ICompetenceManagementProperties::PROP_PARENT_ID)
-                        || $this->props->updateDTOProperty(ICompetenceManagementProperties::PROP_PARENT_ID_TYPE)
-                    ) {
-                        if ($this->skill_tree->isInTree($ilias_id)) {
-                            $this->skill_tree->deleteTree($this->skill_tree->getNodeData($ilias_id));
-                        }
-
-                        $parent_id = $this->getParentId($dto);
-
-                        ilSkillTreeNode::putInTree($this->current_ilias_object, $parent_id, IL_LAST_NODE);
-
-                        if ($this->props->updateDTOProperty(ICompetenceManagementProperties::PROP_SKILL_LEVELS)) {
-                            $this->handleSkillLevels($dto);
-                        }
+                if ($this->props->get(ICompetenceManagementProperties::MOVE) && ($this->props->updateDTOProperty(
+                    ICompetenceManagementProperties::PROP_PARENT_ID
+                )
+                        || $this->props->updateDTOProperty(ICompetenceManagementProperties::PROP_PARENT_ID_TYPE))) {
+                    if ($this->skill_tree->isInTree($ilias_id)) {
+                        $this->skill_tree->deleteTree($this->skill_tree->getNodeData($ilias_id));
+                    }
+                    $parent_id = $this->getParentId($dto);
+                    ilSkillTreeNode::putInTree($this->current_ilias_object, $parent_id, IL_LAST_NODE);
+                    if ($this->props->updateDTOProperty(ICompetenceManagementProperties::PROP_SKILL_LEVELS)) {
+                        $this->handleSkillLevels($dto);
                     }
                 }
                 break;
@@ -309,7 +297,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
                     default:
                         $this->current_ilias_object = $this->getSkillObject($ilias_id);
 
-                        if (empty($this->current_ilias_object)) {
+                        if (!$this->current_ilias_object instanceof \ilSkillTreeNode) {
                             return;
                         }
 
@@ -329,7 +317,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param ICompetenceManagementDTO $dto
      * @throws HubException
      */
     protected function handleSkillLevels(ICompetenceManagementDTO $dto)/*: void*/
@@ -361,7 +348,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param int $obj_id
      * @return ilSkillTreeNode|null
      */
     protected function getSkillObject(int $obj_id)
@@ -376,8 +362,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param ICompetenceManagementDTO $dto
-     * @return int
      * @throws HubException
      */
     protected function getParentId(ICompetenceManagementDTO $dto) : int
@@ -394,7 +378,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
                     $parent_id = $parent_competence_management->getILIASId();
 
-                    if (empty($parent_id) || empty($this->getSkillObject($parent_id))) {
+                    if (empty($parent_id) || !$this->getSkillObject($parent_id) instanceof \ilSkillTreeNode) {
                         throw new HubException("External ID {$ext_id} not found!");
                     }
                 }
@@ -402,7 +386,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
             case ICompetenceManagementDTO::PARENT_ID_TYPE_REF_ID:
             default:
-                $parent_id = intval($dto->getParentId());
+                $parent_id = (int) $dto->getParentId();
                 break;
         }
 
@@ -410,24 +394,18 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
             $parent_id = $this->config->getIdIfNoParentId();
         }
         if (empty($parent_id)) {
-            $parent_id = intval($this->skill_tree->getRootId());
+            $parent_id = (int) $this->skill_tree->getRootId();
         }
 
         return $parent_id;
     }
 
-    /**
-     * @param string $skill_id
-     * @param string $level_id
-     * @return string
-     */
     protected function getSkillLevelImportId(string $skill_id, string $level_id) : string
     {
         return self::IMPORT_PREFIX . $this->origin->getId() . "_" . $skill_id . "_" . $level_id;
     }
 
     /**
-     * @param ICompetenceManagementDTO $dto
      * @throws HubException
      */
     protected function handleProfileLevels(ICompetenceManagementDTO $dto)/*: void*/
@@ -447,7 +425,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param ICompetenceManagementDTO $dto
      * @throws HubException
      */
     protected function handleProfileAssignedUsers(ICompetenceManagementDTO $dto)/*: void*/
@@ -463,8 +440,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param IProfileLevel $level
-     * @return int
      * @throws HubException
      */
     protected function getSkillId(IProfileLevel $level) : int
@@ -481,7 +456,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
                     $skill_id = $skill_competence_management->getILIASId();
 
-                    if (empty($skill_id) || empty($this->getSkillObject($skill_id))) {
+                    if (empty($skill_id) || !$this->getSkillObject($skill_id) instanceof \ilSkillTreeNode) {
                         throw new HubException("Skill ID {$ext_id} not found!");
                     }
                 }
@@ -489,7 +464,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
             case IProfileLevel::SKILL_ID_TYPE_ILIAS_ID:
             default:
-                $skill_id = intval($level->getSkillId());
+                $skill_id = (int) $level->getSkillId();
                 break;
         }
 
@@ -497,9 +472,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
     }
 
     /**
-     * @param int           $skill_id
-     * @param IProfileLevel $level
-     * @return int
      * @throws HubException
      */
     protected function getLevelId(int $skill_id, IProfileLevel $level) : int
@@ -518,7 +490,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
                         );
 
                     if (($row = $result->fetchAssoc()) !== false) {
-                        $level_id = intval($row["id"]);
+                        $level_id = (int) $row["id"];
                     } else {
                         throw new HubException("Level ID {$ext_id} not found!");
                     }
@@ -527,7 +499,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
 
             case IProfileLevel::LEVEL_ID_TYPE_ILIAS_ID:
             default:
-                $level_id = intval($level->getLevelId());
+                $level_id = (int) $level->getLevelId();
                 break;
         }
 

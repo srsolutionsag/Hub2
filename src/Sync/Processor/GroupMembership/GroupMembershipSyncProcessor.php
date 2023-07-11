@@ -38,11 +38,6 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
      */
     private $tree;
 
-    /**
-     * @param IOrigin                 $origin
-     * @param IOriginImplementation   $implementation
-     * @param IObjectStatusTransition $transition
-     */
     public function __construct(
         IOrigin $origin,
         IOriginImplementation $implementation,
@@ -64,7 +59,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         $ilias_group_ref_id = $this->buildParentRefId($dto);
 
         $group = $this->findILIASGroup($ilias_group_ref_id);
-        if (!$group) {
+        if (!$group instanceof \ilObjGroup) {
             return;
         }
 
@@ -93,7 +88,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         }
 
         $group = $this->findILIASGroup($ilias_group_ref_id);
-        if (!$group) {
+        if (!$group instanceof \ilObjGroup) {
             return;
         }
 
@@ -134,11 +129,9 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     }
 
     /**
-     * @param GroupMembershipDTO $dto
-     * @return int
      * @throws HubException
      */
-    protected function buildParentRefId(GroupMembershipDTO $dto)
+    protected function buildParentRefId(GroupMembershipDTO $dto) : int
     {
         if ($dto->getGroupIdType() == GroupMembershipDTO::PARENT_ID_TYPE_REF_ID) {
             if ($this->tree->isInTree($dto->getGroupId())) {
@@ -151,13 +144,13 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
             // We must search the parent ref-ID from a group object synced by a linked origin.
             // --> Get an instance of the linked origin and lookup the group by the given external ID.
             $linkedOriginId = $this->config->getLinkedOriginId();
-            if (!$linkedOriginId) {
+            if ($linkedOriginId === 0) {
                 throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
             }
             $originRepository = new OriginRepository();
             $arrayFilter = array_filter(
                 $originRepository->groups(),
-                function ($origin) use ($linkedOriginId) {
+                function ($origin) use ($linkedOriginId) : bool {
                     /** @var IOrigin $origin */
                     return (int) $origin->getId() == $linkedOriginId;
                 }
@@ -165,7 +158,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
             $origin = array_pop(
                 $arrayFilter
             );
-            if ($origin === null) {
+            if (!$origin instanceof \srag\Plugins\Hub2\Origin\Group\IGroupOrigin) {
                 $msg = "The linked origin syncing group was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
             }
@@ -187,7 +180,6 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     }
 
     /**
-     * @param GroupMembershipDTO $object
      * @return int
      */
     protected function mapRole(GroupMembershipDTO $object)
@@ -203,8 +195,6 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     }
 
     /**
-     * @param GroupMembershipDTO $object
-     * @param ilObjGroup         $group
      * @return int
      */
     protected function getILIASRole(GroupMembershipDTO $object, ilObjGroup $group)
@@ -213,7 +203,6 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
             case GroupMembershipDTO::ROLE_ADMIN:
                 return $group->getDefaultAdminRole();
             case GroupMembershipDTO::ROLE_MEMBER:
-                return $group->getDefaultMemberRole();
             default:
                 return $group->getDefaultMemberRole();
         }

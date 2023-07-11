@@ -27,7 +27,7 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function all()
+    public function all() : array
     {
         return array_merge(
             $this->users(),
@@ -47,11 +47,11 @@ class OriginRepository implements IOriginRepository
     /**
      * @inheritdoc
      */
-    public function allActive()
+    public function allActive() : array
     {
         return array_filter(
             $this->all(),
-            function ($origin) {
+            function ($origin) : bool {
                 /** @var IOrigin $origin */
                 return $origin->isActive();
             }

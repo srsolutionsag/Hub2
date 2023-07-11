@@ -38,9 +38,6 @@ class ObjectFactory implements IObjectFactory
      */
     private $db;
 
-    /**
-     * @param IOrigin $origin
-     */
     public function __construct(IOrigin $origin)
     {
         global $DIC;
@@ -103,7 +100,7 @@ class ObjectFactory implements IObjectFactory
     /**
      * @inheritdoc
      */
-    public function user($ext_id)
+    public function user($ext_id) : \ActiveRecord
     {
         return $this->buildARfromDB($ext_id, new ARUser());
     }
@@ -171,17 +168,9 @@ class ObjectFactory implements IObjectFactory
     /**
      * @inheritdoc
      */
-    public function courseMembership($ext_id)
+    public function courseMembership($ext_id) : \ActiveRecord
     {
         return $this->buildARfromDB($ext_id, new ARCourseMembership());
-        $course_membership = ARCourseMembership::find($this->getId($ext_id));
-        if ($course_membership === null) {
-            $course_membership = new ARCourseMembership();
-            $course_membership->setOriginId($this->origin->getId());
-            $course_membership->setExtId($ext_id);
-        }
-
-        return $course_membership;
     }
 
     /**
@@ -263,9 +252,9 @@ class ObjectFactory implements IObjectFactory
     /**
      * @inheritdoc
      */
-    public function getId($ext_id)
+    public function getId($ext_id) : string
     {
-        return (string) $this->origin->getId() . $ext_id;
+        return $this->origin->getId() . $ext_id;
     }
 
     /**

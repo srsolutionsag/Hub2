@@ -66,13 +66,10 @@ class hub2LogsGUI extends hub2MainGUI
 
     /**
      * @param string $cmd
-     * @return LogsTableGUI
      */
-    protected function getLogsTable($cmd = self::CMD_INDEX): LogsTableGUI
+    protected function getLogsTable($cmd = self::CMD_INDEX) : LogsTableGUI
     {
-        $table = new LogsTableGUI($this, $cmd);
-
-        return $table;
+        return new LogsTableGUI($this, $cmd);
     }
 
     /**
@@ -131,7 +128,7 @@ class hub2LogsGUI extends hub2MainGUI
      */
     protected function showLogsOfExtID()/*: void*/
     {
-        $origin_id = intval(filter_input(INPUT_GET, DataTableGUI::F_ORIGIN_ID));
+        $origin_id = (int) filter_input(INPUT_GET, DataTableGUI::F_ORIGIN_ID);
         $ext_id = filter_input(INPUT_GET, DataTableGUI::F_EXT_ID);
 
         $table = $this->getLogsTable(self::CMD_RESET_FILTER);

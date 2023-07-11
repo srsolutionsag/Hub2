@@ -20,7 +20,6 @@ abstract class AbstractBaseLink implements IObjectLink
 
     /**
      * AbstractBaseLink constructor
-     * @param ARObject $object
      */
     public function __construct(ARObject $object)
     {

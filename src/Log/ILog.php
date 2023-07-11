@@ -31,111 +31,49 @@ interface ILog
      */
     public const LEVEL_CRITICAL = 500;
 
-    /**
-     * @return int
-     */
-    public function getLogId(): int;
+    public function getLogId() : int;
+
+    public function withLogId(int $log_id) : self;
+
+    public function getTitle() : string;
+
+    public function withTitle(string $title) : self;
+
+    public function getMessage() : string;
+
+    public function withMessage(string $message) : self;
+
+    public function getStatus() : int;
 
     /**
-     * @param int $log_id
-     * @return self
-     */
-    public function withLogId(int $log_id): self;
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string;
-
-    /**
-     * @param string $title
-     * @return self
-     */
-    public function withTitle(string $title): self;
-
-    /**
-     * @return string
-     */
-    public function getMessage(): string;
-
-    /**
-     * @param string $message
-     * @return self
-     */
-    public function withMessage(string $message): self;
-
-    /**
-     * @return int
-     */
-    public function getStatus(): int;
-
-    /**
-     * @param int $status
      * @return $this
      */
-    public function withStatus(int $status): self;
+    public function withStatus(int $status) : self;
+
+    public function getDate() : ilDateTime;
+
+    public function withDate(ilDateTime $date) : self;
+
+    public function getLevel() : int;
+
+    public function withLevel(int $level) : self;
+
+    public function getAdditionalData() : stdClass;
+
+    public function withAdditionalData(stdClass $additional_data) : self;
 
     /**
-     * @return ilDateTime
+     * @param mixed $value
      */
-    public function getDate(): ilDateTime;
+    public function addAdditionalData(string $key, $value) : self;
 
-    /**
-     * @param ilDateTime $date
-     * @return self
-     */
-    public function withDate(ilDateTime $date): self;
+    public function getOriginId() : int;
 
-    /**
-     * @return int
-     */
-    public function getLevel(): int;
+    public function withOriginId(int $origin_id) : self;
 
-    /**
-     * @param int $level
-     * @return self
-     */
-    public function withLevel(int $level): self;
+    public function getOriginObjectType() : string;
 
-    /**
-     * @return stdClass
-     */
-    public function getAdditionalData(): stdClass;
-
-    /**
-     * @param stdClass $additional_data
-     * @return self
-     */
-    public function withAdditionalData(stdClass $additional_data): self;
-
-    /**
-     * @param string $key
-     * @param mixed  $value
-     * @return self
-     */
-    public function addAdditionalData(string $key, $value): self;
-
-    /**
-     * @return int
-     */
-    public function getOriginId(): int;
-
-    /**
-     * @param int $origin_id
-     * @return self
-     */
-    public function withOriginId(int $origin_id): self;
-
-    /**
-     * @return string
-     */
-    public function getOriginObjectType(): string;
-
-    /**
-     * @param string $origin_object_type
-     * @return self
-     */
-    public function withOriginObjectType(string $origin_object_type): self;
+    public function withOriginObjectType(string $origin_object_type) : self;
 
     /**
      * @return string|null
@@ -145,11 +83,10 @@ interface ILog
 
     /**
      * @param string|null $object_ext_id
-     * @return self
      */
     public function withObjectExtId(/*?*/
         string $object_ext_id = null
-    ): self;
+    ) : self;
 
     /**
      * @return int|null
@@ -159,16 +96,13 @@ interface ILog
 
     /**
      * @param int|null $object_ilias_id
-     * @return self
      */
     public function withObjectIliasId(/*?*/
         int $object_ilias_id = null
-    ): self;
+    ) : self;
 
     /**
      * Syntactic sugar for self::logs()->storeLog($log->withMessage()->withLevel());
-     * @param string $message
-     * @param int    $level
      */
     public function write(string $message, int $level = self::LEVEL_INFO)/*: void*/
     ;

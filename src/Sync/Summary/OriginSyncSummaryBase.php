@@ -48,7 +48,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     /**
      * @inheritdoc
      */
-    public function addOriginSync(IOriginSync $originSync)
+    public function addOriginSync(IOriginSync $originSync) : void
     {
         $this->syncs[] = $originSync;
     }
@@ -69,7 +69,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     /**
      * @inheritdoc
      */
-    public function sendEmail()
+    public function sendEmail() : void
     {
         $mail = new ilMimeMail();
 
@@ -81,7 +81,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 
             $title = $originSync->getOrigin()->getTitle();
 
-            if ($summary_email) {
+            if ($summary_email !== []) {
                 $mail->To($summary_email);
 
                 $mail->Subject($this->plugin->txt("summary_notification"));
@@ -90,31 +90,21 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
                 $mail->Send();
             }
 
-            if ($error_email) {
-                if ((count($this->log_repo->getKeptLogs($originSync->getOrigin(), Log::LEVEL_EXCEPTION))
-                        + count($this->log_repo->getKeptLogs($originSync->getOrigin(), Log::LEVEL_CRITICAL)))
-                    > 0
-                ) {
-                    $mail->To($error_email);
-
-                    $mail->Subject(
-                        sprintf($this->plugin->txt("logs_summary_logs_in"), $title)
-                    );
-
-                    $mail->Body($this->renderOneSync($originSync, true, true));
-
-                    $mail->Send();
-                }
+            if ($error_email !== [] && (count(
+                $this->log_repo->getKeptLogs($originSync->getOrigin(), Log::LEVEL_EXCEPTION)
+            )
+                    + count($this->log_repo->getKeptLogs($originSync->getOrigin(), Log::LEVEL_CRITICAL)))
+                > 0) {
+                $mail->To($error_email);
+                $mail->Subject(
+                    sprintf($this->plugin->txt("logs_summary_logs_in"), $title)
+                );
+                $mail->Body($this->renderOneSync($originSync, true, true));
+                $mail->Send();
             }
         }
     }
 
-    /**
-     * @param IOriginSync $originSync
-     * @param bool        $only_logs
-     * @param bool        $output_message
-     * @return string
-     */
     protected function renderOneSync(
         IOriginSync $originSync,
         bool $only_logs = false,
@@ -147,7 +137,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
             );
         }
 
-        if (count($this->log_repo->getKeptLogs($originSync->getOrigin())) > 0) {
+        if ($this->log_repo->getKeptLogs($originSync->getOrigin()) !== []) {
             $msg .= "\n" . $this->plugin->txt("summary") . "\n";
 
             $msg .= implode(
@@ -162,8 +152,10 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
                     },
                     array_filter(
                         Log::$levels,
-                        static function (int $level) use ($originSync) : bool {
-                            return ((is_countable($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) ? count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) : 0) > 0);
+                        function (int $level) use ($originSync) : bool {
+                            return ((is_countable(
+                                $this->log_repo->getKeptLogs($originSync->getOrigin(), $level)
+                            ) ? count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) : 0) > 0);
                         }
                     )
                 )

@@ -13,14 +13,10 @@ use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
  */
 trait DidacticTemplateSyncProcessor
 {
-    /**
-     * @param IDidacticTemplateAwareDataTransferObject $dto
-     * @param ilObject                                 $ilias_object
-     */
     public function handleDidacticTemplate(
         IDidacticTemplateAwareDataTransferObject $dto,
         ilObject $ilias_object
-    ): void {
+    ) : void {
         if (
             null !== ($tpl_id = $dto->getDidacticTemplateId())
             // && $tpl_id !== (int) \ilDidacticTemplateObjSettings::lookupTemplateId($ilias_object->getRefId())
@@ -28,7 +24,7 @@ trait DidacticTemplateSyncProcessor
             $ilias_object->applyDidacticTemplate($tpl_id);
 
             // Apply templates of children
-            $recurser = function (int $ref_id) use (&$recurser): void {
+            $recurser = function (int $ref_id) use (&$recurser) : void {
                 global $DIC;
                 foreach ($DIC->repositoryTree()->getChilds($ref_id) as $child) {
                     $child_ref_id = (int) $child['ref_id'];

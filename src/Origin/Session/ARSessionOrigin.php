@@ -16,7 +16,7 @@ class ARSessionOrigin extends AROrigin implements ISessionOrigin
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data)
+    protected function getOriginConfig(array $data) : \srag\Plugins\Hub2\Origin\Config\Session\SessionOriginConfig
     {
         return new SessionOriginConfig($data);
     }
@@ -24,7 +24,7 @@ class ARSessionOrigin extends AROrigin implements ISessionOrigin
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data)
+    protected function getOriginProperties(array $data) : \srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties
     {
         return new SessionProperties($data);
     }

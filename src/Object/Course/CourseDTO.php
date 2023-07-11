@@ -151,10 +151,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      */
     protected $languageCode = 'en';
     /**
-     * @var string
-     */
-    protected $icon;
-    /**
      * @var bool
      */
     protected $sessionLimitEnabled = false;
@@ -179,21 +175,21 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      */
     protected $appointementsColor = '';
     /**
-     * @var ilDate|null
+     * @var \ilDateTime|null
      */
-    protected $courseStart = null;
+    protected $courseStart;
+    /**
+     * @var \ilDateTime|null
+     */
+    protected $courseEnd;
     /**
      * @var ilDate|null
      */
-    protected $courseEnd = null;
+    protected $activationStart;
     /**
      * @var ilDate|null
      */
-    protected $activationStart = null;
-    /**
-     * @var ilDate|null
-     */
-    protected $activationEnd = null;
+    protected $activationEnd;
 
     /**
      * @return string
@@ -338,16 +334,12 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFourthDependenceCategory() : ?string
     {
         return $this->fourthDependenceCategory;
     }
 
     /**
-     * @param string $fourthDependenceCategory
      * @return CourseDTO
      */
     public function setFourthDependenceCategory(string $fourthDependenceCategory)
@@ -357,16 +349,12 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getTemplateId() : int
     {
         return $this->template_id;
     }
 
     /**
-     * @param int $template_id
      * @return $this
      */
     public function setTemplateId(int $template_id)
@@ -604,11 +592,10 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
 
     /**
      * @param $languageCode
-     * @return CourseDTO
      * @throws LanguageCodeException if the passed $language is not a valid
      * ILIAS language code
      */
-    public function setLanguageCode($languageCode) : CourseDTO
+    public function setLanguageCode(string $languageCode) : CourseDTO
     {
         self::checkLanguageCode($languageCode);
 
@@ -617,116 +604,61 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIcon() : string
-    {
-        return is_string($this->icon) ? $this->icon : '';
-    }
-
-    /**
-     * @param string $icon
-     * @return CourseDTO
-     */
-    public function setIcon(string $icon) : CourseDTO
-    {
-        $this->icon = $icon;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
     public function isSessionLimitEnabled() : bool
     {
         return $this->sessionLimitEnabled;
     }
 
-    /**
-     * @param bool $sessionLimitEnabled
-     */
-    public function enableSessionLimit(bool $sessionLimitEnabled)
+    public function enableSessionLimit(bool $sessionLimitEnabled) : void
     {
         $this->sessionLimitEnabled = $sessionLimitEnabled;
     }
 
-    /**
-     * @return int
-     */
     public function getNumberOfPreviousSessions() : int
     {
         return $this->numberOfPreviousSessions;
     }
 
-    /**
-     * @param int $numberOfPreviousSessions
-     */
-    public function setNumberOfPreviousSessions(int $numberOfPreviousSessions)
+    public function setNumberOfPreviousSessions(int $numberOfPreviousSessions) : void
     {
         $this->numberOfPreviousSessions = $numberOfPreviousSessions;
     }
 
-    /**
-     * @return int
-     */
     public function getNumberOfNextSessions() : int
     {
         return $this->numberOfNextSessions;
     }
 
-    /**
-     * @param int $numberOfNextSessions
-     */
-    public function setNumberOfNextSessions(int $numberOfNextSessions)
+    public function setNumberOfNextSessions(int $numberOfNextSessions) : void
     {
         $this->numberOfNextSessions = $numberOfNextSessions;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderType() : int
     {
         return $this->orderType;
     }
 
-    /**
-     * @param int $orderType
-     */
-    public function setOrderType(int $orderType)
+    public function setOrderType(int $orderType) : void
     {
         $this->orderType = $orderType;
     }
 
-    /**
-     * @return int
-     */
     public function getOrderDirection() : int
     {
         return $this->orderDirection;
     }
 
-    /**
-     * @param int $orderDirection
-     */
-    public function setOrderDirection(int $orderDirection)
+    public function setOrderDirection(int $orderDirection) : void
     {
         $this->orderDirection = $orderDirection;
     }
 
-    /**
-     * @return string
-     */
     public function getAppointementsColor() : string
     {
         return $this->appointementsColor;
     }
 
-    /**
-     * @param string $appointementsColor
-     */
     public function setAppointementsColor(string $appointementsColor)
     {
         $this->appointementsColor = $appointementsColor;
@@ -734,38 +666,28 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-    /**
-     * @return ilDate|null
-     */
-    public function getCourseStart()/*? : ilDate*/
+
+    public function getCourseStart() : ?\ilDateTime
     {
         return $this->courseStart;
     }
 
-    /**
-     * @param ilDate|null $courseStart
-     * @return self
-     */
-    public function setCourseStart(/*?*/ ilDate $courseStart = null) : self
+
+    public function setCourseStart(\ilDateTime $courseStart = null) : self
     {
         $this->courseStart = $courseStart;
 
         return $this;
     }
 
-    /**
-     * @return ilDate|null
-     */
-    public function getCourseEnd()/*? : ilDate*/
+
+    public function getCourseEnd() : ?\ilDateTime
     {
         return $this->courseEnd;
     }
 
-    /**
-     * @param ilDate|null $courseEnd
-     * @return self
-     */
-    public function setCourseEnd(/*?*/ ilDate $courseEnd = null) : self
+
+    public function setCourseEnd(\ilDateTime $courseEnd = null) : self
     {
         $this->courseEnd = $courseEnd;
 
@@ -782,7 +704,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
 
     /**
      * @param ilDate|null $activationStart
-     * @return self
      */
     public function setActivationStart(/*?*/ ilDate $activationStart = null) : self
     {
@@ -801,7 +722,6 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
 
     /**
      * @param ilDate|null $activationEnd
-     * @return self
      */
     public function setActivationEnd(/*?*/ ilDate $activationEnd = null) : self
     {
@@ -810,18 +730,11 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTargetGroup() : ?string
     {
         return $this->targetGroup;
     }
 
-    /**
-     * @param string $targetGroup
-     * @return CourseDTO
-     */
     public function setTargetGroup(string $targetGroup) : self
     {
         $this->targetGroup = $targetGroup;

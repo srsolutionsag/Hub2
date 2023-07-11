@@ -16,16 +16,18 @@ class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOr
     /**
      * @inheritdoc
      */
-    protected function getOriginConfig(array $data)
-    {
+    protected function getOriginConfig(
+        array $data
+    ) : \srag\Plugins\Hub2\Origin\Config\SessionMembership\SessionMembershipOriginConfig {
         return new SessionMembershipOriginConfig($data);
     }
 
     /**
      * @inheritdoc
      */
-    protected function getOriginProperties(array $data)
-    {
+    protected function getOriginProperties(
+        array $data
+    ) : \srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipProperties {
         return new SessionMembershipProperties($data);
     }
 }
