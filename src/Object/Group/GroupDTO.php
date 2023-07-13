@@ -85,11 +85,11 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
      */
     protected $cancellationEnd;
     /**
-     * @var int timestamp
+     * @var \ilDateTime
      */
     protected $start;
     /**
-     * @var int timestamp
+     * @var \ilDateTime
      */
     protected $end;
     /**
@@ -437,38 +437,28 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getStart()
+
+    public function getStart() : ?\ilDateTime
     {
         return $this->start;
     }
 
-    /**
-     * @param int $start
-     * @return GroupDTO
-     */
-    public function setStart($start)
+
+    public function setStart(\ilDateTime $start) : GroupDTO
     {
         $this->start = $start;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getEnd()
+
+    public function getEnd() : ?\ilDateTime
     {
         return $this->end;
     }
 
-    /**
-     * @param int $end
-     * @return GroupDTO
-     */
-    public function setEnd($end)
+
+    public function setEnd(\ilDateTime $end) : GroupDTO
     {
         $this->end = $end;
 
