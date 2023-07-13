@@ -48,7 +48,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     /**
      * @inheritdoc
      */
-    public function addOriginSync(IOriginSync $originSync) : void
+    public function addOriginSync(IOriginSync $originSync): void
     {
         $this->syncs[] = $originSync;
     }
@@ -69,7 +69,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     /**
      * @inheritdoc
      */
-    public function sendEmail() : void
+    public function sendEmail(): void
     {
         $mail = new ilMimeMail();
 
@@ -109,7 +109,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         IOriginSync $originSync,
         bool $only_logs = false,
         bool $output_message = null
-    ) : string {
+    ): string {
         $msg = "";
         if (!$only_logs) {
             // Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
@@ -138,21 +138,21 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         }
 
         if ($this->log_repo->getKeptLogs($originSync->getOrigin()) !== []) {
-            $msg .= "\n" . $this->plugin->txt("summary") . "\n";
+            $msg .= "\n" . $this->plugin->txt("logs_summary") . "\n";
 
             $msg .= implode(
                 "\n",
                 array_map(
-                    function (int $level) use ($output_message, $originSync) : string {
+                    function (int $level) use ($output_message, $originSync): string {
                         $logs = $this->log_repo->getKeptLogs($originSync->getOrigin(), $level);
 
-                        return $this->plugin->txt("level_" . $level)
+                        return $this->plugin->txt("logs_level_" . $level)
                             . ": " . count($logs) . ($output_message ? " - "
                                 . current($logs)->getMessage() : "");
                     },
                     array_filter(
                         Log::$levels,
-                        function (int $level) use ($originSync) : bool {
+                        function (int $level) use ($originSync): bool {
                             return ((is_countable(
                                 $this->log_repo->getKeptLogs($originSync->getOrigin(), $level)
                             ) ? count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) : 0) > 0);
