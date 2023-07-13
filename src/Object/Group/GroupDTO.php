@@ -39,11 +39,11 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     /**
      * @var int
      */
-    protected $registerMode;
+    protected $registrationType;
     /**
-     * @var bool
+     * @var null|bool
      */
-    protected $regUnlimited;
+    protected $regUnlimited = null;
     /**
      * @var int timestamp
      */
@@ -63,21 +63,23 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     /**
      * @var bool
      */
-    protected bool $regMembershipLimitation = false;
+    protected $regMembershipLimitation = false;
     /**
-     * @var int
+     * @var null|int
      */
-    protected ?int $minMembers = null;
-
-    protected ?int $maxMembers = null;
+    protected $minMembers = null;
     /**
-     * @var bool
+     * @var null|int
      */
-    protected bool $waitingList = false;
+    protected $maxMembers = null;
     /**
      * @var bool
      */
-    protected bool $waitingListAutoFill = false;
+    protected $waitingList = false;
+    /**
+     * @var bool
+     */
+    protected $waitingListAutoFill = false;
     /**
      * @var int timestamp
      */
@@ -107,11 +109,11 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
      */
     protected $enableGroupMap;
 
-    protected bool $regAccessCodeEnabled = false;
+    protected $regAccessCodeEnabled = false;
     /**
      * @var string
      */
-    protected string $registrationAccessCode = '';
+    protected $registrationAccessCode = '';
     /**
      * @var int
      */
@@ -167,21 +169,14 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getRegisterMode()
+    public function getRegisterMode() : ?int
     {
-        return $this->registerMode;
+        return $this->registrationType;
     }
 
-    /**
-     * @param int $registerMode
-     * @return GroupDTO
-     */
-    public function setRegisterMode($registerMode)
+    public function setRegisterMode(int $registrationType) : self
     {
-        $this->registerMode = $registerMode;
+        $this->registrationType = $registrationType;
 
         return $this;
     }
@@ -243,19 +238,14 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getRegUnlimited()
+
+    public function getRegUnlimited() : ?bool
     {
         return $this->regUnlimited;
     }
 
-    /**
-     * @param bool $regUnlimited
-     * @return GroupDTO
-     */
-    public function setRegUnlimited($regUnlimited)
+
+    public function setRegUnlimited(bool $regUnlimited) : self
     {
         $this->regUnlimited = $regUnlimited;
 
@@ -377,13 +367,13 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     }
 
 
-    public function getWaitingList(): bool
+    public function getWaitingList() : bool
     {
         return $this->waitingList;
     }
 
 
-    public function setWaitingList(bool $waitingList): self
+    public function setWaitingList(bool $waitingList) : self
     {
         $this->waitingList = $waitingList;
 
@@ -391,7 +381,7 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     }
 
 
-    public function getWaitingListAutoFill(): bool
+    public function getWaitingListAutoFill() : bool
     {
         return $this->waitingListAutoFill;
     }
@@ -427,13 +417,13 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     }
 
 
-    public function getStart(): ?\ilDateTime
+    public function getStart() : ?\ilDateTime
     {
         return $this->start;
     }
 
 
-    public function setStart(\ilDateTime $start): GroupDTO
+    public function setStart(\ilDateTime $start) : GroupDTO
     {
         $this->start = $start;
 
@@ -441,13 +431,13 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     }
 
 
-    public function getEnd(): ?\ilDateTime
+    public function getEnd() : ?\ilDateTime
     {
         return $this->end;
     }
 
 
-    public function setEnd(\ilDateTime $end): GroupDTO
+    public function setEnd(\ilDateTime $end) : GroupDTO
     {
         $this->end = $end;
 
@@ -531,13 +521,13 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     }
 
 
-    public function getRegAccessCodeEnabled(): bool
+    public function getRegAccessCodeEnabled() : bool
     {
         return $this->regAccessCodeEnabled;
     }
 
 
-    public function setRegAccessCodeEnabled(bool $regAccessCodeEnabled): self
+    public function setRegAccessCodeEnabled(bool $regAccessCodeEnabled) : self
     {
         $this->regAccessCodeEnabled = $regAccessCodeEnabled;
 
@@ -620,7 +610,7 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    public function getAppointementsColor(): string
+    public function getAppointementsColor() : string
     {
         return $this->appointementsColor;
     }
