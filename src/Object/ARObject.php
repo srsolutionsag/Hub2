@@ -282,7 +282,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     {
         $messages = [];
         foreach (self::$observed_fields as $title => $field) {
-            if ($this->clone->$field != $this->$field) {
+            if ($this->clone->$field !== $this->$field) {
                 $messages[] = $title . " updated";
             }
         }

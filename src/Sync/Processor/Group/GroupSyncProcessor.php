@@ -66,7 +66,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             "registrationStart",
             "registrationEnd",
             "password",
-            "registerMode",
             "minMembers",
             "maxMembers",
             "waitingListAutoFill",

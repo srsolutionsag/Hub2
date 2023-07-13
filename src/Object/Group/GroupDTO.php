@@ -63,23 +63,21 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     /**
      * @var bool
      */
-    protected $regMembershipLimitation;
+    protected bool $regMembershipLimitation = false;
     /**
      * @var int
      */
-    protected $minMembers;
-    /**
-     * @var int
-     */
-    protected $maxMembers;
+    protected ?int $minMembers = null;
+
+    protected ?int $maxMembers = null;
     /**
      * @var bool
      */
-    protected $waitingList;
+    protected bool $waitingList = false;
     /**
      * @var bool
      */
-    protected $waitingListAutoFill;
+    protected bool $waitingListAutoFill = false;
     /**
      * @var int timestamp
      */
@@ -108,14 +106,12 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
      * @var int
      */
     protected $enableGroupMap;
-    /**
-     * @var bool
-     */
-    protected $regAccessCodeEnabled;
+
+    protected bool $regAccessCodeEnabled = false;
     /**
      * @var string
      */
-    protected $registrationAccessCode;
+    protected string $registrationAccessCode = '';
     /**
      * @var int
      */
@@ -328,7 +324,7 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
      */
     public function getRegMembershipLimitation()
     {
-        return $this->regMembershipLimitation;
+        return $this->regMembershipLimitation ?? false;
     }
 
     /**
@@ -380,29 +376,22 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getWaitingList()
+
+    public function getWaitingList(): bool
     {
         return $this->waitingList;
     }
 
-    /**
-     * @param bool $waitingList
-     * @return GroupDTO
-     */
-    public function setWaitingList($waitingList)
+
+    public function setWaitingList(bool $waitingList): self
     {
         $this->waitingList = $waitingList;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getWaitingListAutoFill()
+
+    public function getWaitingListAutoFill(): bool
     {
         return $this->waitingListAutoFill;
     }
@@ -438,13 +427,13 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     }
 
 
-    public function getStart() : ?\ilDateTime
+    public function getStart(): ?\ilDateTime
     {
         return $this->start;
     }
 
 
-    public function setStart(\ilDateTime $start) : GroupDTO
+    public function setStart(\ilDateTime $start): GroupDTO
     {
         $this->start = $start;
 
@@ -452,13 +441,13 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
     }
 
 
-    public function getEnd() : ?\ilDateTime
+    public function getEnd(): ?\ilDateTime
     {
         return $this->end;
     }
 
 
-    public function setEnd(\ilDateTime $end) : GroupDTO
+    public function setEnd(\ilDateTime $end): GroupDTO
     {
         $this->end = $end;
 
@@ -541,19 +530,14 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getRegAccessCodeEnabled()
+
+    public function getRegAccessCodeEnabled(): bool
     {
         return $this->regAccessCodeEnabled;
     }
 
-    /**
-     * @param bool $regAccessCodeEnabled
-     * @return GroupDTO
-     */
-    public function setRegAccessCodeEnabled($regAccessCodeEnabled)
+
+    public function setRegAccessCodeEnabled(bool $regAccessCodeEnabled): self
     {
         $this->regAccessCodeEnabled = $regAccessCodeEnabled;
 
@@ -636,7 +620,7 @@ class GroupDTO extends DataTransferObject implements IGroupDTO
         return $this;
     }
 
-    public function getAppointementsColor() : string
+    public function getAppointementsColor(): string
     {
         return $this->appointementsColor;
     }
