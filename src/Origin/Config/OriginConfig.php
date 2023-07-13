@@ -167,7 +167,7 @@ class OriginConfig implements IOriginConfig
 
     public function getActivePeriod(): string
     {
-        return $this->get(self::ACTIVE_PERIOD);
+        return $this->get(self::ACTIVE_PERIOD) ?? '';
     }
 
     public function getCheckAmountData(): bool
