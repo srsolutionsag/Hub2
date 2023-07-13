@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.0]
+- [RELEASE] Support for ILIAS 8 (only)
+
+## [3.5.1]
+- [FIX] Fixed Parent Ref ID for Groups (Restoring Objects in Trash)
+- [FIX] Fixed Start / End Date for Groups
+
 ## [3.5.0]
 - [IMPROVEMENT] Several Refactorings before first Version for ILIAS 8
 - [FIX] Removed non working Icon implementation
