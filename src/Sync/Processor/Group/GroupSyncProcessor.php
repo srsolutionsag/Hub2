@@ -21,6 +21,8 @@ use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
 use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\ParentResolver\GroupParentResolver;
+use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 
 /**
  * Class GroupSyncProcessor
@@ -32,6 +34,11 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
+
+    /**
+     * @var GroupParentResolver
+     */
+    private $parent_resolver;
 
     /**
      * @var GroupProperties
@@ -76,7 +83,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @var array
      */
     protected static $ildate_fields
-        = ["cancellationEnd", "start", "end", "registrationStart", "registrationEnd"];
+        = ["cancellationEnd", "registrationStart", "registrationEnd"];
     /**
      * @var \ilTree
      */
@@ -104,6 +111,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         $this->props = $origin->properties();
         $this->config = $origin->config();
         $this->groupActivities = $groupActivities;
+        $this->parent_resolver = new GroupParentResolver(
+            $this->config->getParentRefIdIfNoParentIdFound(),
+            $this->config->getLinkedOriginId()
+        );
     }
 
     /**
@@ -122,11 +133,16 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     {
         $this->current_ilias_object = $ilObjGroup = new ilObjGroup();
         $ilObjGroup->setImportId($this->getImportId($dto));
+        $ilObjGroup->enableUnlimitedRegistration(true);
         // Find the refId under which this group should be created
         $parentRefId = $this->determineParentRefId($dto);
         // Pass properties from DTO to ilObjUser
 
         foreach (self::getProperties() as $property) {
+            // handled separately
+            if ($property === 'start' || $property === 'end') {
+                continue;
+            }
             $setter = "set" . ucfirst($property);
             $getter = "get" . ucfirst($property);
             if ($dto->$getter() !== null) {
@@ -137,6 +153,11 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
                 $ilObjGroup->$setter($var);
             }
+        }
+
+        // handle start and end separately
+        if ($dto->getStart() !== null && $dto->getEnd() !== null) {
+            $ilObjGroup->setPeriod($dto->getStart(), $dto->getEnd());
         }
 
         $ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
@@ -168,6 +189,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         }
         // Update some properties if they should be updated depending on the origin config
         foreach (self::getProperties() as $property) {
+            // handled separately
+            if ($property === 'start' || $property === 'end') {
+                continue;
+            }
             if (!$this->props->updateDTOProperty($property)) {
                 continue;
             }
@@ -182,6 +207,15 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
                 $ilObjGroup->$setter($var);
             }
         }
+        if (
+            $this->props->updateDTOProperty('start')
+            && $this->props->updateDTOProperty('end')
+            && $dto->getStart() !== null
+            && $dto->getEnd() !== null
+        ) {
+            $ilObjGroup->setPeriod($dto->getStart(), $dto->getEnd());
+        }
+
         if ($this->props->updateDTOProperty("registrationMode")
             && $dto->getRegisterMode() !== null
         ) {
@@ -220,12 +254,19 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             $this->handleAppointementsColor($ilObjGroup, $dto);
         }
 
-        if (!$this->tree->isInTree($ilObjGroup->getRefId())) {
-            $parentRefId = $this->determineParentRefId($dto);
-            $ilObjGroup->putInTree($parentRefId);
+        // move/put in tree
+        // Find the refId under which this course should be created
+        $parent_ref_id = $this->determineParentRefId($dto);
+        // Check if we should create some dependence categories
+        $ref_id = (int) $ilObjGroup->getRefId();
+
+
+        if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
+            $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
         } elseif ($this->props->get(GroupProperties::MOVE_GROUP)) {
-            $this->moveGroup($ilObjGroup, $dto);
+            $this->parent_resolver->move($ref_id, $parent_ref_id);
         }
+
         $ilObjGroup->update();
     }
 
@@ -283,65 +324,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      */
     protected function determineParentRefId(GroupDTO $group)
     {
-        if ($group->getParentIdType() == GroupDTO::PARENT_ID_TYPE_REF_ID) {
-            if ($this->tree->isInTree($group->getParentId())) {
-                return $group->getParentId();
-            }
-            // The ref-ID does not exist in the tree, use the fallback parent ref-ID according to the config
-            $parentRefId = $this->config->getParentRefIdIfNoParentIdFound();
-            if (!$this->tree->isInTree($parentRefId)) {
-                throw new HubException("Could not find the fallback parent ref-ID in tree: '{$parentRefId}'");
-            }
-
-            return $parentRefId;
-        }
-        if ($group->getParentIdType() == GroupDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
-            // The stored parent-ID is an external-ID from a category.
-            // We must search the parent ref-ID from a category object synced by a linked origin.
-            // --> Get an instance of the linked origin and lookup the category by the given external ID.
-            $linkedOriginId = $this->config->getLinkedOriginId();
-            if ($linkedOriginId === 0) {
-                throw new HubException("Unable to lookup external parent ref-ID because there is no origin linked");
-            }
-            $originRepository = new OriginRepository();
-            $possible_parents = array_merge($originRepository->categories(), $originRepository->courses());
-            $arrayFilter = array_filter(
-                $possible_parents,
-                function ($origin) use ($linkedOriginId) : bool {
-                    /** @var IOrigin $origin */
-                    return $origin->getId() == $linkedOriginId;
-                }
-            );
-            $origin = array_pop(
-                $arrayFilter
-            );
-            if ($origin === null) {
-                $msg = "The linked origin syncing categories or courses was not found,
-				please check that the correct origin is linked";
-                throw new HubException($msg);
-            }
-
-            $objectFactory = new ObjectFactory($origin);
-
-            if ($origin instanceof ARCourseOrigin) {
-                $parent = $objectFactory->course($group->getParentId());
-            } else {
-                $parent = $objectFactory->category($group->getParentId());
-            }
-
-            if (!$parent->getILIASId()) {
-                throw new HubException("The linked category or course does not (yet) exist in ILIAS");
-            }
-            if (!$this->tree->isInTree($parent->getILIASId())) {
-                throw new HubException(
-                    "Could not find the ref-ID of the parent category or course in the tree: '{$parent->getILIASId()}'"
-                );
-            }
-
-            return $parent->getILIASId();
-        }
-
-        return 0;
+        return $this->parent_resolver->resolveParentRefId($group);
     }
 
     /**

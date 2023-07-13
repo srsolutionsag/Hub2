@@ -353,6 +353,7 @@ return array(
     'srag\\Plugins\\Hub2\\Sync\\Processor\\ParentResolver\\BasicParentResolver' => $baseDir . '/src/Sync/Processor/ParentResolver/BasicParentResolver.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\ParentResolver\\CategoryParentResolver' => $baseDir . '/src/Sync/Processor/ParentResolver/CategoryParentResolver.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\ParentResolver\\CourseParentResolver' => $baseDir . '/src/Sync/Processor/ParentResolver/CourseParentResolver.php',
+    'srag\\Plugins\\Hub2\\Sync\\Processor\\ParentResolver\\GroupParentResolver' => $baseDir . '/src/Sync/Processor/ParentResolver/GroupParentResolver.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\ParentResolver\\ParentResolver' => $baseDir . '/src/Sync/Processor/ParentResolver/ParentResolver.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\SessionMembership\\ISessionMembershipSyncProcessor' => $baseDir . '/src/Sync/Processor/SessionMembership/ISessionMembershipSyncProcessor.php',
     'srag\\Plugins\\Hub2\\Sync\\Processor\\SessionMembership\\SessionMembershipSyncProcessor' => $baseDir . '/src/Sync/Processor/SessionMembership/SessionMembershipSyncProcessor.php',
