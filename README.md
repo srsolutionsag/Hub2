@@ -25,8 +25,8 @@ cd Customizing/global/plugins/Services/Cron/CronHook
 git clone https://github.com/srsolutionsag/Hub2.git Hub2
 ```
 ### Requirements
-* ILIAS 5.4 to ILIAS 7
-* PHP >=7.0
+* ILIAS 8
+* PHP 7.4 - 8.0
 
 
 ### ILIAS Plugin SLA
