@@ -63,6 +63,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             "groupType",
             "owner",
             "viewMode",
+            "registerMode",
             "registrationStart",
             "registrationEnd",
             "password",
@@ -116,12 +117,19 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         );
     }
 
-    /**
-     * @return array
-     */
-    public static function getProperties()
+    public static function getProperties() : array
     {
         return self::$properties;
+    }
+
+    public static function getNonAutoProperties() : array
+    {
+        return [
+            "start",
+            "end",
+            "groupType",
+            "registerMode"
+        ];
     }
 
     /**
@@ -139,7 +147,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
         foreach (self::getProperties() as $property) {
             // handled separately
-            if ($property === 'start' || $property === 'end') {
+            if (in_array($property, self::getNonAutoProperties(), true)) {
                 continue;
             }
             $setter = "set" . ucfirst($property);
@@ -154,16 +162,12 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             }
         }
 
-        // handle start and end separately
-        if ($dto->getStart() !== null && $dto->getEnd() !== null) {
-            $ilObjGroup->setPeriod($dto->getStart(), $dto->getEnd());
-        }
-
         $ilObjGroup->enableUnlimitedRegistration($dto->getRegUnlimited());
 
         $ilObjGroup->enableMembershipLimitation($dto->getRegMembershipLimitation());
 
         $ilObjGroup->enableWaitingList($dto->getWaitingList());
+        $ilObjGroup->setRegistrationType($dto->getRegisterMode());
 
         $ilObjGroup->enableRegistrationAccessCode($dto->getRegAccessCodeEnabled());
 
@@ -174,6 +178,17 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         $this->writeRBACLog($ilObjGroup->getRefId());
 
         $this->handleAppointementsColor($ilObjGroup, $dto);
+
+        // handle start and end separately
+        if ($dto->getStart() !== null && $dto->getEnd() !== null) {
+            $ilObjGroup->setPeriod($dto->getStart(), $dto->getEnd());
+        }
+
+        if ($dto->getGroupType() !== null) {
+            $ilObjGroup->updateGroupType($dto->getGroupType());
+        }
+
+        $ilObjGroup->update();
     }
 
     /**
@@ -189,7 +204,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         // Update some properties if they should be updated depending on the origin config
         foreach (self::getProperties() as $property) {
             // handled separately
-            if ($property === 'start' || $property === 'end') {
+            if (in_array($property, self::getNonAutoProperties(), true)) {
                 continue;
             }
             if (!$this->props->updateDTOProperty($property)) {
@@ -215,10 +230,10 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             $ilObjGroup->setPeriod($dto->getStart(), $dto->getEnd());
         }
 
-        if ($this->props->updateDTOProperty("registrationMode")
+        if ($this->props->updateDTOProperty("registerMode")
             && $dto->getRegisterMode() !== null
         ) {
-            $ilObjGroup->setRegisterMode($dto->getRegisterMode());
+            $ilObjGroup->setRegistrationType($dto->getRegisterMode());
         }
 
         if ($this->props->updateDTOProperty("regUnlimited")
@@ -252,13 +267,15 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         if ($this->props->updateDTOProperty("appointementsColor")) {
             $this->handleAppointementsColor($ilObjGroup, $dto);
         }
+        if ($this->props->updateDTOProperty("groupType")) {
+            $ilObjGroup->updateGroupType($dto->getGroupType());
+        }
 
         // move/put in tree
         // Find the refId under which this course should be created
         $parent_ref_id = $this->determineParentRefId($dto);
         // Check if we should create some dependence categories
         $ref_id = (int) $ilObjGroup->getRefId();
-
 
         if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
             $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
