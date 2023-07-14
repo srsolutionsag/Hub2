@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.5.2]
+- [FIX] Fixed Group-Type, Registration Mode and Start-/End on Create 
+
 ## [3.5.1]
 - [FIX] Fixed Parent Ref ID for Groups (Restoring Objects in Trash)
 - [FIX] Fixed Start / End Date for Groups
