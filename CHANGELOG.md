@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.0.1]
+- [FIX] Fixed Group-Type, Registration Mode and Start-/End on Create
+
 ## [4.0.0]
 - [RELEASE] Support for ILIAS 8 (only)
 
