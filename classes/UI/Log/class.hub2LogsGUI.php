@@ -100,7 +100,11 @@ class hub2LogsGUI extends hub2MainGUI
     {
         $table = $this->getLogsTable(self::CMD_APPLY_FILTER);
 
-        $table->writeFilterToSession();
+        try {
+            $table->writeFilterToSession();
+        } catch (Throwable $t) {
+            // Ignore
+        }
 
         $table->resetOffset();
 
