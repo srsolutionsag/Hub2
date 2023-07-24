@@ -230,7 +230,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             $ilObjGroup->setPeriod($dto->getStart(), $dto->getEnd());
         }
 
-        if ($this->props->updateDTOProperty("registerMode")
+        if ($this->props->updateDTOProperty("registrationType")
             && $dto->getRegisterMode() !== null
         ) {
             $ilObjGroup->setRegistrationType($dto->getRegisterMode());
