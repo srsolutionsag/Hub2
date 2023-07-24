@@ -264,7 +264,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 );
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_USERNAME));
                 $by_database->addSubItem($te);
-                $te = new ilTextInputGUI(
+                $te = new ilTextAreaInputGUI(
                     $this->translate('origin_form_field_conf_type_db_password'),
                     $this->conf(IOriginConfig::SERVER_PASSWORD)
                 );
