@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.0.2]
+- [FIX] catch errors writing to session
+- [FIX] update RegistrationType in Groups
+
 ## [4.0.1]
 - [FIX] Fixed Group-Type, Registration Mode and Start-/End on Create
 
