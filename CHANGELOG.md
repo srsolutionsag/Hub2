@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.0.3]
+- [FIX] bad method call after refactoring
+- [FIX] error in cli context for cron notifier
+
 ## [4.0.2]
 - [FIX] catch errors writing to session
 - [FIX] update RegistrationType in Groups
