@@ -196,7 +196,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     public function update(): void
     {
-        $this->updated_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
+        $this->updated_at = date('Y-m-d H:i:s');
         parent::update();
     }
 

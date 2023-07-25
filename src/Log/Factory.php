@@ -64,11 +64,13 @@ final class Factory implements IFactory
      */
     public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog
     {
-        $log = $this->log()->withOriginId($origin->getId())->withOriginObjectType($origin->getObjectType());
+        $log = $this->log()->withOriginId(
+            (int)$origin->getId()
+        )->withOriginObjectType($origin->getObjectType());
 
         if ($object instanceof \srag\Plugins\Hub2\Object\IObject) {
             $log->withObjectExtId($object->getExtId())
-                ->withObjectIliasId($object->getILIASId())
+                ->withObjectIliasId((int) $object->getILIASId())
                 ->withStatus($object->getStatus())
                 ->withAdditionalData((object) ($object->getData()['additionalData']?? new stdClass()));
         }

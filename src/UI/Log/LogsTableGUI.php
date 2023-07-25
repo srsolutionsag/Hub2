@@ -103,7 +103,7 @@ class LogsTableGUI extends \ilTable2GUI
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable(
             'VALUE',
-            $this->plugin->txt('data_table_status_' . ARObject::$available_status[$a_set->getStatus()])
+            $this->plugin->txt('data_table_status_' . (ARObject::$available_status[$a_set->getStatus()] ?? ''))
         );
         $this->tpl->parseCurrentBlock();
 

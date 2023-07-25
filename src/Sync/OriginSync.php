@@ -217,7 +217,7 @@ class OriginSync implements IOriginSync
 
         $this->implementation->afterSync();
 
-        $this->getOrigin()->setLastRun(date(DATE_ATOM));
+        $this->getOrigin()->setLastRun(date('Y-m-d H:i:s'));
 
         $this->getOrigin()->update();
         $notifier->notify('finished');
@@ -227,11 +227,11 @@ class OriginSync implements IOriginSync
      * @param IDataTransferObject[] $dtos
      * @return IDataTransferObject[]
      */
-    protected function sortDtoObjects(array $dtos) : array
+    protected function sortDtoObjects(array $dtos): array
     {
         // Create IDataTransferObjectSort objects
         $sort_dtos = array_map(
-            function (IDataTransferObject $dto) : IDataTransferObjectSort {
+            function (IDataTransferObject $dto): IDataTransferObjectSort {
                 return new DataTransferObjectSort($dto);
             },
             $dtos
@@ -242,14 +242,14 @@ class OriginSync implements IOriginSync
             // Sort by level
             usort(
                 $sort_dtos,
-                function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2) : int {
+                function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int {
                     return ($sort_dto1->getLevel() - $sort_dto2->getLevel());
                 }
             );
 
             // Back to IDataTransferObject objects
             $dtos = array_map(
-                function (IDataTransferObjectSort $sort_dto) : IDataTransferObject {
+                function (IDataTransferObjectSort $sort_dto): IDataTransferObject {
                     return $sort_dto->getDtoObject();
                 },
                 $sort_dtos
@@ -329,37 +329,37 @@ class OriginSync implements IOriginSync
         return $this->origin;
     }
 
-    public function setOrigin(IOrigin $origin) : void
+    public function setOrigin(IOrigin $origin): void
     {
         $this->origin = $origin;
     }
 
-    public function getRepository() : IObjectRepository
+    public function getRepository(): IObjectRepository
     {
         return $this->repository;
     }
 
-    public function setRepository(IObjectRepository $repository) : void
+    public function setRepository(IObjectRepository $repository): void
     {
         $this->repository = $repository;
     }
 
-    public function getFactory() : IObjectFactory
+    public function getFactory(): IObjectFactory
     {
         return $this->factory;
     }
 
-    public function setFactory(IObjectFactory $factory) : void
+    public function setFactory(IObjectFactory $factory): void
     {
         $this->factory = $factory;
     }
 
-    public function getProcessor() : IObjectSyncProcessor
+    public function getProcessor(): IObjectSyncProcessor
     {
         return $this->processor;
     }
 
-    public function setProcessor(IObjectSyncProcessor $processor) : void
+    public function setProcessor(IObjectSyncProcessor $processor): void
     {
         $this->processor = $processor;
     }
@@ -367,7 +367,7 @@ class OriginSync implements IOriginSync
     /**
      * @deprecated
      */
-    public function getStatusTransition() : IObjectStatusTransition
+    public function getStatusTransition(): IObjectStatusTransition
     {
         return $this->statusTransition;
     }
@@ -375,17 +375,17 @@ class OriginSync implements IOriginSync
     /**
      * @deprecated
      */
-    public function setStatusTransition(IObjectStatusTransition $statusTransition) : void
+    public function setStatusTransition(IObjectStatusTransition $statusTransition): void
     {
         $this->statusTransition = $statusTransition;
     }
 
-    public function getImplementation() : IOriginImplementation
+    public function getImplementation(): IOriginImplementation
     {
         return $this->implementation;
     }
 
-    public function setImplementation(IOriginImplementation $implementation) : void
+    public function setImplementation(IOriginImplementation $implementation): void
     {
         $this->implementation = $implementation;
     }
