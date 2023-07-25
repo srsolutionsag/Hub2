@@ -153,7 +153,7 @@ class RunSync extends ilCronJob
                     $skip_object_type = $origin->getObjectType();
                     continue;
                 } catch (Throwable $e) {
-                    $this->log_repo->storeLog(self::logs()->factory()->exceptionLog($e, $origin));
+                    $this->log_repo->storeLog($this->log_repo->factory()->exceptionLog($e, $origin));
                 }
 
                 $this->summary->addOriginSync($originSync);
