@@ -13,7 +13,6 @@ return array(
     'hub2DataGUI' => $baseDir . '/classes/UI/Data/class.hub2DataGUI.php',
     'hub2LogsGUI' => $baseDir . '/classes/UI/Log/class.hub2LogsGUI.php',
     'hub2MainGUI' => $baseDir . '/classes/UI/class.hub2MainGUI.php',
-    'hub2RemoveDataConfirm' => $baseDir . '/classes/uninstall/class.hub2RemoveDataConfirm.php',
     'ilHub2ConfigGUI' => $baseDir . '/classes/class.ilHub2ConfigGUI.php',
     'ilHub2Plugin' => $baseDir . '/classes/class.ilHub2Plugin.php',
     'srag\\Plugins\\Hub2\\Access\\Access' => $baseDir . '/src/Access/Access.php',

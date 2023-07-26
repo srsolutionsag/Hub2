@@ -134,7 +134,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
             $this->prop(UserProperties::UPDATE_PASSWORD)
         );
         $activate->setInfo($this->plugin->txt('usr_prop_update_password_info'));
-        $activate->setChecked($this->origin->properties()->get(UserProperties::UPDATE_PASSWORD));
+        $activate->setChecked((bool)$this->origin->properties()->get(UserProperties::UPDATE_PASSWORD));
         $this->addItem($activate);
 
         $activate = new ilCheckboxInputGUI(
@@ -142,7 +142,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
             $this->prop(UserProperties::REACTIVATE_ACCOUNT)
         );
         $activate->setInfo($this->plugin->txt('usr_prop_reactivate_account_info'));
-        $activate->setChecked($this->origin->properties()->get(UserProperties::REACTIVATE_ACCOUNT));
+        $activate->setChecked((bool)$this->origin->properties()->get(UserProperties::REACTIVATE_ACCOUNT));
         $this->addItem($activate);
 
         $activate = new ilCheckboxInputGUI(
@@ -150,7 +150,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
             $this->prop(UserProperties::RE_SEND_PASSWORD)
         );
         $activate->setInfo($this->plugin->txt('usr_prop_resend_password_info'));
-        $activate->setChecked($this->origin->properties()->get(UserProperties::RE_SEND_PASSWORD));
+        $activate->setChecked((bool)$this->origin->properties()->get(UserProperties::RE_SEND_PASSWORD));
         $this->addItem($activate);
     }
 
