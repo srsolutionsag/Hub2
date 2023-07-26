@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.5.5]
+- [FIX] Several code incompatibilities
+
 ## [3.5.4]
 - [FIX] bad method call after refactoring
 - [FIX] error in cli context for cron notifier
