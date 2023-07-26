@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.0.4]
+- [FIX] Several PHP8 and ILIAS 8 incompatibilities 
+
 ## [4.0.3]
 - [FIX] bad method call after refactoring
 - [FIX] error in cli context for cron notifier
