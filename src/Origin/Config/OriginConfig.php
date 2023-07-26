@@ -83,7 +83,7 @@ class OriginConfig implements IOriginConfig
      */
     public function getConnectionType() : int
     {
-        return (int) $this->get(self::CONNECTION_TYPE);
+        return (int) ($this->get(self::CONNECTION_TYPE)??self::CONNECTION_TYPE_SERVER);
     }
 
     /**

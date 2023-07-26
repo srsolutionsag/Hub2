@@ -213,24 +213,20 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         switch ($field_name) {
             case 'config':
                 if ($this->_config === null) {
-                    $config = $this->getOriginConfig([]);
+                    $config = $this->getOriginConfig($this->getConfigData());
 
                     return json_encode($config->getData(), JSON_THROW_ON_ERROR);
-                } else {
-                    return json_encode($this->config()->getData(), JSON_THROW_ON_ERROR);
                 }
 
-            // no break
+                return json_encode($this->config()->getData(), JSON_THROW_ON_ERROR);
             case 'properties':
                 if ($this->_properties === null) {
-                    $properties = $this->getOriginProperties([]);
+                    $properties = $this->getOriginProperties($this->getPropertiesData());
 
                     return json_encode($properties->getData(), JSON_THROW_ON_ERROR);
-                } else {
-                    return json_encode($this->properties()->getData(), JSON_THROW_ON_ERROR);
                 }
 
-            // no break
+                return json_encode($this->properties()->getData(), JSON_THROW_ON_ERROR);
             case "adhoc":
             case "adhoc_parent_scope":
                 return ($field_value ? 1 : 0);

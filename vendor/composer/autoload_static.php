@@ -14,7 +14,6 @@ class ComposerStaticInit5479c2b3600ef601418dd59cf314d01e
         'hub2DataGUI' => __DIR__ . '/../..' . '/classes/UI/Data/class.hub2DataGUI.php',
         'hub2LogsGUI' => __DIR__ . '/../..' . '/classes/UI/Log/class.hub2LogsGUI.php',
         'hub2MainGUI' => __DIR__ . '/../..' . '/classes/UI/class.hub2MainGUI.php',
-        'hub2RemoveDataConfirm' => __DIR__ . '/../..' . '/classes/uninstall/class.hub2RemoveDataConfirm.php',
         'ilHub2ConfigGUI' => __DIR__ . '/../..' . '/classes/class.ilHub2ConfigGUI.php',
         'ilHub2Plugin' => __DIR__ . '/../..' . '/classes/class.ilHub2Plugin.php',
         'srag\\Plugins\\Hub2\\Access\\Access' => __DIR__ . '/../..' . '/src/Access/Access.php',
