@@ -36,6 +36,10 @@ class Json
      * @var array
      */
     private $filters = [];
+    /**
+     * @var \Closure
+     */
+    private $string_sanitizer;
 
     /**
      *
@@ -43,14 +47,13 @@ class Json
     public function __construct(
         string $file_path,
         ?string $unique_field,
-        array $mandatory_columns = []
-//        array $column_mapping = []
-    )
-    {
+        array $mandatory_columns = [],
+        \Closure $string_sanitizer
+    ) {
         $this->file_path = $file_path;
         $this->unique_field = $unique_field;
         $this->mandatory_columns = $mandatory_columns;
-        $this->columns_mapping = $column_mapping ?? [];
+        $this->string_sanitizer = $string_sanitizer;
     }
 
     public function addFilter(\Closure $filter): void
@@ -95,7 +98,6 @@ class Json
             }
         });
     }
-
 
     protected function removeBOM(string $text): string
     {
@@ -158,6 +160,7 @@ class Json
 
     protected function sanitize(string $s): string
     {
-        return utf8_encode(utf8_decode($s));
+        $sanitizer = $this->string_sanitizer;
+        return $sanitizer($s);
     }
 }
