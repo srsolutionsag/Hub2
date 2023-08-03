@@ -26,7 +26,7 @@ class OriginConfig implements IOriginConfig
         return $this->data;
     }
 
-    public function setData(array $data): static
+    public function setData(array $data): self
     {
         $this->data = array_merge($this->data, $data);
 

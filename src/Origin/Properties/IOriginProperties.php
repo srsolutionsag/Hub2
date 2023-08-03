@@ -36,5 +36,5 @@ interface IOriginProperties
      * Set all properties as associative array
      * @return $this
      */
-    public function setData(array $data): static;
+    public function setData(array $data): self;
 }
