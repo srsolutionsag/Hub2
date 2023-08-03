@@ -52,12 +52,11 @@ class OriginConfig implements IOriginConfig
         return $this->data;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setData(array $data) : void
+    public function setData(array $data): IOriginConfig
     {
         $this->data = array_merge($this->data, $data);
+
+        return $this;
     }
 
     /**

@@ -46,7 +46,7 @@ interface IOriginConfig
     /**
      * @return $this
      */
-    public function setData(array $data);
+    public function setData(array $data): self;
 
     /**
      * @return mixed

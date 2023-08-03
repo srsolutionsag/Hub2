@@ -36,12 +36,11 @@ abstract class OriginProperties implements IOriginProperties
         return $this->get(self::PREFIX_UPDATE_DTO . $property);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setData(array $data) : void
+    public function setData(array $data): IOriginProperties
     {
         $this->data = array_merge($this->data, $data);
+        
+        return $this;
     }
 
     /**
