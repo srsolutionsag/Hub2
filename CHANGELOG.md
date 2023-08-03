@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.5]
+- [FIX] Incompatible Syntax in PHP 7.4
+- [FIX] make Plugin installable using cli
+- [FIX] more PHP 7.4 syntax incompatibilities
+
 ## [4.0.4]
 - [FIX] Several PHP8 and ILIAS 8 incompatibilities 
 
