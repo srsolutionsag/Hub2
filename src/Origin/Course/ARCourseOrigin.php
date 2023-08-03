@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Origin\Course;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class ARCourseOrigin
@@ -14,18 +16,13 @@ use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
  */
 class ARCourseOrigin extends AROrigin implements ICourseOrigin
 {
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginConfig(array $data) : \srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig
+    protected function getOriginConfig(array $data): IOriginConfig
     {
         return new CourseOriginConfig($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginProperties(array $data) : \srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties
+
+    protected function getOriginProperties(array $data): IOriginProperties
     {
         return new CourseProperties($data);
     }

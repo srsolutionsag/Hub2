@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Origin\GroupMembership;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\GroupMembership\GroupMembershipOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\GroupMembership\GroupMembershipProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class ARGroupMembershipOrigin
@@ -13,21 +15,14 @@ use srag\Plugins\Hub2\Origin\Properties\GroupMembership\GroupMembershipPropertie
  */
 class ARGroupMembershipOrigin extends AROrigin implements IGroupMembershipOrigin
 {
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginConfig(
-        array $data
-    ) : \srag\Plugins\Hub2\Origin\Config\GroupMembership\GroupMembershipOriginConfig {
+    protected function getOriginConfig(array $data): IOriginConfig
+    {
         return new GroupMembershipOriginConfig($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginProperties(
-        array $data
-    ) : \srag\Plugins\Hub2\Origin\Properties\GroupMembership\GroupMembershipProperties {
+
+    protected function getOriginProperties(array $data): IOriginProperties
+    {
         return new GroupMembershipProperties($data);
     }
 }

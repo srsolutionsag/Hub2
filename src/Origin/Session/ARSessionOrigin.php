@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Origin\Session;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\Session\SessionOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class ARSessionOrigin
@@ -13,18 +15,13 @@ use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
  */
 class ARSessionOrigin extends AROrigin implements ISessionOrigin
 {
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginConfig(array $data) : \srag\Plugins\Hub2\Origin\Config\Session\SessionOriginConfig
+    protected function getOriginConfig(array $data): IOriginConfig
     {
         return new SessionOriginConfig($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginProperties(array $data) : \srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties
+
+    protected function getOriginProperties(array $data): IOriginProperties
     {
         return new SessionProperties($data);
     }

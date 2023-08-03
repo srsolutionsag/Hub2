@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Origin\Category;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\Category\CategoryOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class ARCategoryOrigin
@@ -14,20 +16,13 @@ use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
  */
 class ARCategoryOrigin extends AROrigin implements ICategoryOrigin
 {
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginConfig(array $data) : \srag\Plugins\Hub2\Origin\Config\Category\CategoryOriginConfig
+    protected function getOriginConfig(array $data): IOriginConfig
     {
         return new CategoryOriginConfig($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginProperties(
-        array $data
-    ) : \srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties {
+    protected function getOriginProperties(array $data): IOriginProperties
+    {
         return new CategoryProperties($data);
     }
 }

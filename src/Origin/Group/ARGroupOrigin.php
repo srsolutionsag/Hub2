@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Origin\Group;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\Group\GroupOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class ARGroupOrigin
@@ -13,18 +15,13 @@ use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
  */
 class ARGroupOrigin extends AROrigin implements IGroupOrigin
 {
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginConfig(array $data) : \srag\Plugins\Hub2\Origin\Config\Group\GroupOriginConfig
+    protected function getOriginConfig(array $data): IOriginConfig
     {
         return new GroupOriginConfig($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginProperties(array $data) : \srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties
+
+    protected function getOriginProperties(array $data): IOriginProperties
     {
         return new GroupProperties($data);
     }

@@ -5,6 +5,8 @@ namespace srag\Plugins\Hub2\Origin\SessionMembership;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Origin\Config\SessionMembership\SessionMembershipOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 
 /**
  * Class ARSessionMembershipOrigin
@@ -13,21 +15,14 @@ use srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipPrope
  */
 class ARSessionMembershipOrigin extends AROrigin implements ISessionMembershipOrigin
 {
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginConfig(
-        array $data
-    ) : \srag\Plugins\Hub2\Origin\Config\SessionMembership\SessionMembershipOriginConfig {
+    protected function getOriginConfig(array $data): IOriginConfig
+    {
         return new SessionMembershipOriginConfig($data);
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function getOriginProperties(
-        array $data
-    ) : \srag\Plugins\Hub2\Origin\Properties\SessionMembership\SessionMembershipProperties {
+
+    protected function getOriginProperties(array $data): IOriginProperties
+    {
         return new SessionMembershipProperties($data);
     }
 }
