@@ -108,7 +108,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         $ilObjUser->setDescription($dto->getEmail());
         $ilObjUser->setImportId($this->getImportId($dto));
         $ilObjUser->setLogin($this->buildLogin($dto, $ilObjUser));
-        $ilObjUser->setUTitle($dto->getTitle());
+        $ilObjUser->setUTitle($dto->getTitle() ?? '');
         $ilObjUser->create();
         if ($this->props->get(UserProperties::ACTIVATE_ACCOUNT)) {
             $ilObjUser->setActive(true);
@@ -134,10 +134,10 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         if ($this->props->get(UserProperties::CREATE_PASSWORD)) {
             $password = $this->generatePassword();
             $dto->setPasswd($password);
-            $ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
+            $ilObjUser->setPasswd($dto->getPasswd(), ilObjUser::PASSWD_PLAIN);
             $this->sendPasswordMail($dto);
         } else {
-            $ilObjUser->setPasswd($dto->getPasswd(), IL_PASSWD_PLAIN);
+            $ilObjUser->setPasswd($dto->getPasswd(), ilObjUser::PASSWD_PLAIN);
         }
 
         $ilObjUser->saveAsNew();
@@ -196,7 +196,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
 
         // Update Password?
         if ($this->props->get(UserProperties::UPDATE_PASSWORD) && $dto->getPasswd() !== null && $dto->getPasswd(
-            ) !== '') {
+        ) !== '') {
             $ilObjUser->resetPassword($dto->getPasswd(), $dto->getPasswd());
         }
 
@@ -208,7 +208,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         $ilObjUser->update();
     }
 
-    private function sendPasswordMail(IDataTransferObject $dto) : void
+    private function sendPasswordMail(IDataTransferObject $dto): void
     {
         /** @var UserDTO $dto */
 
@@ -318,13 +318,16 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      * @param int $ilias_id
      * @return ilObjUser|null
      */
-    protected function findILIASUser($ilias_id)
+    protected function findILIASUser(int $ilias_id): ?ilObjUser
     {
         if (!ilObjUser::_exists($ilias_id, false, 'usr')) {
             return null;
         }
-
-        return new ilObjUser($ilias_id);
+        try {
+            return new ilObjUser($ilias_id);
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 
     /**
@@ -332,7 +335,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      */
     protected function generatePassword()
     {
-        $generatePasswords = ilUtil::generatePasswords(1);
+        $generatePasswords = \ilSecuritySettingsChecker::generatePasswords(1);
         return array_pop($generatePasswords);
     }
 }
