@@ -42,14 +42,12 @@ class ilHub2Plugin extends ilCronHookPlugin
         return self::PLUGIN_NAME;
     }
 
-    public function __construct(
-        ilDBInterface $db,
-        ilComponentRepositoryWrite $component_repository,
-        string $id
-    ) {
-        parent::__construct($db, $component_repository, $id);
+    protected function init(): void
+    {
         global $DIC;
-        $this->provider_collection->setMainBarProvider(new Menu($DIC, $this));
+        if ($DIC->offsetExists('global_screen')) {
+            $this->provider_collection->setMainBarProvider(new Menu($DIC, $this));
+        }
     }
 
     public static function getInstance(): self
