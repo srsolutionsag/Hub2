@@ -302,17 +302,17 @@ class LogsTableGUI extends \ilTable2GUI
 
     protected function buildTableDataArray(
         string $sort_by,
-        mixed $title,
-        mixed $message,
+        ?string $title,
+        ?string $message,
         ?ilDateTime $date_start,
         ?ilDateTime $date_end,
         ?int $level,
         ?int $origin_id,
-        mixed $origin_object_type,
-        mixed $object_ext_id,
+        ?string $origin_object_type,
+        ?string $object_ext_id,
         ?int $object_ilias_id,
-        mixed $additional_data,
-        int $status
+        ?string $additional_data,
+        ?int $status
     ): array {
         return array_map(function (ILog $log): array {
             return [
