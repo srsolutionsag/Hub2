@@ -66,32 +66,32 @@ class RunSync extends ilCronJob
         $this->log_repo = LogRepository::getInstance();
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return self::CRON_JOB_ID;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return ilHub2Plugin::PLUGIN_NAME;
     }
 
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return "";
     }
 
-    public function hasAutoActivation() : bool
+    public function hasAutoActivation(): bool
     {
         return true;
     }
 
-    public function hasFlexibleSchedule() : bool
+    public function hasFlexibleSchedule(): bool
     {
         return true;
     }
 
-    public function getDefaultScheduleType() : int
+    public function getDefaultScheduleType(): int
     {
         return ilCronJob::SCHEDULE_TYPE_DAILY;
     }
@@ -99,7 +99,7 @@ class RunSync extends ilCronJob
     /**
      * @return null
      */
-    public function getDefaultScheduleValue() : int
+    public function getDefaultScheduleValue(): int
     {
         return 1;
     }
@@ -107,7 +107,7 @@ class RunSync extends ilCronJob
     /**
      * @return AbstractResult
      */
-    public function run() : \ilCronJobResult
+    public function run(): \ilCronJobResult
     {
         try {
             $skip_object_type = '';
@@ -162,12 +162,12 @@ class RunSync extends ilCronJob
             $this->summary->sendEmail();
 
             if (!$global_hook->afterSync($this->origins)) {
-                return ResultFactory::error("there was an error");
+                return ResultFactory::error("General Error: GlobalHook returned false");
             }
 
             return ResultFactory::ok("everything's fine.");
         } catch (Throwable $e) {
-            return ResultFactory::error("there was an error");
+            return ResultFactory::error("General Error: " . $e->getMessage());
         }
     }
 }

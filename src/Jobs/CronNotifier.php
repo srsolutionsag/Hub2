@@ -21,21 +21,25 @@ class CronNotifier implements Notifier
         $this->logger = $DIC->logger()->root();
     }
 
-    public function reset() : void
+    public function reset(): void
     {
         $this->ping_counter = 0;
         $this->notify_counter = 0;
     }
 
-    private function pingCronJob() : void
+    private function pingCronJob(): void
     {
-        if (php_sapi_name() === 'cli') {
+        if (PHP_SAPI === 'cli') {
             global $DIC;
-            (new \ilCronManager($DIC->settings(), $DIC->logger()->root()))->ping(RunSync::CRON_JOB_ID);
+            if (!isset($DIC['cron.repository'])) {
+                return;
+            }
+
+            $DIC['cron.manager']->ping(RunSync::CRON_JOB_ID);
         }
     }
 
-    public function ping() : void
+    public function ping(): void
     {
         if ($this->ping_counter % self::PING_MODULO === 0) {
             $this->pingCronJob();
@@ -43,13 +47,13 @@ class CronNotifier implements Notifier
         $this->ping_counter++;
     }
 
-    public function notify(string $text) : void
+    public function notify(string $text): void
     {
         $this->pingCronJob();
         $this->logger->write('HUB2: ' . $text);
     }
 
-    public function notifySometimes(string $text) : void
+    public function notifySometimes(string $text): void
     {
         if ($this->notify_counter % self::NOTIFY_MODULO === 0) {
             $this->notify($text . " ({$this->notify_counter})");
