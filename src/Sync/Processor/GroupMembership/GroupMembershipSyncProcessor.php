@@ -186,11 +186,11 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     {
         switch ($object->getRole()) {
             case GroupMembershipDTO::ROLE_ADMIN:
-                return IL_GRP_ADMIN;
+                return \ilGroupParticipants::IL_GRP_ADMIN;
             case GroupMembershipDTO::ROLE_MEMBER:
-                return IL_GRP_MEMBER;
+                return \ilGroupParticipants::IL_GRP_MEMBER;
             default:
-                return IL_CRS_MEMBER;
+                return \ilGroupParticipants::IL_CRS_MEMBER;
         }
     }
 

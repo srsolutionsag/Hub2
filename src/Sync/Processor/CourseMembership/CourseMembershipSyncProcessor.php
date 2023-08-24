@@ -142,12 +142,12 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
     {
         switch ($object->getRole()) {
             case CourseMembershipDTO::ROLE_ADMIN:
-                return IL_CRS_ADMIN;
+                return \ilCourseParticipants::IL_CRS_ADMIN;
             case CourseMembershipDTO::ROLE_TUTOR:
-                return IL_CRS_TUTOR;
+                return \ilCourseParticipants::IL_CRS_TUTOR;
             case CourseMembershipDTO::ROLE_MEMBER:
             default:
-                return IL_CRS_MEMBER;
+                return \ilCourseParticipants::IL_CRS_MEMBER;
         }
     }
 
