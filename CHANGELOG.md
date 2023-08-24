@@ -1,8 +1,11 @@
 # Changelog
 
+## [4.0.7]
+- [FIX] Course and Group Membership constants
+
 ## [4.0.6]
 - [FIX] general errors during cron in CLI context
-- 
+
 ## [4.0.5]
 - [FIX] Incompatible Syntax in PHP 7.4
 - [FIX] make Plugin installable using cli
