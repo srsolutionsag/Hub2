@@ -213,6 +213,9 @@ origin_form_field_conf_type_db_password#:#Kennwort
 origin_form_field_conf_type_db_port#:#Port
 origin_form_field_conf_type_db_search_base#:#Such-Base
 origin_form_field_conf_type_db_username#:#Login-Name
+origin_form_field_conf_type_api#:#API
+origin_form_field_conf_type_api_info#:#Verbindung mit externer API
+origin_form_field_conf_type_api_token#:#Bearer-Token
 origin_form_field_conf_type_external#:#Extern
 origin_form_field_conf_type_external_info#:#Füllen der Hub-Tabelle durch Fremdsystem.
 origin_form_field_conf_type_path#:#Pfad

@@ -264,7 +264,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 );
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_USERNAME));
                 $by_database->addSubItem($te);
-                $te = new ilTextAreaInputGUI(
+                $te = new ilTextInputGUI(
                     $this->translate('origin_form_field_conf_type_db_password'),
                     $this->conf(IOriginConfig::SERVER_PASSWORD)
                 );
@@ -326,40 +326,36 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 );
                 $filedrop->addSubItem($auth_token);
 
-                $rid = new ilNonEditableValueGUI(
-                    $this->translate('origin_form_field_conf_type_filedrop_rid'),
-                    "",
-                    true
-                );
-                $resource_identification = $this->origin->config()->get(IOriginConfig::FILE_DROP_RID);
-                $rid_link = $resource_identification === null
-                    ? $this->translate(
-                        'origin_form_field_conf_type_filedrop_rid_nya'
-                    )
-                    : $this->getLinkToResource($resource_identification);
-                $rid->setValue($rid_link);
-                $filedrop->addSubItem($rid);
-
-                if ($resource_identification !== null) {
-                    $latest_file = new ilNonEditableValueGUI(
-                        $this->translate('origin_form_field_conf_type_filedrop_latest'),
-                        "",
-                        true
-                    );
-                    $resource_info = $this->file_storage->getRevisionInfo($resource_identification);
-                    $latest_file->setValue($resource_info['creation_date'] ?? '');
-                    $filedrop->addSubItem($latest_file);
-
-                    // new fileupload-field for manual upload
-                    $file = new \ilFileInputGUI(
-                        $this->translate('origin_form_field_conf_type_filedrop_file'),
-                        'manual_file_drop'
-                    );
-                    $file->setRequired(false);
-                    $filedrop->addSubItem($file);
-                }
+                $this->addRIDSection($filedrop);
             }
             $ro->addOption($filedrop);
+
+            // By API
+            $api = new ilRadioOption(
+                $this->translate('origin_form_field_conf_type_api'),
+                IOriginConfig::CONNECTION_TYPE_API,
+                $this->translate('origin_form_field_conf_type_api_info')
+            );
+            {
+                $te = new ilTextInputGUI(
+                    $this->translate('origin_form_field_conf_type_db_host'),
+                    $this->conf(IOriginConfig::SERVER_HOST)
+                );
+                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_HOST));
+                $api->addSubItem($te);
+
+                $te = new ilTextAreaInputGUI(
+                    $this->translate('origin_form_field_conf_type_api_token'),
+                    $this->conf(IOriginConfig::SERVER_PASSWORD)
+                );
+                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
+                $api->addSubItem($te);
+
+                $this->addRIDSection($api);
+            }
+
+
+            $ro->addOption($api);
         }
         $this->addItem($ro);
     }
@@ -577,5 +573,47 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     {
         $this->ctrl->setParameterByClass(hub2ConfigOriginsGUI::class, 'rid', $resource_identification);
         return "<a href=\"{$this->ctrl->getLinkTarget($this->parent_gui, hub2ConfigOriginsGUI::CMD_DOWNLOAD_RID)}\">{$resource_identification}</a>";
+    }
+
+    /**
+     * @param ilRadioOption $filedrop
+     * @return void
+     */
+    protected function addRIDSection(ilRadioOption $filedrop) : void
+    {
+        $rid = new ilNonEditableValueGUI(
+            $this->translate('origin_form_field_conf_type_filedrop_rid'),
+            "",
+            true
+        );
+        $resource_identification = $this->origin->config()->get(IOriginConfig::FILE_DROP_RID);
+        $rid_link = $resource_identification === null
+            ? $this->translate(
+                'origin_form_field_conf_type_filedrop_rid_nya'
+            )
+            : $this->getLinkToResource($resource_identification);
+        $rid->setValue($rid_link);
+        $filedrop->addSubItem($rid);
+
+        if ($resource_identification !== null) {
+            $latest_file = new ilNonEditableValueGUI(
+                $this->translate('origin_form_field_conf_type_filedrop_latest'),
+                "",
+                true
+            );
+            $resource_info = $this->file_storage->getRevisionInfo($resource_identification);
+            $latest_file->setValue($resource_info['creation_date'] ?? '');
+            $filedrop->addSubItem($latest_file);
+
+            // new fileupload-field for manual upload
+            if ($this->origin->config()->getConnectionType() !== IOriginConfig::CONNECTION_TYPE_API) {
+                $file = new \ilFileInputGUI(
+                    $this->translate('origin_form_field_conf_type_filedrop_file'),
+                    'manual_file_drop'
+                );
+                $file->setRequired(false);
+                $filedrop->addSubItem($file);
+            }
+        }
     }
 }

@@ -32,6 +32,7 @@ interface IOriginConfig
     public const CONNECTION_TYPE_EXTERNAL = 3;
     public const CONNECTION_TYPE_ILIAS_FILE = 4;
     public const CONNECTION_TYPE_FILE_DROP = 5;
+    public const CONNECTION_TYPE_API = 6;
     public const FILE_DROP_AUTH_TOKEN = 'fd_auth_token';
     public const FILE_DROP_RID = 'fd_rid';
     // Prefix for keys that storing custom config values
