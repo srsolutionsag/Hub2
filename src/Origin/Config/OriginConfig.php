@@ -52,15 +52,17 @@ class OriginConfig implements IOriginConfig
 
     public function getPath(): string
     {
-        if (
-            $this->getConnectionType() !== self::CONNECTION_TYPE_PATH
-            && $this->getConnectionType() !== self::CONNECTION_TYPE_FILE_DROP
-        ) {
+        if (!in_array(
+            $this->getConnectionType(),
+            [self::CONNECTION_TYPE_PATH, self::CONNECTION_TYPE_FILE_DROP, self::CONNECTION_TYPE_API],
+            true
+        )) {
             throw new ConnectionFailedException("Please set connection type to path to use getPath");
         }
 
         switch ($this->getConnectionType()) {
             case self::CONNECTION_TYPE_FILE_DROP:
+            case self::CONNECTION_TYPE_API:
                 $f = new Factory();
                 $path = $f->storage()->getPath($this->get(self::FILE_DROP_RID));
                 break;
@@ -83,7 +85,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerHost(): string
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerHost");
         }
 
@@ -92,7 +94,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerPort(): int
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerPort");
         }
 
@@ -101,7 +103,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerUsername(): string
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerUsername");
         }
 
@@ -110,7 +112,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerPassword(): string
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerPassword");
         }
 
@@ -119,7 +121,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerDatabase(): string
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerDatabase");
         }
 
@@ -128,7 +130,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerSearchBase(): string
     {
-        if ($this->getConnectionType() !== self::CONNECTION_TYPE_SERVER) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerSearchBase");
         }
 
