@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.6.0]
+- [FEATURE] added specific connection type "API"
+
 ## [3.5.6]
 - [FIX] Several PHP 7.4 compatibility issues
 - [FIX] Use TextArea for Password (to Store tokens as well)
