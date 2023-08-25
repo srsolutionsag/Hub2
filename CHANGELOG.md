@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.1.0]
+- [FEATURE] added specific connection type "API"
+
 ## [4.0.7]
 - [FIX] Course and Group Membership constants
 
