@@ -129,6 +129,8 @@ interface IOrigin
      */
     public function setLastRun($last_run);
 
+    public function setLastRunToNow(): void;
+
     /**
      *
      */

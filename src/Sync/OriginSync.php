@@ -216,10 +216,10 @@ class OriginSync implements IOriginSync
         }
 
         $this->implementation->afterSync();
-
-        $this->getOrigin()->setLastRun(date(DATE_ATOM));
-
-        $this->getOrigin()->update();
+        
+        $origin = $this->getOrigin();
+        $origin->setLastRunToNow();
+        $origin->update();
         $notifier->notify('finished');
     }
 
