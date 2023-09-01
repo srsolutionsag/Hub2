@@ -217,9 +217,9 @@ class OriginSync implements IOriginSync
 
         $this->implementation->afterSync();
 
-        $this->getOrigin()->setLastRun(date('Y-m-d H:i:s'));
-
-        $this->getOrigin()->update();
+        $origin = $this->getOrigin();
+        $origin->setLastRunToNow();
+        $origin->update();
         $notifier->notify('finished');
     }
 

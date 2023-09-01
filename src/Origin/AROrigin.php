@@ -19,7 +19,7 @@ use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 abstract class AROrigin extends ActiveRecord implements IOrigin
 {
     public const TABLE_NAME = 'sr_hub2_origin';
-
+    const DATE_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @var array
@@ -196,7 +196,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     public function update(): void
     {
-        $this->updated_at = date('Y-m-d H:i:s');
+        $this->updated_at = date(self::DATE_FORMAT);
         parent::update();
     }
 
@@ -392,6 +392,11 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     public function setLastRun($last_run): void
     {
         $this->last_run = $last_run;
+    }
+
+    public function setLastRunToNow(): void
+    {
+        $this->last_run = date(self::DATE_FORMAT);
     }
 
     /**
