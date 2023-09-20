@@ -228,7 +228,7 @@ abstract class ARObject extends ActiveRecord implements IObject
 
                 return $data;
             case 'meta_data':
-                if (is_null($field_value)) {
+                if ('' === $field_value || is_null($field_value)) {
                     return [];
                 }
                 $json_decode = json_decode($field_value, true, 512, JSON_THROW_ON_ERROR);
@@ -246,7 +246,7 @@ abstract class ARObject extends ActiveRecord implements IObject
 
                 return $IMetadata;
             case 'taxonomies':
-                if (is_null($field_value)) {
+                if ('' === $field_value || is_null($field_value)) {
                     return [];
                 }
                 $json_decode = json_decode($field_value, true, 512, JSON_THROW_ON_ERROR);
