@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.1.1]
+- [FIX] handle empty strings in json parser
+
 ## [4.1.0]
 - [FEATURE] added specific connection type "API"
 
