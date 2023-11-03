@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.7.0]
+- [FEATURE] added Posiibility to exchange string sanitizer in Origin for JSON based implementations
+- [FIX] Fixed Issue with truncated timestamps with newer MySQL versions
+
 ## [3.6.0]
 - [FEATURE] added specific connection type "API"
 
