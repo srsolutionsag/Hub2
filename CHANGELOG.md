@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.2.0]
+- [FEATURE] added possibility to exchange string sanitizer in Origin for JSON based implementations
+- [FIX] Fixed Issue with truncated timestamps with newer MySQL versions
+
 ## [4.1.1]
 - [FIX] handle empty strings in json parser
 

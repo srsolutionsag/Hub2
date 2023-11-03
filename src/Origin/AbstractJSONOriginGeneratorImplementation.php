@@ -37,7 +37,8 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
         $this->json_parser = new Json(
             $this->file_path,
             $this->getUniqueField(),
-            $this->getMandatoryColumns()
+            $this->getMandatoryColumns(),
+            $this->getStringSanitizer()
         );
 
         foreach ($this->getFilters() as $filter) {
@@ -51,6 +52,13 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
     abstract protected function getMandatoryColumns() : array;
 
     abstract protected function getUniqueField() : ?string;
+
+    protected function getStringSanitizer() : \Closure
+    {
+        return static function (string $string) : string {
+            return utf8_encode(utf8_decode($string));
+        };
+    }
 
     /**
      * @return IDataTransferObject[]|\Generator
