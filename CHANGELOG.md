@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.7.1]
+- [FIX] fixed storage of MetaData in Database
+
 ## [3.7.0]
 - [FEATURE] added Posiibility to exchange string sanitizer in Origin for JSON based implementations
 - [FIX] Fixed Issue with truncated timestamps with newer MySQL versions
