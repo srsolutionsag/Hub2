@@ -31,6 +31,6 @@ trait MetadataAwareDataTransferObject
      */
     public function getMetaData(): array
     {
-        return is_array($this->_meta_data) ? $this->_meta_data : [];
+        return $this->_meta_data;
     }
 }
