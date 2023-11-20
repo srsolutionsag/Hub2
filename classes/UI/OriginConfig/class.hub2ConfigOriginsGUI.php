@@ -260,13 +260,14 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             $upload_service = $DIC->upload();
             $upload_service->process();
 
-            $file_drop = $form->getInput('manual_file_drop');
+            $file_drop_filedrop = $form->getInput('manual_file_drop_filedrop');
+            $file_drop_api = $form->getInput('manual_file_drop_filedrop_api');
             if (
                 $upload_service->hasUploads()
                 && ($rid = $origin->config()->get(IOriginConfig::FILE_DROP_RID)) !== null
             ) {
                 $uploads = $upload_service->getResults();
-                $upload = $uploads[$file_drop['tmp_name']] ?? null;
+                $upload = $uploads[$file_drop_filedrop['tmp_name']] ?? $uploads[$file_drop_api['tmp_name']] ?? null;
                 if ($upload !== null) {
                     $storage = (new Factory())->storage();
                     $storage->replaceUpload($upload, $rid);

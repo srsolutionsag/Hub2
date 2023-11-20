@@ -325,7 +325,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 );
                 $filedrop->addSubItem($auth_token);
 
-                $this->addRIDSection($filedrop);
+                $this->addRIDSection($filedrop, 'filedrop');
             }
             $ro->addOption($filedrop);
 
@@ -350,7 +350,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                 $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
                 $api->addSubItem($te);
 
-                $this->addRIDSection($api);
+                $this->addRIDSection($api, 'api');
             }
 
 
@@ -578,7 +578,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      * @param ilRadioOption $filedrop
      * @return void
      */
-    protected function addRIDSection(ilRadioOption $filedrop) : void
+    protected function addRIDSection(ilRadioOption $filedrop, string $parent_section) : void
     {
         $rid = new ilNonEditableValueGUI(
             $this->translate('origin_form_field_conf_type_filedrop_rid'),
@@ -608,7 +608,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             if ($this->origin->config()->getConnectionType() !== IOriginConfig::CONNECTION_TYPE_API) {
                 $file = new \ilFileInputGUI(
                     $this->translate('origin_form_field_conf_type_filedrop_file'),
-                    'manual_file_drop'
+                    'manual_file_drop_' . $parent_section
                 );
                 $file->setRequired(false);
                 $filedrop->addSubItem($file);
