@@ -19,6 +19,7 @@ class Handler
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
+
     /**
      * @var bool
      */
@@ -34,38 +35,47 @@ class Handler
     /**
      * @var \ilDBInterface
      */
-    private $db;
+    private $db = null;
     /**
      * @var \ilCtrlInterface
      */
-    private $ctrl;
+    private $ctrl = null;
     /**
      * @var \ilAuthSession
      */
-    private $auth_session;
+    private $auth_session = null;
     /**
      * @var \ilObjUser
      */
-    private $user;
+    private $user = null;
+    /**
+     * @var \ilGlobalTemplateInterface
+     */
+    private $main_tpl = null;
 
     /**
      * Handler constructor
      */
     public function __construct(string $ext_id)
     {
+        $this->init = false;
+        $this->ext_id = $ext_id;
+    }
+
+    private function initDependecies(): void
+    {
         global $DIC;
         $this->db = $DIC->database();
         $this->ctrl = $DIC->ctrl();
         $this->auth_session = $DIC['ilAuthSession'];
         $this->user = $DIC->user();
-        $this->init = false;
-        $this->ext_id = $ext_id;
+        $this->main_tpl = $DIC->ui()->mainTemplate();
     }
 
     /**
      *
      */
-    public function storeQuery() : void
+    public function storeQuery(): void
     {
         setcookie('xhub_query', $this->ext_id, ['expires' => time() + 10]);
     }
@@ -73,7 +83,7 @@ class Handler
     /**
      * @throws ShortlinkException
      */
-    public function process()
+    public function process(): void
     {
         if (!$this->init || !$this->db instanceof ilDBInterface) {
             throw new ShortlinkException("ILIAS not initialized, aborting...");
@@ -96,28 +106,27 @@ class Handler
         $this->doRedirect($link->getAccessGrantedExternalLink());
     }
 
-    protected function doRedirect(string $link)
+    protected function doRedirect(string $link): void
     {
         $link = $this->sanitizeLink($link);
         $this->ctrl->redirectToURL($link);
     }
 
-    protected function sendMessage(string $message)
+    protected function sendMessage(string $message): void
     {
         if ($message !== '') {
-            ilUtil::sendInfo($message, true);
+            $this->main_tpl->setOnScreenMessage('info', $message, true);
         }
     }
 
-    /**
-     *
-     */
-    public function tryILIASInit() : void
+    public function tryILIASInit(): void
     {
         $this->prepareILIASInit();
-
-        require_once(__DIR__ . "/Services/Init/classes/class.ilInitialisation.php");
+        /** @noRector */
+        require_once("./Services/Init/classes/class.ilInitialisation.php");
         ilInitialisation::initILIAS();
+
+        $this->initDependecies();
 
         $this->init = true;
     }
@@ -125,20 +134,22 @@ class Handler
     /**
      *
      */
-    public function tryILIASInitPublic() : void
+    public function tryILIASInitPublic(): void
     {
         $this->prepareILIASInit();
 
-        require_once __DIR__ . '/Services/Context/classes/class.ilContext.php';
+        /** @noRector */
+        require_once './Services/Context/classes/class.ilContext.php';
         ilContext::init(ilContext::CONTEXT_WAC);
-        require_once __DIR__ . "/Services/Init/classes/class.ilInitialisation.php";
+        /** @noRector */
+        require_once  "./Services/Init/classes/class.ilInitialisation.php";
         ilInitialisation::initILIAS();
-        $ilAuthSession = $this->auth_session;
-        $ilAuthSession->init();
-        $ilAuthSession->regenerateId();
+        $this->initDependecies();
+        $this->auth_session->init();
+        $this->auth_session->regenerateId();
         $a_id = (int) ANONYMOUS_USER_ID;
-        $ilAuthSession->setUserId($a_id);
-        $ilAuthSession->setAuthenticated(false, $a_id);
+        $this->auth_session->setUserId($a_id);
+        $this->auth_session->setAuthenticated(false, $a_id);
         $this->user->setId($a_id);
 
         $this->init = true;
