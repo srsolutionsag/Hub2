@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.2.2]
+- [FIX] Shortlinks did not work in some cases
+- [FIX] Limited A cess Time for User Accounts
+- [FIX] Reference to a deleted class in UserDTO
+- [FIX] Manual FileDrop for files now working
+
 ## [4.2.1]
 - [FIX] fixed storage of MetaData in Database
 
