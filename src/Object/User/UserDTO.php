@@ -4,7 +4,6 @@ namespace srag\Plugins\Hub2\Object\User;
 
 use DateTime;
 use InvalidArgumentException;
-use srag\ActiveRecordConfig\Hub2\ActiveRecordConfig;
 use srag\Plugins\Hub2\Exception\LanguageCodeException;
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
@@ -19,6 +18,8 @@ use srag\Plugins\Hub2\Object\LanguageCheck;
  */
 class UserDTO extends DataTransferObject implements IUserDTO
 {
+    private const SQL_DATE_FORMAT = "Y-m-d H:i:s";
+
     use MetadataAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
     use LanguageCheck;
@@ -607,7 +608,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      */
     public function setTimeLimitFrom(DateTime $timeLimitFrom)
     {
-        $this->timeLimitFrom = $timeLimitFrom->format(ActiveRecordConfig::SQL_DATE_FORMAT);
+        $this->timeLimitFrom = $timeLimitFrom->format(self::SQL_DATE_FORMAT);
 
         return $this;
     }
@@ -625,7 +626,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      */
     public function setTimeLimitUntil(DateTime $timeLimitUntil)
     {
-        $this->timeLimitUntil = $timeLimitUntil->format(ActiveRecordConfig::SQL_DATE_FORMAT);
+        $this->timeLimitUntil = $timeLimitUntil->format(self::SQL_DATE_FORMAT);
 
         return $this;
     }
