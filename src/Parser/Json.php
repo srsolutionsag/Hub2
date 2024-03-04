@@ -36,12 +36,14 @@ class Json
     public function __construct(
         string $file_path,
         ?string $unique_field,
-        array $mandatory_columns = [],
-        \Closure $string_sanitizer
+        ?array $mandatory_columns = [],
+        ?\Closure $string_sanitizer = null
     ) {
         $this->file_path = $file_path;
-        $this->mandatory_columns = $mandatory_columns;
-        $this->string_sanitizer = $string_sanitizer;
+        $this->mandatory_columns = $mandatory_columns ?? [];
+        $this->string_sanitizer = $string_sanitizer ?? static function (string $s): string {
+            return $s;
+        };
     }
 
     public function addFilter(\Closure $filter) : void
