@@ -9,7 +9,7 @@ namespace srag\Plugins\Hub2\Metadata;
  */
 interface IMetadata
 {
-    public const DEFAULT_RECORD_ID = 1;
+    public const DEFAULT_RECORD_ID = '1';
 
     /**
      * @param string|string[] $value
@@ -32,7 +32,7 @@ interface IMetadata
      */
     public function getIdentifier();
 
-    public function getRecordId() : int;
+    public function getRecordId() : string;
 
     public function __toString() : string;
 }

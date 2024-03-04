@@ -121,7 +121,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
             $password = $this->generatePassword();
             $ilObjUser->setPasswd($password);
         } else {
-            $ilObjUser->setPasswd($dto->getPasswd());
+            $ilObjUser->setPasswd($dto->getPasswd() ?? '');
         }
         foreach (self::getProperties() as $property) {
             $setter = "set" . ucfirst($property);
@@ -137,7 +137,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
             $ilObjUser->setPasswd($dto->getPasswd(), ilObjUser::PASSWD_PLAIN);
             $this->sendPasswordMail($dto);
         } else {
-            $ilObjUser->setPasswd($dto->getPasswd(), ilObjUser::PASSWD_PLAIN);
+            $ilObjUser->setPasswd($dto->getPasswd() ?? '', ilObjUser::PASSWD_PLAIN);
         }
 
         $ilObjUser->saveAsNew();
@@ -172,7 +172,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         }
         // Update title?
         if ($this->props->updateDTOProperty('title')) {
-            $ilObjUser->setUTitle($dto->getTitle());
+            $ilObjUser->setUTitle($dto->getTitle() ?? '');
         }
         // Reactivate account?
         if ($this->props->get(UserProperties::REACTIVATE_ACCOUNT)) {

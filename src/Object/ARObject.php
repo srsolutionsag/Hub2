@@ -242,7 +242,9 @@ abstract class ARObject extends ActiveRecord implements IObject
                             continue;
                         }
                         foreach (array_keys($records) as $mid) {
-                            $IMetadata[$record_id . '_' . $mid] = (new Metadata($mid, $record_id))->setValue($records);
+                            $IMetadata[$record_id . '_' . $mid] = (new Metadata((int) $mid, (string) $record_id))->setValue(
+                                $records
+                            );
                         }
                     }
                 }
