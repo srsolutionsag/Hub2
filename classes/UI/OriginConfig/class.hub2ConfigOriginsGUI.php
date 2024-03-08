@@ -267,7 +267,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
                 && ($rid = $origin->config()->get(IOriginConfig::FILE_DROP_RID)) !== null
             ) {
                 $uploads = $upload_service->getResults();
-                $upload = $uploads[$file_drop_filedrop['tmp_name']] ?? $uploads[$file_drop_api['tmp_name']] ?? null;
+                $file_drop_temp_name = $file_drop_filedrop['tmp_name'] ?? '';
+                $api_temp_name = $file_drop_api['tmp_name'] ?? '';
+                $upload = $uploads[$file_drop_temp_name] ?? $uploads[$api_temp_name] ?? null;
                 if ($upload !== null) {
                     $storage = (new Factory())->storage();
                     $storage->replaceUpload($upload, $rid);
