@@ -36,8 +36,8 @@ class OriginFactory implements IOriginFactory
     {
         $sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
         $set = $this->db->queryF($sql, ['integer'], [$id]);
-        $type = $this->db->fetchObject($set)->object_type;
-        if (!$type) {
+        $type = $this->db->fetchObject($set)->object_type ?? null;
+        if (empty($type)) {
             //throw new HubException("Can not get type of origin id (probably deleted): ".$id);
             return null;
         }
