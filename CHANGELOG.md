@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.2.3]
+- [FIX] filedrop settings array access
+- [FIX] proper check for origin implementation
+
 ## [4.2.2]
 - [FIX] Shortlinks did not work in some cases
 - [FIX] Limited A cess Time for User Accounts
