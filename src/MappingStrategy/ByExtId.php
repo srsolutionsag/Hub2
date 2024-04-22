@@ -32,11 +32,13 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
      * @var \ilDBInterface
      */
     private $db;
+    private ?int $origin_id = null;
 
-    public function __construct()
+    public function __construct(int $origin_id = null)
     {
         global $DIC;
         $this->db = $DIC->database();
+        $this->origin_id = $origin_id;
     }
 
     /**
@@ -79,11 +81,22 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
                 );
         }
 
-        $result = $this->db->queryF(
-            'SELECT DISTINCT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s',
-            [ilDBConstants::T_TEXT],
-            [$dto->getExtId()]
-        );
+        $query = 'SELECT DISTINCT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s';
+        if (!empty($this->origin_id)) {
+            $query .= ' AND origin_id=%s';
+            $result = $this->db->queryF(
+                $query,
+                [ilDBConstants::T_TEXT, ilDBConstants::T_INTEGER],
+                [$dto->getExtId(), $this->origin_id]
+            );
+        } else {
+            $result = $this->db->queryF(
+                $query,
+                [ilDBConstants::T_TEXT],
+                [$dto->getExtId()]
+            );
+        }
+
 
         if ($result->rowCount() > 0) {
             if ($result->rowCount() > 1) {
