@@ -151,3 +151,20 @@ $ilDB->manipulate('ALTER TABLE ' . $table_name_q . ' MODIFY COLUMN ' . $field_q 
 <?php
 \srag\Plugins\Hub2\Log\Log::updateDB(); // new field 'status'
 ?>
+<#19>
+<?php
+/** @var ilDBInterface $ilDB */
+$ilDB->addIndex('sr_hub2_log', ['origin_id', 'object_ext_id'], 'i1');
+$ilDB->addIndex('sr_hub2_log', ['date'], 'i2');
+?>
+<#20>
+<?php
+/** @var ilDBInterface $ilDB */
+
+// we have to fix the class names of the stakeholder since it has been renamed
+$ilDB->manipulateF(
+    "update il_resource_stkh set class_name = %s WHERE id = 'hub2'",
+    ["text"],
+    [srag\Plugins\Hub2\FileDrop\ResourceStorage\Stakeholder::class]
+);
+?>
