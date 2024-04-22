@@ -13,11 +13,11 @@ use srag\Plugins\Hub2\Parser\Csv;
  */
 abstract class AbstractCSVOriginGeneratorImplementation extends AbstractOriginGeneratorImplementation
 {
+    use FileConnection;
     /**
      * @var Csv
      */
     protected $csv_parser;
-    protected $file_path = '';
     /**
      * @var array
      */
@@ -31,15 +31,6 @@ abstract class AbstractCSVOriginGeneratorImplementation extends AbstractOriginGe
     protected function getSeparator() : string
     {
         return ";";
-    }
-
-    public function connect() : bool
-    {
-        $this->file_path = $this->config()->getPath();
-        if (!is_readable($this->file_path)) {
-            throw new ConnectionFailedException("Cannot parse file {$this->file_path}");
-        }
-        return true;
     }
 
     public function parseData() : int

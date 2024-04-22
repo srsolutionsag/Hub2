@@ -12,7 +12,7 @@ use ILIAS\ResourceStorage\Identification\ResourceIdentification;
  *
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class ResourceStorage7 implements ResourceStorage
+class ResourceStorage8 implements ResourceStorage
 {
     /**
      * @var \ILIAS\ResourceStorage\Services
@@ -38,7 +38,7 @@ class ResourceStorage7 implements ResourceStorage
         return $this->services->manage()->upload(
             $u,
             $this->stakeholder
-        );
+        )->serialize();
     }
 
     public function replaceUpload(UploadResult $u, string $rid_string) : string
@@ -62,7 +62,7 @@ class ResourceStorage7 implements ResourceStorage
         return $this->services->manage()->stream(
             $stream,
             $this->stakeholder
-        );
+        )->serialize();
     }
 
     public function getDataURL(string $identification) : string

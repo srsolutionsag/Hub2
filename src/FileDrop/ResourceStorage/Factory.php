@@ -21,13 +21,12 @@ class Factory
         $this->ilias_version = new ILIASVersion(ILIAS_VERSION_NUMERIC);
     }
 
-    public function storage() : ResourceStorage
+    public function storage(): ResourceStorage
     {
-        return new ResourceStorage7();
-    }
+        if ($this->ilias_version->isNewerThan(new ILIASVersion('7.999'))) {
+            return new ResourceStorage8();
+        }
 
-    public function stakeholder() : \srag\Plugins\Hub2\FileDrop\ResourceStorage\Stakeholder7
-    {
-        return new Stakeholder7();
+        return new ResourceStorage7();
     }
 }
