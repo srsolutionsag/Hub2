@@ -171,8 +171,8 @@ class DataTableGUI extends ilTable2GUI
     {
         $this->addFilterItem($item);
         if ($this->hasSessionValue($item->getFieldId())) { // Supports filter default values
-            $item->readFromSession();
         }
+        $item->readFromSession();
         $this->filtered[$item->getPostVar()] = $item instanceof ilCheckboxInputGUI ? $item->getChecked(
         ) : $item->getValue();
     }

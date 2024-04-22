@@ -35,28 +35,29 @@ class hub2DataGUI extends hub2MainGUI
         $this->tpl->setContent($table->getHTML());
     }
 
-    /**
-     *
-     */
-    protected function applyFilter()
+    protected function applyFilter(): void
     {
         $table = new DataTableGUI($this, self::CMD_INDEX);
-        $table->writeFilterToSession();
-        $table->resetOffset();
-        //self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
-        $this->index(); // Fix reset offset
+        try {
+            $table->resetOffset();
+            $table->writeFilterToSession();
+            $table->storeNavParameter();
+        } catch (Throwable $t) {
+            $table->resetFilter();
+            // Ignore
+        }
+
+        $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
-    /**
-     *
-     */
-    protected function resetFilter()
+    protected function resetFilter(): void
     {
         $table = new DataTableGUI($this, self::CMD_INDEX);
         $table->resetFilter();
         $table->resetOffset();
-        //self::dic()->ctrl()->redirect($this, self::CMD_INDEX);
-        $this->index(); // Fix reset offset
+        $table->storeNavParameter();
+
+        $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
     /**
