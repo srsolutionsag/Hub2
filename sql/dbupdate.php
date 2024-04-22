@@ -151,3 +151,9 @@ $ilDB->manipulate('ALTER TABLE ' . $table_name_q . ' MODIFY COLUMN ' . $field_q 
 <?php
 \srag\Plugins\Hub2\Log\Log::updateDB(); // new field 'status'
 ?>
+<#19>
+<?php
+/** @var ilDBInterface $ilDB */
+$ilDB->addIndex('sr_hub2_log', ['origin_id', 'object_ext_id'], 'i1');
+$ilDB->addIndex('sr_hub2_log', ['date'], 'i2');
+?>
