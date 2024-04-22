@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.3.1]
+- [FIX] renamed stakeholder in DB
+- [FIX] improved performance in logs table
+
 ## [4.3.0]
 - [FEATURE] added new MappingStack
 - [FIX] error while deleting origin
