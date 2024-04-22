@@ -403,6 +403,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $c = new ilConfirmationGUI();
         $c->setFormAction($this->ctrl->getFormAction($this));
         $c->addItem(self::ORIGIN_ID, $o->getId(), $o->getTitle());
+        $c->setHeaderText($this->plugin->txt('msg_confirm_delete_origin'));
         $c->setConfirm($this->plugin->txt('confirm_delete_button'), self::CMD_DELETE);
         $c->setCancel($this->plugin->txt('cancel_delete_button'), self::CMD_INDEX);
         $this->tpl->setContent($c->getHTML());

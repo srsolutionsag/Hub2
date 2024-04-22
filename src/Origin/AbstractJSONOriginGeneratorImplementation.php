@@ -7,32 +7,27 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Parser\Json;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 
 /**
  * Class AbstractJSONOriginGeneratorImplementation
  */
 abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginGeneratorImplementation
 {
+    use FileConnection;
+
     /**
      * @var Json
      */
     protected $json_parser;
-    protected $file_path = '';
     /**
      * @var array
      */
     protected $json = [];
 
-    public function connect() : bool
-    {
-        $this->file_path = $this->config()->getPath();
-        if (!is_readable($this->file_path)) {
-            throw new ConnectionFailedException("Cannot parse file {$this->file_path}");
-        }
-        return true;
-    }
 
-    public function parseData() : int
+    public function parseData(): int
     {
         $this->json_parser = new Json(
             $this->file_path,
@@ -49,13 +44,13 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
         return count($this->json);
     }
 
-    abstract protected function getMandatoryColumns() : array;
+    abstract protected function getMandatoryColumns(): array;
 
-    abstract protected function getUniqueField() : ?string;
+    abstract protected function getUniqueField(): ?string;
 
-    protected function getStringSanitizer() : \Closure
+    protected function getStringSanitizer(): \Closure
     {
-        return static function (string $string) : string {
+        return static function (string $string): string {
             return utf8_encode(utf8_decode($string));
         };
     }
@@ -63,71 +58,71 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
     /**
      * @return IDataTransferObject[]|\Generator
      */
-    abstract protected function buildObjectsFromJSON(array $json_data) : \Generator;
+    abstract protected function buildObjectsFromJSON(array $json_data): \Generator;
 
     /**
      * @return IDataTransferObject[]
      */
-    public function buildObjects() : \Generator
+    public function buildObjects(): \Generator
     {
         yield from $this->buildObjectsFromJSON($this->json);
     }
 
-    protected function getFilter() : \Closure
+    protected function getFilter(): \Closure
     {
-        return static function (array $item) : bool {
+        return static function (array $item): bool {
             return true;
         };
     }
 
-    protected function getFilters() : array
+    protected function getFilters(): array
     {
         return [
             $this->getFilter()
         ];
     }
 
-    public function handleLog(ILog $log) : void
+    public function handleLog(ILog $log): void
     {
         // TODO: Implement handleLog() method.
     }
 
-    public function beforeCreateILIASObject(HookObject $hook) : void
+    public function beforeCreateILIASObject(HookObject $hook): void
     {
         // TODO: Implement beforeCreateILIASObject() method.
     }
 
-    public function afterCreateILIASObject(HookObject $hook) : void
+    public function afterCreateILIASObject(HookObject $hook): void
     {
         // TODO: Implement afterCreateILIASObject() method.
     }
 
-    public function beforeUpdateILIASObject(HookObject $hook) : void
+    public function beforeUpdateILIASObject(HookObject $hook): void
     {
         // TODO: Implement beforeUpdateILIASObject() method.
     }
 
-    public function afterUpdateILIASObject(HookObject $hook) : void
+    public function afterUpdateILIASObject(HookObject $hook): void
     {
         // TODO: Implement afterUpdateILIASObject() method.
     }
 
-    public function beforeDeleteILIASObject(HookObject $hook) : void
+    public function beforeDeleteILIASObject(HookObject $hook): void
     {
         // TODO: Implement beforeDeleteILIASObject() method.
     }
 
-    public function afterDeleteILIASObject(HookObject $hook) : void
+    public function afterDeleteILIASObject(HookObject $hook): void
     {
         // TODO: Implement afterDeleteILIASObject() method.
     }
 
-    public function beforeSync() : void
+    public function beforeSync(): void
     {
         // TODO: Implement beforeSync() method.
     }
 
-    public function afterSync() : void
+    public function afterSync(): void
     {
         // TODO: Implement afterSync() method.
     }

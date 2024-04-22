@@ -96,35 +96,34 @@ class hub2LogsGUI extends hub2MainGUI
     /**
      *
      */
-    protected function applyFilter()/*: void*/
+    protected function applyFilter(): void
     {
         $table = $this->getLogsTable(self::CMD_APPLY_FILTER);
 
         try {
+            $table->resetOffset();
             $table->writeFilterToSession();
+            $table->storeNavParameter();
         } catch (Throwable $t) {
+            $table->resetFilter();
             // Ignore
         }
 
-        $table->resetOffset();
-
-        //$this->ctrl->redirect($this, self::CMD_INDEX);
-        $this->index(); // Fix reset offset
+        $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
     /**
      *
      */
-    protected function resetFilter()/*: void*/
+    protected function resetFilter(): void
     {
         $table = $this->getLogsTable(self::CMD_RESET_FILTER);
 
         $table->resetFilter();
-
         $table->resetOffset();
+        $table->storeNavParameter();
 
-        //$this->ctrl->redirect($this, self::CMD_INDEX);
-        $this->index(); // Fix reset offset
+        $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
     /**

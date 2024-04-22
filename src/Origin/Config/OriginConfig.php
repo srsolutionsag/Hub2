@@ -64,7 +64,11 @@ class OriginConfig implements IOriginConfig
             case self::CONNECTION_TYPE_FILE_DROP:
             case self::CONNECTION_TYPE_API:
                 $f = new Factory();
-                $path = $f->storage()->getPath($this->get(self::FILE_DROP_RID));
+                $identification = $this->get(self::FILE_DROP_RID);
+                $path = '';
+                if (!empty($identification)) {
+                    $path = $f->storage()->getPath($identification);
+                }
                 break;
             default:
             case self::CONNECTION_TYPE_PATH:

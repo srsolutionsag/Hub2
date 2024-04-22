@@ -5,11 +5,11 @@ namespace srag\Plugins\Hub2\FileDrop\ResourceStorage;
 use ILIAS\ResourceStorage\Stakeholder\AbstractResourceStakeholder;
 
 /**
- * Class Stakeholder7
+ * Class Stakeholder
  *
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-class Stakeholder7 extends AbstractResourceStakeholder
+class Stakeholder extends AbstractResourceStakeholder
 {
     public function getId(): string
     {

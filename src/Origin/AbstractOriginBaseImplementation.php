@@ -56,12 +56,14 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
         $this->origin = $origin;
     }
 
-    /**
-     * @return IOriginConfig
-     */
-    final protected function config()
+    final protected function config(): IOriginConfig
     {
         return $this->originConfig;
+    }
+
+    final protected function origin(): IOrigin
+    {
+        return $this->origin;
     }
 
     /**

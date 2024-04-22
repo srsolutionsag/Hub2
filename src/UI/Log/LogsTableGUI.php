@@ -211,9 +211,9 @@ class LogsTableGUI extends \ilTable2GUI
     protected function addAndReadFilterItem(\ilFormPropertyGUI $item): void
     {
         $this->addFilterItem($item);
-        if ($this->hasSessionValue($item->getFieldId())) { // Supports filter default values
-            $item->readFromSession();
-        }
+//        if ($this->hasSessionValue($item->getFieldId())) { // Supports filter default values
+//        } // removed, filters did not work with this
+        $item->readFromSession();
         switch (true) {
             case ($item instanceof \ilCheckboxInputGUI):
                 $this->filtered[$item->getPostVar()] = $item->getChecked();

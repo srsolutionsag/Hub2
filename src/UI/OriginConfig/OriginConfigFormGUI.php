@@ -347,7 +347,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
                     $this->translate('origin_form_field_conf_type_api_token'),
                     $this->conf(IOriginConfig::SERVER_PASSWORD)
                 );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
+                $te->setValue((string) $this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
                 $api->addSubItem($te);
 
                 $this->addRIDSection($api, 'api');
