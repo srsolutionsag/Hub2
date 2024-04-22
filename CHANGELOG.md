@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.3.0]
+- [FEATURE] added new MappingStack
+- [FIX] error while deleting origin
+- [FIX] error while creating origin
+- [FEATURE] finalized implementation of API source
+
 ## [4.2.3]
 - [FIX] filedrop settings array access
 - [FIX] proper check for origin implementation
