@@ -7,6 +7,14 @@ use ilHub2Plugin;
 use srag\Plugins\Hub2\Object\Group\GroupRepository;
 use srag\Plugins\Hub2\Object\Session\SessionRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Object\User\ARUser;
+use srag\Plugins\Hub2\Object\Category\ARCategory;
+use srag\Plugins\Hub2\Object\Course\ARCourse;
+use srag\Plugins\Hub2\Object\Group\ARGroup;
+use srag\Plugins\Hub2\Object\CourseMembership\ARCourseMembership;
+use srag\Plugins\Hub2\Object\GroupMembership\ARGroupMembership;
+use srag\Plugins\Hub2\Object\Session\ARSession;
+use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 
 /**
  * Class ObjectRepository
@@ -17,6 +25,10 @@ use srag\Plugins\Hub2\Origin\IOrigin;
 abstract class ObjectRepository implements IObjectRepository
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @var \ilDBInterface
+     */
+    protected $db;
     /**
      * @var IOrigin
      */
@@ -31,7 +43,9 @@ abstract class ObjectRepository implements IObjectRepository
      */
     public function __construct(IOrigin $origin)
     {
+        global $DIC;
         $this->origin = $origin;
+        $this->db = $DIC->database();
     }
 
     /**
@@ -139,12 +153,18 @@ abstract class ObjectRepository implements IObjectRepository
     /**
      * @inheritdoc
      */
-    public function count() : int
+    public function count(): int
     {
+        // we moved the implementation away from AR since this was a memory killer
+        /** @var ARObject|ARUser|ARCategory|ARCourse|ARGroup|ARCourseMembership|ARGroupMembership|ARSession|ARSessionMembership $class */
         $class = $this->getClass();
+        $table_name = $class::returnDbTableName();
+        $q = "SELECT COUNT(*) as count FROM $table_name WHERE origin_id = " . $this->db->quote(
+                $this->origin->getId(), 'integer'
+            );
+        $result = $this->db->query($q);
 
-        /** @var ActiveRecord $class */
-        return $class::where(['origin_id' => $this->origin->getId()])->count();
+        return (int) $this->db->fetchObject($result)->count;
     }
 
     /**
