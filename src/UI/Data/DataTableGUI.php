@@ -232,11 +232,17 @@ class DataTableGUI extends ilTable2GUI
         $order_by_query = " ORDER BY " . $order_field . " " . $this->getOrderDirection();
 
         $query = $union_query . $order_by_query;
+
+
+        $max_count_result = $this->db->query($query);
+        $this->setMaxCount($max_count_result->rowCount());
+
+        $query .= " LIMIT " . $this->getOffset() . ", " . ($this->getOffset() + $this->getLimit());
         $result = $this->db->query($query);
         while ($row = $result->fetchRow()) {
             $data[] = $row;
         }
-        $this->setMaxCount(count($data));
+
         $data = array_slice($data, $this->getOffset(), $this->getLimit());
         $this->setData($data);
     }
