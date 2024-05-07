@@ -1,5 +1,8 @@
 # Changelog
 
+## [4.3.2]
+- [FIX] memory leaks on status and origins overview
+
 ## [4.3.1]
 - [FIX] renamed stakeholder in DB
 - [FIX] improved performance in logs table
