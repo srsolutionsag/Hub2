@@ -169,7 +169,13 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
                     }
 
                     if ($this->current_ilias_object === null) {
-                        throw new ILIASObjectNotFoundException($hub_object);
+                        // the object may be deleted in ILIAS. we remove the association in the hub object table
+                        $clone = clone $hub_object; // to keep the original object for logging
+                        $hub_object->setILIASId(null);
+                        $hub_object->setStatus(IObject::STATUS_FAILED);
+                        $hub_object->store();
+
+                        throw new ILIASObjectNotFoundException($clone);
                     }
 
                     if ($this instanceof IMetadataSyncProcessor && $hub_object instanceof IMetadataAwareObject && $dto instanceof IMetadataAwareDataTransferObject) {
