@@ -90,7 +90,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      * @inheritdoc
      * @param CategoryDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $this->current_ilias_object = $ilObjCategory = new ilObjCategory();
         $ilObjCategory->setImportId($this->getImportId($dto));
@@ -138,7 +138,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      * @inheritdoc
      * @param CategoryDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
         if (!$ilObjCategory instanceof \ilObjCategory) {
@@ -204,7 +204,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      * @inheritdoc
      * @param CategoryDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjCategory = $this->findILIASCategory($ilias_id);
         if (!$ilObjCategory instanceof \ilObjCategory) {

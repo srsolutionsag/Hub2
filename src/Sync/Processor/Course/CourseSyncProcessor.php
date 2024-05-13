@@ -141,7 +141,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @inheritdoc
      * @param CourseDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         // Find the refId under which this course should be created
         $parentRefId = $this->determineParentRefId($dto);
@@ -369,10 +369,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @inheritdoc
      * @param CourseDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
         if (!$ilObjCourse instanceof \ilObjCourse) {
+            //
+
             return;
         }
         // Update some properties if they should be updated depending on the origin config
@@ -467,7 +469,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @inheritdoc
      * @param CourseDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
         if (!$ilObjCourse instanceof \ilObjCourse) {

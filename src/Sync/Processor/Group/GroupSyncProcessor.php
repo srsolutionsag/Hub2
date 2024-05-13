@@ -136,7 +136,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @inheritdoc
      * @param GroupDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $this->current_ilias_object = $ilObjGroup = new ilObjGroup();
         $ilObjGroup->setImportId($this->getImportId($dto));
@@ -195,7 +195,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @inheritdoc
      * @param GroupDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
         if (!$ilObjGroup instanceof \ilObjGroup) {
@@ -303,7 +303,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @inheritdoc
      * @param GroupDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjGroup = $this->findILIASGroup($ilias_id);
         if (!$ilObjGroup instanceof \ilObjGroup) {

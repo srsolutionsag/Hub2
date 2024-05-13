@@ -54,7 +54,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
      * @inheritdoc
      * @param GroupMembershipDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $ilias_group_ref_id = $this->buildParentRefId($dto);
 
@@ -75,7 +75,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
      * @inheritdoc
      * @param GroupMembershipDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
@@ -107,7 +107,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
      * @inheritdoc
      * @param GroupMembershipDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 

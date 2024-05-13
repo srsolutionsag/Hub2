@@ -62,7 +62,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
      * @inheritdoc
      * @param IOrgUnitMembershipDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $this->current_ilias_object = $this->getFakeIliasObject($this->assignToOrgUnit($dto));
     }
@@ -71,7 +71,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
      * @inheritdoc
      * @param IOrgUnitMembershipDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         if ($this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_ORG_UNIT_ID)
             || $this->props->updateDTOProperty(IOrgUnitMembershipProperties::PROP_ORG_UNIT_ID_TYPE)
@@ -90,7 +90,7 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
      * @inheritdoc
      * @param IOrgUnitMembershipDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         switch ($this->props->get(IOrgUnitMembershipProperties::DELETE_MODE)) {
             case IOrgUnitMembershipProperties::DELETE_MODE_DELETE:

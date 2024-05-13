@@ -292,30 +292,24 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
     /**
      * Create a new ILIAS object from the given data transfer object.
-     * @return void
      * @throws HubException
      */
-    abstract protected function handleCreate(IDataTransferObject $dto)/*: void*/
-    ;
+    abstract protected function handleCreate(IDataTransferObject $dto): void;
 
     /**
      * Update the corresponding ILIAS object.
      * Return the processed ILIAS object or null if the object was not found, e.g. it is deleted in
      * ILIAS.
-     * @param int $iliasId
-     * @return void
+     * @param int|string $ilias_id
      * @throws HubException
      */
-    abstract protected function handleUpdate(IDataTransferObject $dto, $iliasId)/*: void*/
-    ;
+    abstract protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void;
 
     /**
      * Delete the corresponding ILIAS object.
      * Return the deleted ILIAS object or null if the object was not found in ILIAS.
-     * @param int $ilias_id
-     * @return void
+     * @param int|string $ilias_id
      * @throws HubException
      */
-    abstract protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
-    ;
+    abstract protected function handleDelete(IDataTransferObject $dto, $ilias_id): void;
 }

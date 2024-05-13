@@ -146,7 +146,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
      * @inheritdoc
      * @param ICompetenceManagementDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         switch ($dto->getType()) {
             case CompetenceManagementDTO::TYPE_PROFILE:
@@ -216,7 +216,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
      * @inheritdoc
      * @param ICompetenceManagementDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         switch ($dto->getType()) {
             case CompetenceManagementDTO::TYPE_PROFILE:
@@ -283,7 +283,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
      * @inheritdoc
      * @param ICompetenceManagementDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         switch ($this->props->get(ICompetenceManagementProperties::DELETE_MODE)) {
             case ICompetenceManagementProperties::DELETE_MODE_DELETE:

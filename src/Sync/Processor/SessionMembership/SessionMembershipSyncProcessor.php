@@ -72,7 +72,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
      * @inheritdoc
      * @param SessionMembershipDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $session_ref_id = $this->buildParentRefId($dto);
         $ilObjSession = $this->findILIASObject($session_ref_id);
@@ -86,7 +86,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
      * @inheritdoc
      * @param SessionMembershipDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 
@@ -106,7 +106,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
      * @inheritdoc
      * @param SessionMembershipDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
         $ilObjSession = $this->findILIASObject($obj->getContainerIdIlias());

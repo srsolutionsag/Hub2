@@ -101,7 +101,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      * @inheritdoc
      * @param UserDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $this->current_ilias_object = $ilObjUser = new ilObjUser();
         $ilObjUser->setTitle($dto->getFirstname() . ' ' . $dto->getLastname());
@@ -150,7 +150,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      * @param UserDTO $dto
      * @throws ilUserException
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
         if (!$ilObjUser instanceof \ilObjUser) {
@@ -233,7 +233,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
      * @inheritdoc
      * @param UserDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjUser = $this->findILIASUser($ilias_id);
         if (!$ilObjUser instanceof \ilObjUser) {

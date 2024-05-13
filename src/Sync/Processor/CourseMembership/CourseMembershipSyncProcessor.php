@@ -49,7 +49,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
      * @inheritdoc
      * @param CourseMembershipDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $ilias_course_ref_id = $this->determineCourseRefId($dto);
 
@@ -71,7 +71,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
      * @inheritdoc
      * @param CourseMembershipDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
         $ilias_course_ref_id = $obj->getContainerIdIlias();
@@ -108,7 +108,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
      * @inheritdoc
      * @param CourseMembershipDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $obj = FakeIliasMembershipObject::loadInstanceWithConcatenatedId($ilias_id);
 

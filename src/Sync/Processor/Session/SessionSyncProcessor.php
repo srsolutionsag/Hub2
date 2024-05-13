@@ -91,7 +91,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
      * @inheritdoc
      * @param SessionDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $this->current_ilias_object = $ilObjSession = new ilObjSession();
         $ilObjSession->setImportId($this->getImportId($dto));
@@ -130,7 +130,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
      * @inheritdoc
      * @param SessionDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
         if (!$ilObjSession instanceof \ilObjSession) {
@@ -164,7 +164,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
      * @inheritdoc
      * @param SessionDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $ilObjSession = $this->findILIASObject($ilias_id);
         if (!$ilObjSession instanceof \ilObjSession) {

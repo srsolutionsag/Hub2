@@ -152,7 +152,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @inheritdoc
      * @param IOrgUnitDTO $dto
      */
-    protected function handleCreate(IDataTransferObject $dto)/*: void*/
+    protected function handleCreate(IDataTransferObject $dto): void/*: void*/
     {
         $this->current_ilias_object = new ilObjOrgUnit();
 
@@ -180,7 +180,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @inheritdoc
      * @param IOrgUnitDTO $dto
      */
-    protected function handleUpdate(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleUpdate(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         $this->current_ilias_object = $this->getOrgUnitObject($ilias_id);
 
@@ -215,7 +215,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @inheritdoc
      * @param IOrgUnitDTO $dto
      */
-    protected function handleDelete(IDataTransferObject $dto, $ilias_id)/*: void*/
+    protected function handleDelete(IDataTransferObject $dto, $ilias_id): void/*: void*/
     {
         switch ($this->props->get(IOrgUnitProperties::DELETE_MODE)) {
             case IOrgUnitProperties::DELETE_MODE_DELETE:
