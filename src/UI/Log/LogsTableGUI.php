@@ -83,6 +83,7 @@ class LogsTableGUI extends \ilTable2GUI
 
     protected function fillRow(array $a_set): void
     {
+        /** @var ILog $a_set */
         $a_set = $a_set['object'];
 
         $this->tpl->setCurrentBlock('cell');
@@ -138,6 +139,8 @@ class LogsTableGUI extends \ilTable2GUI
                 return $k . ': ' . $v;
             }, array_keys($value), $value)
         );
+        $value = $a_set->getMessage() . "\n" . $value;
+
         $this->tpl->setVariable('VALUE', $value);
         $this->tpl->parseCurrentBlock();
 
