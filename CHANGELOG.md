@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.3.3]
+- [FIX] memory leak in metadata handling
+- [FIX] dessign hub objects from ILIAS-ID if the ILAIS Object has been deleted
+- [FIX] show error message in logs table again
+
 ## [4.3.2]
 - [FIX] memory leaks on status and origins overview
 
