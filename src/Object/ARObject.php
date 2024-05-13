@@ -242,6 +242,11 @@ abstract class ARObject extends ActiveRecord implements IObject
                             continue;
                         }
                         foreach (array_keys($records) as $mid) {
+                            // check for format [0-9]_[0-9]
+                            if (!preg_match('/^\d+_\d+$/', $record_id)) {
+                                continue;
+                            }
+
                             $IMetadata[$record_id . '_' . $mid] = (new Metadata((int) $mid, (string) $record_id))->setValue(
                                 $records
                             );
