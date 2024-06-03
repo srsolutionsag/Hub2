@@ -9,9 +9,7 @@ use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipPropert
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
- * Class CourseMembershipOriginConfigFormGUI
- * @package srag\Plugins\Hub2\UI\CourseMembership
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @author Fabian Schmid <fabian@sr.solutions>
  */
 class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI
 {
@@ -20,9 +18,7 @@ class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI
      */
     protected $origin;
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();
@@ -31,7 +27,11 @@ class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI
             $this->plugin->txt('crs_prop_delete_mode'),
             $this->prop(CourseMembershipProperties::DELETE_MODE)
         );
-        $delete->setValue($this->origin->properties()->get(CourseMembershipProperties::DELETE_MODE));
+        $delete->setValue(
+            $this->origin->properties()->get(
+                CourseMembershipProperties::DELETE_MODE
+            ) ?? CourseMembershipProperties::DELETE_MODE_NONE
+        );
 
         $opt = new ilRadioOption(
             $this->plugin->txt('crs_prop_delete_mode_none'),

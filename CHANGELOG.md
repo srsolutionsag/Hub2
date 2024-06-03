@@ -1,5 +1,7 @@
 # Changelog
 
+- [FIX] missing default value for course membership origins
+
 ## [4.3.3]
 - [FIX] memory leak in metadata handling
 - [FIX] dessign hub objects from ILIAS-ID if the ILAIS Object has been deleted
