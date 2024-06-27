@@ -258,7 +258,9 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             // Manual File Drops
             global $DIC;
             $upload_service = $DIC->upload();
-            $upload_service->process();
+            if(!$upload_service->hasBeenProcessed()) {
+                $upload_service->process();
+            }
 
             $file_drop_filedrop = $form->getInput('manual_file_drop_filedrop');
             $file_drop_api = $form->getInput('manual_file_drop_filedrop_api');
