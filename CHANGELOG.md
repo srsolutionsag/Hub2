@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 4.4.0
+- [FEATURE] allow more options on csv imports
+- [FIX] Error while saving Origin due to already processed Uploads
 - [FIX] missing default value for course membership origins
 
 ## [4.3.3]
