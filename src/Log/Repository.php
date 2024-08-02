@@ -74,9 +74,7 @@ final class Repository implements IRepository
         $this->db = $DIC->database();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function deleteLog(ILog $log): void/*: void*/
     {
         $this->db->manipulateF(
@@ -87,9 +85,7 @@ final class Repository implements IRepository
         );
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function deleteOldLogs(int $keep_old_logs_time): int
     {
         $time = time();
@@ -128,17 +124,13 @@ final class Repository implements IRepository
         return $count;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function factory(): IFactory
     {
         return Factory::getInstance();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getLogs(
         string $sort_by = null,
         string $sort_by_direction = null,
@@ -185,9 +177,7 @@ final class Repository implements IRepository
         return array_map(fn (\stdClass $data): ILog => $this->factory()->fromDB($data), $logs);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getLogsCount(
         string $title = null,
         string $message = null,
@@ -346,9 +336,7 @@ final class Repository implements IRepository
         return $sql;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getLogById(int $log_id)/*: ?ILog*/
     {
         /**
@@ -367,17 +355,13 @@ final class Repository implements IRepository
         return $log;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getGlobalAdditionalData(): stdClass
     {
         return $this->global_additional_data;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function withGlobalAdditionalData(stdClass $global_additional_data): IRepository
     {
         $this->global_additional_data = $global_additional_data;
@@ -385,9 +369,7 @@ final class Repository implements IRepository
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function keepLog(ILog $log): void/*:void*/
     {
         if (!isset($this->kept_logs[$log->getOriginId()])) {
@@ -403,9 +385,7 @@ final class Repository implements IRepository
         GlobalHook::getInstance()->handleLog($log);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getKeptLogs(IOrigin $origin, /*?*/ int $level = null): array
     {
         if (!isset($this->kept_logs[$origin->getId()])) {
@@ -423,9 +403,7 @@ final class Repository implements IRepository
         return $this->kept_logs[$origin->getId()][$level] ?? [];
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function storeLog(ILog $log): void/*: void*/
     {
         $date = new ilDateTime(time(), IL_CAL_UNIX);

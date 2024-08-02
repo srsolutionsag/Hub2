@@ -17,14 +17,8 @@ class Taxonomy implements ITaxonomy
      * @var INode[]
      */
     protected $nodes = [];
-    /**
-     * @var string
-     */
-    protected $title = '';
-    /**
-     * @var int
-     */
-    protected $mode;
+    protected string $title;
+    protected int $mode;
     /**
      * @var string
      */
@@ -39,31 +33,25 @@ class Taxonomy implements ITaxonomy
         $this->mode = $mode;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMode() : int
+
+    public function getMode(): int
     {
         return $this->mode;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNodes() : array
+
+    public function getNodes(): array
     {
         return $this->nodes;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNodeTitlesAsArray() : array
+
+    public function getNodeTitlesAsArray(): array
     {
         $titles = [];
         foreach ($this->nodes as $node) {
@@ -73,10 +61,8 @@ class Taxonomy implements ITaxonomy
         return $titles;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attach(INode $node) : ITaxonomy
+
+    public function attach(INode $node): ITaxonomy
     {
         $this->nodes[] = $node;
 
@@ -95,17 +81,15 @@ class Taxonomy implements ITaxonomy
      * @param string $description
      * @return Taxonomy
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function __toString() : string
+
+    public function __toString(): string
     {
         return ""; // Is this needed?
     }

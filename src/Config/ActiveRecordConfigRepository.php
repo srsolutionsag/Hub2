@@ -15,7 +15,6 @@ use srag\Plugins\Hub2\Exception\ActiveRecordConfigException;
  */
 final class ActiveRecordConfigRepository extends AbstractRepository
 {
-
     /**
      * @var self|null
      *
@@ -27,7 +26,7 @@ final class ActiveRecordConfigRepository extends AbstractRepository
      *
      * @deprecated
      */
-    public static function getInstance(string $table_name, array $fields) : self
+    public static function getInstance(string $table_name, array $fields): self
     {
         if (!self::$instance instanceof \srag\Plugins\Hub2\Config\ActiveRecordConfigRepository) {
             self::$instance = new self($table_name, $fields);
@@ -37,17 +36,13 @@ final class ActiveRecordConfigRepository extends AbstractRepository
     }
 
     /**
-     * @var string
-     *
      * @deprecated
      */
-    protected $table_name;
+    protected string $table_name;
     /**
-     * @var array
-     *
      * @deprecated
      */
-    protected $fields;
+    protected array $fields;
 
     /**
      * ActiveRecordConfigRepository constructor
@@ -70,7 +65,7 @@ final class ActiveRecordConfigRepository extends AbstractRepository
      *
      * @deprecated
      */
-    public function factory() : AbstractFactory
+    public function factory(): AbstractFactory
     {
         return ActiveRecordConfigFactory::getInstance();
     }
@@ -80,7 +75,7 @@ final class ActiveRecordConfigRepository extends AbstractRepository
      *
      * @deprecated
      */
-    protected function getTableName() : string
+    protected function getTableName(): string
     {
         return $this->table_name;
     }
@@ -90,7 +85,7 @@ final class ActiveRecordConfigRepository extends AbstractRepository
      *
      * @deprecated
      */
-    protected function getFields() : array
+    protected function getFields(): array
     {
         return $this->fields;
     }

@@ -2,6 +2,9 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\CourseMembership;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Course\ICourseOrigin;
 use ilObjCourse;
 use ilObject2;
 use srag\Plugins\Hub2\Exception\HubException;
@@ -29,11 +32,11 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
     /**
      * @var CourseProperties
      */
-    protected $props;
+    protected IOriginProperties $props;
     /**
      * @var CourseOriginConfig
      */
-    protected $config;
+    protected IOriginConfig $config;
 
     public function __construct(
         IOrigin $origin,
@@ -126,7 +129,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
      * @param int $iliasId
      * @return ilObjCourse|null
      */
-    protected function findILIASCourse($iliasId)
+    protected function findILIASCourse($iliasId): ?\ilObjCourse
     {
         if (!ilObject2::_exists($iliasId, true)) {
             return null;
@@ -138,7 +141,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
     /**
      * @return int
      */
-    protected function mapRole(CourseMembershipDTO $object)
+    protected function mapRole(CourseMembershipDTO $object): int
     {
         switch ($object->getRole()) {
             case CourseMembershipDTO::ROLE_ADMIN:
@@ -154,7 +157,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
     /**
      * @return int
      */
-    protected function getILIASRole(CourseMembershipDTO $object, ilObjCourse $course)
+    protected function getILIASRole(CourseMembershipDTO $object, ilObjCourse $course): int
     {
         switch ($object->getRole()) {
             case CourseMembershipDTO::ROLE_ADMIN:
@@ -188,15 +191,14 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
             $originRepository = new OriginRepository();
             $arrayFilter = array_filter(
                 $originRepository->courses(),
-                function ($origin) use ($linkedOriginId) : bool {
+                fn ($origin): bool =>
                     /** @var IOrigin $origin */
-                    return $origin->getId() == $linkedOriginId;
-                }
+                    $origin->getId() == $linkedOriginId
             );
             $origin = array_pop(
                 $arrayFilter
             );
-            if (!$origin instanceof \srag\Plugins\Hub2\Origin\Course\ICourseOrigin) {
+            if (!$origin instanceof ICourseOrigin) {
                 $msg = "The linked origin syncing courses was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
             }

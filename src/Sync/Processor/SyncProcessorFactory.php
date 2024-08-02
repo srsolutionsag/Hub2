@@ -32,19 +32,12 @@ use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
 class SyncProcessorFactory implements ISyncProcessorFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    protected IOrigin $origin;
     /**
-     * @var IOrigin
-     */
-    protected $origin;
-    /**
-     * @var IObjectStatusTransition
      * @deprecated
      */
-    protected $statusTransition;
-    /**
-     * @var IOriginImplementation
-     */
-    protected $implementation;
+    protected IObjectStatusTransition $statusTransition;
+    protected IOriginImplementation $implementation;
     /**
      * @var \ilDBInterface
      */
@@ -62,18 +55,14 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         $this->implementation = $implementation;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function user() : \srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor
+
+    public function user(): UserSyncProcessor
     {
         return new UserSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function course() : \srag\Plugins\Hub2\Sync\Processor\Course\CourseSyncProcessor
+
+    public function course(): CourseSyncProcessor
     {
         return new CourseSyncProcessor(
             $this->origin,
@@ -83,10 +72,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function category() : \srag\Plugins\Hub2\Sync\Processor\Category\CategorySyncProcessor
+
+    public function category(): CategorySyncProcessor
     {
         return new CategorySyncProcessor(
             $this->origin,
@@ -95,10 +82,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function session() : \srag\Plugins\Hub2\Sync\Processor\Session\SessionSyncProcessor
+
+    public function session(): SessionSyncProcessor
     {
         return new SessionSyncProcessor(
             $this->origin,
@@ -107,10 +92,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function courseMembership() : \srag\Plugins\Hub2\Sync\Processor\CourseMembership\CourseMembershipSyncProcessor
+
+    public function courseMembership(): CourseMembershipSyncProcessor
     {
         return new CourseMembershipSyncProcessor(
             $this->origin,
@@ -119,10 +102,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function group() : \srag\Plugins\Hub2\Sync\Processor\Group\GroupSyncProcessor
+
+    public function group(): GroupSyncProcessor
     {
         return new GroupSyncProcessor(
             $this->origin,
@@ -132,10 +113,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function groupMembership() : \srag\Plugins\Hub2\Sync\Processor\GroupMembership\GroupMembershipSyncProcessor
+
+    public function groupMembership(): GroupMembershipSyncProcessor
     {
         return new GroupMembershipSyncProcessor(
             $this->origin,
@@ -144,11 +123,9 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function sessionMembership(
-    ) : \srag\Plugins\Hub2\Sync\Processor\SessionMembership\SessionMembershipSyncProcessor {
+    ): SessionMembershipSyncProcessor {
         return new SessionMembershipSyncProcessor(
             $this->origin,
             $this->implementation,
@@ -156,10 +133,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function orgUnit() : IOrgUnitSyncProcessor
+
+    public function orgUnit(): IOrgUnitSyncProcessor
     {
         return new OrgUnitSyncProcessor(
             $this->origin,
@@ -168,10 +143,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor
+
+    public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor
     {
         return new OrgUnitMembershipSyncProcessor(
             $this->origin,
@@ -180,10 +153,8 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function competenceManagement() : ICompetenceManagementSyncProcessor
+
+    public function competenceManagement(): ICompetenceManagementSyncProcessor
     {
         return new CompetenceManagementSyncProcessor(
             $this->origin,

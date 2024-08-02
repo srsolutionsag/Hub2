@@ -12,10 +12,7 @@ use ilHub2Plugin;
 class Node implements INode
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var string
-     */
-    protected $title = '';
+    protected string $title;
     /**
      * @var INode[]
      */
@@ -29,28 +26,24 @@ class Node implements INode
         $this->title = $title;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title) : void
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNodes() : array
+
+    public function getNodes(): array
     {
         return $this->nodes;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNodeTitlesAsArray() : array
+
+    public function getNodeTitlesAsArray(): array
     {
         $titles = [];
         foreach ($this->nodes as $node) {
@@ -60,10 +53,8 @@ class Node implements INode
         return $titles;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attach(INode $node) : INode
+
+    public function attach(INode $node): INode
     {
         $this->nodes[] = $node;
 

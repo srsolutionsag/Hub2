@@ -14,11 +14,7 @@ use srag\Plugins\Hub2\Object\User\UserDTO;
  */
 class ByEmail extends AMappingStrategy implements IMappingStrategy
 {
-
-    /**
-     * @inheritdoc
-     */
-    public function map(IDataTransferObject $dto) : int
+    public function map(IDataTransferObject $dto): int
     {
         if (!$dto instanceof UserDTO) {
             throw new HubException("Mapping using Email not supported for this type of DTO");

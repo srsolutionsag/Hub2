@@ -20,18 +20,12 @@ class Handler
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 
-    /**
-     * @var bool
-     */
-    protected $init = false;
+    protected bool $init = false;
     /**
      * @var ObjectLinkFactory
      */
     protected $object_link_factory;
-    /**
-     * @var string
-     */
-    protected $ext_id = '';
+    protected string $ext_id;
     /**
      * @var \ilDBInterface
      */
@@ -58,7 +52,6 @@ class Handler
      */
     public function __construct(string $ext_id)
     {
-        $this->init = false;
         $this->ext_id = $ext_id;
     }
 
@@ -158,7 +151,7 @@ class Handler
     /**
      * @return mixed|string
      */
-    protected function sanitizeLink(string $link)
+    protected function sanitizeLink(string $link): string
     {
         $link = str_replace(self::PLUGIN_BASE, "", $link);
         $link = ltrim($link, "/");

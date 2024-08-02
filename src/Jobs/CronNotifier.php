@@ -6,8 +6,8 @@ class CronNotifier implements Notifier
 {
     public const NOTIFY_MODULO = 500;
     public const PING_MODULO = 500;
-    private $ping_counter = 0;
-    private $notify_counter = 0;
+    private int $ping_counter = 0;
+    private int $notify_counter = 0;
     /**
      * @var \ilLogger
      */

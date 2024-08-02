@@ -37,9 +37,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
      */
     protected $isContact = false;
 
-    /**
-     * @inheritdoc
-     */
+
     public function __construct($group_id, $user_id)
     {
         parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$group_id, $user_id]));
@@ -47,24 +45,24 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         $this->setUserId($user_id);
     }
 
-    public function getGroupId() : string
+    public function getGroupId(): string
     {
         return $this->groupId;
     }
 
-    public function setGroupId(string $groupId) : GroupMembershipDTO
+    public function setGroupId(string $groupId): GroupMembershipDTO
     {
         $this->groupId = $groupId;
 
         return $this;
     }
 
-    public function getGroupIdType() : int
+    public function getGroupIdType(): int
     {
         return $this->groupIdType;
     }
 
-    public function setGroupIdType(int $groupIdType) : GroupMembershipDTO
+    public function setGroupIdType(int $groupIdType): GroupMembershipDTO
     {
         $this->groupIdType = $groupIdType;
 
@@ -79,7 +77,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
         return $this->user_id;
     }
 
-    public function setUserId(int $user_id) : GroupMembershipDTO
+    public function setUserId(int $user_id): GroupMembershipDTO
     {
         $this->user_id = $user_id;
 
@@ -98,14 +96,14 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
      * @param mixed $role
      * @return GroupMembershipDTO
      */
-    public function setRole($role)
+    public function setRole($role): self
     {
         $this->role = $role;
 
         return $this;
     }
 
-    public function isContact() : bool
+    public function isContact(): bool
     {
         return $this->isContact;
     }
@@ -113,7 +111,7 @@ class GroupMembershipDTO extends DataTransferObject implements IGroupMembershipD
     /**
      * @return $this
      */
-    public function setIsContact(bool $isContact)
+    public function setIsContact(bool $isContact): self
     {
         $this->isContact = $isContact;
 

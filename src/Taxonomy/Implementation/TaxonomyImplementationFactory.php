@@ -15,10 +15,8 @@ class TaxonomyImplementationFactory implements ITaxonomyImplementationFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-    /**
-     * @inheritdoc
-     */
-    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object) : ITaxonomyImplementation
+
+    public function taxonomy(ITaxonomy $Taxonomy, ilObject $ilias_object): ITaxonomyImplementation
     {
         switch ($Taxonomy->getMode()) {
             case ITaxonomy::MODE_CREATE:

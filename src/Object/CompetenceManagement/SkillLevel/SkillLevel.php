@@ -9,18 +9,9 @@ namespace srag\Plugins\Hub2\Object\CompetenceManagement\SkillLevel;
  */
 class SkillLevel implements ISkillLevel
 {
-    /**
-     * @var string
-     */
-    protected $ext_id = "";
-    /**
-     * @var string
-     */
-    protected $title = "";
-    /**
-     * @var string
-     */
-    protected $description = "";
+    protected string $ext_id;
+    protected string $title;
+    protected string $description;
 
     /**
      * SkillLevel constructor
@@ -32,54 +23,42 @@ class SkillLevel implements ISkillLevel
         $this->description = $description;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getExtId() : string
+
+    public function getExtId(): string
     {
         return $this->ext_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setExtId(string $ext_id) : ISkillLevel
+
+    public function setExtId(string $ext_id): ISkillLevel
     {
         $this->ext_id = $ext_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getTitle() : string
+
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setTitle(string $title) : ISkillLevel
+
+    public function setTitle(string $title): ISkillLevel
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getDescription() : string
+
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setDescription(string $description) : ISkillLevel
+
+    public function setDescription(string $description): ISkillLevel
     {
         $this->description = $description;
 
@@ -90,7 +69,7 @@ class SkillLevel implements ISkillLevel
      * @inheritdoc
      * @return array{ext_id: string, title: string, description: string}
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             "ext_id" => $this->ext_id,

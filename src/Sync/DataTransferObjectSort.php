@@ -13,48 +13,34 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 final class DataTransferObjectSort implements IDataTransferObjectSort
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var IDataTransferObject
-     */
-    private $dto_object;
-    /**
-     * @var int
-     */
-    private $level = 1;
+    private IDataTransferObject $dto_object;
+    private int $level = 1;
 
     public function __construct(IDataTransferObject $dto_object)
     {
         $this->dto_object = $dto_object;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getDtoObject() : IDataTransferObject
+
+    public function getDtoObject(): IDataTransferObject
     {
         return $this->dto_object;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setDtoObject(IDataTransferObject $dto_object) : void
+
+    public function setDtoObject(IDataTransferObject $dto_object): void
     {
         $this->dto_object = $dto_object;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getLevel() : int
+
+    public function getLevel(): int
     {
         return $this->level;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setLevel(int $level) : void
+
+    public function setLevel(int $level): void
     {
         $this->level = $level;
     }

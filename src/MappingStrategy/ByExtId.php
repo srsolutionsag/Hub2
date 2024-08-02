@@ -41,10 +41,8 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
         $this->origin_id = $origin_id;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function map(IDataTransferObject $dto) : int
+
+    public function map(IDataTransferObject $dto): int
     {
         switch (true) {
             case $dto instanceof IUserDTO:
@@ -82,7 +80,7 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
         }
 
         $query = 'SELECT DISTINCT ilias_id FROM ' . $table_name . ' WHERE ext_id=%s';
-        if (!empty($this->origin_id)) {
+        if ($this->origin_id !== null && $this->origin_id !== 0) {
             $query .= ' AND origin_id=%s';
             $result = $this->db->queryF(
                 $query,

@@ -126,9 +126,7 @@ class DataTableGUI extends ilTable2GUI
         $this->initTableData();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function initFilter(): void
     {
         $this->setDisableFilterHiding(true);

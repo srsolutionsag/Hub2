@@ -9,22 +9,10 @@ namespace srag\Plugins\Hub2\Object\CompetenceManagement\ProfileLevel;
  */
 class ProfileLevel implements IProfileLevel
 {
-    /**
-     * @var string
-     */
-    protected $skill_id = "";
-    /**
-     * @var int
-     */
-    protected $skill_id_type = self::SKILL_ID_TYPE_ILIAS_ID;
-    /**
-     * @var string
-     */
-    protected $level_id = "";
-    /**
-     * @var int
-     */
-    protected $level_id_type = self::LEVEL_ID_TYPE_ILIAS_ID;
+    protected string $skill_id;
+    protected int $skill_id_type;
+    protected string $level_id;
+    protected int $level_id_type;
 
     /**
      * ProfileLevel constructor
@@ -41,72 +29,56 @@ class ProfileLevel implements IProfileLevel
         $this->level_id_type = $level_id_type;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getSkillId() : string
+
+    public function getSkillId(): string
     {
         return $this->skill_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setSkillId(string $skill_id) : IProfileLevel
+
+    public function setSkillId(string $skill_id): IProfileLevel
     {
         $this->skill_id = $skill_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getSkillIdType() : int
+
+    public function getSkillIdType(): int
     {
         return $this->skill_id_type;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setSkillIdType(int $skill_id_type) : IProfileLevel
+
+    public function setSkillIdType(int $skill_id_type): IProfileLevel
     {
         $this->skill_id_type = $skill_id_type;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getLevelId() : string
+
+    public function getLevelId(): string
     {
         return $this->level_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setLevelId(string $level_id) : IProfileLevel
+
+    public function setLevelId(string $level_id): IProfileLevel
     {
         $this->level_id = $level_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getLevelIdType() : int
+
+    public function getLevelIdType(): int
     {
         return $this->level_id_type;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setLevelIdType(int $level_id_type) : IProfileLevel
+
+    public function setLevelIdType(int $level_id_type): IProfileLevel
     {
         $this->level_id_type = $level_id_type;
 
@@ -117,7 +89,7 @@ class ProfileLevel implements IProfileLevel
      * @inheritdoc
      * @return array{skill_id: string, skill_id_type: int, level_id: string, level_id_type: int}
      */
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             "skill_id" => $this->skill_id,

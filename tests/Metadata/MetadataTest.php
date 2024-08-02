@@ -12,16 +12,16 @@ require_once __DIR__ . "/../AbstractHub2Tests.php";
  */
 class MetadataTest extends AbstractHub2Tests
 {
-    protected function setUp()
+    protected function setUp(): void
     {
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
-    public function test_one_metadata_dto()
+    public function test_one_metadata_dto(): void
     {
     }
 }

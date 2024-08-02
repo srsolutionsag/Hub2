@@ -43,25 +43,19 @@ abstract class DataTransferObject implements IDataTransferObject
         $this->ext_id = $ext_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getExtId()
     {
         return $this->ext_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getPeriod()
     {
         return $this->period;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setPeriod($period)
     {
         $this->period = $period;
@@ -69,9 +63,7 @@ abstract class DataTransferObject implements IDataTransferObject
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getData()
     {
         $data = [];
@@ -82,9 +74,7 @@ abstract class DataTransferObject implements IDataTransferObject
         return $data;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setData(array $data)
     {
         foreach (array_keys($data) as $key) {
@@ -103,16 +93,14 @@ abstract class DataTransferObject implements IDataTransferObject
     {
         return array_filter(
             array_keys(get_class_vars(get_class($this))),
-            function (string $property) : bool {
-                return ($property !== "should_deleted");
-            }
+            fn (string $property): bool => $property !== "should_deleted"
         );
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return implode(
             ', ',
@@ -123,17 +111,13 @@ abstract class DataTransferObject implements IDataTransferObject
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function shouldDeleted() : bool
+
+    public function shouldDeleted(): bool
     {
         return $this->should_deleted;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setShouldDeleted(bool $should_deleted)
     {
         $this->should_deleted = $should_deleted;
@@ -141,10 +125,8 @@ abstract class DataTransferObject implements IDataTransferObject
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAdditionalData() : Serializable
+
+    public function getAdditionalData(): Serializable
     {
         $object = unserialize($this->additionalData);
         if (!$object) {
@@ -154,9 +136,7 @@ abstract class DataTransferObject implements IDataTransferObject
         return $object;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function withAdditionalData(Serializable $additionalData)
     {
         $this->additionalData = serialize($additionalData);

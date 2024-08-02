@@ -49,7 +49,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Setup default mocks
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $arr = [
             'update_dto_title' => true,
@@ -63,7 +63,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests
         $this->initDTO();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -130,7 +130,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create Category
      */
-    public function test_create_session_with_default_properties()
+    public function test_create_session_with_default_properties(): void
     {
         $processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 
@@ -156,7 +156,7 @@ class SessionSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create Category
      */
-    public function test_update_session_with_default_properties()
+    public function test_update_session_with_default_properties(): void
     {
         $processor = new SessionSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
 

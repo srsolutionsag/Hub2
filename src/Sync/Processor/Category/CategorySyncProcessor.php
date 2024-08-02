@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Category;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use ilContainerSortingSettings;
 use ilObjCategory;
 use ilObjectServiceSettingsGUI;
@@ -37,11 +39,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     /**
      * @var CategoryProperties
      */
-    protected $props;
+    protected IOriginProperties $props;
     /**
      * @var CategoryOriginConfig
      */
-    protected $config;
+    protected IOriginConfig $config;
     /**
      * @var array
      */
@@ -52,10 +54,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             'owner',
             'orderType',
         ];
-    /**
-     * @var CategoryParentResolver
-     */
-    protected $parent_resolver;
+    protected CategoryParentResolver $parent_resolver;
     /**
      * @var \ilLanguage
      */
@@ -229,7 +228,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
     /**
      * @throws HubException
      */
-    protected function determineParentRefId(CategoryDTO $category) : int
+    protected function determineParentRefId(CategoryDTO $category): int
     {
         return $this->parent_resolver->resolveParentRefId($category);
     }
@@ -238,7 +237,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
      * @param int $iliasId
      * @return ilObjCategory|null
      */
-    protected function findILIASCategory($iliasId)
+    protected function findILIASCategory($iliasId): ?\ilObjCategory
     {
         if (!ilObjCategory::_exists($iliasId, true)) {
             return null;
@@ -255,12 +254,10 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         );
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function handleSort(array $sort_dtos) : bool
+
+    public function handleSort(array $sort_dtos): bool
     {
-        array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto) : void {
+        array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto): void {
             $sort_dto->setLevel((int) $sort_dto->getDtoObject()->getPeriod());
         });
 

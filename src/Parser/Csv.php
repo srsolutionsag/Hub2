@@ -14,19 +14,10 @@ class Csv
     public const ENCLOSURE_DEFAULT = '"';
     public const SEPARATOR_DEFAULT = ";";
     public const BAD_ENCLOSURE_REPLACEMENT = '';
-    /**
-     * @var \Closure
-     */
-    private $sanitizer;
+    private \Closure $sanitizer;
 
-    /**
-     * @var array
-     */
-    protected $bad_enclosures = [];
-    /**
-     * @var array
-     */
-    protected $columns_mapping = [];
+    protected array $bad_enclosures;
+    protected array $columns_mapping;
     /**
      * @var \Closure[]
      */
@@ -35,26 +26,11 @@ class Csv
      * @var array
      */
     protected $parsed_csv = [];
-    /**
-     * @var string
-     */
-    protected $enclosure = self::ENCLOSURE_DEFAULT;
-    /**
-     * @var string
-     */
-    protected $separator = self::SEPARATOR_DEFAULT;
-    /**
-     * @var string
-     */
-    protected $file_path = '';
-    /**
-     * @var string
-     */
-    protected $unique_field = '';
-    /**
-     * @var array
-     */
-    protected $mandatory_columns = [];
+    protected string $enclosure;
+    protected string $separator;
+    protected string $file_path;
+    protected string $unique_field;
+    protected array $mandatory_columns;
     /**
      * @var array
      */
@@ -76,9 +52,7 @@ class Csv
         string $separator = self::SEPARATOR_DEFAULT,
         array $bad_enclosures = []
     ) {
-        $this->sanitizer = function (string $s): string {
-            return utf8_encode(utf8_decode($s));
-        };
+        $this->sanitizer = fn (string $s): string => utf8_encode(utf8_decode($s));
         $this->enclosure = $enclosure;
         $this->separator = $separator;
         $this->file_path = $file_path;
@@ -114,20 +88,8 @@ class Csv
     {
         $this->parsed_csv = array_filter(
             $this->parsed_csv,
-            (($closure ?? function ($v, $k): bool {
-                return !empty($v);
-            }) ?? function ($v, $k): bool {
-                return !empty($v);
-            }) ?? function ($v, $k): bool {
-            return !empty($v);
-        },
-            (($closure ?? function ($v, $k): bool {
-                return !empty($v);
-            }) ?? function ($v, $k): bool {
-                return !empty($v);
-            }) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? function ($v, $k): bool {
-                return !empty($v);
-            }) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
+            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v),
+            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? fn ($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
         );
     }
 
@@ -182,13 +144,11 @@ class Csv
 
     protected function parseCSVFile(string $path_to_file): void
     {
-        $this->parsed_csv = array_map(function (string $line): array {
-            return str_getcsv(
-                $this->sanitizeEnclosures($this->removeBOM($line)),
-                $this->getSeparator(),
-                $this->getEnclosure()
-            );
-        }, file($path_to_file));
+        $this->parsed_csv = array_map(fn (string $line): array => str_getcsv(
+            $this->sanitizeEnclosures($this->removeBOM($line)),
+            $this->getSeparator(),
+            $this->getEnclosure()
+        ), file($path_to_file));
     }
 
     public function parseData(): array

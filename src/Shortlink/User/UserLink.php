@@ -34,10 +34,8 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         parent::__construct($object);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function doesObjectExist() : bool
+
+    public function doesObjectExist(): bool
     {
         if (!$this->object->getILIASId()) {
             return false;
@@ -46,10 +44,8 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         return ilObjUser::_exists($this->object->getILIASId(), false);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isAccessGranted() : bool
+
+    public function isAccessGranted(): bool
     {
         $userObj = new ilObjUser($this->object->getILIASId());
         if ($userObj->hasPublicProfile()) {
@@ -59,26 +55,20 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         return $this->access->checkAccess('read', '', 7); // Read access to user administration
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAccessGrantedExternalLink() : string
+
+    public function getAccessGrantedExternalLink(): string
     {
         return ilLink::_getLink($this->object->getILIASId(), 'usr');
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAccessDeniedLink() : string
+
+    public function getAccessDeniedLink(): string
     {
         return "ilias.php";
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAccessGrantedInternalLink() : string
+
+    public function getAccessGrantedInternalLink(): string
     {
         $this->ctrl->setParameterByClass(ilObjUserGUI::class, "ref_id", 7);
         $this->ctrl->setParameterByClass(ilObjUserGUI::class, "obj_id", $this->object->getILIASId());

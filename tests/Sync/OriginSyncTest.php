@@ -62,7 +62,7 @@ class OriginSyncTest extends AbstractHub2Tests
      */
     protected $originConfig;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->originImplementation = Mockery::mock(IOriginImplementation::class);
         $this->originImplementation->shouldReceive('beforeSync')->once();
@@ -74,12 +74,12 @@ class OriginSyncTest extends AbstractHub2Tests
         $this->statusTransition = Mockery::mock(IObjectStatusTransition::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
-    public function test_fail_connect()
+    public function test_fail_connect(): void
     {
         $this->originImplementation->shouldReceive('connect')->andThrow(
             ConnectionFailedException::class,
@@ -98,7 +98,7 @@ class OriginSyncTest extends AbstractHub2Tests
         //$this->assertInstanceOf(ConnectionFailedException::class, array_pop($originSync->getLogs()));
     }
 
-    public function test_fail_parse_data()
+    public function test_fail_parse_data(): void
     {
         $this->originImplementation->shouldReceive('connect')->once();
         $this->originImplementation->shouldReceive('parseData')->andThrow(ParseDataFailedException::class);
@@ -115,7 +115,7 @@ class OriginSyncTest extends AbstractHub2Tests
         //$this->assertInstanceOf(ParseDataFailedException::class, array_pop($originSync->getLogs()));
     }
 
-    public function test_that_origin_sync_gets_aborted_if_not_enough_data_delivered()
+    public function test_that_origin_sync_gets_aborted_if_not_enough_data_delivered(): void
     {
         $this->originImplementation->shouldReceive('connect');
         // 100 data sets delivered
@@ -139,7 +139,7 @@ class OriginSyncTest extends AbstractHub2Tests
         //$this->assertInstanceOf(AbortOriginSyncException::class, array_pop($originSync->getLogs()));
     }
 
-    public function test_that_origin_sync_does_not_abort_if_enough_data_delivered()
+    public function test_that_origin_sync_does_not_abort_if_enough_data_delivered(): void
     {
         $this->originImplementation->shouldReceive('connect');
         // 100 data sets delivered
@@ -170,7 +170,7 @@ class OriginSyncTest extends AbstractHub2Tests
         //$this->assertEquals([], $originSync->getLogs());
     }
 
-    public function test_processing()
+    public function test_processing(): void
     {
         $this->originImplementation->shouldReceive('connect');
         $this->originImplementation->shouldReceive('parseData')->andReturn(4);
@@ -223,7 +223,7 @@ class OriginSyncTest extends AbstractHub2Tests
         //$this->assertEquals([], $originSync->getLogs());
     }
 
-    public function test_that_any_exception_during_processing_is_forwarded_to_the_origin_implementation()
+    public function test_that_any_exception_during_processing_is_forwarded_to_the_origin_implementation(): void
     {
         $this->originImplementation->shouldReceive('connect');
         $this->originImplementation->shouldReceive('parseData')->andReturn(1);

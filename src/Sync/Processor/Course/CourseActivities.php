@@ -25,10 +25,8 @@ class CourseActivities implements ICourseActivities
         $this->db = $db;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function hasActivities(ilObjCourse $ilObjCourse)
+
+    public function hasActivities(ilObjCourse $ilObjCourse): bool
     {
         $sql = "SELECT 
 				    wre.*, dat.*, rbac_ua.*

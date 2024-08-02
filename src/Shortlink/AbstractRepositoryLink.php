@@ -30,10 +30,8 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         parent::__construct($object);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function doesObjectExist() : bool
+
+    public function doesObjectExist(): bool
     {
         if ($this->getILIASId() === 0) {
             return false;
@@ -42,40 +40,31 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return ilObject2::_exists($this->getILIASId(), true);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isAccessGranted() : bool
+
+    public function isAccessGranted(): bool
     {
         return (bool) $this->access->checkAccess("read", '', $this->getILIASId());
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAccessGrantedInternalLink() : string
+
+    public function getAccessGrantedInternalLink(): string
     {
         if ($this->isAccessGranted()) {
             return $this->getAccessGrantedExternalLink();
-        } else {
-            return $this->getAccessDeniedLink();
         }
+        return $this->getAccessDeniedLink();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAccessGrantedExternalLink() : string
+
+    public function getAccessGrantedExternalLink(): string
     {
         $ref_id = $this->getILIASId();
 
         return $this->generateLink($ref_id);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAccessDeniedLink() : string
+
+    public function getAccessDeniedLink(): string
     {
         $ref_id = $this->findReadableParent();
         if ($ref_id === 0) {
@@ -93,7 +82,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return $this->object->getILIASId();
     }
 
-    protected function findReadableParent() : int
+    protected function findReadableParent(): int
     {
         $ref_id = $this->getILIASId();
 
@@ -112,7 +101,7 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
      * @param int $ref_id
      * @return mixed|string
      */
-    private function generateLink($ref_id)
+    private function generateLink(?int $ref_id): string
     {
         $link = ilLink::_getLink($ref_id);
 

@@ -12,22 +12,13 @@ use srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership\FakeOrgUnitMembershipObje
  */
 class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembershipDTO
 {
-    /**
-     * @var string
-     */
-    protected $org_unit_id = "";
+    protected string $org_unit_id;
     /**
      * @var int
      */
     protected $org_unit_id_type = self::ORG_UNIT_ID_TYPE_OBJ_ID;
-    /**
-     * @var int
-     */
-    protected $user_id;
-    /**
-     * @var int
-     */
-    protected $position;
+    protected int $user_id;
+    protected int $position;
 
     public function __construct(string $org_unit_id, int $user_id, int $position)
     {
@@ -37,72 +28,56 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         $this->position = $position;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOrgUnitId() : string
+
+    public function getOrgUnitId(): string
     {
         return $this->org_unit_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setOrgUnitId(string $org_unit_id) : IOrgUnitMembershipDTO
+
+    public function setOrgUnitId(string $org_unit_id): IOrgUnitMembershipDTO
     {
         $this->org_unit_id = $org_unit_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOrgUnitIdType() : int
+
+    public function getOrgUnitIdType(): int
     {
         return $this->org_unit_id_type;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setOrgUnitIdType(int $org_unit_id_type) : IOrgUnitMembershipDTO
+
+    public function setOrgUnitIdType(int $org_unit_id_type): IOrgUnitMembershipDTO
     {
         $this->org_unit_id_type = $org_unit_id_type;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getUserId() : int
+
+    public function getUserId(): int
     {
         return $this->user_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setUserId(int $user_id) : IOrgUnitMembershipDTO
+
+    public function setUserId(int $user_id): IOrgUnitMembershipDTO
     {
         $this->user_id = $user_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPosition() : int
+
+    public function getPosition(): int
     {
         return $this->position;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setPosition(int $position) : IOrgUnitMembershipDTO
+
+    public function setPosition(int $position): IOrgUnitMembershipDTO
     {
         $this->position = $position;
 

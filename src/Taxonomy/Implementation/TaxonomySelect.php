@@ -42,10 +42,8 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         parent::__construct();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function write()
+
+    public function write(): void
     {
         $this->initSelectableTaxonomies();
 
@@ -73,7 +71,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     /**
      *
      */
-    private function selectTaxonomy()
+    private function selectTaxonomy(): void
     {
         $tax_id = array_search($this->getTaxonomy()->getTitle(), $this->selectable_taxonomies);
         if (!$tax_id) {
@@ -89,7 +87,7 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
      * @throws TaxonomyNodeNotFoundException
      * @throws ilTaxonomyException
      */
-    private function selectNode(INode $node)
+    private function selectNode(INode $node): void
     {
         $node_id = array_search($node->getTitle(), $this->childs);
         if (!$node_id) {
@@ -99,10 +97,8 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         $this->ilTaxNodeAssignment->addAssignment($node_id, $this->container_obj_id);
     }
 
-    /**
-     * @inheritdoc
-     */
-    protected function taxonomyExists() : bool
+
+    protected function taxonomyExists(): bool
     {
         return in_array($this->getTaxonomy()->getTitle(), $this->selectable_taxonomies);
     }
@@ -110,25 +106,33 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
     /**
      *
      */
-    private function initSelectableTaxonomies() : void
+    private function initSelectableTaxonomies(): void
     {
         $res = [];
         foreach ($this->tree->getPathFull($this->getILIASParentId()) as $node) {
-            if ($node["ref_id"] != $this->getILIASParentId() && $node["type"] == "cat") {
-                if (ilContainer::_lookupContainerSetting(
-                    $node["obj_id"],
-                    ilObjectServiceSettingsGUI::TAXONOMIES,
-                    false
-                ) !== '' && ilContainer::_lookupContainerSetting(
-                    $node["obj_id"],
-                    ilObjectServiceSettingsGUI::TAXONOMIES,
-                    false
-                ) !== '0') {
-                    $tax_ids = ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
-                    if ($tax_ids !== []) {
-                        $res = array_merge($res, $tax_ids);
-                    }
-                }
+            if ($node["ref_id"] == $this->getILIASParentId()) {
+                continue;
+            }
+            if ($node["type"] != "cat") {
+                continue;
+            }
+            if (ilContainer::_lookupContainerSetting(
+                $node["obj_id"],
+                ilObjectServiceSettingsGUI::TAXONOMIES,
+                false
+            ) === '') {
+                continue;
+            }
+            if (ilContainer::_lookupContainerSetting(
+                $node["obj_id"],
+                ilObjectServiceSettingsGUI::TAXONOMIES,
+                false
+            ) === '0') {
+                continue;
+            }
+            $tax_ids = ilObjTaxonomy::getUsageOfObject($node["obj_id"]);
+            if ($tax_ids !== []) {
+                $res = array_merge($res, $tax_ids);
             }
         }
         foreach ($res as $re) {

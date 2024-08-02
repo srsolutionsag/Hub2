@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync;
 
+use srag\Plugins\Hub2\Log\IRepository;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
@@ -30,22 +31,10 @@ class OriginSync implements IOriginSync
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const NOTIFY_ALL_X_DTOS = 500;
-    /**
-     * @var \srag\Plugins\Hub2\Log\IRepository
-     */
-    protected $log_repo;
-    /**
-     * @var IOrigin
-     */
-    protected $origin;
-    /**
-     * @var IObjectRepository
-     */
-    protected $repository;
-    /**
-     * @var IObjectFactory
-     */
-    protected $factory;
+    protected IRepository $log_repo;
+    protected IOrigin $origin;
+    protected IObjectRepository $repository;
+    protected IObjectFactory $factory;
     /**
      * @var IDataTransferObject[]|\Generator
      */
@@ -55,10 +44,9 @@ class OriginSync implements IOriginSync
      */
     protected $processor;
     /**
-     * @var IObjectStatusTransition
      * @deprecated
      */
-    protected $statusTransition;
+    protected IObjectStatusTransition $statusTransition;
     /**
      * @var IOriginImplementation
      */
@@ -92,10 +80,8 @@ class OriginSync implements IOriginSync
         $this->log_repo = LogRepository::getInstance();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function execute(Notifier $notifier)
+
+    public function execute(Notifier $notifier): void
     {
         // Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
         // as the sync of this origin cannot continue.
@@ -231,9 +217,7 @@ class OriginSync implements IOriginSync
     {
         // Create IDataTransferObjectSort objects
         $sort_dtos = array_map(
-            function (IDataTransferObject $dto): IDataTransferObjectSort {
-                return new DataTransferObjectSort($dto);
-            },
+            fn (IDataTransferObject $dto): IDataTransferObjectSort => new DataTransferObjectSort($dto),
             $dtos
         );
 
@@ -242,16 +226,12 @@ class OriginSync implements IOriginSync
             // Sort by level
             usort(
                 $sort_dtos,
-                function (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int {
-                    return ($sort_dto1->getLevel() - $sort_dto2->getLevel());
-                }
+                fn (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int => $sort_dto1->getLevel() - $sort_dto2->getLevel()
             );
 
             // Back to IDataTransferObject objects
             $dtos = array_map(
-                function (IDataTransferObjectSort $sort_dto): IDataTransferObject {
-                    return $sort_dto->getDtoObject();
-                },
+                fn (IDataTransferObjectSort $sort_dto): IDataTransferObject => $sort_dto->getDtoObject(),
                 $sort_dtos
             );
         }
@@ -259,25 +239,19 @@ class OriginSync implements IOriginSync
         return $dtos;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getCountProcessedByStatus($status)
     {
         return $this->countProcessed[$status];
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getCountProcessedTotal()
     {
         return array_sum($this->countProcessed);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getCountDelivered()
     {
         return $this->countDelivered;
@@ -321,9 +295,7 @@ class OriginSync implements IOriginSync
         $this->countProcessed[$status]++;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getOrigin()
     {
         return $this->origin;

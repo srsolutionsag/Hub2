@@ -85,7 +85,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Setup default mocks
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->activities = Mockery::mock(IGroupActivities::class);
 
@@ -96,7 +96,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests
         $this->initDTO();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -104,7 +104,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create Group
      */
-    public function test_create_group_with_default_properties()
+    public function test_create_group_with_default_properties(): void
     {
         $processor = new GroupSyncProcessor(
             $this->origin,
@@ -132,7 +132,7 @@ class GroupSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    public function test_update_group_with_default_properties()
+    public function test_update_group_with_default_properties(): void
     {
         $processor = new GroupSyncProcessor(
             $this->origin,

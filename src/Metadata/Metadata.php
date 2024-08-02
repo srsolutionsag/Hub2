@@ -37,41 +37,35 @@ class Metadata implements IMetadata
         $this->record_id = $record_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setValue($value) : IMetadata
+
+    public function setValue($value): IMetadata
     {
         $this->value = $value;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setIdentifier(int $identifier) : IMetadata
+
+    public function setIdentifier(int $identifier): IMetadata
     {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    public function setLanguageCode(string $code) : IMetadata
+    public function setLanguageCode(string $code): IMetadata
     {
         $this->language_code = $code;
 
         return $this;
     }
 
-    public function getLanguageCode() : string
+    public function getLanguageCode(): string
     {
         return $this->language_code;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getValue()
     {
         return $this->value;
@@ -82,15 +76,13 @@ class Metadata implements IMetadata
         return $this->identifier;
     }
 
-    public function getRecordId() : string
+    public function getRecordId(): string
     {
         return $this->record_id ?? self::DEFAULT_RECORD_ID;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function __toString() : string
+
+    public function __toString(): string
     {
         return json_encode(
             [$this->getRecordId() => [$this->getIdentifier() => $this->getValue()]],

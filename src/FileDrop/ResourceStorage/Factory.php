@@ -11,10 +11,7 @@ use srag\Plugins\Hub2\Version\ILIASVersion;
  */
 class Factory
 {
-    /**
-     * @var ILIASVersion
-     */
-    protected $ilias_version;
+    protected ILIASVersion $ilias_version;
 
     public function __construct()
     {

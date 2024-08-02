@@ -32,10 +32,8 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
         $this->db = $DIC->database();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function map(IDataTransferObject $dto) : int
+
+    public function map(IDataTransferObject $dto): int
     {
         switch (true) {
             case $dto instanceof IUserDTO:

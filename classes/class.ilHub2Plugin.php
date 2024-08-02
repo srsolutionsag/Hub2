@@ -106,18 +106,14 @@ class ilHub2Plugin extends ilCronHookPlugin implements Translator
         }
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
     {
         global $DIC;
         return new Menu($DIC, $this);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function afterUninstall(): void
     {
         $this->getDBInstance()->dropTable(ARUserOrigin::TABLE_NAME, false);

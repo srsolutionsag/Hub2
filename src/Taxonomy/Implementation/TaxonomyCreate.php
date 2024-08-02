@@ -26,10 +26,8 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
         parent::__construct();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function write() : void
+
+    public function write(): void
     {
         if (!$this->taxonomyExists()) {
             $this->createTaxonomy();
@@ -42,7 +40,7 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
     /**
      *
      */
-    private function createTaxonomy() : void
+    private function createTaxonomy(): void
     {
         $tax = new ilObjTaxonomy();
         $tax->setTitle($this->getTaxonomy()->getTitle());
@@ -70,7 +68,7 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
         }
     }
 
-    private function createNode(INode $nodeDTO, $parent_id = 0) : void
+    private function createNode(INode $nodeDTO, int $parent_id = 0): void
     {
         $node = new ilTaxonomyNode();
         $node->setTitle($nodeDTO->getTitle());

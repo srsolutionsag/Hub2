@@ -19,7 +19,7 @@ use srag\Plugins\Hub2\Taxonomy\TaxonomyFactory;
  */
 class OriginImplementationFactory
 {
-    protected \srag\Plugins\Hub2\Origin\IOrigin $origin;
+    protected IOrigin $origin;
 
     public function __construct(IOrigin $origin)
     {

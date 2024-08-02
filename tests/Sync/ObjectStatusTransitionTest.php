@@ -13,12 +13,12 @@ use srag\Plugins\Hub2\Sync\ObjectStatusTransition;
  */
 class ObjectStatusTransitionTest extends AbstractHub2Tests
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
-    public function test_intermediate_to_final()
+    public function test_intermediate_to_final(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
         $transition = new ObjectStatusTransition($config);
@@ -40,7 +40,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests
         //$this->assertEquals(IObject::STATUS_OUTDATED, $transition->intermediateToFinal($object));
     }
 
-    public function test_final_to_intermediate()
+    public function test_final_to_intermediate(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
         $config->shouldReceive('getActivePeriod')->andReturn('Period1');
@@ -63,7 +63,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests
         $this->assertEquals(IObject::STATUS_TO_RESTORE, $transition->finalToIntermediate($object));
     }
 
-    public function test_status_is_to_create_if_ignored_and_no_ilias_object_exists()
+    public function test_status_is_to_create_if_ignored_and_no_ilias_object_exists(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
         $config->shouldReceive('getActivePeriod')->andReturn('Period1');
@@ -73,7 +73,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests
         $this->assertEquals(IObject::STATUS_TO_CREATE, $transition->finalToIntermediate($object));
     }
 
-    public function test_status_is_to_update_if_ignored_and_ilias_object_exists()
+    public function test_status_is_to_update_if_ignored_and_ilias_object_exists(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
         $config->shouldReceive('getActivePeriod')->andReturn('Period1');
@@ -88,7 +88,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests
         $this->assertEquals(IObject::STATUS_IGNORED, $transition->finalToIntermediate($object));
     }
 
-    public function test_status_gets_ignored_if_period_does_not_match()
+    public function test_status_gets_ignored_if_period_does_not_match(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
         $config->shouldReceive('getActivePeriod')->andReturn('ActualPeriod');
@@ -101,7 +101,7 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests
         $this->assertNotEquals(IObject::STATUS_IGNORED, $transition->finalToIntermediate($object));
     }
 
-    public function test_intermediate_to_final_status_does_not_change_if_already_final()
+    public function test_intermediate_to_final_status_does_not_change_if_already_final(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
         $transition = new ObjectStatusTransition($config);

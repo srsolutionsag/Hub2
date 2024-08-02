@@ -46,7 +46,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Setup default mocks
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->activities = Mockery::mock(IUserActivities::class);
         $this->initOrigin(new UserProperties(), new UserOriginConfig([]));
@@ -56,7 +56,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
         $this->initDTO();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -100,7 +100,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create ILIAS User
      */
-    public function test_create_user_with_default_properties()
+    public function test_create_user_with_default_properties(): void
     {
         $processor = new UserSyncProcessor($this->origin, $this->originImplementation, $this->statusTransition);
         $this->initDataExpectations();
@@ -114,7 +114,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
      * @param string $mode
      * @param string $expectedLoginName
      */
-    public function test_create_user_with_different_login_name_modes($mode, $expectedLoginName)
+    public function test_create_user_with_different_login_name_modes(int $mode, string $expectedLoginName): void
     {
         $this->originConfig->setData([IUserOriginConfig::LOGIN_FIELD => $mode]);
         $this->initDataExpectations();
@@ -126,7 +126,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create ILIAS user: Test that user is not active AND profile is set to incomplete.
      */
-    public function test_create_user_with_inactive_account()
+    public function test_create_user_with_inactive_account(): void
     {
         $this->originProperties->setData([UserProperties::ACTIVATE_ACCOUNT => false]);
         $this->initDataExpectations();
@@ -140,7 +140,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
      * Update ILIAS user: Using the default properties (properties of UserDTO are not forwarded to
      * ILIAS user).
      */
-    public function test_update_user_with_default_properties()
+    public function test_update_user_with_default_properties(): void
     {
         $this->setDefaultExpectationsForUpdateOfILIASUser();
         $this->ilObject->shouldReceive('setImportId')->once();
@@ -157,7 +157,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    public function test_update_user_not_required_if_no_properties_changed()
+    public function test_update_user_not_required_if_no_properties_changed(): void
     {
         $this->setDefaultExpectationsForUpdateOfILIASUser();
         //$this->iobject->shouldReceive('updateStatus')->once()->with(IObject::STATUS_NOTHING_TO_UPDATE);
@@ -173,7 +173,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    public function test_delete_user_mode_none()
+    public function test_delete_user_mode_none(): void
     {
         $this->setDefaultExpectationsForDeletionOfILIASUser();
         $this->originProperties->setData([UserProperties::DELETE => UserProperties::DELETE_MODE_NONE]);
@@ -185,7 +185,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    public function test_delete_user_mode_inactive()
+    public function test_delete_user_mode_inactive(): void
     {
         $this->setDefaultExpectationsForDeletionOfILIASUser();
         $this->originProperties->setData([UserProperties::DELETE => UserProperties::DELETE_MODE_INACTIVE]);
@@ -198,7 +198,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    public function test_delete_user_mode_delete_user()
+    public function test_delete_user_mode_delete_user(): void
     {
         $this->setDefaultExpectationsForDeletionOfILIASUser();
         $this->originProperties->setData([UserProperties::DELETE => UserProperties::DELETE_MODE_DELETE]);
@@ -212,7 +212,7 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * @return array
      */
-    public function getUsernameModes()
+    public function getUsernameModes(): array
     {
         return [
             [UserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME, 'j.doe'],

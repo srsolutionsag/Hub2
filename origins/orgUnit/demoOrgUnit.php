@@ -71,12 +71,8 @@ class demoOrgUnit extends AbstractOriginImplementation
             "Org Type" => "org_unit_type"
         ];
         $columns = array_map(function (string $column) use (&$columns_map): string {
-            if (isset($columns_map[$column])) {
-                return $columns_map[$column];
-            } else {
-                // Optimal column
-                return "";
-            }
+            // Optimal column
+            return $columns_map[$column] ?? "";
         }, array_shift($rows));
         foreach ($columns_map as $key => $value) {
             if (!in_array($value, $columns)) {
@@ -99,7 +95,7 @@ class demoOrgUnit extends AbstractOriginImplementation
                     throw new ParseDataFailedException("<b>Row $rowId, column $cellI</b> does not exists in <b>{$csv_file}</b>!");
                 }
 
-                if ($columns[$cellI] != "") { // Skip optimal columns
+                if ($columns[$cellI] !== "") { // Skip optimal columns
                     $data->{$columns[$cellI]} = $cell;
                 }
             }

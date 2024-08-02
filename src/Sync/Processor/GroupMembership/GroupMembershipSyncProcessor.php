@@ -2,6 +2,9 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\GroupMembership;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Group\IGroupOrigin;
 use ilObject2;
 use ilObjGroup;
 use srag\Plugins\Hub2\Exception\HubException;
@@ -28,11 +31,11 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     /**
      * @var GroupProperties
      */
-    protected $props;
+    protected IOriginProperties $props;
     /**
      * @var GroupOriginConfig
      */
-    protected $config;
+    protected IOriginConfig $config;
     /**
      * @var \ilTree
      */
@@ -119,7 +122,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
      * @param int $iliasId
      * @return ilObjGroup|null
      */
-    protected function findILIASGroup($iliasId)
+    protected function findILIASGroup($iliasId): ?\ilObjGroup
     {
         if (!ilObject2::_exists($iliasId, true)) {
             return null;
@@ -131,7 +134,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     /**
      * @throws HubException
      */
-    protected function buildParentRefId(GroupMembershipDTO $dto) : int
+    protected function buildParentRefId(GroupMembershipDTO $dto): int
     {
         if ($dto->getGroupIdType() == GroupMembershipDTO::PARENT_ID_TYPE_REF_ID) {
             if ($this->tree->isInTree($dto->getGroupId())) {
@@ -150,15 +153,14 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
             $originRepository = new OriginRepository();
             $arrayFilter = array_filter(
                 $originRepository->groups(),
-                function ($origin) use ($linkedOriginId) : bool {
+                fn ($origin): bool =>
                     /** @var IOrigin $origin */
-                    return (int) $origin->getId() == $linkedOriginId;
-                }
+                    (int) $origin->getId() == $linkedOriginId
             );
             $origin = array_pop(
                 $arrayFilter
             );
-            if (!$origin instanceof \srag\Plugins\Hub2\Origin\Group\IGroupOrigin) {
+            if (!$origin instanceof IGroupOrigin) {
                 $msg = "The linked origin syncing group was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
             }
@@ -182,7 +184,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     /**
      * @return int
      */
-    protected function mapRole(GroupMembershipDTO $object)
+    protected function mapRole(GroupMembershipDTO $object): int
     {
         switch ($object->getRole()) {
             case GroupMembershipDTO::ROLE_ADMIN:
@@ -197,7 +199,7 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
     /**
      * @return int
      */
-    protected function getILIASRole(GroupMembershipDTO $object, ilObjGroup $group)
+    protected function getILIASRole(GroupMembershipDTO $object, ilObjGroup $group): int
     {
         switch ($object->getRole()) {
             case GroupMembershipDTO::ROLE_ADMIN:

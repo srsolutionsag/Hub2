@@ -32,14 +32,8 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
      * @var ilObjTaxonomy
      */
     protected $ilObjTaxonomy;
-    /**
-     * @var ITaxonomy
-     */
-    protected $taxonomy;
-    /**
-     * @var int
-     */
-    protected $ilias_parent_id;
+    protected ITaxonomy $taxonomy;
+    protected int $ilias_parent_id;
 
     /**
      * Taxonomy constructor
@@ -52,7 +46,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         $this->ilias_parent_id = $ilias_parent_id;
     }
 
-    protected function taxonomyExists() : bool
+    protected function taxonomyExists(): bool
     {
         $childsByType = $this->tree->getChildsByType($this->getILIASParentId(), 'tax');
         if ($childsByType === []) {
@@ -82,7 +76,7 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
     /**
      * @param int $parent_id
      */
-    protected function setChildrenByParentId($parent_id)
+    protected function setChildrenByParentId(int $parent_id)
     {
         foreach ($this->tree->getChildsByTypeFilter($parent_id, ["taxn"]) as $item) {
             $this->childs[$item['obj_id']] = $item['title'];
@@ -90,28 +84,22 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         }
     }
 
-    protected function nodeExists(INode $node) : bool
+    protected function nodeExists(INode $node): bool
     {
         return in_array($node->getTitle(), $this->childs);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     abstract public function write();
 
-    /**
-     * @inheritdoc
-     */
-    public function getTaxonomy() : ITaxonomy
+
+    public function getTaxonomy(): ITaxonomy
     {
         return $this->taxonomy;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getILIASParentId() : int
+
+    public function getILIASParentId(): int
     {
         return $this->ilias_parent_id;
     }

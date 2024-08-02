@@ -12,9 +12,6 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class CourseMembershipDTO extends DataTransferObject implements ICourseMembershipDTO
 {
-    /**
-     * @inheritdoc
-     */
     public function __construct($course_ext_id, $user_id)
     {
         parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$course_ext_id, $user_id]));
@@ -58,7 +55,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
     /**
      * @param int $courseId
      */
-    public function setCourseId($courseId) : CourseMembershipDTO
+    public function setCourseId($courseId): CourseMembershipDTO
     {
         $this->courseId = $courseId;
 
@@ -73,7 +70,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
         return $this->userId;
     }
 
-    public function setUserId(int $userId) : CourseMembershipDTO
+    public function setUserId(int $userId): CourseMembershipDTO
     {
         $this->userId = $userId;
 
@@ -92,26 +89,26 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
      * @param mixed $role
      * @return CourseMembershipDTO
      */
-    public function setRole($role)
+    public function setRole($role): self
     {
         $this->role = $role;
 
         return $this;
     }
 
-    public function getCourseIdType() : int
+    public function getCourseIdType(): int
     {
         return $this->courseIdType;
     }
 
-    public function setCourseIdType(int $courseIdType) : CourseMembershipDTO
+    public function setCourseIdType(int $courseIdType): CourseMembershipDTO
     {
         $this->courseIdType = $courseIdType;
 
         return $this;
     }
 
-    public function isContact() : bool
+    public function isContact(): bool
     {
         return $this->isContact;
     }
@@ -119,7 +116,7 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
     /**
      * @return $this
      */
-    public function setIsContact(bool $isContact)
+    public function setIsContact(bool $isContact): self
     {
         $this->isContact = $isContact;
 
@@ -129,14 +126,14 @@ class CourseMembershipDTO extends DataTransferObject implements ICourseMembershi
     /**
      * @return $this
      */
-    public function setHasNotification(bool $notification)
+    public function setHasNotification(bool $notification): self
     {
         $this->hasNotification = $notification;
 
         return $this;
     }
 
-    public function hasNotification() : bool
+    public function hasNotification(): bool
     {
         return $this->hasNotification;
     }

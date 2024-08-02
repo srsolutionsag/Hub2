@@ -13,10 +13,7 @@ use srag\Plugins\Hub2\Object\ARObject;
 abstract class AbstractBaseLink implements IObjectLink
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var ARObject
-     */
-    protected $object;
+    protected ARObject $object;
 
     /**
      * AbstractBaseLink constructor
@@ -26,10 +23,8 @@ abstract class AbstractBaseLink implements IObjectLink
         $this->object = $object;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getNonExistingLink() : string
+
+    public function getNonExistingLink(): string
     {
         return "index.php";
     }

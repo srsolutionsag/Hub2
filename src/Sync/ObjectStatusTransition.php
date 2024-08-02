@@ -21,10 +21,9 @@ class ObjectStatusTransition implements IObjectStatusTransition
      */
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
-     * @var IOriginConfig
      * @deprecated
      */
-    protected $config;
+    protected IOriginConfig $config;
 
     /**
      * @deprecated
@@ -38,7 +37,7 @@ class ObjectStatusTransition implements IObjectStatusTransition
      * @inheritdoc
      * @deprecated
      */
-    public function finalToIntermediate(IObject $object) : int
+    public function finalToIntermediate(IObject $object): int
     {
         // If the config has defined an active period and the period of the object does not match,
         // we set the status to IGNORED. The sync won't process this object anymore.

@@ -33,7 +33,7 @@ class GroupParentResolver extends BasicParentResolver
         }
     }
 
-    private function resolveLinkedOrigin(int $linked_origin_id) : bool
+    private function resolveLinkedOrigin(int $linked_origin_id): bool
     {
         if ($linked_origin_id === 0) {
             return false;
@@ -42,10 +42,9 @@ class GroupParentResolver extends BasicParentResolver
         $originRepository = new OriginRepository();
         $filtered = array_filter(
             $originRepository->categories(),
-            function ($origin) use ($linked_origin_id) : bool {
+            fn ($origin): bool =>
                 /** @var IOrigin $origin */
-                return $origin->getId() === $linked_origin_id;
-            }
+                $origin->getId() === $linked_origin_id
         );
         $origin = array_pop($filtered);
         if (!$origin instanceof IOrigin) {
@@ -57,7 +56,7 @@ class GroupParentResolver extends BasicParentResolver
         return true;
     }
 
-    public function resolveParentRefId(DataTransferObject $dto) : int
+    public function resolveParentRefId(DataTransferObject $dto): int
     {
         if (!$dto instanceof GroupDTO) {
             throw new \InvalidArgumentException();

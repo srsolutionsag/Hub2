@@ -12,8 +12,4 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class SessionMembershipOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var ARSessionMembershipOrigin
-     */
-    protected $origin;
 }

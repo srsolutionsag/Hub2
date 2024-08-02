@@ -18,30 +18,23 @@ use srag\Plugins\Hub2\Object\LanguageCheck;
  */
 class UserDTO extends DataTransferObject implements IUserDTO
 {
-    private const SQL_DATE_FORMAT = "Y-m-d H:i:s";
-
     use MetadataAwareDataTransferObject;
     use MappingStrategyAwareDataTransferObject;
     use LanguageCheck;
+    private const SQL_DATE_FORMAT = "Y-m-d H:i:s";
 
     public const AUTH_MODE_LDAP_2 = 'ldap_2';
     public const AUTH_MODE_LDAP_3 = 'ldap_3';
     public const AUTH_MODE_LDAP_4 = 'ldap_4';
     public const AUTH_MODE_LDAP_5 = 'ldap_5';
-    /**
-     * @var array
-     */
-    private static $genders
+    private static array $genders
         = [
             self::GENDER_MALE,
             self::GENDER_FEMALE,
             self::GENDER_NONE,
             self::GENDER_NEUTRAL,
         ];
-    /**
-     * @var array
-     */
-    private static $auth_modes
+    private static array $auth_modes
         = [
             self::AUTH_MODE_ILIAS,
             self::AUTH_MODE_SHIB,
@@ -187,7 +180,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $passwd
      * @return UserDTO
      */
-    public function setPasswd($passwd)
+    public function setPasswd($passwd): self
     {
         $this->passwd = $passwd;
 
@@ -206,7 +199,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $firstname
      * @return UserDTO
      */
-    public function setFirstname($firstname)
+    public function setFirstname($firstname): self
     {
         $this->firstname = $firstname;
 
@@ -225,7 +218,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $lastname
      * @return UserDTO
      */
-    public function setLastname($lastname)
+    public function setLastname($lastname): self
     {
         $this->lastname = $lastname;
 
@@ -244,7 +237,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $login
      * @return UserDTO
      */
-    public function setLogin($login)
+    public function setLogin($login): self
     {
         $this->login = $login;
 
@@ -263,7 +256,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $title
      * @return UserDTO
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -282,7 +275,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $gender
      * @return UserDTO
      */
-    public function setGender($gender)
+    public function setGender($gender): self
     {
         if (!in_array($gender, self::$genders, true)) {
             throw new InvalidArgumentException("'$gender' is not a valid gender");
@@ -304,7 +297,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $email
      * @return UserDTO
      */
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         $this->email = $email;
 
@@ -323,7 +316,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $secondEmail
      * @return UserDTO
      */
-    public function setSecondEmail($secondEmail)
+    public function setSecondEmail($secondEmail): self
     {
         $this->secondEmail = $secondEmail;
         return $this;
@@ -341,7 +334,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $emailPassword
      * @return UserDTO
      */
-    public function setEmailPassword($emailPassword)
+    public function setEmailPassword($emailPassword): self
     {
         $this->emailPassword = $emailPassword;
 
@@ -360,7 +353,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $institution
      * @return UserDTO
      */
-    public function setInstitution($institution)
+    public function setInstitution($institution): self
     {
         $this->institution = $institution;
 
@@ -379,7 +372,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $street
      * @return UserDTO
      */
-    public function setStreet($street)
+    public function setStreet($street): self
     {
         $this->street = $street;
 
@@ -398,7 +391,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $city
      * @return UserDTO
      */
-    public function setCity($city)
+    public function setCity($city): self
     {
         $this->city = $city;
 
@@ -417,7 +410,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param int $zipcode
      * @return UserDTO
      */
-    public function setZipcode($zipcode)
+    public function setZipcode($zipcode): self
     {
         $this->zipcode = $zipcode;
 
@@ -436,7 +429,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $country
      * @return UserDTO
      */
-    public function setCountry($country)
+    public function setCountry($country): self
     {
         $this->country = $country;
 
@@ -455,7 +448,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $selectedCountry
      * @return UserDTO
      */
-    public function setSelectedCountry($selectedCountry)
+    public function setSelectedCountry($selectedCountry): self
     {
         $this->selectedCountry = $selectedCountry;
 
@@ -474,7 +467,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $phoneOffice
      * @return UserDTO
      */
-    public function setPhoneOffice($phoneOffice)
+    public function setPhoneOffice($phoneOffice): self
     {
         $this->phoneOffice = $phoneOffice;
 
@@ -493,7 +486,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $department
      * @return UserDTO
      */
-    public function setDepartment($department)
+    public function setDepartment($department): self
     {
         $this->department = $department;
 
@@ -512,7 +505,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $phoneHome
      * @return UserDTO
      */
-    public function setPhoneHome($phoneHome)
+    public function setPhoneHome($phoneHome): self
     {
         $this->phoneHome = $phoneHome;
 
@@ -531,7 +524,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $phoneMobile
      * @return UserDTO
      */
-    public function setPhoneMobile($phoneMobile)
+    public function setPhoneMobile($phoneMobile): self
     {
         $this->phoneMobile = $phoneMobile;
 
@@ -550,7 +543,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $fax
      * @return UserDTO
      */
-    public function setFax($fax)
+    public function setFax($fax): self
     {
         $this->fax = $fax;
 
@@ -569,7 +562,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param int $timeLimitOwner
      * @return UserDTO
      */
-    public function setTimeLimitOwner($timeLimitOwner)
+    public function setTimeLimitOwner($timeLimitOwner): self
     {
         $this->timeLimitOwner = $timeLimitOwner;
 
@@ -588,7 +581,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param bool $timeLimitUnlimited
      * @return UserDTO
      */
-    public function setTimeLimitUnlimited($timeLimitUnlimited)
+    public function setTimeLimitUnlimited($timeLimitUnlimited): self
     {
         $this->timeLimitUnlimited = $timeLimitUnlimited;
 
@@ -606,7 +599,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
     /**
      * @return UserDTO
      */
-    public function setTimeLimitFrom(DateTime $timeLimitFrom)
+    public function setTimeLimitFrom(DateTime $timeLimitFrom): self
     {
         $this->timeLimitFrom = $timeLimitFrom->format(self::SQL_DATE_FORMAT);
 
@@ -624,7 +617,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
     /**
      * @return UserDTO
      */
-    public function setTimeLimitUntil(DateTime $timeLimitUntil)
+    public function setTimeLimitUntil(DateTime $timeLimitUntil): self
     {
         $this->timeLimitUntil = $timeLimitUntil->format(self::SQL_DATE_FORMAT);
 
@@ -643,7 +636,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $matriculation
      * @return UserDTO
      */
-    public function setMatriculation($matriculation)
+    public function setMatriculation($matriculation): self
     {
         $this->matriculation = $matriculation;
 
@@ -661,7 +654,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
     /**
      * @return UserDTO
      */
-    public function setBirthday(DateTime $birthday)
+    public function setBirthday(DateTime $birthday): self
     {
         $this->birthday = $birthday->format(ActiveRecordConfig::SQL_DATE_FORMAT);
 
@@ -680,7 +673,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param array $iliasRoles
      * @return UserDTO
      */
-    public function setIliasRoles($iliasRoles)
+    public function setIliasRoles($iliasRoles): self
     {
         $this->iliasRoles = $iliasRoles;
 
@@ -698,7 +691,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
     /**
      * @param string $authMode
      */
-    public function setAuthMode($authMode)
+    public function setAuthMode($authMode): self
     {
         if (!in_array($authMode, self::$auth_modes)) {
             throw new InvalidArgumentException("'$authMode' is not a valid account type");
@@ -720,7 +713,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @param string $externalAccount
      * @return UserDTO $this
      */
-    public function setExternalAccount($externalAccount)
+    public function setExternalAccount($externalAccount): self
     {
         $this->externalAccount = $externalAccount;
 
@@ -741,7 +734,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
      * @throws LanguageCodeException if the passed $language is not a valid
      *                  ILIAS language code
      */
-    public function setLanguage(string $language)
+    public function setLanguage(string $language): self
     {
         self::checkLanguageCode($language);
 
@@ -750,7 +743,7 @@ class UserDTO extends DataTransferObject implements IUserDTO
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return implode(
             ', ',

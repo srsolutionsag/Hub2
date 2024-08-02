@@ -2,6 +2,11 @@
 
 namespace srag\Plugins\Hub2\FileDrop;
 
+use ILIAS\FileUpload\DTO\UploadResult;
+use ILIAS\FileUpload\FileUpload;
+use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
+use ILIAS\FileUpload\Exception\IllegalStateException;
+use ILIAS\FileUpload\DTO\ProcessingStatus;
 use ilContext;
 use ilInitialisation;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
@@ -30,21 +35,15 @@ class Handler
     public const PHP_AUTH_PW = 'PHP_AUTH_PW';
     public const FD_CONTAINER = 'fd_container';
     /**
-     * @var \ILIAS\FileUpload\DTO\UploadResult[]
+     * @var UploadResult[]
      */
     private $uploaded_files = [];
     /**
-     * @var \ILIAS\FileUpload\FileUpload
+     * @var FileUpload
      */
     private $upload;
-    /**
-     * @var ResourceStorage\ResourceStorage
-     */
-    private $storage;
-    /**
-     * @var Token
-     */
-    protected $token;
+    private ResourceStorage $storage;
+    protected Token $token;
     /**
      * @var string
      */
@@ -68,7 +67,6 @@ class Handler
         global $DIC;
         $this->http = $DIC->http();
         $this->upload = $DIC->upload();
-        $this->file_drop_container = '';
         $f = new Factory();
         $this->storage = $f->storage();
         $this->token = new Token();
@@ -87,14 +85,14 @@ class Handler
         $origin_id = (int) ltrim($file_drop_container, 'o');
         $repo = new OriginFactory();
         $origin = $repo->getById($origin_id);
-        if (!$origin instanceof \srag\Plugins\Hub2\Origin\IOrigin) {
+        if (!$origin instanceof IOrigin) {
             throw new NotFound("FileDrop '$file_drop_container' not Found");
         }
         return $origin;
     }
 
     /**
-     * @throws \ILIAS\FileUpload\Exception\IllegalStateException
+     * @throws IllegalStateException
      */
     protected function processFiles(): void
     {
@@ -118,7 +116,7 @@ class Handler
                 $result = end($this->uploaded_files);
 
                 if (null === $result || $result->getStatus()->getCode(
-                ) !== \ILIAS\FileUpload\DTO\ProcessingStatus::OK) {
+                ) !== ProcessingStatus::OK) {
                     $message = $result === null ? 'no file uploaded' : $result->getStatus()->getMessage();
                     throw new InternalError('Upload failed: ' . $message);
                 }
@@ -207,7 +205,7 @@ class Handler
     /**
      * @throws ShortlinkException
      */
-    public function process()
+    public function process(): void
     {
         try {
             global $DIC;

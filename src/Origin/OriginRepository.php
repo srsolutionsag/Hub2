@@ -24,9 +24,7 @@ class OriginRepository implements IOriginRepository
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-    /**
-     * @inheritdoc
-     */
+
     public function all(): array
     {
         return array_merge(
@@ -44,103 +42,78 @@ class OriginRepository implements IOriginRepository
         );
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function allActive(): array
     {
         return array_filter(
             $this->all(),
-            function ($origin): bool {
+            fn ($origin): bool =>
                 /** @var IOrigin $origin */
-                return $origin->isActive();
-            }
+                $origin->isActive()
         );
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function users(): array
     {
         return ARUserOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_USER])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function courses(): array
     {
         return ARCourseOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_COURSE])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function categories(): array
     {
         return ARCategoryOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_CATEGORY])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function courseMemberships(): array
     {
         return ARCourseMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function groups(): array
     {
         return ARGroupOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_GROUP])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function groupMemberships(): array
     {
         return ARGroupMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function sessions(): array
     {
         return ARSessionOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_SESSION])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function sessionsMemberships(): array
     {
         return ARSessionMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function orgUnits(): array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function orgUnitMemberships(): array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function competenceManagements(): array
     {
         return ARCompetenceManagementOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_COMPETENCE_MANAGEMENT])->get(

@@ -14,7 +14,6 @@ use srag\DIC\Hub2\DICTrait;
  */
 class Config extends ActiveRecord
 {
-
     /**
      * @var string
      */
@@ -81,7 +80,7 @@ class Config extends ActiveRecord
         parent::__construct($primary_name_value, $connector);
     }
 
-    public static function getTableName() : string
+    public static function getTableName(): string
     {
         if (empty(self::$table_name)) {
             throw new LogicException("table name is empty - please call repository earlier!");
@@ -90,7 +89,7 @@ class Config extends ActiveRecord
         return self::$table_name;
     }
 
-    public static function setTableName(string $table_name) : void
+    public static function setTableName(string $table_name): void
     {
         self::$table_name = $table_name;
     }
@@ -100,25 +99,23 @@ class Config extends ActiveRecord
      *
      * @deprecated
      */
-    public static function returnDbTableName() : string
+    public static function returnDbTableName(): string
     {
         return self::getTableName();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getConnectorContainerName() : string
+
+    public function getConnectorContainerName(): string
     {
         return self::getTableName();
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name) : void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -134,7 +131,7 @@ class Config extends ActiveRecord
     /**
      * @param mixed $value
      */
-    public function setValue($value) : void
+    public function setValue($value): void
     {
         $this->value = $value;
     }

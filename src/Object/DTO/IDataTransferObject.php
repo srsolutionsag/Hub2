@@ -45,7 +45,7 @@ interface IDataTransferObject
      */
     public function setData(array $data);
 
-    public function shouldDeleted() : bool;
+    public function shouldDeleted(): bool;
 
     /**
      * @return static
@@ -55,7 +55,7 @@ interface IDataTransferObject
     /**
      * Get the additional data stored on the dto persistently
      */
-    public function getAdditionalData() : Serializable;
+    public function getAdditionalData(): Serializable;
 
     /**
      * Add some additional data to store persistently in the DB along with the data of the
@@ -64,8 +64,6 @@ interface IDataTransferObject
      */
     public function withAdditionalData(Serializable $additionalData);
 
-    /**
-     * @inheritdoc
-     */
-    public function computeHashCode() : string;
+
+    public function computeHashCode(): string;
 }

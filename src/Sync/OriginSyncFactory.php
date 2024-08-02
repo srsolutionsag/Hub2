@@ -21,10 +21,7 @@ use srag\Plugins\Hub2\Sync\Processor\SyncProcessorFactory;
 class OriginSyncFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var IOrigin
-     */
-    protected $origin;
+    protected IOrigin $origin;
 
     public function __construct(IOrigin $origin)
     {
@@ -34,7 +31,7 @@ class OriginSyncFactory
     /**
      * @throws HubException
      */
-    public function instance() : OriginSync
+    public function instance(): OriginSync
     {
         $statusTransition = new ObjectStatusTransition($this->origin->config());
 
@@ -49,7 +46,7 @@ class OriginSyncFactory
     /**
      * @throws HubException
      */
-    public function initImplementation(OriginSync $originSync) : void
+    public function initImplementation(OriginSync $originSync): void
     {
         $implementationFactory = new OriginImplementationFactory($this->origin);
 

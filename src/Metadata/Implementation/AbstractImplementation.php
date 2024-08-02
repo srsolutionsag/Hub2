@@ -13,14 +13,8 @@ use srag\Plugins\Hub2\Metadata\IMetadata;
 abstract class AbstractImplementation implements IMetadataImplementation
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var int
-     */
-    private $ilias_id;
-    /**
-     * @var IMetadata
-     */
-    private $metadata;
+    private int $ilias_id;
+    private IMetadata $metadata;
 
     /**
      * UDF constructor
@@ -31,23 +25,17 @@ abstract class AbstractImplementation implements IMetadataImplementation
         $this->ilias_id = $ilias_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     abstract public function write();
 
-    /**
-     * @inheritdoc
-     */
-    public function getMetadata() : IMetadata
+
+    public function getMetadata(): IMetadata
     {
         return $this->metadata;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIliasId() : int
+
+    public function getIliasId(): int
     {
         return $this->ilias_id;
     }

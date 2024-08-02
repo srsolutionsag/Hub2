@@ -24,10 +24,7 @@ final class Factory implements IFactory
      * @var IFactory
      */
     protected static $instance;
-    /**
-     * @var IRepository
-     */
-    protected $log_repo;
+    protected IRepository $log_repo;
 
     public static function getInstance(): IFactory
     {
@@ -51,31 +48,27 @@ final class Factory implements IFactory
         $this->log_repo = LogRepository::getInstance();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function log(): ILog
     {
         return (new Log())->withAdditionalData(clone $this->log_repo->getGlobalAdditionalData());
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog
     {
         $log = $this->log()->withOriginId(
-            (int)$origin->getId()
+            (int) $origin->getId()
         )->withOriginObjectType($origin->getObjectType());
 
-        if ($object instanceof \srag\Plugins\Hub2\Object\IObject) {
+        if ($object instanceof IObject) {
             $log->withObjectExtId($object->getExtId())
                 ->withObjectIliasId((int) $object->getILIASId())
                 ->withStatus($object->getStatus())
-                ->withAdditionalData((object) ($object->getData()['additionalData']?? new stdClass()));
+                ->withAdditionalData((object) ($object->getData()['additionalData'] ?? new stdClass()));
         }
 
-        if ($dto instanceof \srag\Plugins\Hub2\Object\DTO\IDataTransferObject) {
+        if ($dto instanceof IDataTransferObject) {
             if (empty($log->getObjectExtId())) {
                 $log->withObjectExtId($dto->getExtId());
             }
@@ -96,9 +89,7 @@ final class Factory implements IFactory
         return $log;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function exceptionLog(
         Throwable $ex,
         IOrigin $origin = null,
@@ -116,7 +107,7 @@ final class Factory implements IFactory
         };
         $stack = array_filter($ex->getTrace(), $filter);
 
-        $closure = static function (array $stack) {
+        $closure = static function (array $stack): string {
             // $file = str_replace(getcwd(), "", $stack["file"]);
             $file = basename($stack["file"]);
             return "$file({$stack["line"] })->{$stack["function"]}()";
@@ -128,9 +119,7 @@ final class Factory implements IFactory
         return $log;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function fromDB(stdClass $data): ILog
     {
         return $this->log()->withLogId($data->log_id)->withTitle($data->title)->withMessage($data->message)

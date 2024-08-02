@@ -62,26 +62,20 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
      */
     protected $ext_id = "";
 
-    /**
-     * @inheritdoc
-     */
+
     public function __construct(string $ext_id)
     {
         parent::__construct($ext_id);
         $this->ext_id = $ext_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setType(int $type): ICompetenceManagementDTO
     {
         $this->type = $type;
@@ -89,17 +83,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setTitle(string $title): ICompetenceManagementDTO
     {
         $this->title = $title;
@@ -107,17 +97,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getDescription(): string
     {
         return $this->title;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setDescription(string $description): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
@@ -129,17 +115,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getParentId(): string
     {
         return $this->parent_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setParentId(string $parent_id): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
@@ -151,17 +133,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getParentIdType(): int
     {
         return $this->parent_id_type;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setParentIdType(int $parent_id__type): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
@@ -173,17 +151,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setStatus(int $status): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
@@ -195,17 +169,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getSelfEvaluation(): bool
     {
         return $this->self_evaluation;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setSelfEvaluation(bool $self_evaluation): ICompetenceManagementDTO
     {
         if ($this->getType() === self::TYPE_PROFILE) {
@@ -217,9 +187,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function addSkillLevel(ISkillLevel $skill_level): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_COMPETENCE) {
@@ -231,17 +199,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getSkillLevels(): array
     {
         return $this->skill_levels;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setSkillLevels(array $skill_levels): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_COMPETENCE) {
@@ -253,9 +217,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function addProfileLevel(IProfileLevel $profile_level): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
@@ -267,17 +229,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getProfileLevels(): array
     {
         return $this->profile_levels;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setProfileLevels(array $profile_levels): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
@@ -289,9 +247,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function addProfileAssignedUser(int $user_id): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
@@ -303,17 +259,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getProfileAssignedUsers(): array
     {
         return $this->profile_assigned_users;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setProfileAssignedUsers(array $user_ids): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
@@ -325,17 +277,13 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getExtId(): string
     {
         return $this->ext_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setExtId(string $ext_id): ICompetenceManagementDTO
     {
         $this->ext_id = $ext_id;
@@ -343,33 +291,32 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function sleepValue(array &$data, string $key)
     {
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
                 $data[$key] = json_decode(
-                    json_encode($this->{$key}, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR
+                    json_encode($this->{$key}, JSON_THROW_ON_ERROR),
+                    true,
+                    512,
+                    JSON_THROW_ON_ERROR
                 );
 
-            // no break
+                // no break
             default:
                 parent::sleepValue($data, $key);
         }
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function wakeUpValue(array $data, string $key)
     {
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
                 return array_map(
-                    function ($skill_level): ISkillLevel {
+                    function (array $skill_level): ISkillLevel {
                         $key = null;
                         if ($skill_level instanceof ISkillLevel) {
                             $this->{$key} = $skill_level;
@@ -386,7 +333,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
 
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
                 return array_map(
-                    function ($profile_level): IProfileLevel {
+                    function (array $profile_level): IProfileLevel {
                         $key = null;
                         if ($profile_level instanceof IProfileLevel) {
                             $this->{$key} = $profile_level;

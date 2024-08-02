@@ -91,7 +91,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Setup default mocks
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->initOrigin(
             new CourseMembershipProperties(['update_dto_role' => true]),
@@ -103,12 +103,12 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
         $this->initDTO();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
-    public function test_create_course_membership()
+    public function test_create_course_membership(): void
     {
         $processor = new CourseMembershipSyncProcessor(
             $this->origin,
@@ -132,7 +132,7 @@ class CourseMembershipSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    public function test_update_course_membership()
+    public function test_update_course_membership(): void
     {
         $processor = new CourseMembershipSyncProcessor(
             $this->origin,

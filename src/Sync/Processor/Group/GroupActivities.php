@@ -24,10 +24,8 @@ class GroupActivities implements IGroupActivities
         $this->db = $db;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function hasActivities(ilObjGroup $ilObjGroup)
+
+    public function hasActivities(ilObjGroup $ilObjGroup): bool
     {
         $sql = "SELECT 
 				    wre.*, dat.*, rbac_ua.*

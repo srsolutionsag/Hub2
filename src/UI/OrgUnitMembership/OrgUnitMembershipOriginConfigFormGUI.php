@@ -15,14 +15,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class OrgUnitMembershipOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var AROrgUnitMembershipOrigin
-     */
-    protected $origin;
-
-    /**
-     * @inheritdoc
-     */
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

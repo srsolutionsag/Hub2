@@ -23,17 +23,17 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
      */
     protected $csv = [];
 
-    protected function getEnclosure() : string
+    protected function getEnclosure(): string
     {
         return '"';
     }
 
-    protected function getSeparator() : string
+    protected function getSeparator(): string
     {
         return ";";
     }
 
-    public function parseData() : int
+    public function parseData(): int
     {
         $this->csv_parser = new Csv(
             $this->file_path,
@@ -52,14 +52,14 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
         return count($this->csv);
     }
 
-    abstract protected function getMandatoryColumns() : array;
+    abstract protected function getMandatoryColumns(): array;
 
-    protected function getColumnMapping() : array
+    protected function getColumnMapping(): array
     {
         return [];
     }
 
-    abstract protected function getUniqueField() : string;
+    abstract protected function getUniqueField(): string;
 
     /**
      * @return IDataTransferObject[]
@@ -74,61 +74,59 @@ abstract class AbstractCSVOriginImplementation extends AbstractOriginImplementat
         return $this->buildObjectsFromCSV($this->csv);
     }
 
-    protected function getFilter() : \Closure
+    protected function getFilter(): \Closure
     {
-        return static function (array $item) : bool {
-            return true;
-        };
+        return static fn (array $item): bool => true;
     }
 
-    protected function getFilters() : array
+    protected function getFilters(): array
     {
         return [
             $this->getFilter()
         ];
     }
 
-    public function handleLog(ILog $log) : void
+    public function handleLog(ILog $log): void
     {
         // TODO: Implement handleLog() method.
     }
 
-    public function beforeCreateILIASObject(HookObject $hook) : void
+    public function beforeCreateILIASObject(HookObject $hook): void
     {
         // TODO: Implement beforeCreateILIASObject() method.
     }
 
-    public function afterCreateILIASObject(HookObject $hook) : void
+    public function afterCreateILIASObject(HookObject $hook): void
     {
         // TODO: Implement afterCreateILIASObject() method.
     }
 
-    public function beforeUpdateILIASObject(HookObject $hook) : void
+    public function beforeUpdateILIASObject(HookObject $hook): void
     {
         // TODO: Implement beforeUpdateILIASObject() method.
     }
 
-    public function afterUpdateILIASObject(HookObject $hook) : void
+    public function afterUpdateILIASObject(HookObject $hook): void
     {
         // TODO: Implement afterUpdateILIASObject() method.
     }
 
-    public function beforeDeleteILIASObject(HookObject $hook) : void
+    public function beforeDeleteILIASObject(HookObject $hook): void
     {
         // TODO: Implement beforeDeleteILIASObject() method.
     }
 
-    public function afterDeleteILIASObject(HookObject $hook) : void
+    public function afterDeleteILIASObject(HookObject $hook): void
     {
         // TODO: Implement afterDeleteILIASObject() method.
     }
 
-    public function beforeSync() : void
+    public function beforeSync(): void
     {
         // TODO: Implement beforeSync() method.
     }
 
-    public function afterSync() : void
+    public function afterSync(): void
     {
         // TODO: Implement afterSync() method.
     }

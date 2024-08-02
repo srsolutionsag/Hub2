@@ -29,10 +29,7 @@ abstract class ObjectRepository implements IObjectRepository
      * @var \ilDBInterface
      */
     protected $db;
-    /**
-     * @var IOrigin
-     */
-    protected $origin;
+    protected IOrigin $origin;
     /**
      * @var array
      */
@@ -48,10 +45,8 @@ abstract class ObjectRepository implements IObjectRepository
         $this->db = $DIC->database();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function all() : array
+
+    public function all(): array
     {
         $class = $this->getClass();
 
@@ -59,10 +54,8 @@ abstract class ObjectRepository implements IObjectRepository
         return $class::where(['origin_id' => $this->origin->getId()])->get();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getByStatus(int $status) : array
+
+    public function getByStatus(int $status): array
     {
         $class = $this->getClass();
 
@@ -75,10 +68,8 @@ abstract class ObjectRepository implements IObjectRepository
         )->get();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids) : array
+
+    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array
     {
         $existing_ext_id_query = null;
         $glue = self::GLUE;
@@ -117,10 +108,8 @@ abstract class ObjectRepository implements IObjectRepository
         return [];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getToDelete(array $ext_ids) : array
+
+    public function getToDelete(array $ext_ids): array
     {
         $class = $this->getClass();
 
@@ -136,23 +125,20 @@ abstract class ObjectRepository implements IObjectRepository
                 ],
                 ['origin_id' => '=', 'status' => 'IN', 'ext_id' => 'NOT IN']
             )->get();
-        } else {
-            /** @var ActiveRecord $class */
-            return $class::where(
-                [
-                    'origin_id' => $this->origin->getId(),
-                    // We only can transmit from final states CREATED and UPDATED to TO_DELETE
-                    // E.g. not from OUTDATED or IGNORED
-                    'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
-                ],
-                ['origin_id' => '=', 'status' => 'IN']
-            )->get();
         }
+        /** @var ActiveRecord $class */
+        return $class::where(
+            [
+                'origin_id' => $this->origin->getId(),
+                // We only can transmit from final states CREATED and UPDATED to TO_DELETE
+                // E.g. not from OUTDATED or IGNORED
+                'status' => [IObject::STATUS_CREATED, IObject::STATUS_UPDATED, IObject::STATUS_IGNORED],
+            ],
+            ['origin_id' => '=', 'status' => 'IN']
+        )->get();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function count(): int
     {
         // we moved the implementation away from AR since this was a memory killer
@@ -160,8 +146,9 @@ abstract class ObjectRepository implements IObjectRepository
         $class = $this->getClass();
         $table_name = $class::returnDbTableName();
         $q = "SELECT COUNT(*) as count FROM $table_name WHERE origin_id = " . $this->db->quote(
-                $this->origin->getId(), 'integer'
-            );
+            $this->origin->getId(),
+            'integer'
+        );
         $result = $this->db->query($q);
 
         return (int) $this->db->fetchObject($result)->count;

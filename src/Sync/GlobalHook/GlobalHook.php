@@ -18,7 +18,7 @@ final class GlobalHook implements IGlobalHook
      */
     protected static $instance;
 
-    public static function getInstance() : self
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -69,10 +69,8 @@ final class GlobalHook implements IGlobalHook
         return $global_hook;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function beforeSync(array $active_orgins) : bool
+
+    public function beforeSync(array $active_orgins): bool
     {
         if ($this->global_hook) {
             return $this->global_hook->beforeSync($active_orgins);
@@ -81,10 +79,8 @@ final class GlobalHook implements IGlobalHook
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function afterSync(array $active_orgins) : bool
+
+    public function afterSync(array $active_orgins): bool
     {
         if ($this->global_hook) {
             return $this->global_hook->afterSync($active_orgins);
@@ -93,10 +89,8 @@ final class GlobalHook implements IGlobalHook
         return true;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function handleLog(ILog $log) : void
+
+    public function handleLog(ILog $log): void
     {
         if ($this->global_hook) {
             $this->global_hook->handleLog($log);

@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\OrgUnit;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use ilObjectFactory;
 use ilObjOrgUnit;
 use ilOrgUnitType;
@@ -30,11 +32,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     /**
      * @var IOrgUnitProperties
      */
-    protected $props;
+    protected IOriginProperties $props;
     /**
      * @var IOrgUnitOriginConfig
      */
-    protected $config;
+    protected IOriginConfig $config;
     /**
      * @var array
      */
@@ -68,12 +70,12 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         $this->config = $origin->config();
     }
 
-    public static function getProperties() : array
+    public static function getProperties(): array
     {
         return self::$properties;
     }
 
-    protected function getParentRefIdFallback() : int
+    protected function getParentRefIdFallback(): int
     {
         static $ref_id_fallback;
         if (!isset($ref_id_fallback)) {
@@ -90,11 +92,11 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @param IDataTransferObjectSort[] $sort_dtos
      * @throws HubException
      */
-    public function handleSort(array $sort_dtos) : bool
+    public function handleSort(array $sort_dtos): bool
     {
         $sort_dtos = array_filter(
             $sort_dtos,
-            function (IDataTransferObjectSort $sort_dto) : bool {
+            function (IDataTransferObjectSort $sort_dto): bool {
                 /**
                  * @var IOrgUnitDTO $dto
                  */
@@ -108,7 +110,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
 
         $dtos = array_reduce(
             $sort_dtos,
-            function (array $dtos, IDataTransferObjectSort $sort_dto) : array {
+            function (array $dtos, IDataTransferObjectSort $sort_dto): array {
                 $dtos[$sort_dto->getDtoObject()->getExtId()] = $sort_dto->getDtoObject();
 
                 return $dtos;
@@ -139,11 +141,13 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     /**
      * @throws HubException
      */
-    private function isRootId(IOrgUnitDTO $dto) : bool
+    private function isRootId(IOrgUnitDTO $dto): bool
     {
         //$parent_id = $this->getParentId($dto);
-
-        return (empty($dto->getParentId()));
+        if ($dto->getParentId() === '') {
+            return true;
+        }
+        return $dto->getParentId() === '0';
         //	|| ($parent_id === $this->config->getRefIdIfNoParentId()
         //	|| $parent_id === ilObjOrgUnit::getRootOrgRefId()));
     }
@@ -238,7 +242,7 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     /**
      * @return ilObjOrgUnit|null
      */
-    protected function getOrgUnitObject(int $obj_id)
+    protected function getOrgUnitObject(int $obj_id): ?\ilObjOrgUnit
     {
         $ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));
         if (empty($ref_id)) {
@@ -246,15 +250,16 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         }
 
         $orgUnit = ilObjectFactory::getInstanceByRefId($ref_id);
-
-        if (!empty($orgUnit) && $orgUnit instanceof ilObjOrgUnit) {
-            return $orgUnit;
-        } else {
+        if (!$orgUnit instanceof \ilObject) {
             return null;
         }
+        if (!$orgUnit instanceof ilObjOrgUnit) {
+            return null;
+        }
+        return $orgUnit;
     }
 
-    protected function getOrgUnitTypeId(IOrgUnitDTO $dto) : int
+    protected function getOrgUnitTypeId(IOrgUnitDTO $dto): int
     {
         $orgu_type_id = 0;
 
@@ -279,14 +284,14 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
     /**
      * @throws HubException
      */
-    protected function getParentId(IOrgUnitDTO $dto) : int
+    protected function getParentId(IOrgUnitDTO $dto): int
     {
         $parent_id = 0;
         $ref_id_fallback = $this->getParentRefIdFallback();
         switch ($dto->getParentIdType()) {
             case IOrgUnitDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID:
                 $ext_id = $dto->getParentId();
-                if (!empty($ext_id)) {
+                if ($ext_id !== '' && $ext_id !== '0') {
                     $object_factory = new ObjectFactory($this->origin);
 
                     $parent_org_unit = $object_factory->orgUnit($ext_id);
@@ -308,8 +313,8 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
                 break;
         }
 
-        if (empty($parent_id)) {
-            $parent_id = $ref_id_fallback;
+        if ($parent_id === 0) {
+            return $ref_id_fallback;
         }
 
         return $parent_id;

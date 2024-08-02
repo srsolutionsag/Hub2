@@ -16,9 +16,7 @@ trait MappingStrategyAwareDataTransferObject
      */
     private $_mapping_strategy;
 
-    /**
-     * @inheritdoc
-     */
+
     public function getMappingStrategy(): IMappingStrategy
     {
         return $this->_mapping_strategy ?: new None();

@@ -19,14 +19,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var ARCategoryOrigin
-     */
-    protected $origin;
-
-    /**
-     * @inheritdoc
-     */
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
@@ -48,9 +40,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($te);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesNew()
     {
         parent::addPropertiesNew();
@@ -70,9 +60,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($cb);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
@@ -85,9 +73,7 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($cb);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

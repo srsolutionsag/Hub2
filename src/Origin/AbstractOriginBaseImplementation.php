@@ -24,16 +24,16 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
 abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    private \srag\Plugins\Hub2\MappingStrategy\IMappingStrategyFactory $mapping_strategy_factory;
-    private \srag\Plugins\Hub2\Taxonomy\ITaxonomyFactory $taxonomyFactory;
-    private \srag\Plugins\Hub2\Metadata\IMetadataFactory $metadataFactory;
-    private \srag\Plugins\Hub2\Origin\Config\IOriginConfig $originConfig;
-    private \srag\Plugins\Hub2\Object\DTO\IDataTransferObjectFactory $factory;
+    private IMappingStrategyFactory $mapping_strategy_factory;
+    private ITaxonomyFactory $taxonomyFactory;
+    private IMetadataFactory $metadataFactory;
+    private IOriginConfig $originConfig;
+    private IDataTransferObjectFactory $factory;
     /**
      * @var array
      */
     protected $data = [];
-    protected \srag\Plugins\Hub2\Origin\IOrigin $origin;
+    protected IOrigin $origin;
 
     /**
      * AbstractOriginImplementation constructor
@@ -109,17 +109,13 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 
     // HOOKS
 
-    /**
-     * @inheritdoc
-     */
+
     public function overrideStatus(HookObject $hook): void
     {
         // TODO: Implement overrideStatus() method.
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getAdHocParentScopesAsExtIds(): array
     {
         return [];

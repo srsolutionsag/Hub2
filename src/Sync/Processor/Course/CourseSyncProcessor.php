@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use ilCalendarCategory;
 use ilContainer;
 use ilContainerSortingSettings;
@@ -48,15 +50,12 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     /**
      * @var CourseProperties
      */
-    protected $props;
+    protected IOriginProperties $props;
     /**
      * @var CourseOriginConfig
      */
-    protected $config;
-    /**
-     * @var ICourseActivities
-     */
-    protected $courseActivities;
+    protected IOriginConfig $config;
+    protected ICourseActivities $courseActivities;
     /**
      * @var array
      */
@@ -82,10 +81,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             'activationEnd',
             'targetGroup',
         ];
-    /**
-     * @var CourseParentResolver
-     */
-    protected $parent_resolver;
+    protected CourseParentResolver $parent_resolver;
     /**
      * @var \ilTree
      */
@@ -173,12 +169,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         foreach (self::getProperties() as $property) {
             $setter = "set" . ucfirst($property);
             $getter = "get" . ucfirst($property);
-            if ($dto->$getter() !== null && $setter !== "setActivationType") {
-                if ($property === "activationStart" || $property === "activationEnd") {
-                    $ilObjCourse->$setter($dto->$getter() !== null ? $dto->$getter()->get(IL_CAL_UNIX) : null);
-                } else {
-                    $ilObjCourse->$setter($dto->$getter());
-                }
+            if ($dto->$getter() === null) {
+                continue;
+            }
+            if ($setter === "setActivationType") {
+                continue;
+            }
+            if ($property === "activationStart" || $property === "activationEnd") {
+                $ilObjCourse->$setter($dto->$getter() !== null ? $dto->$getter()->get(IL_CAL_UNIX) : null);
+            } else {
+                $ilObjCourse->$setter($dto->$getter());
             }
         }
 
@@ -237,7 +237,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param $source_id
      * @return array<int|string, array{type: int}>
      */
-    protected function getCloneOptions($source_id): array
+    protected function getCloneOptions(int $source_id): array
     {
         $options = [];
         foreach ($this->tree->getSubTree($root = $this->tree->getNodeData($source_id)) as $node) {
@@ -384,12 +384,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             }
             $setter = "set" . ucfirst($property);
             $getter = "get" . ucfirst($property);
-            if ($dto->$getter() !== null && $setter !== "setActivationType") {
-                if ($property === "activationStart" || $property === "activationEnd") {
-                    $ilObjCourse->$setter($dto->$getter() !== null ? $dto->$getter()->get(IL_CAL_UNIX) : null);
-                } else {
-                    $ilObjCourse->$setter($dto->$getter());
-                }
+            if ($dto->$getter() === null) {
+                continue;
+            }
+            if ($setter === "setActivationType") {
+                continue;
+            }
+            if ($property === "activationStart" || $property === "activationEnd") {
+                $ilObjCourse->$setter($dto->$getter() !== null ? $dto->$getter()->get(IL_CAL_UNIX) : null);
+            } else {
+                $ilObjCourse->$setter($dto->$getter());
             }
         }
         $courseStart = $this->props->updateDTOProperty("courseStart");
@@ -454,7 +458,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
     protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto)
     {
-        if (!empty($dto->getAppointementsColor())) {
+        if ($dto->getAppointementsColor() !== '' && $dto->getAppointementsColor() !== '0') {
             $this->obj_data_cache->deleteCachedEntry($ilObjCourse->getId());
             /**
              * @var $cal_cat ilCalendarCategory
@@ -531,9 +535,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if ($object->getFirstDependenceCategory() !== null
             && $object->getSecondDependenceCategory() !== null
             && $object->getThirdDependenceCategory() !== null
-            && $object->getFourthDependenceCategory() !== null
-        ) {
-            $parentRefId = $this->buildDependenceCategory($object->getFourthDependenceCategory(), $parentRefId, 4);
+            && $object->getFourthDependenceCategory() !== null) {
+            return $this->buildDependenceCategory($object->getFourthDependenceCategory(), $parentRefId, 4);
         }
 
         return $parentRefId;
@@ -550,7 +553,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param int    $level
      * @return int
      */
-    protected function buildDependenceCategory($title, $parent_ref_id, $level)
+    protected function buildDependenceCategory(string $title, int $parent_ref_id, $level)
     {
         static $cache = [];
         // We use a cache for created dependence categories to save some SQL queries
@@ -559,9 +562,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $cache[$cacheKey];
         }
         $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
-        $matches = array_filter($categories, static function ($category) use ($title): bool {
-            return $category['title'] === $title;
-        });
+        $matches = array_filter($categories, static fn (array $category): bool => $category['title'] === $title);
         if ($matches !== []) {
             $category = array_pop($matches);
             $cache[$cacheKey] = $category['ref_id'];
@@ -595,7 +596,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param int $iliasId
      * @return ilObjCourse|null
      */
-    protected function findILIASCourse($iliasId)
+    protected function findILIASCourse($iliasId): ?\ilObjCourse
     {
         if (!ilObjCourse::_exists($iliasId, true)) {
             return null;

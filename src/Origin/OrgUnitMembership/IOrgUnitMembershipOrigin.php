@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Origin\OrgUnitMembership;
 
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 use srag\Plugins\Hub2\Origin\Config\OrgUnitMembership\IOrgUnitMembershipOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\Properties\OrgUnitMembership\IOrgUnitMembershipProperties;
@@ -16,10 +18,10 @@ interface IOrgUnitMembershipOrigin extends IOrigin
     /**
      * @return IOrgUnitMembershipOriginConfig
      */
-    public function config(): \srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+    public function config(): IOriginConfig;
 
     /**
      * @return IOrgUnitMembershipProperties
      */
-    public function properties(): \srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+    public function properties(): IOriginProperties;
 }

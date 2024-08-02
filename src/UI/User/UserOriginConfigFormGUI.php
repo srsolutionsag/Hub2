@@ -22,14 +22,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class UserOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var ARUserOrigin
-     */
-    protected $origin;
-
-    /**
-     * @inheritdoc
-     */
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
@@ -57,9 +49,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($keep_case);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesNew()
     {
         parent::addPropertiesNew();
@@ -122,9 +112,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($send_password);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
@@ -134,7 +122,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
             $this->prop(UserProperties::UPDATE_PASSWORD)
         );
         $activate->setInfo($this->plugin->txt('usr_prop_update_password_info'));
-        $activate->setChecked((bool)$this->origin->properties()->get(UserProperties::UPDATE_PASSWORD));
+        $activate->setChecked((bool) $this->origin->properties()->get(UserProperties::UPDATE_PASSWORD));
         $this->addItem($activate);
 
         $activate = new ilCheckboxInputGUI(
@@ -142,7 +130,7 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
             $this->prop(UserProperties::REACTIVATE_ACCOUNT)
         );
         $activate->setInfo($this->plugin->txt('usr_prop_reactivate_account_info'));
-        $activate->setChecked((bool)$this->origin->properties()->get(UserProperties::REACTIVATE_ACCOUNT));
+        $activate->setChecked((bool) $this->origin->properties()->get(UserProperties::REACTIVATE_ACCOUNT));
         $this->addItem($activate);
 
         $activate = new ilCheckboxInputGUI(
@@ -150,13 +138,11 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
             $this->prop(UserProperties::RE_SEND_PASSWORD)
         );
         $activate->setInfo($this->plugin->txt('usr_prop_resend_password_info'));
-        $activate->setChecked((bool)$this->origin->properties()->get(UserProperties::RE_SEND_PASSWORD));
+        $activate->setChecked((bool) $this->origin->properties()->get(UserProperties::RE_SEND_PASSWORD));
         $this->addItem($activate);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

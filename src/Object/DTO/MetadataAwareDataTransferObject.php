@@ -16,9 +16,7 @@ trait MetadataAwareDataTransferObject
      */
     private $_meta_data = [];
 
-    /**
-     * @inheritdoc
-     */
+
     public function addMetadata(IMetadata $IMetadata): IMetadataAwareDataTransferObject
     {
         $this->_meta_data[$IMetadata->getRecordId() . '_' . $IMetadata->getIdentifier()] = $IMetadata;

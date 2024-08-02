@@ -47,7 +47,7 @@ class OriginConfig implements IOriginConfig
 
     public function getConnectionType(): int
     {
-        return (int) ($this->get(self::CONNECTION_TYPE)??self::CONNECTION_TYPE_SERVER);
+        return (int) ($this->get(self::CONNECTION_TYPE) ?? self::CONNECTION_TYPE_SERVER);
     }
 
     public function getPath(): string
@@ -149,7 +149,7 @@ class OriginConfig implements IOriginConfig
 
         $ilias_file_ref_id = (int) $this->get(self::ILIAS_FILE_REF_ID);
 
-        if (empty($ilias_file_ref_id)) {
+        if ($ilias_file_ref_id === 0) {
             throw new ConnectionFailedException("Please select an ILIAS file to use getIliasFileRefId");
         }
 

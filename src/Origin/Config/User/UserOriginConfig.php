@@ -34,23 +34,19 @@ class UserOriginConfig extends OriginConfig implements IUserOriginConfig
     //		return intval($this->get(IUserOriginConfig::SYNC_FIELD_NONE));
     //	}
 
-    /**
-     * @inheritdoc
-     */
-    public function getILIASLoginField() : int
+
+    public function getILIASLoginField(): int
     {
         return (int) $this->get(self::LOGIN_FIELD);
     }
 
-    public function isKeepCase() : bool
+    public function isKeepCase(): bool
     {
         return (bool) $this->get(self::LOGIN_KEEP_CASE);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function getAvailableLoginFields() : array
+
+    public static function getAvailableLoginFields(): array
     {
         return [
             self::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME,

@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Jobs;
 
+use srag\Plugins\Hub2\Log\IRepository;
 use ilCronJob;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
@@ -27,26 +28,17 @@ class RunSync extends ilCronJob
 {
     public const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var \srag\Plugins\Hub2\Log\IRepository
-     */
-    protected $log_repo;
+    protected IRepository $log_repo;
     /**
      * @var IOrigin[]
      */
-    protected $origins;
+    protected array $origins;
+    protected ?IOriginSyncSummary $summary;
     /**
      * @var IOriginSyncSummary
      */
-    protected $summary;
-    /**
-     * @var IOriginSyncSummary
-     */
-    protected $force_update;
-    /**
-     * @var Notifier
-     */
-    protected $notifier;
+    protected bool $force_update;
+    protected Notifier $notifier;
 
     /**
      * RunSync constructor
@@ -118,7 +110,7 @@ class RunSync extends ilCronJob
                 $this->origins = (new OriginFactory())->getAllActive();
             }
 
-            if (!$this->summary instanceof \srag\Plugins\Hub2\Sync\Summary\IOriginSyncSummary) {
+            if (!$this->summary instanceof IOriginSyncSummary) {
                 $this->summary = (new OriginSyncSummaryFactory())->mail();
             }
 

@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\General;
 
+use srag\Plugins\Hub2\Object\General\LearningProgressSettings;
 use srag\Plugins\Hub2\Object\DTO\ILearningProgressSettingsAwareDataTransferObject;
 
 /**
@@ -9,10 +10,10 @@ use srag\Plugins\Hub2\Object\DTO\ILearningProgressSettingsAwareDataTransferObjec
  */
 trait LearningProgressSettingsSyncProcessor
 {
-    protected function handleLPSettings(ILearningProgressSettingsAwareDataTransferObject $dto, \ilObject $object) : void
+    protected function handleLPSettings(ILearningProgressSettingsAwareDataTransferObject $dto, \ilObject $object): void
     {
         $lp_settings = $dto->getLPSettings();
-        if (!$lp_settings instanceof \srag\Plugins\Hub2\Object\General\LearningProgressSettings) {
+        if (!$lp_settings instanceof LearningProgressSettings) {
             return;
         }
         $object_id = $object->getId();

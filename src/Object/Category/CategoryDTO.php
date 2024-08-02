@@ -20,10 +20,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
     use MappingStrategyAwareDataTransferObject;
     use DidacticTemplateAwareDataTransferObject;
 
-    /**
-     * @var array
-     */
-    private static $orderTypes
+    private static array $orderTypes
         = [
             self::ORDER_TYPE_TITLE,
             self::ORDER_TYPE_MANUAL,
@@ -31,35 +28,23 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
             self::ORDER_TYPE_INHERIT,
             self::ORDER_TYPE_CREATION,
         ];
-    /**
-     * @var array
-     */
-    private static $orderDirections
+    private static array $orderDirections
         = [
             self::ORDER_DIRECTION_ASC,
             self::ORDER_DIRECTION_DESC,
         ];
-    /**
-     * @var array
-     */
-    private static $newItemsPositions
+    private static array $newItemsPositions
         = [
             self::ORDER_NEW_ITEMS_POSITION_TOP,
             self::ORDER_NEW_ITEMS_POSITION_BOTTOM,
         ];
-    /**
-     * @var array
-     */
-    private static $newItemsOrderTypes
+    private static array $newItemsOrderTypes
         = [
             self::ORDER_NEW_ITEMS_BY_TITLE,
             self::ORDER_NEW_ITEMS_BY_CREATION,
             self::ORDER_NEW_ITEMS_BY_ACTIVATION,
         ];
-    /**
-     * @var array
-     */
-    private static $parentIdTypes
+    private static array $parentIdTypes
         = [
             self::PARENT_ID_TYPE_REF_ID,
             self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
@@ -121,7 +106,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param string $title
      * @return CategoryDTO
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -140,7 +125,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param string $description
      * @return CategoryDTO
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -159,7 +144,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param int $orderType
      * @return CategoryDTO
      */
-    public function setOrderType($orderType)
+    public function setOrderType($orderType): self
     {
         if (!in_array($orderType, self::$orderTypes)) {
             throw new InvalidArgumentException("Given '$orderType' is not a valid order type'");
@@ -181,7 +166,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param int $orderDirection
      * @return CategoryDTO
      */
-    public function setOrderDirection($orderDirection)
+    public function setOrderDirection($orderDirection): self
     {
         if (!in_array($orderDirection, self::$orderDirections)) {
             throw new InvalidArgumentException("Given '$orderDirection' is not a valid order direction'");
@@ -203,7 +188,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param int $newItemsPosition
      * @return CategoryDTO
      */
-    public function setNewItemsPosition($newItemsPosition)
+    public function setNewItemsPosition($newItemsPosition): self
     {
         if (!in_array($newItemsPosition, self::$newItemsPositions)) {
             throw new InvalidArgumentException("Given '$newItemsPosition' is not a valid new items position'");
@@ -225,7 +210,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param int $newItemsOrderType
      * @return CategoryDTO
      */
-    public function setNewItemsOrderType($newItemsOrderType)
+    public function setNewItemsOrderType($newItemsOrderType): self
     {
         if (!in_array($newItemsOrderType, self::$newItemsOrderTypes)) {
             throw new InvalidArgumentException("Given '$newItemsOrderType' is not a valid new items order type'");
@@ -247,7 +232,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param int $owner
      * @return CategoryDTO
      */
-    public function setOwner($owner)
+    public function setOwner($owner): self
     {
         $this->owner = $owner;
 
@@ -266,7 +251,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param int $parentId
      * @return $this
      */
-    public function setParentId($parentId)
+    public function setParentId($parentId): self
     {
         $this->parentId = $parentId;
 
@@ -285,7 +270,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param int $parentIdType
      * @return CategoryDTO
      */
-    public function setParentIdType($parentIdType)
+    public function setParentIdType($parentIdType): self
     {
         if (!in_array($parentIdType, self::$parentIdTypes)) {
             throw new InvalidArgumentException("Invalid parentIdType given '$parentIdType'");
@@ -307,7 +292,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param bool $showNews
      * @return CategoryDTO
      */
-    public function setShowNews($showNews)
+    public function setShowNews($showNews): self
     {
         $this->showNews = $showNews;
 
@@ -326,7 +311,7 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
      * @param bool $showInfoPage
      * @return CategoryDTO
      */
-    public function setShowInfoPage($showInfoPage)
+    public function setShowInfoPage($showInfoPage): self
     {
         $this->showInfoPage = $showInfoPage;
 

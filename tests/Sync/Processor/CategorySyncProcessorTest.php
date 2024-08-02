@@ -46,7 +46,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Setup default mocks
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->activities = Mockery::mock(ICategoryActivities::class);
         $this->initOrigin(new CategoryProperties(), new CategoryOriginConfig([]));
@@ -56,7 +56,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests
         $this->initDTO();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -64,7 +64,7 @@ class CategorySyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create Category
      */
-    public function test_create_category_with_default_properties()
+    public function test_create_category_with_default_properties(): void
     {
         $processor = new CategorySyncProcessor(
             $this->origin,

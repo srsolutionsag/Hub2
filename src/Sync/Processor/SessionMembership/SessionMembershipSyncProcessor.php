@@ -2,6 +2,9 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\SessionMembership;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Session\ISessionOrigin;
 use ilObject2;
 use ilObjSession;
 use ilObjUser;
@@ -29,11 +32,11 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
     /**
      * @var SessionMembershipProperties
      */
-    private $props;
+    private IOriginProperties $props;
     /**
      * @var SessionMembershipOriginConfig
      */
-    private $config;
+    private IOriginConfig $config;
     /**
      * @var array
      */
@@ -117,7 +120,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
      * @param int $ilias_id
      * @throws HubException
      */
-    protected function findILIASObject($ilias_id) : \ilObjSession
+    protected function findILIASObject($ilias_id): \ilObjSession
     {
         if (!ilObject2::_exists($ilias_id, true)) {
             throw new HubException("Session not found with ref_id {$ilias_id}");
@@ -129,7 +132,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
     /**
      * @throws HubException
      */
-    protected function buildParentRefId(SessionMembershipDTO $dto) : int
+    protected function buildParentRefId(SessionMembershipDTO $dto): int
     {
         if ($dto->getSessionIdType() == SessionMembershipDTO::PARENT_ID_TYPE_REF_ID) {
             if ($this->tree->isInTree($dto->getSessionId())) {
@@ -150,15 +153,14 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
             $originRepository = new OriginRepository();
             $arrayFilter = array_filter(
                 $originRepository->sessions(),
-                function ($origin) use ($linkedOriginId) : bool {
+                fn ($origin): bool =>
                     /** @var IOrigin $origin */
-                    return (int) $origin->getId() == $linkedOriginId;
-                }
+                    (int) $origin->getId() == $linkedOriginId
             );
             $origin = array_pop(
                 $arrayFilter
             );
-            if (!$origin instanceof \srag\Plugins\Hub2\Origin\Session\ISessionOrigin) {
+            if (!$origin instanceof ISessionOrigin) {
                 $msg = "The linked origin syncing sessions was not found, please check that the correct origin is linked";
                 throw new HubException($msg);
             }
@@ -224,7 +226,7 @@ class SessionMembershipSyncProcessor extends ObjectSyncProcessor implements ISes
          * $ilSessionParticipants->getEventParticipants()->updateUser();
          */
         $event_id = $ilSessionParticipants->getEventParticipants()->getEventId();
-        $query = "UPDATE event_participants " . "SET contact = " . $this->db->quote(
+        $query = 'UPDATE event_participants SET contact = ' . $this->db->quote(
             $dto->isContact(),
             'integer'
         ) . " "

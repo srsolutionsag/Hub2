@@ -13,10 +13,8 @@ class UDF extends AbstractImplementation implements IMetadataImplementation
 {
     public const PREFIX = 'f_';
 
-    /**
-     * @inheritdoc
-     */
-    public function write() : void
+
+    public function write(): void
     {
         $user_id = $this->getIliasId();
         $ilUserDefinedData = new ilUserDefinedData($user_id);

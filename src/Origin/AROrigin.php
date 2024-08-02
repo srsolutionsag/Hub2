@@ -19,7 +19,7 @@ use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 abstract class AROrigin extends ActiveRecord implements IOrigin
 {
     public const TABLE_NAME = 'sr_hub2_origin';
-    const DATE_FORMAT = 'Y-m-d H:i:s';
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @var array
@@ -200,9 +200,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         parent::update();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function sleep($field_name)
     {
         $field_value = $this->{$field_name};
@@ -233,9 +231,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         }
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function wakeUp($field_name, $field_value)
     {
         switch ($field_name) {
@@ -268,17 +264,13 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return (int) $this->id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setTitle($title)
     {
         $this->title = $title;
@@ -286,33 +278,25 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getDescription()
     {
         return $this->description;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setDescription($description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function isActive()
     {
         return (bool) $this->active;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setActive($active)
     {
         $this->active = $active;
@@ -320,17 +304,13 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getImplementationClassName()
     {
         return $this->implementation_class_name;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setImplementationClassName($name)
     {
         $this->implementation_class_name = $name;
@@ -354,25 +334,19 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->implementation_namespace = $implementation_namespace;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getCreatedAt()
     {
         return $this->created_at;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getUpdatedAt()
     {
         return $this->updated_at;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getObjectType()
     {
         return $this->object_type;
@@ -399,9 +373,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->last_run = date(self::DATE_FORMAT);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setObjectType($type)
     {
         if (!in_array($type, self::$object_types)) {
@@ -465,49 +437,37 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this->force_update;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function isAdHoc(): bool
     {
         return $this->adhoc;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setAdHoc(bool $adhoc): void/*: void*/
     {
         $this->adhoc = $adhoc;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function isAdhocParentScope(): bool
     {
         return $this->adhoc_parent_scope;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setAdhocParentScope(bool $adhoc_parent_scope): void/*: void*/
     {
         $this->adhoc_parent_scope = $adhoc_parent_scope;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getSort(): int
     {
         return $this->sort;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setSort(int $sort): void/*: void*/
     {
         $this->sort = $sort;

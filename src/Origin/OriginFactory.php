@@ -29,9 +29,7 @@ class OriginFactory implements IOriginFactory
         $this->db = $DIC->database();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getById($id)
     {
         $sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
@@ -46,20 +44,16 @@ class OriginFactory implements IOriginFactory
         return $class::find($id);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function createByType(string $type) : IOrigin
+
+    public function createByType(string $type): IOrigin
     {
         $class = $this->getClass($type);
 
         return new $class();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAllActive() : array
+
+    public function getAllActive(): array
     {
         $sql = 'SELECT id FROM ' . AROrigin::TABLE_NAME . ' WHERE active = %s ORDER BY sort';
         $set = $this->db->queryF($sql, ['integer'], [1]);
@@ -71,10 +65,8 @@ class OriginFactory implements IOriginFactory
         return $origins;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAll() : array
+
+    public function getAll(): array
     {
         $origins = [];
 
@@ -91,14 +83,14 @@ class OriginFactory implements IOriginFactory
      * @param string $type
      * @return string
      */
-    protected function getClass($type)
+    protected function getClass($type): string
     {
         $ucfirst = ucfirst($type);
 
         return "srag\\Plugins\\Hub2\\Origin\\{$ucfirst}\\AR{$ucfirst}Origin";
     }
 
-    public function delete(int $origin_id) : void/*: void*/
+    public function delete(int $origin_id): void/*: void*/
     {
         /**
          * @var ActiveRecord $object

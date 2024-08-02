@@ -77,7 +77,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Setup default mocks
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->activities = Mockery::mock(ICourseActivities::class);
 
@@ -88,7 +88,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests
         $this->initDTO();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
@@ -96,7 +96,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create Course
      */
-    public function test_create_course_with_default_properties()
+    public function test_create_course_with_default_properties(): void
     {
         $processor = new CourseSyncProcessor(
             $this->origin,
@@ -126,7 +126,7 @@ class CourseSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    public function test_update_course_with_default_properties()
+    public function test_update_course_with_default_properties(): void
     {
         $processor = new CourseSyncProcessor(
             $this->origin,

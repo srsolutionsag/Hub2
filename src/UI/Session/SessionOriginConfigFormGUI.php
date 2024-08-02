@@ -16,14 +16,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class SessionOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var ARSessionOrigin
-     */
-    protected $origin;
-
-    /**
-     * @inheritdoc
-     */
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
@@ -36,9 +28,7 @@ class SessionOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($cb);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

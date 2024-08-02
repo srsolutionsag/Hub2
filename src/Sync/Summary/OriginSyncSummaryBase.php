@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Summary;
 
+use srag\Plugins\Hub2\Log\IRepository;
 use ilHub2Plugin;
 use ilMimeMail;
 use srag\Plugins\Hub2\Log\Log;
@@ -17,14 +18,8 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
 abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var \srag\Plugins\Hub2\Log\IRepository
-     */
-    protected $log_repo;
-    /**
-     * @var ilHub2Plugin
-     */
-    protected $plugin;
+    protected IRepository $log_repo;
+    protected \ilHub2Plugin $plugin;
     /**
      * @var IOriginSync[]
      */
@@ -45,17 +40,13 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         $this->log_repo = LogRepository::getInstance();
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function addOriginSync(IOriginSync $originSync): void
     {
         $this->syncs[] = $originSync;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getOutputAsString()
     {
         $return = "";
@@ -66,9 +57,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         return $return;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function sendEmail(): void
     {
         $mail = new ilMimeMail();
@@ -152,11 +141,9 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
                     },
                     array_filter(
                         Log::$levels,
-                        function (int $level) use ($originSync): bool {
-                            return ((is_countable(
-                                $this->log_repo->getKeptLogs($originSync->getOrigin(), $level)
-                            ) ? count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) : 0) > 0);
-                        }
+                        fn (int $level): bool => (is_countable(
+                            $this->log_repo->getKeptLogs($originSync->getOrigin(), $level)
+                        ) ? count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) : 0) > 0
                     )
                 )
             );

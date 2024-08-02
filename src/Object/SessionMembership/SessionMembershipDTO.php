@@ -33,9 +33,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
      */
     protected $isContact = false;
 
-    /**
-     * @inheritdoc
-     */
+
     public function __construct($session_id, $user_id)
     {
         parent::__construct(implode(FakeIliasMembershipObject::GLUE, [$session_id, $user_id]));
@@ -43,55 +41,55 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
         $this->userId = $user_id;
     }
 
-    public function getSessionId() : string
+    public function getSessionId(): string
     {
         return $this->sessionId;
     }
 
-    public function setSessionId(string $sessionId) : SessionMembershipDTO
+    public function setSessionId(string $sessionId): SessionMembershipDTO
     {
         $this->sessionId = $sessionId;
 
         return $this;
     }
 
-    public function getSessionIdType() : int
+    public function getSessionIdType(): int
     {
         return $this->sessionIdType;
     }
 
-    public function setSessionIdType(int $sessionIdType) : SessionMembershipDTO
+    public function setSessionIdType(int $sessionIdType): SessionMembershipDTO
     {
         $this->sessionIdType = $sessionIdType;
 
         return $this;
     }
 
-    public function getRole() : int
+    public function getRole(): int
     {
         return $this->role;
     }
 
-    public function setRole(int $role) : SessionMembershipDTO
+    public function setRole(int $role): SessionMembershipDTO
     {
         $this->role = $role;
 
         return $this;
     }
 
-    public function getUserId() : int
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    public function setUserId(int $userId) : SessionMembershipDTO
+    public function setUserId(int $userId): SessionMembershipDTO
     {
         $this->userId = $userId;
 
         return $this;
     }
 
-    public function isContact() : bool
+    public function isContact(): bool
     {
         return $this->isContact;
     }
@@ -99,7 +97,7 @@ class SessionMembershipDTO extends DataTransferObject implements ISessionMembers
     /**
      * @return $this
      */
-    public function setIsContact(bool $isContact)
+    public function setIsContact(bool $isContact): self
     {
         $this->isContact = $isContact;
 

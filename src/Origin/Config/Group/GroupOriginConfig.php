@@ -24,10 +24,8 @@ class GroupOriginConfig extends OriginConfig implements IGroupOriginConfig
         parent::__construct(array_merge($this->courseData, $data));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getParentRefIdIfNoParentIdFound() : int
+
+    public function getParentRefIdIfNoParentIdFound(): int
     {
         return (int) $this->get(self::REF_ID_NO_PARENT_ID_FOUND);
     }

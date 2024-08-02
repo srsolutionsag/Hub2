@@ -16,9 +16,7 @@ trait TaxonomyAwareDataTransferObject
      */
     private $_taxonomies = [];
 
-    /**
-     * @inheritdoc
-     */
+
     public function addTaxonomy(ITaxonomy $ITaxonomy): ITaxonomyAwareDataTransferObject
     {
         $this->_taxonomies[] = $ITaxonomy;
@@ -26,9 +24,7 @@ trait TaxonomyAwareDataTransferObject
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getTaxonomies(): array
     {
         return $this->_taxonomies;

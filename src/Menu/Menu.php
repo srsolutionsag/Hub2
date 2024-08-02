@@ -29,18 +29,13 @@ use srag\Plugins\Hub2\Config\ArConfig;
  */
 class Menu extends AbstractStaticPluginMainMenuProvider
 {
-    /**
-     * @inheritdoc
-     */
     public function getStaticTopItems(): array
     {
         return [];
     }
 
 
-    /**
-     * @inheritdoc
-     */
+
     public function getStaticSubItems(): array
     {
         $obj_id = array_key_first(\ilObject2::_getObjectsByType('cmps') ?? []);

@@ -18,12 +18,9 @@ class Log extends ActiveRecord implements ILog
 {
     public const TABLE_NAME = "sr_hub2_log";
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var IRepository
-     */
-    protected $log_repo;
+    protected IRepository $log_repo;
 
-    final public function getConnectorContainerName() : string
+    final public function getConnectorContainerName(): string
     {
         return static::TABLE_NAME;
     }
@@ -31,7 +28,7 @@ class Log extends ActiveRecord implements ILog
     /**
      * @deprecated
      */
-    final public static function returnDbTableName() : string
+    final public static function returnDbTableName(): string
     {
         return static::TABLE_NAME;
     }
@@ -92,12 +89,11 @@ class Log extends ActiveRecord implements ILog
      */
     protected $level = self::LEVEL_INFO;
     /**
-     * @var stdClass
      * @con_has_field    true
      * @con_fieldtype    text
      * @con_is_notnull   true
      */
-    protected $additional_data;
+    protected \stdClass $additional_data;
     /**
      * @var int
      * @con_has_field    true
@@ -142,79 +138,63 @@ class Log extends ActiveRecord implements ILog
         //parent::__construct($primary_key_value, $connector);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getLogId() : int
+
+    public function getLogId(): int
     {
         return $this->log_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withLogId(int $log_id) : ILog
+
+    public function withLogId(int $log_id): ILog
     {
         $this->log_id = $log_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getTitle() : string
+
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withTitle(string $title) : ILog
+
+    public function withTitle(string $title): ILog
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMessage() : string
+
+    public function getMessage(): string
     {
         return $this->message;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withMessage(string $message) : ILog
+
+    public function withMessage(string $message): ILog
     {
         $this->message = $message;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getDate() : ilDateTime
+
+    public function getDate(): ilDateTime
     {
         return $this->date;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withDate(ilDateTime $date) : ILog
+
+    public function withDate(ilDateTime $date): ILog
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getStatus() : int
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -222,137 +202,109 @@ class Log extends ActiveRecord implements ILog
     /**
      * @return $this
      */
-    public function withStatus(int $status) : ILog
+    public function withStatus(int $status): ILog
     {
         $this->status = $status;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getLevel() : int
+
+    public function getLevel(): int
     {
         return $this->level;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withLevel(int $level) : ILog
+
+    public function withLevel(int $level): ILog
     {
         $this->level = $level;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAdditionalData() : stdClass
+
+    public function getAdditionalData(): stdClass
     {
         return $this->additional_data;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withAdditionalData(stdClass $additional_data) : ILog
+
+    public function withAdditionalData(stdClass $additional_data): ILog
     {
         $this->additional_data = $additional_data;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function addAdditionalData(string $key, $value) : ILog
+
+    public function addAdditionalData(string $key, $value): ILog
     {
         $this->additional_data->{$key} = $value;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOriginId() : int
+
+    public function getOriginId(): int
     {
         return $this->origin_id;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withOriginId(int $origin_id) : ILog
+
+    public function withOriginId(int $origin_id): ILog
     {
         $this->origin_id = $origin_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOriginObjectType() : string
+
+    public function getOriginObjectType(): string
     {
         return $this->origin_object_type;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withOriginObjectType(string $origin_object_type) : ILog
+
+    public function withOriginObjectType(string $origin_object_type): ILog
     {
         $this->origin_object_type = $origin_object_type;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getObjectExtId()/*: ?string*/
     {
         return $this->object_ext_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function withObjectExtId(/*?*/
         string $object_ext_id = null
-    ) : ILog {
+    ): ILog {
         $this->object_ext_id = $object_ext_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getObjectIliasId()/*: ?int*/
     {
         return $this->object_ilias_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function withObjectIliasId(/*?*/
         int $object_ilias_id = null
-    ) : ILog {
+    ): ILog {
         $this->object_ilias_id = $object_ilias_id;
 
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function write(string $message, int $level = self::LEVEL_INFO) : void/*: void*/
+
+    public function write(string $message, int $level = self::LEVEL_INFO): void/*: void*/
     {
         $this->log_repo->storeLog($this->withMessage($message)->withLevel($level));
     }

@@ -14,10 +14,7 @@ use srag\DIC\Hub2\DICTrait;
  */
 abstract class AbstractRepository
 {
-    /**
-     * @var \ilDBInterface
-     */
-    private $db;
+    protected \ilDBInterface $db;
 
     /**
      * AbstractRepository constructor
@@ -290,9 +287,8 @@ abstract class AbstractRepository
 
         if ($value instanceof \ilDateTime) {
             return $value->getUnixTime();
-        } else {
-            return $default_value;
         }
+        return $default_value;
     }
 
     /**
@@ -306,7 +302,7 @@ abstract class AbstractRepository
         $value = $config->getValue();
 
         if ($value === null) {
-            $value = $default_value;
+            return $default_value;
         }
 
         return $value;

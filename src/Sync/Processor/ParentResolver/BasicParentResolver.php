@@ -11,14 +11,8 @@ class BasicParentResolver implements ParentResolver
      * @var \ilTree
      */
     protected $tree;
-    /**
-     * @var int
-     */
-    protected $fallback_ref_id = 1;
-    /**
-     * @var \ilRepUtil
-     */
-    protected $rep_util;
+    protected int $fallback_ref_id;
+    protected \ilRepUtil $rep_util;
     /**
      * @var \ilRbacAdmin
      */

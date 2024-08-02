@@ -101,7 +101,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $title
      * @return SessionDTO
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -120,7 +120,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $description
      * @return SessionDTO
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -139,7 +139,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $location
      * @return SessionDTO
      */
-    public function setLocation($location)
+    public function setLocation($location): self
     {
         $this->location = $location;
 
@@ -158,7 +158,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $details
      * @return SessionDTO
      */
-    public function setDetails($details)
+    public function setDetails($details): self
     {
         $this->details = $details;
 
@@ -177,7 +177,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $name
      * @return SessionDTO
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -196,7 +196,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $phone
      * @return SessionDTO
      */
-    public function setPhone($phone)
+    public function setPhone($phone): self
     {
         $this->phone = $phone;
 
@@ -215,7 +215,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $email
      * @return SessionDTO
      */
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         $this->email = $email;
 
@@ -234,7 +234,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param int $registrationType
      * @return SessionDTO
      */
-    public function setRegistrationType($registrationType)
+    public function setRegistrationType($registrationType): self
     {
         $this->registrationType = $registrationType;
 
@@ -253,7 +253,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param bool $registrationLimited
      * @return SessionDTO
      */
-    public function setRegistrationLimited($registrationLimited)
+    public function setRegistrationLimited($registrationLimited): self
     {
         $this->registrationLimited = $registrationLimited;
 
@@ -272,7 +272,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param int $registrationMinUsers
      * @return SessionDTO
      */
-    public function setRegistrationMinUsers($registrationMinUsers)
+    public function setRegistrationMinUsers($registrationMinUsers): self
     {
         $this->registrationMinUsers = $registrationMinUsers;
 
@@ -291,7 +291,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param int $registrationMaxUsers
      * @return SessionDTO
      */
-    public function setRegistrationMaxUsers($registrationMaxUsers)
+    public function setRegistrationMaxUsers($registrationMaxUsers): self
     {
         $this->registrationMaxUsers = $registrationMaxUsers;
 
@@ -310,7 +310,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param bool $registrationWaitingList
      * @return SessionDTO
      */
-    public function setRegistrationWaitingList($registrationWaitingList)
+    public function setRegistrationWaitingList($registrationWaitingList): self
     {
         $this->registrationWaitingList = $registrationWaitingList;
 
@@ -329,7 +329,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param bool $waitingListAutoFill
      * @return SessionDTO
      */
-    public function setWaitingListAutoFill($waitingListAutoFill)
+    public function setWaitingListAutoFill($waitingListAutoFill): self
     {
         $this->waitingListAutoFill = $waitingListAutoFill;
 
@@ -348,7 +348,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param string $parentId
      * @return SessionDTO
      */
-    public function setParentId($parentId)
+    public function setParentId($parentId): self
     {
         $this->parentId = $parentId;
 
@@ -367,7 +367,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param int $parentIdType
      * @return SessionDTO
      */
-    public function setParentIdType($parentIdType)
+    public function setParentIdType($parentIdType): self
     {
         $this->parentIdType = $parentIdType;
 
@@ -386,7 +386,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param bool $fullDay
      * @return SessionDTO
      */
-    public function setFullDay($fullDay)
+    public function setFullDay($fullDay): self
     {
         $this->fullDay = $fullDay;
 
@@ -405,7 +405,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param int $start
      * @return SessionDTO
      */
-    public function setStart($start)
+    public function setStart($start): self
     {
         $this->start = $start;
 
@@ -424,7 +424,7 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
      * @param int $end Unix Timestamp
      * @return SessionDTO
      */
-    public function setEnd($end)
+    public function setEnd($end): self
     {
         $this->end = $end;
 

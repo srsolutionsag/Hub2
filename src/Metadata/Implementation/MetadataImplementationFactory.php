@@ -2,6 +2,11 @@
 
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
+use srag\Plugins\Hub2\Object\Group\GroupDTO;
+use srag\Plugins\Hub2\Object\Course\CourseDTO;
+use srag\Plugins\Hub2\Object\Category\CategoryDTO;
+use srag\Plugins\Hub2\Object\Session\SessionDTO;
+use srag\Plugins\Hub2\Object\User\UserDTO;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Metadata\IMetadata;
 use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
@@ -15,37 +20,31 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-    /**
-     * @inheritdoc
-     */
-    public function userDefinedField(IMetadata $metadata, int $ilias_id) : IMetadataImplementation
+
+    public function userDefinedField(IMetadata $metadata, int $ilias_id): IMetadataImplementation
     {
         return new UDF($metadata, $ilias_id);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function customMetadata(IMetadata $metadata, int $ilias_id) : IMetadataImplementation
+
+    public function customMetadata(IMetadata $metadata, int $ilias_id): IMetadataImplementation
     {
         return new CustomMetadata($metadata, $ilias_id);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getImplementationForDTO(
         IMetadataAwareDataTransferObject $dto,
         IMetadata $metadata,
         int $ilias_id
-    ) : IMetadataImplementation {
+    ): IMetadataImplementation {
         switch (true) {
-            case $dto instanceof \srag\Plugins\Hub2\Object\Group\GroupDTO:
-            case $dto instanceof \srag\Plugins\Hub2\Object\Course\CourseDTO:
-            case $dto instanceof \srag\Plugins\Hub2\Object\Category\CategoryDTO:
-            case $dto instanceof \srag\Plugins\Hub2\Object\Session\SessionDTO:
+            case $dto instanceof GroupDTO:
+            case $dto instanceof CourseDTO:
+            case $dto instanceof CategoryDTO:
+            case $dto instanceof SessionDTO:
                 return $this->customMetadata($metadata, $ilias_id);
-            case $dto instanceof \srag\Plugins\Hub2\Object\User\UserDTO:
+            case $dto instanceof UserDTO:
                 return $this->userDefinedField($metadata, $ilias_id);
         }
     }

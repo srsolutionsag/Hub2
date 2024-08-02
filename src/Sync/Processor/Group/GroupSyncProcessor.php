@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Group;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use ilCalendarCategory;
 use ilDate;
 use ilObjGroup;
@@ -35,23 +37,17 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
 
-    /**
-     * @var GroupParentResolver
-     */
-    private $parent_resolver;
+    private GroupParentResolver $parent_resolver;
 
     /**
      * @var GroupProperties
      */
-    protected $props;
+    protected IOriginProperties $props;
     /**
      * @var GroupOriginConfig
      */
-    protected $config;
-    /**
-     * @var IGroupActivities
-     */
-    protected $groupActivities;
+    protected IOriginConfig $config;
+    protected IGroupActivities $groupActivities;
     /**
      * @var array
      */
@@ -117,12 +113,12 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         );
     }
 
-    public static function getProperties() : array
+    public static function getProperties(): array
     {
         return self::$properties;
     }
 
-    public static function getNonAutoProperties() : array
+    public static function getNonAutoProperties(): array
     {
         return [
             "start",
@@ -338,7 +334,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @return int
      * @throws HubException
      */
-    protected function determineParentRefId(GroupDTO $group)
+    protected function determineParentRefId(GroupDTO $group): int
     {
         return $this->parent_resolver->resolveParentRefId($group);
     }
@@ -347,7 +343,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @param int $iliasId
      * @return ilObjGroup|null
      */
-    protected function findILIASGroup($iliasId)
+    protected function findILIASGroup($iliasId): ?\ilObjGroup
     {
         if (!ilObjGroup::_exists($iliasId, true)) {
             return null;

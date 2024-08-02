@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Object;
 
+use srag\Plugins\Hub2\Log\IRepository;
 use ActiveRecord;
 use arConnector;
 use DateTime;
@@ -33,15 +34,12 @@ abstract class ARObject extends ActiveRecord implements IObject
      */
     public const TABLE_NAME = '';
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var \srag\Plugins\Hub2\Log\IRepository
-     */
-    protected $log_repo;
+    protected IRepository $log_repo;
     /**
      * a clone of this object made before any changes happened; used to compare when persisting
      * @var static
      */
-    protected $clone;
+    protected self $clone;
 
     /**
      * ARObject constructor.
@@ -182,9 +180,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->clone = clone $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function sleep($field_name)
     {
         switch ($field_name) {
@@ -217,16 +213,14 @@ abstract class ARObject extends ActiveRecord implements IObject
         return parent::sleep($field_name);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function wakeUp($field_name, $field_value)
     {
         switch ($field_name) {
             case 'data':
                 $data = json_decode($field_value, true, 8, JSON_THROW_ON_ERROR);
                 if (!is_array($data)) {
-                    $data = [];
+                    return [];
                 }
 
                 return $data;
@@ -275,9 +269,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         return parent::wakeUp($field_name, $field_value);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function update(): void
     {
         $this->hash_code = $this->computeHashCode();
@@ -302,9 +294,7 @@ abstract class ARObject extends ActiveRecord implements IObject
         }
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function create(): void
     {
         if ($this->origin_id === 0) {
@@ -320,25 +310,19 @@ abstract class ARObject extends ActiveRecord implements IObject
                        ->write("Created");
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getExtId()
     {
         return $this->ext_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setExtId($id)
     {
         $this->ext_id = $id;
@@ -346,49 +330,37 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getDeliveryDate(): DateTime
     {
         return new DateTime($this->delivery_date);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getProcessedDate(): DateTime
     {
         return new DateTime($this->processed_date);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setDeliveryDate(int $unix_timestamp): void
     {
         $this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setProcessedDate(int $unix_timestamp): void
     {
         $this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getILIASId()
     {
         return $this->ilias_id;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setILIASId($id)
     {
         $this->ilias_id = $id;
@@ -396,17 +368,13 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setStatus(int $status)
     {
         if (!isset(self::$available_status[$status])) {
@@ -429,17 +397,13 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getPeriod()
     {
         return $this->period;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setPeriod($period)
     {
         $this->period = $period;
@@ -447,25 +411,19 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getHashCode()
     {
         return $this->hash_code;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function getData()
     {
         return $this->data;
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function setData(array $data): void
     {
         $this->data = $data;
@@ -477,7 +435,7 @@ abstract class ARObject extends ActiveRecord implements IObject
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return implode(
             ', ',

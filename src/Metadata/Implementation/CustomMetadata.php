@@ -20,10 +20,7 @@ use ilDateTime;
  */
 class CustomMetadata extends AbstractImplementation implements IMetadataImplementation
 {
-    /**
-     * @inheritdoc
-     */
-    public function write() : void
+    public function write(): void
     {
         $field_id = $this->getMetadata()->getIdentifier();
         $object_id = $this->getIliasId();

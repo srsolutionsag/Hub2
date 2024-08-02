@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\User;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use ilMimeMail;
 use ilObjUser;
 use ilUserException;
@@ -30,11 +32,11 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
     /**
      * @var UserProperties
      */
-    private $props;
+    private IOriginProperties $props;
     /**
      * @var UserOriginConfig
      */
-    private $config;
+    private IOriginConfig $config;
     /**
      * @var array
      */

@@ -15,26 +15,20 @@ class TaxonomyFactory implements ITaxonomyFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-    /**
-     * @inheritdoc
-     */
-    public function select(string $title) : ITaxonomy
+
+    public function select(string $title): ITaxonomy
     {
         return new Taxonomy($title, ITaxonomy::MODE_SELECT);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function create(string $title) : ITaxonomy
+
+    public function create(string $title): ITaxonomy
     {
         return new Taxonomy($title, ITaxonomy::MODE_CREATE);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function node(string $node_title) : INode
+
+    public function node(string $node_title): INode
     {
         return new Node($node_title);
     }

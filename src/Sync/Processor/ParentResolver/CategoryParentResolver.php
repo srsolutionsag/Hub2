@@ -9,14 +9,8 @@ use srag\Plugins\Hub2\Object\ObjectFactory;
 
 class CategoryParentResolver extends BasicParentResolver
 {
-    /**
-     * @var string|null
-     */
-    protected $fallback_ext_id;
-    /**
-     * @var ObjectFactory
-     */
-    protected $factory;
+    protected ?string $fallback_ext_id;
+    protected ObjectFactory $factory;
 
     public function __construct(
         ObjectFactory $factory,
@@ -28,7 +22,7 @@ class CategoryParentResolver extends BasicParentResolver
         $this->fallback_ext_id = $fallback_ext_id;
     }
 
-    public function resolveParentRefId(DataTransferObject $dto) : int
+    public function resolveParentRefId(DataTransferObject $dto): int
     {
         if (!$dto instanceof CategoryDTO) {
             throw new \InvalidArgumentException();
@@ -50,9 +44,8 @@ class CategoryParentResolver extends BasicParentResolver
             // no parent ref id available
             if ($parent_category->getILIASId() === null || $parent_category->getILIASId() === 0) {
                 return $this->checkAndReturnRefId($this->fallback_ref_id);
-            } else {
-                return $this->checkAndReturnRefId($parent_category->getILIASId());
             }
+            return $this->checkAndReturnRefId($parent_category->getILIASId());
         }
 
         return $this->checkAndReturnRefId($this->fallback_ref_id);

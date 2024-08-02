@@ -18,14 +18,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var AROrgUnitOrigin
-     */
-    protected $origin;
-
-    /**
-     * @inheritdoc
-     */
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
@@ -39,9 +31,7 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($ref_id_if_no_parent_id);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
@@ -51,9 +41,7 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($cb);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

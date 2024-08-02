@@ -26,18 +26,14 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
         parent::__construct(array_merge($this->categoryData, $data));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getParentRefIdIfNoParentIdFound() : int
+
+    public function getParentRefIdIfNoParentIdFound(): int
     {
         return (int) $this->get(self::REF_ID_NO_PARENT_ID_FOUND);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getExternalParentIdIfNoParentIdFound() : string
+
+    public function getExternalParentIdIfNoParentIdFound(): string
     {
         return (string) $this->get(self::EXT_ID_NO_PARENT_ID_FOUND);
     }

@@ -18,14 +18,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var ARCompetenceManagementOrigin
-     */
-    protected $origin;
-
-    /**
-     * @inheritdoc
-     */
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
@@ -39,9 +31,7 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($id_if_no_parent_id);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
@@ -54,9 +44,7 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($cb);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

@@ -68,12 +68,8 @@ class demoCompetenceManagement extends AbstractOriginImplementation
             "Externe ID" => "ext_id"
         ];
         $columns = array_map(function (string $column) use (&$columns_map): string {
-            if (isset($columns_map[$column])) {
-                return $columns_map[$column];
-            } else {
-                // Optimal column
-                return "";
-            }
+            // Optimal column
+            return $columns_map[$column] ?? "";
         }, array_shift($rows));
         foreach ($columns_map as $key => $value) {
             if (!in_array($value, $columns)) {
@@ -96,7 +92,7 @@ class demoCompetenceManagement extends AbstractOriginImplementation
                     throw new ParseDataFailedException("<b>Row $rowId, column $cellI</b> does not exists in <b>{$csv_file}</b>!");
                 }
 
-                if ($columns[$cellI] != "") { // Skip optimal columns
+                if ($columns[$cellI] !== "") { // Skip optimal columns
                     $data->{$columns[$cellI]} = $cell;
                 }
             }
@@ -127,11 +123,7 @@ class demoCompetenceManagement extends AbstractOriginImplementation
      */
     public function buildObjects(): array
     {
-        return array_map(function (stdClass $data): ICompetenceManagementDTO {
-            $competence_management = $this->factory()->competenceManagement($data->ext_id);
-
-            return $competence_management;
-        }, $this->data);
+        return array_map(fn (stdClass $data): ICompetenceManagementDTO => $this->factory()->competenceManagement($data->ext_id), $this->data);
     }
 
 

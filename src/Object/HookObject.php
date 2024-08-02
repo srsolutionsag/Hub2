@@ -17,14 +17,8 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
 class HookObject
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var IDataTransferObject
-     */
-    protected $dto;
-    /**
-     * @var IObject
-     */
-    private $object;
+    protected IDataTransferObject $dto;
+    private IObject $object;
     /**
      * @var ilObject
      */
@@ -48,7 +42,7 @@ class HookObject
     /**
      * Get the current status, see constants in IObject
      */
-    public function getStatus() : int
+    public function getStatus(): int
     {
         return $this->object->getStatus();
     }
@@ -56,7 +50,7 @@ class HookObject
     /**
      * @throws HubException
      */
-    public function overrideStatus(int $status) : void
+    public function overrideStatus(int $status): void
     {
         $this->object->setStatus($status);
     }
@@ -65,7 +59,7 @@ class HookObject
      * @param ilObject|FakeIliasObject $object
      * @return HookObject
      */
-    public function withILIASObject($object)
+    public function withILIASObject($object): self
     {
         $clone = clone $this;
         $clone->ilias_object = $object;
@@ -97,7 +91,7 @@ class HookObject
         return $this->object->getILIASId();
     }
 
-    public function getDTO() : IDataTransferObject
+    public function getDTO(): IDataTransferObject
     {
         return $this->dto;
     }
@@ -105,7 +99,7 @@ class HookObject
     /**
      * @return IObject the internal AR Object, not the ILIAS Object
      */
-    public function getObject() : IObject
+    public function getObject(): IObject
     {
         return $this->object;
     }

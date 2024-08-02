@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor;
 
+use srag\Plugins\Hub2\Log\IRepository;
 use ilHub2Plugin;
 use ilObject;
 use ilObjOrgUnit;
@@ -38,23 +39,11 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
     use Helper;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var \srag\Plugins\Hub2\Log\IRepository
-     */
-    protected $log_repo;
+    protected IRepository $log_repo;
 
-    /**
-     * @var IOrigin
-     */
-    protected $origin;
-    /**
-     * @var IObjectStatusTransition
-     */
-    protected $transition;
-    /**
-     * @var IOriginImplementation
-     */
-    protected $implementation;
+    protected IOrigin $origin;
+    protected IObjectStatusTransition $transition;
+    protected IOriginImplementation $implementation;
     /**
      * @var ilObject|FakeIliasObject|null
      */
@@ -77,10 +66,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         $this->log_repo = LogRepository::getInstance();
     }
 
-    /**
-     * @inheritdoc
-     */
-    final public function process(IObject $hub_object, IDataTransferObject $dto, bool $force = false)
+
+    final public function process(IObject $hub_object, IDataTransferObject $dto, bool $force = false): void
     {
         // The HookObject is filled with the object (known Data in HUB) and the DTO delivered with
         // your origin. Additionally, if available, the HookObject is filled with the given
@@ -95,7 +82,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 
         // We check if there is another mapping strategy than "None" and check for existing objects in ILIAS
         if ($hub_object->getStatus(
-            ) === IObject::STATUS_TO_CREATE && $dto instanceof IMappingStrategyAwareDataTransferObject) {
+        ) === IObject::STATUS_TO_CREATE && $dto instanceof IMappingStrategyAwareDataTransferObject) {
             $m = $dto->getMappingStrategy();
             $ilias_id = $m->map($dto);
             if ($ilias_id > 0) {
@@ -156,7 +143,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
             case IObject::STATUS_TO_RESTORE:
                 // Updating the ILIAS object is only needed if some properties were changed
                 if (($dto->computeHashCode() !== $hub_object->getHashCode()) || $force || $hub_object->getStatus(
-                    ) === iObject::STATUS_TO_RESTORE) {
+                ) === iObject::STATUS_TO_RESTORE) {
                     $this->implementation->beforeUpdateILIASObject($hook_object);
 
                     try {
@@ -288,10 +275,8 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         ilRbacLog::add(ilRbacLog::CREATE_OBJECT, $ref_id, $rbac_log);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function handleSort(array $sort_dtos) : bool
+
+    public function handleSort(array $sort_dtos): bool
     {
         return false;
     }

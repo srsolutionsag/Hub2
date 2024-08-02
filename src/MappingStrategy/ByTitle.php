@@ -2,6 +2,7 @@
 
 namespace srag\Plugins\Hub2\MappingStrategy;
 
+use srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject;
 use ilObject2;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
@@ -33,10 +34,8 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
         $this->tree = $DIC['tree'];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function map(IDataTransferObject $dto) : int
+
+    public function map(IDataTransferObject $dto): int
     {
         switch (true) {
             case ($dto instanceof UserDTO):
@@ -75,7 +74,7 @@ class ByTitle extends AMappingStrategy implements IMappingStrategy
         return 0;
     }
 
-    private function getTypeByDTO(\srag\Plugins\Hub2\Object\DTO\IDidacticTemplateAwareDataTransferObject $dto) : string
+    private function getTypeByDTO(IDidacticTemplateAwareDataTransferObject $dto): string
     {
         if ($dto instanceof GroupDTO) {
             return "grp";

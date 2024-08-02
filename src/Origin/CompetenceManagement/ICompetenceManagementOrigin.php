@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Origin\CompetenceManagement;
 
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
 use srag\Plugins\Hub2\Origin\Config\CompetenceManagement\ICompetenceManagementOriginConfig;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManagementProperties;
@@ -16,10 +18,10 @@ interface ICompetenceManagementOrigin extends IOrigin
     /**
      * @return ICompetenceManagementOriginConfig
      */
-    public function config(): \srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+    public function config(): IOriginConfig;
 
     /**
      * @return ICompetenceManagementProperties
      */
-    public function properties(): \srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+    public function properties(): IOriginProperties;
 }

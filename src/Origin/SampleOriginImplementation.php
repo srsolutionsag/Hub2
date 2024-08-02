@@ -21,7 +21,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
      * Throw a ConnectionFailedException to abort the sync if a connection is not possible.
      * @throws ConnectionFailedException
      */
-    public function connect() : bool
+    public function connect(): bool
     {
         //		$file = $this->config()->getPath();
         //		if (!is_file($file)) {
@@ -37,7 +37,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
      * Throw a ParseDataFailedException to abort the sync if your data cannot be parsed.
      * @throws ParseDataFailedException
      */
-    public function parseData() : int
+    public function parseData(): int
     {
         //		foreach (['userData1', 'userData2', 'userData3'] as $fakeUserData) {
         //			$this->data[] = $fakeUserData;
@@ -59,7 +59,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
      * @return IDataTransferObject[]
      * @throws BuildObjectsFailedException
      */
-    public function buildObjects() : array
+    public function buildObjects(): array
     {
         //		$userDTOs = [];
         //		foreach ($this->data as $userData) {
@@ -82,52 +82,50 @@ class SampleOriginImplementation extends AbstractOriginImplementation
      * origins in the processing chain is NOT getting executed.
      * Note that if you do not throw any of the exceptions above, the sync will continue.
      */
-    public function handleLog(ILog $log) : void
+    public function handleLog(ILog $log): void
     {
     }
 
-    public function beforeCreateILIASObject(HookObject $hook) : void
+    public function beforeCreateILIASObject(HookObject $hook): void
     {
     }
 
-    public function afterCreateILIASObject(HookObject $hook) : void
+    public function afterCreateILIASObject(HookObject $hook): void
     {
     }
 
-    public function beforeUpdateILIASObject(HookObject $hook) : void
+    public function beforeUpdateILIASObject(HookObject $hook): void
     {
     }
 
-    public function afterUpdateILIASObject(HookObject $hook) : void
+    public function afterUpdateILIASObject(HookObject $hook): void
     {
     }
 
-    public function beforeDeleteILIASObject(HookObject $hook) : void
+    public function beforeDeleteILIASObject(HookObject $hook): void
     {
     }
 
-    public function afterDeleteILIASObject(HookObject $hook) : void
+    public function afterDeleteILIASObject(HookObject $hook): void
     {
     }
 
     /**
      * Executed before the synchronization of the origin is executed.
      */
-    public function beforeSync() : void
+    public function beforeSync(): void
     {
     }
 
     /**
      * Executed after the synchronization of the origin has been executed.
      */
-    public function afterSync() : void
+    public function afterSync(): void
     {
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function overrideStatus(HookObject $hook) : void
+
+    public function overrideStatus(HookObject $hook): void
     {
     }
 }

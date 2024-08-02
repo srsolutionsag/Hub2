@@ -28,20 +28,14 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     use LearningProgressSettingsAwareDataTransferObject;
     use LanguageCheck;
 
-    /**
-     * @var array
-     */
-    private static $subscriptionTypes
+    private static array $subscriptionTypes
         = [
             self::SUBSCRIPTION_TYPE_DEACTIVATED,
             self::SUBSCRIPTION_TYPE_REQUEST_MEMBERSHIP,
             self::SUBSCRIPTION_TYPE_DIRECTLY,
             self::SUBSCRIPTION_TYPE_PASSWORD,
         ];
-    /**
-     * @var array
-     */
-    private static $viewModes
+    private static array $viewModes
         = [
             self::VIEW_MODE_SESSIONS,
             self::VIEW_MODE_OBJECTIVES,
@@ -50,10 +44,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
             self::VIEW_MODE_BY_TYPE,
             self::VIEW_MODE_INHERIT,
         ];
-    /**
-     * @var array
-     */
-    private static $parentIdTypes
+    private static array $parentIdTypes
         = [
             self::PARENT_ID_TYPE_REF_ID,
             self::PARENT_ID_TYPE_EXTERNAL_EXT_ID,
@@ -203,7 +194,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $title
      * @return CourseDTO
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -222,7 +213,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $description
      * @return CourseDTO
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -241,7 +232,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $importantInformation
      * @return CourseDTO
      */
-    public function setImportantInformation($importantInformation)
+    public function setImportantInformation($importantInformation): self
     {
         $this->importantInformation = $importantInformation;
 
@@ -260,7 +251,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $contactResponsibility
      * @return CourseDTO
      */
-    public function setContactResponsibility($contactResponsibility)
+    public function setContactResponsibility($contactResponsibility): self
     {
         $this->contactResponsibility = $contactResponsibility;
 
@@ -279,14 +270,14 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $contactEmail
      * @return CourseDTO
      */
-    public function setContactEmail($contactEmail)
+    public function setContactEmail($contactEmail): self
     {
         $this->contactEmail = $contactEmail;
 
         return $this;
     }
 
-    public function getFirstDependenceCategory() : ?string
+    public function getFirstDependenceCategory(): ?string
     {
         return $this->firstDependenceCategory;
     }
@@ -295,14 +286,14 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $firstDependenceCategory
      * @return CourseDTO
      */
-    public function setFirstDependenceCategory($firstDependenceCategory)
+    public function setFirstDependenceCategory($firstDependenceCategory): self
     {
         $this->firstDependenceCategory = $firstDependenceCategory;
 
         return $this;
     }
 
-    public function getSecondDependenceCategory() : ?string
+    public function getSecondDependenceCategory(): ?string
     {
         return $this->secondDependenceCategory;
     }
@@ -311,14 +302,14 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $secondDependenceCategory
      * @return CourseDTO
      */
-    public function setSecondDependenceCategory($secondDependenceCategory)
+    public function setSecondDependenceCategory($secondDependenceCategory): self
     {
         $this->secondDependenceCategory = $secondDependenceCategory;
 
         return $this;
     }
 
-    public function getThirdDependenceCategory() : ?string
+    public function getThirdDependenceCategory(): ?string
     {
         return $this->thirdDependenceCategory;
     }
@@ -327,14 +318,14 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $thirdDependenceCategory
      * @return CourseDTO
      */
-    public function setThirdDependenceCategory($thirdDependenceCategory)
+    public function setThirdDependenceCategory($thirdDependenceCategory): self
     {
         $this->thirdDependenceCategory = $thirdDependenceCategory;
 
         return $this;
     }
 
-    public function getFourthDependenceCategory() : ?string
+    public function getFourthDependenceCategory(): ?string
     {
         return $this->fourthDependenceCategory;
     }
@@ -342,14 +333,14 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     /**
      * @return CourseDTO
      */
-    public function setFourthDependenceCategory(string $fourthDependenceCategory)
+    public function setFourthDependenceCategory(string $fourthDependenceCategory): self
     {
         $this->fourthDependenceCategory = $fourthDependenceCategory;
 
         return $this;
     }
 
-    public function getTemplateId() : int
+    public function getTemplateId(): int
     {
         return $this->template_id;
     }
@@ -357,7 +348,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     /**
      * @return $this
      */
-    public function setTemplateId(int $template_id)
+    public function setTemplateId(int $template_id): self
     {
         $this->template_id = $template_id;
 
@@ -376,7 +367,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param array $notificationEmails
      * @return CourseDTO
      */
-    public function setNotificationEmails($notificationEmails)
+    public function setNotificationEmails($notificationEmails): self
     {
         $this->notificationEmails = $notificationEmails;
 
@@ -395,7 +386,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param int $owner
      * @return CourseDTO
      */
-    public function setOwner($owner)
+    public function setOwner($owner): self
     {
         $this->owner = (int) $owner;
 
@@ -414,7 +405,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param int $subscriptionLimitationType
      * @return CourseDTO
      */
-    public function setSubscriptionLimitationType($subscriptionLimitationType)
+    public function setSubscriptionLimitationType($subscriptionLimitationType): self
     {
         if (!in_array($subscriptionLimitationType, self::$subscriptionTypes)) {
             throw new InvalidArgumentException("Given $subscriptionLimitationType does not exist");
@@ -436,7 +427,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param int $viewMode
      * @return CourseDTO
      */
-    public function setViewMode($viewMode)
+    public function setViewMode($viewMode): self
     {
         if (!in_array($viewMode, self::$viewModes)) {
             throw new InvalidArgumentException("Given $viewMode does not exist");
@@ -458,7 +449,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param int $parentId
      * @return $this
      */
-    public function setParentId($parentId)
+    public function setParentId($parentId): self
     {
         $this->parentId = $parentId;
 
@@ -477,7 +468,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param int $parentIdType
      * @return CourseDTO
      */
-    public function setParentIdType($parentIdType)
+    public function setParentIdType($parentIdType): self
     {
         if (!in_array($parentIdType, self::$parentIdTypes)) {
             throw new InvalidArgumentException("Invalid parentIdType given '$parentIdType'");
@@ -499,7 +490,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $syllabus
      * @return CourseDTO
      */
-    public function setSyllabus($syllabus)
+    public function setSyllabus($syllabus): self
     {
         $this->syllabus = $syllabus;
 
@@ -518,7 +509,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $contactName
      * @return CourseDTO
      */
-    public function setContactName($contactName)
+    public function setContactName($contactName): self
     {
         $this->contactName = $contactName;
 
@@ -537,7 +528,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $contactConsultation
      * @return CourseDTO
      */
-    public function setContactConsultation($contactConsultation)
+    public function setContactConsultation($contactConsultation): self
     {
         $this->contactConsultation = $contactConsultation;
 
@@ -556,7 +547,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param string $contactPhone
      * @return CourseDTO
      */
-    public function setContactPhone($contactPhone)
+    public function setContactPhone($contactPhone): self
     {
         $this->contactPhone = $contactPhone;
 
@@ -575,7 +566,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @param int $activationType
      * @return CourseDTO
      */
-    public function setActivationType($activationType)
+    public function setActivationType($activationType): self
     {
         $this->activationType = $activationType;
 
@@ -595,7 +586,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
      * @throws LanguageCodeException if the passed $language is not a valid
      * ILIAS language code
      */
-    public function setLanguageCode(string $languageCode) : CourseDTO
+    public function setLanguageCode(string $languageCode): CourseDTO
     {
         self::checkLanguageCode($languageCode);
 
@@ -604,62 +595,62 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
         return $this;
     }
 
-    public function isSessionLimitEnabled() : bool
+    public function isSessionLimitEnabled(): bool
     {
         return $this->sessionLimitEnabled;
     }
 
-    public function enableSessionLimit(bool $sessionLimitEnabled) : void
+    public function enableSessionLimit(bool $sessionLimitEnabled): void
     {
         $this->sessionLimitEnabled = $sessionLimitEnabled;
     }
 
-    public function getNumberOfPreviousSessions() : int
+    public function getNumberOfPreviousSessions(): int
     {
         return $this->numberOfPreviousSessions;
     }
 
-    public function setNumberOfPreviousSessions(int $numberOfPreviousSessions) : void
+    public function setNumberOfPreviousSessions(int $numberOfPreviousSessions): void
     {
         $this->numberOfPreviousSessions = $numberOfPreviousSessions;
     }
 
-    public function getNumberOfNextSessions() : int
+    public function getNumberOfNextSessions(): int
     {
         return $this->numberOfNextSessions;
     }
 
-    public function setNumberOfNextSessions(int $numberOfNextSessions) : void
+    public function setNumberOfNextSessions(int $numberOfNextSessions): void
     {
         $this->numberOfNextSessions = $numberOfNextSessions;
     }
 
-    public function getOrderType() : int
+    public function getOrderType(): int
     {
         return $this->orderType;
     }
 
-    public function setOrderType(int $orderType) : void
+    public function setOrderType(int $orderType): void
     {
         $this->orderType = $orderType;
     }
 
-    public function getOrderDirection() : int
+    public function getOrderDirection(): int
     {
         return $this->orderDirection;
     }
 
-    public function setOrderDirection(int $orderDirection) : void
+    public function setOrderDirection(int $orderDirection): void
     {
         $this->orderDirection = $orderDirection;
     }
 
-    public function getAppointementsColor() : string
+    public function getAppointementsColor(): string
     {
         return $this->appointementsColor;
     }
 
-    public function setAppointementsColor(string $appointementsColor)
+    public function setAppointementsColor(string $appointementsColor): self
     {
         $this->appointementsColor = $appointementsColor;
 
@@ -667,13 +658,13 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     }
 
 
-    public function getCourseStart() : ?\ilDateTime
+    public function getCourseStart(): ?\ilDateTime
     {
         return $this->courseStart;
     }
 
 
-    public function setCourseStart(\ilDateTime $courseStart = null) : self
+    public function setCourseStart(\ilDateTime $courseStart = null): self
     {
         $this->courseStart = $courseStart;
 
@@ -681,13 +672,13 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     }
 
 
-    public function getCourseEnd() : ?\ilDateTime
+    public function getCourseEnd(): ?\ilDateTime
     {
         return $this->courseEnd;
     }
 
 
-    public function setCourseEnd(\ilDateTime $courseEnd = null) : self
+    public function setCourseEnd(\ilDateTime $courseEnd = null): self
     {
         $this->courseEnd = $courseEnd;
 
@@ -705,7 +696,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     /**
      * @param ilDate|null $activationStart
      */
-    public function setActivationStart(/*?*/ ilDate $activationStart = null) : self
+    public function setActivationStart(/*?*/ ilDate $activationStart = null): self
     {
         $this->activationStart = $activationStart;
 
@@ -723,19 +714,19 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     /**
      * @param ilDate|null $activationEnd
      */
-    public function setActivationEnd(/*?*/ ilDate $activationEnd = null) : self
+    public function setActivationEnd(/*?*/ ilDate $activationEnd = null): self
     {
         $this->activationEnd = $activationEnd;
 
         return $this;
     }
 
-    public function getTargetGroup() : ?string
+    public function getTargetGroup(): ?string
     {
         return $this->targetGroup;
     }
 
-    public function setTargetGroup(string $targetGroup) : self
+    public function setTargetGroup(string $targetGroup): self
     {
         $this->targetGroup = $targetGroup;
 

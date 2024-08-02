@@ -21,14 +21,6 @@ use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
  */
 class CourseOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var ARCourseOrigin
-     */
-    protected $origin;
-
-    /**
-     * @inheritdoc
-     */
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
@@ -52,9 +44,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($te);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesNew()
     {
         parent::addPropertiesNew();
@@ -102,9 +92,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($send_mail);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
@@ -126,9 +114,7 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($cb);
     }
 
-    /**
-     * @inheritdoc
-     */
+
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

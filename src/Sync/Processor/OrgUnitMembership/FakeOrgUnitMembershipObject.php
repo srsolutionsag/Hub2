@@ -11,10 +11,7 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
  */
 class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
 {
-    /**
-     * @var int
-     */
-    protected $position_id;
+    protected int $position_id;
 
     public function __construct(int $container_id_ilias, int $user_id_ilias, int $position_id)
     {
@@ -25,12 +22,12 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
         $this->initId();
     }
 
-    public function getPositionId() : int
+    public function getPositionId(): int
     {
         return $this->position_id;
     }
 
-    public function setPositionId(int $position_id) : void
+    public function setPositionId(int $position_id): void
     {
         $this->position_id = $position_id;
     }
@@ -38,12 +35,12 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
     /**
      *
      */
-    public function initId() : void
+    public function initId(): void
     {
         $this->setId(implode(self::GLUE, [$this->container_id_ilias, $this->user_id_ilias, $this->position_id]));
     }
 
-    public static function loadInstanceWithConcatenatedId(string $id) : self
+    public static function loadInstanceWithConcatenatedId(string $id): self
     {
         [$container_id_ilias, $user_id_ilias, $position_id] = explode(self::GLUE, $id);
 

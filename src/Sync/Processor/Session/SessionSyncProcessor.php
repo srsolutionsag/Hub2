@@ -2,6 +2,8 @@
 
 namespace srag\Plugins\Hub2\Sync\Processor\Session;
 
+use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
+use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use ilDateTime;
 use ilObject2;
 use ilObjSession;
@@ -34,11 +36,11 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
     /**
      * @var SessionProperties
      */
-    private $props;
+    private IOriginProperties $props;
     /**
      * @var SessionOriginConfig
      */
-    private $config;
+    private IOriginConfig $config;
     /**
      * @var array
      */
@@ -188,7 +190,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
      * @param int $ilias_id
      * @return ilObjSession|null
      */
-    protected function findILIASObject($ilias_id)
+    protected function findILIASObject($ilias_id): ?\ilObjSession
     {
         if (!ilObject2::_exists($ilias_id, true)) {
             return null;
@@ -200,7 +202,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
     /**
      * @throws HubException
      */
-    protected function buildParentRefId(SessionDTO $session) : int
+    protected function buildParentRefId(SessionDTO $session): int
     {
         if ($session->getParentIdType() == SessionDTO::PARENT_ID_TYPE_REF_ID && $this->tree->isInTree(
             $session->getParentId()
@@ -219,10 +221,9 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             $possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
             $arrayFilter = array_filter(
                 $possible_parents,
-                function ($origin) use ($linkedOriginId) : bool {
+                fn ($origin): bool =>
                     /** @var IOrigin $origin */
-                    return (int) $origin->getId() == $linkedOriginId;
-                }
+                    (int) $origin->getId() == $linkedOriginId
             );
             $origin = array_pop(
                 $arrayFilter
@@ -258,7 +259,7 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
      * @param bool $force
      * @return ilObjSession
      */
-    protected function setDataForFirstAppointment(SessionDTO $object, ilObjSession $ilObjSession, $force = false)
+    protected function setDataForFirstAppointment(SessionDTO $object, ilObjSession $ilObjSession, $force = false): ilObjSession
     {
         $appointments = $ilObjSession->getAppointments();
         $first = $ilObjSession->getFirstAppointment();

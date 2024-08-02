@@ -9,7 +9,7 @@ use ilHub2Plugin;
  * @package srag\Plugins\Hub2\Config
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  */
-class ArConfig extends \srag\Plugins\Hub2\Config\ActiveRecordConfig
+class ArConfig extends ActiveRecordConfig
 {
     public const TABLE_NAME = 'sr_hub2_config_n';
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
