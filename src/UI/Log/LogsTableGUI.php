@@ -1,7 +1,17 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\Log;
 
+use srag\Plugins\Hub2\Log\IRepository;
+use ILIAS\DI\UIServices;
 use ilDateTime;
 use ilHub2Plugin;
 use srag\Plugins\Hub2\Log\Log;
@@ -18,26 +28,17 @@ use srag\Plugins\Hub2\Log\ILog;
  */
 class LogsTableGUI extends \ilTable2GUI
 {
-    /**
-     * @var ilHub2Plugin
-     */
-    private $plugin;
+    private \ilHub2Plugin $plugin;
 
-    private $filtered = [];
+    private array $filtered = [];
+    private IRepository $log_repo;
+    private ObjectLinkFactory $link_factory;
     /**
-     * @var \srag\Plugins\Hub2\Log\IRepository
-     */
-    private $log_repo;
-    /**
-     * @var ObjectLinkFactory
-     */
-    private $link_factory;
-    /**
-     * @var \ILIAS\DI\UIServices
+     * @var UIServices
      */
     private $ui;
 
-    public function __construct(\hub2LogsGUI $a_parent_obj, $a_parent_cmd)
+    public function __construct(\ilHub2LogsGUI $a_parent_obj, string $a_parent_cmd)
     {
         global $DIC;
         $ctrl = $DIC->ctrl();
@@ -135,9 +136,7 @@ class LogsTableGUI extends \ilTable2GUI
         // stClass to list of key value pairs, seperated by : and newlines
         $value = implode(
             "\n",
-            array_map(function ($k, $v): string {
-                return $k . ': ' . $v;
-            }, array_keys($value), $value)
+            array_map(fn ($k, string $v): string => $k . ': ' . $v, array_keys($value), $value)
         );
         $value = $a_set->getMessage() . "\n" . $value;
 
@@ -193,9 +192,7 @@ class LogsTableGUI extends \ilTable2GUI
         // Level
         $level_select = new \ilSelectInputGUI($this->plugin->txt('logs_level'), 'level');
         $level_select->setOptions(
-            [null => null] + array_map(function ($level): string {
-                return $this->plugin->txt('logs_level_' . $level);
-            }, Log::$levels)
+            [null => null] + array_map(fn (string $level): string => $this->plugin->txt('logs_level_' . $level), Log::$levels)
         );
         $this->addAndReadFilterItem($level_select);
 
@@ -214,8 +211,8 @@ class LogsTableGUI extends \ilTable2GUI
     protected function addAndReadFilterItem(\ilFormPropertyGUI $item): void
     {
         $this->addFilterItem($item);
-//        if ($this->hasSessionValue($item->getFieldId())) { // Supports filter default values
-//        } // removed, filters did not work with this
+        //        if ($this->hasSessionValue($item->getFieldId())) { // Supports filter default values
+        //        } // removed, filters did not work with this
         $item->readFromSession();
         switch (true) {
             case ($item instanceof \ilCheckboxInputGUI):
@@ -317,11 +314,9 @@ class LogsTableGUI extends \ilTable2GUI
         ?string $additional_data,
         ?int $status
     ): array {
-        return array_map(function (ILog $log): array {
-            return [
-                'object' => $log,
-            ];
-        }, $this->log_repo
+        return array_map(fn (ILog $log): array => [
+            'object' => $log,
+        ], $this->log_repo
             ->getLogs(
                 $sort_by,
                 $this->getOrderDirection(),

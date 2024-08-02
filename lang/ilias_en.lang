@@ -117,10 +117,14 @@ com_prop_mark_deleted_text#:#(deleted)
 com_prop_shortlink#:#Enable shortlink
 com_prop_use_ext_status#:#Use external status model
 log_status_0#:#Unknown
+log_status_2#:#To be created
 log_status_4#:#Created
+log_status_8#:#To be updated
 log_status_16#:#Updated
-log_status_2#:#To create
 log_status_32#:#To delete
+log_status_64#:#Deleted
+log_status_128#:#To restore
+log_status_256#:#Failed
 log_status_4096#:#Ignored
 purge_logs#:#Purge logs
 msg_logs_purged#:#%s Log(s) deleted
@@ -449,6 +453,7 @@ competencemanagement_delete_mode_none#:#No action
 competencemanagement_delete_mode_delete#:#Delete
 competencemanagement_move#:#Move
 logs#:#Logs
+subtab_logs#:#Logs
 logs_additional_data#:#Additional data
 logs_clear_logs#:#Clear logs
 logs_cron#:#Delete old logs

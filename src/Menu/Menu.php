@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Menu;
 
 use hub2MainGUI;
@@ -60,9 +68,9 @@ class Menu extends AbstractStaticPluginMainMenuProvider
             [
                 ilAdministrationGUI::class,
                 ilObjComponentSettingsGUI::class,
-                ilHub2ConfigGUI::class,
+                \ilHub2ConfigGUI::class
             ],
-            hub2MainGUI::CMD_INDEX
+            \ilHub2DispatchableGUI::CMD_INDEX
         );
         return [
             $this->symbol(
@@ -71,9 +79,7 @@ class Menu extends AbstractStaticPluginMainMenuProvider
                                ->withTitle('HUB Sync')
                                ->withAction($action)
                                ->withAvailableCallable(
-                                   function (): bool {
-                                       return $this->plugin->isActive();
-                                   }
+                                   fn (): bool => $this->plugin->isActive()
                                )
                                ->withVisibilityCallable(
                                    function (): bool {

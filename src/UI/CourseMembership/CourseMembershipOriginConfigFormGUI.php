@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\CourseMembership;
 
 use ilRadioGroupInputGUI;
@@ -7,18 +15,13 @@ use ilRadioOption;
 use srag\Plugins\Hub2\Origin\CourseMembership\ARCourseMembershipOrigin;
 use srag\Plugins\Hub2\Origin\Properties\CourseMembership\CourseMembershipProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
+use srag\Plugins\Hub2\Origin\IOrigin;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
 class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI
 {
-    /**
-     * @var ARCourseMembershipOrigin
-     */
-    protected $origin;
-
-
     protected function addPropertiesDelete()
     {
         parent::addPropertiesDelete();

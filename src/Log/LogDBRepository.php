@@ -42,23 +42,14 @@ class LogDBRepository implements LogRepository
 
         $where = '';
 
-        $check_any_filter = false;
-        foreach ($filter_values as $column => $value) {
-            if (!empty($value)) {
-                $check_any_filter = true;
-                break;
-            }
-        }
-        if (!$check_any_filter) {
-            $filter_values['date'] = date('Y-m-d');
-        }
-
-
         if ($filter_values !== []) {
             foreach ($filter_values as $column => $value) {
                 if (empty($value)) {
                     continue;
                 }
+                $value = trim($value);
+                $value = str_replace('*', '%', $value);
+
                 switch ($column) {
                     case 'object_ext_id':
                     case 'date':
@@ -67,15 +58,17 @@ class LogDBRepository implements LogRepository
                     case 'status':
                     case 'object_ilias_id':
                     case 'origin_id':
+                    case 'level':
                         $where .= ' AND ' . $column . ' = ' . $this->db->quote((int) $value, 'integer');
                         break;
-
                 }
             }
         }
-        // cut off the first AND
-        $where = substr($where, 4);
-        $query .= ' WHERE ' . $where;
+        if ($where !== '') {
+            // cut off the first AND
+            $where = substr($where, 4);
+            $query .= ' WHERE ' . $where;
+        }
 
         if ($order_by !== null && $order_direction !== null) {
             $query .= " ORDER BY $order_by $order_direction";
@@ -156,7 +149,6 @@ class LogDBRepository implements LogRepository
             }
         }
 
-
         return $removed;
 
         // Alternative Version
@@ -168,7 +160,6 @@ class LogDBRepository implements LogRepository
                     WHERE n > $keep_latest_per_status)";
 
             return $removed_in_step = $this->db->manipulate($q);
-
         }
         $step = 1;
         $removed = 0;
@@ -200,7 +191,6 @@ class LogDBRepository implements LogRepository
             $step++;
         }
         return $removed;
-
     }
 
 }

@@ -8,38 +8,28 @@
  *
  *********************************************************************/
 
-//namespace srag\Plugins\Hub2\UI\Data;
 use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 use ILIAS\Filesystem\Stream\Streams;
+use srag\Plugins\Hub2\Exception\HubException;
 
 /**
- * Class DataGUI
- * @package srag\Plugins\Hub2\UI\Data
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @author Fabian Schmid <fabian@sr.solutions>
  */
-class hub2DataGUI extends hub2MainGUI
+class ilHub2DataGUI extends ilHub2DispatchableBaseGUI
 {
-    /**
-     *
-     */
-    public function executeCommand(): void
+    public function checkAccess(): void
     {
-        $this->initTabs();
-        $cmd = $this->ctrl->getCmd(self::CMD_INDEX);
-        $this->{$cmd}();
+        // TODO: Implement checkAccess() method.
     }
 
-    /**
-     *
-     */
-    protected function index(): void
+    public function index(): void
     {
         $table = new DataTableGUI($this, self::CMD_INDEX);
-        $this->tpl->setContent($table->getHTML());
+        $this->main_tpl->setContent($table->getHTML());
     }
 
     protected function applyFilter(): void
@@ -67,18 +57,12 @@ class hub2DataGUI extends hub2MainGUI
         $this->ctrl->redirect($this, self::CMD_INDEX);
     }
 
-    /**
-     *
-     */
-    protected function initTabs()
+    public function getActiveSubTab(): ?string
     {
-        $this->tabs->activateSubTab(hub2ConfigOriginsGUI::SUBTAB_DATA);
+        return 'subtab_data';
     }
 
-    /**
-     *
-     */
-    protected function renderData()
+    protected function renderData(): void
     {
         $ext_id = $this->http->request()->getQueryParams()[DataTableGUI::F_EXT_ID];
         $origin_id = $this->http->request()->getQueryParams()[DataTableGUI::F_ORIGIN_ID];

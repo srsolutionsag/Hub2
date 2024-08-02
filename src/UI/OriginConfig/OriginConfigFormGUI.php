@@ -1,8 +1,17 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\OriginConfig;
 
-use hub2ConfigOriginsGUI;
+use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
+use ilHub2OriginsGUI;
 use hub2MainGUI;
 use ilCheckboxInputGUI;
 use ilFormSectionHeaderGUI;
@@ -45,31 +54,16 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     public const POST_VAR_ADHOC = "adhoc";
     public const POST_VAR_SORT = "sort";
     public const PLUGIN_BASE = 'Customizing/global/plugins/Services/Cron/CronHook/Hub2';
-    /**
-     * @var Token
-     */
-    private $token;
-    /**
-     * @var ilHub2Plugin
-     */
-    protected $plugin;
-    /**
-     * @var \srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage
-     */
-    protected $file_storage;
+    private Token $token;
+    protected \ilHub2Plugin $plugin;
+    protected ResourceStorage $file_storage;
 
     protected $parent_gui;
-    /**
-     * @var IOrigin
-     */
-    protected $origin;
-    /**
-     * @var IOriginRepository
-     */
-    protected $originRepository;
+    protected IOrigin $origin;
+    protected IOriginRepository $originRepository;
 
     /**
-     * @param hub2ConfigOriginsGUI $parent_gui
+     * @param ilHub2OriginsGUI $parent_gui
      */
     public function __construct($parent_gui, IOriginRepository $originRepository, IOrigin $origin)
     {
@@ -84,13 +78,13 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
         $this->initForm();
         if ($origin->getId() === 0) {
-            $this->addCommandButton(hub2ConfigOriginsGUI::CMD_CREATE_ORIGIN, $this->translate('button_save'));
+            $this->addCommandButton(ilHub2OriginsGUI::CMD_CREATE_ORIGIN, $this->translate('button_save'));
             $this->setTitle($this->translate('origin_form_title_add'));
         } else {
-            $this->addCommandButton(hub2ConfigOriginsGUI::CMD_SAVE_ORIGIN, $this->translate('button_save'));
+            $this->addCommandButton(ilHub2OriginsGUI::CMD_SAVE_ORIGIN, $this->translate('button_save'));
             $this->setTitle($this->translate('origin_form_title_edit'));
         }
-        $this->addCommandButton(hub2ConfigOriginsGUI::CMD_CANCEL, $this->translate('button_cancel'));
+        $this->addCommandButton(ilHub2OriginsGUI::CMD_CANCEL, $this->translate('button_cancel'));
     }
 
     /**
@@ -362,8 +356,8 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
     public function getILIASFileRepositorySelector(): ilRepositorySelector2InputGUI
     {
         $this->ctrl->setParameterByClass(
-            hub2MainGUI::class,
-            hub2ConfigOriginsGUI::ORIGIN_ID,
+            ilHub2OriginsGUI::class,
+            ilHub2OriginsGUI::ORIGIN_ID,
             $this->origin->getId()
         );
 
@@ -554,7 +548,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      * @param string $postVar
      * @return string
      */
-    protected function prop($postVar)
+    protected function prop(string $postVar): string
     {
         return 'prop_' . $postVar;
     }
@@ -563,22 +557,22 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
      * @param string $postVar
      * @return string
      */
-    protected function conf($postVar)
+    protected function conf(string $postVar): string
     {
         return 'config_' . $postVar;
     }
 
     private function getLinkToResource(string $resource_identification): string
     {
-        $this->ctrl->setParameterByClass(hub2ConfigOriginsGUI::class, 'rid', $resource_identification);
-        return "<a href=\"{$this->ctrl->getLinkTarget($this->parent_gui, hub2ConfigOriginsGUI::CMD_DOWNLOAD_RID)}\">{$resource_identification}</a>";
+        $this->ctrl->setParameterByClass(ilHub2OriginsGUI::class, 'rid', $resource_identification);
+        return "<a href=\"{$this->ctrl->getLinkTarget($this->parent_gui, ilHub2OriginsGUI::CMD_DOWNLOAD_RID)}\">{$resource_identification}</a>";
     }
 
     /**
      * @param ilRadioOption $filedrop
      * @return void
      */
-    protected function addRIDSection(ilRadioOption $filedrop, string $parent_section) : void
+    protected function addRIDSection(ilRadioOption $filedrop, string $parent_section): void
     {
         $rid = new ilNonEditableValueGUI(
             $this->translate('origin_form_field_conf_type_filedrop_rid'),

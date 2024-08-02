@@ -10,7 +10,6 @@
 
 //namespace srag\Plugins\Hub2\UI\OriginConfig;
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
-use ILIAS\HTTP\Services;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Jobs\RunSync;
@@ -30,14 +29,13 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 
 /**
- * Class ConfigOriginsGUI
  * @package      srag\Plugins\Hub2\UI\OriginConfig
  * @author       Stefan Wanzenried <sw@studer-raimann.ch>
  * @author       Fabian Schmid <fs@studer-raimann.ch>
- * @ilCtrl_calls hub2ConfigOriginsGUI: hub2DataGUI
- * @ilCtrl_calls hub2ConfigOriginsGUI: hub2LogsGUI
+ * @ilCtrl_calls ilHub2OriginsGUI: ilHub2DataGUI
+ * @ilCtrl_calls ilHub2OriginsGUI: ilHub2LogsGUI
  */
-class hub2ConfigOriginsGUI extends hub2MainGUI
+class ilHub2OriginsGUI extends ilHub2DispatchableBaseGUI
 {
     public const CMD_DELETE = 'delete';
     public const ORIGIN_ID = 'origin_id';
@@ -60,96 +58,37 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     protected ResourceStorage $file_storage;
     protected OriginSyncSummaryFactory $summaryFactory;
     protected OriginFactory $originFactory;
-    /**
-     * @var IOriginRepository
-     */
-    protected OriginRepository $originRepository;
-    /**
-     * @var \ilToolbarGUI
-     */
-    private $toolbar;
-    /**
-     * @var Services
-     */
-    protected $http;
-    /**
-     * @var \ilObjUser
-     */
-    protected $user;
+    protected IOriginRepository $originRepository;
 
-    /**
-     * ConfigOriginsGUI constructor
-     */
     public function __construct()
     {
-        global $DIC;
-        $this->toolbar = $DIC->toolbar();
-        $this->http = $DIC->http();
-        $this->user = $DIC->user();
         parent::__construct();
         $this->originFactory = new OriginFactory();
         $this->originRepository = new OriginRepository();
         $this->summaryFactory = new OriginSyncSummaryFactory();
         $this->file_storage = (new Factory())->storage();
-        $this->plugin = ilHub2Plugin::getInstance();
     }
 
-    /**
-     *
-     */
-    public function executeCommand(): void
+    public function getDefaultClass(): ilHub2DispatchableGUI
     {
-        $this->checkAccess();
-        parent::executeCommand();
-        // require_once "./Customizing/global/plugins/Services/Cron/CronHook/Hub2/sql/dbupdate.php";
-        switch ($this->ctrl->getNextClass()) {
-            case strtolower(hub2DataGUI::class):
-                $this->ctrl->forwardCommand(new hub2DataGUI());
-                break;
-            case strtolower(hub2LogsGUI::class):
-                $this->ctrl->forwardCommand(new hub2LogsGUI());
-                break;
-        }
+        return $this;
     }
 
-    /**
-     *
-     */
-    protected function initTabs()
+    public function getSubtabs(): array
     {
-        $this->tabs->addSubTab(
-            self::SUBTAB_ORIGINS,
-            $this->plugin->txt(self::SUBTAB_ORIGINS),
-            $this->ctrl->getLinkTarget(
-                $this,
-                self::CMD_INDEX
-            )
-        );
-
-        $this->tabs->addSubTab(
-            self::SUBTAB_DATA,
-            $this->plugin->txt(self::SUBTAB_DATA),
-            $this->ctrl->getLinkTargetByClass(
-                hub2DataGUI::class,
-                hub2DataGUI::CMD_INDEX
-            )
-        );
-
-        $this->tabs->addSubTab(
-            hub2LogsGUI::SUBTAB_LOGS,
-            $this->plugin->txt("logs"),
-            $this->ctrl
-                ->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_INDEX)
-        );
-
-        $this->tabs->activateTab(self::TAB_ORIGINS);
-        $this->tabs->activateSubTab(self::SUBTAB_ORIGINS);
+        return [
+            self::SUBTAB_ORIGINS => $this->ctrl->getLinkTarget($this, self::CMD_INDEX),
+            'subtab_data' => $this->ctrl->getLinkTargetByClass([self::class, ilHub2DataGUI::class], ilHub2DataGUI::CMD_INDEX),
+            'subtab_logs' => $this->ctrl->getLinkTargetByClass([self::class, ilHub2LogsGUI::class], ilHub2LogsGUI::CMD_INDEX),
+        ];
     }
 
-    /**
-     *
-     */
-    protected function index(): void
+    public function getActiveSubTab(): ?string
+    {
+        return self::SUBTAB_ORIGINS;
+    }
+
+    public function index(): void
     {
         $this->toolbar->setFormAction($this->ctrl->getFormAction($this));
 
@@ -172,24 +111,13 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->toolbar->addButtonInstance($button);
 
         $table = new OriginsTableGUI($this, self::CMD_INDEX, new OriginRepository());
-        $this->tpl->setContent($table->getHTML());
+        $this->main_tpl->setContent($table->getHTML());
     }
 
-    /**
-     *
-     */
-    protected function cancel()
-    {
-        $this->index();
-    }
-
-    /**
-     *
-     */
-    protected function addOrigin()
+    protected function addOrigin(): void
     {
         $form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
-        $this->tpl->setContent($form->getHTML());
+        $this->main_tpl->setContent($form->getHTML());
     }
 
     protected function downloadFileDrop(): void
@@ -203,10 +131,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $this->file_storage->download($rid, $origin->getTitle());
     }
 
-    /**
-     *
-     */
-    protected function createOrigin()
+    protected function createOrigin(): void
     {
         $form = new OriginConfigFormGUI($this, new OriginRepository(), new ARUserOrigin());
         if ($form->checkInput()) {
@@ -214,22 +139,19 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             $origin->setTitle($form->getInput('title'));
             $origin->setDescription($form->getInput('description'));
             $origin->store();
-            $this->tpl->setOnScreenMessage('success', $this->plugin->txt('msg_success_create_origin'), true);
+            $this->main_tpl->setOnScreenMessage('success', $this->plugin->txt('msg_success_create_origin'), true);
             $this->ctrl->setParameter($this, self::ORIGIN_ID, $origin->getId());
             $this->ctrl->redirect($this, self::CMD_EDIT_ORGIN);
         }
         $form->setValuesByPost();
-        $this->tpl->setContent($form->getHTML());
+        $this->main_tpl->setContent($form->getHTML());
     }
 
-    /**
-     *
-     */
-    protected function saveOrigin()
+    protected function saveOrigin(): void
     {
         /** @var AROrigin $origin */
         $origin = $this->getOrigin((int) $_POST[self::ORIGIN_ID]);
-        $this->tpl->setTitle($origin->getTitle());
+        $this->main_tpl->setTitle($origin->getTitle());
         $form = $this->getForm($origin);
         if ($form->checkInput()) {
             $origin->setTitle($form->getInput('title'));
@@ -258,7 +180,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             // Manual File Drops
             global $DIC;
             $upload_service = $DIC->upload();
-            if(!$upload_service->hasBeenProcessed()) {
+            if (!$upload_service->hasBeenProcessed()) {
                 $upload_service->process();
             }
 
@@ -281,123 +203,110 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
             $origin->config()->setData($configData);
             $origin->properties()->setData($propertyData);
             $origin->store();
-            $this->tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_saved'), true);
+            $this->main_tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_saved'), true);
             // Try to create the implementation class file automatically
             $generator = new OriginImplementationTemplateGenerator();
             try {
                 $result = $generator->create($origin);
                 if ($result) {
-                    $this->tpl->setOnScreenMessage('info', sprintf(
-                        $this->plugin->txt("msg_created_class_implementation_file"),
-                        $generator->getClassFilePath($origin)
-                    ), true);
+                    $this->main_tpl->setOnScreenMessage(
+                        'info',
+                        sprintf(
+                            $this->plugin->txt("msg_created_class_implementation_file"),
+                            $generator->getClassFilePath($origin)
+                        ),
+                        true
+                    );
                 }
             } catch (HubException $e) {
-                $this->tpl->setOnScreenMessage('info', sprintf(
-                    $this->plugin->txt("msg_created_class_implementation_file_failed"),
-                    $generator->getClassFilePath($origin)
-                ), true);
+                $this->main_tpl->setOnScreenMessage(
+                    'info',
+                    sprintf(
+                        $this->plugin->txt("msg_created_class_implementation_file_failed"),
+                        $generator->getClassFilePath($origin)
+                    ),
+                    true
+                );
             }
             $this->ctrl->saveParameter($this, self::ORIGIN_ID);
             $this->ctrl->redirect($this, self::CMD_EDIT_ORGIN);
         }
         $form->setValuesByPost();
-        $this->tpl->setContent($form->getHTML());
+        $this->main_tpl->setContent($form->getHTML());
     }
 
-    /**
-     *
-     */
-    protected function editOrigin()
+    protected function editOrigin(): void
     {
         $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
-        $this->tpl->setTitle($origin->getTitle());
+        $this->main_tpl->setTitle($origin->getTitle());
         $form = $this->getForm($origin);
-        $this->tpl->setContent($form->getHTML());
+        $this->main_tpl->setContent($form->getHTML());
     }
 
-    /**
-     *
-     */
-    protected function activateAll()
+    protected function activateAll(): void
     {
         foreach ($this->originRepository->all() as $repository) {
             $repository->setActive(true);
             $repository->store();
         }
-        $this->tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_activated'), true);
+        $this->main_tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_activated'), true);
         $this->ctrl->redirect($this);
     }
 
-    /**
-     *
-     */
-    protected function deactivateAll()
+    protected function deactivateAll(): void
     {
         foreach ($this->originRepository->all() as $repository) {
             $repository->setActive(false);
             $repository->store();
         }
-        $this->tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_deactivated'), true);
+        $this->main_tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_deactivated'), true);
         $this->ctrl->redirect($this);
     }
 
-    protected function toggle()
+    protected function toggle(): void
     {
         /** @var AROrigin $origin */
         $origin = $this->getOrigin((int) $_GET[self::ORIGIN_ID]);
         $origin->setActive(!$origin->isActive());
         $origin->save();
-        $this->tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_toggled'), true);
+        $this->main_tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_toggled'), true);
         $this->cancel();
     }
 
-    /**
-     * @param IOrigin $origins
-     */
     protected function execute(array $origins, bool $force_update = false): void
     {
         $summary = $this->summaryFactory->web();
 
         (new RunSync(new CronNotifier(), $origins, $summary, $force_update))->run();
 
-        $this->tpl->setOnScreenMessage('info', nl2br($summary->getOutputAsString(), false), true);
+        $this->main_tpl->setOnScreenMessage('info', nl2br($summary->getOutputAsString(), false), true);
 
         $this->ctrl->redirect($this);
     }
 
-    protected function run(bool $force_update = false)/*: void*/
+    protected function run(bool $force_update = false): void
     {
         $this->execute($this->originFactory->getAllActive(), $force_update);
     }
 
-    /**
-     *
-     */
-    protected function runForceUpdate()/*: void*/
+    protected function runForceUpdate(): void
     {
         $this->run(true);
     }
 
-    protected function runOriginSync(bool $force_update = false)/*: void*/
+    protected function runOriginSync(bool $force_update = false): void
     {
         $origin = $this->getOrigin((int) filter_input(INPUT_GET, self::ORIGIN_ID));
 
         $this->execute([$origin], $force_update);
     }
 
-    /**
-     *
-     */
-    protected function runOriginSyncForceUpdate()/*: void*/
+    protected function runOriginSyncForceUpdate(): void
     {
         $this->runOriginSync(true);
     }
 
-    /**
-     *
-     */
-    protected function confirmDelete()
+    protected function confirmDelete(): void
     {
         $f = new OriginFactory();
         $o = $f->getById($this->http->request()->getQueryParams()[self::ORIGIN_ID]);
@@ -408,13 +317,10 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
         $c->setHeaderText($this->plugin->txt('msg_confirm_delete_origin'));
         $c->setConfirm($this->plugin->txt('confirm_delete_button'), self::CMD_DELETE);
         $c->setCancel($this->plugin->txt('cancel_delete_button'), self::CMD_INDEX);
-        $this->tpl->setContent($c->getHTML());
+        $this->main_tpl->setContent($c->getHTML());
     }
 
-    /**
-     *
-     */
-    protected function delete()
+    protected function delete(): void
     {
         $origin_id = (int) $this->http->request()->getParsedBody()[self::ORIGIN_ID];
 
@@ -428,23 +334,16 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
      * Check access based on plugin configuration.
      * Returns to personal desktop if a user does not have permission to administrate hub.
      */
-    protected function checkAccess()
+    public function checkAccess(): void
     {
         $roles = array_unique(array_merge(ArConfig::getField(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS), [2]));
         if (!$this->rbac_review->isAssignedToAtLeastOneGivenRole($this->user->getId(), $roles)) {
-            $this->tpl->setOnScreenMessage('failure', $this->plugin->txt('permission_denied'), true);
-            if (self::version()->is6()) {
-                $this->ctrl->redirectByClass(ilDashboardGUI::class);
-            } else {
-                $this->ctrl->redirectByClass(ilPersonalDesktopGUI::class);
-            }
+            $this->main_tpl->setOnScreenMessage('failure', $this->plugin->txt('permission_denied'), true);
+            $this->ctrl->redirectByClass(ilDashboardGUI::class);
         }
     }
 
-    /**
-     * @return OriginConfigFormGUI
-     */
-    protected function getForm(AROrigin $origin)
+    protected function getForm(AROrigin $origin): OriginConfigFormGUI
     {
         $formFactory = new OriginFormFactory();
         $formClass = $formFactory->getFormClassNameByOrigin($origin);

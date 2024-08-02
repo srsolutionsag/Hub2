@@ -1,21 +1,25 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 require_once __DIR__ . "/../vendor/autoload.php";
 
 /**
  * Class ilHub2ConfigGUI
- * @author  Stefan Wanzenried <sw@studer-raimann.ch>
- * @author  Fabian Schmid <fs@studer-raimann.ch>
+ * @author            Stefan Wanzenried <sw@studer-raimann.ch>
+ * @author            Fabian Schmid <fs@studer-raimann.ch>
  *
- * @ilCtrl_isCalledBy ilHub2ConfigGUI: ilObjComponentSettingsGUI
+ * @ilCtrl_isCalledBy ilHub2ConfigGUI: ilObjComponentSettingsGUI, ilUIPluginRouterGUI
  */
 class ilHub2ConfigGUI extends ilPluginConfigGUI
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var \ilCtrlInterface
-     */
-    private $ctrl;
+    private \ilCtrlInterface $ctrl;
 
     public function __construct()
     {
@@ -23,19 +27,16 @@ class ilHub2ConfigGUI extends ilPluginConfigGUI
         $this->ctrl = $DIC->ctrl();
     }
 
-    /**
-     * @param string $cmd
-     */
     public function performCommand(string $cmd): void
     {
         switch ($this->ctrl->getNextClass()) {
-            case strtolower(hub2MainGUI::class):
-                $h = new hub2MainGUI();
+            case strtolower(ilHub2DispatcherGUI::class):
+                $h = new ilHub2DispatcherGUI();
                 $this->ctrl->forwardCommand($h);
                 break;
 
             default:
-                $this->ctrl->redirectByClass([hub2MainGUI::class]);
+                $this->ctrl->redirectByClass([ilHub2DispatcherGUI::class]);
                 break;
         }
     }

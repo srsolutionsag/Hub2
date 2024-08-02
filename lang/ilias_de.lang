@@ -373,7 +373,13 @@ data_table_ext_md#:#MD: %s
 data_table_ext_tax#:#TAX: %s
 log_status_0#:#Unbekannt
 log_status_2#:#Zu erstellen
+log_status_4#:#Erstellt
+log_status_8#:#Zu Aktualisieren
+log_status_16#:#Aktualisiert
 log_status_32#:#Zu löschen
+log_status_64#:#Gelöscht
+log_status_128#:#Zu Wiederherstellen
+log_status_256#:#Fehlgeschlagen
 log_status_4096#:#Ignoriert
 msg_logs_purged#:#%s Log(s) gelöscht
 purge_logs#:#Logs aufräumen
@@ -446,6 +452,7 @@ competencemanagement_delete_mode_none#:#Keine Aktion
 competencemanagement_delete_mode_delete#:#Löschen
 competencemanagement_move#:#Verschieben
 logs#:#Logs
+subtab_logs#:#Logs
 logs_additional_data#:#Zusätzliche Daten
 logs_clear_logs#:#Logs löschen
 logs_cron#:#Alte Logs löschen

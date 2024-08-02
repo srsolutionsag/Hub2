@@ -1,9 +1,18 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\Data;
 
-use hub2DataGUI;
-use hub2LogsGUI;
+use ILIAS\DI\UIServices;
+use ilHub2DataGUI;
+use ilHub2LogsGUI;
 use ilCheckboxInputGUI;
 use ilExcel;
 use ilFormPropertyGUI;
@@ -57,26 +66,17 @@ class DataTableGUI extends ilTable2GUI
             AROrgUnitMembership::class,
             ARCompetenceManagement::class,
         ];
-    /**
-     * @var ilHub2Plugin
-     */
-    protected $plugin;
-    /**
-     * @var ObjectLinkFactory
-     */
-    protected $originLinkfactory;
+    protected \ilHub2Plugin $plugin;
+    protected ObjectLinkFactory $originLinkfactory;
     /**
      * @var array
      */
     protected $filtered = [];
-    /**
-     * @var OriginFactory
-     */
-    protected $originFactory;
+    protected OriginFactory $originFactory;
     /**
      * @var int
      */
-    protected $a_parent_obj;
+    protected \ilHub2DataGUI $a_parent_obj;
     /**
      * @var IOriginRepository
      */
@@ -86,7 +86,7 @@ class DataTableGUI extends ilTable2GUI
      */
     private $db;
     /**
-     * @var \ILIAS\DI\UIServices
+     * @var UIServices
      */
     private $ui;
 
@@ -94,7 +94,7 @@ class DataTableGUI extends ilTable2GUI
      * DataTableGUI constructor
      * @param string $a_parent_cmd
      */
-    public function __construct(hub2DataGUI $a_parent_obj, $a_parent_cmd)
+    public function __construct(ilHub2DataGUI $a_parent_obj, string $a_parent_cmd)
     {
         global $DIC;
         $ctrl = $DIC->ctrl();
@@ -141,9 +141,7 @@ class DataTableGUI extends ilTable2GUI
         $status = new ilSelectInputGUI($this->plugin->txt('data_table_header_status'), 'status');
 
         $options = ["" => ""] + array_map(
-            function (string $txt): string {
-                return $this->plugin->txt("data_table_status_" . $txt);
-            },
+            fn (string $txt): string => $this->plugin->txt("data_table_status_" . $txt),
             ARObject::$available_status
         ) + [
                 "!" . IObject::STATUS_IGNORED => $this->plugin->txt("data_table_status_not_ignored"),
@@ -197,7 +195,10 @@ class DataTableGUI extends ilTable2GUI
 
         $where_query = " WHERE true = true"; // TODO: ???
         foreach ($this->filtered as $postvar => $value) {
-            if (!$postvar || !$value) {
+            if (!$postvar) {
+                continue;
+            }
+            if (!$value) {
                 continue;
             }
             $where_query .= " AND ";
@@ -258,8 +259,8 @@ class DataTableGUI extends ilTable2GUI
         $this->ctrl->setParameter($this->parent_obj, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
         $this->ctrl->setParameter($this->parent_obj, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
 
-        $this->ctrl->setParameterByClass(hub2LogsGUI::class, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
-        $this->ctrl->setParameterByClass(hub2LogsGUI::class, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
+        $this->ctrl->setParameterByClass(ilHub2LogsGUI::class, self::F_EXT_ID, $a_set[self::F_EXT_ID]);
+        $this->ctrl->setParameterByClass(ilHub2LogsGUI::class, self::F_ORIGIN_ID, $a_set[self::F_ORIGIN_ID]);
 
         $origin = $this->originFactory->getById($a_set[self::F_ORIGIN_ID]);
 
@@ -282,7 +283,7 @@ class DataTableGUI extends ilTable2GUI
                     );
                     break;
                 case self::F_ORIGIN_ID:
-                    if (!$origin instanceof \srag\Plugins\Hub2\Origin\IOrigin) {
+                    if (!$origin instanceof IOrigin) {
                         $this->tpl->setVariable('VALUE', " " . $this->plugin->txt("origin_deleted"));
                     } else {
                         $this->tpl->setVariable('VALUE', $origin->getTitle());
@@ -315,7 +316,7 @@ class DataTableGUI extends ilTable2GUI
             ),
             $this->ui->factory()->button()->shy(
                 $this->plugin->txt("logs_show_logs"),
-                $this->ctrl->getLinkTargetByClass(hub2LogsGUI::class, hub2LogsGUI::CMD_SHOW_LOGS_OF_EXT_ID)
+                $this->ctrl->getLinkTargetByClass(ilHub2LogsGUI::class, ilHub2LogsGUI::CMD_INDEX)
             ),
         ];
         $actions_ = $this->ui->factory()->dropdown()->standard($items);
@@ -382,9 +383,9 @@ class DataTableGUI extends ilTable2GUI
      * @param int          $ilias_id
      * @param IOrigin|null $origin
      */
-    protected function renderILIASLinkForIliasId($ilias_id, string $ext_id, IOrigin $origin = null): string
+    protected function renderILIASLinkForIliasId(string $ilias_id, string $ext_id, IOrigin $origin = null): string
     {
-        if (!$origin instanceof \srag\Plugins\Hub2\Origin\IOrigin) {
+        if (!$origin instanceof IOrigin) {
             return (string) $ilias_id;
         }
 
@@ -398,9 +399,8 @@ class DataTableGUI extends ilTable2GUI
                     $link->getAccessGrantedInternalLink()
                 )->withOpenInNewViewport(true)
             );
-        } else {
-            return (string) $ilias_id;
         }
+        return (string) $ilias_id;
     }
 
     protected function getFields(): array
@@ -420,7 +420,7 @@ class DataTableGUI extends ilTable2GUI
      * @return array
      * @throws DICException
      */
-    private function getAvailableOrigins()
+    private function getAvailableOrigins(): array
     {
         static $origins;
         if (is_array($origins)) {

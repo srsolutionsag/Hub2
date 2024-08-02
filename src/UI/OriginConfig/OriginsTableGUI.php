@@ -1,8 +1,17 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\OriginConfig;
 
-use hub2ConfigOriginsGUI;
+use ILIAS\DI\UIServices;
+use ilHub2OriginsGUI;
 use ilAdvancedSelectionListGUI;
 use ilHub2Plugin;
 use ilTable2GUI;
@@ -19,30 +28,21 @@ use srag\Plugins\Hub2\Origin\IOriginRepository;
 class OriginsTableGUI extends ilTable2GUI
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    private \ilHub2Plugin $plugin;
+    protected ?object $a_parent_obj;
+    protected IOriginRepository $originRepository;
     /**
-     * @var ilHub2Plugin
-     */
-    private $plugin;
-    /**
-     * @var int
-     */
-    protected $a_parent_obj;
-    /**
-     * @var IOriginRepository
-     */
-    protected $originRepository;
-    /**
-     * @var \ILIAS\DI\UIServices
+     * @var UIServices
      */
     private $ui;
 
     /**
-     * @param hub2ConfigOriginsGUI $a_parent_obj
-     * @param string               $a_parent_cmd
+     * @param ilHub2OriginsGUI $a_parent_obj
+     * @param string           $a_parent_cmd
      * @throws DICException
      * @internal param
      */
-    public function __construct($a_parent_obj, $a_parent_cmd, IOriginRepository $originRepository)
+    public function __construct(?object $a_parent_obj, string $a_parent_cmd, IOriginRepository $originRepository)
     {
         global $DIC;
         $ctrl = $DIC->ctrl();
@@ -59,11 +59,11 @@ class OriginsTableGUI extends ilTable2GUI
         $this->initColumns();
         $this->initTableData();
         $this->addCommandButton(
-            hub2ConfigOriginsGUI::CMD_DEACTIVATE_ALL,
+            ilHub2OriginsGUI::CMD_DEACTIVATE_ALL,
             $this->plugin->txt('origin_table_button_deactivate_all')
         );
         $this->addCommandButton(
-            hub2ConfigOriginsGUI::CMD_ACTIVATE_ALL,
+            ilHub2OriginsGUI::CMD_ACTIVATE_ALL,
             $this->plugin->txt('origin_table_button_activate_all')
         );
     }
@@ -106,7 +106,7 @@ class OriginsTableGUI extends ilTable2GUI
                     $origin->getTitle(),
                     $this->ctrl->getLinkTarget(
                         $this->parent_obj,
-                        hub2ConfigOriginsGUI::CMD_EDIT_ORGIN
+                        ilHub2OriginsGUI::CMD_EDIT_ORGIN
                     )
                 )
             );
@@ -142,7 +142,7 @@ class OriginsTableGUI extends ilTable2GUI
             $this->ctrl
                 ->getLinkTarget(
                     $this->parent_obj,
-                    hub2ConfigOriginsGUI::CMD_EDIT_ORGIN
+                    ilHub2OriginsGUI::CMD_EDIT_ORGIN
                 )
         );
         $actions->addItem(
@@ -151,7 +151,7 @@ class OriginsTableGUI extends ilTable2GUI
             $this->ctrl
                 ->getLinkTarget(
                     $this->parent_obj,
-                    hub2ConfigOriginsGUI::CMD_CONFIRM_DELETE
+                    ilHub2OriginsGUI::CMD_CONFIRM_DELETE
                 )
         );
         $actions->addItem(
@@ -160,19 +160,19 @@ class OriginsTableGUI extends ilTable2GUI
             $this->ctrl
                 ->getLinkTarget(
                     $this->parent_obj,
-                    hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC
+                    ilHub2OriginsGUI::CMD_RUN_ORIGIN_SYNC
                 )
         );
         $actions->addItem(
             $this->plugin->txt('origin_table_button_run_force_update'),
             'runOriginSyncForceUpdate',
             $this->ctrl
-                ->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE)
+                ->getLinkTarget($this->parent_obj, ilHub2OriginsGUI::CMD_RUN_ORIGIN_SYNC_FORCE_UPDATE)
         );
         $actions->addItem(
             $this->plugin->txt('origin_table_button_toggle'),
-            hub2ConfigOriginsGUI::CMD_TOGGLE,
-            $this->ctrl->getLinkTarget($this->parent_obj, hub2ConfigOriginsGUI::CMD_TOGGLE)
+            ilHub2OriginsGUI::CMD_TOGGLE,
+            $this->ctrl->getLinkTarget($this->parent_obj, ilHub2OriginsGUI::CMD_TOGGLE)
         );
         $this->ctrl->clearParameters($this->parent_obj);
         $this->tpl->setCurrentBlock('cell');

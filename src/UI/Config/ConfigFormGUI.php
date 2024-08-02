@@ -10,11 +10,9 @@
 
 namespace srag\Plugins\Hub2\UI\Config;
 
-use hub2ConfigGUI;
 use ilCheckboxInputGUI;
 use ilFormPropertyGUI;
 use ilFormSectionHeaderGUI;
-use ilHub2ConfigGUI;
 use ilHub2Plugin;
 use ilNumberInputGUI;
 use ilPropertyFormGUI;
@@ -30,17 +28,13 @@ use srag\Plugins\Hub2\Config\ArConfig;
  */
 class ConfigFormGUI extends ilPropertyFormGUI
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     protected \ilHub2Plugin $plugin;
-    /**
-     * @var ilHub2ConfigGUI
-     */
-    protected \hub2ConfigGUI $parent_gui;
+    protected \ilHub2SettingsGUI $parent_gui;
 
     /**
      * ConfigFormGUI constructor
      */
-    public function __construct(hub2ConfigGUI $parent_gui)
+    public function __construct(\ilHub2SettingsGUI $parent_gui)
     {
         parent::__construct();
 
@@ -54,8 +48,8 @@ class ConfigFormGUI extends ilPropertyFormGUI
     {
         $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 
-        $this->addCommandButton(hub2ConfigGUI::CMD_SAVE_CONFIG, $this->plugin->txt('button_save'));
-        $this->addCommandButton(hub2ConfigGUI::CMD_CANCEL, $this->plugin->txt('button_cancel'));
+        $this->addCommandButton(\ilHub2SettingsGUI::CMD_SAVE_CONFIG, $this->plugin->txt('button_save'));
+        $this->addCommandButton(\ilHub2SettingsGUI::CMD_CANCEL, $this->plugin->txt('button_cancel'));
 
         $this->setTitle($this->plugin->txt('admin_form_title'));
 
