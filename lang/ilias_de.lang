@@ -371,10 +371,12 @@ data_table_all#:#Alle
 data_table_ext_id#:#Ext-ID: %s
 data_table_ext_md#:#MD: %s
 data_table_ext_tax#:#TAX: %s
-status_4#:#Erstellt
-status_16#:#Aktualisiert
-status_2#:#Zu erstellen
-status_32#:#Zu löschen
+log_status_0#:#Unbekannt
+log_status_2#:#Zu erstellen
+log_status_32#:#Zu löschen
+log_status_4096#:#Ignoriert
+msg_logs_purged#:#%s Log(s) gelöscht
+purge_logs#:#Logs aufräumen
 subtab_origins#:#Übersicht
 subtab_data#:#Status
 grp_prop_activate#:#Aktivieren

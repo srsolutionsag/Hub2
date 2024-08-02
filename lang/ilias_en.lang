@@ -116,6 +116,14 @@ com_prop_link_to_origin#:#Link to other origin
 com_prop_mark_deleted_text#:#(deleted)
 com_prop_shortlink#:#Enable shortlink
 com_prop_use_ext_status#:#Use external status model
+log_status_0#:#Unknown
+log_status_4#:#Created
+log_status_16#:#Updated
+log_status_2#:#To create
+log_status_32#:#To delete
+log_status_4096#:#Ignored
+purge_logs#:#Purge logs
+msg_logs_purged#:#%s Log(s) deleted
 common_status_1#:#New
 common_status_2#:#Delivered
 common_status_3#:#Not delivered
@@ -372,10 +380,6 @@ data_table_all#:#All
 data_table_ext_id#:#Ext ID: %s
 data_table_ext_md#:#MD: %s
 data_table_ext_tax#:#TAX: %s
-status_4#:#Created
-status_16#:#Updated
-status_2#:#To create
-status_32#:#To delete
 subtab_origins#:#Overview
 subtab_data#:#Status
 grp_prop_activate#:#Activate

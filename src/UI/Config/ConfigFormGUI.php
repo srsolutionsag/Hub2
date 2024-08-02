@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\Config;
 
 use hub2ConfigGUI;
@@ -23,14 +31,11 @@ use srag\Plugins\Hub2\Config\ArConfig;
 class ConfigFormGUI extends ilPropertyFormGUI
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var ilHub2Plugin
-     */
-    protected $plugin;
+    protected \ilHub2Plugin $plugin;
     /**
      * @var ilHub2ConfigGUI
      */
-    protected $parent_gui;
+    protected \hub2ConfigGUI $parent_gui;
 
     /**
      * ConfigFormGUI constructor
@@ -45,10 +50,7 @@ class ConfigFormGUI extends ilPropertyFormGUI
         $this->initForm();
     }
 
-    /**
-     *
-     */
-    protected function initForm()/*: void*/
+    protected function initForm(): void
     {
         $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
 
@@ -227,7 +229,7 @@ class ConfigFormGUI extends ilPropertyFormGUI
     /**
      *
      */
-    public function updateConfig() : void/*: void*/
+    public function updateConfig(): void/*: void*/
     {
         foreach ($this->getInputItemsRecursive() as $item) {
             /** @var ilFormPropertyGUI $item */
@@ -236,9 +238,7 @@ class ConfigFormGUI extends ilPropertyFormGUI
                     $administration_role_ids = $this->getInput($item->getPostVar());
                     $administration_role_ids = preg_split('/, */', $administration_role_ids);
                     $administration_role_ids = array_map(
-                        static function (string $id) : int {
-                            return (int) $id;
-                        },
+                        static fn (string $id): int => (int) $id,
                         $administration_role_ids
                     );
                     ArConfig::setField(

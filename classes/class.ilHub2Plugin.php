@@ -1,6 +1,12 @@
 <?php
 
-require_once __DIR__ . "/../vendor/autoload.php";
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
 
 use ILIAS\GlobalScreen\Scope\MainMenu\Provider\AbstractStaticPluginMainMenuProvider;
 use srag\Plugins\Hub2\Config\ArConfig;
@@ -22,13 +28,15 @@ use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
 use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\Jobs\CronNotifier;
+use srag\Plugins\Hub2\Translator;
 
 /**
  * Class ilHub2Plugin
+ *
  * @author  Stefan Wanzenried <sw@studer-raimann.ch>
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
-class ilHub2Plugin extends ilCronHookPlugin
+class ilHub2Plugin extends ilCronHookPlugin implements Translator
 {
     public const PLUGIN_ID = 'hub2';
     public const PLUGIN_NAME = 'Hub2';
@@ -67,6 +75,20 @@ class ilHub2Plugin extends ilCronHookPlugin
     public function getCronJobInstances(): array
     {
         return [new RunSync(new CronNotifier()), new DeleteOldLogsJob()];
+    }
+
+    protected function beforeUpdate(): bool
+    {
+        if (PHP_SAPI !== 'cli') {
+            global $DIC;
+            $DIC->ui()->mainTemplate()->setOnScreenMessage(
+                'failure',
+                'Please run the update with the command line interface (CLI) only!',
+                true
+            );
+            return false;
+        }
+        return true;
     }
 
     public function getCronJobInstance(

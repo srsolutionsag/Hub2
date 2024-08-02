@@ -1,5 +1,15 @@
 <?php
 
+use ILIAS\DI\UIServices;
+
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 //namespace srag\Plugins\Hub2\UI;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -26,7 +36,7 @@ class hub2MainGUI
     public const TAB_CUSTOM_VIEWS = 'admin_tab_custom_views';
     public const CMD_INDEX = 'index';
     /**
-     * @var \ILIAS\DI\UIServices
+     * @var UIServices
      */
     protected $ui;
     /**
@@ -49,10 +59,7 @@ class hub2MainGUI
      * @var ilTabsGUI
      */
     protected $tabs;
-    /**
-     * @var ilHub2Plugin
-     */
-    protected $plugin;
+    protected \ilHub2Plugin $plugin;
 
     /**
      * MainGUI constructor
@@ -72,7 +79,7 @@ class hub2MainGUI
     /**
      *
      */
-    public function executeCommand()/*: void*/
+    public function executeCommand(): void/*: void*/
     {
         $this->initTabs();
         $nextClass = $this->ctrl->getNextClass();
@@ -100,7 +107,7 @@ class hub2MainGUI
     /**
      *
      */
-    protected function index()/*: void*/
+    protected function index(): void
     {
         $this->ctrl->redirectByClass(hub2ConfigOriginsGUI::class);
     }

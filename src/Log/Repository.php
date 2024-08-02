@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Log;
 
 use ilDateTime;
@@ -15,6 +23,8 @@ use stdClass;
  *
  * @package srag\Plugins\Hub2\Log
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
+ *
+ * @deprecated
  */
 final class Repository implements IRepository
 {
@@ -172,9 +182,7 @@ final class Repository implements IRepository
             $logs[] = $d;
         }
 
-        return array_map(function (\stdClass $data): \srag\Plugins\Hub2\Log\ILog {
-            return $this->factory()->fromDB($data);
-        }, $logs);
+        return array_map(fn (\stdClass $data): ILog => $this->factory()->fromDB($data), $logs);
     }
 
     /**
@@ -260,11 +268,11 @@ final class Repository implements IRepository
 
         $wheres = [];
 
-        if (!empty($title)) {
+        if ($title !== null && $title !== '' && $title !== '0') {
             $wheres[] = $this->db->like("title", ilDBConstants::T_TEXT, '%' . $title . '%');
         }
 
-        if (!empty($message)) {
+        if ($message !== null && $message !== '' && $message !== '0') {
             $wheres[] = $this->db->like("message", ilDBConstants::T_TEXT, '%' . $message . '%');
         }
 
@@ -282,30 +290,30 @@ final class Repository implements IRepository
             );
         }
 
-        if (!empty($level)) {
+        if ($level !== null && $level !== 0) {
             $wheres[] = 'level=' . $this->db->quote($level, ilDBConstants::T_INTEGER);
         }
 
-        if (!empty($origin_id)) {
+        if ($origin_id !== null && $origin_id !== 0) {
             $wheres[] = 'origin_id=' . $this->db->quote($origin_id, ilDBConstants::T_INTEGER);
         }
 
-        if (!empty($origin_object_type)) {
+        if ($origin_object_type !== null && $origin_object_type !== '' && $origin_object_type !== '0') {
             $wheres[] = 'origin_object_type=' . $this->db->quote(
                 $origin_object_type,
                 ilDBConstants::T_TEXT
             );
         }
 
-        if (!empty($object_ext_id)) {
+        if ($object_ext_id !== null && $object_ext_id !== '' && $object_ext_id !== '0') {
             $wheres[] = 'object_ext_id LIKE ' . $this->db->quote($object_ext_id, ilDBConstants::T_TEXT);
         }
 
-        if (!empty($object_ilias_id)) {
+        if ($object_ilias_id !== null && $object_ilias_id !== 0) {
             $wheres[] = 'object_ilias_id=' . $this->db->quote($object_ilias_id, ilDBConstants::T_INTEGER);
         }
 
-        if (!empty($additional_data)) {
+        if ($additional_data !== null && $additional_data !== '' && $additional_data !== '0') {
             $wheres[] = $this->db->like(
                 "additional_data",
                 ilDBConstants::T_TEXT,
@@ -313,7 +321,7 @@ final class Repository implements IRepository
             );
         }
 
-        if (!empty($status)) {
+        if ($status !== null && $status !== 0) {
             $wheres[] = 'status=' . $this->db->quote($status, ilDBConstants::T_INTEGER);
         }
 
@@ -353,9 +361,7 @@ final class Repository implements IRepository
                 [ilDBConstants::T_INTEGER],
                 [$log_id]
             ),
-            function (\stdClass $data): \srag\Plugins\Hub2\Log\ILog {
-                return $this->factory()->fromDB($data);
-            }
+            fn (\stdClass $data): ILog => $this->factory()->fromDB($data)
         );
 
         return $log;
@@ -409,18 +415,12 @@ final class Repository implements IRepository
         if ($level === null) {
             return array_reduce(
                 $this->kept_logs[$origin->getId()],
-                function (array $logs1, array $logs2): array {
-                    return array_merge($logs1, $logs2);
-                },
+                fn (array $logs1, array $logs2): array => array_merge($logs1, $logs2),
                 []
             );
         }
 
-        if (isset($this->kept_logs[$origin->getId()][$level])) {
-            return $this->kept_logs[$origin->getId()][$level];
-        } else {
-            return [];
-        }
+        return $this->kept_logs[$origin->getId()][$level] ?? [];
     }
 
     /**
@@ -430,7 +430,7 @@ final class Repository implements IRepository
     {
         $date = new ilDateTime(time(), IL_CAL_UNIX);
 
-        if (empty($log->getLogId())) {
+        if ($log->getLogId() === 0) {
             $log->withDate($date);
         }
 
@@ -464,16 +464,14 @@ final class Repository implements IRepository
         string $primary_key_field,/*?*/
         int $primary_key_value = 0
     ): int {
-        if (empty($primary_key_value)) {
+        if ($primary_key_value === 0) {
             $this->db->insert($table_name, $values);
 
             return $this->db->getLastInsertId();
-        } else {
-            $this->db->update($table_name, $values, [
-                $primary_key_field => [ilDBConstants::T_INTEGER, $primary_key_value]
-            ]);
-
-            return $primary_key_value;
         }
+        $this->db->update($table_name, $values, [
+            $primary_key_field => [ilDBConstants::T_INTEGER, $primary_key_value]
+        ]);
+        return $primary_key_value;
     }
 }

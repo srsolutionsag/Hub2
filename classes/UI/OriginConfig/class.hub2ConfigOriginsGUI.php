@@ -1,7 +1,16 @@
 <?php
 
-//namespace srag\Plugins\Hub2\UI\OriginConfig;
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
 
+//namespace srag\Plugins\Hub2\UI\OriginConfig;
+use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
+use ILIAS\HTTP\Services;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Jobs\RunSync;
@@ -48,28 +57,19 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     public const CMD_ACTIVATE_ALL = 'activateAll';
     public const CMD_TOGGLE = 'toggle';
     public const CMD_DOWNLOAD_RID = 'downloadFileDrop';
-    /**
-     * @var \srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage
-     */
-    protected $file_storage;
-    /**
-     * @var OriginSyncSummaryFactory
-     */
-    protected $summaryFactory;
-    /**
-     * @var OriginFactory
-     */
-    protected $originFactory;
+    protected ResourceStorage $file_storage;
+    protected OriginSyncSummaryFactory $summaryFactory;
+    protected OriginFactory $originFactory;
     /**
      * @var IOriginRepository
      */
-    protected $originRepository;
+    protected OriginRepository $originRepository;
     /**
      * @var \ilToolbarGUI
      */
     private $toolbar;
     /**
-     * @var \ILIAS\HTTP\Services
+     * @var Services
      */
     protected $http;
     /**
@@ -97,7 +97,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     /**
      *
      */
-    public function executeCommand()
+    public function executeCommand(): void
     {
         $this->checkAccess();
         parent::executeCommand();
@@ -149,7 +149,7 @@ class hub2ConfigOriginsGUI extends hub2MainGUI
     /**
      *
      */
-    protected function index()
+    protected function index(): void
     {
         $this->toolbar->setFormAction($this->ctrl->getFormAction($this));
 

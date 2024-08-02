@@ -1,7 +1,14 @@
 <?php
 
-//namespace srag\Plugins\Hub2\UI\Data;
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
 
+//namespace srag\Plugins\Hub2\UI\Data;
 use srag\Plugins\Hub2\Object\IMetadataAwareObject;
 use srag\Plugins\Hub2\Object\ITaxonomyAwareObject;
 use srag\Plugins\Hub2\Object\ObjectFactory;
@@ -19,7 +26,7 @@ class hub2DataGUI extends hub2MainGUI
     /**
      *
      */
-    public function executeCommand()
+    public function executeCommand(): void
     {
         $this->initTabs();
         $cmd = $this->ctrl->getCmd(self::CMD_INDEX);
@@ -29,7 +36,7 @@ class hub2DataGUI extends hub2MainGUI
     /**
      *
      */
-    protected function index()
+    protected function index(): void
     {
         $table = new DataTableGUI($this, self::CMD_INDEX);
         $this->tpl->setContent($table->getHTML());

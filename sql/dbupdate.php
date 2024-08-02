@@ -53,9 +53,7 @@ $administration_role_ids = json_encode(\srag\Plugins\Hub2\Config\ArConfig::getFi
 
 if (strpos($administration_role_ids, "[") === false) {
     $administration_role_ids = preg_split('/, */', $administration_role_ids);
-    $administration_role_ids = array_map(function (string $id) : int {
-        return intval($id);
-    }, $administration_role_ids);
+    $administration_role_ids = array_map(fn (string $id): int => intval($id), $administration_role_ids);
 
     \srag\Plugins\Hub2\Config\ArConfig::setField(\srag\Plugins\Hub2\Config\ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS, $administration_role_ids);
 }
@@ -167,4 +165,7 @@ $ilDB->manipulateF(
     ["text"],
     [srag\Plugins\Hub2\FileDrop\ResourceStorage\Stakeholder::class]
 );
+// ATTENTION:
+// NO MORE STEPS HERE!
+// PLEAS USE THE ilHub2SetupAgent FOR FURTHER DB UPDATES!
 ?>
