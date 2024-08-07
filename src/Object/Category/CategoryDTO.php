@@ -67,11 +67,11 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
     /**
      * @var string
      */
-    protected $title;
+    protected $title = '';
     /**
      * @var string
      */
-    protected $description;
+    protected $description = '';
     /**
      * @var int
      */

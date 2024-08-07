@@ -130,7 +130,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             $dto->getTitle(),
             $dto->getDescription(),
             $this->language->getDefaultLanguage(),
-            true
+            $this->language->getDefaultLanguage()
         );
     }
 
@@ -161,7 +161,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
                 $dto->getTitle(),
                 $dto->getDescription(),
                 $this->language->getDefaultLanguage(),
-                true
+                $this->language->getDefaultLanguage()
             );
         }
         if ($this->props->updateDTOProperty('showNews')) {
