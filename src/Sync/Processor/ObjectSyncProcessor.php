@@ -38,6 +38,12 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
     use Helper;
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+
+    /**
+     * @var int limitation of object_data.import_id column.
+     */
+    protected const MAX_IMPORT_ID_LENGTH = 50;
+
     /**
      * @var \srag\Plugins\Hub2\Log\IRepository
      */
@@ -274,7 +280,13 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
      */
     protected function getImportId(IDataTransferObject $object)
     {
-        return self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
+        $import_id = self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
+
+        if (self::MAX_IMPORT_ID_LENGTH < strlen($import_id)) {
+            return '';
+        }
+
+        return $import_id;
     }
 
     /**
