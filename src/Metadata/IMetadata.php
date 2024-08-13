@@ -9,7 +9,7 @@ namespace srag\Plugins\Hub2\Metadata;
  */
 interface IMetadata
 {
-    public const DEFAULT_RECORD_ID = '1';
+    public const DEFAULT_RECORD_ID = 1;
 
     /**
      * @param string|string[] $value
