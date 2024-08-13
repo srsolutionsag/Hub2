@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use srag\Plugins\Hub2\Log\IRepository;
@@ -37,10 +45,14 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
 abstract class ObjectSyncProcessor implements IObjectSyncProcessor
 {
     use Helper;
+    /**
+     * @var int limitation of object_data.import_id column.
+     */
+    protected const MAX_IMPORT_ID_LENGTH = 50;
+
 
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     protected IRepository $log_repo;
-
     protected IOrigin $origin;
     protected IObjectStatusTransition $transition;
     protected IOriginImplementation $implementation;
@@ -261,7 +273,13 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
      */
     protected function getImportId(IDataTransferObject $object)
     {
-        return self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
+        $import_id = self::IMPORT_PREFIX . $this->origin->getId() . '_' . $object->getExtId();
+
+        if (self::MAX_IMPORT_ID_LENGTH < strlen($import_id)) {
+            return '';
+        }
+
+        return $import_id;
     }
 
     /**

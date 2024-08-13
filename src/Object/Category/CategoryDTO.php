@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\Category;
 
 use InvalidArgumentException;
@@ -52,11 +60,11 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
     /**
      * @var string
      */
-    protected $title;
+    protected $title = '';
     /**
      * @var string
      */
-    protected $description;
+    protected $description = '';
     /**
      * @var int
      */
