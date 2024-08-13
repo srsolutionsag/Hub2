@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 4.5.0
+- [FIX] only generate import ids up to 50 characters.
+- [FIX] match ILIAS 8 ilContainer::addTranslation() type-hints.
+- [FEATURE] general code improvements
+- [FEATURE] reworked GUI classes
+- [FEATURE] New Log-Table and Purge Mechanism to avoid huge data
+- 
 ## Version 4.4.0
 - [FEATURE] allow more options on csv imports
 - [FIX] Error while saving Origin due to already processed Uploads
