@@ -37,7 +37,7 @@ class CategoryParentResolver extends BasicParentResolver
         if ($dto->getParentIdType() === ICategoryDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
             $parent_category = $this->factory->category($dto->getParentId());
             // Tha parent ext ID equals the base of the sync, fallback ref id is used
-            if ($parent_category->getParentId() === $this->fallback_ext_id) {
+            if ($parent_category->getExtId() === $this->fallback_ext_id) {
                 return $this->checkAndReturnRefId($this->fallback_ref_id);
             }
 
