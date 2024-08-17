@@ -270,7 +270,7 @@ class ilHub2OriginsGUI extends ilHub2DispatchableBaseGUI
         $origin->setActive(!$origin->isActive());
         $origin->save();
         $this->main_tpl->setOnScreenMessage('success', $this->plugin->txt('msg_origin_toggled'), true);
-        $this->cancel();
+        $this->ctrl->redirect($this);
     }
 
     protected function execute(array $origins, bool $force_update = false): void
