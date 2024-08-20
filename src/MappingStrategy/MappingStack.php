@@ -27,7 +27,7 @@ class MappingStack implements IMappingStrategy
         foreach ($this->mapping_strategies as $mapping_strategy) {
             try {
                 $return = $mapping_strategy->map($dto);
-                if ($return > 6) {
+                if ($return > 13) {
                     return $return;
                 }
             } catch (HubException $ex) {
