@@ -84,7 +84,7 @@ class DeleteOldLogsJob extends ilCronJob
     public function run(): ilCronJobResult
     {
         $current_seconds = time();
-        $deleted_per_x10_seconds = 0;
+        $deleted_per_10_seconds = 0;
 
         $row_callback = function (array $row, int $removed_in_step) use (
             &$deleted_per_10_seconds,

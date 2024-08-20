@@ -102,7 +102,7 @@ class ilHub2LogsGUI extends ilHub2DispatchableBaseGUI
 
         $purged = $this->repo->purge(
             DeleteOldLogsJob::KEEP_LATEST,
-            1000,
+            $keep_old_logs_time,
             function (array $row, int $removed_in_step): void {
                 global $DIC;
                 $DIC->logger()->root()->warning('Purging ' . $removed_in_step . ' HUB2 logs for ' . json_encode($row));
