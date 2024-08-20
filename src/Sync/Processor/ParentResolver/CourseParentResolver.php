@@ -9,6 +9,7 @@ use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Object\Course\ICourseDTO;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
+use srag\Plugins\Hub2\Object\DTO\NullDTO;
 
 class CourseParentResolver extends BasicParentResolver
 {
@@ -56,7 +57,7 @@ class CourseParentResolver extends BasicParentResolver
 
     public function resolveParentRefId(DataTransferObject $dto): int
     {
-        if (!$dto instanceof CourseDTO) {
+        if (!$dto instanceof CourseDTO && !$dto instanceof NullDTO) {
             throw new \InvalidArgumentException();
         }
 
