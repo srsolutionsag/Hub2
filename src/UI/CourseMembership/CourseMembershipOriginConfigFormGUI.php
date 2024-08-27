@@ -33,17 +33,17 @@ class CourseMembershipOriginConfigFormGUI extends OriginConfigFormGUI
         $delete->setValue(
             $this->origin->properties()->get(
                 CourseMembershipProperties::DELETE_MODE
-            ) ?? CourseMembershipProperties::DELETE_MODE_NONE
+            ) ?? (string) CourseMembershipProperties::DELETE_MODE_NONE
         );
 
         $opt = new ilRadioOption(
             $this->plugin->txt('crs_prop_delete_mode_none'),
-            CourseMembershipProperties::DELETE_MODE_NONE
+            (string) CourseMembershipProperties::DELETE_MODE_NONE
         );
         $delete->addOption($opt);
         $opt = new ilRadioOption(
             $this->plugin->txt('crs_membership_prop_delete_mode_delete'),
-            CourseMembershipProperties::DELETE_MODE_DELETE
+            (string) CourseMembershipProperties::DELETE_MODE_DELETE
         );
         $delete->addOption($opt);
         $this->addItem($delete);
