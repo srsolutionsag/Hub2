@@ -7,6 +7,7 @@ use srag\Plugins\Hub2\Exception\HubException;
 
 class BasicParentResolver implements ParentResolver
 {
+    private bool $try_restore_parent = false;
     /**
      * @var \ilTree
      */
@@ -57,7 +58,7 @@ class BasicParentResolver implements ParentResolver
         $deleted_ref_id = (int) -$node_data['tree'];
 
         // if a parent node of the org unit was deleted, we first have to recover this parent
-        if ($deleted_ref_id !== $ref_id) {
+        if ($this->try_restore_parent && $deleted_ref_id !== $ref_id) {
             $node_data_deleted_parent = $this->tree->getNodeTreeData($deleted_ref_id);
             $this->rep_util->restoreObjects($node_data_deleted_parent['parent'], [$deleted_ref_id]);
             // then move the actual orgunit
