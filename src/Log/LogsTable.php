@@ -146,6 +146,9 @@ class LogsTable implements DataRetrieval
                     $this->translator->txt('logs_level'),
                     $levels
                 )->withValue($this->initial_filter_values['level'] ?? null),
+                'message' => $this->ui_factory->input()->field()->text(
+                    $this->translator->txt('logs_message')
+                )->withValue($this->initial_filter_values['message'] ?? ''),
                 'origin_id' => $this->ui_factory->input()->field()->select(
                     $this->translator->txt('logs_origin_id'),
                     $origin_ids
@@ -161,6 +164,7 @@ class LogsTable implements DataRetrieval
                 'date' => true,
                 'status' => true,
                 'level' => true,
+                'message' => true,
                 'origin_id' => true,
                 'object_ext_id' => true,
                 'object_ilias_id' => true,
@@ -207,6 +211,7 @@ class LogsTable implements DataRetrieval
                         $this->translator->txt('data_table_header_ilias_id')
                     ),
                     'level' => $this->ui_factory->table()->column()->text($this->translator->txt('logs_level')),
+                    'message' => $this->ui_factory->table()->column()->text($this->translator->txt('logs_message')),
                     'additional_data' => $this->ui_factory->table()->column()->text(
                         $this->translator->txt('logs_additional_data')
                     )->withIsSortable(false),
@@ -248,6 +253,7 @@ class LogsTable implements DataRetrieval
                     'object_ext_id' => $item['object_ext_id'],
                     'object_ilias_id' => $ilias_link,
                     'level' => $this->translator->txt('logs_level_' . $item['level']),
+                    'message' => $item['message'],
                     'additional_data' => $this->printAdditioanData($item)
                 ]
             );

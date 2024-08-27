@@ -53,6 +53,7 @@ class LogDBRepository implements LogRepository
                 switch ($column) {
                     case 'object_ext_id':
                     case 'date':
+                    case 'message':
                         $where .= ' AND ' . $column . ' LIKE ' . $this->db->quote('%' . $value . '%', 'text');
                         break;
                     case 'status':
