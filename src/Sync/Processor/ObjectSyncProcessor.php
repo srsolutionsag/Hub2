@@ -104,7 +104,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
                     (new OriginFactory())->getById($this->origin->getId()),
                     $hub_object
                 )->write(
-                    "Existing object found by Mapping Strategy"
+                    "Existing object found by Mapping Strategy `" . get_class($m) . "`"
                 );
             } elseif ($ilias_id < 0) {
                 throw new HubException("Mapping strategy " . get_class($m) . " returns negative value");
