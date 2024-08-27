@@ -577,9 +577,18 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         );
         if ($matches !== []) {
             $category = array_pop($matches);
-            $cache[$cacheKey] = $category['ref_id'];
+            $ref_id = (int) $category['ref_id'];
 
-            return $category['ref_id'];
+            if (false) { // we could restore the permission here.
+                // fix permissions
+                $parent_ref_id = (int) $category['parent'];
+                $obj = new ilObjCategory($ref_id);
+                $obj->setPermissions($parent_ref_id);
+            }
+
+            $cache[$cacheKey] = $ref_id;
+
+            return $ref_id;
         }
         // No category with the given title found, create it!
         $import_id = self::IMPORT_PREFIX . implode(
