@@ -516,7 +516,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param int $parentRefId
      * @return int
      */
-    protected function buildDependenceCategories(CourseDTO $object, $parentRefId)
+    protected function buildDependenceCategories(CourseDTO $object, int $parentRefId): int
     {
         if ($object->getFirstDependenceCategory() !== null) {
             $parentRefId = $this->buildDependenceCategory($object->getFirstDependenceCategory(), $parentRefId, 1);
@@ -553,7 +553,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @param int    $level
      * @return int
      */
-    protected function buildDependenceCategory(string $title, int $parent_ref_id, $level)
+    protected function buildDependenceCategory(string $title, int $parent_ref_id, int $level): int
     {
         static $cache = [];
         // We use a cache for created dependence categories to save some SQL queries
@@ -569,7 +569,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
         $matches = array_filter(
             $categories,
-            static fn(array $category): bool => strcmp($title_santizer($category['title']), $title_santizer($title))
+            static function (array $category) use ($title_santizer, $title): bool {
+                $string_1 = $title_santizer($category['title']);
+                $string_2 = $title_santizer($title);
+                return strcmp($string_1, $string_2) === 0;
+            }
         );
         if ($matches !== []) {
             $category = array_pop($matches);
