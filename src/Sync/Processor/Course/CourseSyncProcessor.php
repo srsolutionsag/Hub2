@@ -561,8 +561,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         if (isset($cache[$cacheKey])) {
             return $cache[$cacheKey];
         }
+
+        $title_santizer = static function (string $title): string {
+            return trim($title);
+        };
+
         $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
-        $matches = array_filter($categories, static fn (array $category): bool => $category['title'] === $title);
+        $matches = array_filter(
+            $categories,
+            static fn(array $category): bool => strcmp($title_santizer($category['title']), $title_santizer($title))
+        );
         if ($matches !== []) {
             $category = array_pop($matches);
             $cache[$cacheKey] = $category['ref_id'];
