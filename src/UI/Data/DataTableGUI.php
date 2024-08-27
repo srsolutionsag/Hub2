@@ -277,7 +277,7 @@ class DataTableGUI extends ilTable2GUI
                 case "ilias_id":
                     $this->tpl->setVariable(
                         'VALUE',
-                        $this->renderILIASLinkForIliasId($value, $a_set[self::F_EXT_ID], $origin)
+                        $this->renderILIASLinkForIliasId((string) $value, $a_set[self::F_EXT_ID], $origin)
                     );
                     break;
                 case self::F_ORIGIN_ID:
