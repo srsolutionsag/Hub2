@@ -280,7 +280,7 @@ class LogsTable implements DataRetrieval
             if (is_array($value)) {
                 $result .= $this->nestedImploder($value);
             } else {
-                $result .= $value;
+                $result .= $value . '<br>';
             }
         }
         return $result;
@@ -300,6 +300,11 @@ class LogsTable implements DataRetrieval
                     if ($json = json_decode($unserialized->serialize(), true)) {
                         return $json;
                     }
+
+                    if ($unserialized instanceof \ArrayObject) {
+                        return $unserialized->getArrayCopy();
+                    }
+
                     return $unserialized->serialize();
                 }
                 return $value;
