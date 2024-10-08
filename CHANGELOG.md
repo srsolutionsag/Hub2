@@ -1,12 +1,27 @@
 # Changelog
 
 ## Version 4.5.0
+- [FIX] pretty print array objects in additional data
+- [FIX] prepared restoring permissions
+- [FIX] titles of dependent categories
+- [FIX] disabled restoring of parent
+- [FIX] find dependent category
+- [FIX] show name of mapping strategy in log
+- [FIX]issue in status table with empty ilias_id
+- [FIX] type of rediooptions
+- [FIX] added message to logs table
+- [FIX] allow NullDTo as well
+- [FIX] ignore existing accounts > 13
+- [FIX] delete old logs parameter
+- [FIX] call to undefined method ilHub2OriginsGUI::cancel().
+- [FIX] undefined property ActiveRecord::\$parent_id due to wrong method call.
+- [FIX] wrong default value type
 - [FIX] only generate import ids up to 50 characters.
 - [FIX] match ILIAS 8 ilContainer::addTranslation() type-hints.
 - [FEATURE] general code improvements
 - [FEATURE] reworked GUI classes
 - [FEATURE] New Log-Table and Purge Mechanism to avoid huge data
-- 
+
 ## Version 4.4.0
 - [FEATURE] allow more options on csv imports
 - [FIX] Error while saving Origin due to already processed Uploads
