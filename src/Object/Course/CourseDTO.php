@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\Course;
 
 use ilDate;
@@ -12,6 +20,7 @@ use srag\Plugins\Hub2\Object\DTO\TaxonomyAndMetadataAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\LanguageCheck;
 use srag\Plugins\Hub2\Object\DTO\NewsSettingsAwareDataTransferObject;
 use srag\Plugins\Hub2\Object\DTO\LearningProgressSettingsAwareDataTransferObject;
+use srag\Plugins\Hub2\Object\DTO\CalendarSettingsAwareDataTransferObject;
 
 /**
  * Class CourseDTO
@@ -25,6 +34,7 @@ class CourseDTO extends DataTransferObject implements ICourseDTO
     use MappingStrategyAwareDataTransferObject;
     use DidacticTemplateAwareDataTransferObject;
     use NewsSettingsAwareDataTransferObject;
+    use CalendarSettingsAwareDataTransferObject;
     use LearningProgressSettingsAwareDataTransferObject;
     use LanguageCheck;
 

@@ -11,22 +11,23 @@
 namespace srag\Plugins\Hub2\Object\DTO;
 
 use srag\Plugins\Hub2\Object\General\NewsSettings;
+use srag\Plugins\Hub2\Object\General\CalendarSettings;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
-trait NewsSettingsAwareDataTransferObject
+trait CalendarSettingsAwareDataTransferObject
 {
-    protected ?NewsSettings $newsSettings = null;
+    protected ?CalendarSettings $calendarSettings = null;
 
-    public function getNewsSettings(): ?NewsSettings
+    public function getCalendarSettings(): ?CalendarSettings
     {
-        return $this->newsSettings;
+        return $this->calendarSettings;
     }
 
-    public function setNewsSettings(?NewsSettings $newsSettings): INewsSettingsAwareDataTransferObject
+    public function setCalendarSettings(?CalendarSettings $calendarSettings): ICalendarSettingsAwareDataTransferObject
     {
-        $this->newsSettings = $newsSettings;
+        $this->calendarSettings = $calendarSettings;
         return $this;
     }
 }

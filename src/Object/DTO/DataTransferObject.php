@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\DTO;
 
 use ArrayObject;
@@ -144,13 +152,13 @@ abstract class DataTransferObject implements IDataTransferObject
         return $this;
     }
 
-    protected function sleepValue(array &$data, string $key)
+    protected function sleepValue(array &$data, string $key): void
     {
-        $data[$key] = $this->{$key};
+        $data[$key] = $this->{$key} ?? null;
     }
 
-    protected function wakeUpValue(array $data, string $key)
+    protected function wakeUpValue(array $data, string $key): void
     {
-        $this->{$key} = $data[$key];
+        $this->{$key} = $data[$key] ?? null;
     }
 }
