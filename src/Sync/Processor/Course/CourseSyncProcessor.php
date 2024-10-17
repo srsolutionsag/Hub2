@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -32,6 +40,7 @@ use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CourseParentResolver;
 use srag\Plugins\Hub2\Sync\Processor\General\NewsSettingsSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\General\LearningProgressSettingsSyncProcessor;
+use srag\Plugins\Hub2\Sync\Processor\General\CalendarSettingsSyncProcessor;
 
 /**
  * Class CourseSyncProcessor
@@ -45,6 +54,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
     use NewsSettingsSyncProcessor;
+    use CalendarSettingsSyncProcessor;
     use LearningProgressSettingsSyncProcessor;
 
     /**
@@ -202,6 +212,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
 
         $this->handleNewsSettings($dto, $ilObjCourse);
+
+        $this->handleCalendarSettings($dto, $ilObjCourse);
 
         $this->handleLPSettings($dto, $ilObjCourse);
 
@@ -431,6 +443,11 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             $this->handleNewsSettings($dto, $ilObjCourse);
         }
 
+        // Calendar Settings
+        if ($this->props->updateDTOProperty("calendarSettings")) {
+            $this->handleCalendarSettings($dto, $ilObjCourse);
+        }
+
         // LP Settings
         if ($this->props->updateDTOProperty("learningProgressSettings")) {
             $this->handleLPSettings($dto, $ilObjCourse);
@@ -562,9 +579,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $cache[$cacheKey];
         }
 
-        $title_santizer = static function (string $title): string {
-            return trim($title);
-        };
+        $title_santizer = static fn (string $title): string => trim($title);
 
         $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
         $matches = array_filter(
