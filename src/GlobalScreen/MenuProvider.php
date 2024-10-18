@@ -8,7 +8,7 @@
  *
  *********************************************************************/
 
-namespace srag\Plugins\Hub2\Menu;
+namespace srag\Plugins\Hub2\GlobalScreen;
 
 use hub2MainGUI;
 use ilAdministrationGUI;
@@ -27,7 +27,7 @@ use srag\Plugins\Hub2\Config\ArConfig;
  * @author  studer + raimann ag - Team Custom 1 <support-custom1@studer-raimann.ch>
  * @since   ILIAS 5.4
  */
-class Menu extends AbstractStaticPluginMainMenuProvider
+class MenuProvider extends AbstractStaticPluginMainMenuProvider
 {
     public function getStaticTopItems(): array
     {
