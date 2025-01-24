@@ -72,9 +72,11 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 
             if ($summary_email !== []) {
                 $mail->To($summary_email);
-
-                $mail->Subject($this->plugin->txt("summary_notification"));
-                $mail->Body($this->renderOneSync($originSync));
+                
+                $txt = $this->plugin->txt("summary_notification");
+                $mail->Subject(sprintf($txt, $originSync->getOrigin()->getTitle()));
+                $body = nl2br(str_replace("\n\n", "\n", $this->renderOneSync($originSync)));
+                $mail->Body($body);
 
                 $mail->Send();
             }
