@@ -22,7 +22,7 @@ class ByEmail extends AMappingStrategy implements IMappingStrategy
 
         $login = false;
         $user_ids_by_email = ilObjUser::getUserIdsByEmail($dto->getEmail());
-        $login = $user_ids_by_email[0];
+        $login = $user_ids_by_email[0] ?? false;
 
         if (!$login) {
             return 0;

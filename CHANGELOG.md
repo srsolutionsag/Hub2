@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 4.6.0
+- [FIX] ByEmail array access in some cases
+- [FEATURE] calendar settings in courses
+ 
 ## Version 4.5.0
 - [FIX] pretty print array objects in additional data
 - [FIX] prepared restoring permissions
