@@ -18,6 +18,7 @@ use srag\Plugins\Hub2\Sync\Summary\IOriginSyncSummary;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use Throwable;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
+use ILIAS\Cron\Schedule\CronJobScheduleType;
 
 /**
  * Class RunSync
@@ -83,9 +84,9 @@ class RunSync extends ilCronJob
         return true;
     }
 
-    public function getDefaultScheduleType(): int
+    public function getDefaultScheduleType(): CronJobScheduleType
     {
-        return ilCronJob::SCHEDULE_TYPE_DAILY;
+        return CronJobScheduleType::SCHEDULE_TYPE_DAILY;
     }
 
     /**

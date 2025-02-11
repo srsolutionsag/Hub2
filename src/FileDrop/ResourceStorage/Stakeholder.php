@@ -21,4 +21,8 @@ class Stakeholder extends AbstractResourceStakeholder
         return 6;
     }
 
+    public function __construct()
+    {
+    }
+
 }

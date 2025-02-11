@@ -13,8 +13,6 @@ use ilHub2Plugin;
 abstract class AbstractResult extends ilCronJobResult
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    public const STATUS_OK = 3;
-    public const STATUS_CRASHED = 4;
 
     /**
      * AbstractResult constructor

@@ -102,15 +102,17 @@ final class Factory implements IFactory
         $log->withMessage($ex->getMessage());
         $relevant = true;
         $filter = static function (array $stack) use (&$relevant): bool {
-            $relevant = strpos($stack["file"], 'OriginSync.php') === false && $relevant;
+            $relevant = strpos($stack["file"] ?? '', 'OriginSync.php') === false && $relevant;
             return $relevant;
         };
         $stack = array_filter($ex->getTrace(), $filter);
 
         $closure = static function (array $stack): string {
             // $file = str_replace(getcwd(), "", $stack["file"]);
-            $file = basename($stack["file"]);
-            return "$file({$stack["line"] })->{$stack["function"]}()";
+            $file = basename($stack["file"] ?? '');
+            $line = $stack["line"] ?? '';
+            $function = $stack["function"] ?? '';
+            return "$file({$line })->{$function}()";
         };
         $small_stack = array_map($closure, $stack);
         $additional = (object) $small_stack;

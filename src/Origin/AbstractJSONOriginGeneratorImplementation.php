@@ -50,7 +50,7 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
 
     protected function getStringSanitizer(): \Closure
     {
-        return static fn (string $string): string => utf8_encode(utf8_decode($string));
+        return static fn(string $string): string => @utf8_encode(utf8_decode($string));
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
 
     protected function getFilter(): \Closure
     {
-        return static fn (array $item): bool => true;
+        return static fn(array $item): bool => true;
     }
 
     protected function getFilters(): array

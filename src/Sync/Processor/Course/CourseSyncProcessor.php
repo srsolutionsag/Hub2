@@ -328,8 +328,9 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
     protected function sendMailNotifications(CourseDTO $dto, ilObjCourse $ilObjCourse)
     {
+        global $DIC;
         $mail = new ilMimeMail();
-        $sender_factory = new ilMailMimeSenderFactory($this->settings);
+        $sender_factory = $DIC->mail()->mime()->senderFactory();
         if ($this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)) {
             $sender = $sender_factory->userByEmailAddress(
                 $this->props->get(CourseProperties::CREATE_NOTIFICATION_FROM)
@@ -579,7 +580,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             return $cache[$cacheKey];
         }
 
-        $title_santizer = static fn (string $title): string => trim($title);
+        $title_santizer = static fn(string $title): string => trim($title);
 
         $categories = $this->tree->getChildsByType($parent_ref_id, 'cat');
         $matches = array_filter(

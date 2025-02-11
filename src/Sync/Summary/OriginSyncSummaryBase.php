@@ -35,7 +35,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     public function __construct()
     {
         global $DIC;
-        $this->sender_factory = $DIC['mail.mime.sender.factory'];
+        $this->sender_factory = $DIC->mail()->mime()->senderFactory();
         $this->plugin = ilHub2Plugin::getInstance();
         $this->log_repo = LogRepository::getInstance();
     }
@@ -72,7 +72,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 
             if ($summary_email !== []) {
                 $mail->To($summary_email);
-                
+
                 $txt = $this->plugin->txt("summary_notification");
                 $mail->Subject(sprintf($txt, $originSync->getOrigin()->getTitle()));
                 $body = nl2br(str_replace("\n\n", "\n", $this->renderOneSync($originSync)));
@@ -143,7 +143,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
                     },
                     array_filter(
                         Log::$levels,
-                        fn (int $level): bool => (is_countable(
+                        fn(int $level): bool => (is_countable(
                             $this->log_repo->getKeptLogs($originSync->getOrigin(), $level)
                         ) ? count($this->log_repo->getKeptLogs($originSync->getOrigin(), $level)) : 0) > 0
                     )

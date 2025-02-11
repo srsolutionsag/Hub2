@@ -12,7 +12,7 @@ trait Helper
     /**
      * @param string $string
      */
-    protected function clearString($string) : string
+    protected function clearString($string): string
     {
         $replaces = [
             'ä' => 'ae',
@@ -35,8 +35,8 @@ trait Helper
         $string = strtr($string, $replaces);
 
         return strtr(
-            utf8_decode($string),
-            utf8_decode('ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ'),
+            @utf8_decode($string),
+            @utf8_decode('ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ'),
             'SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy'
         );
     }

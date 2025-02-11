@@ -18,6 +18,7 @@ use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
 use srag\Plugins\Hub2\Translator;
 use srag\Plugins\Hub2\Log\LogDBRepository;
 use srag\Plugins\Hub2\Config\ArConfig;
+use ILIAS\Cron\Schedule\CronJobScheduleType;
 
 /**
  * Class RunSync
@@ -71,9 +72,9 @@ class DeleteOldLogsJob extends ilCronJob
         return true;
     }
 
-    public function getDefaultScheduleType(): int
+    public function getDefaultScheduleType(): CronJobScheduleType
     {
-        return self::SCHEDULE_TYPE_DAILY;
+        return CronJobScheduleType::SCHEDULE_TYPE_DAILY;
     }
 
     public function getDefaultScheduleValue(): ?int

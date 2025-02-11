@@ -52,7 +52,7 @@ class Csv
         string $separator = self::SEPARATOR_DEFAULT,
         array $bad_enclosures = []
     ) {
-        $this->sanitizer = fn (string $s): string => utf8_encode(utf8_decode($s));
+        $this->sanitizer = fn(string $s): string => @utf8_encode(utf8_decode($s));
         $this->enclosure = $enclosure;
         $this->separator = $separator;
         $this->file_path = $file_path;
@@ -88,8 +88,8 @@ class Csv
     {
         $this->parsed_csv = array_filter(
             $this->parsed_csv,
-            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v),
-            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? fn ($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
+            (($closure ?? fn($v, $k): bool => !empty($v)) ?? fn($v, $k): bool => !empty($v)) ?? fn($v, $k): bool => !empty($v),
+            (($closure ?? fn($v, $k): bool => !empty($v)) ?? fn($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? fn($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
         );
     }
 
@@ -144,7 +144,7 @@ class Csv
 
     protected function parseCSVFile(string $path_to_file): void
     {
-        $this->parsed_csv = array_map(fn (string $line): array => str_getcsv(
+        $this->parsed_csv = array_map(fn(string $line): array => str_getcsv(
             $this->sanitizeEnclosures($this->removeBOM($line)),
             $this->getSeparator(),
             $this->getEnclosure()
