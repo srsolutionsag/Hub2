@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 4.7.0
+- [FIX] Summary Mail Title
+- [FEATURE] support for User-Remapping
+- [FEATURE] remap-tool for courses
+
 ## Version 4.6.0
 - [FIX] ByEmail array access in some cases
 - [FEATURE] calendar settings in courses
