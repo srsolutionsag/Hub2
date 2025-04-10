@@ -18,6 +18,7 @@ use srag\Plugins\Hub2\Exception\HubException;
  * @ilCtrl_calls      ilHub2DispatcherGUI: ilHub2OriginsGUI
  * @ilCtrl_calls      ilHub2DispatcherGUI: ilHub2ConfigGUI
  * @ilCtrl_calls      ilHub2DispatcherGUI: ilHub2SettingsGUI
+ * @ilCtrl_calls      ilHub2DispatcherGUI: ilHub2RemapGUI
  */
 class ilHub2DispatcherGUI extends ilHub2DispatchableBaseGUI
 {

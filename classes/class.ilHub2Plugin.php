@@ -14,7 +14,7 @@ use srag\Plugins\Hub2\Config\ArConfigOld;
 use srag\Plugins\Hub2\Jobs\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Jobs\RunSync;
 use srag\Plugins\Hub2\Log\Log;
-use srag\Plugins\Hub2\Menu\Menu;
+use srag\Plugins\Hub2\GlobalScreen\MenuProvider;
 use srag\Plugins\Hub2\Object\Category\ARCategory;
 use srag\Plugins\Hub2\Object\CompetenceManagement\ARCompetenceManagement;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -29,6 +29,7 @@ use srag\Plugins\Hub2\Object\User\ARUser;
 use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\Jobs\CronNotifier;
 use srag\Plugins\Hub2\Translator;
+use srag\Plugins\Hub2\GlobalScreen\ToolProvider;
 
 /**
  * Class ilHub2Plugin
@@ -54,7 +55,8 @@ class ilHub2Plugin extends ilCronHookPlugin implements Translator
     {
         global $DIC;
         if ($DIC->offsetExists('global_screen')) {
-            $this->provider_collection->setMainBarProvider(new Menu($DIC, $this));
+            $this->provider_collection->setMainBarProvider(new MenuProvider($DIC, $this));
+            $this->provider_collection->setToolProvider(new ToolProvider($DIC, $this));
         }
     }
 
@@ -110,7 +112,7 @@ class ilHub2Plugin extends ilCronHookPlugin implements Translator
     public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
     {
         global $DIC;
-        return new Menu($DIC, $this);
+        return new MenuProvider($DIC, $this);
     }
 
 
