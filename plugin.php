@@ -3,7 +3,7 @@
 require_once __DIR__ . "/vendor/autoload.php";
 
 $id = 'hub2';
-$version = '4.7.0';
+$version = '5.0.0';
 $ilias_min_version = '9.0';
 $ilias_max_version = '9.999';
 $responsible = 'sr.solutions';
