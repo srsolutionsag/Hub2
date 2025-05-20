@@ -296,6 +296,8 @@ class ObjectFactory implements IObjectFactory
             $ext_ids[] = $d->ext_id;
         }
 
+        $r->closeCursor();
+
         return $ext_ids;
     }
 

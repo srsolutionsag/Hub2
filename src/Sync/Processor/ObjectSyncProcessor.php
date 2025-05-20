@@ -217,10 +217,15 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
                 break;
 
             case IObject::STATUS_IGNORED:
+                if(method_exists($this->implementation, 'afterIgnoredILIASObject')) {
+                    $this->implementation->afterIgnoredILIASObject(
+                        $hook_object
+                    );
+                }
+                break;
             case IObject::STATUS_FAILED:
                 // Nothing to do here, object is ignored
                 break;
-
             default:
                 throw new HubException(
                     "Unrecognized intermediate status '{$hub_object->getStatus()}' while processing {$hub_object}"
@@ -242,6 +247,7 @@ abstract class ObjectSyncProcessor implements IObjectSyncProcessor
         }
 
         $hub_object->store();
+        $hub_object->flush();
     }
 
     /**
