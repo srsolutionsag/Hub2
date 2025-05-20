@@ -183,27 +183,46 @@ class OriginSync implements IOriginSync
         }
         $notifier->notify('end processing outdated DTOs');
 
-        $all_ext_ids = $this->factory->{$type . 'sExtIds'}();
-        if ($this->implementation->hookConfig()->hasAllObjectHook()) {
-            /*$notifier->notify('start handle all objects');
-            foreach ($all_ext_ids as $all_ext_id) {
-                $hook_object = new HookObject($object = $this->factory->$type($all_ext_id), new NullDTO($all_ext_id));
-                $this->implementation->handleAllObjects($hook_object);
-            }
-            $notifier->notify('end handle all objects');*/
-        }
+        if (
+            ($all_hook = $this->implementation->hookConfig()->hasAllObjectHook())
+            || ($no_longer_hook = $this->implementation->hookConfig()->hasNoLongerDeliveredObjectHook())) {
+            $all_ext_ids = $this->factory->{$type . 'sExtIds'}();
 
-        // After that we propose all objects to the origin which are no longer devlivered
-        $missing = array_diff($all_ext_ids, $ext_ids_delivered);
-        foreach ($missing as $missing_ext_id) {
-            $hook_object = new HookObject(
-                $object = $this->factory->$type($missing_ext_id),
-                new NullDTO($missing_ext_id)
-            );
-            $this->implementation->handleNoLongerDeliveredObject($hook_object);
+            if ($all_hook) {
+                $notifier->notify('start handle all objects');
+                foreach ($all_ext_ids as $all_ext_id) {
+                    $notifier->notifySometimes('processing all objects');
+                    $hook_object = new HookObject(
+                        $object = $this->factory->$type($all_ext_id), new NullDTO($all_ext_id)
+                    );
+                    $this->implementation->handleAllObjects($hook_object);
+                    unset($hook_object);
+                    $object->flush();
+                }
+                $notifier->notify('end handle all objects');
+            }
+
+            if ($no_longer_hook) {
+                // After that we propose all objects to the origin which are no longer devlivered
+                $missing = array_diff($all_ext_ids, $ext_ids_delivered);
+                foreach ($missing as $missing_ext_id) {
+                    $notifier->notifySometimes('processing missing objects');
+                    $hook_object = new HookObject(
+                        $object = $this->factory->$type($missing_ext_id),
+                        new NullDTO($missing_ext_id)
+                    );
+                    $this->implementation->handleNoLongerDeliveredObject($hook_object);
+                    unset($hook_object);
+                    $object->flush();
+                }
+            }
+
+            unset($all_ext_ids, $ext_ids_delivered, $missing);
         }
 
         $this->implementation->afterSync();
+
+
 
         $origin = $this->getOrigin();
         $origin->setLastRunToNow();

@@ -71,6 +71,7 @@ interface IOriginImplementation
     public function beforeUpdateILIASObject(HookObject $hook);
 
     public function afterUpdateILIASObject(HookObject $hook);
+//    public function afterIgnoredILIASObject(HookObject $hook);
 
     public function beforeDeleteILIASObject(HookObject $hook);
 

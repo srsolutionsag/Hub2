@@ -13,14 +13,24 @@ namespace srag\Plugins\Hub2\Origin\Hook;
 class Config
 {
     protected bool $all_object_hook = false;
-    public function __construct(bool $all_object_hook = false)
-    {
+    protected bool $no_longer_hhok = false;
+
+    public function __construct(
+        bool $all_object_hook = false,
+        bool $no_longer_hhok = false
+    ) {
         $this->all_object_hook = $all_object_hook;
+        $this->no_longer_hhok = $no_longer_hhok;
     }
 
     public function hasAllObjectHook(): bool
     {
         return $this->all_object_hook;
+    }
+
+    public function hasNoLongerDeliveredObjectHook(): bool
+    {
+        return $this->no_longer_hhok;
     }
 
     // more to come
