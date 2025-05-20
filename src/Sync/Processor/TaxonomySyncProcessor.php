@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilContainer;
@@ -23,7 +31,7 @@ trait TaxonomySyncProcessor
         ITaxonomyAwareDataTransferObject $dto,
         ITaxonomyAwareObject $iobject,
         ilObject $ilias_object
-    ) : void {
+    ): void {
         if ($dto->getTaxonomies() !== []) {
             $this->handleDTOSpecificTaxonomySettings($dto, $ilias_object);
 
@@ -34,7 +42,7 @@ trait TaxonomySyncProcessor
         }
     }
 
-    private function handleDTOSpecificTaxonomySettings(ITaxonomyAwareDataTransferObject $dto, ilObject $object) : void
+    private function handleDTOSpecificTaxonomySettings(ITaxonomyAwareDataTransferObject $dto, ilObject $object): void
     {
         switch (true) {
             case $dto instanceof CourseDTO:

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Log;
 
 use ActiveRecord;
@@ -33,16 +41,12 @@ class Log extends ActiveRecord implements ILog
         return static::TABLE_NAME;
     }
 
-    /**
-     * @var array
-     */
-    public static $levels
-        = [
-            self::LEVEL_INFO => self::LEVEL_INFO,
-            self::LEVEL_WARNING => self::LEVEL_WARNING,
-            self::LEVEL_EXCEPTION => self::LEVEL_EXCEPTION,
-            self::LEVEL_CRITICAL => self::LEVEL_CRITICAL,
-        ];
+    public static array $levels = [
+        self::LEVEL_INFO => self::LEVEL_INFO,
+        self::LEVEL_WARNING => self::LEVEL_WARNING,
+        self::LEVEL_EXCEPTION => self::LEVEL_EXCEPTION,
+        self::LEVEL_CRITICAL => self::LEVEL_CRITICAL,
+    ];
     /**
      * @var int
      * @con_has_field    true
@@ -130,6 +134,7 @@ class Log extends ActiveRecord implements ILog
      * Log constructor
      * @param int              $primary_key_value
      * @param arConnector|null $connector
+     * @noinspection MagicMethodsValidityInspection
      */
     final public function __construct()
     {
@@ -138,12 +143,10 @@ class Log extends ActiveRecord implements ILog
         //parent::__construct($primary_key_value, $connector);
     }
 
-
     public function getLogId(): int
     {
         return $this->log_id;
     }
-
 
     public function withLogId(int $log_id): ILog
     {
@@ -152,12 +155,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getTitle(): string
     {
         return $this->title;
     }
-
 
     public function withTitle(string $title): ILog
     {
@@ -166,12 +167,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getMessage(): string
     {
         return $this->message;
     }
-
 
     public function withMessage(string $message): ILog
     {
@@ -180,12 +179,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getDate(): ilDateTime
     {
         return $this->date;
     }
-
 
     public function withDate(ilDateTime $date): ILog
     {
@@ -209,12 +206,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getLevel(): int
     {
         return $this->level;
     }
-
 
     public function withLevel(int $level): ILog
     {
@@ -223,12 +218,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getAdditionalData(): stdClass
     {
         return $this->additional_data;
     }
-
 
     public function withAdditionalData(stdClass $additional_data): ILog
     {
@@ -237,7 +230,6 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function addAdditionalData(string $key, $value): ILog
     {
         $this->additional_data->{$key} = $value;
@@ -245,12 +237,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
-    public function getOriginId(): int
+    public function getOriginId(): ?int
     {
         return $this->origin_id;
     }
-
 
     public function withOriginId(int $origin_id): ILog
     {
@@ -259,12 +249,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getOriginObjectType(): string
     {
         return $this->origin_object_type;
     }
-
 
     public function withOriginObjectType(string $origin_object_type): ILog
     {
@@ -273,12 +261,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getObjectExtId()/*: ?string*/
     {
         return $this->object_ext_id;
     }
-
 
     public function withObjectExtId(/*?*/
         string $object_ext_id = null
@@ -288,12 +274,10 @@ class Log extends ActiveRecord implements ILog
         return $this;
     }
 
-
     public function getObjectIliasId()/*: ?int*/
     {
         return $this->object_ilias_id;
     }
-
 
     public function withObjectIliasId(/*?*/
         int $object_ilias_id = null
@@ -302,7 +286,6 @@ class Log extends ActiveRecord implements ILog
 
         return $this;
     }
-
 
     public function write(string $message, int $level = self::LEVEL_INFO): void/*: void*/
     {

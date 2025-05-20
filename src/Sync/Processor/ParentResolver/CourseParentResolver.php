@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\ParentResolver;
 
 use srag\Plugins\Hub2\Object\Course\CourseDTO;
@@ -41,8 +49,7 @@ class CourseParentResolver extends BasicParentResolver
         $originRepository = new OriginRepository();
         $filtered = array_filter(
             $originRepository->categories(),
-            fn ($origin): bool =>
-                /** @var IOrigin $origin */
+            fn ($origin): bool => /** @var IOrigin $origin */
                 $origin->getId() === $linked_origin_id
         );
         $origin = array_pop($filtered);
@@ -60,12 +67,10 @@ class CourseParentResolver extends BasicParentResolver
         if (!$dto instanceof CourseDTO && !$dto instanceof NullDTO) {
             throw new \InvalidArgumentException();
         }
-
         // Parent ID type is Ref-ID
         if ($dto->getParentIdType() === ICourseDTO::PARENT_ID_TYPE_REF_ID) {
             return $this->resolveRefIdForDTOwithRefIdParentType($dto);
         }
-
         // Parent ID type is External ID
         if ($dto->getParentIdType() === ICourseDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
             if (!$this->linked_origin instanceof IOrigin) {
@@ -82,7 +87,6 @@ class CourseParentResolver extends BasicParentResolver
 
             return $this->checkAndReturnRefId($category->getILIASId());
         }
-
         return $this->checkAndReturnRefId($this->fallback_ref_id);
     }
 }

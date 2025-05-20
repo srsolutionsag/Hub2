@@ -1,8 +1,14 @@
 <?php
 
-require_once __DIR__ . "/../vendor/autoload.php";
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
 
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+require_once __DIR__ . "/../vendor/autoload.php";
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,5 +21,5 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractHub2Tests extends TestCase
 {
-    use MockeryPHPUnitIntegration;
+    //    use MockeryPHPUnitIntegration;
 }

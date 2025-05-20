@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\Session;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -100,8 +108,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
         // Properties
         foreach (self::getProperties() as $property) {
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $ilObjSession->$setter($dto->$getter());
             }
@@ -143,8 +151,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             if (!$this->props->updateDTOProperty($property)) {
                 continue;
             }
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $ilObjSession->$setter($dto->$getter());
             }
@@ -188,7 +196,6 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
     /**
      * @param int $ilias_id
-     * @return ilObjSession|null
      */
     protected function findILIASObject($ilias_id): ?\ilObjSession
     {
@@ -221,9 +228,8 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
             $possible_parents = array_merge($originRepository->groups(), $originRepository->courses());
             $arrayFilter = array_filter(
                 $possible_parents,
-                fn ($origin): bool =>
-                    /** @var IOrigin $origin */
-                    (int) $origin->getId() == $linkedOriginId
+                fn ($origin): bool => /** @var IOrigin $origin */
+                    $origin->getId() == $linkedOriginId
             );
             $origin = array_pop(
                 $arrayFilter
@@ -257,10 +263,12 @@ class SessionSyncProcessor extends ObjectSyncProcessor implements ISessionSyncPr
 
     /**
      * @param bool $force
-     * @return ilObjSession
      */
-    protected function setDataForFirstAppointment(SessionDTO $object, ilObjSession $ilObjSession, $force = false): ilObjSession
-    {
+    protected function setDataForFirstAppointment(
+        SessionDTO $object,
+        ilObjSession $ilObjSession,
+        $force = false
+    ): ilObjSession {
         $appointments = $ilObjSession->getAppointments();
         $first = $ilObjSession->getFirstAppointment();
         if ($this->props->updateDTOProperty('start') || $force) {

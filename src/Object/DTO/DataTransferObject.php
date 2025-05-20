@@ -24,12 +24,12 @@ use srag\Plugins\Hub2\Sync\Processor\HashCodeComputer;
 abstract class DataTransferObject implements IDataTransferObject
 {
     use HashCodeComputer;
-
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
      */
-    private $ext_id = '';
+    private $ext_id;
+
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
      */
@@ -51,18 +51,15 @@ abstract class DataTransferObject implements IDataTransferObject
         $this->ext_id = $ext_id;
     }
 
-
     public function getExtId()
     {
         return $this->ext_id;
     }
 
-
     public function getPeriod()
     {
         return $this->period;
     }
-
 
     public function setPeriod($period)
     {
@@ -70,7 +67,6 @@ abstract class DataTransferObject implements IDataTransferObject
 
         return $this;
     }
-
 
     public function getData()
     {
@@ -81,7 +77,6 @@ abstract class DataTransferObject implements IDataTransferObject
 
         return $data;
     }
-
 
     public function setData(array $data)
     {
@@ -100,14 +95,11 @@ abstract class DataTransferObject implements IDataTransferObject
     protected function getProperties()
     {
         return array_filter(
-            array_keys(get_class_vars(get_class($this))),
+            array_keys(get_class_vars(static::class)),
             fn (string $property): bool => $property !== "should_deleted"
         );
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return implode(
@@ -119,12 +111,10 @@ abstract class DataTransferObject implements IDataTransferObject
         );
     }
 
-
     public function shouldDeleted(): bool
     {
         return $this->should_deleted;
     }
-
 
     public function setShouldDeleted(bool $should_deleted)
     {
@@ -133,17 +123,17 @@ abstract class DataTransferObject implements IDataTransferObject
         return $this;
     }
 
-
     public function getAdditionalData(): Serializable
     {
-        $object = unserialize($this->additionalData);
+        /** @noinspection UnserializeExploitsInspection */
+        $object = unserialize($this->additionalData, true);
         if (!$object) {
+            /** @noinspection UnserializeExploitsInspection */
             return unserialize(serialize(new ArrayObject()));
         }
 
         return $object;
     }
-
 
     public function withAdditionalData(Serializable $additionalData)
     {

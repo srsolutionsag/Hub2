@@ -1,8 +1,14 @@
 <?php
 
-namespace srag\Plugins\Hub2\Config;
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
 
-use srag\Plugins\Hub2\Exception\ActiveRecordConfigException;
+namespace srag\Plugins\Hub2\Config;
 
 /**
  * Class ActiveRecordConfigRepository
@@ -16,11 +22,17 @@ use srag\Plugins\Hub2\Exception\ActiveRecordConfigException;
 final class ActiveRecordConfigRepository extends AbstractRepository
 {
     /**
-     * @var self|null
-     *
+     * @readonly
+     */
+    private string $table_name;
+    /**
+     * @readonly
+     */
+    private array $fields;
+    /**
      * @deprecated
      */
-    protected static $instance;
+    private static ?\srag\Plugins\Hub2\Config\ActiveRecordConfigRepository $instance = null;
 
     /**
      *
@@ -36,25 +48,23 @@ final class ActiveRecordConfigRepository extends AbstractRepository
     }
 
     /**
-     * @deprecated
-     */
-    protected string $table_name;
-    /**
-     * @deprecated
-     */
-    protected array $fields;
-
-    /**
      * ActiveRecordConfigRepository constructor
      *
      *
      * @deprecated
      */
-    protected function __construct(string $table_name, array $fields)
-    {
+    protected function __construct(
+        string $table_name,
+        array $fields
+    ) {
+        /**
+         * @deprecated
+         */
         $this->table_name = $table_name;
+        /**
+         * @deprecated
+         */
         $this->fields = $fields;
-
         parent::__construct();
     }
 

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\Group;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -11,12 +19,9 @@ use ilRepUtil;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
-use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\Config\Group\GroupOriginConfig;
-use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginImplementation;
-use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
 use srag\Plugins\Hub2\Sync\Processor\DidacticTemplateSyncProcessor;
 use srag\Plugins\Hub2\Sync\IObjectStatusTransition;
@@ -24,7 +29,6 @@ use srag\Plugins\Hub2\Sync\Processor\MetadataSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ObjectSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\TaxonomySyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\ParentResolver\GroupParentResolver;
-use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 
 /**
  * Class GroupSyncProcessor
@@ -36,6 +40,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     use TaxonomySyncProcessor;
     use MetadataSyncProcessor;
     use DidacticTemplateSyncProcessor;
+    protected IGroupActivities $groupActivities;
 
     private GroupParentResolver $parent_resolver;
 
@@ -47,7 +52,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
      * @var GroupOriginConfig
      */
     protected IOriginConfig $config;
-    protected IGroupActivities $groupActivities;
     /**
      * @var array
      */
@@ -99,6 +103,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         IObjectStatusTransition $transition,
         IGroupActivities $groupActivities
     ) {
+        $this->groupActivities = $groupActivities;
         global $DIC;
         $this->tree = $DIC['tree'];
         $this->obj_data_cache = $DIC['ilObjDataCache'];
@@ -106,7 +111,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
-        $this->groupActivities = $groupActivities;
         $this->parent_resolver = new GroupParentResolver(
             $this->config->getParentRefIdIfNoParentIdFound(),
             $this->config->getLinkedOriginId()
@@ -146,8 +150,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             if (in_array($property, self::getNonAutoProperties(), true)) {
                 continue;
             }
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $var = $dto->$getter();
                 if (in_array($property, self::$ildate_fields)) {
@@ -206,8 +210,8 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
             if (!$this->props->updateDTOProperty($property)) {
                 continue;
             }
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $var = $dto->$getter();
                 if (in_array($property, self::$ildate_fields)) {
@@ -271,7 +275,7 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
         // Find the refId under which this course should be created
         $parent_ref_id = $this->determineParentRefId($dto);
         // Check if we should create some dependence categories
-        $ref_id = (int) $ilObjGroup->getRefId();
+        $ref_id = $ilObjGroup->getRefId();
 
         if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
             $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
@@ -331,7 +335,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
     }
 
     /**
-     * @return int
      * @throws HubException
      */
     protected function determineParentRefId(GroupDTO $group): int
@@ -341,7 +344,6 @@ class GroupSyncProcessor extends ObjectSyncProcessor implements IGroupSyncProces
 
     /**
      * @param int $iliasId
-     * @return ilObjGroup|null
      */
     protected function findILIASGroup($iliasId): ?\ilObjGroup
     {

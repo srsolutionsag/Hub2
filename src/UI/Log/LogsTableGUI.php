@@ -18,7 +18,6 @@ use srag\Plugins\Hub2\Log\Log;
 use srag\Plugins\Hub2\Object\ARObject;
 use srag\Plugins\Hub2\Origin\AROrigin;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
-use srag\Plugins\Hub2\UI\Table\TableGUI\TableGUI;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
 use srag\Plugins\Hub2\Log\ILog;
@@ -28,10 +27,19 @@ use srag\Plugins\Hub2\Log\ILog;
  */
 class LogsTableGUI extends \ilTable2GUI
 {
+    /**
+     * @readonly
+     */
     private \ilHub2Plugin $plugin;
 
     private array $filtered = [];
+    /**
+     * @readonly
+     */
     private IRepository $log_repo;
+    /**
+     * @readonly
+     */
     private ObjectLinkFactory $link_factory;
     /**
      * @var UIServices
@@ -86,33 +94,27 @@ class LogsTableGUI extends \ilTable2GUI
     {
         /** @var ILog $a_set */
         $a_set = $a_set['object'];
-
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable('VALUE', $a_set->getDate()->get(IL_CAL_DATETIME));
         $this->tpl->parseCurrentBlock();
-
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable('VALUE', $a_set->getOriginId());
         $this->tpl->parseCurrentBlock();
-
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable(
             'VALUE',
             $this->plugin->txt('origin_object_type_' . AROrigin::$object_types[$a_set->getOriginObjectType()])
         );
         $this->tpl->parseCurrentBlock();
-
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable(
             'VALUE',
             $this->plugin->txt('data_table_status_' . (ARObject::$available_status[$a_set->getStatus()] ?? ''))
         );
         $this->tpl->parseCurrentBlock();
-
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable('VALUE', $a_set->getObjectExtId());
         $this->tpl->parseCurrentBlock();
-
         $this->tpl->setCurrentBlock('cell');
         $ilias_id = $a_set->getObjectIliasId();
         $this->tpl->setVariable(
@@ -125,11 +127,9 @@ class LogsTableGUI extends \ilTable2GUI
             )
         );
         $this->tpl->parseCurrentBlock();
-
         $this->tpl->setCurrentBlock('cell');
         $this->tpl->setVariable('VALUE', $this->plugin->txt('logs_level_' . Log::$levels[$a_set->getLevel()]));
         $this->tpl->parseCurrentBlock();
-
         $this->tpl->setCurrentBlock('cell');
         $value = $a_set->getAdditionalData();
         $value = get_object_vars($value);
@@ -139,10 +139,8 @@ class LogsTableGUI extends \ilTable2GUI
             array_map(fn ($k, string $v): string => $k . ': ' . $v, array_keys($value), $value)
         );
         $value = $a_set->getMessage() . "\n" . $value;
-
         $this->tpl->setVariable('VALUE', $value);
         $this->tpl->parseCurrentBlock();
-
         // Actions
         // TODO
     }
@@ -192,7 +190,10 @@ class LogsTableGUI extends \ilTable2GUI
         // Level
         $level_select = new \ilSelectInputGUI($this->plugin->txt('logs_level'), 'level');
         $level_select->setOptions(
-            [null => null] + array_map(fn (string $level): string => $this->plugin->txt('logs_level_' . $level), Log::$levels)
+            [null => null] + array_map(
+                fn (string $level): string => $this->plugin->txt('logs_level_' . $level),
+                Log::$levels
+            )
         );
         $this->addAndReadFilterItem($level_select);
 

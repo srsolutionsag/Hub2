@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
@@ -31,13 +39,10 @@ use srag\Plugins\Hub2\Sync\Processor\User\UserSyncProcessor;
  */
 class SyncProcessorFactory implements ISyncProcessorFactory
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     protected IOrigin $origin;
-    /**
-     * @deprecated
-     */
-    protected IObjectStatusTransition $statusTransition;
     protected IOriginImplementation $implementation;
+    protected IObjectStatusTransition $statusTransition;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var \ilDBInterface
      */
@@ -48,19 +53,17 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         IOriginImplementation $implementation,
         IObjectStatusTransition $statusTransition
     ) {
+        $this->origin = $origin;
+        $this->implementation = $implementation;
+        $this->statusTransition = $statusTransition;
         global $DIC;
         $this->database = $DIC->database();
-        $this->origin = $origin;
-        $this->statusTransition = $statusTransition;
-        $this->implementation = $implementation;
     }
-
 
     public function user(): UserSyncProcessor
     {
         return new UserSyncProcessor($this->origin, $this->implementation, $this->statusTransition);
     }
-
 
     public function course(): CourseSyncProcessor
     {
@@ -72,7 +75,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-
     public function category(): CategorySyncProcessor
     {
         return new CategorySyncProcessor(
@@ -81,7 +83,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
             $this->statusTransition
         );
     }
-
 
     public function session(): SessionSyncProcessor
     {
@@ -92,7 +93,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-
     public function courseMembership(): CourseMembershipSyncProcessor
     {
         return new CourseMembershipSyncProcessor(
@@ -101,7 +101,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
             $this->statusTransition
         );
     }
-
 
     public function group(): GroupSyncProcessor
     {
@@ -113,7 +112,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-
     public function groupMembership(): GroupMembershipSyncProcessor
     {
         return new GroupMembershipSyncProcessor(
@@ -123,16 +121,14 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-
-    public function sessionMembership(
-    ): SessionMembershipSyncProcessor {
+    public function sessionMembership(): SessionMembershipSyncProcessor
+    {
         return new SessionMembershipSyncProcessor(
             $this->origin,
             $this->implementation,
             $this->statusTransition
         );
     }
-
 
     public function orgUnit(): IOrgUnitSyncProcessor
     {
@@ -143,7 +139,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
         );
     }
 
-
     public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor
     {
         return new OrgUnitMembershipSyncProcessor(
@@ -152,7 +147,6 @@ class SyncProcessorFactory implements ISyncProcessorFactory
             $this->statusTransition
         );
     }
-
 
     public function competenceManagement(): ICompetenceManagementSyncProcessor
     {

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -30,20 +38,15 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
 {
     /**
      * @var IOrgUnitMembershipProperties
+     * @readonly
      */
     private IOriginProperties $props;
     /**
      * @var IOrgUnitMembershipOriginConfig
+     * @readonly
      */
     private IOriginConfig $config;
-    /**
-     * @var array
-     */
-    protected static $properties = [];
-    /**
-     * @var FakeOrgUnitMembershipObject|null
-     */
-    protected $current_ilias_object;
+    protected static array $properties = [];
 
     public function __construct(
         IOrigin $origin,
@@ -122,13 +125,15 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
     {
         switch ($dto->getPosition()) {
             case IOrgUnitMembershipDTO::POSITION_EMPLOYEE:
-                $position_id = ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_EMPLOYEE);
+                $position_id = ilOrgUnitPosition::getCorePositionId(
+                    self::IL_POSITION_EMPLOYEE
+                );
                 break;
-
             case IOrgUnitMembershipDTO::POSITION_SUPERIOR:
-                $position_id = ilOrgUnitPosition::getCorePositionId(self::IL_POSITION_SUPERIOR);
+                $position_id = ilOrgUnitPosition::getCorePositionId(
+                    self::IL_POSITION_SUPERIOR
+                );
                 break;
-
             default:
                 throw new HubException("Invalid position {$dto->getPosition()}!");
         }
@@ -194,9 +199,6 @@ class OrgUnitMembershipSyncProcessor extends ObjectSyncProcessor implements IOrg
         return $org_unit->getRefId();
     }
 
-    /**
-     * @return ilObjOrgUnit|null
-     */
     protected function getOrgUnitObject(int $obj_id): ?\ilObjOrgUnit
     {
         $ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));

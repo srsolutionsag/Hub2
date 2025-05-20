@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 /**
@@ -17,17 +25,17 @@ interface IOriginFactory
      */
     public function getById($id); //Correct return type would by : ?IOrigin, but this is PHP7.1+
 
-    public function createByType(string $type) : IOrigin;
+    public function createByType(string $type): IOrigin;
 
     /**
      * @return IOrigin[]
      */
-    public function getAllActive() : array;
+    public function getAllActive(): array;
 
     /**
      * @return IOrigin[]
      */
-    public function getAll() : array;
+    public function getAll(): array;
 
     public function delete(int $origin_id)/*: void*/
     ;

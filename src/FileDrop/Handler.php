@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\FileDrop;
 
 use ILIAS\FileUpload\DTO\UploadResult;
@@ -42,6 +50,9 @@ class Handler
      * @var FileUpload
      */
     private $upload;
+    /**
+     * @readonly
+     */
     private ResourceStorage $storage;
     protected Token $token;
     /**
@@ -115,8 +126,7 @@ class Handler
 
                 $result = end($this->uploaded_files);
 
-                if (null === $result || $result->getStatus()->getCode(
-                ) !== ProcessingStatus::OK) {
+                if (null === $result || $result->getStatus()->getCode() !== ProcessingStatus::OK) {
                     $message = $result === null ? 'no file uploaded' : $result->getStatus()->getMessage();
                     throw new InternalError('Upload failed: ' . $message);
                 }
@@ -146,7 +156,6 @@ class Handler
 
     /**
      * @param $DIC
-     * @return void
      */
     protected function checkAuth(string $file_drop_token): bool
     {
@@ -188,12 +197,15 @@ class Handler
                 );
                 break;
             case $e instanceof NotFound:
-                $this->http->saveResponse($this->http->response()->withStatus(404, $e->getMessage()));
+                $this->http->saveResponse(
+                    $this->http->response()->withStatus(404, $e->getMessage())
+                );
                 break;
             case $e instanceof Success:
-                $this->http->saveResponse($this->http->response()->withStatus(200, $e->getMessage()));
+                $this->http->saveResponse(
+                    $this->http->response()->withStatus(200, $e->getMessage())
+                );
                 break;
-            case $e instanceof InternalError:
             default:
                 $this->http->saveResponse($this->http->response()->withStatus(500, $e->getMessage()));
                 break;

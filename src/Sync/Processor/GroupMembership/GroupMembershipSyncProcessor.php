@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\GroupMembership;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -120,7 +128,6 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
 
     /**
      * @param int $iliasId
-     * @return ilObjGroup|null
      */
     protected function findILIASGroup($iliasId): ?\ilObjGroup
     {
@@ -153,9 +160,8 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
             $originRepository = new OriginRepository();
             $arrayFilter = array_filter(
                 $originRepository->groups(),
-                fn ($origin): bool =>
-                    /** @var IOrigin $origin */
-                    (int) $origin->getId() == $linkedOriginId
+                fn ($origin): bool => /** @var IOrigin $origin */
+                    $origin->getId() == $linkedOriginId
             );
             $origin = array_pop(
                 $arrayFilter
@@ -181,9 +187,6 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         return 0;
     }
 
-    /**
-     * @return int
-     */
     protected function mapRole(GroupMembershipDTO $object): int
     {
         switch ($object->getRole()) {
@@ -196,15 +199,11 @@ class GroupMembershipSyncProcessor extends ObjectSyncProcessor implements IGroup
         }
     }
 
-    /**
-     * @return int
-     */
     protected function getILIASRole(GroupMembershipDTO $object, ilObjGroup $group): int
     {
         switch ($object->getRole()) {
             case GroupMembershipDTO::ROLE_ADMIN:
                 return $group->getDefaultAdminRole();
-            case GroupMembershipDTO::ROLE_MEMBER:
             default:
                 return $group->getDefaultMemberRole();
         }

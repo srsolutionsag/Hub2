@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\User;
 
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
@@ -13,7 +21,7 @@ use srag\Plugins\Hub2\Object\DTO\IMetadataAwareDataTransferObject;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IUserDTO extends IDataTransferObject, IMetadataAwareDataTransferObject,
-                           IMappingStrategyAwareDataTransferObject
+    IMappingStrategyAwareDataTransferObject
 {
     public const GENDER_MALE = 'm';
     public const GENDER_FEMALE = 'f';

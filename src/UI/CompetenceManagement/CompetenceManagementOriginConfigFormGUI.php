@@ -1,12 +1,19 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\CompetenceManagement;
 
 use ilCheckboxInputGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilTextInputGUI;
-use srag\Plugins\Hub2\Origin\CompetenceManagement\ARCompetenceManagementOrigin;
 use srag\Plugins\Hub2\Origin\Config\CompetenceManagement\ICompetenceManagementOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\CompetenceManagement\ICompetenceManagementProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
@@ -21,7 +28,6 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
-
         $id_if_no_parent_id = new ilTextInputGUI(
             $this->plugin->txt("competencemanagement_id_if_no_parent_id"),
             $this->conf(ICompetenceManagementOriginConfig::ID_IF_NO_PARENT_ID)
@@ -31,11 +37,9 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($id_if_no_parent_id);
     }
 
-
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
-
         $cb = new ilCheckboxInputGUI(
             $this->plugin->txt("competencemanagement_move"),
             $this->prop(ICompetenceManagementProperties::MOVE)
@@ -43,7 +47,6 @@ class CompetenceManagementOriginConfigFormGUI extends OriginConfigFormGUI
         $cb->setChecked($this->origin->properties()->get(ICompetenceManagementProperties::MOVE));
         $this->addItem($cb);
     }
-
 
     protected function addPropertiesDelete()
     {

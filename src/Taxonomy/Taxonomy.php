@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Taxonomy;
 
 use ilHub2Plugin;
@@ -12,13 +20,13 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
  */
 class Taxonomy implements ITaxonomy
 {
+    protected string $title;
+    protected int $mode;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var INode[]
      */
     protected $nodes = [];
-    protected string $title;
-    protected int $mode;
     /**
      * @var string
      */
@@ -38,18 +46,15 @@ class Taxonomy implements ITaxonomy
         return $this->title;
     }
 
-
     public function getMode(): int
     {
         return $this->mode;
     }
 
-
     public function getNodes(): array
     {
         return $this->nodes;
     }
-
 
     public function getNodeTitlesAsArray(): array
     {
@@ -60,7 +65,6 @@ class Taxonomy implements ITaxonomy
 
         return $titles;
     }
-
 
     public function attach(INode $node): ITaxonomy
     {
@@ -79,7 +83,6 @@ class Taxonomy implements ITaxonomy
 
     /**
      * @param string $description
-     * @return Taxonomy
      */
     public function setDescription($description): self
     {
@@ -87,7 +90,6 @@ class Taxonomy implements ITaxonomy
 
         return $this;
     }
-
 
     public function __toString(): string
     {

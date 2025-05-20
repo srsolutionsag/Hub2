@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use srag\Plugins\Hub2\Exception\HubException;
@@ -18,5 +26,5 @@ interface IMappingStrategy
      * Return an existing ILIAS ID which leads to an update of the Object
      * @throws HubException
      */
-    public function map(IDataTransferObject $dto) : int;
+    public function map(IDataTransferObject $dto): int;
 }

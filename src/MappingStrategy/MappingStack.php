@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -11,7 +19,6 @@ use srag\Plugins\Hub2\Exception\HubException;
  */
 class MappingStack implements IMappingStrategy
 {
-
     /**
      * @var IMappingStrategy[]
      */
@@ -30,7 +37,7 @@ class MappingStack implements IMappingStrategy
                 if ($return > 13) {
                     return $return;
                 }
-            } catch (HubException $ex) {
+            } catch (HubException $exception) {
                 // Continue with next mapping strategy
             }
         }

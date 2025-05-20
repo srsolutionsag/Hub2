@@ -27,10 +27,13 @@ use srag\Plugins\Hub2\Origin\IOriginRepository;
  */
 class OriginsTableGUI extends ilTable2GUI
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    private \ilHub2Plugin $plugin;
     protected ?object $a_parent_obj;
     protected IOriginRepository $originRepository;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    /**
+     * @readonly
+     */
+    private \ilHub2Plugin $plugin;
     /**
      * @var UIServices
      */
@@ -38,24 +41,29 @@ class OriginsTableGUI extends ilTable2GUI
 
     /**
      * @param ilHub2OriginsGUI $a_parent_obj
-     * @param string           $a_parent_cmd
      * @throws DICException
      * @internal param
      */
-    public function __construct(?object $a_parent_obj, string $a_parent_cmd, IOriginRepository $originRepository)
-    {
+    public function __construct(
+        ?object $a_parent_obj,
+        string $a_parent_cmd,
+        IOriginRepository $originRepository
+    ) {
+        $this->a_parent_obj = $a_parent_obj;
+        $this->originRepository = $originRepository;
         global $DIC;
         $ctrl = $DIC->ctrl();
         $this->ui = $DIC->ui();
         $this->plugin = ilHub2Plugin::getInstance();
-        $this->originRepository = $originRepository;
-        $this->a_parent_obj = $a_parent_obj;
         $this->setPrefix('hub2_');
         $this->setId('origins');
         $this->setTitle($this->plugin->txt('hub_origins'));
-        parent::__construct($a_parent_obj, $a_parent_cmd);
-        $this->setFormAction($ctrl->getFormAction($a_parent_obj));
-        $this->setRowTemplate('tpl.std_row_template.html', 'Services/ActiveRecord');
+        parent::__construct($this->a_parent_obj, $a_parent_cmd);
+        $this->setFormAction($ctrl->getFormAction($this->a_parent_obj));
+        $this->setRowTemplate(
+            'tpl.std_row_template.html',
+            './Customizing/global/plugins/Services/Cron/CronHook/Hub2/'
+        );
         $this->initColumns();
         $this->initTableData();
         $this->addCommandButton(
@@ -122,9 +130,6 @@ class OriginsTableGUI extends ilTable2GUI
         $this->setDefaultOrderDirection("asc");
     }
 
-    /**
-     * @param array $a_set
-     */
     protected function fillRow(array $a_set): void
     {
         foreach ($a_set as $value) {

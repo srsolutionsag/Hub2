@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\CompetenceManagement;
 
 use ilSkillTreeNode;
@@ -60,98 +68,98 @@ interface ICompetenceManagementDTO extends IDataTransferObject
      */
     public const STATUS_OUTDATED = ilSkillTreeNode::STATUS_OUTDATED;
 
-    public function getType() : int;
+    public function getType(): int;
 
-    public function setType(int $type) : self;
+    public function setType(int $type): self;
 
-    public function getTitle() : string;
+    public function getTitle(): string;
 
-    public function setTitle(string $title) : self;
+    public function setTitle(string $title): self;
 
-    public function getDescription() : string;
-
-    /**
-     * @throws HubException
-     */
-    public function setDescription(string $description) : self;
-
-    public function getParentId() : string;
+    public function getDescription(): string;
 
     /**
      * @throws HubException
      */
-    public function setParentId(string $parent_id) : self;
+    public function setDescription(string $description): self;
 
-    public function getParentIdType() : int;
-
-    /**
-     * @throws HubException
-     */
-    public function setParentIdType(int $parent_id_type) : self;
-
-    public function getStatus() : int;
+    public function getParentId(): string;
 
     /**
      * @throws HubException
      */
-    public function setStatus(int $status) : self;
+    public function setParentId(string $parent_id): self;
 
-    public function getSelfEvaluation() : bool;
-
-    /**
-     * @throws HubException
-     */
-    public function setSelfEvaluation(bool $self_evaluation) : self;
+    public function getParentIdType(): int;
 
     /**
      * @throws HubException
      */
-    public function addSkillLevel(ISkillLevel $skill_level) : self;
+    public function setParentIdType(int $parent_id_type): self;
+
+    public function getStatus(): int;
+
+    /**
+     * @throws HubException
+     */
+    public function setStatus(int $status): self;
+
+    public function getSelfEvaluation(): bool;
+
+    /**
+     * @throws HubException
+     */
+    public function setSelfEvaluation(bool $self_evaluation): self;
+
+    /**
+     * @throws HubException
+     */
+    public function addSkillLevel(ISkillLevel $skill_level): self;
 
     /**
      * @return ISkillLevel[]
      */
-    public function getSkillLevels() : array;
+    public function getSkillLevels(): array;
 
     /**
      * @param ISkillLevel[] $skill_levels
      * @throws HubException
      */
-    public function setSkillLevels(array $skill_levels) : self;
+    public function setSkillLevels(array $skill_levels): self;
 
     /**
      * @throws HubException
      */
-    public function addProfileLevel(IProfileLevel $profile_level) : self;
+    public function addProfileLevel(IProfileLevel $profile_level): self;
 
     /**
      * @return IProfileLevel[]
      */
-    public function getProfileLevels() : array;
+    public function getProfileLevels(): array;
 
     /**
      * @param IProfileLevel[] $profile_levels
      * @throws HubException
      */
-    public function setProfileLevels(array $profile_levels) : self;
+    public function setProfileLevels(array $profile_levels): self;
 
     /**
      * @throws HubException
      */
-    public function addProfileAssignedUser(int $user_id) : self;
+    public function addProfileAssignedUser(int $user_id): self;
 
     /**
      * @return int[]
      */
-    public function getProfileAssignedUsers() : array;
+    public function getProfileAssignedUsers(): array;
 
     /**
      * @param int[] $user_ids
      * @throws HubException
      */
-    public function setProfileAssignedUsers(array $user_ids) : self;
+    public function setProfileAssignedUsers(array $user_ids): self;
 
-    public function getExtId() : string;
+    public function getExtId(): string;
 
-    public function setExtId(string $ext_id) : self;
+    public function setExtId(string $ext_id): self;
 }

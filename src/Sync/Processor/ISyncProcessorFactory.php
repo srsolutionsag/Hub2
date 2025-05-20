@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use srag\Plugins\Hub2\Sync\Processor\Category\ICategorySyncProcessor;
@@ -61,9 +69,9 @@ interface ISyncProcessorFactory
      */
     public function sessionMembership();
 
-    public function orgUnit() : IOrgUnitSyncProcessor;
+    public function orgUnit(): IOrgUnitSyncProcessor;
 
-    public function orgUnitMembership() : IOrgUnitMembershipSyncProcessor;
+    public function orgUnitMembership(): IOrgUnitMembershipSyncProcessor;
 
-    public function competenceManagement() : ICompetenceManagementSyncProcessor;
+    public function competenceManagement(): ICompetenceManagementSyncProcessor;
 }

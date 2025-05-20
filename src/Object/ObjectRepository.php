@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object;
 
 use ActiveRecord;
@@ -24,12 +32,12 @@ use srag\Plugins\Hub2\Object\SessionMembership\ARSessionMembership;
  */
 abstract class ObjectRepository implements IObjectRepository
 {
+    protected IOrigin $origin;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var \ilDBInterface
      */
     protected $db;
-    protected IOrigin $origin;
     /**
      * @var array
      */
@@ -40,11 +48,10 @@ abstract class ObjectRepository implements IObjectRepository
      */
     public function __construct(IOrigin $origin)
     {
-        global $DIC;
         $this->origin = $origin;
+        global $DIC;
         $this->db = $DIC->database();
     }
-
 
     public function all(): array
     {
@@ -53,7 +60,6 @@ abstract class ObjectRepository implements IObjectRepository
         /** @var ActiveRecord $class */
         return $class::where(['origin_id' => $this->origin->getId()])->get();
     }
-
 
     public function getByStatus(int $status): array
     {
@@ -67,7 +73,6 @@ abstract class ObjectRepository implements IObjectRepository
             ]
         )->get();
     }
-
 
     public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array
     {
@@ -108,7 +113,6 @@ abstract class ObjectRepository implements IObjectRepository
         return [];
     }
 
-
     public function getToDelete(array $ext_ids): array
     {
         $class = $this->getClass();
@@ -137,7 +141,6 @@ abstract class ObjectRepository implements IObjectRepository
             ['origin_id' => '=', 'status' => 'IN']
         )->get();
     }
-
 
     public function count(): int
     {

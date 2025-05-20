@@ -19,6 +19,9 @@ require_once __DIR__ . "/../vendor/autoload.php";
  */
 class ilHub2ConfigGUI extends ilPluginConfigGUI
 {
+    /**
+     * @readonly
+     */
     private \ilCtrlInterface $ctrl;
 
     public function __construct()

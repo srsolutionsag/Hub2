@@ -1,14 +1,19 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use srag\Plugins\Hub2\Log\ILog;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\HookObject;
-use srag\Plugins\Hub2\Exception\ConnectionFailedException;
 use srag\Plugins\Hub2\Parser\Json;
-use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
-use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 
 /**
  * Class AbstractJSONOriginGeneratorImplementation
@@ -25,7 +30,6 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
      * @var array
      */
     protected $json = [];
-
 
     public function parseData(): int
     {
@@ -50,7 +54,11 @@ abstract class AbstractJSONOriginGeneratorImplementation extends AbstractOriginG
 
     protected function getStringSanitizer(): \Closure
     {
-        return static fn(string $string): string => @utf8_encode(utf8_decode($string));
+        return static fn (string $string): string => @mb_convert_encoding(
+            mb_convert_encoding($string, 'ISO-8859-1'),
+            'UTF-8',
+            'ISO-8859-1'
+        );
     }
 
     /**

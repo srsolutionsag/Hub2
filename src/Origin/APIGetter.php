@@ -1,12 +1,16 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
-use srag\Plugins\Hub2\Log\ILog;
-use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use srag\Plugins\Hub2\Object\HookObject;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
-use srag\Plugins\Hub2\Parser\Json;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
@@ -16,7 +20,6 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
  */
 trait APIGetter
 {
-
     protected function getResourceStorage(): ResourceStorage
     {
         return (new Factory())->storage();

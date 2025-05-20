@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
@@ -15,15 +23,12 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
  */
 class ObjectStatusTransition implements IObjectStatusTransition
 {
+    protected IOriginConfig $config;
     /**
      * @var string
      * @deprecated
      */
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @deprecated
-     */
-    protected IOriginConfig $config;
 
     /**
      * @deprecated
@@ -51,20 +56,16 @@ class ObjectStatusTransition implements IObjectStatusTransition
         switch ($object->getStatus()) {
             case IObject::STATUS_NEW:
                 return IObject::STATUS_TO_CREATE;
-
             case IObject::STATUS_CREATED:
             case IObject::STATUS_UPDATED:
                 return IObject::STATUS_TO_UPDATE;
-
             case IObject::STATUS_TO_OUTDATED:
             case IObject::STATUS_OUTDATED:
                 return IObject::STATUS_TO_RESTORE;
-
             case IObject::STATUS_IGNORED:
             case IObject::STATUS_FAILED:
-                // Either create or update the ILIAS object
-                return ($object->getILIASId()) ? IObject::STATUS_TO_UPDATE : IObject::STATUS_TO_CREATE;
-
+                return ($object->getILIASId(
+                )) ? IObject::STATUS_TO_UPDATE : IObject::STATUS_TO_CREATE;
             default:
                 return $object->getStatus();
         }

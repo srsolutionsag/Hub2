@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\OrgUnit;
 
 use srag\Plugins\Hub2\MappingStrategy\MappingStrategyAwareDataTransferObject;
@@ -43,19 +51,16 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
      */
     protected $ext_id = "";
 
-
     public function __construct(string $ext_id)
     {
         parent::__construct($ext_id);
         $this->ext_id = $ext_id;
     }
 
-
     public function getTitle(): string
     {
         return $this->title;
     }
-
 
     public function setTitle(string $title): IOrgUnitDTO
     {
@@ -64,12 +69,10 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     public function getDescription(): string
     {
         return $this->description;
     }
-
 
     public function setDescription(string $description): IOrgUnitDTO
     {
@@ -78,12 +81,10 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     public function getOwner(): int
     {
         return $this->owner;
     }
-
 
     public function setOwner(int $owner): IOrgUnitDTO
     {
@@ -92,12 +93,10 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     public function getParentId(): string
     {
         return $this->parent_id;
     }
-
 
     public function setParentId(string $parent_id): IOrgUnitDTO
     {
@@ -106,12 +105,10 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     public function getParentIdType(): int
     {
         return $this->parent_id_type;
     }
-
 
     public function setParentIdType(int $parent_id__type): IOrgUnitDTO
     {
@@ -120,12 +117,10 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     public function getOrgUnitType(): string
     {
         return $this->org_unit_type;
     }
-
 
     public function setOrgUnitType(string $org_unit_type): IOrgUnitDTO
     {
@@ -134,12 +129,10 @@ class OrgUnitDTO extends DataTransferObject implements IOrgUnitDTO
         return $this;
     }
 
-
     public function getExtId(): string
     {
         return $this->ext_id;
     }
-
 
     public function setExtId(string $ext_id): IOrgUnitDTO
     {

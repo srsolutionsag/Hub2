@@ -1,11 +1,18 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Config;
 
 use ActiveRecord;
 use arConnector;
 use LogicException;
-use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class Config
@@ -72,7 +79,7 @@ class Config extends ActiveRecord
     /**
      * Config constructor
      *
-     * @param string|null      $primary_name_value
+     * @param mixed $primary_name_value
      * @param arConnector|null $connector
      */
     public function __construct(/*?string*/ $primary_name_value = null, /*?*/ arConnector $connector = null)
@@ -103,7 +110,6 @@ class Config extends ActiveRecord
     {
         return self::getTableName();
     }
-
 
     public function getConnectorContainerName(): string
     {

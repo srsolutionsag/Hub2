@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Log;
 
 use ilDateTime;
@@ -19,12 +27,15 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 final class Factory implements IFactory
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
-     * @var IFactory
+     * @var string
      */
-    protected static $instance;
-    protected IRepository $log_repo;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    private static ?IFactory $instance = null;
+    /**
+     * @readonly
+     */
+    private IRepository $log_repo;
 
     public static function getInstance(): IFactory
     {
@@ -48,18 +59,20 @@ final class Factory implements IFactory
         $this->log_repo = LogRepository::getInstance();
     }
 
-
     public function log(): ILog
     {
         return (new Log())->withAdditionalData(clone $this->log_repo->getGlobalAdditionalData());
     }
 
-
     public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog
     {
-        $log = $this->log()->withOriginId(
-            (int) $origin->getId()
-        )->withOriginObjectType($origin->getObjectType());
+        $log = $this->log();
+        if ($origin !== null) {
+            $log = $log->withOriginId(
+                $origin->getId()
+            )->withOriginObjectType($origin->getObjectType());
+            ;
+        }
 
         if ($object instanceof IObject) {
             $log->withObjectExtId($object->getExtId())
@@ -88,7 +101,6 @@ final class Factory implements IFactory
 
         return $log;
     }
-
 
     public function exceptionLog(
         Throwable $ex,
@@ -121,7 +133,6 @@ final class Factory implements IFactory
         return $log;
     }
 
-
     public function fromDB(stdClass $data): ILog
     {
         return $this->log()->withLogId($data->log_id)->withTitle($data->title)->withMessage($data->message)
@@ -132,7 +143,7 @@ final class Factory implements IFactory
                         )
                     )->withLevel($data->level)->withAdditionalData(
                         json_decode(
-                            $data->additional_data,
+                            (string) $data->additional_data,
                             false,
                             512,
                             JSON_THROW_ON_ERROR

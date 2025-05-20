@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\User;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -7,7 +15,6 @@ use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use ilMimeMail;
 use ilObjUser;
 use ilUserException;
-use ilUtil;
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
 use srag\Plugins\Hub2\Object\User\UserDTO;
 use srag\Plugins\Hub2\Origin\Config\User\IUserOriginConfig;
@@ -126,8 +133,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
             $ilObjUser->setPasswd($dto->getPasswd() ?? '');
         }
         foreach (self::getProperties() as $property) {
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $ilObjUser->$setter($dto->$getter());
             }
@@ -185,8 +192,8 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
             if (!$this->props->updateDTOProperty($property)) {
                 continue;
             }
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $ilObjUser->$setter($dto->$getter());
             }
@@ -279,17 +286,12 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
                 $login = $user->getExtId();
                 break;
             case IUserOriginConfig::LOGIN_FIELD_FIRSTNAME_LASTNAME:
-                $login = $this->clearString($user->getFirstname()) . '.' . $this->clearString($user->getLastname());
+                $login = $this->clearString(
+                    $user->getFirstname()
+                ) . '.' . $this->clearString($user->getLastname());
                 break;
             case IUserOriginConfig::LOGIN_FIELD_HUB_LOGIN:
                 $login = $user->getLogin();
-                break;
-            case IUserOriginConfig::LOGIN_FIELD_SHORTENED_FIRST_LASTNAME:
-                $login = substr(
-                    $this->clearString($user->getFirstname()),
-                    0,
-                    1
-                ) . '.' . $this->clearString($user->getLastname());
                 break;
             default:
                 $login = substr(
@@ -297,6 +299,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
                     0,
                     1
                 ) . '.' . $this->clearString($user->getLastname());
+                break;
         }
 
         if (!$this->config->isKeepCase()) {
@@ -316,10 +319,6 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         return $login;
     }
 
-    /**
-     * @param int $ilias_id
-     * @return ilObjUser|null
-     */
     protected function findILIASUser(int $ilias_id): ?ilObjUser
     {
         if (!ilObjUser::_exists($ilias_id, false, 'usr')) {
@@ -327,7 +326,7 @@ class UserSyncProcessor extends ObjectSyncProcessor implements IUserSyncProcesso
         }
         try {
             return new ilObjUser($ilias_id);
-        } catch (\Throwable $e) {
+        } catch (\Throwable $exception) {
             return null;
         }
     }

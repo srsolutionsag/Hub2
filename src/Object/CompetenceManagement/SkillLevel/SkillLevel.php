@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\CompetenceManagement\SkillLevel;
 
 /**
@@ -10,9 +18,8 @@ namespace srag\Plugins\Hub2\Object\CompetenceManagement\SkillLevel;
 class SkillLevel implements ISkillLevel
 {
     protected string $ext_id;
-    protected string $title;
-    protected string $description;
-
+    protected string $title = "";
+    protected string $description = "";
     /**
      * SkillLevel constructor
      */
@@ -23,12 +30,10 @@ class SkillLevel implements ISkillLevel
         $this->description = $description;
     }
 
-
     public function getExtId(): string
     {
         return $this->ext_id;
     }
-
 
     public function setExtId(string $ext_id): ISkillLevel
     {
@@ -37,12 +42,10 @@ class SkillLevel implements ISkillLevel
         return $this;
     }
 
-
     public function getTitle(): string
     {
         return $this->title;
     }
-
 
     public function setTitle(string $title): ISkillLevel
     {
@@ -51,12 +54,10 @@ class SkillLevel implements ISkillLevel
         return $this;
     }
 
-
     public function getDescription(): string
     {
         return $this->description;
     }
-
 
     public function setDescription(string $description): ISkillLevel
     {

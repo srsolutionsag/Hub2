@@ -11,15 +11,9 @@
 use ILIAS\UI\Factory;
 use ILIAS\UI\Renderer;
 use srag\Plugins\Hub2\Log\LogsTable;
-use srag\Plugins\Hub2\UI\Data\DataTableGUI;
-use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
 use srag\Plugins\Hub2\Log\LogDBRepository;
-use ILIAS\UI\Component\Table\PresentationRow;
-use srag\Plugins\Hub2\Object\ARObject;
-use srag\Plugins\Hub2\Translator;
 use srag\Plugins\Hub2\Jobs\Log\DeleteOldLogsJob;
 use srag\Plugins\Hub2\Config\ArConfig;
-use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Log\LogRepository;
 
 /**
@@ -28,6 +22,9 @@ use srag\Plugins\Hub2\Log\LogRepository;
 class ilHub2LogsGUI extends ilHub2DispatchableBaseGUI
 {
     public const SUBTAB_LOGS = 'subtab_logs';
+    /**
+     * @var string
+     */
     private const CMD_PURGE_LOGS = 'purgeLogs';
     public const CMD_SHOW_LOGS_OF_EXT_ID = 'showLogsOfExtId';
     /**

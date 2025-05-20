@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Log;
 
 use ilDateTime;
@@ -31,49 +39,49 @@ interface ILog
      */
     public const LEVEL_CRITICAL = 500;
 
-    public function getLogId() : int;
+    public function getLogId(): int;
 
-    public function withLogId(int $log_id) : self;
+    public function withLogId(int $log_id): self;
 
-    public function getTitle() : string;
+    public function getTitle(): string;
 
-    public function withTitle(string $title) : self;
+    public function withTitle(string $title): self;
 
-    public function getMessage() : string;
+    public function getMessage(): string;
 
-    public function withMessage(string $message) : self;
+    public function withMessage(string $message): self;
 
-    public function getStatus() : int;
+    public function getStatus(): int;
 
     /**
      * @return $this
      */
-    public function withStatus(int $status) : self;
+    public function withStatus(int $status): self;
 
-    public function getDate() : ilDateTime;
+    public function getDate(): ilDateTime;
 
-    public function withDate(ilDateTime $date) : self;
+    public function withDate(ilDateTime $date): self;
 
-    public function getLevel() : int;
+    public function getLevel(): int;
 
-    public function withLevel(int $level) : self;
+    public function withLevel(int $level): self;
 
-    public function getAdditionalData() : stdClass;
+    public function getAdditionalData(): stdClass;
 
-    public function withAdditionalData(stdClass $additional_data) : self;
+    public function withAdditionalData(stdClass $additional_data): self;
 
     /**
      * @param mixed $value
      */
-    public function addAdditionalData(string $key, $value) : self;
+    public function addAdditionalData(string $key, $value): self;
 
-    public function getOriginId() : int;
+    public function getOriginId(): ?int;
 
-    public function withOriginId(int $origin_id) : self;
+    public function withOriginId(int $origin_id): self;
 
-    public function getOriginObjectType() : string;
+    public function getOriginObjectType(): string;
 
-    public function withOriginObjectType(string $origin_object_type) : self;
+    public function withOriginObjectType(string $origin_object_type): self;
 
     /**
      * @return string|null
@@ -86,7 +94,7 @@ interface ILog
      */
     public function withObjectExtId(/*?*/
         string $object_ext_id = null
-    ) : self;
+    ): self;
 
     /**
      * @return int|null
@@ -99,7 +107,7 @@ interface ILog
      */
     public function withObjectIliasId(/*?*/
         int $object_ilias_id = null
-    ) : self;
+    ): self;
 
     /**
      * Syntactic sugar for self::logs()->storeLog($log->withMessage()->withLevel());

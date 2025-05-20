@@ -10,7 +10,6 @@
 
 namespace srag\Plugins\Hub2\Object\DTO;
 
-use srag\Plugins\Hub2\Object\General\NewsSettings;
 use srag\Plugins\Hub2\Object\General\CalendarSettings;
 
 /**

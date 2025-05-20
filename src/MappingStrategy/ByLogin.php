@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilObjUser;
@@ -20,6 +28,6 @@ class ByLogin extends AMappingStrategy implements IMappingStrategy
             throw new HubException("Mapping using Login not supported for this type of DTO");
         }
 
-        return (int) ilObjUser::getUserIdByLogin($dto->getLogin());
+        return ilObjUser::getUserIdByLogin($dto->getLogin());
     }
 }

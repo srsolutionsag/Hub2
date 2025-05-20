@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -10,15 +18,15 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 class FromHubToHub2 extends AMappingStrategy implements IMappingStrategy
 {
-    protected bool $hub1_table_exists;
     protected \ilDBInterface $database;
     protected int $former_origin_id;
+    protected bool $hub1_table_exists;
 
     public function __construct(\ilDBInterface $database, int $former_origin_id)
     {
         $this->database = $database;
         $this->former_origin_id = $former_origin_id;
-        $this->hub1_table_exists = (bool) $this->database->tableExists('sr_hub_sync_history');
+        $this->hub1_table_exists = $this->database->tableExists('sr_hub_sync_history');
     }
 
     public function map(IDataTransferObject $dto): int

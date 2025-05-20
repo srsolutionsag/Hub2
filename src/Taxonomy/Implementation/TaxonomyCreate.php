@@ -1,7 +1,16 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
+use ilRbacReview;
 use ilObject2;
 use ilObjTaxonomy;
 use ilRbacLog;
@@ -15,7 +24,7 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
 class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
 {
     /**
-     * @var \ilRbacReview
+     * @var ilRbacReview
      */
     private $rbacreview;
 
@@ -25,7 +34,6 @@ class TaxonomyCreate extends AbstractTaxonomy implements ITaxonomyImplementation
         $this->rbacreview = $DIC['rbacreview'];
         parent::__construct();
     }
-
 
     public function write(): void
     {

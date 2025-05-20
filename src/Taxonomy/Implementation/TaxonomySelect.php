@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilContainer;
@@ -30,10 +38,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
      * @var array
      */
     protected $selectable_taxonomies = [];
-    /**
-     * @var \ilTree
-     */
-    private $tree;
 
     public function __construct()
     {
@@ -41,7 +45,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
         $this->tree = $DIC['tree'];
         parent::__construct();
     }
-
 
     public function write(): void
     {
@@ -96,7 +99,6 @@ class TaxonomySelect extends AbstractTaxonomy implements ITaxonomyImplementation
 
         $this->ilTaxNodeAssignment->addAssignment($node_id, $this->container_obj_id);
     }
-
 
     protected function taxonomyExists(): bool
     {

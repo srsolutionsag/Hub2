@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilDBConstants;
@@ -29,18 +37,20 @@ use srag\Plugins\Hub2\Object\User\IUserDTO;
 class ByExtId extends AMappingStrategy implements IMappingStrategy
 {
     /**
+     * @readonly
+     */
+    private ?int $origin_id = null;
+    /**
      * @var \ilDBInterface
      */
     private $db;
-    private ?int $origin_id = null;
 
-    public function __construct(int $origin_id = null)
+    public function __construct(?int $origin_id = null)
     {
+        $this->origin_id = $origin_id;
         global $DIC;
         $this->db = $DIC->database();
-        $this->origin_id = $origin_id;
     }
-
 
     public function map(IDataTransferObject $dto): int
     {
@@ -48,31 +58,24 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
             case $dto instanceof IUserDTO:
                 $table_name = ARUser::TABLE_NAME;
                 break;
-
             case $dto instanceof ICourseDTO:
                 $table_name = ARCourse::TABLE_NAME;
                 break;
-
             case $dto instanceof ICategoryDTO:
                 $table_name = ARCategory::TABLE_NAME;
                 break;
-
             case $dto instanceof IGroupDTO:
                 $table_name = ARGroup::TABLE_NAME;
                 break;
-
             case $dto instanceof ISessionDTO:
                 $table_name = ARSession::TABLE_NAME;
                 break;
-
             case $dto instanceof IOrgUnitDTO:
                 $table_name = AROrgUnit::TABLE_NAME;
                 break;
-
             case $dto instanceof ICompetenceManagementDTO:
                 $table_name = ARCompetenceManagement::TABLE_NAME;
                 break;
-
             default:
                 throw new HubException(
                     "Cannot find ILIAS id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!"
@@ -94,7 +97,6 @@ class ByExtId extends AMappingStrategy implements IMappingStrategy
                 [$dto->getExtId()]
             );
         }
-
 
         if ($result->rowCount() > 0) {
             if ($result->rowCount() > 1) {

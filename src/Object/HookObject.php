@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object;
 
 use ilHub2Plugin;
@@ -16,9 +24,9 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasObject;
  */
 class HookObject
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    protected IDataTransferObject $dto;
     private IObject $object;
+    protected IDataTransferObject $dto;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var ilObject
      */
@@ -57,7 +65,6 @@ class HookObject
 
     /**
      * @param ilObject|FakeIliasObject $object
-     * @return HookObject
      */
     public function withILIASObject($object): self
     {

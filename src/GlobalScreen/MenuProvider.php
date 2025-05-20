@@ -10,7 +10,6 @@
 
 namespace srag\Plugins\Hub2\GlobalScreen;
 
-use hub2MainGUI;
 use ilAdministrationGUI;
 use ilHub2ConfigGUI;
 use ilHub2Plugin;
@@ -33,8 +32,6 @@ class MenuProvider extends AbstractStaticPluginMainMenuProvider
     {
         return [];
     }
-
-
 
     public function getStaticSubItems(): array
     {
@@ -81,7 +78,7 @@ class MenuProvider extends AbstractStaticPluginMainMenuProvider
                                        $config = ArConfig::find(ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS);
                                        if (null !== $config) {
                                            // replace outer brackets from array string and convert values to int
-                                           $roles = preg_replace("/[\[\]']+/", '', $config->getValue());
+                                           $roles = preg_replace("/[\[\]']+/", '', $config->getValue() ?? '');
                                            $roles = array_map('intval', explode(',', $roles));
                                            // add at least default admin role id (doesn't matter if it's repeatedly)
                                            $roles[] = 2;

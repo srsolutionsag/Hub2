@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\DTO;
 
 use srag\Plugins\Hub2\Object\Category\CategoryDTO;
@@ -72,9 +80,9 @@ interface IDataTransferObjectFactory
      */
     public function sessionMembership($session_id, $user_id);
 
-    public function orgUnit(string $ext_id) : IOrgUnitDTO;
+    public function orgUnit(string $ext_id): IOrgUnitDTO;
 
-    public function orgUnitMembership(string $org_unit_id, int $user_id, int $position) : IOrgUnitMembershipDTO;
+    public function orgUnitMembership(string $org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO;
 
-    public function competenceManagement(string $ext_id) : ICompetenceManagementDTO;
+    public function competenceManagement(string $ext_id): ICompetenceManagementDTO;
 }

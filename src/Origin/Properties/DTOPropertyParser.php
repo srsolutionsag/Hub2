@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Properties;
 
 use ReflectionClass;
@@ -17,7 +25,6 @@ class DTOPropertyParser
      * @var string
      */
     private $dtoClass;
-
     /**
      * @param string $dtoClass Fully qualified name of a DTO class, e.g. UserDTO
      */
@@ -29,7 +36,7 @@ class DTOPropertyParser
     /**
      * @return DTOProperty[]
      */
-    public function getProperties() : array
+    public function getProperties(): array
     {
         $reflection = new ReflectionClass($this->dtoClass);
         $reflectionProperties = $reflection->getProperties(ReflectionProperty::IS_PROTECTED);

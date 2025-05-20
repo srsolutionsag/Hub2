@@ -41,10 +41,7 @@ class ilHub2Plugin extends ilCronHookPlugin implements Translator
 {
     public const PLUGIN_ID = 'hub2';
     public const PLUGIN_NAME = 'Hub2';
-    /**
-     * @var ilHub2Plugin|null
-     */
-    protected static $instance = null;
+    protected static ?ilHub2Plugin $instance = null;
 
     public function getPluginName(): string
     {
@@ -99,22 +96,18 @@ class ilHub2Plugin extends ilCronHookPlugin implements Translator
         switch ($a_job_id) {
             case RunSync::CRON_JOB_ID:
                 return new RunSync(new CronNotifier());
-
             case DeleteOldLogsJob::CRON_JOB_ID:
                 return new DeleteOldLogsJob();
-
             default:
                 throw new InvalidArgumentException("Unknown cron job id: " . $a_job_id);
         }
     }
-
 
     public function promoteGlobalScreenProvider(): AbstractStaticPluginMainMenuProvider
     {
         global $DIC;
         return new MenuProvider($DIC, $this);
     }
-
 
     protected function afterUninstall(): void
     {

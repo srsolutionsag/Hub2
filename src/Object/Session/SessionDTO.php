@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\Session;
 
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
@@ -99,7 +107,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $title
-     * @return SessionDTO
      */
     public function setTitle($title): self
     {
@@ -118,7 +125,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $description
-     * @return SessionDTO
      */
     public function setDescription($description): self
     {
@@ -137,7 +143,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $location
-     * @return SessionDTO
      */
     public function setLocation($location): self
     {
@@ -156,7 +161,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $details
-     * @return SessionDTO
      */
     public function setDetails($details): self
     {
@@ -175,7 +179,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $name
-     * @return SessionDTO
      */
     public function setName($name): self
     {
@@ -194,7 +197,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $phone
-     * @return SessionDTO
      */
     public function setPhone($phone): self
     {
@@ -213,7 +215,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $email
-     * @return SessionDTO
      */
     public function setEmail($email): self
     {
@@ -232,7 +233,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param int $registrationType
-     * @return SessionDTO
      */
     public function setRegistrationType($registrationType): self
     {
@@ -251,7 +251,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param bool $registrationLimited
-     * @return SessionDTO
      */
     public function setRegistrationLimited($registrationLimited): self
     {
@@ -270,7 +269,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param int $registrationMinUsers
-     * @return SessionDTO
      */
     public function setRegistrationMinUsers($registrationMinUsers): self
     {
@@ -289,7 +287,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param int $registrationMaxUsers
-     * @return SessionDTO
      */
     public function setRegistrationMaxUsers($registrationMaxUsers): self
     {
@@ -308,7 +305,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param bool $registrationWaitingList
-     * @return SessionDTO
      */
     public function setRegistrationWaitingList($registrationWaitingList): self
     {
@@ -327,7 +323,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param bool $waitingListAutoFill
-     * @return SessionDTO
      */
     public function setWaitingListAutoFill($waitingListAutoFill): self
     {
@@ -346,7 +341,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param string $parentId
-     * @return SessionDTO
      */
     public function setParentId($parentId): self
     {
@@ -365,7 +359,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param int $parentIdType
-     * @return SessionDTO
      */
     public function setParentIdType($parentIdType): self
     {
@@ -384,7 +377,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param bool $fullDay
-     * @return SessionDTO
      */
     public function setFullDay($fullDay): self
     {
@@ -403,7 +395,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param int $start
-     * @return SessionDTO
      */
     public function setStart($start): self
     {
@@ -422,7 +413,6 @@ class SessionDTO extends DataTransferObject implements ISessionDTO
 
     /**
      * @param int $end Unix Timestamp
-     * @return SessionDTO
      */
     public function setEnd($end): self
     {

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilUserDefinedData;
@@ -12,7 +20,6 @@ use ilUserDefinedData;
 class UDF extends AbstractImplementation implements IMetadataImplementation
 {
     public const PREFIX = 'f_';
-
 
     public function write(): void
     {

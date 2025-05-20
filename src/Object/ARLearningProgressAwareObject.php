@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object;
 
 use srag\Plugins\Hub2\Object\General\LearningProgressSettings;
@@ -18,14 +26,14 @@ trait ARLearningProgressAwareObject
      */
     private $learning_progress_settings;
 
-    public function getLPSettings() : ?LearningProgressSettings
+    public function getLPSettings(): ?LearningProgressSettings
     {
         return $this->learning_progress_settings;
     }
 
     public function setLPSettings(
         ?LearningProgressSettings $learningProgressSettings
-    ) : ILearningProgressSettingsAwareDataTransferObject {
+    ): ILearningProgressSettingsAwareDataTransferObject {
         $this->learning_progress_settings = $learningProgressSettings;
 
         return $this;

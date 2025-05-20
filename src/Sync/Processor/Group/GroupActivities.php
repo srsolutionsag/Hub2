@@ -1,9 +1,15 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\Group;
 
-use ilDB;
-use ilDBInterface;
 use ilObject2;
 use ilObjGroup;
 
@@ -14,16 +20,11 @@ use ilObjGroup;
  */
 class GroupActivities implements IGroupActivities
 {
-    /**
-     * @var ilDB
-     */
-    protected $db;
-
-    public function __construct(ilDBInterface $db)
+    protected \ilDBInterface $db;
+    public function __construct(\ilDBInterface $db)
     {
         $this->db = $db;
     }
-
 
     public function hasActivities(ilObjGroup $ilObjGroup): bool
     {

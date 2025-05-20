@@ -16,7 +16,9 @@ use srag\Plugins\Hub2\Exception\HubException;
 interface ilHub2DispatchableGUI
 {
     public const CMD_INDEX = 'index';
+
     public function executeCommand(): void;
+
     public function index(): void;
 
     public function getActiveTab(): ?string;
@@ -24,6 +26,7 @@ interface ilHub2DispatchableGUI
     public function getDefaultClass(): ilHub2DispatchableGUI;
 
     public function getSubtabs(): array;
+
     public function getTabs(): array;
 
     public function getActiveSubTab(): ?string;

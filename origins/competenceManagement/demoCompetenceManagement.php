@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use ilCSVReader;
@@ -22,11 +30,11 @@ use stdClass;
  */
 class demoCompetenceManagement extends AbstractOriginImplementation
 {
+    public $data;
     /**
      * Connect to the service providing the sync data.
      * Throw a ConnectionFailedException to abort the sync if a connection is not possible.
      *
-     * @return bool
      * @throws ConnectionFailedException
      */
     public function connect(): bool
@@ -49,7 +57,6 @@ class demoCompetenceManagement extends AbstractOriginImplementation
      *
      * Throw a ParseDataFailedException to abort the sync if your data cannot be parsed.
      *
-     * @return int
      * @throws ParseDataFailedException
      */
     public function parseData(): int
@@ -129,7 +136,6 @@ class demoCompetenceManagement extends AbstractOriginImplementation
 
     // HOOKS
     // ------------------------------------------------------------------------------------------------------------
-
     /**
      * Called if any exception occurs during processing the ILIAS objects. This hook can be used to
      * influence the further processing of the current origin sync or the global sync:
@@ -142,57 +148,37 @@ class demoCompetenceManagement extends AbstractOriginImplementation
      * origins in the processing chain is NOT getting executed.
      *
      * Note that if you do not throw any of the exceptions above, the sync will continue.
-     *
-     * @param ILog $log
      */
     public function handleLog(ILog $log)
     {
     }
 
 
-    /**
-     * @param HookObject $hook
-     */
     public function beforeCreateILIASObject(HookObject $hook)
     {
     }
 
 
-    /**
-     * @param HookObject $hook
-     */
     public function afterCreateILIASObject(HookObject $hook)
     {
     }
 
 
-    /**
-     * @param HookObject $hook
-     */
     public function beforeUpdateILIASObject(HookObject $hook)
     {
     }
 
 
-    /**
-     * @param HookObject $hook
-     */
     public function afterUpdateILIASObject(HookObject $hook)
     {
     }
 
 
-    /**
-     * @param HookObject $hook
-     */
     public function beforeDeleteILIASObject(HookObject $hook)
     {
     }
 
 
-    /**
-     * @param HookObject $hook
-     */
     public function afterDeleteILIASObject(HookObject $hook)
     {
     }

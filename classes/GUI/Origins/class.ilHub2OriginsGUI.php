@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Jobs\RunSync;
 use srag\Plugins\Hub2\Origin\AROrigin;
-use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Origin\IOriginRepository;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\Origin\OriginImplementationTemplateGenerator;
@@ -24,9 +23,9 @@ use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginsTableGUI;
 use srag\Plugins\Hub2\UI\OriginFormFactory;
-use srag\Plugins\Hub2\Jobs\CronNotifier;
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
+use srag\Plugins\Hub2\Jobs\WebNotifier;
 
 /**
  * @package      srag\Plugins\Hub2\UI\OriginConfig
@@ -78,8 +77,14 @@ class ilHub2OriginsGUI extends ilHub2DispatchableBaseGUI
     {
         return [
             self::SUBTAB_ORIGINS => $this->ctrl->getLinkTarget($this, self::CMD_INDEX),
-            'subtab_data' => $this->ctrl->getLinkTargetByClass([self::class, ilHub2DataGUI::class], ilHub2DataGUI::CMD_INDEX),
-            'subtab_logs' => $this->ctrl->getLinkTargetByClass([self::class, ilHub2LogsGUI::class], ilHub2LogsGUI::CMD_INDEX),
+            'subtab_data' => $this->ctrl->getLinkTargetByClass(
+                [self::class, ilHub2DataGUI::class],
+                ilHub2DataGUI::CMD_INDEX
+            ),
+            'subtab_logs' => $this->ctrl->getLinkTargetByClass(
+                [self::class, ilHub2LogsGUI::class],
+                ilHub2LogsGUI::CMD_INDEX
+            ),
         ];
     }
 
@@ -168,11 +173,11 @@ class ilHub2OriginsGUI extends ilHub2DispatchableBaseGUI
             $configData = [];
             $propertyData = [];
             foreach ($form->getInputItemsRecursive() as $item) {
-                if (strpos($item->getPostVar(), 'config_') === 0) {
-                    $key = substr($item->getPostVar(), 7);
+                if (strncmp((string) $item->getPostVar(), 'config_', strlen('config_')) === 0) {
+                    $key = substr((string) $item->getPostVar(), 7);
                     $configData[$key] = $form->getInput($item->getPostVar());
-                } elseif (strpos($item->getPostVar(), 'prop_') === 0) {
-                    $key = substr($item->getPostVar(), 5);
+                } elseif (strncmp((string) $item->getPostVar(), 'prop_', strlen('prop_')) === 0) {
+                    $key = substr((string) $item->getPostVar(), 5);
                     $propertyData[$key] = $form->getInput($item->getPostVar());
                 }
             }
@@ -218,7 +223,7 @@ class ilHub2OriginsGUI extends ilHub2DispatchableBaseGUI
                         true
                     );
                 }
-            } catch (HubException $e) {
+            } catch (HubException $exception) {
                 $this->main_tpl->setOnScreenMessage(
                     'info',
                     sprintf(
@@ -277,7 +282,7 @@ class ilHub2OriginsGUI extends ilHub2DispatchableBaseGUI
     {
         $summary = $this->summaryFactory->web();
 
-        (new RunSync(new CronNotifier(), $origins, $summary, $force_update))->run();
+        (new RunSync(new WebNotifier(), $origins, $summary, $force_update))->run();
 
         $this->main_tpl->setOnScreenMessage('info', nl2br($summary->getOutputAsString(), false), true);
 

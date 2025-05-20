@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\OrgUnitMembership;
 
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
@@ -28,12 +36,10 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         $this->position = $position;
     }
 
-
     public function getOrgUnitId(): string
     {
         return $this->org_unit_id;
     }
-
 
     public function setOrgUnitId(string $org_unit_id): IOrgUnitMembershipDTO
     {
@@ -42,12 +48,10 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         return $this;
     }
 
-
     public function getOrgUnitIdType(): int
     {
         return $this->org_unit_id_type;
     }
-
 
     public function setOrgUnitIdType(int $org_unit_id_type): IOrgUnitMembershipDTO
     {
@@ -56,12 +60,10 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         return $this;
     }
 
-
     public function getUserId(): int
     {
         return $this->user_id;
     }
-
 
     public function setUserId(int $user_id): IOrgUnitMembershipDTO
     {
@@ -70,12 +72,10 @@ class OrgUnitMembershipDTO extends DataTransferObject implements IOrgUnitMembers
         return $this;
     }
 
-
     public function getPosition(): int
     {
         return $this->position;
     }
-
 
     public function setPosition(int $position): IOrgUnitMembershipDTO
     {

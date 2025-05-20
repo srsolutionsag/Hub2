@@ -12,9 +12,7 @@ declare(strict_types=1);
 
 namespace srag\Plugins\Hub2\Setup;
 
-use ILIAS\Setup\Objective\NullObjective;
 use ILIAS\Setup\Environment;
-use srag\Plugins\Hub2\Setup\DB\Update;
 use ILIAS\Setup\Objective;
 
 /**
@@ -51,17 +49,6 @@ class ResetObjective implements Objective
     {
         // this objective currently does nothing. if enabled, it will reset the new update
         // steps to be run again on the next update.
-
-        return $environment;
-
-        /** @var \ilDBInterface $db */
-        $db = $environment->getResource(Environment::RESOURCE_DATABASE);
-
-        $db->manipulateF(
-            'DELETE FROM  il_db_steps WHERE class = %s',
-            ['text'],
-            [Update::class]
-        );
 
         return $environment;
     }

@@ -100,7 +100,6 @@ class DeleteOldLogsJob extends ilCronJob
                 $deleted_per_10_seconds = 0;
             }
 
-
             /** @var \ilCronManager $manager */
             $manager = $DIC['cron.manager'];
             $manager->ping(self::CRON_JOB_ID);

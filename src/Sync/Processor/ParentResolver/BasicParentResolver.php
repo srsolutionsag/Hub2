@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\ParentResolver;
 
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
@@ -7,12 +15,12 @@ use srag\Plugins\Hub2\Exception\HubException;
 
 class BasicParentResolver implements ParentResolver
 {
+    protected int $fallback_ref_id;
     private bool $try_restore_parent = false;
     /**
      * @var \ilTree
      */
     protected $tree;
-    protected int $fallback_ref_id;
     protected \ilRepUtil $rep_util;
     /**
      * @var \ilRbacAdmin
@@ -22,11 +30,11 @@ class BasicParentResolver implements ParentResolver
     public function __construct(
         int $fallback_ref_id
     ) {
+        $this->fallback_ref_id = $fallback_ref_id;
         global $DIC;
         $this->tree = $DIC->repositoryTree();
         $this->rbacadmin = $DIC->rbac()->admin();
         $this->rep_util = new \ilRepUtil();
-        $this->fallback_ref_id = $fallback_ref_id;
     }
 
     public function resolveParentRefId(DataTransferObject $dto): int

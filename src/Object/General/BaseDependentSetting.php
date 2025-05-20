@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\General;
 
 /**
@@ -7,67 +15,75 @@ namespace srag\Plugins\Hub2\Object\General;
  */
 abstract class BaseDependentSetting implements IDependentSettings
 {
-    protected $data = [];
+    protected array $data = [];
 
-    public function __toArray() : array
+    public function toArray(): array
     {
         return $this->data;
     }
 
-    public function __fromArray(array $data) : void
+    public function fromArray(array $data): void
     {
         $this->data = $data;
     }
 
-    protected function set(string $key, $value) : self
+    protected function set(string $key, $value): self
     {
         $this->data[$key] = $value;
 
         return $this;
     }
 
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize($this->__toArray());
+        return $this->toArray();
     }
 
-    public function unserialize($data) : void
+    public function __unserialize($data): void
     {
-        $this->__fromArray(unserialize($data));
+        $this->fromArray($data);
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
-        return $this->serialize();
+        return (string) $this->__serialize();
     }
 
-    public function __fromString(string $data) : void
+    public function fromString(string $data): void
     {
-        $this->unserialize($data);
+        $this->__unserialize($data);
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->data[$offset] ?? false;
     }
 
+    /**
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->data[$offset] ?? null;
     }
 
-    public function offsetSet($offset, $value) : void
+    public function offsetSet($offset, $value): void
     {
         $this->data[$offset] = $value;
     }
 
-    public function offsetUnset($offset) : void
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
 
+    /**
+     * @return mixed
+     */
     public function jsonSerialize()
     {
-        return $this->__toArray();
+        return $this->toArray();
     }
+
 }

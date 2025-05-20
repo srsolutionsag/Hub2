@@ -1,8 +1,14 @@
 <?php
 
-require_once __DIR__ . "/../AbstractHub2Tests.php";
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
 
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+require_once __DIR__ . "/../AbstractHub2Tests.php";
 use Mockery\MockInterface;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
@@ -30,7 +36,7 @@ use srag\Plugins\Hub2\Sync\Processor\IObjectSyncProcessor;
  */
 class OriginSyncTest extends AbstractHub2Tests
 {
-    use MockeryPHPUnitIntegration;
+    //    use MockeryPHPUnitIntegration;
 
     /**
      * @var MockInterface
@@ -165,8 +171,8 @@ class OriginSyncTest extends AbstractHub2Tests
             $this->originImplementation
         );
         $originSync->execute();
-        $this->assertEquals(100, $originSync->getCountDelivered());
-        $this->assertEquals(0, $originSync->getCountProcessedTotal());
+        $this->assertEquals(100, $originSync->getDeliveredTotal());
+        $this->assertEquals(0, $originSync->getProcessedTotal());
         //$this->assertEquals([], $originSync->getLogs());
     }
 
@@ -214,12 +220,12 @@ class OriginSyncTest extends AbstractHub2Tests
             $this->originImplementation
         );
         $originSync->execute();
-        $this->assertEquals(4, $originSync->getCountDelivered());
-        $this->assertEquals(4, $originSync->getCountProcessedTotal());
-        $this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED));
-        $this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED));
-        $this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED));
-        $this->assertEquals(1, $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED));
+        $this->assertEquals(4, $originSync->getDeliveredTotal());
+        $this->assertEquals(4, $originSync->getProcessedTotal());
+        $this->assertEquals(1, $originSync->getTotalByStatus(IObject::STATUS_CREATED));
+        $this->assertEquals(1, $originSync->getTotalByStatus(IObject::STATUS_UPDATED));
+        $this->assertEquals(1, $originSync->getTotalByStatus(IObject::STATUS_OUTDATED));
+        $this->assertEquals(1, $originSync->getTotalByStatus(IObject::STATUS_IGNORED));
         //$this->assertEquals([], $originSync->getLogs());
     }
 
@@ -256,7 +262,7 @@ class OriginSyncTest extends AbstractHub2Tests
         );
         $originSync->execute();
         //$this->assertEquals($exception, array_pop($originSync->getLogs()));
-        $this->assertEquals(0, $originSync->getCountProcessedTotal());
-        $this->assertEquals(1, $originSync->getCountDelivered());
+        $this->assertEquals(0, $originSync->getProcessedTotal());
+        $this->assertEquals(1, $originSync->getDeliveredTotal());
     }
 }

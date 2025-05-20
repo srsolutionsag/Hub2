@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
@@ -20,18 +28,15 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-
     public function userDefinedField(IMetadata $metadata, int $ilias_id): IMetadataImplementation
     {
         return new UDF($metadata, $ilias_id);
     }
 
-
     public function customMetadata(IMetadata $metadata, int $ilias_id): IMetadataImplementation
     {
         return new CustomMetadata($metadata, $ilias_id);
     }
-
 
     public function getImplementationForDTO(
         IMetadataAwareDataTransferObject $dto,
@@ -46,6 +51,8 @@ class MetadataImplementationFactory implements IMetadataImplementationFactory
                 return $this->customMetadata($metadata, $ilias_id);
             case $dto instanceof UserDTO:
                 return $this->userDefinedField($metadata, $ilias_id);
+            default:
+                throw new \LogicException("No implementation for " . get_class($dto) . " found");
         }
     }
 }

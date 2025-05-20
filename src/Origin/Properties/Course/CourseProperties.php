@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Properties\Course;
 
 use srag\Plugins\Hub2\Origin\Properties\OriginProperties;
@@ -19,7 +27,6 @@ class CourseProperties extends OriginProperties implements ICourseProperties
         'notification_email',
         'shortlink'
     ];
-
 
     public static function getPlaceHolderStrings(): string
     {
@@ -41,7 +48,6 @@ class CourseProperties extends OriginProperties implements ICourseProperties
             self::MOVE_COURSE => false,
             self::DELETE_MODE => self::DELETE_MODE_NONE,
         ];
-
 
     public static function getAvailableDeleteModes(): array
     {

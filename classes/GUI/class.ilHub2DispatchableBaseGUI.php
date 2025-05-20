@@ -59,10 +59,10 @@ abstract class ilHub2DispatchableBaseGUI implements ilHub2DispatchableGUI
         if ($next_class === null
             || $next_class === ''
             || $next_class === '0'
-            || $next_class === strtolower(get_class($this))
+            || $next_class === strtolower(static::class)
         ) {
             $default = $this->getDefaultClass();
-            if (get_class($this) === get_class($default)) {
+            if (static::class === get_class($default)) {
                 $command = $this->ctrl->getCmd(ilHub2DispatchableGUI::CMD_INDEX);
                 $this->{$command}();
                 // ilUIPluginRouterGUI doesnt load and shows the main template, we have to do it manually
@@ -79,7 +79,7 @@ abstract class ilHub2DispatchableBaseGUI implements ilHub2DispatchableGUI
         $classes = $this->ctrl->getCurrentClassPath();
         // get the last class in the path
         $class_name = array_pop($classes);
-        $instance = $next_class === strtolower($class_name) ? new $class_name() : $this->getDefaultClass();
+        $instance = $next_class === strtolower((string) $class_name) ? new $class_name() : $this->getDefaultClass();
         $this->ctrl->forwardCommand($instance);
     }
 

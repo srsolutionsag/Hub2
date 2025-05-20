@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync;
 
 use ilHub2Plugin;
@@ -12,8 +20,11 @@ use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
  */
 final class DataTransferObjectSort implements IDataTransferObjectSort
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     private IDataTransferObject $dto_object;
+    /**
+     * @var string
+     */
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     private int $level = 1;
 
     public function __construct(IDataTransferObject $dto_object)
@@ -21,24 +32,20 @@ final class DataTransferObjectSort implements IDataTransferObjectSort
         $this->dto_object = $dto_object;
     }
 
-
     public function getDtoObject(): IDataTransferObject
     {
         return $this->dto_object;
     }
-
 
     public function setDtoObject(IDataTransferObject $dto_object): void
     {
         $this->dto_object = $dto_object;
     }
 
-
     public function getLevel(): int
     {
         return $this->level;
     }
-
 
     public function setLevel(int $level): void
     {

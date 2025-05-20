@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Parser;
 
 use srag\Plugins\Hub2\Exception\ParseDataFailedException;
@@ -11,13 +19,17 @@ use srag\Plugins\Hub2\Exception\ParseDataFailedException;
  */
 class Csv
 {
+    protected string $file_path;
+    protected string $unique_field = '';
+    protected array $mandatory_columns = [];
+    protected array $columns_mapping = [];
+    protected string $enclosure = self::ENCLOSURE_DEFAULT;
+    protected string $separator = self::SEPARATOR_DEFAULT;
+    protected array $bad_enclosures = [];
     public const ENCLOSURE_DEFAULT = '"';
     public const SEPARATOR_DEFAULT = ";";
     public const BAD_ENCLOSURE_REPLACEMENT = '';
     private \Closure $sanitizer;
-
-    protected array $bad_enclosures;
-    protected array $columns_mapping;
     /**
      * @var \Closure[]
      */
@@ -26,11 +38,6 @@ class Csv
      * @var array
      */
     protected $parsed_csv = [];
-    protected string $enclosure;
-    protected string $separator;
-    protected string $file_path;
-    protected string $unique_field;
-    protected array $mandatory_columns;
     /**
      * @var array
      */
@@ -47,19 +54,23 @@ class Csv
         string $file_path,
         string $unique_field = '',
         array $mandatory_columns = [],
-        array $column_mapping = [],
+        array $columns_mapping = [],
         string $enclosure = self::ENCLOSURE_DEFAULT,
         string $separator = self::SEPARATOR_DEFAULT,
         array $bad_enclosures = []
     ) {
-        $this->sanitizer = fn(string $s): string => @utf8_encode(utf8_decode($s));
-        $this->enclosure = $enclosure;
-        $this->separator = $separator;
         $this->file_path = $file_path;
         $this->unique_field = $unique_field;
         $this->mandatory_columns = $mandatory_columns;
-        $this->columns_mapping = $column_mapping;
+        $this->columns_mapping = $columns_mapping;
+        $this->enclosure = $enclosure;
+        $this->separator = $separator;
         $this->bad_enclosures = $bad_enclosures;
+        $this->sanitizer = fn (string $s): string => @mb_convert_encoding(
+            mb_convert_encoding($s, 'ISO-8859-1'),
+            'UTF-8',
+            'ISO-8859-1'
+        );
     }
 
     public function setSanitizer(\Closure $sanitizer): void
@@ -132,8 +143,6 @@ class Csv
     protected function removeBOM(string $text): string
     {
         return $text;
-        $bom = pack('H*', 'EFBBBF');
-        return preg_replace("/^$bom/", '', $text);
     }
 
     protected function parseCSVFileAndApplyHeaders(string $path_to_file): void

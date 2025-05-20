@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Parser;
 
 /**
@@ -10,13 +18,23 @@ namespace srag\Plugins\Hub2\Parser;
 class Json
 {
     /**
+     * @readonly
+     */
+    private string $file_path;
+    /**
      * @var array[]
      */
     private ?array $parsed_json = null;
-    private string $file_path;
+    /**
+     * @readonly
+     */
     private array $mandatory_columns;
     private array $filters = [];
+    /**
+     * @readonly
+     */
     private \Closure $string_sanitizer;
+    private array $delivered_columns = [];
 
     /**
      *
@@ -48,8 +66,17 @@ class Json
     {
         $this->parsed_json = array_filter(
             $this->parsed_json,
-            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v),
-            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? fn ($v, $k): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
+            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn ($v, $k): bool => !empty($v)) ?? fn (
+                $v,
+                $k
+            ): bool => !empty($v),
+            (($closure ?? fn ($v, $k): bool => !empty($v)) ?? fn (
+                $v,
+                $k
+            ): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : (($closure ?? fn (
+                $v,
+                $k
+            ): bool => !empty($v)) === null ? ARRAY_FILTER_USE_BOTH : ($closure === null ? ARRAY_FILTER_USE_BOTH : 0))
         );
     }
 

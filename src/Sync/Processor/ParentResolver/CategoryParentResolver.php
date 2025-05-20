@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\ParentResolver;
 
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
@@ -9,17 +17,16 @@ use srag\Plugins\Hub2\Object\ObjectFactory;
 
 class CategoryParentResolver extends BasicParentResolver
 {
-    protected ?string $fallback_ext_id;
     protected ObjectFactory $factory;
-
+    protected ?string $fallback_ext_id = null;
     public function __construct(
         ObjectFactory $factory,
         int $fallback_ref_id,
-        string $fallback_ext_id = null
+        ?string $fallback_ext_id = null
     ) {
-        parent::__construct($fallback_ref_id);
         $this->factory = $factory;
         $this->fallback_ext_id = $fallback_ext_id;
+        parent::__construct($fallback_ref_id);
     }
 
     public function resolveParentRefId(DataTransferObject $dto): int
@@ -27,12 +34,10 @@ class CategoryParentResolver extends BasicParentResolver
         if (!$dto instanceof CategoryDTO) {
             throw new \InvalidArgumentException();
         }
-
         // Parent ID type is Ref-ID
         if ($dto->getParentIdType() === ICategoryDTO::PARENT_ID_TYPE_REF_ID) {
             return $this->resolveRefIdForDTOwithRefIdParentType($dto);
         }
-
         // Parent ID type is External ID
         if ($dto->getParentIdType() === ICategoryDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
             $parent_category = $this->factory->category($dto->getParentId());
@@ -47,7 +52,6 @@ class CategoryParentResolver extends BasicParentResolver
             }
             return $this->checkAndReturnRefId($parent_category->getILIASId());
         }
-
         return $this->checkAndReturnRefId($this->fallback_ref_id);
     }
 }

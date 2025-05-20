@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Config\Category;
 
 use srag\Plugins\Hub2\Origin\Config\OriginConfig;
@@ -26,12 +34,10 @@ class CategoryOriginConfig extends OriginConfig implements ICategoryOriginConfig
         parent::__construct(array_merge($this->categoryData, $data));
     }
 
-
     public function getParentRefIdIfNoParentIdFound(): int
     {
         return (int) $this->get(self::REF_ID_NO_PARENT_ID_FOUND);
     }
-
 
     public function getExternalParentIdIfNoParentIdFound(): string
     {

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\GlobalHook;
 
 use srag\Plugins\Hub2\Config\ArConfig;
@@ -13,10 +21,7 @@ use srag\Plugins\Hub2\Log\ILog;
  */
 final class GlobalHook implements IGlobalHook
 {
-    /**
-     * @var self
-     */
-    protected static $instance;
+    private static ?\srag\Plugins\Hub2\Sync\GlobalHook\GlobalHook $instance = null;
 
     public static function getInstance(): self
     {
@@ -30,7 +35,7 @@ final class GlobalHook implements IGlobalHook
     /**
      * @var IGlobalHook
      */
-    protected $global_hook;
+    private $global_hook;
 
     /**
      * GlobalHook constructor
@@ -46,7 +51,7 @@ final class GlobalHook implements IGlobalHook
     /**
      * @throws HubException
      */
-    protected function instantiateGlobalHook()
+    private function instantiateGlobalHook()
     {
         $class_path = ArConfig::getField(ArConfig::KEY_GLOBAL_HOCK_PATH);
         if (!file_exists($class_path)) {
@@ -69,7 +74,6 @@ final class GlobalHook implements IGlobalHook
         return $global_hook;
     }
 
-
     public function beforeSync(array $active_orgins): bool
     {
         if ($this->global_hook) {
@@ -79,7 +83,6 @@ final class GlobalHook implements IGlobalHook
         return true;
     }
 
-
     public function afterSync(array $active_orgins): bool
     {
         if ($this->global_hook) {
@@ -88,7 +91,6 @@ final class GlobalHook implements IGlobalHook
 
         return true;
     }
-
 
     public function handleLog(ILog $log): void
     {

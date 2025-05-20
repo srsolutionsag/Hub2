@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Version;
 
 /**
@@ -10,6 +18,9 @@ namespace srag\Plugins\Hub2\Version;
 class ILIASVersion extends Version
 {
     public const ILIAS_SEVEN = '7.0';
+    /**
+     * @readonly
+     */
     private Version $ilias_7;
 
     public function __construct(string $version)

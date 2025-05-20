@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Properties\User;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -29,5 +37,5 @@ interface IUserProperties extends IOriginProperties
     public const DELETE_MODE_DELETE = 1;
     public const DELETE_MODE_INACTIVE = 2;
 
-    public static function getAvailableDeleteModes() : array;
+    public static function getAvailableDeleteModes(): array;
 }

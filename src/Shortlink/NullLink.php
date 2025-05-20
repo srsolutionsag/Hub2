@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Shortlink;
 
 /**
@@ -14,30 +22,25 @@ class NullLink implements IObjectLink
         return false;
     }
 
-
     public function isAccessGranted(): bool
     {
         return false;
     }
-
 
     public function getAccessGrantedExternalLink(): string
     {
         return "index.php";
     }
 
-
     public function getAccessDeniedLink(): string
     {
         return "index.php";
     }
 
-
     public function getNonExistingLink(): string
     {
         return "index.php";
     }
-
 
     public function getAccessGrantedInternalLink(): string
     {

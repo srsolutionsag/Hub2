@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use srag\Plugins\Hub2\Exception\BuildObjectsFailedException;
@@ -28,6 +36,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
         //			throw new ConnectionFailedException("Data file does not exist");
         //		}
         // TODO: Implement connect() method.
+        return true;
     }
 
     /**
@@ -44,6 +53,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
         //		}
         //		return count($this->data);
         // TODO: Implement parseData() method.
+        return 0;
     }
 
     /**
@@ -71,6 +81,7 @@ class SampleOriginImplementation extends AbstractOriginImplementation
         //		}
         //		return $userDTOs;
         // TODO: Implement buildObjects() method.
+        return [];
     }
 
     /**
@@ -123,7 +134,6 @@ class SampleOriginImplementation extends AbstractOriginImplementation
     public function afterSync(): void
     {
     }
-
 
     public function overrideStatus(HookObject $hook): void
     {

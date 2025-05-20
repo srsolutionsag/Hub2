@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Config\Category;
 
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -19,7 +27,7 @@ interface ICategoryOriginConfig extends IOriginConfig
      * the correct parent ref-ID. By default, the category will be created directly
      * in the repository (refId = 1).
      */
-    public function getParentRefIdIfNoParentIdFound() : int;
+    public function getParentRefIdIfNoParentIdFound(): int;
 
     /**
      * Get an external ID of another category from the same origin acting as parent,
@@ -27,5 +35,5 @@ interface ICategoryOriginConfig extends IOriginConfig
      * there is no "fallback category" found with the ext-ID returned here, the category
      * will be created directly in the repository (refId = 1)
      */
-    public function getExternalParentIdIfNoParentIdFound() : string;
+    public function getExternalParentIdIfNoParentIdFound(): string;
 }

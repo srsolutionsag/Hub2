@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\CompetenceManagement\ProfileLevel;
 
 use JsonSerializable;
@@ -28,21 +36,21 @@ interface IProfileLevel extends JsonSerializable
      */
     public const LEVEL_ID_TYPE_EXTERNAL_EXT_ID = 2;
 
-    public function getSkillId() : string;
+    public function getSkillId(): string;
 
-    public function setSkillId(string $skill_id) : self;
+    public function setSkillId(string $skill_id): self;
 
-    public function getSkillIdType() : int;
+    public function getSkillIdType(): int;
 
-    public function setSkillIdType(int $skill_id_type) : self;
+    public function setSkillIdType(int $skill_id_type): self;
 
-    public function getLevelId() : string;
+    public function getLevelId(): string;
 
-    public function setLevelId(string $level_id) : self;
+    public function setLevelId(string $level_id): self;
 
-    public function getLevelIdType() : int;
+    public function getLevelIdType(): int;
 
-    public function setLevelIdType(int $level_id_type) : self;
+    public function setLevelIdType(int $level_id_type): self;
 
-    public function jsonSerialize() : array;
+    public function jsonSerialize(): array;
 }

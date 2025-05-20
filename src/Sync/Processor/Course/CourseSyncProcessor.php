@@ -17,7 +17,6 @@ use ilContainer;
 use ilContainerSortingSettings;
 use ilCopyWizardOptions;
 use ilLink;
-use ilMailMimeSenderFactory;
 use ilMD;
 use ilMDLanguageItem;
 use ilMimeMail;
@@ -41,6 +40,7 @@ use srag\Plugins\Hub2\Sync\Processor\ParentResolver\CourseParentResolver;
 use srag\Plugins\Hub2\Sync\Processor\General\NewsSettingsSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\General\LearningProgressSettingsSyncProcessor;
 use srag\Plugins\Hub2\Sync\Processor\General\CalendarSettingsSyncProcessor;
+use ILIAS\ResourceStorage\Preloader\SecureString;
 
 /**
  * Class CourseSyncProcessor
@@ -56,6 +56,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     use NewsSettingsSyncProcessor;
     use CalendarSettingsSyncProcessor;
     use LearningProgressSettingsSyncProcessor;
+    use SecureString;
+    protected ICourseActivities $courseActivities;
 
     /**
      * @var CourseProperties
@@ -65,7 +67,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * @var CourseOriginConfig
      */
     protected IOriginConfig $config;
-    protected ICourseActivities $courseActivities;
     /**
      * @var array
      */
@@ -119,6 +120,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         IObjectStatusTransition $transition,
         ICourseActivities $courseActivities
     ) {
+        $this->courseActivities = $courseActivities;
         global $DIC;
         $this->tree = $DIC['tree'];
         $this->object_definition = $DIC['objDefinition'];
@@ -128,7 +130,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         parent::__construct($origin, $implementation, $transition);
         $this->props = $origin->properties();
         $this->config = $origin->config();
-        $this->courseActivities = $courseActivities;
         $this->parent_resolver = new CourseParentResolver(
             $this->config->getParentRefIdIfNoParentIdFound(),
             $this->config->getLinkedOriginId()
@@ -177,8 +178,8 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         // Pass properties from DTO to ilObjUser
         foreach (self::getProperties() as $property) {
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() === null) {
                 continue;
             }
@@ -372,7 +373,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                     $replacement = ilLink::_getStaticLink($ilObjCourse->getRefId(), 'crs');
                     break;
             }
-            $body = str_ireplace('[' . strtoupper($ph) . ']', $replacement, $body);
+            $body = str_ireplace('[' . strtoupper((string) $ph) . ']', $replacement, $body);
         }
 
         return $body;
@@ -386,17 +387,16 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
     {
         $this->current_ilias_object = $ilObjCourse = $this->findILIASCourse($ilias_id);
         if (!$ilObjCourse instanceof \ilObjCourse) {
-            //
-
             return;
         }
+        $changed = false;
         // Update some properties if they should be updated depending on the origin config
         foreach (self::getProperties() as $property) {
             if (!$this->props->updateDTOProperty($property)) {
                 continue;
             }
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() === null) {
                 continue;
             }
@@ -408,6 +408,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
             } else {
                 $ilObjCourse->$setter($dto->$getter());
             }
+            $changed = true;
         }
         $courseStart = $this->props->updateDTOProperty("courseStart");
         $courseEnd = $this->props->updateDTOProperty("courseEnd");
@@ -419,39 +420,48 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
                 ? $dto->getCourseEnd()
                 : $ilObjCourse->getCourseEnd();
             $ilObjCourse->setCoursePeriod($start, $end);
+            $changed = true;
         }
         if ($this->props->updateDTOProperty("enableSessionLimit")) {
             $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
+            $changed = true;
         }
         if ($this->props->updateDTOProperty("subscriptionLimitationType")) {
             $this->setSubscriptionType($dto, $ilObjCourse);
+            $changed = true;
         }
         if ($this->props->updateDTOProperty("languageCode")) {
             $this->setLanguage($dto, $ilObjCourse);
+            $changed = true;
         }
         if ($this->props->get(CourseProperties::SET_ONLINE_AGAIN)) {
             $ilObjCourse->setOfflineStatus(false);
+            $changed = true;
             //Does not exist in 5.4
             //$ilObjCourse->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
         }
 
         if ($this->props->updateDTOProperty("enableSessionLimit")) {
             $ilObjCourse->enableSessionLimit($dto->isSessionLimitEnabled());
+            $changed = true;
         }
 
         // News Settings
         if ($this->props->updateDTOProperty("newsSettings")) {
             $this->handleNewsSettings($dto, $ilObjCourse);
+            $changed = true;
         }
 
         // Calendar Settings
         if ($this->props->updateDTOProperty("calendarSettings")) {
             $this->handleCalendarSettings($dto, $ilObjCourse);
+            $changed = true;
         }
 
         // LP Settings
         if ($this->props->updateDTOProperty("learningProgressSettings")) {
             $this->handleLPSettings($dto, $ilObjCourse);
+            $changed = true;
         }
 
         // move/put in tree
@@ -459,31 +469,43 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $parent_ref_id = $this->determineParentRefId($dto);
         // Check if we should create some dependence categories
         $parent_ref_id = $this->buildDependenceCategories($dto, $parent_ref_id);
-        $ref_id = (int) $ilObjCourse->getRefId();
+        $ref_id = $ilObjCourse->getRefId();
 
         if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
             $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
+            $changed = true;
         } elseif ($this->props->get(CourseProperties::MOVE_COURSE)) {
             $this->parent_resolver->move($ref_id, $parent_ref_id);
+            $changed = true;
         }
 
         if ($this->props->updateDTOProperty("appointementsColor")) {
             $this->handleAppointementsColor($ilObjCourse, $dto);
+            $changed = true;
         }
 
-        $ilObjCourse->update();
+        if ($changed) {
+            $ilObjCourse->update();
+        }
     }
 
-    protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto)
+    protected function handleAppointementsColor(ilObjCourse $ilObjCourse, CourseDTO $dto): void
     {
         if ($dto->getAppointementsColor() !== '' && $dto->getAppointementsColor() !== '0') {
-            $this->obj_data_cache->deleteCachedEntry($ilObjCourse->getId());
-            /**
-             * @var $cal_cat ilCalendarCategory
-             */
-            $cal_cat = ilCalendarCategory::_getInstanceByObjId($ilObjCourse->getId());
-            $cal_cat->setColor($dto->getAppointementsColor());
-            $cal_cat->update();
+            try {
+                $this->obj_data_cache->deleteCachedEntry($ilObjCourse->getId());
+                /**
+                 * @var $cal_cat ilCalendarCategory
+                 */
+                $cal_cat = ilCalendarCategory::_getInstanceByObjId($ilObjCourse->getId());
+                $cal_cat->setColor($dto->getAppointementsColor());
+                $cal_cat->setTitle($this->secure($dto->getTitle()));
+                $cal_cat->update();
+            } catch (\Throwable $t) {
+                $this->log_repo->storeLog(
+                    $this->log_repo->factory()->exceptionLog($t)
+                );
+            }
         }
     }
 
@@ -530,10 +552,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         return $this->parent_resolver->resolveParentRefId($course);
     }
 
-    /**
-     * @param int $parentRefId
-     * @return int
-     */
     protected function buildDependenceCategories(CourseDTO $object, int $parentRefId): int
     {
         if ($object->getFirstDependenceCategory() !== null) {
@@ -566,10 +584,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
      * find a category having the same title. If not, a new category is created.
      * It would be better to identify the category over the unique import ID and then update
      * the title of the category, if necessary.
-     * @param string $title
-     * @param int    $parent_ref_id
-     * @param int    $level
-     * @return int
      */
     protected function buildDependenceCategory(string $title, int $parent_ref_id, int $level): int
     {
@@ -631,7 +645,6 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
     /**
      * @param int $iliasId
-     * @return ilObjCourse|null
      */
     protected function findILIASCourse($iliasId): ?\ilObjCourse
     {
@@ -641,4 +654,10 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
 
         return new ilObjCourse($iliasId);
     }
+
+    public function teardown(): void
+    {
+        // $this->obj_data_cache // would be grat if we could clear the cache here, currently not possible
+    }
+
 }

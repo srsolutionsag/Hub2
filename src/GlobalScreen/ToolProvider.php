@@ -112,7 +112,12 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
                               );
 
                               $listing_data = array_merge($listing_data, $data);
-                              $listing = $factory->listing()->descriptive($listing_data);
+                              $listing = $factory->listing()->descriptive(
+                                  array_map(
+                                      static fn ($value): string => (string) $value,
+                                      $listing_data
+                                  )
+                              );
 
                               $info_panel = $factory->panel()->secondary()->legacy(
                                   'Infos',

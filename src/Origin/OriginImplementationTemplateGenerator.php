@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
@@ -23,7 +31,7 @@ class OriginImplementationTemplateGenerator
      * @return bool False if file exists, true if created
      * @throws HubException
      */
-    public function create(IOrigin $origin) : bool
+    public function create(IOrigin $origin): bool
     {
         $classFile = $this->getClassFilePath($origin);
         if ($this->classFileExists($origin)) {
@@ -35,7 +43,7 @@ class OriginImplementationTemplateGenerator
                 if (!ilUtil::makeDirParents($path)) {
                     throw new HubException("Could not create directory: $path");
                 }
-            } catch (\Throwable $t) {
+            } catch (\Throwable $exception) {
                 throw new HubException("Could not create directory: $path");
             }
         }
@@ -56,14 +64,14 @@ class OriginImplementationTemplateGenerator
         return true;
     }
 
-    public function classFileExists(IOrigin $origin) : bool
+    public function classFileExists(IOrigin $origin): bool
     {
         $classFile = $this->getClassFilePath($origin);
 
         return is_file($classFile);
     }
 
-    public function getClassFilePath(IOrigin $origin) : string
+    public function getClassFilePath(IOrigin $origin): string
     {
         $path = $this->getPath($origin);
         $className = $origin->getImplementationClassName();
@@ -71,9 +79,9 @@ class OriginImplementationTemplateGenerator
         return $path . $className . '.php';
     }
 
-    protected function getPath(IOrigin $origin) : string
+    protected function getPath(IOrigin $origin): string
     {
-        $basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
+        $basePath = rtrim((string) ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
 
         return $basePath . $origin->getObjectType() . '/';
     }
