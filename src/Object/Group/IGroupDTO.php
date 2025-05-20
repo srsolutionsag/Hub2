@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\Group;
 
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
@@ -14,7 +22,7 @@ use srag\Plugins\Hub2\Object\DTO\ITaxonomyAwareDataTransferObject;
  * @author  Fabian Schmid <fs@studer-raimann.ch>
  */
 interface IGroupDTO extends IDataTransferObject, IMetadataAwareDataTransferObject, ITaxonomyAwareDataTransferObject,
-                            IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject
+    IMappingStrategyAwareDataTransferObject, IDidacticTemplateAwareDataTransferObject
 {
     // View
     public const VIEW_BY_TYPE = 5;

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use srag\Plugins\Hub2\Exception\ConnectionFailedException;
@@ -9,7 +17,6 @@ use srag\Plugins\Hub2\Exception\ConnectionFailedException;
  */
 trait FileConnection
 {
-
     use APIGetter;
 
     protected string $file_path = '';
@@ -19,7 +26,7 @@ trait FileConnection
         // in case of api connection, we call the API first to get the data
         try {
             $this->maybeGetAPIData();
-        } catch (ConnectionFailedException $e) {
+        } catch (ConnectionFailedException $exception) {
             return false;
         }
 

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Log;
 
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -15,14 +23,14 @@ use Throwable;
  */
 interface IFactory
 {
-    public function log() : ILog;
+    public function log(): ILog;
 
     /**
      * @param IOrigin|null             $origin
      * @param IObject|null             $object
      * @param IDataTransferObject|null $dto
      */
-    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null) : ILog;
+    public function originLog(IOrigin $origin = null, IObject $object = null, IDataTransferObject $dto = null): ILog;
 
     /**
      * @param IOrigin|null             $origin
@@ -34,7 +42,7 @@ interface IFactory
         IOrigin $origin = null,
         IObject $object = null,
         IDataTransferObject $dto = null
-    ) : ILog;
+    ): ILog;
 
-    public function fromDB(stdClass $data) : ILog;
+    public function fromDB(stdClass $data): ILog;
 }

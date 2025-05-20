@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilObject;
@@ -16,7 +24,7 @@ trait DidacticTemplateSyncProcessor
     public function handleDidacticTemplate(
         IDidacticTemplateAwareDataTransferObject $dto,
         ilObject $ilias_object
-    ) : void {
+    ): void {
         if (
             null !== ($tpl_id = $dto->getDidacticTemplateId())
             // && $tpl_id !== (int) \ilDidacticTemplateObjSettings::lookupTemplateId($ilias_object->getRefId())
@@ -24,11 +32,11 @@ trait DidacticTemplateSyncProcessor
             $ilias_object->applyDidacticTemplate($tpl_id);
 
             // Apply templates of children
-            $recurser = function (int $ref_id) use (&$recurser) : void {
+            $recurser = function (int $ref_id) use (&$recurser): void {
                 global $DIC;
                 foreach ($DIC->repositoryTree()->getChilds($ref_id) as $child) {
                     $child_ref_id = (int) $child['ref_id'];
-                    if (($tpl_id = (int) \ilDidacticTemplateObjSettings::lookupTemplateId($child_ref_id)) > 0) {
+                    if (($tpl_id = \ilDidacticTemplateObjSettings::lookupTemplateId($child_ref_id)) > 0) {
                         foreach (\ilDidacticTemplateActionFactory::getActionsByTemplateId($tpl_id) as $action) {
                             $action->setRefId($child_ref_id);
                             $action->apply();

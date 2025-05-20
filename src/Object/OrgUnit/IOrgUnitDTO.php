@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\OrgUnit;
 
 use srag\Plugins\Hub2\MappingStrategy\IMappingStrategyAwareDataTransferObject;
@@ -21,31 +29,31 @@ interface IOrgUnitDTO extends IDataTransferObject, IMappingStrategyAwareDataTran
      */
     public const PARENT_ID_TYPE_EXTERNAL_EXT_ID = 2;
 
-    public function getTitle() : string;
+    public function getTitle(): string;
 
-    public function setTitle(string $title) : self;
+    public function setTitle(string $title): self;
 
-    public function getDescription() : string;
+    public function getDescription(): string;
 
-    public function setDescription(string $description) : self;
+    public function setDescription(string $description): self;
 
-    public function getOwner() : int;
+    public function getOwner(): int;
 
-    public function setOwner(int $owner) : self;
+    public function setOwner(int $owner): self;
 
-    public function getParentId() : string;
+    public function getParentId(): string;
 
-    public function setParentId(string $parent_id) : self;
+    public function setParentId(string $parent_id): self;
 
-    public function getParentIdType() : int;
+    public function getParentIdType(): int;
 
-    public function setParentIdType(int $parent_id_type) : self;
+    public function setParentIdType(int $parent_id_type): self;
 
-    public function getOrgUnitType() : string;
+    public function getOrgUnitType(): string;
 
-    public function setOrgUnitType(string $org_unit_type) : self;
+    public function setOrgUnitType(string $org_unit_type): self;
 
-    public function getExtId() : string;
+    public function getExtId(): string;
 
-    public function setExtId(string $ext_id) : self;
+    public function setExtId(string $ext_id): self;
 }

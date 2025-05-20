@@ -28,15 +28,15 @@ use stdClass;
  */
 final class Repository implements IRepository
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
-     * @var IRepository
+     * @var string
      */
-    protected static $instance;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    private static ?IRepository $instance = null;
     /**
      * @var \ilDBInterface
      */
-    protected $db;
+    private $db;
 
     public static function getInstance(): IRepository
     {
@@ -55,14 +55,12 @@ final class Repository implements IRepository
     /**
      * Additional data which should appear in all logs. E.g. something like
      * ID of datajunk of delivering system etc.
-     *
-     * @var stdClass
      */
-    protected $global_additional_data;
+    private \stdClass $global_additional_data;
     /**
      * @var ILog[][][]
      */
-    protected $kept_logs = [];
+    private array $kept_logs = [];
 
     /**
      * Repository constructor
@@ -74,7 +72,6 @@ final class Repository implements IRepository
         $this->db = $DIC->database();
     }
 
-
     public function deleteLog(ILog $log): void/*: void*/
     {
         $this->db->manipulateF(
@@ -84,7 +81,6 @@ final class Repository implements IRepository
             [$log->getLogId()]
         );
     }
-
 
     public function deleteOldLogs(int $keep_old_logs_time): int
     {
@@ -124,12 +120,10 @@ final class Repository implements IRepository
         return $count;
     }
 
-
     public function factory(): IFactory
     {
         return Factory::getInstance();
     }
-
 
     public function getLogs(
         string $sort_by = null,
@@ -176,7 +170,6 @@ final class Repository implements IRepository
 
         return array_map(fn (\stdClass $data): ILog => $this->factory()->fromDB($data), $logs);
     }
-
 
     public function getLogsCount(
         string $title = null,
@@ -336,7 +329,6 @@ final class Repository implements IRepository
         return $sql;
     }
 
-
     public function getLogById(int $log_id)/*: ?ILog*/
     {
         /**
@@ -355,12 +347,10 @@ final class Repository implements IRepository
         return $log;
     }
 
-
     public function getGlobalAdditionalData(): stdClass
     {
         return $this->global_additional_data;
     }
-
 
     public function withGlobalAdditionalData(stdClass $global_additional_data): IRepository
     {
@@ -368,7 +358,6 @@ final class Repository implements IRepository
 
         return $this;
     }
-
 
     public function keepLog(ILog $log): void/*:void*/
     {
@@ -384,7 +373,6 @@ final class Repository implements IRepository
 
         GlobalHook::getInstance()->handleLog($log);
     }
-
 
     public function getKeptLogs(IOrigin $origin, /*?*/ int $level = null): array
     {
@@ -403,7 +391,6 @@ final class Repository implements IRepository
         return $this->kept_logs[$origin->getId()][$level] ?? [];
     }
 
-
     public function storeLog(ILog $log): void/*: void*/
     {
         $date = new ilDateTime(time(), IL_CAL_UNIX);
@@ -413,16 +400,17 @@ final class Repository implements IRepository
         }
 
         $json_encode = json_encode($log->getAdditionalData(), JSON_THROW_ON_ERROR) ?? '{}';
+        $message = $log->getMessage();
         $log->withLogId(
             $this->store(
                 Log::TABLE_NAME,
                 [
                     "title" => [ilDBConstants::T_TEXT, $log->getTitle()],
-                    "message" => [ilDBConstants::T_TEXT, $log->getMessage()],
-                    "date" => [ilDBConstants::T_TEXT, $log->getDate()->get(IL_CAL_DATETIME)],
+                    "message" => [ilDBConstants::T_TEXT, $message],
+                    "date" => [ilDBConstants::T_TEXT, $log->getDate()->get(IL_CAL_FKT_DATE, "Y-m-d H:i:s")],
                     "level" => [ilDBConstants::T_INTEGER, $log->getLevel()],
                     "additional_data" => [ilDBConstants::T_TEXT, $json_encode],
-                    "origin_id" => [ilDBConstants::T_INTEGER, $log->getOriginId()],
+                    "origin_id" => [ilDBConstants::T_INTEGER, $log->getOriginId() ?? ''],
                     "origin_object_type" => [ilDBConstants::T_TEXT, $log->getOriginObjectType()],
                     "object_ext_id" => [ilDBConstants::T_TEXT, $log->getObjectExtId()],
                     "object_ilias_id" => [ilDBConstants::T_INTEGER, $log->getObjectIliasId()],

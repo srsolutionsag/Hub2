@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\CompetenceManagement;
 
 use srag\Plugins\Hub2\Exception\HubException;
@@ -62,19 +70,16 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
      */
     protected $ext_id = "";
 
-
     public function __construct(string $ext_id)
     {
         parent::__construct($ext_id);
         $this->ext_id = $ext_id;
     }
 
-
     public function getType(): int
     {
         return $this->type;
     }
-
 
     public function setType(int $type): ICompetenceManagementDTO
     {
@@ -83,12 +88,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getTitle(): string
     {
         return $this->title;
     }
-
 
     public function setTitle(string $title): ICompetenceManagementDTO
     {
@@ -97,12 +100,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getDescription(): string
     {
         return $this->title;
     }
-
 
     public function setDescription(string $description): ICompetenceManagementDTO
     {
@@ -115,12 +116,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getParentId(): string
     {
         return $this->parent_id;
     }
-
 
     public function setParentId(string $parent_id): ICompetenceManagementDTO
     {
@@ -133,12 +132,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getParentIdType(): int
     {
         return $this->parent_id_type;
     }
-
 
     public function setParentIdType(int $parent_id__type): ICompetenceManagementDTO
     {
@@ -151,12 +148,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getStatus(): int
     {
         return $this->status;
     }
-
 
     public function setStatus(int $status): ICompetenceManagementDTO
     {
@@ -169,12 +164,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getSelfEvaluation(): bool
     {
         return $this->self_evaluation;
     }
-
 
     public function setSelfEvaluation(bool $self_evaluation): ICompetenceManagementDTO
     {
@@ -187,7 +180,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function addSkillLevel(ISkillLevel $skill_level): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_COMPETENCE) {
@@ -199,12 +191,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getSkillLevels(): array
     {
         return $this->skill_levels;
     }
-
 
     public function setSkillLevels(array $skill_levels): ICompetenceManagementDTO
     {
@@ -217,7 +207,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function addProfileLevel(IProfileLevel $profile_level): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
@@ -229,12 +218,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getProfileLevels(): array
     {
         return $this->profile_levels;
     }
-
 
     public function setProfileLevels(array $profile_levels): ICompetenceManagementDTO
     {
@@ -247,7 +234,6 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function addProfileAssignedUser(int $user_id): ICompetenceManagementDTO
     {
         if ($this->getType() !== self::TYPE_PROFILE) {
@@ -259,12 +245,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getProfileAssignedUsers(): array
     {
         return $this->profile_assigned_users;
     }
-
 
     public function setProfileAssignedUsers(array $user_ids): ICompetenceManagementDTO
     {
@@ -277,12 +261,10 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
     public function getExtId(): string
     {
         return $this->ext_id;
     }
-
 
     public function setExtId(string $ext_id): ICompetenceManagementDTO
     {
@@ -291,8 +273,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         return $this;
     }
 
-
-    protected function sleepValue(array &$data, string $key)
+    protected function sleepValue(array &$data, string $key): void
     {
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
@@ -310,12 +291,11 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
         }
     }
 
-
-    protected function wakeUpValue(array $data, string $key)
+    protected function wakeUpValue(array $data, string $key): void
     {
         switch ($key) {
             case ICompetenceManagementProperties::PROP_SKILL_LEVELS:
-                return array_map(
+                array_map(
                     function (array $skill_level): ISkillLevel {
                         $key = null;
                         if ($skill_level instanceof ISkillLevel) {
@@ -332,14 +312,14 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
                 );
 
             case ICompetenceManagementProperties::PROP_PROFILE_LEVELS:
-                return array_map(
+                array_map(
                     function (array $profile_level): IProfileLevel {
                         $key = null;
                         if ($profile_level instanceof IProfileLevel) {
                             $this->{$key} = $profile_level;
                         }
 
-                        $this->{$key} = new ProfileLevel(
+                        return $this->{$key} = new ProfileLevel(
                             $profile_level["skill_id"],
                             $profile_level["skill_id_type"],
                             $profile_level["level_id"],
@@ -350,7 +330,7 @@ class CompetenceManagementDTO extends DataTransferObject implements ICompetenceM
                 );
 
             default:
-                return parent::wakeUpValue($data, $key);
+                parent::wakeUpValue($data, $key);
         }
     }
 }

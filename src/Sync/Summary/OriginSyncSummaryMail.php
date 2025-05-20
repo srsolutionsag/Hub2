@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Summary;
 
 use srag\Plugins\Hub2\Sync\IOriginSync;
@@ -11,11 +19,8 @@ use srag\Plugins\Hub2\Sync\IOriginSync;
  */
 class OriginSyncSummaryMail extends OriginSyncSummaryBase implements IOriginSyncSummary
 {
-    protected function renderOneSync(
-        IOriginSync $originSync,
-        bool $only_logs = false,
-        bool $output_message = null
-    ): string {
+    protected function renderOneSync(IOriginSync $originSync, bool $only_logs = false, bool $output_message = null): string
+    {
         return parent::renderOneSync($originSync, $only_logs, true);
     }
 }

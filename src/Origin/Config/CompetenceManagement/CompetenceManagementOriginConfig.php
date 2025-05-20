@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Config\CompetenceManagement;
 
 use srag\Plugins\Hub2\Origin\Config\OriginConfig;
@@ -23,7 +31,6 @@ class CompetenceManagementOriginConfig extends OriginConfig implements ICompeten
     {
         parent::__construct(array_merge($this->competenceManagementConfig, $data));
     }
-
 
     public function getIdIfNoParentId(): int
     {

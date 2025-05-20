@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\DTO;
 
 use ilHub2Plugin;
@@ -28,36 +36,30 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-
     public function user($ext_id): UserDTO
     {
         return new UserDTO($ext_id);
     }
-
 
     public function course($ext_id): CourseDTO
     {
         return new CourseDTO($ext_id);
     }
 
-
     public function category($ext_id): CategoryDTO
     {
         return new CategoryDTO($ext_id);
     }
-
 
     public function group($ext_id): GroupDTO
     {
         return new GroupDTO($ext_id);
     }
 
-
     public function session($ext_id): SessionDTO
     {
         return new SessionDTO($ext_id);
     }
-
 
     public function courseMembership(
         $course_id,
@@ -66,12 +68,10 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
         return new CourseMembershipDTO($course_id, $user_id);
     }
 
-
     public function groupMembership($group_id, $user_id): GroupMembershipDTO
     {
         return new GroupMembershipDTO($group_id, $user_id);
     }
-
 
     public function sessionMembership(
         $session_id,
@@ -80,18 +80,15 @@ class DataTransferObjectFactory implements IDataTransferObjectFactory
         return new SessionMembershipDTO($session_id, $user_id);
     }
 
-
     public function orgUnit(string $ext_id): IOrgUnitDTO
     {
         return new OrgUnitDTO($ext_id);
     }
 
-
     public function orgUnitMembership(string $org_unit_id, int $user_id, int $position): IOrgUnitMembershipDTO
     {
         return new OrgUnitMembershipDTO($org_unit_id, $user_id, $position);
     }
-
 
     public function competenceManagement(string $ext_id): ICompetenceManagementDTO
     {

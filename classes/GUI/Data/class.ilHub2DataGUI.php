@@ -14,7 +14,6 @@ use srag\Plugins\Hub2\Object\ObjectFactory;
 use srag\Plugins\Hub2\Origin\OriginFactory;
 use srag\Plugins\Hub2\UI\Data\DataTableGUI;
 use ILIAS\Filesystem\Stream\Streams;
-use srag\Plugins\Hub2\Exception\HubException;
 
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
@@ -39,7 +38,7 @@ class ilHub2DataGUI extends ilHub2DispatchableBaseGUI
             $table->resetOffset();
             $table->writeFilterToSession();
             $table->storeNavParameter();
-        } catch (Throwable $t) {
+        } catch (Throwable $exception) {
             $table->resetFilter();
             // Ignore
         }

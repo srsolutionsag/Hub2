@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\FileDrop;
 
 use Psr\Http\Message\RequestInterface;
@@ -10,16 +18,28 @@ use Psr\Http\Message\RequestInterface;
  */
 class Token
 {
+    /**
+     * @var int
+     */
     private const LENGTH = 16;
+    /**
+     * @var string
+     */
     private const BEARER = 'Bearer';
+    /**
+     * @var string
+     */
     private const SPACE = ' ';
+    /**
+     * @var string
+     */
     private const HEADER_AUTHORIZATION = 'Authorization';
 
     public function generate(): string
     {
         try {
             $token = bin2hex(random_bytes(self::LENGTH));
-        } catch (\Throwable $t) {
+        } catch (\Throwable $exception) {
             $token = hash('sha256', uniqid((string) time(), true));
         }
 

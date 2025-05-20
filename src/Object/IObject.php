@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object;
 
 use DateTime;
@@ -78,7 +86,7 @@ interface IObject
      * Get the date where the data of this object was delivered from the external system, e.g. via
      * CSV.
      */
-    public function getDeliveryDate() : DateTime;
+    public function getDeliveryDate(): DateTime;
 
     /**
      * @return $this
@@ -113,7 +121,7 @@ interface IObject
     /**
      * Get the status of this object.
      */
-    public function getStatus() : int;
+    public function getStatus(): int;
 
     /**
      * @return $this
@@ -141,7 +149,7 @@ interface IObject
      * changed. This means that the sync can skip processing the ILIAS object.
      * Note: Different objects MAY have identical hashcodes.
      */
-    public function computeHashCode() : string;
+    public function computeHashCode(): string;
 
     /**
      * Get the current hash code of this object, e.g. the hash stored in db. May not be up to date!
@@ -165,4 +173,6 @@ interface IObject
      * Persist data in database.
      */
     public function store();
+
+    public function flush();
 }

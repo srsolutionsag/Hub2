@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -15,7 +23,7 @@ use srag\Plugins\Hub2\Object\General\IDependentSettings;
  */
 trait HashCodeComputer
 {
-    public function computeHashCode() : string
+    public function computeHashCode(): string
     {
         switch (true) {
             case $this instanceof IDataTransferObject:
@@ -44,12 +52,12 @@ trait HashCodeComputer
         return md5($stringified_data);
     }
 
-    private function flattenArray(array $array) : string
+    private function flattenArray(array $array): string
     {
         $flat = '';
         foreach ($array as $value) {
             if ($value instanceof IDependentSettings) {
-                $value = $value->__toArray();
+                $value = $value->toArray();
             }
             if (is_array($value)) {
                 $flat .= $this->flattenArray($value);

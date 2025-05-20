@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Config\CompetenceManagement;
 
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
@@ -16,5 +24,5 @@ interface ICompetenceManagementOriginConfig extends IOriginConfig
      */
     public const ID_IF_NO_PARENT_ID = "id_if_no_parent_id";
 
-    public function getIdIfNoParentId() : int;
+    public function getIdIfNoParentId(): int;
 }

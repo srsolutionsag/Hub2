@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Jobs;
 
 use srag\Plugins\Hub2\Log\IRepository;
@@ -18,6 +26,7 @@ use srag\Plugins\Hub2\Sync\Summary\IOriginSyncSummary;
 use srag\Plugins\Hub2\Sync\Summary\OriginSyncSummaryFactory;
 use Throwable;
 use srag\Plugins\Hub2\Log\Repository as LogRepository;
+use ILIAS\Cron\Schedule\CronJobScheduleType;
 
 /**
  * Class RunSync
@@ -26,35 +35,34 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 class RunSync extends ilCronJob
 {
+    protected Notifier $notifier;
+    /**
+     * @var IOrigin[]
+     */
+    protected array $origins = [];
+    protected ?IOriginSyncSummary $summary = null;
     public const CRON_JOB_ID = ilHub2Plugin::PLUGIN_ID;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     protected IRepository $log_repo;
     /**
-     * @var IOrigin[]
-     */
-    protected array $origins;
-    protected ?IOriginSyncSummary $summary;
-    /**
      * @var IOriginSyncSummary
      */
     protected bool $force_update;
-    protected Notifier $notifier;
 
     /**
      * RunSync constructor
-     * @param IOrigin[]               $origins
-     * @param IOriginSyncSummary|null $summary
+     * @param IOrigin[] $origins
      */
     public function __construct(
         Notifier $notifier,
-        array $origins = [],/*?*/
-        IOriginSyncSummary $summary = null,
+        array $origins = [],
+        ?IOriginSyncSummary $summary = null,
         bool $force_update = false
     ) {
+        $this->notifier = $notifier;
         $this->origins = $origins;
         $this->summary = $summary;
         $this->force_update = $force_update || (getenv('HUB2_FORCED_SYNC') === "true");
-        $this->notifier = $notifier;
         $this->log_repo = LogRepository::getInstance();
     }
 
@@ -85,12 +93,9 @@ class RunSync extends ilCronJob
 
     public function getDefaultScheduleType(): int
     {
-        return ilCronJob::SCHEDULE_TYPE_DAILY;
+        return self::SCHEDULE_TYPE_DAILY;
     }
 
-    /**
-     * @return null
-     */
     public function getDefaultScheduleValue(): int
     {
         return 1;
@@ -139,9 +144,9 @@ class RunSync extends ilCronJob
                     $originSync->execute($this->notifier);
                 } catch (AbortSyncException $e) {
                     throw $e;
-                } catch (AbortOriginSyncException $ex) {
+                } catch (AbortOriginSyncException $exception) {
                     break;
-                } catch (AbortOriginSyncOfCurrentTypeException $e) {
+                } catch (AbortOriginSyncOfCurrentTypeException $exception) {
                     $skip_object_type = $origin->getObjectType();
                     continue;
                 } catch (Throwable $e) {
@@ -156,6 +161,7 @@ class RunSync extends ilCronJob
             if (!$global_hook->afterSync($this->origins)) {
                 return ResultFactory::error("General Error: GlobalHook returned false");
             }
+            // file_put_contents(time(), (string) (new DataSize(memory_get_peak_usage(true), DataSize::Byte)));
 
             return ResultFactory::ok("everything's fine.");
         } catch (Throwable $e) {

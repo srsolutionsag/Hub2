@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\User;
 
 use ilCheckboxInputGUI;
@@ -11,7 +19,6 @@ use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\User\IUserOriginConfig;
 use srag\Plugins\Hub2\Origin\Config\User\UserOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\User\UserProperties;
-use srag\Plugins\Hub2\Origin\User\ARUserOrigin;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
@@ -25,7 +32,6 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
-
         $syncfield = new ilSelectInputGUI(
             $this->plugin->txt('usr_config_login_field'),
             $this->conf(IUserOriginConfig::LOGIN_FIELD)
@@ -39,7 +45,6 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $syncfield->setRequired(true);
         $syncfield->setValue($this->origin->config()->getILIASLoginField());
         $this->addItem($syncfield);
-
         $keep_case = new ilCheckboxInputGUI(
             $this->plugin->txt('usr_config_login_keep_case'),
             $this->conf(IUserOriginConfig::LOGIN_KEEP_CASE)
@@ -48,7 +53,6 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $keep_case->setChecked($this->origin->config()->isKeepCase());
         $this->addItem($keep_case);
     }
-
 
     protected function addPropertiesNew()
     {
@@ -112,11 +116,9 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($send_password);
     }
 
-
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
-
         $activate = new ilCheckboxInputGUI(
             $this->plugin->txt('usr_prop_update_password'),
             $this->prop(UserProperties::UPDATE_PASSWORD)
@@ -124,7 +126,6 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $activate->setInfo($this->plugin->txt('usr_prop_update_password_info'));
         $activate->setChecked((bool) $this->origin->properties()->get(UserProperties::UPDATE_PASSWORD));
         $this->addItem($activate);
-
         $activate = new ilCheckboxInputGUI(
             $this->plugin->txt('usr_prop_reactivate_account'),
             $this->prop(UserProperties::REACTIVATE_ACCOUNT)
@@ -132,7 +133,6 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $activate->setInfo($this->plugin->txt('usr_prop_reactivate_account_info'));
         $activate->setChecked((bool) $this->origin->properties()->get(UserProperties::REACTIVATE_ACCOUNT));
         $this->addItem($activate);
-
         $activate = new ilCheckboxInputGUI(
             $this->plugin->txt('usr_prop_resend_password'),
             $this->prop(UserProperties::RE_SEND_PASSWORD)
@@ -141,7 +141,6 @@ class UserOriginConfigFormGUI extends OriginConfigFormGUI
         $activate->setChecked((bool) $this->origin->properties()->get(UserProperties::RE_SEND_PASSWORD));
         $this->addItem($activate);
     }
-
 
     protected function addPropertiesDelete()
     {

@@ -1,12 +1,19 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\Category;
 
 use ilCheckboxInputGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilTextInputGUI;
-use srag\Plugins\Hub2\Origin\Category\ARCategoryOrigin;
 use srag\Plugins\Hub2\Origin\Config\Category\ICategoryOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\Category\CategoryProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
@@ -22,7 +29,6 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
-
         $te = new ilTextInputGUI(
             $this->plugin->txt('cat_prop_base_node_ilias'),
             $this->conf(ICategoryOriginConfig::REF_ID_NO_PARENT_ID_FOUND)
@@ -30,7 +36,6 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $te->setInfo($this->plugin->txt('cat_prop_base_node_ilias_info'));
         $te->setValue($this->origin->config()->getParentRefIdIfNoParentIdFound());
         $this->addItem($te);
-
         $te = new ilTextInputGUI(
             $this->plugin->txt('cat_prop_base_node_external'),
             $this->conf(ICategoryOriginConfig::EXT_ID_NO_PARENT_ID_FOUND)
@@ -39,7 +44,6 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $te->setValue($this->origin->config()->getExternalParentIdIfNoParentIdFound());
         $this->addItem($te);
     }
-
 
     protected function addPropertiesNew()
     {
@@ -60,11 +64,9 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($cb);
     }
 
-
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
-
         $cb = new ilCheckboxInputGUI(
             $this->plugin->txt('cat_prop_move'),
             $this->prop(CategoryProperties::MOVE_CATEGORY)
@@ -72,7 +74,6 @@ class CategoryOriginConfigFormGUI extends OriginConfigFormGUI
         $cb->setChecked($this->origin->properties()->get(CategoryProperties::MOVE_CATEGORY));
         $this->addItem($cb);
     }
-
 
     protected function addPropertiesDelete()
     {

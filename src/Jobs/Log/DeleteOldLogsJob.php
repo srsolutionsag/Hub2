@@ -18,6 +18,7 @@ use srag\Plugins\Hub2\Jobs\Result\ResultFactory;
 use srag\Plugins\Hub2\Translator;
 use srag\Plugins\Hub2\Log\LogDBRepository;
 use srag\Plugins\Hub2\Config\ArConfig;
+use ILIAS\Cron\Schedule\CronJobScheduleType;
 
 /**
  * Class RunSync
@@ -98,7 +99,6 @@ class DeleteOldLogsJob extends ilCronJob
                 $current_seconds = time();
                 $deleted_per_10_seconds = 0;
             }
-
 
             /** @var \ilCronManager $manager */
             $manager = $DIC['cron.manager'];

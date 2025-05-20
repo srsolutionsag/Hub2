@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Properties\Course;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -27,7 +35,7 @@ interface ICourseProperties extends IOriginProperties
     public const DELETE_MODE_DELETE_OR_OFFLINE = 3; // Set offline if there were any activities in the course, delete otherwise
     public const DELETE_MODE_MOVE_TO_TRASH = 4;
 
-    public static function getPlaceHolderStrings() : string;
+    public static function getPlaceHolderStrings(): string;
 
-    public static function getAvailableDeleteModes() : array;
+    public static function getAvailableDeleteModes(): array;
 }

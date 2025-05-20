@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use ilHub2Plugin;
@@ -11,11 +19,11 @@ use ilHub2Plugin;
  */
 abstract class FakeIliasObject
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var string
      */
-    protected $id;
+    protected $id = "";
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
     /**
      * FakeIliasObject constructor
@@ -26,12 +34,12 @@ abstract class FakeIliasObject
         $this->id = $id;
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function setId(string $id) : void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object;
 
 /**
@@ -15,13 +23,13 @@ interface IObjectRepository
      * Return all objects
      * @return IObject[]
      */
-    public function all() : array;
+    public function all(): array;
 
     /**
      * Return only the objects having the given status
      * @return IObject[]
      */
-    public function getByStatus(int $status) : array;
+    public function getByStatus(int $status): array;
 
     /**
      * Return all objects where the status TO_DELETE should be applied.
@@ -29,7 +37,7 @@ interface IObjectRepository
      * e.g. SELECT * FROM x WHERE ext_id NOT IN ($ext_ids).
      * @return IObject[]
      */
-    public function getToDelete(array $ext_ids) : array;
+    public function getToDelete(array $ext_ids): array;
 
     /**
      * As getToDelete this method returns all objects where the status TO_DELETE should be applied.
@@ -37,10 +45,10 @@ interface IObjectRepository
      * membership to delete for memberships of a course with an ext_id in $parent_ext_ids.
      * @return IObject[]
      */
-    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids) : array;
+    public function getToDeleteByParentScope(array $ext_ids, array $parent_ext_ids): array;
 
     /**
      * Return the number of objects
      */
-    public function count() : int;
+    public function count(): int;
 }

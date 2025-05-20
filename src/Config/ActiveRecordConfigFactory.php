@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Config;
 
 /**
@@ -13,18 +21,15 @@ namespace srag\Plugins\Hub2\Config;
  */
 final class ActiveRecordConfigFactory extends AbstractFactory
 {
-
     /**
-     * @var self|null
-     *
      * @deprecated
      */
-    protected static $instance;
+    private static ?\srag\Plugins\Hub2\Config\ActiveRecordConfigFactory $instance = null;
 
     /**
      * @deprecated
      */
-    public static function getInstance() : self
+    public static function getInstance(): self
     {
         if (!self::$instance instanceof \srag\Plugins\Hub2\Config\ActiveRecordConfigFactory) {
             self::$instance = new self();

@@ -1,12 +1,19 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Shortlink;
 
 use ilContext;
 use ilDBInterface;
 use ilHub2Plugin;
 use ilInitialisation;
-use ilUtil;
 use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\ShortlinkException;
 
@@ -17,6 +24,7 @@ use srag\Plugins\Hub2\Exception\ShortlinkException;
  */
 class Handler
 {
+    protected string $ext_id;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const PLUGIN_BASE = "Customizing/global/plugins/Services/Cron/CronHook/Hub2/";
 
@@ -25,27 +33,26 @@ class Handler
      * @var ObjectLinkFactory
      */
     protected $object_link_factory;
-    protected string $ext_id;
     /**
      * @var \ilDBInterface
      */
-    private $db = null;
+    private $db;
     /**
      * @var \ilCtrlInterface
      */
-    private $ctrl = null;
+    private $ctrl;
     /**
      * @var \ilAuthSession
      */
-    private $auth_session = null;
+    private $auth_session;
     /**
      * @var \ilObjUser
      */
-    private $user = null;
+    private $user;
     /**
      * @var \ilGlobalTemplateInterface
      */
-    private $main_tpl = null;
+    private $main_tpl;
 
     /**
      * Handler constructor
@@ -135,7 +142,7 @@ class Handler
         require_once './Services/Context/classes/class.ilContext.php';
         ilContext::init(ilContext::CONTEXT_WAC);
         /** @noRector */
-        require_once  "./Services/Init/classes/class.ilInitialisation.php";
+        require_once "./Services/Init/classes/class.ilInitialisation.php";
         ilInitialisation::initILIAS();
         $this->initDependecies();
         $this->auth_session->init();

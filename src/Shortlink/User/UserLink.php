@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Shortlink\User;
 
 use ilAdministrationGUI;
@@ -34,7 +42,6 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         parent::__construct($object);
     }
 
-
     public function doesObjectExist(): bool
     {
         if (!$this->object->getILIASId()) {
@@ -43,7 +50,6 @@ class UserLink extends AbstractBaseLink implements IObjectLink
 
         return ilObjUser::_exists($this->object->getILIASId(), false);
     }
-
 
     public function isAccessGranted(): bool
     {
@@ -55,18 +61,15 @@ class UserLink extends AbstractBaseLink implements IObjectLink
         return $this->access->checkAccess('read', '', 7); // Read access to user administration
     }
 
-
     public function getAccessGrantedExternalLink(): string
     {
         return ilLink::_getLink($this->object->getILIASId(), 'usr');
     }
 
-
     public function getAccessDeniedLink(): string
     {
         return "ilias.php";
     }
-
 
     public function getAccessGrantedInternalLink(): string
     {

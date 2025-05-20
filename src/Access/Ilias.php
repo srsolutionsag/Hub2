@@ -1,5 +1,15 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
 namespace srag\Plugins\Hub2\Access;
 
 use ilHub2Plugin;
@@ -11,13 +21,13 @@ use ilHub2Plugin;
  */
 final class Ilias
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
-     * @var self
+     * @var string
      */
-    protected static $instance;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
+    private static ?\srag\Plugins\Hub2\Access\Ilias $instance = null;
 
-    public static function getInstance() : self
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
             self::$instance = new self();

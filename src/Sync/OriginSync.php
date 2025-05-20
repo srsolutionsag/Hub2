@@ -1,9 +1,16 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync;
 
 use srag\Plugins\Hub2\Log\IRepository;
-use ilHub2Plugin;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncException;
 use srag\Plugins\Hub2\Exception\AbortOriginSyncOfCurrentTypeException;
 use srag\Plugins\Hub2\Exception\AbortSyncException;
@@ -29,64 +36,58 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 class OriginSync implements IOriginSync
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    public const NOTIFY_ALL_X_DTOS = 500;
-    protected IRepository $log_repo;
     protected IOrigin $origin;
     protected IObjectRepository $repository;
     protected IObjectFactory $factory;
+    protected IObjectStatusTransition $status_transition;
+    protected IRepository $log_repo;
     /**
-     * @var IDataTransferObject[]|\Generator
+     * @var mixed[]|\Generator
      */
-    protected $dtoObjects = [];
-    /**
-     * @var IObjectSyncProcessor
-     */
-    protected $processor;
-    /**
-     * @deprecated
-     */
-    protected IObjectStatusTransition $statusTransition;
-    /**
-     * @var IOriginImplementation
-     */
-    protected $implementation;
-    /**
-     * @var int
-     */
-    protected $countDelivered = 0;
-    /**
-     * @var array
-     */
-    protected $countProcessed
-        = [
-            IObject::STATUS_CREATED => 0,
-            IObject::STATUS_UPDATED => 0,
-            IObject::STATUS_OUTDATED => 0,
-            IObject::STATUS_IGNORED => 0,
-            IObject::STATUS_FAILED => 0,
-        ];
+    protected $dto_objects = [];
+    protected IObjectSyncProcessor $processor;
+
+    protected ?IOriginImplementation $implementation = null;
+    protected int $delivered_counter = 0;
+
+    protected array $processed_counter = [
+        IObject::STATUS_CREATED => 0,
+        IObject::STATUS_UPDATED => 0,
+        IObject::STATUS_OUTDATED => 0,
+        IObject::STATUS_IGNORED => 0,
+        IObject::STATUS_FAILED => 0,
+    ];
 
     public function __construct(
         IOrigin $origin,
         IObjectRepository $repository,
         IObjectFactory $factory,
-        IObjectStatusTransition $transition
+        IObjectStatusTransition $status_transition
     ) {
         $this->origin = $origin;
         $this->repository = $repository;
         $this->factory = $factory;
-        $this->statusTransition = $transition;
+        $this->status_transition = $status_transition;
         $this->log_repo = LogRepository::getInstance();
     }
 
-
     public function execute(Notifier $notifier): void
     {
+        global $hub_notifier;
+        /** @var Notifier $hub_notifier */
+        $hub_notifier = $notifier;
+
+        //        \arObjectCache::$enabled = false;
+
         // Any exception during the three stages (connect/parse/build hub objects) is forwarded to the global sync
         // as the sync of this origin cannot continue.
         $this->implementation->beforeSync();
         $notifier->reset();
+
+        $notifier->notify('------------------------------------------------');
+        $notifier->notify('Start sync of origin ' . $this->origin->getTitle());
+        $notifier->notify('------------------------------------------------');
+
         $notifier->notify('connect');
         if (!$this->implementation->connect()) {
             throw new ConnectionFailedException('could not connect() in origin');
@@ -96,7 +97,7 @@ class OriginSync implements IOriginSync
         $count = $this->implementation->parseData();
         $notifier->notify('end parsing data');
 
-        $this->countDelivered = $count;
+        $this->delivered_counter = $count;
 
         // Check if the origin aborts its sync if the amount of delivered data is not enough
         if ($this->origin->config()->getCheckAmountData()) {
@@ -111,14 +112,14 @@ class OriginSync implements IOriginSync
             }
         }
         $notifier->notify('start building objects');
-        $this->dtoObjects = $this->implementation->buildObjects();
+        $this->dto_objects = $this->implementation->buildObjects();
         $notifier->notify('end building objects');
 
         $type = $this->origin->getObjectType();
 
         // Sort dto objects
-        if (is_array($this->dtoObjects)) { // Only possible for
-            $this->dtoObjects = $this->sortDtoObjects($this->dtoObjects);
+        if (is_array($this->dto_objects)) { // Only possible for
+            $this->dto_objects = $this->sortDtoObjects($this->dto_objects);
         }
 
         // Start SYNC of delivered objects --> CREATE & UPDATE
@@ -129,7 +130,7 @@ class OriginSync implements IOriginSync
         $objects_to_outdated_map = new \SplObjectStorage();
         $ext_ids_delivered = [];
         $notifier->notify('start looping DTOs');
-        foreach ($this->dtoObjects as $dto) {
+        foreach ($this->dto_objects as $dto) {
             $notifier->notifySometimes('processed DTOs');
 
             $ext_ids_delivered[] = $dto->getExtId();
@@ -143,11 +144,12 @@ class OriginSync implements IOriginSync
                 $data = array_merge($object->getData(), $dto->getData());
                 $dto->setData($data);
                 // Set the intermediate status before processing the ILIAS object
-                $object->setStatus($this->statusTransition->finalToIntermediate($object));
+                $object->setStatus($this->status_transition->finalToIntermediate($object));
                 $this->processObject($object, $dto);
             } else {
                 $objects_to_outdated_map->attach($object);
             }
+            unset($dto);
         }
         $notifier->notify('end looping DTOs');
 
@@ -183,12 +185,12 @@ class OriginSync implements IOriginSync
 
         $all_ext_ids = $this->factory->{$type . 'sExtIds'}();
         if ($this->implementation->hookConfig()->hasAllObjectHook()) {
-            $notifier->notify('start handle all objects');
+            /*$notifier->notify('start handle all objects');
             foreach ($all_ext_ids as $all_ext_id) {
                 $hook_object = new HookObject($object = $this->factory->$type($all_ext_id), new NullDTO($all_ext_id));
                 $this->implementation->handleAllObjects($hook_object);
             }
-            $notifier->notify('end handle all objects');
+            $notifier->notify('end handle all objects');*/
         }
 
         // After that we propose all objects to the origin which are no longer devlivered
@@ -207,6 +209,11 @@ class OriginSync implements IOriginSync
         $origin->setLastRunToNow();
         $origin->update();
         $notifier->notify('finished');
+        $notifier->gc();
+
+        $this->processor->teardown();
+
+        $this->implementation = null; // unset to free memory
     }
 
     /**
@@ -226,7 +233,8 @@ class OriginSync implements IOriginSync
             // Sort by level
             usort(
                 $sort_dtos,
-                fn (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int => $sort_dto1->getLevel() - $sort_dto2->getLevel()
+                fn (IDataTransferObjectSort $sort_dto1, IDataTransferObjectSort $sort_dto2): int => $sort_dto1->getLevel(
+                ) - $sort_dto2->getLevel()
             );
 
             // Back to IDataTransferObject objects
@@ -239,28 +247,25 @@ class OriginSync implements IOriginSync
         return $dtos;
     }
 
-
-    public function getCountProcessedByStatus($status)
+    public function getTotalByStatus(int $status): ?int
     {
-        return $this->countProcessed[$status];
+        return $this->processed_counter[$status];
     }
 
-
-    public function getCountProcessedTotal()
+    public function getProcessedTotal(): int
     {
-        return array_sum($this->countProcessed);
+        return (int) array_sum($this->processed_counter);
     }
 
-
-    public function getCountDelivered()
+    public function getDeliveredTotal(): int
     {
-        return $this->countDelivered;
+        return $this->delivered_counter;
     }
 
     /**
      * @throws Throwable
      */
-    protected function processObject(IObject $object, IDataTransferObject $dto)
+    protected function processObject(IObject $object, IDataTransferObject $dto): void
     {
         try {
             $this->processor->process($object, $dto, $this->origin->isUpdateForced());
@@ -290,13 +295,12 @@ class OriginSync implements IOriginSync
         }
     }
 
-    protected function incrementProcessed(int $status)
+    protected function incrementProcessed(int $status): void
     {
-        $this->countProcessed[$status]++;
+        $this->processed_counter[$status]++;
     }
 
-
-    public function getOrigin()
+    public function getOrigin(): IOrigin
     {
         return $this->origin;
     }
@@ -341,15 +345,15 @@ class OriginSync implements IOriginSync
      */
     public function getStatusTransition(): IObjectStatusTransition
     {
-        return $this->statusTransition;
+        return $this->status_transition;
     }
 
     /**
      * @deprecated
      */
-    public function setStatusTransition(IObjectStatusTransition $statusTransition): void
+    public function setStatusTransition(IObjectStatusTransition $status_transition): void
     {
-        $this->statusTransition = $statusTransition;
+        $this->status_transition = $status_transition;
     }
 
     public function getImplementation(): IOriginImplementation

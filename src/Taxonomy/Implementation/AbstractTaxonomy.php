@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Taxonomy\Implementation;
 
 use ilHub2Plugin;
@@ -15,6 +23,8 @@ use srag\Plugins\Hub2\Taxonomy\Node\INode;
  */
 abstract class AbstractTaxonomy implements ITaxonomyImplementation
 {
+    protected ITaxonomy $taxonomy;
+    protected int $ilias_parent_id;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var int
@@ -32,18 +42,16 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
      * @var ilObjTaxonomy
      */
     protected $ilObjTaxonomy;
-    protected ITaxonomy $taxonomy;
-    protected int $ilias_parent_id;
 
     /**
      * Taxonomy constructor
      */
     public function __construct(ITaxonomy $taxonomy, int $ilias_parent_id)
     {
-        global $DIC;
-        $this->tree = $DIC['tree'];
         $this->taxonomy = $taxonomy;
         $this->ilias_parent_id = $ilias_parent_id;
+        global $DIC;
+        $this->tree = $DIC['tree'];
     }
 
     protected function taxonomyExists(): bool
@@ -73,9 +81,6 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         $this->setChildrenByParentId($this->tree_root_id);
     }
 
-    /**
-     * @param int $parent_id
-     */
     protected function setChildrenByParentId(int $parent_id)
     {
         foreach ($this->tree->getChildsByTypeFilter($parent_id, ["taxn"]) as $item) {
@@ -89,15 +94,12 @@ abstract class AbstractTaxonomy implements ITaxonomyImplementation
         return in_array($node->getTitle(), $this->childs);
     }
 
-
     abstract public function write();
-
 
     public function getTaxonomy(): ITaxonomy
     {
         return $this->taxonomy;
     }
-
 
     public function getILIASParentId(): int
     {

@@ -1,8 +1,16 @@
 <?php
 
-namespace srag\Plugins\Hub2\Access;
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
 
-use ilHub2Plugin;
+declare(strict_types=1);
+
+namespace srag\Plugins\Hub2\Access;
 
 /**
  * Class Access
@@ -11,13 +19,9 @@ use ilHub2Plugin;
  */
 final class Access
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var self
-     */
-    protected static $instance;
+    private static ?\srag\Plugins\Hub2\Access\Access $instance = null;
 
-    public static function getInstance() : self
+    public static function getInstance(): \srag\Plugins\Hub2\Access\Access
     {
         if (self::$instance === null) {
             self::$instance = new self();

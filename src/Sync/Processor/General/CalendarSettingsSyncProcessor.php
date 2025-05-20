@@ -11,7 +11,6 @@
 namespace srag\Plugins\Hub2\Sync\Processor\General;
 
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
-use srag\Plugins\Hub2\Object\General\NewsSettings;
 use srag\Plugins\Hub2\Object\DTO\ICalendarSettingsAwareDataTransferObject;
 
 /**

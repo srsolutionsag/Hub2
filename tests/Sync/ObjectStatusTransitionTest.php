@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 require_once __DIR__ . "/../AbstractHub2Tests.php";
 
 use Mockery\MockInterface;
@@ -21,22 +29,22 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests
     public function test_intermediate_to_final(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
-        $transition = new ObjectStatusTransition($config);
+        new ObjectStatusTransition($config);
 
         // TO_CREATE -> CREATED
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_CREATE);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_CREATE);
         //$this->assertEquals(IObject::STATUS_CREATED, $transition->intermediateToFinal($object));
 
         // TO_UPDATE -> UPDATED
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_UPDATE);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_UPDATE);
         //$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
 
         // NEWLY_DELIVERD -> UPDATED
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_RESTORE);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_RESTORE);
         //$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
 
         // TO_DELETE -> DELETED
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_OUTDATED);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_TO_OUTDATED);
         //$this->assertEquals(IObject::STATUS_OUTDATED, $transition->intermediateToFinal($object));
     }
 
@@ -104,21 +112,21 @@ class ObjectStatusTransitionTest extends AbstractHub2Tests
     public function test_intermediate_to_final_status_does_not_change_if_already_final(): void
     {
         $config = Mockery::mock(IOriginConfig::class);
-        $transition = new ObjectStatusTransition($config);
+        new ObjectStatusTransition($config);
 
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_UPDATED);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_UPDATED);
         //$this->assertEquals(IObject::STATUS_UPDATED, $transition->intermediateToFinal($object));
 
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_CREATED);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_CREATED);
         //$this->assertEquals(IObject::STATUS_CREATED, $transition->intermediateToFinal($object));
 
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_OUTDATED);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_OUTDATED);
         //$this->assertEquals(IObject::STATUS_OUTDATED, $transition->intermediateToFinal($object));
 
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_IGNORED);
         //$this->assertEquals(IObject::STATUS_IGNORED, $transition->intermediateToFinal($object));
 
-        $object = $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW);
+        $this->getObjectMockWithStatusAndPeriod(IObject::STATUS_NEW);
         //$this->assertEquals(IObject::STATUS_NEW, $transition->intermediateToFinal($object));
     }
 

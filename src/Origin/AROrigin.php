@@ -1,14 +1,20 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use ActiveRecord;
-use ilHub2Plugin;
 use InvalidArgumentException;
 use srag\Plugins\Hub2\Config\ActiveRecordConfig;
 use srag\Plugins\Hub2\Origin\Config\IOriginConfig;
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
-use srag\Plugins\Hub2\Origin\Config\Course\CourseOriginConfig;
 
 /**
  * ILIAS ActiveRecord implementation of an Origin
@@ -53,7 +59,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     }
 
     /**
-     * @var int
      * @db_has_field          true
      * @db_is_unique          true
      * @db_is_primary         true
@@ -63,7 +68,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     protected ?int $id = null;
     /**
-     * @var string
      * @db_has_field           true
      * @db_fieldtype           text
      * @db_length              32
@@ -71,7 +75,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     protected ?string $object_type = '';
     /**
-     * @var bool
      * @db_has_field           true
      * @db_fieldtype           integer
      * @db_length              1
@@ -85,14 +88,12 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     protected ?string $title = '';
     /**
-     * @var string
      * @db_has_field        true
      * @db_fieldtype        text
      * @db_length           2048
      */
     protected ?string $description = '';
     /**
-     * @var string
      * @db_has_field           true
      * @db_fieldtype           text
      * @db_length              256
@@ -100,7 +101,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
      */
     protected ?string $implementation_class_name = '';
     /**
-     * @var string
      * @db_has_field           true
      * @db_fieldtype           text
      * @db_length              256
@@ -182,12 +182,10 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     {
         $this->created_at = date(ActiveRecordConfig::SQL_DATE_FORMAT);
         $this->setObjectType($this->parseObjectType());
-
         if (empty($this->sort)) {
             $origins = (new OriginFactory())->getAll();
             $this->sort = $origins !== [] ? end($origins)->getSort() + 1 : 1;
         }
-
         parent::create();
     }
 
@@ -199,7 +197,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->updated_at = date(self::DATE_FORMAT);
         parent::update();
     }
-
 
     public function sleep($field_name)
     {
@@ -231,26 +228,21 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         }
     }
 
-
     public function wakeUp($field_name, $field_value)
     {
         switch ($field_name) {
             case 'config':
             case 'properties':
-                return json_decode($field_value, true, 512, JSON_THROW_ON_ERROR);
-
+                return json_decode((string) $field_value, true, 512, JSON_THROW_ON_ERROR);
             case "adhoc":
             case "adhoc_parent_scope":
                 return (bool) $field_value;
-
             case "sort":
                 return (int) $field_value;
-
             default:
                 return null;
         }
     }
-
 
     public function afterObjectLoad(): void
     {
@@ -258,18 +250,15 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->_properties = $this->getOriginProperties($this->getPropertiesData());
     }
 
-
     public function getId(): int
     {
         return (int) $this->id;
     }
 
-
     public function getTitle(): string
     {
         return $this->title;
     }
-
 
     public function setTitle($title)
     {
@@ -278,24 +267,20 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-
     public function getDescription()
     {
         return $this->description;
     }
-
 
     public function setDescription($description): void
     {
         $this->description = $description;
     }
 
-
     public function isActive()
     {
         return (bool) $this->active;
     }
-
 
     public function setActive($active)
     {
@@ -304,12 +289,10 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-
     public function getImplementationClassName()
     {
         return $this->implementation_class_name;
     }
-
 
     public function setImplementationClassName($name)
     {
@@ -334,18 +317,15 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->implementation_namespace = $implementation_namespace;
     }
 
-
     public function getCreatedAt()
     {
         return $this->created_at;
     }
 
-
     public function getUpdatedAt()
     {
         return $this->updated_at;
     }
-
 
     public function getObjectType()
     {
@@ -373,7 +353,6 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         $this->last_run = date(self::DATE_FORMAT);
     }
 
-
     public function setObjectType($type)
     {
         if (!in_array($type, self::$object_types)) {
@@ -384,12 +363,10 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this;
     }
 
-
     public function config(): IOriginConfig
     {
         return $this->_config ?? ($this->_config = $this->getOriginConfig($this->config));
     }
-
 
     public function properties(): IOriginProperties
     {
@@ -409,7 +386,7 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
     private function parseObjectType(): string
     {
         $out = [];
-        preg_match('%AR(.*)Origin$%', get_class($this), $out);
+        preg_match('%AR(.*)Origin$%', static::class, $out);
 
         return lcfirst($out[1]);
     }
@@ -437,36 +414,30 @@ abstract class AROrigin extends ActiveRecord implements IOrigin
         return $this->force_update;
     }
 
-
     public function isAdHoc(): bool
     {
         return $this->adhoc;
     }
-
 
     public function setAdHoc(bool $adhoc): void/*: void*/
     {
         $this->adhoc = $adhoc;
     }
 
-
     public function isAdhocParentScope(): bool
     {
         return $this->adhoc_parent_scope;
     }
-
 
     public function setAdhocParentScope(bool $adhoc_parent_scope): void/*: void*/
     {
         $this->adhoc_parent_scope = $adhoc_parent_scope;
     }
 
-
     public function getSort(): int
     {
         return $this->sort;
     }
-
 
     public function setSort(int $sort): void/*: void*/
     {

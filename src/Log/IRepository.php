@@ -29,7 +29,6 @@ interface IRepository
 
     public function factory(): IFactory;
 
-
     public function getLogs(
         string $sort_by = null,
         string $sort_by_direction = null,

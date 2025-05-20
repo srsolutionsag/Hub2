@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 /**
@@ -12,7 +20,7 @@ trait Helper
     /**
      * @param string $string
      */
-    protected function clearString($string) : string
+    protected function clearString($string): string
     {
         $replaces = [
             'ä' => 'ae',
@@ -35,8 +43,8 @@ trait Helper
         $string = strtr($string, $replaces);
 
         return strtr(
-            utf8_decode($string),
-            utf8_decode('ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ'),
+            @mb_convert_encoding($string, 'ISO-8859-1'),
+            @mb_convert_encoding('ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿ', 'ISO-8859-1'),
             'SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy'
         );
     }

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Config\User;
 
 use srag\Plugins\Hub2\Origin\Config\OriginConfig;
@@ -34,7 +42,6 @@ class UserOriginConfig extends OriginConfig implements IUserOriginConfig
     //		return intval($this->get(IUserOriginConfig::SYNC_FIELD_NONE));
     //	}
 
-
     public function getILIASLoginField(): int
     {
         return (int) $this->get(self::LOGIN_FIELD);
@@ -44,7 +51,6 @@ class UserOriginConfig extends OriginConfig implements IUserOriginConfig
     {
         return (bool) $this->get(self::LOGIN_KEEP_CASE);
     }
-
 
     public static function getAvailableLoginFields(): array
     {

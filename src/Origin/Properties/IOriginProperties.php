@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Properties;
 
 /**
@@ -13,7 +21,6 @@ interface IOriginProperties
 
     /**
      * Get a property value by key, returns NULL if no property is found.
-     * @param string $key
      * @return mixed
      */
     public function get(string $key);
@@ -21,14 +28,11 @@ interface IOriginProperties
     /**
      * Checks if the given property of a DTO object should be updated on the ILIAS object,
      * e.g. the first- or lastname of a user.
-     * @param string $property
-     * @return bool
      */
     public function updateDTOProperty(string $property): bool;
 
     /**
      * Get all properties as associative array
-     * @return array
      */
     public function getData(): array;
 

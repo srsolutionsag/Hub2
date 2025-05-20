@@ -1,11 +1,18 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Config;
 
 use ilDateTime;
 use ilDateTimeException;
 use LogicException;
-use srag\DIC\Hub2\DICTrait;
 
 /**
  * Class AbstractRepository
@@ -225,7 +232,7 @@ abstract class AbstractRepository
         if ($value !== null) {
             try {
                 $value = new ilDateTime(IL_CAL_DATETIME, $value);
-            } catch (ilDateTimeException $ex) {
+            } catch (ilDateTimeException $exception) {
                 $value = $default_value;
             }
         } else {
@@ -263,7 +270,7 @@ abstract class AbstractRepository
     protected function getJsonValue(string $name, bool $assoc = false, $default_value = null)
     {
         return json_decode(
-            $this->getXValue($name, json_encode($default_value, JSON_THROW_ON_ERROR)),
+            (string) $this->getXValue($name, json_encode($default_value, JSON_THROW_ON_ERROR)),
             $assoc,
             512,
             JSON_THROW_ON_ERROR
@@ -375,7 +382,7 @@ abstract class AbstractRepository
         if ($value !== null) {
             try {
                 $this->setDateTimeValue($name, new ilDateTime(IL_CAL_UNIX, $value));
-            } catch (ilDateTimeException $ex) {
+            } catch (ilDateTimeException $exception) {
             }
         } else {
             // Fix `@null`

@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 5.0.0
+- [FIX] Relevant Changes for ILIAS 9 / PHP8.1
+
 ## Version 4.7.0
 - [FIX] Summary Mail Title
 - [FEATURE] support for User-Remapping

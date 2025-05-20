@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use ilADTDate;
@@ -49,7 +57,7 @@ class CustomMetadata extends AbstractImplementation implements IMetadataImplemen
                 break;
             case ($adt instanceof ilADTDate):
             case ($adt instanceof ilADTDateTime):
-                $adt->setDate(new ilDateTime(strtotime($value), IL_CAL_UNIX));
+                $adt->setDate(new ilDateTime(strtotime((string) $value), IL_CAL_UNIX));
                 break;
             case ($adt instanceof ilADTExternalLink):
                 $adt->setUrl($value['url']);

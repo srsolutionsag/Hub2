@@ -12,7 +12,6 @@ namespace srag\Plugins\Hub2\UI\OriginConfig;
 
 use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
 use ilHub2OriginsGUI;
-use hub2MainGUI;
 use ilCheckboxInputGUI;
 use ilFormSectionHeaderGUI;
 use ilHiddenInputGUI;
@@ -50,34 +49,42 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\Factory;
  */
 class OriginConfigFormGUI extends ilPropertyFormGUI
 {
+    /**
+     * @var ilHub2OriginsGUI
+     */
+    protected $parent_gui;
+    protected IOriginRepository $originRepository;
+    protected IOrigin $origin;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     public const POST_VAR_ADHOC = "adhoc";
     public const POST_VAR_SORT = "sort";
     public const PLUGIN_BASE = 'Customizing/global/plugins/Services/Cron/CronHook/Hub2';
+    /**
+     * @readonly
+     */
     private Token $token;
     protected \ilHub2Plugin $plugin;
     protected ResourceStorage $file_storage;
 
-    protected $parent_gui;
-    protected IOrigin $origin;
-    protected IOriginRepository $originRepository;
-
     /**
      * @param ilHub2OriginsGUI $parent_gui
      */
-    public function __construct($parent_gui, IOriginRepository $originRepository, IOrigin $origin)
-    {
+    public function __construct(
+        $parent_gui,
+        IOriginRepository $originRepository,
+        IOrigin $origin
+    ) {
+        $this->parent_gui = $parent_gui;
+        $this->originRepository = $originRepository;
+        $this->origin = $origin;
         global $DIC;
         $this->plugin = ilHub2Plugin::getInstance();
         parent::__construct();
-        $this->parent_gui = $parent_gui;
-        $this->origin = $origin;
-        $this->originRepository = $originRepository;
         $this->token = new Token();
         $this->file_storage = (new Factory())->storage();
         $this->setFormAction($this->ctrl->getFormAction($this->parent_gui));
         $this->initForm();
-        if ($origin->getId() === 0) {
+        if ($this->origin->getId() === 0) {
             $this->addCommandButton(ilHub2OriginsGUI::CMD_CREATE_ORIGIN, $this->translate('button_save'));
             $this->setTitle($this->translate('origin_form_title_add'));
         } else {
@@ -164,7 +171,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             if ($property->descriptionKey !== '' && $property->descriptionKey !== '0') {
                 $cb->setInfo($this->translate($property->descriptionKey));
             }
-            $cb->setChecked((bool) $this->origin->properties()->updateDTOProperty($property->name));
+            $cb->setChecked($this->origin->properties()->updateDTOProperty($property->name));
             $this->addItem($cb);
         }
     }
@@ -213,143 +220,118 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
             $this->conf(IOriginConfig::CONNECTION_TYPE)
         );
         $ro->setValue($this->origin->config()->getConnectionType());
-
-        {
-            // by Path
-            $by_path = new ilRadioOption(
-                $this->translate('origin_form_field_conf_type_path'),
-                IOriginConfig::CONNECTION_TYPE_PATH,
-                $this->translate('origin_form_field_conf_type_path_info')
-            );
-            {
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_path_path'),
-                    $this->conf(IOriginConfig::PATH)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::PATH));
-                $by_path->addSubItem($te);
-            }
-            $ro->addOption($by_path);
-
-            // By Database
-            $by_database = new ilRadioOption(
-                $this->translate('origin_form_field_conf_type_db'),
-                IOriginConfig::CONNECTION_TYPE_SERVER,
-                $this->translate('origin_form_field_conf_type_db_info')
-            );
-            {
-                // Database Config Fields
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_db_host'),
-                    $this->conf(IOriginConfig::SERVER_HOST)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_HOST));
-                $by_database->addSubItem($te);
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_db_port'),
-                    $this->conf(IOriginConfig::SERVER_PORT)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PORT));
-                $by_database->addSubItem($te);
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_db_username'),
-                    $this->conf(IOriginConfig::SERVER_USERNAME)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_USERNAME));
-                $by_database->addSubItem($te);
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_db_password'),
-                    $this->conf(IOriginConfig::SERVER_PASSWORD)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
-                $by_database->addSubItem($te);
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_db_database'),
-                    $this->conf(IOriginConfig::SERVER_DATABASE)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_DATABASE));
-                $by_database->addSubItem($te);
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_db_search_base'),
-                    $this->conf(IOriginConfig::SERVER_SEARCH_BASE)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_SEARCH_BASE));
-                $by_database->addSubItem($te);
-            }
-            $ro->addOption($by_database);
-
-            // by External Data
-            $external = new ilRadioOption(
-                $this->translate('origin_form_field_conf_type_external'),
-                IOriginConfig::CONNECTION_TYPE_EXTERNAL,
-                $this->translate('origin_form_field_conf_type_external_info')
-            );
-            $ro->addOption($external);
-
-            // by ILIAS File
-            $ilias_file = new ilRadioOption(
-                $this->translate('origin_form_field_conf_type_ilias_file'),
-                IOriginConfig::CONNECTION_TYPE_ILIAS_FILE,
-                $this->translate('origin_form_field_conf_type_ilias_file_info')
-            );
-            $ilias_file->addSubItem($this->getILIASFileRepositorySelector());
-            $ro->addOption($ilias_file);
-
-            // by FileDrop
-            $filedrop = new ilRadioOption(
-                $this->translate('origin_form_field_conf_type_filedrop'),
-                IOriginConfig::CONNECTION_TYPE_FILE_DROP,
-                $this->translate('origin_form_field_conf_type_filedrop_info')
-            );
-            {
-                $url_info = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_url'));
-                $url_info->setValue(Handler::getURL('o' . $this->origin->getId()));
-                $filedrop->addSubItem($url_info);
-
-                $method = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_method'));
-                $method->setValue(Handler::METHOD);
-                $filedrop->addSubItem($method);
-
-                $auth_token = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_filedrop_auth_token'),
-                    $this->conf(IOriginConfig::FILE_DROP_AUTH_TOKEN)
-                );
-                $auth_token->setValue(
-                    $this->origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN) ?? $this->token->generate()
-                );
-                $filedrop->addSubItem($auth_token);
-
-                $this->addRIDSection($filedrop, 'filedrop');
-            }
-            $ro->addOption($filedrop);
-
-            // By API
-            $api = new ilRadioOption(
-                $this->translate('origin_form_field_conf_type_api'),
-                IOriginConfig::CONNECTION_TYPE_API,
-                $this->translate('origin_form_field_conf_type_api_info')
-            );
-            {
-                $te = new ilTextInputGUI(
-                    $this->translate('origin_form_field_conf_type_db_host'),
-                    $this->conf(IOriginConfig::SERVER_HOST)
-                );
-                $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_HOST));
-                $api->addSubItem($te);
-
-                $te = new ilTextAreaInputGUI(
-                    $this->translate('origin_form_field_conf_type_api_token'),
-                    $this->conf(IOriginConfig::SERVER_PASSWORD)
-                );
-                $te->setValue((string) $this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
-                $api->addSubItem($te);
-
-                $this->addRIDSection($api, 'api');
-            }
-
-
-            $ro->addOption($api);
-        }
+        $by_path = new ilRadioOption(
+            $this->translate('origin_form_field_conf_type_path'),
+            IOriginConfig::CONNECTION_TYPE_PATH,
+            $this->translate('origin_form_field_conf_type_path_info')
+        );
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_path_path'),
+            $this->conf(IOriginConfig::PATH)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::PATH));
+        $by_path->addSubItem($te);
+        $ro->addOption($by_path);
+        // By Database
+        $by_database = new ilRadioOption(
+            $this->translate('origin_form_field_conf_type_db'),
+            IOriginConfig::CONNECTION_TYPE_SERVER,
+            $this->translate('origin_form_field_conf_type_db_info')
+        );
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_db_host'),
+            $this->conf(IOriginConfig::SERVER_HOST)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_HOST));
+        $by_database->addSubItem($te);
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_db_port'),
+            $this->conf(IOriginConfig::SERVER_PORT)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PORT));
+        $by_database->addSubItem($te);
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_db_username'),
+            $this->conf(IOriginConfig::SERVER_USERNAME)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_USERNAME));
+        $by_database->addSubItem($te);
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_db_password'),
+            $this->conf(IOriginConfig::SERVER_PASSWORD)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
+        $by_database->addSubItem($te);
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_db_database'),
+            $this->conf(IOriginConfig::SERVER_DATABASE)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_DATABASE));
+        $by_database->addSubItem($te);
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_db_search_base'),
+            $this->conf(IOriginConfig::SERVER_SEARCH_BASE)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_SEARCH_BASE));
+        $by_database->addSubItem($te);
+        $ro->addOption($by_database);
+        // by External Data
+        $external = new ilRadioOption(
+            $this->translate('origin_form_field_conf_type_external'),
+            IOriginConfig::CONNECTION_TYPE_EXTERNAL,
+            $this->translate('origin_form_field_conf_type_external_info')
+        );
+        $ro->addOption($external);
+        // by ILIAS File
+        $ilias_file = new ilRadioOption(
+            $this->translate('origin_form_field_conf_type_ilias_file'),
+            IOriginConfig::CONNECTION_TYPE_ILIAS_FILE,
+            $this->translate('origin_form_field_conf_type_ilias_file_info')
+        );
+        $ilias_file->addSubItem($this->getILIASFileRepositorySelector());
+        $ro->addOption($ilias_file);
+        // by FileDrop
+        $filedrop = new ilRadioOption(
+            $this->translate('origin_form_field_conf_type_filedrop'),
+            IOriginConfig::CONNECTION_TYPE_FILE_DROP,
+            $this->translate('origin_form_field_conf_type_filedrop_info')
+        );
+        $url_info = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_url'));
+        $url_info->setValue(Handler::getURL('o' . $this->origin->getId()));
+        $filedrop->addSubItem($url_info);
+        $method = new ilNonEditableValueGUI($this->translate('origin_form_field_conf_type_filedrop_method'));
+        $method->setValue(Handler::METHOD);
+        $filedrop->addSubItem($method);
+        $auth_token = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_filedrop_auth_token'),
+            $this->conf(IOriginConfig::FILE_DROP_AUTH_TOKEN)
+        );
+        $auth_token->setValue(
+            $this->origin->config()->get(IOriginConfig::FILE_DROP_AUTH_TOKEN) ?? $this->token->generate()
+        );
+        $filedrop->addSubItem($auth_token);
+        $this->addRIDSection($filedrop, 'filedrop');
+        $ro->addOption($filedrop);
+        // By API
+        $api = new ilRadioOption(
+            $this->translate('origin_form_field_conf_type_api'),
+            IOriginConfig::CONNECTION_TYPE_API,
+            $this->translate('origin_form_field_conf_type_api_info')
+        );
+        $te = new ilTextInputGUI(
+            $this->translate('origin_form_field_conf_type_db_host'),
+            $this->conf(IOriginConfig::SERVER_HOST)
+        );
+        $te->setValue($this->origin->config()->get(IOriginConfig::SERVER_HOST));
+        $api->addSubItem($te);
+        $te = new ilTextAreaInputGUI(
+            $this->translate('origin_form_field_conf_type_api_token'),
+            $this->conf(IOriginConfig::SERVER_PASSWORD)
+        );
+        $te->setValue((string) $this->origin->config()->get(IOriginConfig::SERVER_PASSWORD));
+        $api->addSubItem($te);
+        $this->addRIDSection($api, 'api');
+        $ro->addOption($api);
         $this->addItem($ro);
     }
 
@@ -527,10 +509,7 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         }
     }
 
-    /**
-     * @return bool
-     */
-    protected function hasOriginAdHocParentScope()
+    protected function hasOriginAdHocParentScope(): bool
     {
         switch (true) {
             case $this->origin instanceof ICourseMembershipOrigin:
@@ -544,19 +523,11 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         }
     }
 
-    /**
-     * @param string $postVar
-     * @return string
-     */
     protected function prop(string $postVar): string
     {
         return 'prop_' . $postVar;
     }
 
-    /**
-     * @param string $postVar
-     * @return string
-     */
     protected function conf(string $postVar): string
     {
         return 'config_' . $postVar;
@@ -568,10 +539,6 @@ class OriginConfigFormGUI extends ilPropertyFormGUI
         return "<a href=\"{$this->ctrl->getLinkTarget($this->parent_gui, ilHub2OriginsGUI::CMD_DOWNLOAD_RID)}\">{$resource_identification}</a>";
     }
 
-    /**
-     * @param ilRadioOption $filedrop
-     * @return void
-     */
     protected function addRIDSection(ilRadioOption $filedrop, string $parent_section): void
     {
         $rid = new ilNonEditableValueGUI(

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object;
 
 use srag\Plugins\Hub2\Log\IRepository;
@@ -43,7 +51,7 @@ abstract class ARObject extends ActiveRecord implements IObject
 
     /**
      * ARObject constructor.
-     * @param int              $primary_key
+     * @param mixed $primary_key
      * @param arConnector|null $connector
      */
     public function __construct($primary_key = 0, arConnector $connector = null)
@@ -53,21 +61,28 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->log_repo = LogRepository::getInstance();
     }
 
-    /**
-     * @return string
-     */
     public function getConnectorContainerName(): string
     {
         return static::TABLE_NAME;
     }
 
     /**
-     * @return string
      * @deprecated
      */
     public static function returnDbTableName(): string
     {
         return static::TABLE_NAME;
+    }
+
+    public function flush(): void
+    {
+        \arObjectCache::purge($this);
+    }
+
+    public function store(): void
+    {
+        parent::store();
+        $this->flush();
     }
 
     /**
@@ -180,7 +195,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         $this->clone = clone $this;
     }
 
-
     public function sleep($field_name)
     {
         switch ($field_name) {
@@ -213,12 +227,11 @@ abstract class ARObject extends ActiveRecord implements IObject
         return parent::sleep($field_name);
     }
 
-
     public function wakeUp($field_name, $field_value)
     {
         switch ($field_name) {
             case 'data':
-                $data = json_decode($field_value, true, 8, JSON_THROW_ON_ERROR);
+                $data = json_decode((string) $field_value, true, 8, JSON_THROW_ON_ERROR);
                 if (!is_array($data)) {
                     return [];
                 }
@@ -228,7 +241,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                 if ('' === $field_value || is_null($field_value)) {
                     return [];
                 }
-                $json_decode = json_decode($field_value, true, 8, JSON_THROW_ON_ERROR);
+                $json_decode = json_decode((string) $field_value, true, 8, JSON_THROW_ON_ERROR);
                 $IMetadata = [];
                 if (is_array($json_decode)) {
                     foreach ($json_decode as $record_id => $records) {
@@ -241,7 +254,10 @@ abstract class ARObject extends ActiveRecord implements IObject
                                 continue;
                             }
 
-                            $IMetadata[$record_id . '_' . $mid] = (new Metadata((int) $mid, (string) $record_id))->setValue(
+                            $IMetadata[$record_id . '_' . $mid] = (new Metadata(
+                                (int) $mid,
+                                (string) $record_id
+                            ))->setValue(
                                 $records
                             );
                         }
@@ -253,7 +269,7 @@ abstract class ARObject extends ActiveRecord implements IObject
                 if ('' === $field_value || is_null($field_value)) {
                     return [];
                 }
-                $json_decode = json_decode($field_value, true, 8, JSON_THROW_ON_ERROR);
+                $json_decode = json_decode((string) $field_value, true, 8, JSON_THROW_ON_ERROR);
                 $taxonomies = [];
                 foreach ($json_decode as $tax_title => $nodes) {
                     $taxonomy = new Taxonomy($tax_title, ITaxonomy::MODE_CREATE);
@@ -268,7 +284,6 @@ abstract class ARObject extends ActiveRecord implements IObject
 
         return parent::wakeUp($field_name, $field_value);
     }
-
 
     public function update(): void
     {
@@ -294,7 +309,6 @@ abstract class ARObject extends ActiveRecord implements IObject
         }
     }
 
-
     public function create(): void
     {
         if ($this->origin_id === 0) {
@@ -310,18 +324,15 @@ abstract class ARObject extends ActiveRecord implements IObject
                        ->write("Created");
     }
 
-
     public function getId()
     {
         return $this->id;
     }
 
-
     public function getExtId()
     {
         return $this->ext_id;
     }
-
 
     public function setExtId($id)
     {
@@ -330,36 +341,30 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     public function getDeliveryDate(): DateTime
     {
         return new DateTime($this->delivery_date);
     }
-
 
     public function getProcessedDate(): DateTime
     {
         return new DateTime($this->processed_date);
     }
 
-
     public function setDeliveryDate(int $unix_timestamp): void
     {
         $this->delivery_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
-
 
     public function setProcessedDate(int $unix_timestamp): void
     {
         $this->processed_date = date(ActiveRecordConfig::SQL_DATE_FORMAT, $unix_timestamp);
     }
 
-
     public function getILIASId()
     {
         return $this->ilias_id;
     }
-
 
     public function setILIASId($id)
     {
@@ -368,12 +373,10 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     public function getStatus(): int
     {
         return $this->status;
     }
-
 
     public function setStatus(int $status)
     {
@@ -397,12 +400,10 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     public function getPeriod()
     {
         return $this->period;
     }
-
 
     public function setPeriod($period)
     {
@@ -411,18 +412,15 @@ abstract class ARObject extends ActiveRecord implements IObject
         return $this;
     }
 
-
     public function getHashCode()
     {
         return $this->hash_code;
     }
 
-
     public function getData()
     {
         return $this->data;
     }
-
 
     public function setData(array $data): void
     {
@@ -432,16 +430,13 @@ abstract class ARObject extends ActiveRecord implements IObject
         }
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return implode(
             ', ',
             [
                 "origin_id: " . $this->origin_id,
-                "type: " . get_class($this),
+                "type: " . static::class,
                 "ext_id: " . $this->getExtId(),
                 "ilias_id: " . $this->getILIASId(),
                 "status: " . $this->getStatus(),

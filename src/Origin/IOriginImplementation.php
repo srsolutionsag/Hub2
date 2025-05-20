@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use InvalidArgumentException;
@@ -35,13 +43,13 @@ interface IOriginImplementation
      */
     public function parseData();
 
-    public function canDroppedFileContentBestored(string $content) : bool;
+    public function canDroppedFileContentBestored(string $content): bool;
 
 
     // HOOKS
     // ------------------------------------------------------------------------------------------------------------
 
-    public function hookConfig() : Config;
+    public function hookConfig(): Config;
 
     /**
      * Called if any exception occurs during processing the ILIAS objects. This hook can be used to
@@ -105,7 +113,7 @@ interface IOriginImplementation
      * @return array ext_ids of parent containers, who's children will be considered
      * when determining dto's to be deleted.
      */
-    public function getAdHocParentScopesAsExtIds() : array;
+    public function getAdHocParentScopesAsExtIds(): array;
 
     /**
      * @return mixed

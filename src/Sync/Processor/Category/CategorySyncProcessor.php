@@ -110,8 +110,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         $ilObjCategory->setPermissions($parentRefId);
         $this->writeRBACLog($ilObjCategory->getRefId());
         foreach (self::getProperties() as $property) {
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $ilObjCategory->$setter($dto->$getter());
             }
@@ -156,8 +156,8 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
             if (!$this->props->updateDTOProperty($property)) {
                 continue;
             }
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             if ($dto->$getter() !== null) {
                 $ilObjCategory->$setter($dto->$getter());
             }
@@ -196,7 +196,7 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
         // move/put in tree
         $parent_ref_id = $this->determineParentRefId($dto);
-        $ref_id = (int) $ilObjCategory->getRefId();
+        $ref_id = $ilObjCategory->getRefId();
 
         if ($this->parent_resolver->isRefIdDeleted($ref_id)) {
             $this->parent_resolver->restoreRefId($ref_id, $parent_ref_id);
@@ -243,7 +243,6 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
 
     /**
      * @param int $iliasId
-     * @return ilObjCategory|null
      */
     protected function findILIASCategory($iliasId): ?\ilObjCategory
     {
@@ -262,13 +261,11 @@ class CategorySyncProcessor extends ObjectSyncProcessor implements ICategorySync
         );
     }
 
-
     public function handleSort(array $sort_dtos): bool
     {
         array_walk($sort_dtos, function (IDataTransferObjectSort $sort_dto): void {
             $sort_dto->setLevel((int) $sort_dto->getDtoObject()->getPeriod());
         });
-
         return true;
     }
 }

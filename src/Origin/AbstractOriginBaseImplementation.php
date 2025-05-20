@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
@@ -23,37 +31,52 @@ use srag\Plugins\Hub2\Log\Repository as LogRepository;
  */
 abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    private IMappingStrategyFactory $mapping_strategy_factory;
-    private ITaxonomyFactory $taxonomyFactory;
-    private IMetadataFactory $metadataFactory;
+    /**
+     * @readonly
+     */
     private IOriginConfig $originConfig;
+    /**
+     * @readonly
+     */
     private IDataTransferObjectFactory $factory;
+    /**
+     * @readonly
+     */
+    private IMetadataFactory $metadataFactory;
+    /**
+     * @readonly
+     */
+    private ITaxonomyFactory $taxonomyFactory;
+    /**
+     * @readonly
+     */
+    private IMappingStrategyFactory $mapping_strategy_factory;
+    protected IOrigin $origin;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var array
      */
     protected $data = [];
-    protected IOrigin $origin;
 
     /**
      * AbstractOriginImplementation constructor
      */
     public function __construct(
-        IOriginConfig $config,
+        IOriginConfig $originConfig,
         IDataTransferObjectFactory $factory,
         IMetadataFactory $metadataFactory,
         ITaxonomyFactory $taxonomyFactory,
-        IMappingStrategyFactory $mapping_strategy,
+        IMappingStrategyFactory $mapping_strategy_factory,
         IOrigin $origin
     ) {
-        /** @noRector  include once for Origins */
-        include_once "./Customizing/global/plugins/Services/Cron/CronHook/Hub2/vendor/autoload.php";
-        $this->originConfig = $config;
+        $this->originConfig = $originConfig;
         $this->factory = $factory;
         $this->metadataFactory = $metadataFactory;
         $this->taxonomyFactory = $taxonomyFactory;
-        $this->mapping_strategy_factory = $mapping_strategy;
+        $this->mapping_strategy_factory = $mapping_strategy_factory;
         $this->origin = $origin;
+        /** @noRector  include once for Origins */
+        include_once __DIR__ . "/../../vendor/autoload.php";
     }
 
     final protected function config(): IOriginConfig
@@ -77,7 +100,7 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
     public function hookConfig(): Config
     {
         return new Config(
-            true
+            false
         );
     }
 
@@ -109,12 +132,10 @@ abstract class AbstractOriginBaseImplementation implements IOriginImplementation
 
     // HOOKS
 
-
     public function overrideStatus(HookObject $hook): void
     {
         // TODO: Implement overrideStatus() method.
     }
-
 
     public function getAdHocParentScopesAsExtIds(): array
     {

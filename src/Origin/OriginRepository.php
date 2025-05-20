@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use ilHub2Plugin;
@@ -24,7 +32,6 @@ class OriginRepository implements IOriginRepository
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-
     public function all(): array
     {
         return array_merge(
@@ -42,77 +49,64 @@ class OriginRepository implements IOriginRepository
         );
     }
 
-
     public function allActive(): array
     {
         return array_filter(
             $this->all(),
-            fn ($origin): bool =>
-                /** @var IOrigin $origin */
-                $origin->isActive()
+            fn ($origin): bool => /** @var IOrigin $origin */
+            $origin->isActive()
         );
     }
-
 
     public function users(): array
     {
         return ARUserOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_USER])->get();
     }
 
-
     public function courses(): array
     {
         return ARCourseOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_COURSE])->get();
     }
-
 
     public function categories(): array
     {
         return ARCategoryOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_CATEGORY])->get();
     }
 
-
     public function courseMemberships(): array
     {
         return ARCourseMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_COURSE_MEMBERSHIP])->get();
     }
-
 
     public function groups(): array
     {
         return ARGroupOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_GROUP])->get();
     }
 
-
     public function groupMemberships(): array
     {
         return ARGroupMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_GROUP_MEMBERSHIP])->get();
     }
-
 
     public function sessions(): array
     {
         return ARSessionOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_SESSION])->get();
     }
 
-
     public function sessionsMemberships(): array
     {
         return ARSessionMembershipOrigin::where(['object_type' => IOrigin::OBJECT_TYPE_SESSION_MEMBERSHIP])->get();
     }
-
 
     public function orgUnits(): array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT])->get();
     }
 
-
     public function orgUnitMemberships(): array
     {
         return AROrgUnitOrigin::where(["object_type" => IOrigin::OBJECT_TYPE_ORGNUNIT_MEMBERSHIP])->get();
     }
-
 
     public function competenceManagements(): array
     {

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Metadata;
 
 /**
@@ -14,13 +22,13 @@ interface IMetadata
     /**
      * @param string|string[] $value
      */
-    public function setValue($value) : IMetadata;
+    public function setValue($value): IMetadata;
 
-    public function setIdentifier(int $identifier) : IMetadata;
+    public function setIdentifier(int $identifier): IMetadata;
 
-    public function setLanguageCode(string $code) : IMetadata;
+    public function setLanguageCode(string $code): IMetadata;
 
-    public function getLanguageCode() : string;
+    public function getLanguageCode(): string;
 
     /**
      * @return mixed
@@ -32,7 +40,7 @@ interface IMetadata
      */
     public function getIdentifier();
 
-    public function getRecordId() : string;
+    public function getRecordId(): string;
 
-    public function __toString() : string;
+    public function __toString(): string;
 }

@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace srag\Plugins\Hub2\Setup\DB;
 
-use ILIAS\Setup\UnachievableException;
-
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
@@ -35,12 +33,10 @@ class Update implements \ilDatabaseUpdateSteps
             foreach ($this->manager->listTableIndexes('sr_hub2_log') as $idx_name) {
                 try {
                     $this->db->dropIndex('sr_hub2_log', $idx_name);
-                } catch (\Throwable $ex) {
-                    $ex = $ex;
+                } catch (\Throwable $exception) {
                 }
             }
-        } catch (\Throwable $ex) {
-            $ex = $ex;
+        } catch (\Throwable $exception) {
         }
         /*try {
             $this->db->manipulate('CHECK TABLE sr_hub2_log;');
@@ -67,14 +63,12 @@ class Update implements \ilDatabaseUpdateSteps
             if ($this->db->indexExistsByFields('sr_hub2_log', $field)) {
                 try {
                     $this->db->dropIndexByFields('sr_hub2_log', $field);
-                } catch (\Throwable $ex) {
-                    $ex = $ex;
+                } catch (\Throwable $exception) {
                 }
             }
             try {
                 $this->db->addIndex('sr_hub2_log', $field, 'i' . ($k + 1));
-            } catch (\Throwable $ex) {
-                $ex = $ex;
+            } catch (\Throwable $exception) {
             }
         }
     }

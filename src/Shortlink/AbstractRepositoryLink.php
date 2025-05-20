@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Shortlink;
 
 use ilLink;
@@ -30,7 +38,6 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         parent::__construct($object);
     }
 
-
     public function doesObjectExist(): bool
     {
         if ($this->getILIASId() === 0) {
@@ -40,12 +47,10 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return ilObject2::_exists($this->getILIASId(), true);
     }
 
-
     public function isAccessGranted(): bool
     {
         return (bool) $this->access->checkAccess("read", '', $this->getILIASId());
     }
-
 
     public function getAccessGrantedInternalLink(): string
     {
@@ -55,14 +60,12 @@ abstract class AbstractRepositoryLink extends AbstractBaseLink implements IObjec
         return $this->getAccessDeniedLink();
     }
 
-
     public function getAccessGrantedExternalLink(): string
     {
         $ref_id = $this->getILIASId();
 
         return $this->generateLink($ref_id);
     }
-
 
     public function getAccessDeniedLink(): string
     {

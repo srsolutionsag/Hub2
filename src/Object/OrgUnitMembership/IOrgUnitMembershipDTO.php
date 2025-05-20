@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\OrgUnitMembership;
 
 use srag\Plugins\Hub2\Object\DTO\IDataTransferObject;
@@ -28,19 +36,19 @@ interface IOrgUnitMembershipDTO extends IDataTransferObject
      */
     public const POSITION_SUPERIOR = 2;
 
-    public function getOrgUnitId() : string;
+    public function getOrgUnitId(): string;
 
-    public function setOrgUnitId(string $org_unit_id) : self;
+    public function setOrgUnitId(string $org_unit_id): self;
 
-    public function getOrgUnitIdType() : int;
+    public function getOrgUnitIdType(): int;
 
-    public function setOrgUnitIdType(int $org_unit_id_type) : self;
+    public function setOrgUnitIdType(int $org_unit_id_type): self;
 
-    public function getUserId() : int;
+    public function getUserId(): int;
 
-    public function setUserId(int $user_id) : self;
+    public function setUserId(int $user_id): self;
 
-    public function getPosition() : int;
+    public function getPosition(): int;
 
-    public function setPosition(int $position) : self;
+    public function setPosition(int $position): self;
 }

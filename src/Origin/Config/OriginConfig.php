@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Config;
 
 use ilObjFile;
@@ -89,7 +97,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerHost(): string
     {
-        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerHost");
         }
 
@@ -98,7 +106,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerPort(): int
     {
-        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerPort");
         }
 
@@ -107,7 +115,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerUsername(): string
     {
-        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerUsername");
         }
 
@@ -116,7 +124,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerPassword(): string
     {
-        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerPassword");
         }
 
@@ -125,7 +133,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerDatabase(): string
     {
-        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerDatabase");
         }
 
@@ -134,7 +142,7 @@ class OriginConfig implements IOriginConfig
 
     public function getServerSearchBase(): string
     {
-        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API ], true)) {
+        if (!in_array($this->getConnectionType(), [self::CONNECTION_TYPE_SERVER, self::CONNECTION_TYPE_API], true)) {
             throw new ConnectionFailedException("Please set connection type to server to use getServerSearchBase");
         }
 
@@ -203,11 +211,11 @@ class OriginConfig implements IOriginConfig
 
     public function getNotificationsSummary(): array
     {
-        return explode(',', $this->get(self::NOTIFICATION_SUMMARY));
+        return explode(',', (string) $this->get(self::NOTIFICATION_SUMMARY));
     }
 
     public function getNotificationsErrors(): array
     {
-        return explode(',', $this->get(self::NOTIFICATION_ERRORS));
+        return explode(',', (string) $this->get(self::NOTIFICATION_ERRORS));
     }
 }

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\MappingStrategy;
 
 use ilDBConstants;
@@ -32,38 +40,30 @@ class ByImportId extends AMappingStrategy implements IMappingStrategy
         $this->db = $DIC->database();
     }
 
-
     public function map(IDataTransferObject $dto): int
     {
         switch (true) {
             case $dto instanceof IUserDTO:
                 $object_type = "usr";
                 break;
-
             case $dto instanceof ICourseDTO:
                 $object_type = "crs";
                 break;
-
             case $dto instanceof ICategoryDTO:
                 $object_type = "cat";
                 break;
-
             case $dto instanceof IGroupDTO:
                 $object_type = "grp";
                 break;
-
             case $dto instanceof ISessionDTO:
                 $object_type = "sess";
                 break;
-
             case $dto instanceof IOrgUnitDTO:
                 $object_type = "orgu";
                 break;
-
             case $dto instanceof ICompetenceManagementDTO:
                 $object_type = "skmg";
                 break;
-
             default:
                 throw new HubException(
                     "Cannot find import id for type=" . get_class($dto) . ",ext_id=" . $dto->getExtId() . "!"

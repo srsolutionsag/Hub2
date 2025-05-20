@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\CompetenceManagement\ProfileLevel;
 
 /**
@@ -9,32 +17,25 @@ namespace srag\Plugins\Hub2\Object\CompetenceManagement\ProfileLevel;
  */
 class ProfileLevel implements IProfileLevel
 {
-    protected string $skill_id;
-    protected int $skill_id_type;
-    protected string $level_id;
-    protected int $level_id_type;
-
+    protected string $skill_id = "";
+    protected int $skill_id_type = self::SKILL_ID_TYPE_ILIAS_ID;
+    protected string $level_id = "";
+    protected int $level_id_type = self::LEVEL_ID_TYPE_ILIAS_ID;
     /**
      * ProfileLevel constructor
      */
-    public function __construct(
-        string $skill_id = "",
-        int $skill_id_type = self::SKILL_ID_TYPE_ILIAS_ID,
-        string $level_id = "",
-        int $level_id_type = self::LEVEL_ID_TYPE_ILIAS_ID
-    ) {
+    public function __construct(string $skill_id = "", int $skill_id_type = self::SKILL_ID_TYPE_ILIAS_ID, string $level_id = "", int $level_id_type = self::LEVEL_ID_TYPE_ILIAS_ID)
+    {
         $this->skill_id = $skill_id;
         $this->skill_id_type = $skill_id_type;
         $this->level_id = $level_id;
         $this->level_id_type = $level_id_type;
     }
 
-
     public function getSkillId(): string
     {
         return $this->skill_id;
     }
-
 
     public function setSkillId(string $skill_id): IProfileLevel
     {
@@ -43,12 +44,10 @@ class ProfileLevel implements IProfileLevel
         return $this;
     }
 
-
     public function getSkillIdType(): int
     {
         return $this->skill_id_type;
     }
-
 
     public function setSkillIdType(int $skill_id_type): IProfileLevel
     {
@@ -57,12 +56,10 @@ class ProfileLevel implements IProfileLevel
         return $this;
     }
 
-
     public function getLevelId(): string
     {
         return $this->level_id;
     }
-
 
     public function setLevelId(string $level_id): IProfileLevel
     {
@@ -71,12 +68,10 @@ class ProfileLevel implements IProfileLevel
         return $this;
     }
 
-
     public function getLevelIdType(): int
     {
         return $this->level_id_type;
     }
-
 
     public function setLevelIdType(int $level_id_type): IProfileLevel
     {

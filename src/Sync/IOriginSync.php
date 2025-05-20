@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync;
 
 use srag\Plugins\Hub2\Origin\IOrigin;
@@ -25,26 +33,22 @@ interface IOriginSync
      *  * IObject::STATUS_UPDATED: Number of objects updated
      *  * IObject::STATUS_OUTDATED: Number of objects deleted
      *  * IObject::STATUS_IGNORED: Number of objects ignored
-     * @param int $status
      * @return int
      */
-    public function getCountProcessedByStatus($status);
+    public function getTotalByStatus(int $status): ?int;
 
     /**
      * Get the number of objects processed by the sync.
-     * @return int
      */
-    public function getCountProcessedTotal();
+    public function getProcessedTotal(): int;
 
     /**
      * Get the amount of delivered data (excludes non-valid data).
-     * @return int
      */
-    public function getCountDelivered();
+    public function getDeliveredTotal(): int;
 
     /**
      * Return the current origin
-     * @return IOrigin
      */
-    public function getOrigin();
+    public function getOrigin(): IOrigin;
 }

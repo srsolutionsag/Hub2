@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 require_once __DIR__ . "/../../AbstractSyncProcessorTests.php";
 
 use Mockery\MockInterface;
@@ -111,8 +119,6 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
     /**
      * Create ILIAS user: Test that the login name is built correctly for every possible mode.
      * @dataProvider getUsernameModes
-     * @param string $mode
-     * @param string $expectedLoginName
      */
     public function test_create_user_with_different_login_name_modes(int $mode, string $expectedLoginName): void
     {
@@ -209,9 +215,6 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
         $processor->process($this->iobject, $this->dto);
     }
 
-    /**
-     * @return array
-     */
     public function getUsernameModes(): array
     {
         return [
@@ -269,8 +272,8 @@ class UserSyncProcessorTest extends AbstractSyncProcessorTests
         $this->ilObject->shouldReceive('writePrefs')->once();
         $this->ilObject->shouldReceive('_loginExists')->zeroOrMoreTimes()->andReturn(false);
         foreach (UserSyncProcessor::getProperties() as $property) {
-            $setter = "set" . ucfirst($property);
-            $getter = "get" . ucfirst($property);
+            $setter = "set" . ucfirst((string) $property);
+            $getter = "get" . ucfirst((string) $property);
             // null values are NOT forwarded to the ilObjUser since they could overwrite existing values
             if ($this->dto->$getter() === null) {
                 $this->ilObject->shouldNotReceive($setter);

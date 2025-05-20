@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\Course;
 
 use ilCheckboxInputGUI;
@@ -9,7 +17,6 @@ use ilRadioOption;
 use ilTextAreaInputGUI;
 use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\Course\ICourseOriginConfig;
-use srag\Plugins\Hub2\Origin\Course\ARCourseOrigin;
 use srag\Plugins\Hub2\Origin\Properties\Course\CourseProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
@@ -24,7 +31,6 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
-
         // Extend shortlink
         //		$shortlink = $this->getItemByPostVar($this->prop(IOriginConfig::LINKED_ORIGIN_ID));
         //		$cb = new ilCheckboxInputGUI($this->plugin->txt('crs_prop_check_online'), hubCourseFields::F_SL_CHECK_ONLINE);
@@ -34,7 +40,6 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
         //		$cb->addSubItem($msg);
         //		$shortlink->addSubItem($cb);
         //
-
         $te = new ilTextInputGUI(
             $this->plugin->txt('crs_prop_node_noparent'),
             $this->conf(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND)
@@ -43,7 +48,6 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
         $te->setValue($this->origin->config()->get(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND));
         $this->addItem($te);
     }
-
 
     protected function addPropertiesNew()
     {
@@ -92,20 +96,16 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($send_mail);
     }
 
-
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
-
         $cb = new ilCheckboxInputGUI(
             $this->plugin->txt('crs_prop_move'),
             $this->prop(CourseProperties::MOVE_COURSE)
         );
         $cb->setChecked($this->origin->properties()->get(CourseProperties::MOVE_COURSE));
-
         $cb->setInfo($this->plugin->txt('crs_prop_move_info'));
         $this->addItem($cb);
-
         $cb = new ilCheckboxInputGUI(
             $this->plugin->txt('crs_prop_reactivate'),
             $this->prop(CourseProperties::SET_ONLINE_AGAIN)
@@ -113,7 +113,6 @@ class CourseOriginConfigFormGUI extends OriginConfigFormGUI
         $cb->setChecked($this->origin->properties()->get(CourseProperties::SET_ONLINE_AGAIN));
         $this->addItem($cb);
     }
-
 
     protected function addPropertiesDelete()
     {

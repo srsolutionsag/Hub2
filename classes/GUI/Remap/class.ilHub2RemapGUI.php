@@ -8,19 +8,7 @@
  *
  *********************************************************************/
 
-use ILIAS\UI\Factory;
-use ILIAS\UI\Renderer;
-use srag\Plugins\Hub2\Log\LogsTable;
-use srag\Plugins\Hub2\UI\Data\DataTableGUI;
-use srag\Plugins\Hub2\UI\Log\LogsTableGUI;
-use srag\Plugins\Hub2\Log\LogDBRepository;
-use ILIAS\UI\Component\Table\PresentationRow;
-use srag\Plugins\Hub2\Object\ARObject;
-use srag\Plugins\Hub2\Translator;
-use srag\Plugins\Hub2\Jobs\Log\DeleteOldLogsJob;
-use srag\Plugins\Hub2\Config\ArConfig;
 use srag\Plugins\Hub2\Exception\HubException;
-use srag\Plugins\Hub2\Log\LogRepository;
 use srag\Plugins\Hub2\Remap\RemapForm;
 use ILIAS\GlobalScreen\Helper\BasicAccessCheckClosures;
 use srag\Plugins\Hub2\Object\Course\ARCourse;
@@ -36,21 +24,10 @@ class ilHub2RemapGUI extends ilHub2DispatchableBaseGUI
 {
     public const SUBTAB_REMAP = 'subtab_remap';
 
-    /**
-     * @readonly
-     */
-    private Renderer $ui_renderer;
-    /**
-     * @readonly
-     */
-    private Factory $ui_factory;
-
     public function __construct()
     {
         parent::__construct();
         global $DIC;
-        $this->ui_renderer = $DIC->ui()->renderer();
-        $this->ui_factory = $DIC->ui()->factory();
     }
 
     public function getActiveSubTab(): ?string

@@ -1,9 +1,15 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\Course;
 
-use ilDB;
-use ilDBInterface;
 use ilObjCourse;
 use ilObject2;
 
@@ -15,16 +21,11 @@ use ilObject2;
  */
 class CourseActivities implements ICourseActivities
 {
-    /**
-     * @var ilDB
-     */
-    protected $db;
-
-    public function __construct(ilDBInterface $db)
+    protected \ilDBInterface $db;
+    public function __construct(\ilDBInterface $db)
     {
         $this->db = $db;
     }
-
 
     public function hasActivities(ilObjCourse $ilObjCourse): bool
     {

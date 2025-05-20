@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\CourseMembership;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -127,7 +135,6 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
     /**
      * @param int $iliasId
-     * @return ilObjCourse|null
      */
     protected function findILIASCourse($iliasId): ?\ilObjCourse
     {
@@ -138,9 +145,6 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
         return new ilObjCourse($iliasId);
     }
 
-    /**
-     * @return int
-     */
     protected function mapRole(CourseMembershipDTO $object): int
     {
         switch ($object->getRole()) {
@@ -148,15 +152,11 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
                 return \ilCourseParticipants::IL_CRS_ADMIN;
             case CourseMembershipDTO::ROLE_TUTOR:
                 return \ilCourseParticipants::IL_CRS_TUTOR;
-            case CourseMembershipDTO::ROLE_MEMBER:
             default:
                 return \ilCourseParticipants::IL_CRS_MEMBER;
         }
     }
 
-    /**
-     * @return int
-     */
     protected function getILIASRole(CourseMembershipDTO $object, ilObjCourse $course): int
     {
         switch ($object->getRole()) {
@@ -164,7 +164,6 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
                 return $course->getDefaultAdminRole();
             case CourseMembershipDTO::ROLE_TUTOR:
                 return $course->getDefaultTutorRole();
-            case CourseMembershipDTO::ROLE_MEMBER:
             default:
                 return $course->getDefaultMemberRole();
         }
@@ -191,8 +190,7 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
             $originRepository = new OriginRepository();
             $arrayFilter = array_filter(
                 $originRepository->courses(),
-                fn ($origin): bool =>
-                    /** @var IOrigin $origin */
+                fn ($origin): bool => /** @var IOrigin $origin */
                     $origin->getId() == $linkedOriginId
             );
             $origin = array_pop(
@@ -216,4 +214,11 @@ class CourseMembershipSyncProcessor extends ObjectSyncProcessor implements ICour
 
         return 0;
     }
+
+    public function teardown(): void
+    {
+        global $DIC;
+        $DIC->rbac()->review()->clearCaches();
+    }
+
 }

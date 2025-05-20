@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object;
 
 use ilHub2Plugin;
@@ -28,8 +36,8 @@ use srag\Plugins\Hub2\Origin\IOrigin;
  */
 class ObjectFactory implements IObjectFactory
 {
-    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     protected IOrigin $origin;
+    public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
     /**
      * @var \ilDBInterface
      */
@@ -37,11 +45,10 @@ class ObjectFactory implements IObjectFactory
 
     public function __construct(IOrigin $origin)
     {
-        global $DIC;
         $this->origin = $origin;
+        global $DIC;
         $this->db = $DIC->database();
     }
-
 
     public function undefined($ext_id)
     {
@@ -92,12 +99,10 @@ class ObjectFactory implements IObjectFactory
         return $ar;
     }
 
-
     public function user($ext_id): \ActiveRecord
     {
         return $this->buildARfromDB($ext_id, new ARUser());
     }
-
 
     public function course($ext_id)
     {
@@ -111,7 +116,6 @@ class ObjectFactory implements IObjectFactory
         return $course;
     }
 
-
     public function category($ext_id)
     {
         $category = ARCategory::find($this->getId($ext_id));
@@ -123,7 +127,6 @@ class ObjectFactory implements IObjectFactory
 
         return $category;
     }
-
 
     public function group($ext_id)
     {
@@ -137,7 +140,6 @@ class ObjectFactory implements IObjectFactory
         return $group;
     }
 
-
     public function session($ext_id)
     {
         $session = ARSession::find($this->getId($ext_id));
@@ -150,12 +152,10 @@ class ObjectFactory implements IObjectFactory
         return $session;
     }
 
-
     public function courseMembership($ext_id): \ActiveRecord
     {
         return $this->buildARfromDB($ext_id, new ARCourseMembership());
     }
-
 
     public function groupMembership($ext_id)
     {
@@ -169,7 +169,6 @@ class ObjectFactory implements IObjectFactory
         return $group_membership;
     }
 
-
     public function sessionMembership($ext_id)
     {
         $session_membership = ARSessionMembership::find($this->getId($ext_id));
@@ -181,7 +180,6 @@ class ObjectFactory implements IObjectFactory
 
         return $session_membership;
     }
-
 
     public function orgUnit(string $ext_id): IOrgUnit
     {
@@ -195,7 +193,6 @@ class ObjectFactory implements IObjectFactory
         return $org_unit;
     }
 
-
     public function orgUnitMembership(string $ext_id): IOrgUnitMembership
     {
         $org_unit_membership = AROrgUnitMembership::find($this->getId($ext_id));
@@ -207,7 +204,6 @@ class ObjectFactory implements IObjectFactory
 
         return $org_unit_membership;
     }
-
 
     public function competenceManagement(string $ext_id): ICompetenceManagement
     {
@@ -222,78 +218,65 @@ class ObjectFactory implements IObjectFactory
         return $competence_management;
     }
 
-
     public function getId($ext_id): string
     {
         return $this->origin->getId() . $ext_id;
     }
-
 
     public function users(): array
     {
         return ARUser::get();
     }
 
-
     public function courses(): array
     {
         return ARCourse::get();
     }
-
 
     public function categories(): array
     {
         return ARCategory::get();
     }
 
-
     public function categorys(): array
     {
         return $this->categories();
     }
-
 
     public function groups(): array
     {
         return ARGroup::get();
     }
 
-
     public function sessions(): array
     {
         return ARSession::get();
     }
-
 
     public function courseMemberships(): array
     {
         return ARCourseMembership::get();
     }
 
-
     public function groupMemberships(): array
     {
         return ARGroupMembership::get();
     }
-
 
     public function sessionMemberships(): array
     {
         return ARSessionMembership::get();
     }
 
-
     public function orgUnits(): array
     {
         return AROrgUnit::get();
     }
 
-
     public function orgUnitMemberships(): array
     {
         return AROrgUnitMembership::get();
     }
-
 
     public function competenceManagements(): array
     {

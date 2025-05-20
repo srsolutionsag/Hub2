@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Metadata\Implementation;
 
 use srag\Plugins\Hub2\Metadata\IMetadata;
@@ -17,7 +25,7 @@ interface IMetadataImplementation
      */
     public function write();
 
-    public function getMetadata() : IMetadata;
+    public function getMetadata(): IMetadata;
 
-    public function getIliasId() : int;
+    public function getIliasId(): int;
 }

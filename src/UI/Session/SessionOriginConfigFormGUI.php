@@ -1,12 +1,19 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\Session;
 
 use ilCheckboxInputGUI;
 use ilRadioGroupInputGUI;
 use ilRadioOption;
 use srag\Plugins\Hub2\Origin\Properties\Session\SessionProperties;
-use srag\Plugins\Hub2\Origin\Session\ARSessionOrigin;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
 /**
@@ -19,7 +26,6 @@ class SessionOriginConfigFormGUI extends OriginConfigFormGUI
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
-
         $cb = new ilCheckboxInputGUI(
             $this->plugin->txt('sess_prop_move'),
             $this->prop(SessionProperties::MOVE_SESSION)
@@ -27,7 +33,6 @@ class SessionOriginConfigFormGUI extends OriginConfigFormGUI
         $cb->setInfo($this->plugin->txt('sess_prop_move_info'));
         $this->addItem($cb);
     }
-
 
     protected function addPropertiesDelete()
     {

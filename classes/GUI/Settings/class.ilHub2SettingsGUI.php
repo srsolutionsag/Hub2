@@ -17,6 +17,9 @@ class ilHub2SettingsGUI extends ilHub2DispatchableBaseGUI
 {
     public const CMD_SAVE_CONFIG = 'saveConfig';
     public const CMD_CANCEL = 'cancel';
+    /**
+     * @readonly
+     */
     private ConfigFormGUI $form;
 
     public function __construct()
@@ -24,7 +27,6 @@ class ilHub2SettingsGUI extends ilHub2DispatchableBaseGUI
         parent::__construct();
         $this->form = new ConfigFormGUI($this);
     }
-
 
     public function index(): void
     {

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Taxonomy;
 
 use ilHub2Plugin;
@@ -15,18 +23,15 @@ class TaxonomyFactory implements ITaxonomyFactory
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
 
-
     public function select(string $title): ITaxonomy
     {
         return new Taxonomy($title, ITaxonomy::MODE_SELECT);
     }
 
-
     public function create(string $title): ITaxonomy
     {
         return new Taxonomy($title, ITaxonomy::MODE_CREATE);
     }
-
 
     public function node(string $node_title): INode
     {

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\OrgUnitMembership;
 
 use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
@@ -12,12 +20,10 @@ use srag\Plugins\Hub2\Sync\Processor\FakeIliasMembershipObject;
 class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
 {
     protected int $position_id;
-
     public function __construct(int $container_id_ilias, int $user_id_ilias, int $position_id)
     {
-        parent::__construct($container_id_ilias, $user_id_ilias);
-
         $this->position_id = $position_id;
+        parent::__construct($container_id_ilias, $user_id_ilias);
 
         $this->initId();
     }
@@ -43,7 +49,6 @@ class FakeOrgUnitMembershipObject extends FakeIliasMembershipObject
     public static function loadInstanceWithConcatenatedId(string $id): self
     {
         [$container_id_ilias, $user_id_ilias, $position_id] = explode(self::GLUE, $id);
-
         return new self((int) $container_id_ilias, (int) $user_id_ilias, (int) $position_id);
     }
 }

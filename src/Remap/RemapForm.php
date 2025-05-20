@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace srag\Plugins\Hub2\Remap;
 
-use ILIAS\UI\Renderer;
 use ILIAS\UI\Factory;
 use ILIAS\UI\Component\Input\Container\Form\Standard;
 use srag\Plugins\Hub2\Object\ARObject;
@@ -24,6 +23,14 @@ use Psr\Http\Message\RequestInterface;
 class RemapForm
 {
     /**
+     * @readonly
+     */
+    private ?ARObject $object = null;
+    /**
+     * @readonly
+     */
+    private ?string $redirect_after_save = null;
+    /**
      * @var string
      */
     public $target;
@@ -32,9 +39,9 @@ class RemapForm
     public const F_AR_TYPE = 'ar_type';
     public const F_NEW_ILIAS_ID = 'new_ilias_id';
     public const F_CURRENT_ILIAS_ID = 'current_ilias_id';
-    private ?ARObject $object = null;
-    private ?string $redirect_after_save = null;
-    private Renderer $ui_renderer;
+    /**
+     * @readonly
+     */
     private Factory $ui_factory;
 
     public function __construct(
@@ -42,12 +49,10 @@ class RemapForm
         ?ARObject $object = null,
         ?string $redirect_after_save = null
     ) {
-        global $DIC;
         $this->object = $object;
-        $this->target = $target;
         $this->redirect_after_save = $redirect_after_save;
-
-        $this->ui_renderer = $DIC->ui()->renderer();
+        global $DIC;
+        $this->target = $target;
         $this->ui_factory = $DIC->ui()->factory();
     }
 

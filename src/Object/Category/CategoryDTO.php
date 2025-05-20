@@ -112,7 +112,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param string $title
-     * @return CategoryDTO
      */
     public function setTitle($title): self
     {
@@ -131,7 +130,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param string $description
-     * @return CategoryDTO
      */
     public function setDescription($description): self
     {
@@ -150,7 +148,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param int $orderType
-     * @return CategoryDTO
      */
     public function setOrderType($orderType): self
     {
@@ -172,7 +169,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param int $orderDirection
-     * @return CategoryDTO
      */
     public function setOrderDirection($orderDirection): self
     {
@@ -194,7 +190,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param int $newItemsPosition
-     * @return CategoryDTO
      */
     public function setNewItemsPosition($newItemsPosition): self
     {
@@ -216,7 +211,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param int $newItemsOrderType
-     * @return CategoryDTO
      */
     public function setNewItemsOrderType($newItemsOrderType): self
     {
@@ -238,7 +232,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param int $owner
-     * @return CategoryDTO
      */
     public function setOwner($owner): self
     {
@@ -276,7 +269,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param int $parentIdType
-     * @return CategoryDTO
      */
     public function setParentIdType($parentIdType): self
     {
@@ -298,7 +290,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param bool $showNews
-     * @return CategoryDTO
      */
     public function setShowNews($showNews): self
     {
@@ -317,7 +308,6 @@ class CategoryDTO extends DataTransferObject implements ICategoryDTO
 
     /**
      * @param bool $showInfoPage
-     * @return CategoryDTO
      */
     public function setShowInfoPage($showInfoPage): self
     {

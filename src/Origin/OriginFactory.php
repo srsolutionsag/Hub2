@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin;
 
 use ActiveRecord;
@@ -29,7 +37,6 @@ class OriginFactory implements IOriginFactory
         $this->db = $DIC->database();
     }
 
-
     public function getById($id)
     {
         $sql = 'SELECT object_type FROM ' . AROrigin::TABLE_NAME . ' WHERE id = %s';
@@ -44,14 +51,12 @@ class OriginFactory implements IOriginFactory
         return $class::find($id);
     }
 
-
     public function createByType(string $type): IOrigin
     {
         $class = $this->getClass($type);
 
         return new $class();
     }
-
 
     public function getAllActive(): array
     {
@@ -64,7 +69,6 @@ class OriginFactory implements IOriginFactory
 
         return $origins;
     }
-
 
     public function getAll(): array
     {
@@ -81,7 +85,6 @@ class OriginFactory implements IOriginFactory
 
     /**
      * @param string $type
-     * @return string
      */
     protected function getClass($type): string
     {

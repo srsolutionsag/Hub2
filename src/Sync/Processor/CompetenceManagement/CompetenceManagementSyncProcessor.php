@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\CompetenceManagement;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -44,19 +52,9 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
      * @var ICompetenceManagementOriginConfig
      */
     protected IOriginConfig $config;
-    /**
-     * @var array
-     */
-    protected static $properties = [];
-    /**
-     * @var ilSkillTreeNode|ilSkillProfile|null
-     */
-    protected $current_ilias_object;
+    protected static array $properties = [];
     protected \ilSkillTree $skill_tree;
-    /**
-     * @var \ilDBInterface
-     */
-    private $db;
+    private \ilDBInterface $db;
 
     /**
      * @param ICompetenceManagementOrigin $origin
@@ -98,7 +96,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
                 ) === ICompetenceManagementDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID && !$this->isRootId($dto));
             }
         );
-
         $dtos = array_reduce(
             $sort_dtos,
             function (array $dtos, IDataTransferObjectSort $sort_dto): array {
@@ -108,7 +105,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
             },
             []
         );
-
         foreach ($sort_dtos as $sort_dto) {
             /**
              * @var ICompetenceManagementDTO $parent_dto
@@ -125,7 +121,6 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
                 $parent_dto = $dtos[$parent_dto->getParentId()];
             }
         }
-
         return true;
     }
 
@@ -348,16 +343,10 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
         }
     }
 
-    /**
-     * @return ilSkillTreeNode|null
-     */
     protected function getSkillObject(int $obj_id): ?\ilSkillTreeNode
     {
         $skill = ilSkillTreeNodeFactory::getInstance($obj_id);
         if (empty($skill)) {
-            return null;
-        }
-        if (!$skill instanceof ilSkillTreeNode) {
             return null;
         }
         return $skill;
@@ -396,7 +385,7 @@ class CompetenceManagementSyncProcessor extends ObjectSyncProcessor implements I
             $parent_id = $this->config->getIdIfNoParentId();
         }
         if (empty($parent_id)) {
-            return (int) $this->skill_tree->getRootId();
+            return $this->skill_tree->getRootId();
         }
 
         return $parent_id;

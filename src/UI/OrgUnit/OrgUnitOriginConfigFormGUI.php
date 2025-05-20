@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\OrgUnit;
 
 use ilCheckboxInputGUI;
@@ -7,7 +15,6 @@ use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\OrgUnit\IOrgUnitOriginConfig;
-use srag\Plugins\Hub2\Origin\OrgUnit\AROrgUnitOrigin;
 use srag\Plugins\Hub2\Origin\Properties\OrgUnit\IOrgUnitProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
@@ -21,7 +28,6 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
-
         $ref_id_if_no_parent_id = new ilTextInputGUI(
             $this->plugin->txt("orgunit_ref_id_if_no_parent_id"),
             $this->conf(IOrgUnitOriginConfig::REF_ID_IF_NO_PARENT_ID)
@@ -31,16 +37,13 @@ class OrgUnitOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($ref_id_if_no_parent_id);
     }
 
-
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
-
         $cb = new ilCheckboxInputGUI($this->plugin->txt("orgunit_move"), $this->prop(IOrgUnitProperties::MOVE));
         $cb->setChecked($this->origin->properties()->get(IOrgUnitProperties::MOVE));
         $this->addItem($cb);
     }
-
 
     protected function addPropertiesDelete()
     {

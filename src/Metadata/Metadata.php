@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Metadata;
 
 use ilHub2Plugin;
@@ -11,17 +19,13 @@ use ilHub2Plugin;
  */
 class Metadata implements IMetadata
 {
+    protected int $identifier;
+    protected int $record_id = self::DEFAULT_RECORD_ID;
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    /**
-     * @var int
-     */
-    protected $identifier = 0;
     /**
      * @var mixed
      */
     protected $value;
-
-    protected string $record_id;
     /**
      * @var string
      */
@@ -37,14 +41,12 @@ class Metadata implements IMetadata
         $this->record_id = $record_id;
     }
 
-
     public function setValue($value): IMetadata
     {
         $this->value = $value;
 
         return $this;
     }
-
 
     public function setIdentifier(int $identifier): IMetadata
     {
@@ -65,7 +67,6 @@ class Metadata implements IMetadata
         return $this->language_code;
     }
 
-
     public function getValue()
     {
         return $this->value;
@@ -80,7 +81,6 @@ class Metadata implements IMetadata
     {
         return $this->record_id ?? self::DEFAULT_RECORD_ID;
     }
-
 
     public function __toString(): string
     {

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Jobs\Result;
 
 use ilCronJobResult;
@@ -13,12 +21,9 @@ use ilHub2Plugin;
 abstract class AbstractResult extends ilCronJobResult
 {
     public const PLUGIN_CLASS_NAME = ilHub2Plugin::class;
-    public const STATUS_OK = 3;
-    public const STATUS_CRASHED = 4;
 
     /**
      * AbstractResult constructor
-     * @param string $message
      */
     public function __construct(string $message)
     {

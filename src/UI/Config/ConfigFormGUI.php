@@ -28,17 +28,16 @@ use srag\Plugins\Hub2\Config\ArConfig;
  */
 class ConfigFormGUI extends ilPropertyFormGUI
 {
-    protected \ilHub2Plugin $plugin;
     protected \ilHub2SettingsGUI $parent_gui;
+    protected \ilHub2Plugin $plugin;
 
     /**
      * ConfigFormGUI constructor
      */
     public function __construct(\ilHub2SettingsGUI $parent_gui)
     {
-        parent::__construct();
-
         $this->parent_gui = $parent_gui;
+        parent::__construct();
         $this->plugin = ilHub2Plugin::getInstance();
 
         $this->initForm();
@@ -230,7 +229,7 @@ class ConfigFormGUI extends ilPropertyFormGUI
             switch ($item->getPostVar()) {
                 case ArConfig::KEY_ADMINISTRATE_HUB_ROLE_IDS:
                     $administration_role_ids = $this->getInput($item->getPostVar());
-                    $administration_role_ids = preg_split('/, */', $administration_role_ids);
+                    $administration_role_ids = preg_split('/, */', (string) $administration_role_ids);
                     $administration_role_ids = array_map(
                         static fn (string $id): int => (int) $id,
                         $administration_role_ids

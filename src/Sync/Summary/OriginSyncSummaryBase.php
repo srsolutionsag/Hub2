@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Summary;
 
 use srag\Plugins\Hub2\Log\IRepository;
@@ -35,17 +43,15 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     public function __construct()
     {
         global $DIC;
-        $this->sender_factory = $DIC['mail.mime.sender.factory'];
+        $this->sender_factory = new \ilMailMimeSenderFactory($DIC->settings());
         $this->plugin = ilHub2Plugin::getInstance();
         $this->log_repo = LogRepository::getInstance();
     }
-
 
     public function addOriginSync(IOriginSync $originSync): void
     {
         $this->syncs[] = $originSync;
     }
-
 
     public function getOutputAsString()
     {
@@ -56,7 +62,6 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 
         return $return;
     }
-
 
     public function sendEmail(): void
     {
@@ -72,7 +77,7 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 
             if ($summary_email !== []) {
                 $mail->To($summary_email);
-                
+
                 $txt = $this->plugin->txt("summary_notification");
                 $mail->Subject(sprintf($txt, $originSync->getOrigin()->getTitle()));
                 $body = nl2br(str_replace("\n\n", "\n", $this->renderOneSync($originSync)));
@@ -105,26 +110,26 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
         if (!$only_logs) {
             // Print out some useful statistics: --> Should maybe be a OriginSyncSummary object
             $msg .= sprintf($this->plugin->txt("summary_for"), $originSync->getOrigin()->getTitle()) . "\n";
-            $msg .= sprintf($this->plugin->txt("summary_delivered_data_sets"), $originSync->getCountDelivered()) . "\n";
+            $msg .= sprintf($this->plugin->txt("summary_delivered_data_sets"), $originSync->getDeliveredTotal()) . "\n";
             $msg .= sprintf(
                 $this->plugin->txt("summary_failed"),
-                $originSync->getCountProcessedByStatus(IObject::STATUS_FAILED)
+                $originSync->getTotalByStatus(IObject::STATUS_FAILED)
             ) . "\n";
             $msg .= sprintf(
                 $this->plugin->txt("summary_created"),
-                $originSync->getCountProcessedByStatus(IObject::STATUS_CREATED)
+                $originSync->getTotalByStatus(IObject::STATUS_CREATED)
             ) . "\n";
             $msg .= sprintf(
                 $this->plugin->txt("summary_updated"),
-                $originSync->getCountProcessedByStatus(IObject::STATUS_UPDATED)
+                $originSync->getTotalByStatus(IObject::STATUS_UPDATED)
             ) . "\n";
             $msg .= sprintf(
                 $this->plugin->txt("summary_outdated"),
-                $originSync->getCountProcessedByStatus(IObject::STATUS_OUTDATED)
+                $originSync->getTotalByStatus(IObject::STATUS_OUTDATED)
             ) . "\n";
             $msg .= sprintf(
                 $this->plugin->txt("summary_ignored"),
-                $originSync->getCountProcessedByStatus(IObject::STATUS_IGNORED)
+                $originSync->getTotalByStatus(IObject::STATUS_IGNORED)
             );
         }
 

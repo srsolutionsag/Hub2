@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\OrgUnit;
 
 use srag\Plugins\Hub2\Origin\Properties\IOriginProperties;
@@ -37,22 +45,9 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
      * @var IOrgUnitOriginConfig
      */
     protected IOriginConfig $config;
-    /**
-     * @var array
-     */
-    protected static $properties = [];
-    /**
-     * @var ilObjOrgUnit|null
-     */
-    protected $current_ilias_object;
-    /**
-     * @var \ilTree
-     */
-    private $tree;
-    /**
-     * @var \ilRbacAdmin
-     */
-    private $rbacadmin;
+    protected static array $properties = [];
+    private \ilTree $tree;
+    private \ilRbacAdmin $rbacadmin;
 
     /**
      * @param IOrgUnitOrigin $origin
@@ -107,7 +102,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
                 ));
             }
         );
-
         $dtos = array_reduce(
             $sort_dtos,
             function (array $dtos, IDataTransferObjectSort $sort_dto): array {
@@ -117,7 +111,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
             },
             []
         );
-
         foreach ($sort_dtos as $sort_dto) {
             /**
              * @var IOrgUnitDTO $parent_dto
@@ -134,7 +127,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
                 $parent_dto = $dtos[$parent_dto->getParentId()];
             }
         }
-
         return true;
     }
 
@@ -239,9 +231,6 @@ class OrgUnitSyncProcessor extends ObjectSyncProcessor implements IOrgUnitSyncPr
         }
     }
 
-    /**
-     * @return ilObjOrgUnit|null
-     */
     protected function getOrgUnitObject(int $obj_id): ?\ilObjOrgUnit
     {
         $ref_id = current(ilObjOrgUnit::_getAllReferences($obj_id));

@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor;
 
 use srag\Plugins\Hub2\Object\IObjectRepository;
@@ -28,16 +36,12 @@ class FakeIliasMembershipObject extends FakeIliasObject
         $this->initId();
     }
 
-    /**
-     * @return FakeIliasMembershipObject
-     */
     public static function loadInstanceWithConcatenatedId(string $id): self
     {
         [$container_id_ilias, $user_id_ilias] = explode(self::GLUE, $id);
 
         return new self((int) $container_id_ilias, (int) $user_id_ilias);
     }
-
 
     public function getId(): string
     {

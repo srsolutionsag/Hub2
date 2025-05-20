@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\UI\Group;
 
 use ilCheckboxInputGUI;
@@ -7,7 +15,6 @@ use ilRadioGroupInputGUI;
 use ilRadioOption;
 use ilTextInputGUI;
 use srag\Plugins\Hub2\Origin\Config\Course\ICourseOriginConfig;
-use srag\Plugins\Hub2\Origin\Group\ARGroupOrigin;
 use srag\Plugins\Hub2\Origin\Properties\Group\GroupProperties;
 use srag\Plugins\Hub2\UI\OriginConfig\OriginConfigFormGUI;
 
@@ -21,7 +28,6 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI
     protected function addSyncConfig()
     {
         parent::addSyncConfig();
-
         $te = new ilTextInputGUI(
             $this->plugin->txt('grp_prop_node_noparent'),
             $this->conf(ICourseOriginConfig::REF_ID_NO_PARENT_ID_FOUND)
@@ -31,11 +37,9 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI
         $this->addItem($te);
     }
 
-
     protected function addPropertiesUpdate()
     {
         parent::addPropertiesUpdate();
-
         $cb = new ilCheckboxInputGUI(
             $this->plugin->txt('grp_prop_move'),
             $this->prop(GroupProperties::MOVE_GROUP)
@@ -43,7 +47,6 @@ class GroupOriginConfigFormGUI extends OriginConfigFormGUI
         $cb->setInfo($this->plugin->txt('grp_prop_move_info'));
         $this->addItem($cb);
     }
-
 
     protected function addPropertiesDelete()
     {

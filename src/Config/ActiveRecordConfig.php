@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Config;
 
 use arConnector;
@@ -16,7 +24,6 @@ use srag\Plugins\Hub2\Exception\ActiveRecordConfigException;
  */
 class ActiveRecordConfig extends Config
 {
-
     /**
      * @var string
      *
@@ -37,7 +44,7 @@ class ActiveRecordConfig extends Config
     /**
      * @deprecated
      */
-    protected static function config() : ActiveRecordConfigRepository
+    protected static function config(): ActiveRecordConfigRepository
     {
         return ActiveRecordConfigRepository::getInstance(static::TABLE_NAME, static::$fields);
     }
@@ -45,11 +52,10 @@ class ActiveRecordConfig extends Config
     /**
      * @param mixed $default_value
      *
-     * @return never
      *
      * @throws ActiveRecordConfigException
-     *
      * @deprecated
+     * @return never
      */
     final protected static function getDefaultValue(string $name, int $type, $default_value)
     {
@@ -76,7 +82,7 @@ class ActiveRecordConfig extends Config
      *
      * @deprecated
      */
-    public static function getFields() : array
+    public static function getFields(): array
     {
         return self::config()->getValues();
     }
@@ -88,7 +94,7 @@ class ActiveRecordConfig extends Config
      *
      * @deprecated
      */
-    public static function removeField(string $name) : void/*: void*/
+    public static function removeField(string $name): void/*: void*/
     {
         self::config()->removeValue($name);
     }
@@ -97,7 +103,7 @@ class ActiveRecordConfig extends Config
      * @param mixed $value
      * @deprecated
      */
-    public static function setField(string $name, $value) : void/*: void*/
+    public static function setField(string $name, $value): void/*: void*/
     {
         self::config()->setValue($name, $value);
     }
@@ -110,7 +116,7 @@ class ActiveRecordConfig extends Config
      *
      * @deprecated
      */
-    public static function setFields(array $fields, bool $remove_exists = false) : void/*: void*/
+    public static function setFields(array $fields, bool $remove_exists = false): void/*: void*/
     {
         self::config()->setValues($fields, $remove_exists);
     }
@@ -118,10 +124,9 @@ class ActiveRecordConfig extends Config
     /**
      * ActiveRecordConfig constructor
      *
-     * @param string|null      $primary_name_value
      * @param arConnector|null $connector
-     *
      * @deprecated
+     * @param mixed $primary_name_value
      */
     public function __construct(/*?string*/ $primary_name_value = null, /*?*/ arConnector $connector = null)
     {

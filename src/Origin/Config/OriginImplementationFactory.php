@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Origin\Config;
 
 use srag\Plugins\Hub2\Config\ArConfig;
@@ -20,7 +28,6 @@ use srag\Plugins\Hub2\Taxonomy\TaxonomyFactory;
 class OriginImplementationFactory
 {
     protected IOrigin $origin;
-
     public function __construct(IOrigin $origin)
     {
         $this->origin = $origin;
@@ -32,8 +39,15 @@ class OriginImplementationFactory
      */
     public function instance()
     {
-        $basePath = rtrim(ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH), '/') . '/';
-        $path = $basePath . $this->origin->getObjectType() . '/';
+        $ilias_base_dir = realpath(__DIR__ . '/../../../../../../../../../../');
+        $configured_base_path = realpath(
+            $ilias_base_dir . '/./' . rtrim(
+                (string) ArConfig::getField(ArConfig::KEY_ORIGIN_IMPLEMENTATION_PATH),
+                '/'
+            ) . '/'
+        );
+
+        $path = $configured_base_path . '/' . $this->origin->getObjectType() . '/';
         $className = $this->origin->getImplementationClassName();
         $namespace = $this->origin->getImplementationNamespace();
         $classFile = $path . $className . '.php';
@@ -46,6 +60,13 @@ class OriginImplementationFactory
             throw new HubException("Origin implementation namespace\\class does not exist, should be: $class");
         }
 
-        return new $class($this->origin->config(), new DataTransferObjectFactory(), new MetadataFactory(), new TaxonomyFactory(), new MappingStrategyFactory(), $this->origin);
+        return new $class(
+            $this->origin->config(),
+            new DataTransferObjectFactory(),
+            new MetadataFactory(),
+            new TaxonomyFactory(),
+            new MappingStrategyFactory(),
+            $this->origin
+        );
     }
 }

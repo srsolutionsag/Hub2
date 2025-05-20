@@ -1,5 +1,13 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Object\General;
 
 /**
@@ -19,7 +27,7 @@ class LearningProgressSettings extends BaseDependentSetting implements IDependen
         $this->setLearningProgressMode($learning_progress_mode);
     }
 
-    public function isActivateLearningProgress() : bool
+    public function isActivateLearningProgress(): bool
     {
         return $this->offsetGet(self::ACTIVATE_LEARNING_PROGRESS);
     }
@@ -27,13 +35,13 @@ class LearningProgressSettings extends BaseDependentSetting implements IDependen
     public function activateLearningProgress(
         bool $activate_learning_progress,
         int $mode
-    ) : LearningProgressSettings {
+    ): LearningProgressSettings {
         $this->setLearningProgressMode($mode);
 
         return $this->set(self::ACTIVATE_LEARNING_PROGRESS, $activate_learning_progress);
     }
 
-    public function setLearningProgressMode(int $mode) : LearningProgressSettings
+    public function setLearningProgressMode(int $mode): LearningProgressSettings
     {
         // check if mode is implemented
         if (!in_array($mode, [
@@ -50,7 +58,7 @@ class LearningProgressSettings extends BaseDependentSetting implements IDependen
         return $this->set(self::LP_MODE, $mode);
     }
 
-    public function getLearningProgressMode() : int
+    public function getLearningProgressMode(): int
     {
         return $this->offsetGet(self::LP_MODE) ?? self::LP_MODE_DEACTIVATED;
     }

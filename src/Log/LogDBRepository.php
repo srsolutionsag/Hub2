@@ -10,13 +10,14 @@
 
 namespace srag\Plugins\Hub2\Log;
 
-use function PHPUnit\Framework\matches;
-
 /**
  * @author Fabian Schmid <fabian@sr.solutions>
  */
 class LogDBRepository implements LogRepository
 {
+    /**
+     * @var string
+     */
     private const TABLE_NAME = 'sr_hub2_log';
 
     /**
@@ -42,27 +43,25 @@ class LogDBRepository implements LogRepository
 
         $where = '';
 
-        if ($filter_values !== []) {
-            foreach ($filter_values as $column => $value) {
-                if (empty($value)) {
-                    continue;
-                }
-                $value = trim($value);
-                $value = str_replace('*', '%', $value);
+        foreach ($filter_values as $column => $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $value = trim((string) $value);
+            $value = str_replace('*', '%', $value);
 
-                switch ($column) {
-                    case 'object_ext_id':
-                    case 'date':
-                    case 'message':
-                        $where .= ' AND ' . $column . ' LIKE ' . $this->db->quote('%' . $value . '%', 'text');
-                        break;
-                    case 'status':
-                    case 'object_ilias_id':
-                    case 'origin_id':
-                    case 'level':
-                        $where .= ' AND ' . $column . ' = ' . $this->db->quote((int) $value, 'integer');
-                        break;
-                }
+            switch ($column) {
+                case 'object_ext_id':
+                case 'date':
+                case 'message':
+                    $where .= ' AND ' . $column . ' LIKE ' . $this->db->quote('%' . $value . '%', 'text');
+                    break;
+                case 'status':
+                case 'object_ilias_id':
+                case 'origin_id':
+                case 'level':
+                    $where .= ' AND ' . $column . ' = ' . $this->db->quote((int) $value, 'integer');
+                    break;
             }
         }
         if ($where !== '') {
@@ -150,47 +149,6 @@ class LogDBRepository implements LogRepository
             }
         }
 
-        return $removed;
-
-        // Alternative Version
-        $full = true;
-        if ($full) {
-            $q = "DELETE FROM sr_hub2_log WHERE log_id IN (SELECT log_id
-                    FROM (SELECT log_id, ROW_NUMBER() OVER (PARTITION BY origin_id, object_ext_id, status ORDER BY date DESC) AS n
-                        FROM) AS x
-                    WHERE n > $keep_latest_per_status)";
-
-            return $removed_in_step = $this->db->manipulate($q);
-        }
-        $step = 1;
-        $removed = 0;
-        $res = $this->db->query(
-            "SELECT DISTINCT origin_id, object_ext_id, status FROM sr_hub2_log
-            GROUP BY origin_id, object_ext_id, status
-            HAVING COUNT(*) > $keep_latest_per_status
-            ;"
-        );
-        while ($row = $this->db->fetchAssoc($res)) {
-            if ($delete_before_days !== -1 && $step === $delete_before_days) {
-                return $removed;
-            }
-
-            $q = "DELETE FROM sr_hub2_log WHERE log_id IN (SELECT log_id
-                    FROM (SELECT log_id, ROW_NUMBER() OVER (PARTITION BY origin_id, object_ext_id, status ORDER BY date DESC) AS n
-                        FROM sr_hub2_log WHERE origin_id = %s AND object_ext_id = %s AND status = %s) AS x
-                    WHERE n > $keep_latest_per_status)";
-
-            $removed += $removed_in_step = $this->db->manipulateF(
-                $q,
-                ['integer', 'text', 'integer'],
-                [$row['origin_id'], $row['object_ext_id'], $row['status']]
-            );
-
-            if ($row_callback !== null) {
-                $row_callback($row, $removed_in_step);
-            }
-            $step++;
-        }
         return $removed;
     }
 

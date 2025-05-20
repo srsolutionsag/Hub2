@@ -8,9 +8,6 @@
  *
  *********************************************************************/
 
-use srag\Plugins\Hub2\Translator;
-use srag\Plugins\Hub2\Exception\HubException;
-
 /**
  * @author            Fabian Schmid <fabian@sr.solutions>
  *
@@ -32,7 +29,6 @@ class ilHub2DispatcherGUI extends ilHub2DispatchableBaseGUI
 
     public function checkAccess(): void
     {
-        return;
     }
 
     public function getTabs(): array

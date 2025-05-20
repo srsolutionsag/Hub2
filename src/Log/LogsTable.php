@@ -21,7 +21,6 @@ use ILIAS\Data\Range;
 use Generator;
 use ILIAS\UI\Component\Table\Data;
 use srag\Plugins\Hub2\Translator;
-use ILIAS\Data\DateFormat\DateFormat;
 use srag\Plugins\Hub2\Shortlink\ObjectLinkFactory;
 use srag\Plugins\Hub2\Object\IObject;
 
@@ -30,9 +29,15 @@ use srag\Plugins\Hub2\Object\IObject;
  */
 class LogsTable implements DataRetrieval
 {
-    private array $initial_filter_values = [];
-    private Translator $translator;
+    /**
+     * @readonly
+     */
     private LogRepository $repository;
+    /**
+     * @readonly
+     */
+    private Translator $translator;
+    private array $initial_filter_values = [];
     /**
      * @readonly
      */
@@ -45,10 +50,6 @@ class LogsTable implements DataRetrieval
      * @readonly
      */
     private Services $http;
-    /**
-     * @readonly
-     */
-    private \ilCtrlInterface $ctrl;
     /**
      * @readonly
      */
@@ -68,14 +69,13 @@ class LogsTable implements DataRetrieval
         Translator $translator,
         array $initial_filter_values = []
     ) {
-        global $DIC;
-        $this->initial_filter_values = $initial_filter_values;
-        $this->translator = $translator;
         $this->repository = $repository;
+        $this->translator = $translator;
+        $this->initial_filter_values = $initial_filter_values;
+        global $DIC;
         $this->data_factory = new \ILIAS\Data\Factory();
         $this->ui_factory = $DIC->ui()->factory();
         $this->http = $DIC->http();
-        $this->ctrl = $DIC->ctrl();
         $this->filter_service = $DIC->uiService()->filter();
         $this->db = $DIC->database();
         $this->object_link = new ObjectLinkFactory();
@@ -293,7 +293,7 @@ class LogsTable implements DataRetrieval
             $unserializer = function ($value) {
                 try {
                     $unserialized = unserialize($value, ['allowed_classes' => true]);
-                } catch (\Throwable $ex) {
+                } catch (\Throwable $exception) {
                     return $value;
                 }
                 if ($unserialized !== false && $unserialized instanceof \Serializable) {

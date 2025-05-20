@@ -1,33 +1,18 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Jobs;
 
-class CronNotifier implements Notifier
+class CronNotifier extends BaseNotifier
 {
-    public const NOTIFY_MODULO = 500;
-    public const PING_MODULO = 500;
-    private int $ping_counter = 0;
-    private int $notify_counter = 0;
-    /**
-     * @var \ilLogger
-     */
-    protected $logger;
-
-    public function __construct()
-    {
-        ini_set('zend.enable_gc', true);
-        gc_enable();
-        global $DIC;
-        $this->logger = $DIC->logger()->root();
-    }
-
-    public function reset(): void
-    {
-        $this->ping_counter = 0;
-        $this->notify_counter = 0;
-    }
-
-    private function pingCronJob(): void
+    protected function pingInternal(): void
     {
         if (PHP_SAPI === 'cli') {
             global $DIC;
@@ -37,30 +22,5 @@ class CronNotifier implements Notifier
 
             $DIC['cron.manager']->ping(RunSync::CRON_JOB_ID);
         }
-    }
-
-    public function ping(): void
-    {
-        if ($this->ping_counter % self::PING_MODULO === 0) {
-            $this->pingCronJob();
-        }
-        $this->ping_counter++;
-    }
-
-    public function notify(string $text): void
-    {
-        $this->pingCronJob();
-        $this->logger->write('HUB2: ' . $text);
-    }
-
-    public function notifySometimes(string $text): void
-    {
-        if ($this->notify_counter % self::NOTIFY_MODULO === 0) {
-            $this->notify($text . " ({$this->notify_counter})");
-            if (gc_enabled()) {
-                gc_collect_cycles();
-            }
-        }
-        $this->notify_counter++;
     }
 }

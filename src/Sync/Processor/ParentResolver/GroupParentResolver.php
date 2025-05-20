@@ -1,12 +1,18 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 namespace srag\Plugins\Hub2\Sync\Processor\ParentResolver;
 
-use srag\Plugins\Hub2\Object\Course\CourseDTO;
 use srag\Plugins\Hub2\Object\DTO\DataTransferObject;
 use srag\Plugins\Hub2\Exception\HubException;
 use srag\Plugins\Hub2\Object\ObjectFactory;
-use srag\Plugins\Hub2\Object\Course\ICourseDTO;
 use srag\Plugins\Hub2\Origin\OriginRepository;
 use srag\Plugins\Hub2\Origin\IOrigin;
 use srag\Plugins\Hub2\Object\Group\GroupDTO;
@@ -42,8 +48,7 @@ class GroupParentResolver extends BasicParentResolver
         $originRepository = new OriginRepository();
         $filtered = array_filter(
             $originRepository->categories(),
-            fn ($origin): bool =>
-                /** @var IOrigin $origin */
+            fn ($origin): bool => /** @var IOrigin $origin */
                 $origin->getId() === $linked_origin_id
         );
         $origin = array_pop($filtered);
@@ -61,12 +66,10 @@ class GroupParentResolver extends BasicParentResolver
         if (!$dto instanceof GroupDTO) {
             throw new \InvalidArgumentException();
         }
-
         // Parent ID type is Ref-ID
         if ($dto->getParentIdType() === GroupDTO::PARENT_ID_TYPE_REF_ID) {
             return $this->resolveRefIdForDTOwithRefIdParentType($dto);
         }
-
         // Parent ID type is External ID
         if ($dto->getParentIdType() === IGroupDTO::PARENT_ID_TYPE_EXTERNAL_EXT_ID) {
             if (!$this->linked_origin instanceof IOrigin) {
@@ -83,7 +86,6 @@ class GroupParentResolver extends BasicParentResolver
 
             return $this->checkAndReturnRefId($category->getILIASId());
         }
-
         return $this->checkAndReturnRefId($this->fallback_ref_id);
     }
 }

@@ -1,9 +1,16 @@
 <?php
 
+/*********************************************************************
+ * This Code is licensed under the GPL-3.0 License and is Part of a
+ * ILIAS Plugin developed by sr solutions ag in Switzerland.
+ *
+ * https://sr.solutions
+ *
+ *********************************************************************/
+
 require_once __DIR__ . "/AbstractHub2Tests.php";
 
 use ILIAS\DI\Container;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use Pimple\Container as PimpleContainer;
 use srag\Plugins\Hub2\Log\Factory as LogFactory;
@@ -27,7 +34,7 @@ use srag\Plugins\Hub2\Sync\ObjectStatusTransition;
  */
 abstract class AbstractSyncProcessorTests extends AbstractHub2Tests
 {
-    use MockeryPHPUnitIntegration;
+    //    use MockeryPHPUnitIntegration;
 
     /**
      * @var IOrigin
@@ -76,10 +83,6 @@ abstract class AbstractSyncProcessorTests extends AbstractHub2Tests
         $this->initLog();
     }
 
-    /**
-     * @param IOriginProperties $properties
-     * @param IOriginConfig     $config
-     */
     protected function initOrigin(IOriginProperties $properties, IOriginConfig $config)
     {
         $this->originProperties = $properties;
