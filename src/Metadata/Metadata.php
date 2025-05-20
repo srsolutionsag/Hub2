@@ -35,7 +35,7 @@ class Metadata implements IMetadata
      * Metadata constructor
      * @param int $identifier
      */
-    public function __construct($identifier, string $record_id = self::DEFAULT_RECORD_ID)
+    public function __construct($identifier, int $record_id = self::DEFAULT_RECORD_ID)
     {
         $this->identifier = $identifier;
         $this->record_id = $record_id;
