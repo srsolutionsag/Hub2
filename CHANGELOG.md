@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 4.7.1
+- [FIX] HUB2 Memory leak
+- [FIX] metadata issue with wrong type
+- [FIX] Performance Downpatch
+
 ## Version 5.0.0
 - [FIX] Relevant Changes for ILIAS 9 / PHP8.1
 
