@@ -84,7 +84,11 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
 
     public function getToolsForContextStack(CalledContexts $called_contexts): array
     {
-        $object = $this->resolveObject($called_contexts->current());
+        try {
+            $object = $this->resolveObject($called_contexts->current());
+        } catch (\Throwable $t) {
+            return [];
+        }
         if ($object === null) {
             return [];
         }
@@ -99,22 +103,22 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
                           ->withContentWrapper(function () use ($object): Legacy {
                               $factory = $this->dic->ui()->factory();
                               $listing_data = [
-                                  'Ext ID' => $object->getExtId(),
-                                  'Origin ID' => $object->getOriginId(),
+                                  'Ext ID' => (string) $object->getExtId(),
+                                  'Origin ID' => (string) $object->getOriginId(),
                                   'Last Delivery Date' => $object->getDeliveryDate()->format('d.m.Y H:i:s'),
                                   'Last Processing Date' => $object->getProcessedDate()->format('d.m.Y H:i:s'),
                               ];
 
                               $data = array_filter(
                                   $object->getData(),
-                                  static fn ($value, $key): bool => is_string($value),
+                                  static fn($value, $key): bool => is_string($value),
                                   ARRAY_FILTER_USE_BOTH
                               );
 
                               $listing_data = array_merge($listing_data, $data);
                               $listing = $factory->listing()->descriptive(
                                   array_map(
-                                      static fn ($value): string => (string) $value,
+                                      static fn($value): string => (string) $value,
                                       $listing_data
                                   )
                               );
