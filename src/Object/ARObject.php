@@ -256,7 +256,7 @@ abstract class ARObject extends ActiveRecord implements IObject
 
                             $IMetadata[$record_id . '_' . $mid] = (new Metadata(
                                 (int) $mid,
-                                (string) $record_id
+                                (int) $record_id
                             ))->setValue(
                                 $records
                             );
