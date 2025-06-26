@@ -77,11 +77,8 @@ abstract class BaseDependentSetting implements IDependentSettings
     {
         unset($this->data[$offset]);
     }
-
-    /**
-     * @return mixed
-     */
-    public function jsonSerialize()
+    
+    public function jsonSerialize() : mixed
     {
         return $this->toArray();
     }
