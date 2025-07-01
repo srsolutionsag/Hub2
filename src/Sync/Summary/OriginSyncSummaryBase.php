@@ -52,8 +52,8 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
     {
         $this->syncs[] = $originSync;
     }
-
-    public function getOutputAsString()
+    
+    public function getOutputAsString() : string
     {
         $return = "";
         foreach ($this->syncs as $sync) {
@@ -80,7 +80,8 @@ abstract class OriginSyncSummaryBase implements IOriginSyncSummary
 
                 $txt = $this->plugin->txt("summary_notification");
                 $mail->Subject(sprintf($txt, $originSync->getOrigin()->getTitle()));
-                $body = nl2br(str_replace("\n\n", "\n", $this->renderOneSync($originSync)));
+                $str_replace = str_replace("\n\n", "\n", $this->renderOneSync($originSync));
+                $body = $str_replace;
                 $mail->Body($body);
 
                 $mail->Send();
