@@ -292,14 +292,14 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $wizard_options->storeTree($clone_source);
 
         // Duplicate session to avoid logout problems with backgrounded SOAP calls
-        $new_session_id = ilSession::_duplicate($_COOKIE['PHPSESSID']);
+        $new_session_id = ilSession::_duplicate($_COOKIE['PHPSESSID'] ?? session_id());
 
         $wizard_options->disableSOAP();
         $wizard_options->read();
 
         require_once __DIR__ . '/../../../../../../../../../../../webservice/soap/include/inc.soap_functions.php';
 
-        return ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
+        return ilSoapFunctions::ilClone($new_session_id . '::' . CLIENT_ID, $copy_id);
     }
 
     protected function setLanguage(CourseDTO $dto, ilObjCourse $ilObjCourse)
