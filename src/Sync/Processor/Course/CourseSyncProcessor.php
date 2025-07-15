@@ -297,7 +297,7 @@ class CourseSyncProcessor extends ObjectSyncProcessor implements ICourseSyncProc
         $wizard_options->disableSOAP();
         $wizard_options->read();
 
-        require_once __DIR__ . '/webservice/soap/include/inc.soap_functions.php';
+        require_once __DIR__ . '/../../../../../../../../../../../webservice/soap/include/inc.soap_functions.php';
 
         return ilSoapFunctions::ilClone($new_session_id . '::' . $_COOKIE['ilClientId'], $copy_id);
     }
