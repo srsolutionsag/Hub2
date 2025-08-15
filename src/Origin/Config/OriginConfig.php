@@ -92,7 +92,7 @@ class OriginConfig implements IOriginConfig
     {
         if (!in_array(
             $this->getConnectionType(),
-            [self::CONNECTION_TYPE_PATH, self::CONNECTION_TYPE_FILE_DROP, self::CONNECTION_TYPE_API],
+            [self::CONNECTION_TYPE_PATH, self::CONNECTION_TYPE_FILE_DROP, self::CONNECTION_TYPE_API, self::CONNECTION_TYPE_ILIAS_FILE],
             true
         )) {
             throw new ConnectionFailedException("Please set connection type to path to use getPath");
@@ -105,6 +105,14 @@ class OriginConfig implements IOriginConfig
                 $path = $f->storage()->getPath($this->get(self::FILE_DROP_RID));
                 break;
             default:
+                case self::CONNECTION_TYPE_ILIAS_FILE:
+                    $file_ref_id = (int)$this->get(self::ILIAS_FILE_REF_ID);
+                    if($file_ref_id === 0) {
+                        throw new ConnectionFailedException("Please set an ILIAS file ref id to use getPath");
+                    }
+
+                    $path = (new ilObjFile($file_ref_id, true))->getFile();
+                    break;
             case self::CONNECTION_TYPE_PATH:
                 $path = $this->get(self::PATH);
                 break;
