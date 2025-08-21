@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 5.0.2
+- [FIX] to much newlines
+- [FIX] JsonSerializable compatibility
+- [FIX] type of \srag\Plugins\Hub2\Metadata\Metadata::__construct(record_id)
+- [FIX] Toolprovider
+
 ## Version 5.0.1
 - [FIX] HUB2 Memory leak
 - [FIX] metadata issue with wrong type
