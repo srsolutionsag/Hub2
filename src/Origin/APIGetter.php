@@ -20,6 +20,12 @@ use srag\Plugins\Hub2\FileDrop\ResourceStorage\ResourceStorage;
  */
 trait APIGetter
 {
+    protected function getUserAgent(): string
+    {
+        // some WAFs reject requests without a User-Agent with a 403
+        return 'ILIAS Hub2';
+    }
+
     protected function getResourceStorage(): ResourceStorage
     {
         return (new Factory())->storage();
@@ -35,19 +41,31 @@ trait APIGetter
         if ($config->getConnectionType() === IOriginConfig::CONNECTION_TYPE_API) {
             // call the API here
             $api = $config->getServerHost();
-            $token = $config->getServerPassword() ?? null;
+            $token = trim((string) ($config->getServerPassword() ?? ''));
 
             $connection = curl_init($api);
             curl_setopt($connection, CURLOPT_RETURNTRANSFER, true);
-            if (!empty($token)) {
+            curl_setopt($connection, CURLOPT_USERAGENT, $this->getUserAgent());
+            if ($token !== '') {
                 curl_setopt($connection, CURLOPT_HTTPHEADER, [
                     'Authorization: Bearer ' . $token
                 ]);
             }
 
             $response = curl_exec($connection);
+            $status = (int) curl_getinfo($connection, CURLINFO_HTTP_CODE);
+            $error = curl_error($connection);
+            curl_close($connection);
+
             if ($response === false) {
-                throw new ConnectionFailedException("Cannot connect to API");
+                throw new ConnectionFailedException("Cannot connect to API: " . $error);
+            }
+
+            // an error response must never replace the last known good data
+            if ($status < 200 || $status >= 300) {
+                throw new ConnectionFailedException(
+                    "API returned HTTP {$status}: " . substr((string) $response, 0, 500)
+                );
             }
 
             $storage = $this->getResourceStorage();

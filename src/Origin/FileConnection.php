@@ -23,12 +23,10 @@ trait FileConnection
 
     public function connect(): bool
     {
-        // in case of api connection, we call the API first to get the data
-        try {
-            $this->maybeGetAPIData();
-        } catch (ConnectionFailedException $exception) {
-            return false;
-        }
+        // in case of api connection, we call the API first to get the data.
+        // a ConnectionFailedException is passed on deliberately, otherwise the reason
+        // (e.g. the HTTP status of the API) would be lost in the sync log.
+        $this->maybeGetAPIData();
 
         $this->file_path = $this->config()->getPath();
         if (!is_readable($this->file_path)) {
